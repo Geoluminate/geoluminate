@@ -1,0 +1,65 @@
+{% load cms_tags menu_tags sekizai_tags static %}
+<!doctype html>
+<html>
+  <head>
+    <title>{% block title %}The Mbantua Collection{% endblock title %}</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<link rel="stylesheet" href="{% static 'strongly_typed/css/main.css'  %}" />
+    {% render_block "css" %}
+  </head>
+  <body class="homepage is-preload">
+    <div id="page-wrapper" style='bottom:0' class='w-100'>
+
+			{% comment %} {% cms_toolbar %} {% endcomment %}
+				<section id='header'>
+					<div class='container wide border-0 d-flex align-items-center justify-content-center' style='box-shadow:none; height:100vh;'>
+						<div id="lockdown" class='text-center'>
+							<img class='w-50' src="{% static "collection/images/MB_logo.svg" %}" alt="Mbantua Collection logo">
+							<h1>The Mbantua Collection</h1>
+							<h3 class='text-center pt-3'>Coming Soon!</h3>
+							<a href='' data-toggle="modal" data-target="#loginModal">Admin Login</a>
+						</div>
+					</div>
+				</section>
+
+
+		<div id="loginModal" class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+				<div class="modal-content">
+					<div class='modal-body'>
+						<div class='container wide'>
+							<section> 
+								<h1 class='mb-3'>Login</h1>
+								{% if form %}
+								<form action="" method="post">{% csrf_token %}
+									{{ form.as_p }}
+									<p><input type="submit" value="Login" /></p>
+								</form>
+								{% endif %}
+							</section>
+						</div>
+					</div>  
+				</div>
+			</div>
+		</div>
+
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+      <script src="https://kit.fontawesome.com/a08181010c.js"></script>
+
+
+      <script src="{% static 'strongly_typed/js/jquery.min.js' %}"></script>
+      <script src="{% static 'strongly_typed/js/jquery.dropotron.min.js' %}"></script>
+      <script src="{% static 'strongly_typed/js/browser.min.js' %}"></script>
+      <script src="{% static 'strongly_typed/js/breakpoints.min.js' %}"></script>
+      <script src="{% static 'strongly_typed/js/util.js' %}"></script>
+      <script src="{% static 'strongly_typed/js/main.js' %}"></script>
+      <script src="{% static 'strongly_typed/js/custom.js' %}"></script>
+      {% render_block "js" %}
+    </div>
+  </body>
+</html>
+

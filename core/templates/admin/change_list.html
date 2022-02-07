@@ -154,11 +154,9 @@
 {% block object-tools %}
     <ul class="grp-object-tools">
         {% block object-tools-items %}
-            {% if has_add_permission %}
-            {% if admin_urlname %}
+            {% if has_add_permission and admin.change_list_template != 'admin/cms/page/tree/base.html' %}
               {% url cl.opts|admin_urlname:'add' as add_url %}
               <li><a href="{% add_preserved_filters add_url is_popup to_field %}" class="grp-add-link grp-state-focus">{% blocktrans with cl.opts.verbose_name as name %}Add {{ name }}{% endblocktrans %}</a></li>
-            {% endif %}
             {% endif %}
         {% endblock %}
     </ul>

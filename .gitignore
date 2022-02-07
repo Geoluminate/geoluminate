@@ -9,4 +9,4 @@ node_modules
 *.pyc
 *.cpython-38.pyc
 playground
-*__pycache__
+__pycache__

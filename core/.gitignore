@@ -2,7 +2,6 @@
 dump.json
 project.db
 media
-/static
 .vscode
 .jsbeautifyrc
 node_modules

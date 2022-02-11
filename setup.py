@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os
+import os, find_packages
 from setuptools import setup
 from core import __version__
 
@@ -12,16 +12,18 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='core',
-    packages='core',
+    packages=find_packages(),
+    include_package_data=True,
     version=__version__,
     author='Sam Jennings',
     author_email='samuel.jennings@pm.me',
     license='MIT',
     description='Core functionality and patches for Django projects',
     url=REPO_URL,
-    download_url=REPO_URL + 'archive/refs/tags/v' + __version__ +'.tar.gz',
-    install_requires=[],
-    keywords='scientific geology geochronology stratigraphy',
+    install_requires=[
+        "Django>=3,<4",    
+        ],
+    keywords='scientific django',
     classifiers=[
         'Development Status :: 1 - Development',
         'Intended Audience :: Developers',
@@ -30,10 +32,8 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.8',
+        'Framework :: Django',
+        'Natural Language :: English',
         'Topic :: Internet :: WWW/HTTP',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
     ],

@@ -11,8 +11,8 @@ REPO_URL = "https://github.com/SSJenny90/core"
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
-    name='publications',
-    packages='publications',
+    name='core',
+    packages='core',
     version=__version__,
     author='Sam Jennings',
     author_email='samuel.jennings@pm.me',

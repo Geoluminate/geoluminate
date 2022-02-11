@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os, find_packages
-from setuptools import setup
+import os
+from setuptools import setup, find_packages
 from core import __version__
 
 REPO_URL = "https://github.com/SSJenny90/core"

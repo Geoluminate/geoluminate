@@ -4,7 +4,8 @@ from django.contrib.messages import constants as messages
 
 DEBUG = True if os.environ.get('DEBUG') == 'TRUE' else False
 
-DATA_DIR = BASE_DIR = os.getcwd()
+BASE_DIR = os.getcwd()
+
 include('components/*.py')
 
 SECRET_KEY = os.environ.get('SECRET_KEY')

@@ -15,9 +15,7 @@ AWS_S3_REGION_NAME = 'ap-southeast-2'
 
 AWS_DEFAULT_ACL = None
 AWS_STATIC_LOCATION = 'static'
-STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_STATIC_LOCATION}/"
 
 AWS_PUBLIC_MEDIA_LOCATION =  'media/public'
-
 AWS_PRIVATE_MEDIA_LOCATION = 'media/private'
 

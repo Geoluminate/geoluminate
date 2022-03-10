@@ -7,7 +7,7 @@
 #         'drf_ujson.renderers.UJSONRenderer',
 #         # 'rest_framework.renderers.JSONRenderer',
 #         'rest_framework.renderers.BrowsableAPIRenderer',
-#         'drf_renderer_xlsx.renderers.XLSXRenderer',
+#         'drf_excel.renderers.XLSXRenderer',
 #     ],
 #     'DEFAULT_PARSER_CLASSES': [
 #         'drf_ujson.parsers.UJSONParser',

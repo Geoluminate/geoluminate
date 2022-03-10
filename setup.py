@@ -21,7 +21,9 @@ setup(
     description='Core functionality and patches for Django projects',
     url=REPO_URL,
     install_requires=[
-        "Django>=3,<4",    
+        "Django>=3,<4",
+        "django-import-export",
+        "tqdm",    
         ],
     keywords='scientific django',
     classifiers=[

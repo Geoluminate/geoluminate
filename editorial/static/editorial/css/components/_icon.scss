@@ -1,0 +1,87 @@
+///
+/// Editorial by Pixelarity
+/// pixelarity.com | hello@pixelarity.com
+/// License: pixelarity.com/license
+///
+
+/* Icon */
+
+	.icon {
+		@include icon;
+		border-bottom: none;
+		position: relative;
+
+		> .label {
+			display: none;
+		}
+
+		&:before {
+			line-height: inherit;
+		}
+
+		&.solid {
+			&:before {
+				font-weight: 900;
+			}
+		}
+
+		&.brands {
+			&:before {
+				font-family: 'Font Awesome 5 Brands';
+			}
+		}
+
+		&.disabled {
+			color: _palette(fg) !important;
+			opacity: 50%;
+			pointer-events: none;
+		}
+
+		&.globe:before {
+			content: '\f0ac'
+		}
+
+		&.chart:before {
+			content: '\f080'
+		}
+		&.ellipsis-v:before {
+			content: '\f142'
+		}
+		&.ellipsis-h:before {
+			content: '\f141'
+		}
+		&.export:before {
+			content: '\f35d'
+		}
+		&.download:before {
+			content: '\f019'
+		}		
+		&.pdf:before {
+			content: '\f1c1'
+		}	
+
+		&.settings:before {
+			content: '\f085'
+		}	
+		&.filter:before {
+			content: '\f0b0'
+		}		
+		&.left-arrow:before {
+			content: '\f0d9'
+		}		
+
+
+	
+
+	}
+
+	.map-sidebar {
+		li {
+			padding: 0.5em !important;
+		}
+
+		.icon:before {
+			font-size: 1.5rem;
+		}
+
+	}

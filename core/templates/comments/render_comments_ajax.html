@@ -1,0 +1,54 @@
+{% load static sekizai_tags comments comments_xtd authentication %}
+{% get_comment_count for object as comment_count %}
+
+{% if user.is_authenticated %}
+  <p>Hi {{user.first_name}}!
+  {% if not comment_count %} Be the first to comment and let us know what you think about {{object_descr|default:object}}!</p>
+  {% else %}
+    Let us know what you think about {{object_descr|default_if_none:object}}!</p>
+  {% endif %}
+{% else %}
+  <p>To prevent spam and keep the conversation on track, only registered users may comment. Please {% auth_link 'login' 'login' %} or {% auth_link 'register' 'create an account' %}!</p>
+{% endif %}
+
+{% if object|can_receive_comments_from:user %}
+  <div class="comment-form w-100">
+    {% render_comment_form for object %}
+  </div>
+{% endif %}
+
+
+{% addtoblock "js" %}<script src='{% static "core/js/comments.js" %}'></script>{% endaddtoblock %}
+
+
+
+
+
+{% addtoblock "js" %}<script>
+  var props = {% get_commentbox_props for object %};
+</script>{% endaddtoblock %}
+<div id="comments"></div>
+
+
+{% addtoblock "js" %}<script>$(function () {$('[data-bs-toggle="tooltip"]').tooltip()})</script>{% endaddtoblock %}
+{% addtoblock "js" %}<script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>{% endaddtoblock %}
+{% addtoblock "js" %}<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>{% endaddtoblock %}
+
+
+{% addtoblock "js" %}
+<script>
+ window.comments_props = {% get_commentbox_props for object %};
+
+ window.comments_props_override = {
+     allow_comments: true,
+     allow_feedback: true,
+     show_feedback: true,
+     allow_flagging: true,
+     polling_interval: 0  // In milliseconds.
+ };
+</script>
+
+<script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+<script src="{% static 'django_comments_xtd/js/plugin-2.9.4.js' %}"></script>
+<script src="{% static 'django_comments_xtd/js/vendor~plugin-2.9.4.js' %}"></script>
+{% endaddtoblock %}

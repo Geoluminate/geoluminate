@@ -1,0 +1,29 @@
+{% load i18n comments crispy_forms_tags %}
+<form action="/comments/post/" id="commentForm" onsubmit="post.disabled = true; return true;" method="post">
+    <input type="hidden" name="next" value="/comments/sent/#commentTree" id="id_next">
+    <input type="hidden" name="content_type" value="collection.artist" id="id_content_type">
+    <input type="hidden" name="object_pk" value="4" id="id_object_pk">
+    <input type="hidden" name="timestamp" value="1644137455" id="id_timestamp">
+    <input type="hidden" name="security_hash" value="ad106573bd9e6bb5867597397a3d8a5272c0c414" id="id_security_hash">
+    <input type="hidden" name="reply_to" value="0" id="id_reply_to">
+    <input type="hidden" name="name" id="id_name">
+    <input type="hidden" name="email" id="id_email">
+    <input type="hidden" name="url" id="id_url">
+    <input type="hidden" name="honeypot" id="id_honeypot">
+    <div id="div_id_comment" class="mb-3">
+        <label for="id_comment" class="form-label requiredField">
+            Comment<span class="asteriskField">*</span>
+        </label>
+        <textarea name="comment" placeholder="Your comment" class="form-control textarea" rows="5" required="" id="id_comment"></textarea>
+    </div>
+    <div class="mb-3 form-check">
+        <div id="div_id_followup" class="mb-3">
+            <input type="checkbox" name="followup" id="id_followup"
+                class="custom-control-input checkboxinput form-check-input">
+            <label for="id_followup" class="form-check-label">
+                Notify me about follow-up comments
+            </label>
+        </div>
+    </div>
+    <input type="submit" name="post" value="send" class="btn btn-primary" id="submit-id-post">
+</form>

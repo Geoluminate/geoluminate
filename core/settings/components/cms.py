@@ -25,6 +25,13 @@ CMS_TEMPLATES = (
     ('sidebar_right.html', 'Sidebar Right')
 )
 
+# set to true to hide toolbar
+# Has unintended side effects when adding plugins.
+# Don't use until bug fixed
+CMS_TOOLBAR_HIDE = False
+
 CMS_PERMISSION = True
+
+CMS_TOOLBAR_ANONYMOUS_ON = False
 
 CMS_PLACEHOLDER_CONF = {}

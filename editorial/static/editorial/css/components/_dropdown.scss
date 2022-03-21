@@ -1,0 +1,10 @@
+.dropdown {
+    &-item {
+        &:active {
+            background-color: _palette(primary);
+            color: _palette(bg)!important;
+            text-decoration: none;
+
+        }
+    }
+}

@@ -1,0 +1,5 @@
+{% load thumbnail solo_tags %}
+
+{% get_config 'core.SiteConfiguration' as site_config %}
+{% thumbnail site_config.logo size as thumb %}
+<img src="{{thumb.url}}" width={{thumb.width}} height={{thumb.height}} alt="logo">

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load i18n comments_xtd %}
+
+{% block title %}{% trans "Comment reply" %}{% endblock %}
+
+{% block content %}
+<section class="container wide">
+  <div class="mb-4">
+    <h3 class="text-center">{% trans "You are replying to the following comment" %}</h3>
+  </div>
+  <div class='container wide w-50'>
+    {% include 'comments/comment.html' %}
+    {% include "comments/form.html" %}
+  </div>
+</section>
+{% endblock %}

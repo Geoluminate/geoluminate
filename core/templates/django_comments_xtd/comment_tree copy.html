@@ -1,0 +1,96 @@
+{% load static i18n sekizai_tags comments_xtd %}
+
+{% for item in comments %}
+  {% include 'django_comments_xtd/comment.html' with comment=item.comment %}
+{% endfor %}
+
+{% block modals %}
+  {% include 'comments/modals/flag.html' %}
+  {% include 'comments/modals/delete.html' %}
+{% endblock modals %}
+
+{% addtoblock "js" %}<script>
+
+var props = {% get_commentbox_props for object %};
+
+$('.reply').on('click', function(e){
+  var cid = $(this).attr("href");
+  var $form_input = $(cid);
+  if ($form_input.is(':empty')) {
+      $form_input.append(`
+                {% comment %} <form> {% endcomment %}
+                  <div class="form-group ">
+                    <textarea class="w-100" name="comment" rows="5" placeholder="Your reply" required="" id="id_comment"></textarea>
+                  </div>
+                  <button onclick="submitReply(this, ${$(this).data('cid')})">Reply</button>
+                {% comment %} </form> {% endcomment %}
+                `
+                )
+      }
+
+  })
+
+
+function (e,cid) {
+
+  var data = {
+    "comment": "This is the body, the actual comment...",
+    "content_type": props.form.content_type,
+    "email": "{{user.email}}",
+    "followup": true,
+    "honeypot": "",
+    "name": "{{user.first_name}}",
+    "object_pk": props.form.object_pk,
+    "reply_to": cid,
+    "security_hash": props.form.security_hash,
+    "timestamp": Date.now(),
+    };
+
+  console.log(data)
+   $.ajax({
+        url : props.send_url,
+        method : 'POST',
+        data : data,
+        success: console.log('success!'),
+        error: function(e) {console.log(e)}
+    });
+
+  {% comment %} $.post(props.send_url, data).done(function(result) {
+     console.log(result)
+    }); {% endcomment %}
+}
+
+function getCookie(name) {
+  var cookieValue = null;
+  if (document.cookie && document.cookie != '') {
+      var cookies = document.cookie.split(';');
+      for (var i = 0; i < cookies.length; i++) {
+          var cookie = jQuery.trim(cookies[i]);
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) == (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+          }
+      }
+  }
+  return cookieValue;
+}
+
+var csrftoken = getCookie('csrftoken');
+
+function csrfSafeMethod(method) {
+  // these HTTP methods do not require CSRF protection
+  return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+
+$.ajaxSetup({
+  beforeSend: function (xhr, settings) {
+      if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+          xhr.setRequestHeader("X-CSRFToken", csrftoken);
+      }
+  }
+});
+
+
+</script>{% endaddtoblock %}
+

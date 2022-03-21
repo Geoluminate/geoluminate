@@ -7,10 +7,10 @@ WATERMARK = dict(
 
 # EASY_THUMBNAILS SETTINGS
 THUMBNAIL_CACHE_DIMENSIONS = True
-THUMBNAIL_CHECK_CACHE_MISS = True
+# THUMBNAIL_CHECK_CACHE_MISS = True
 THUMBNAIL_SUBDIR = 'thumbs'
 THUMBNAIL_ALIASES = {}
-THUMBNAIL_NAMER = 'easy_thumbnails.namers.alias'
+# THUMBNAIL_NAMER = 'easy_thumbnails.namers.alias'
 THUMBNAIL_PROCESSORS = [
     'easy_thumbnails.processors.colorspace',
     'easy_thumbnails.processors.autocrop',

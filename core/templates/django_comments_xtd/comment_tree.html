@@ -1,0 +1,6 @@
+{% load static i18n sekizai_tags comments_xtd %}
+
+{% for item in comments %}
+  {% include 'django_comments_xtd/comment.html' with comment=item.comment %}
+{% endfor %}
+

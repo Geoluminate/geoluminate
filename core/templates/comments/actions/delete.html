@@ -1,0 +1,5 @@
+{% load i18n %}
+
+{% if not comment.is_removed and perms.comments.can_moderate %}
+  <li><a href="#deleteCommentModal" class='mutedlink comment-delete' data-bs-target="#deleteCommentModal" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-next="{{ comment.get_absolute_url }}" data-bs-action="{% url 'comments-delete' comment.pk %}"><i class="fas fa-trash-alt" title="{% trans 'delete comment' %}"></i></a></li>
+{% endif %}

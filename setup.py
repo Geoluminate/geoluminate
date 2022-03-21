@@ -23,7 +23,12 @@ setup(
     install_requires=[
         "Django>=3,<4",
         "django-import-export",
-        "tqdm",    
+        "tqdm", 
+        'django-solo',  
+        'easy-thumbnails',
+        'django-contrib-comments',
+        'django-comments-xtd',
+
         ],
     keywords='scientific django',
     classifiers=[

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags static i18n %}
+
+{% block content %}
+<div class='inner container'>
+	<header id="header">
+		<div class="logo"><strong>Publications</strong> ThermoGlobe</div>
+		<ul class="icons">
+			{% include "editorial/components/socials.html" %}
+		</ul>
+	</header>
+
+	<section class='d-flex flex-row-reverse '>
+		<div class='w-100'>
+			<section class='main'>
+				<div class='d-flex justify-content-between'>
+					{% include "crossref/paginator.html" %}
+					<a href="#filterPublicationsModal" class="icon solid filter" data-bs-target="#filterPublicationsModal" data-bs-toggle="modal" data-bs-dismiss="modal"></a>
+				</div>	
+				{% for year, publications in years %}
+				{% if not forloop.first %}<hr class="major" />{% endif %}
+				<div class='publication-group'>
+					<header><h2>{{ year }}</h2></header>
+					{% for pub in publications %}
+						{% include "crossref/publication.html" %}
+					{% endfor %}
+				</div>
+				{% endfor %}
+			</section>
+		</div>
+	</section>
+</div>
+{% endblock %}
+
+{% block modals %}
+	{% include 'core/modals/form.html' with modal_id="filterPublicationsModal" form=filter.form helper=filter.helper %}
+	{% include "crossref/claim_publication.html" %}
+{% endblock modals %}

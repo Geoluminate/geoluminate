@@ -1,0 +1,19 @@
+<header class="main">
+  <h3 class='m-0'>{{ publication.title }}</h3>
+  <div><i>in {% firstof publication.journal publication.book_title %},	{{ publication.year }}</i></div>
+	{% if publication.author %}<div>{{publication.authors_display_long}}</div>{% endif %}
+</header>
+
+{% if publication.abstract %}
+  <p>{{ publication.abstract }}</p>
+{% endif %}
+
+{% if publication.keywords %}
+	{% for keyword in publication.keywords.all %}
+	  <a class="keyword" href="{% url 'publications:keyword' keyword %}">{{ keyword }}</a>
+	{% endfor %}
+{% endif %}
+
+<hr class="major" />
+<header><h3>Comments</h3></header>
+{% include "core/components/comments.html" with url="publications:detail" %}

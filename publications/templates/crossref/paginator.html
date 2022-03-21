@@ -1,0 +1,7 @@
+{% load sekizai_tags %}
+<div class="dropdown-toggle fit" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Showing: {{ page }}</div>
+<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+  {% for p in page.paginator.pages %}
+    <a class="dropdown-item" href="?page={{ p.number }}{{ parameters }}">{{ p }}</a>
+  {% endfor %}
+</div>

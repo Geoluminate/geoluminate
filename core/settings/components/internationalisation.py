@@ -15,3 +15,12 @@ LANGUAGES = (
     ## Customize this
     ('en', _('English')),
 )
+
+ROSETTA_SHOW_AT_ADMIN_PANEL = True
+
+# Instead of creating a global translators group, create individual per-language groups, e.g. translators-de, translators-fr, and assign users to these.
+ROSETTA_LANGUAGE_GROUPS = True
+
+ROSETTA_MESSAGES_PER_PAGE = 25
+
+ROSETTA_EXCLUDED_APPLICATIONS = ['django',"allauth.account",]

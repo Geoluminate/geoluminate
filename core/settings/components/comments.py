@@ -12,6 +12,6 @@ COMMENTS_XTD_APP_MODEL_OPTIONS = {
         'who_can_post': 'users'  # Valid values: 'all', users'
     }
 }
-COMMENTS_XTD_FORM_CLASS = "comments.forms.SuperCommentForm"
+COMMENTS_XTD_FORM_CLASS = "core.forms.SuperCommentForm"
 COMMENTS_XTD_THREADED_EMAILS = True
 COMMENTS_XTD_API_USER_REPR = lambda u: u.first_l()

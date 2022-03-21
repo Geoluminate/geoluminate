@@ -1,0 +1,4 @@
+{% load authentication %}
+{% if request.user|has_group:"CMS" or request.user.is_superuser%}
+  {% include 'core/utils/_cms_toolbar.html' %}
+{% endif %}

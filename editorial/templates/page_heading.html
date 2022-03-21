@@ -1,0 +1,7 @@
+{% load static cms_tags %}
+<header id="header">
+  <div class="logo"><strong>{{instance.title}}</strong> {% if instance.sub_title %}{{instance.sub_title}}{% endif %}</div>
+  <ul class="icons">
+    {% include 'editorial/components/socials.html' %}
+  </ul>
+</header>

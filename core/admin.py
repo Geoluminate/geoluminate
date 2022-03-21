@@ -1,5 +1,7 @@
 from django.contrib import admin
 from django.contrib.admin.models import LogEntry
+from solo.admin import SingletonModelAdmin
+from core.models import SiteConfiguration
 
 @admin.register(LogEntry)
 class LogEntryAdmin(admin.ModelAdmin):
@@ -26,3 +28,5 @@ class LogEntryAdmin(admin.ModelAdmin):
         'change_message',
         'action_flag',
     ]
+
+admin.site.register(SiteConfiguration, SingletonModelAdmin)

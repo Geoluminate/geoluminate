@@ -36,12 +36,14 @@
 // Palette.
 	$palette: (
 		bg:					#ffffff,
-		fg:					#7f888f,
+		fg:					#679bd0,
+		// fg:					#7f888f,
 		fg-bold:			#3d4449,
 		fg-light:			#9fa3a6,
 		border:				rgba(210,215,217,0.75),
 		border-bg:			transparentize(#e6ebed, 0.75),
-		primary:			#62d4e5,
+		primary:			#304b9b,
+		// fg-bold:			#679bd0,
 		secondary:			#f5f6f7,
 		comment-border: 	#ededed,
 	);

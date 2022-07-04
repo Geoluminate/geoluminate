@@ -1,13 +1,13 @@
 from publications.models import Publication
 from django.views.generic import DetailView
-from thermoglobe.mixins import DownloadMixin 
+# from thermoglobe.mixins import DownloadMixin 
 from meta.views import MetadataMixin
 from django_filters.views import FilterView
 from .filters import PublicationFilter
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from thermoglobe.models import Site
+# from thermoglobe.models import Site
 from django.contrib import auth
 from django.core.mail import send_mail
 from django.conf import settings
@@ -15,7 +15,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.translation import gettext_lazy as _
 from django.contrib.sites.shortcuts import get_current_site
-from thermoglobe.tables import IntervalTable, HeatProductionTable, ConductivityTable, TemperatureTable, SiteTable
+# from thermoglobe.tables import IntervalTable, HeatProductionTable, ConductivityTable, TemperatureTable, SiteTable
 from crossref.views import PublicationPaginateYearView
 
 
@@ -70,7 +70,8 @@ class PublicationListView(PublicationPaginateYearView, FilterView):
         return super().get_queryset().prefetch_related('author','sites', 'intervals','temperature_logs','conductivity_logs','heat_production_logs').exclude(published__year__isnull=True)
 
 
-class PublicationDetailsView(DownloadMixin, MetadataMixin, DetailView):
+# class PublicationDetailsView(DownloadMixin, MetadataMixin, DetailView):
+class PublicationDetailsView(MetadataMixin, DetailView):
     template_name = "thermoglobe/publication_details.html"
     model = Publication
 

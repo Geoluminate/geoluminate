@@ -1,6 +1,6 @@
 {% load i18n crossref_tags sekizai_tags authentication %}
 
-<div class="publication card">
+<div class="publication card ">
   <div class='card-header d-flex w-100'>	
 		{% include "crossref/partials/action_list.html" %}
 	</div>
@@ -39,4 +39,3 @@
 </div>
 
 {% addtoblock "js" %}<script>$(function(){$('[data-bs-toggle="tooltip"]').tooltip()})</script>{% endaddtoblock %}
-{% addtoblock "modals" %}{% include "crossref/claim_publication.html" %}{% endaddtoblock %}

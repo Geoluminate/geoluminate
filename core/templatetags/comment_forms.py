@@ -7,6 +7,7 @@ from django.conf import settings
 from allauth.utils import get_form_class
 from crispy_forms.utils import render_crispy_form
 from django.template.context_processors import csrf
+
 register = template.Library()
 
 

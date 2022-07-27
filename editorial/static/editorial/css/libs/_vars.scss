@@ -16,8 +16,8 @@
 		element-margin:		2em,
 		// sidebar-width:		26em,
 		// sidebar-width-alt:	24em,
-		sidebar-width:		22em,
-		sidebar-width-alt:  22em,
+		sidebar-width:		18em,
+		sidebar-width-alt:  18em,
 		gutter:				3em
 	);
 
@@ -36,13 +36,13 @@
 // Palette.
 	$palette: (
 		bg:					#ffffff,
-		fg:					#679bd0,
+		primary:			#679bd0,
 		// fg:					#7f888f,
 		fg-bold:			#3d4449,
 		fg-light:			#9fa3a6,
 		border:				rgba(210,215,217,0.75),
 		border-bg:			transparentize(#e6ebed, 0.75),
-		primary:			#304b9b,
+		fg:			#304b9b,
 		// fg-bold:			#679bd0,
 		secondary:			#f5f6f7,
 		comment-border: 	#ededed,

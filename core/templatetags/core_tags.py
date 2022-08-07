@@ -28,13 +28,13 @@ def get_obj_attr(obj):
 
     return '<tr><td class="w-50">{}:</td><td>{}</td></tr>'.format(obj.name.replace('_',' ').title(),value)
 
-@register.inclusion_tag('main/bootstrap/tab.html', takes_context=True)
+@register.inclusion_tag('core/bootstrap/tab.html', takes_context=True)
 def tab(context, name, active=False):
     context['name'] = name
     context['active'] = active
     return context
 
-@register.inclusion_tag('main/bootstrap/panel.html', takes_context=True)
+@register.inclusion_tag('core/bootstrap/panel.html', takes_context=True)
 def panel(context, name, template, active=False):
     context['name'] = name
     context['template'] = template

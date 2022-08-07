@@ -12,7 +12,7 @@ from django.db.models import Count, Min, Max
 
 
 class PublicationInline(GrappelliSortableHiddenMixin, admin.TabularInline):
-    model = Publication.authors.through
+    model = Publication.author.through
     verbose_name = _("publication")
     verbose_name_plural = _("Publications")
     fields = ("publication", 'year', "title", 'journal', "position",)
@@ -44,6 +44,32 @@ class PublicationAdmin(PublicationAdminMixin, ExportActionModelAdmin):
     resource_class = PublicationResource
     list_display = ['file','article', 'label', 'title', 'container_title', 'is_referenced_by_count', 'published','issue','volume','page','type', '_sites']
 
+    fieldsets = [
+        (None, {
+            'fields':[
+                'pdf',
+                ]}
+            ),
+        ('Bibliographic', {'fields':[
+            'DOI',
+            ('type', 'published'),
+            'title',
+            'author',
+            'container_title',
+            'volume',
+            'issue',
+            'page',
+            'abstract',
+            ]}),
+        ('Additional', {'fields':[
+            'keywords',
+            'language',
+            'source',
+            'bibtex',
+            ]}),
+        ]
+
+
     def get_queryset(self, request):
         return (super().get_queryset(request)
             .prefetch_related('sites')
@@ -65,8 +91,6 @@ class AuthorAdmin(AuthorAdminMixin, ExportActionModelAdmin):
     change_list_template = "admin/change_list_filter_sidebar.html"
     change_list_filter_template = "admin/filter_listing.html"
 
-    list_display = ['family','given']
-    search_fields = ['family', 'given']
     inlines = [PublicationInline]
     fields = [('given','family')]
     actions = ["merge",]

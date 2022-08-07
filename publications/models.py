@@ -12,7 +12,6 @@ from ordered_model.models import OrderedModelBase
 from sortedm2m.fields import SortedManyToManyField
 from crossref.models import PublicationAbstract, AuthorAbstract
 
-
 class UUIDTaggedItem(GenericUUIDTaggedItemBase, TaggedItemBase):
 
     class Meta:
@@ -38,7 +37,6 @@ class Publication(PublicationAbstract):
     keywords = TaggableManager(through=UUIDTaggedItem, 
         blank=True,
         verbose_name=_('key words'), help_text=None)
-    abstract = models.TextField(blank=True)
     bibtex = models.TextField(blank=True,null=True)
 
     _metadata = {
@@ -50,7 +48,6 @@ class Publication(PublicationAbstract):
 
     class Meta(PublicationAbstract.Meta):
         db_table = 'publications'
-
         
     def get_data(self,data_type=None):
         return dict(

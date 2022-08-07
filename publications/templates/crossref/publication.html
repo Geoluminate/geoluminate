@@ -4,16 +4,22 @@
   <div class='card-header d-flex w-100'>	
 		{% include "crossref/partials/action_list.html" %}
 	</div>
-  <div class="card-body">
+  <div class="card-body">      
+		{% if object.is_verified %}
+			<i class='text-success fas fa-check-circle' data-bs-toggle="tooltip" data-bs-placement="bottom" title="Data from this publication have been verified as part of the World Heat Flow Database Project!"></i>
+		{% else %}
+			<i class='text-warning fas fa-exclamation-triangle' data-bs-toggle="tooltip" data-bs-placement="bottom" title="Data from this publication are unverified. Use at your own discretion."></i>
+		{% endif %}
 		<i class='me-auto'>{{pub.container_title}}, {{ pub.published|date:'Y' }}</i>
-    <h4 class="card-title">{{ pub.title }}</h4>
+    <h4 class="card-title"><a href="{% url "publications:detail" pk=pub.pk %}">{{ pub.title }}</a></h4>
 		{% if pub.author.exists %}
 			<h5 class="card-subtitle mb-2 text-muted">{{ pub.authors_display }}</h5>
 		{% endif %}
 		{% if pub.abstract %}
-    	<p class="card-text">{{ pub.abstract|truncatewords:75 }}</p>
+    	<p class="card-text">
+				<span>{{ pub.abstract|safe|truncatewords:75 }}</span>
+			</p>
 		{% endif %}
-		{% comment %} <hr class='major'>  {% endcomment %}
   </div>
 	<div class='card-footer bg-white'>
 		{% if pub.sites %}<span class='badge bg-primary'>
@@ -24,19 +30,7 @@
 			Intervals<span class='ms-1 badge bg-light text-secondary'>{{pub.intervals.count}}</span>
 		</span>{% endif %}
 
-		{% if pub.temperature_logs.exists %}<span class='badge bg-warning'>
-			Temp. Logs<span class='ms-1 badge bg-light text-secondary'>{{pub.temperature_logs.count}}</span>
-		</span>{% endif %}
-
-		{% if pub.conductivity_logs.exists %}<span class='badge bg-info'>
-			Cond. Logs<span class='ms-1 badge bg-light text-secondary'>{{pub.conductivity_logs.count}}</span>
-		</span>{% endif %}
-
-		{% if pub.heat_production_logs.exists %}<span class='badge bg-danger'>
-			H.Prod. Logs<span class='ms-1 badge bg-light text-secondary'>{{pub.heat_production_logs.count}}</span>
-		</span>{% endif %}
 	</div>
 </div>
 
 {% addtoblock "js" %}<script>$(function(){$('[data-bs-toggle="tooltip"]').tooltip()})</script>{% endaddtoblock %}
-{% addtoblock "modals" %}{% include "crossref/claim_publication.html" %}{% endaddtoblock %}

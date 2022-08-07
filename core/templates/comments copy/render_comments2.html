@@ -1,0 +1,58 @@
+{% load static sekizai_tags comments authentication %}
+{% get_comment_count for object as comment_count %}
+
+{% if user.is_authenticated %}
+  <p>Hi {{user.first_name}}!
+  {% if not comment_count %} Be the first to comment and let us know what you think about {{object_descr|default:object}}!</p>
+  {% else %}
+    Let us know what you think about {{object_descr|default_if_none:object}}!</p>
+  {% endif %}
+{% else %}
+  <p>To prevent spam and keep the conversation on track, only registered users may comment. Please {% auth_link 'login' 'login' %} or {% auth_link 'register' 'create an account' %}!</p>
+{% endif %}
+
+{% comment %} {% if object|can_receive_comments_from:user %} {% endcomment %}
+{% comment %} {% if object %}
+  <div id='joinDiscussionForm' class='comment-wrapper'>
+    <div class='comment'>
+      <div class="comment-avatar">{{ user.email|xtd_comment_gravatar }}</div>
+      <div class="comment-avatar"></div>
+      <div class="comment-body">
+        <div class="comment-header"><h6>Commenting as {{user}}</h6></div>
+        <div class='comment-content'>
+          {% render_comment_form for object %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %} {% endcomment %}
+<div id='joinDiscussionForm' class='comment-wrapper'>
+  <div class='comment'>
+    {% comment %} <div class="comment-avatar">{{ user.email|xtd_comment_gravatar }}</div> {% endcomment %}
+    <div class="comment-avatar"></div>
+    <div class="comment-body">
+      <div class="comment-header"><h6>Commenting as {{user}}</h6></div>
+      <div class='comment-content'>
+        {% render_comment_form for object %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<link rel="stylesheet" type="text/css" href="{% static 'fluent_comments/css/ajaxcomments.css' %}" />
+<script type="text/javascript" src="{% static 'fluent_comments/js/ajaxcomments.js' %}"></script>
+<div id='comment-tree' >{% render_comment_list for object %}</div>
+
+{% if comment_count %}
+
+  {% comment %} <div id='comment-tree' >{% render_comment_tree for object allow_flagging %}</div> {% endcomment %}
+{% endif %}
+
+{% block modals %}
+  {% comment %} {% include 'comments/modals/flag.html' %} {% endcomment %}
+  {% comment %} {% include 'comments/modals/delete.html' %} {% endcomment %}
+{% endblock modals %}
+
+{% comment %} {% addtoblock "js" %}<script src='{% static "core/js/comments.js" %}'></script>{% endaddtoblock %} {% endcomment %}

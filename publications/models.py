@@ -12,7 +12,6 @@ from ordered_model.models import OrderedModelBase
 from sortedm2m.fields import SortedManyToManyField
 from crossref.models import PublicationAbstract, AuthorAbstract
 
-
 class UUIDTaggedItem(GenericUUIDTaggedItemBase, TaggedItemBase):
 
     class Meta:
@@ -24,7 +23,6 @@ class Author(AuthorAbstract):
 
 class Publication(PublicationAbstract):
  
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     owner = models.ForeignKey(get_user_model(), 
         verbose_name=_('owner'),
         related_name='publications',
@@ -39,7 +37,6 @@ class Publication(PublicationAbstract):
     keywords = TaggableManager(through=UUIDTaggedItem, 
         blank=True,
         verbose_name=_('key words'), help_text=None)
-    abstract = models.TextField(blank=True)
     bibtex = models.TextField(blank=True,null=True)
 
     _metadata = {
@@ -51,20 +48,12 @@ class Publication(PublicationAbstract):
 
     class Meta(PublicationAbstract.Meta):
         db_table = 'publications'
-
         
-    def data_counts(self):
-        return {'heat_flow': self.heatflow.count()}
-
-    def get_meta_title(self):
-        return '{} | HeatFlow.org'.format(self.cite_key)
-
     def get_data(self,data_type=None):
         return dict(
             intervals = self.intervals.all(),
             temperature = self.temperature_logs.all(),
             conductivity = self.conductivity_logs.all(),
-            heat_production = self.heat_production_logs.all(),
             )
 
     def get_absolute_url(self):

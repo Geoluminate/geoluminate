@@ -1,60 +1,15 @@
-from publications.models import Publication
+from publications.models import Publication, Author
 from django.views.generic import DetailView
-# from thermoglobe.mixins import DownloadMixin 
+from main.mixins import DownloadMixin 
 from meta.views import MetadataMixin
 from django_filters.views import FilterView
 from .filters import PublicationFilter
-from django.shortcuts import get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
-from django.urls import reverse
-# from thermoglobe.models import Site
-from django.contrib import auth
-from django.core.mail import send_mail
-from django.conf import settings
-from django.contrib.sites.shortcuts import get_current_site
-from django.template.loader import render_to_string
+from database.models import Site
 from django.utils.translation import gettext_lazy as _
-from django.contrib.sites.shortcuts import get_current_site
-# from thermoglobe.tables import IntervalTable, HeatProductionTable, ConductivityTable, TemperatureTable, SiteTable
+from main.tables import SiteTable
 from crossref.views import PublicationPaginateYearView
 
-
-@login_required
-def verify(request, pk):
-    pub = get_object_or_404(Publication, pk=pk)
-    pub.is_verified = True
-    pub.verified_by.add(request.user)
-    pub.save()
-    return redirect(reverse('publications:detail',kwargs={'pk':pk}))
-
-
-@login_required
-def claim(request, pk):
-    pub = get_object_or_404(Publication, pk=pk)
-    subject = render_to_string("emails/publication_claim_subject.txt")
-
-    subject = "".join(subject.splitlines())
-    message = render_to_string("emails/publication_claim_body.txt", 
-        context=dict(
-            scheme = "https" if request.is_secure() else "http",
-            site = get_current_site(request),
-            publication=pub,
-        ),
-        request=request)
-    send_mail(subject, message, settings.DEFAULT_FROM_EMAIL,['admin@geoluminate.com.au'],fail_silently=False)
-
-    return redirect(reverse('publications:detail', kwargs={'pk':pub.pk}))
-
-
-@login_required
-def claim_confirmed(request):
-    user = get_object_or_404(auth.get_user_model(),pk=request.GET.get('user_id'))
-    pub = get_object_or_404(Publication, pk=request.GET.get('pub_id'))
-    user.publications.add(pub)
-    return redirect(reverse('publications:detail',kwargs={'pk':request.GET.get('pub_id')}))
-
-
-class PublicationListView(PublicationPaginateYearView, FilterView):
+class PublicationList(PublicationPaginateYearView):
     model = Publication
     template_name = 'crossref/publication_list.html'
     paginate_by = 50
@@ -67,22 +22,17 @@ class PublicationListView(PublicationPaginateYearView, FilterView):
         return context
 
     def get_queryset(self):
-        return super().get_queryset().prefetch_related('author','sites', 'intervals','temperature_logs','conductivity_logs','heat_production_logs').exclude(published__year__isnull=True)
+        return super().get_queryset().prefetch_related('author','sites','intervals')
 
 
-# class PublicationDetailsView(DownloadMixin, MetadataMixin, DetailView):
-class PublicationDetailsView(MetadataMixin, DetailView):
-    template_name = "thermoglobe/publication_details.html"
+class PublicationDetail(DownloadMixin, MetadataMixin, DetailView):
+    template_name = "main/publication_details.html"
     model = Publication
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['tables'] = [
-            SiteTable(self.get_object()), 
-            # IntervalTable(self.get_object()), 
-            # TemperatureTable(self.get_object()), 
-            # HeatProductionTable(self.get_object()), 
-            # ConductivityTable(self.get_object())
+            SiteTable(self.get_object()),
             ]
         return context
 
@@ -108,3 +58,14 @@ class PublicationDetailsView(MetadataMixin, DetailView):
 
         return response
 
+
+class AuthorDetail(DownloadMixin, MetadataMixin, DetailView):
+    template_name = "main/author_detail.html"
+    model = Author
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # context['tables'] = [
+        #     SiteTable(self.get_object()),
+        #     ]
+        return context

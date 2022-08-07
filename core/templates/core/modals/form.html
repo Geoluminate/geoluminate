@@ -9,7 +9,7 @@
         {% if helper %}{% crispy form helper %}{% else %}{% crispy form %}{% endif %}
         </div>
         <div class="modal-footer">
-          <input form="{{filter.form.id}}" type="submit" name="submit" value="{% trans "confirm" %}" class="btn btn-primary large">
+          <input form="{{filter.helper.form_id}}" type="submit" name="submit" value="{% trans "confirm" %}" class="btn btn-primary large">
         </div>
       </div>
     </div>

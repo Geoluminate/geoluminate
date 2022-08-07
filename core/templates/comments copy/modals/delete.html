@@ -1,0 +1,26 @@
+{% load static i18n %}
+
+{% if not comment.is_removed and perms.comments.can_moderate %}
+<div id="deleteCommentModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="deleteCommentModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      {% include 'core/modals/header.html' with header='Remove comment' %}
+
+      <div class='modal-body'>
+        <p class=''>{% trans "You are about to remove the following comment from the website. This action is irreversible!" %}</p>
+        <figure>
+          <blockquote class="blockquote"></blockquote>
+          <figcaption class="blockquote-footer"></figcaption>
+        </figure>
+        <form id='deleteCommentForm' action="" method="post">
+          {% csrf_token %}
+          <input id='deleteComment_id' type="hidden" name="next" value="">
+        </form>
+        <div class="modal-footer">
+          <input form='deleteCommentForm' type="submit" name="submit" value="{% trans "Remove" %}" class="btn btn-primary">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}

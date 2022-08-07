@@ -6,8 +6,8 @@ from easy_thumbnails.fields import ThumbnailerField
 class SiteConfiguration(SingletonModel):
 
     site_name = models.CharField(max_length=255, default='Site Name')
-
     logo = ThumbnailerField(null=True, blank=True, upload_to='logos')
+    icon = ThumbnailerField(null=True, blank=True, upload_to='logos')
 
     maintenance_mode = models.BooleanField(default=False)
 

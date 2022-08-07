@@ -3,9 +3,8 @@ from django.urls import path
 
 app_name = 'publications'
 urlpatterns = [
-    path('',views.PublicationListView.as_view(), name='list'),
-    path('claim-confirmed/',views.claim_confirmed, name='claim_confirmed'),
-    path('<pk>/',views.PublicationDetailsView.as_view(), name='detail'),
-    path('verify/<pk>/',views.verify, name='verify'),
-    path('claim/<pk>/',views.claim, name='claim'),
+    path('',views.PublicationList.as_view(), name='list'),
+    path('<pk>/',views.PublicationDetail.as_view(), name='detail'),
+    path('author/<pk>/',views.AuthorDetail.as_view(), name='author_detail'),
+
 ]

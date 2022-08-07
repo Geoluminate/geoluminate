@@ -6,8 +6,9 @@ from django.shortcuts import render
 from grappelli.forms import GrappelliSortableHiddenMixin
 from django.utils.translation import gettext as _
 from django.shortcuts import render
-from crossref.admin import PublicationAdminMixin
+from crossref.admin import PublicationAdminMixin, AuthorAdminMixin
 from .models import Author
+from django.db.models import Count, Min, Max
 
 
 class PublicationInline(GrappelliSortableHiddenMixin, admin.TabularInline):
@@ -41,21 +42,63 @@ class PublicationAdmin(PublicationAdminMixin, ExportActionModelAdmin):
     change_list_template = "admin/crossref/change_list_filter_sidebar.html"
     # change_list_filter_template = "admin/filter_listing.html"
     resource_class = PublicationResource
+    list_display = ['file','article', 'label', 'title', 'container_title', 'is_referenced_by_count', 'published','issue','volume','page','type', '_sites']
 
-admin.site.register(Author)
-# class AuthorAdmin(ExportActionModelAdmin):
-#     change_list_template = "admin/change_list_filter_sidebar.html"
-#     change_list_filter_template = "admin/filter_listing.html"
+    fieldsets = [
+        (None, {
+            'fields':[
+                'pdf',
+                ]}
+            ),
+        ('Bibliographic', {'fields':[
+            'DOI',
+            ('type', 'published'),
+            'title',
+            'author',
+            'container_title',
+            'volume',
+            'issue',
+            'page',
+            'abstract',
+            ]}),
+        ('Additional', {'fields':[
+            'keywords',
+            'language',
+            'source',
+            'bibtex',
+            ]}),
+        ]
 
-#     list_display = ['family','given']
-#     search_fields = ['family', 'given']
-#     inlines = [PublicationInline]
-#     fields = [('given','family')]
 
-#     # def get_queryset(self, request):
-#     #     return super().get_queryset(request)
+    def get_queryset(self, request):
+        return (super().get_queryset(request)
+            .prefetch_related('sites')
+            .annotate(
+                _sites=Count('sites'),
+                )
+        )
 
-#     def publications(self,obj):
-#         return obj.publications.count()
+    def _sites(self, obj):
+        return obj._sites
+    _sites.admin_order_field = '_sites'
+    _sites.short_description = _('heat flow sites')
+
+
+
+# admin.site.register(Author)
+@admin.register(Author)
+class AuthorAdmin(AuthorAdminMixin, ExportActionModelAdmin):
+    change_list_template = "admin/change_list_filter_sidebar.html"
+    change_list_filter_template = "admin/filter_listing.html"
+
+    inlines = [PublicationInline]
+    fields = [('given','family')]
+    actions = ["merge",]
+
+    # def get_queryset(self, request):
+    #     return super().get_queryset(request)
+
+    def publications(self,obj):
+        return obj.publications.count()
 
 

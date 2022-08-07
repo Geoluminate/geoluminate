@@ -31,12 +31,12 @@
     </div>
   </div>
 
-  {% comment %} {% if not comment.is_removed and item.children %} {% endcomment %}
-  <div class="comment-replies {% if not item.children %}hidden{% endif %}">
+  {% comment %} {% if not comment.is_removed and comment.children %} {% endcomment %}
+  <div class="comment-replies {% if not comment.children %}hidden{% endif %}">
     <div class='comment-replies-inner'>
       <div class='comment-drawer'></div>
-        {% if item.children %}
-          {% render_xtdcomment_tree with comments=item.children %}
+        {% if comment.children %}
+          {% render_xtdcomment_tree with comments=comment.children %}
         {% endif %}
     </div>
   </div>

@@ -1,0 +1,25 @@
+{% load i18n gravatar %}
+
+<div id="{% if preview %}comment-preview{% else %}c{{ comment.id }}{% endif %}" class="comment-item{% if comment.user_id and comment.user_id == comment.content_object.author_id %} by-author{% endif %}">
+  {% if preview %}<h3>{% trans "Preview of your comment" %}</h3>{% endif %}
+  <div class="media">
+    {% gravatar comment.email css_class='user-image' %}
+    <div class="media-body">
+      <h4>
+        {% block comment_title %}
+          {% if comment.url %}<a href="{{ comment.url }}" rel="nofollow">{% endif %}
+          {% if comment.name %}{{ comment.name }}{% else %}{% trans "Anonymous" %}{% endif %}{% comment %}
+          {% endcomment %}{% if comment.url %}</a>{% endif %}
+          {% if not comment.is_public %}<span class="comment-moderated-flag">({% trans "moderated" %})</span>{% endif %}
+          {% if comment.user_id and comment.user_id == comment.content_object.author_id %}<span class="comment-author-flag">[{% trans "author" %}]</span>{% endif %}
+        {% endblock %}
+      </h4>
+
+      <div class="comment-text">{{ comment.comment|linebreaks }}</div>
+      <div class="comment-tools">
+        {% if USE_THREADEDCOMMENTS and not preview %}<a href="#c{{ comment.id }}" data-comment-id="{{ comment.id }}" class="comment-reply-link">{% trans "reply" %}</a>{% endif %}
+        <span class="comment-date">{{ comment.submit_date }}</span>
+      </div>
+    </div>
+  </div>
+</div>

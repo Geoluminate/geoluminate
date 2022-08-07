@@ -1,4 +1,4 @@
-{% load static sekizai_tags comments comments_xtd authentication %}
+{% load static sekizai_tags comments authentication %}
 {% get_comment_count for object as comment_count %}
 
 {% if user.is_authenticated %}
@@ -49,6 +49,6 @@
 </script>
 
 <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
-<script src="{% static 'django_comments_xtd/js/plugin-2.9.4.js' %}"></script>
-<script src="{% static 'django_comments_xtd/js/vendor~plugin-2.9.4.js' %}"></script>
+{% comment %} <script src="{% static 'django_comments_xtd/js/plugin-2.9.4.js' %}"></script> {% endcomment %}
+{% comment %} <script src="{% static 'django_comments_xtd/js/vendor~plugin-2.9.4.js' %}"></script> {% endcomment %}
 {% endaddtoblock %}

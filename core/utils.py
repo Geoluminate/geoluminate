@@ -4,6 +4,9 @@ from rest_framework import viewsets
 from django_filters.rest_framework import DjangoFilterBackend
 import importlib
 
+def get_choices(model, field):
+    return [(k, k) for k in model.objects.order_by(field).values_list(field, flat=True).distinct()]
+
 def import_attribute(path):
     assert isinstance(path, str)
     pkg, attr = path.rsplit(".", 1)

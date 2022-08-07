@@ -16,7 +16,7 @@
             <div class="col-md-6">
                 <div id="comment-list">
                     {% for comment in object_list %}
-                    {% include "django_comments_xtd/comment.html" %}
+                    {% comment %} {% include "django_comments_xtd/comment.html" %} {% endcomment %}
                     {% empty %}
                     <p class="text-center">No comments yet.</p>
                     {% endfor %}

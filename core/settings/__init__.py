@@ -119,6 +119,6 @@ DEBUG_TOOLBAR_PANELS = [
     'debug_toolbar.panels.logging.LoggingPanel',
     'debug_toolbar.panels.redirects.RedirectsPanel',
     'debug_toolbar.panels.profiling.ProfilingPanel',
-    'template_profiler_panel.panels.template.TemplateProfilerPanel',
+    # 'template_profiler_panel.panels.template.TemplateProfilerPanel',
 ]
 

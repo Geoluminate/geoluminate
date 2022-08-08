@@ -10,3 +10,4 @@ node_modules
 *.cpython-38.pyc
 playground
 __pycache__
+data

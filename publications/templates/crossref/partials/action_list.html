@@ -1,11 +1,6 @@
 {% load i18n authentication %}
 
-<ul class='icons text-secondary w-100 d-flex'>
-  <li data-bs-toggle="tooltip" data-bs-placement="top" title="Preview data">
-    <a href="{% url "publications:detail" pk=pub.pk %}" class="icon chart">
-      <span class="label">Data</span>
-    </a>
-  </li>
+<ul class='icons text-secondary w-100 d-flex m-0'>
   <li data-bs-toggle="tooltip" data-bs-placement="top" title="Go to article">
     <a href="https://doi.org/{{pub.DOI}}" class="icon {% if not pub.DOI %}disabled{% endif %} solid globe">
       <span class="label">{% trans "View article" %}</span>

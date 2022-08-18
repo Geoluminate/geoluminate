@@ -95,8 +95,9 @@ class AuthorAdmin(AuthorAdminMixin, ExportActionModelAdmin):
     fields = [('given','family')]
     actions = ["merge",]
 
-    # def get_queryset(self, request):
-    #     return super().get_queryset(request)
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs
 
     def publications(self,obj):
         return obj.publications.count()

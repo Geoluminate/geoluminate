@@ -3,7 +3,7 @@ from django.contrib.admin.models import LogEntry
 from solo.admin import SingletonModelAdmin
 from core.models import SiteConfiguration
 
-@admin.register(LogEntry)
+# @admin.register(LogEntry)
 class LogEntryAdmin(admin.ModelAdmin):
     # to have a date-based drilldown navigation in the admin page
     date_hierarchy = 'action_time'
@@ -28,5 +28,6 @@ class LogEntryAdmin(admin.ModelAdmin):
         'change_message',
         'action_flag',
     ]
+
 
 admin.site.register(SiteConfiguration, SingletonModelAdmin)

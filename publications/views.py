@@ -7,9 +7,9 @@ from .filters import PublicationFilter
 from database.models import Site
 from django.utils.translation import gettext_lazy as _
 from main.tables import SiteTable
-from crossref.views import PublicationPaginateYearView
+from crossref.views import PublicationsByYearMixin
 
-class PublicationList(PublicationPaginateYearView):
+class PublicationList(PublicationsByYearMixin):
     model = Publication
     template_name = 'crossref/publication_list.html'
     paginate_by = 50
@@ -22,7 +22,17 @@ class PublicationList(PublicationPaginateYearView):
         return context
 
     def get_queryset(self):
-        return super().get_queryset().prefetch_related('author','sites','intervals')
+        return super().get_queryset()
+        # return super().get_queryset().prefetch_related('author','sites','intervals')
+
+    def get_filter_parameters(self):
+        """Gets url parameters from the filter and returns as a string to be placed behind paginator links"""
+        request_copy = self.request.GET.copy()
+        request_copy.pop('page', True)
+        if request_copy:
+            return '&'+request_copy.urlencode()
+        else:
+            return ''
 
 
 class PublicationDetail(DownloadMixin, MetadataMixin, DetailView):

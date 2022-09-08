@@ -33,3 +33,15 @@
     }
 
 }
+
+
+li.nav-item {
+    a.active {
+        font-weight: 1000;
+
+        :before {
+            font-weight: 1000;
+
+        }
+    }
+}

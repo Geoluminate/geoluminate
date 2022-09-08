@@ -11,11 +11,6 @@ USE_I18N = True
 
 USE_L10N = True
 
-LANGUAGES = (
-    ## Customize this
-    ('en', _('English')),
-)
-
 ROSETTA_SHOW_AT_ADMIN_PANEL = True
 
 # Instead of creating a global translators group, create individual per-language groups, e.g. translators-de, translators-fr, and assign users to these.

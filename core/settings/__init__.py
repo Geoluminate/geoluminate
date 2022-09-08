@@ -122,3 +122,11 @@ DEBUG_TOOLBAR_PANELS = [
     # 'template_profiler_panel.panels.template.TemplateProfilerPanel',
 ]
 
+CKEDITOR_5_CONFIGS = {
+    'default': {
+        'toolbar': ['outdent', 'indent', '|', 'bold', 'italic', 'underline', 'strikethrough',
+        'subscript', 'superscript', '|', 
+                    'bulletedList', 'numberedList',
+                    ]
+    },
+}

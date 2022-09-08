@@ -40,3 +40,14 @@ def panel(context, name, template, active=False):
     context['template'] = template
     context['active'] = active
     return context
+
+@register.simple_tag(takes_context=True)
+def filter_params(context):
+    """Returns curent filter params as a string"""
+    request = context['request']
+    params = request.GET.copy()
+    params.pop('page', True)
+    if params:
+        return '&'+params.urlencode()
+    else:
+        return ''

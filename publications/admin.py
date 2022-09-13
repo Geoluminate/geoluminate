@@ -39,7 +39,7 @@ class PublicationInline(GrappelliSortableHiddenMixin, admin.TabularInline):
 
 @admin.register(Publication)
 class PublicationAdmin(PublicationAdminMixin, ExportActionModelAdmin):
-    change_list_template = "admin/crossref/change_list_filter_sidebar.html"
+    # change_list_template = "admin/crossref/change_list_filter_sidebar.html"
     # change_list_filter_template = "admin/filter_listing.html"
     resource_class = PublicationResource
     list_display = ['file','article', 'label', 'title', 'container_title', 'is_referenced_by_count', 'published','issue','volume','page','type', '_sites']

@@ -8,12 +8,23 @@ from database.models import Site
 from django.utils.translation import gettext_lazy as _
 from main.tables import SiteTable
 from crossref.views import PublicationsByYearMixin
+from django.shortcuts import render
+from django.http import Http404
+import time
 
 class PublicationList(PublicationsByYearMixin):
     model = Publication
-    template_name = 'crossref/publication_list.html'
+    template_name = 'publications/list.html'
     paginate_by = 50
     filterset_class = PublicationFilter
+
+    def get_template_names(self):
+        if self.request.htmx:
+            # time.sleep(2)
+            return ['crossref/partials/publication_list.html'] # The response HTML to inject into a list
+        else:
+            return [self.template_name] # The actual form
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)      
@@ -23,7 +34,6 @@ class PublicationList(PublicationsByYearMixin):
 
     def get_queryset(self):
         return super().get_queryset()
-        # return super().get_queryset().prefetch_related('author','sites','intervals')
 
     def get_filter_parameters(self):
         """Gets url parameters from the filter and returns as a string to be placed behind paginator links"""

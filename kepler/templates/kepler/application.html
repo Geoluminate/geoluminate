@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block css %}{% endblock css %}
+
+
+{% block main %}
+<div class="w-100 vh-100 bg-light d-flex">
+  <div class='flex-fill'>
+    {% include "kepler/partials/map.html" with css_class='fullscreen' %}   
+  </div>
+</div>
+ {% endblock main %}

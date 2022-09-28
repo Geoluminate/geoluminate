@@ -1,0 +1,23 @@
+<a class="dropdown-toggle" href="#" role="button" id="userMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  {% if user.is_authenticated %}
+  <span class="initials">{{user.initials}}</span>
+  <span>Hi, {{user.first_name}}</span>
+  {% else %}
+  <i class='fas fa-user-circle'></i>
+  <span> Guest</span>
+  {% endif %}
+</a>
+<div class="dropdown-menu" aria-labelledby="userMenuLink">
+{% if user.is_authenticated %}
+  <a class='dropdown-item' href="{% url 'gallery:user_gallery_list' %}"><span>My Gallery</span></a>
+  <a class='dropdown-item' href="{% url 'user:settings' %}"><span>Settings</span></a>
+  <a class='dropdown-item' href="{% url 'account_logout' %}"><span>Logout</span></a>
+  {% if user.is_staff %}
+    <hr class='divider'>  
+    <a class='dropdown-item' href="{% url 'admin:index' %}?toolbar_off"><span>Admin Site</span></a>
+  {% endif %}
+{% else %}
+  <a class='dropdown-item' href="#" data-bs-toggle="modal" data-bs-target="#loginModal"><span>Login</span></a>
+  <a class='dropdown-item' href="#" data-bs-toggle="modal" data-bs-target="#createAccountModal"><span>Register</span></a>
+{% endif %}
+</div>

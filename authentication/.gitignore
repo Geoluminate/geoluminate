@@ -1,0 +1,11 @@
+.env
+dump.json
+project.db
+media
+.vscode
+.jsbeautifyrc
+node_modules
+*.pyc
+*.cpython-38.pyc
+playground
+__pycache__/

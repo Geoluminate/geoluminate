@@ -1,0 +1,64 @@
+{% load i18n crispy_forms_tags authentication %}
+
+{% if user.emailaddress_set.all %}
+<p>{% trans 'The following e-mail addresses are associated with your account:' %}</p>
+
+<form id='emailActionsForm' action="{% url 'account_email' %}" class="email_list" method="post">
+  {% csrf_token %}
+
+  <table>
+    <thead>
+      <th>{% trans 'Preferred' %}</th>
+      <th>{% trans 'Email' %}</th>
+      <th>{% trans 'Verified' %}</th>
+      <th></th>
+    </thead>
+
+    {% for email in user.emailaddress_set.all %}
+    <tr id='emailActionsRow{{forloop.counter}}'>
+      <td> 
+        <div class='text-center'>
+          <input id="email_radio_{{forloop.counter}}" 
+            type="radio" 
+            name="email" 
+            {% if email.primary or user.email.count == 1 %}checked="checked"{%endif %} 
+            value="{{email.email}}" 
+            {% if not email.verified %} disabled{% endif %} 
+            />
+          <label 
+            for="email_radio_{{forloop.counter}}" 
+            class="{% if email.primary %}primary_email{%endif%}"
+            ></label>
+        </div>
+      </td>
+      <td>{{ email.email }}</td>
+      <td>
+        {% if email.verified %}
+          <span class="fa fa-check-circle text-success"></span>
+        {% else %}
+          <button name="action_send"
+            class="resendVerification text-info shadow-none" 
+            type="submit"  
+            value='{{ email.email }}'
+            >{% trans 'Re-send' %}</button>
+        {% endif %}
+      </td>
+      <td>
+        <button name="action_remove"
+          class="removeEmail text-danger shadow-none {% if email.primary or user.email.count == 1 %}disabled{%endif %}" 
+          type="submit"  
+          value='{{ email.email }}'
+          >{% trans 'Remove' %}</button>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+
+</form>
+{% endif %}
+
+{% can_add_email as adding_allowed %}
+{% if adding_allowed %}
+  <h5 class='pb-1'>{% trans 'Add New'%}</h5>
+  {% authentication_form 'add_email' %}
+{% endif %}

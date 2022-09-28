@@ -5,7 +5,7 @@ from .models import Section, Heading, Image, Feature, PageHeading
 
 @plugin_pool.register_plugin
 class SectionPlugin(CMSPluginBase):
-    module = _('Editorial')
+    module = 'GeoLuminate'
     model = Section
     render_template = "section.html"
     cache = False
@@ -15,7 +15,7 @@ class SectionPlugin(CMSPluginBase):
 
 @plugin_pool.register_plugin
 class ContentPlugin(CMSPluginBase):
-    module = _('Editorial')
+    module = 'GeoLuminate'
     render_template = "content.html"
     cache = False
     name = _('Content')
@@ -24,40 +24,44 @@ class ContentPlugin(CMSPluginBase):
 
 @plugin_pool.register_plugin
 class HeadingPlugin(CMSPluginBase):
-    module = _('Editorial')
+    module = 'GeoLuminate'
     model = Heading
     render_template = "heading.html"
     cache = False
     name = _('Heading')
     require_parent = True
 
+
 @plugin_pool.register_plugin
 class ImagePlugin(CMSPluginBase):
-    module = _('Editorial')
+    module = 'GeoLuminate'
     model = Image
     render_template = "image.html"
     cache = False
     name = _('Image')
 
+
 @plugin_pool.register_plugin
 class FeaturePlugin(CMSPluginBase):
-    module = _('Editorial')
+    module = 'GeoLuminate'
     model = Feature
     render_template = "feature.html"
     cache = False
     name = _('Feature')
 
+
 @plugin_pool.register_plugin
 class FeatureContainerPlugin(CMSPluginBase):
-    module = _('Editorial')
+    module = 'GeoLuminate'
     render_template = "feature_container.html"
     cache = False
     name = _('Feature Container')
     allow_children = True
 
+
 @plugin_pool.register_plugin
 class PageHeadingPlugin(CMSPluginBase):
-    module = _('Editorial')
+    module = 'GeoLuminate'
     model = PageHeading
     render_template = "page_heading.html"
     cache = False

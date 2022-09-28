@@ -6,7 +6,7 @@
 	</header>
 	<ul>
 	{% if user.is_authenticated %}
-		{% comment %} <li><a href="{% url 'dashboard:dashboard' %}">{% trans "Dashboard" %}</a></li> {% endcomment %}
+		{% comment %} <li><a href="{% url 'user:dashboard' %}">{% trans "Dashboard" %}</a></li> {% endcomment %}
 		<li><a href="{% url 'account_logout' %}">{% trans "Logout" %}</a></li>
 		{% if user.is_staff %}
 			<li><a href="{% url 'admin:index' %}?toolbar_off">{% trans "Admin" %}</a></li>

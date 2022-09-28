@@ -14,7 +14,7 @@
   {% render_block "css"%}
 </head>
 
-<body class="is-preload">
+<body class="is-preload" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
   {% include 'core/utils/cms_toolbar.html' %}
   <div id="wrapper">
     <div id="main" class='position-relative'>
@@ -42,7 +42,7 @@
   <script src="{% static "editorial/js/breakpoints.min.js" %}"></script>
   {% comment %} <script src="{% static "editorial/js/util.js" %}"></script> {% endcomment %}
   <script src="{% static "editorial/js/main.js" %}"></script>
-  <script src="{% static "thermoglobe/js/custom.js" %}"></script>
+  <script src="{% static "main/js/custom.js" %}"></script>
   {% render_block "js"%}
 
   {% block scripts %}

@@ -9,15 +9,15 @@ class PublicationFilter(df.FilterSet):
     DOI = df.CharFilter(label='DOI', lookup_expr='exact')
     author = df.CharFilter(label='Author', lookup_expr='icontains')
     title = df.CharFilter(label='Title', lookup_expr='icontains')
-    type = df.ChoiceFilter(
-        choices=get_choices(Publication, 'type'),
-        label='Type', lookup_expr='exact')
-    container_title = df.ChoiceFilter(
-        choices=get_choices(Publication, 'container_title'),
-        label='Container', lookup_expr='exact')
-    language = df.ChoiceFilter(
-        choices=get_choices(Publication, 'language'),
-        label='Language', lookup_expr='exact')
+    # type = df.ChoiceFilter(
+    #     choices=get_choices(Publication, 'type'),
+    #     label='Type', lookup_expr='exact')
+    # container_title = df.ChoiceFilter(
+    #     choices=get_choices(Publication, 'container_title'),
+    #     label='Container', lookup_expr='exact')
+    # language = df.ChoiceFilter(
+    #     choices=get_choices(Publication, 'language'),
+    #     label='Language', lookup_expr='exact')
     # keywords = df.ModelMultipleChoiceFilter(queryset=,label='Keywords')
 
     class Meta:

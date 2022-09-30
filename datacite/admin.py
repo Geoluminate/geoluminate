@@ -9,7 +9,7 @@ from django.contrib import messages
 @admin.register(Schema)
 class SchemaAdmin(admin.ModelAdmin):
     list_display = ['title','description','default']
-    fields = ['title','description','schema',]
+    fields = ['title','description','schema','default']
     actions = ['set_default']
 
     def save_model(self, request, obj, form, change):

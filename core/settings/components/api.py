@@ -34,10 +34,10 @@ SPECTACULAR_SETTINGS = {
     #     # 'rest_framework_csv.renderers.PaginatedCSVRenderer',
     #     ],
     'SERVERS': [],
-    'ENUM_NAME_OVERRIDES': {
-        "TCorrTop/TCorrBot": "database.choices.TempCorrectionMethod",
-        "TMethodTop/TMethodBot": "database.choices.TempMethod",
-        },
+    # 'ENUM_NAME_OVERRIDES': {
+    #     "TCorrTop/TCorrBot": "database.choices.TempCorrectionMethod",
+    #     "TMethodTop/TMethodBot": "database.choices.TempMethod",
+    #     },
     'TAGS': [],
     # Tags defined in the global scope
     "SWAGGER_UI_SETTINGS": {

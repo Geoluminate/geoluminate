@@ -6,6 +6,7 @@ from django.utils.translation import gettext as _
 from datetime import datetime
 from .utils import ISO_LANGUAGES
 
+
 def current_year():
     return datetime.now().year
 

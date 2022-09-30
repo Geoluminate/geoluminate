@@ -7,12 +7,12 @@ from .filters import PublicationFilter
 from database.models import Site
 from django.utils.translation import gettext_lazy as _
 from main.tables import SiteTable
-from crossref.views import PublicationsByYearMixin
+from crossref.views import WorksByYearMixin
 from django.shortcuts import render
 from django.http import Http404
 import time
 
-class PublicationList(PublicationsByYearMixin):
+class PublicationList(WorksByYearMixin):
     model = Publication
     template_name = 'publications/list.html'
     paginate_by = 50

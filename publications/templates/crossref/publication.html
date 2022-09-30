@@ -13,7 +13,11 @@
 		<i class='me-auto'>{{pub.container_title}}, {{ pub.published|date:'Y' }}</i>
     <h4 class="card-title"><a href="{% url "publications:detail" pk=pub.pk %}">{{ pub.title }}</a></h4>
 		{% if pub.author.exists %}
-			<h5 class="card-subtitle mb-2 text-muted authors">{{ pub.authors_display }}</h5>
+			<h5 class="card-subtitle mb-2 text-muted authors">
+				{% for author in pub.author.all %}
+					<a href="{% url author.get_absolute_url %}">{{author.family}}, {{author.given.0 }}</a>
+								{% endfor %}
+			</h5>
 		{% endif %}
 		{% if pub.abstract %}
     	<p class="card-text abstract">

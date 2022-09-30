@@ -90,33 +90,33 @@ def form_to_xml(form):
     return xml
 
 # Create your views here.
-def submit_metadata(request):
-    """Submit metadata to the gfz dataservices portal"""
+# def submit_metadata(request):
+#     """Submit metadata to the gfz dataservices portal"""
 
-    form = DataCiteForm(request.GET)
-    if form.is_valid():
+#     form = DataCiteForm(request.GET)
+#     if form.is_valid():
 
-        # 1. convert to xml string
-        xml = form.to_xml()
+#         # 1. convert to xml string
+#         xml = form.to_xml()
 
-        # 2. validate xml string
-
-
-        # 3. create file from xml string
-        """This is necessary because GFZ Dataservices portal expect a file to be submitted, not form data"""
-
-        # 4. send xml file to GFZ
+#         # 2. validate xml string
 
 
-        # 5. check response code
+#         # 3. create file from xml string
+#         """This is necessary because GFZ Dataservices portal expect a file to be submitted, not form data"""
+
+#         # 4. send xml file to GFZ
 
 
-        # 6. add user message
-    else:
-        formset = DescriptionFormSet()
+#         # 5. check response code
 
 
-    return render(request, "datacite/metadata_submit.html",{'form':form, 'formset':formset})
+#         # 6. add user message
+#     else:
+#         formset = DescriptionFormSet()
+
+
+#     return render(request, "datacite/metadata_submit.html",{'form':form, 'formset':formset})
 
 
 

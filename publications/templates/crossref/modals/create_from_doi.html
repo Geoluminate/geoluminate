@@ -1,4 +1,4 @@
-{% load static sekizai_tags i18n crispy_forms_tags %}
+{% load static sekizai_tags i18n %}
 <div id="createPublicationModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createPublicationModal" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -8,7 +8,7 @@
         <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close" value'bibtex'></button>
       </div>
       <div class='modal-body'>
-        {% crispy form %}
+        {{ form.as_p }}
         <h5>{% trans "Preview" %}:</h5>
         <p id='citePreview' style='min-height:100px;'></p>
         <div class="modal-footer">

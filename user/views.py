@@ -10,8 +10,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from publications.forms import DOIForm
 
 
-
-
 User = get_user_model()
 
 @login_required
@@ -28,13 +26,6 @@ class Dashboard(LoginRequiredMixin,TemplateView):
         context['publication_form'] = DOIForm()
         return context
    
-# @login_required
-# def dashboard(request):
-#     # messages.success(request,"You've succsfully done something!")
-#     return render(request, 'dashboard/dashboard.html')
-
-
-
 
 @login_required
 def user_settings(request):
@@ -45,3 +36,28 @@ def user_settings(request):
     )
 
     return render(request, 'dashboard/settings.html',context=context)
+
+@login_required
+def profile(request):
+    context = dict(
+        can_add_email = EmailAddress.objects.can_add_email(request.user),
+        email_form = AddEmailForm(request),
+        disconnect_form = DisconnectForm(request=request),
+    )
+
+    return render(request, 'dashboard/settings.html',context=context)
+
+@login_required
+def deactivate(request):
+    context = {}
+    try:
+        user = User.objects.get(pk=request.user.pk)
+        user.is_active = False
+        user.save()
+        context['msg'] = 'Profile successfully disabled.'
+    except User.DoesNotExist:
+        context['msg'] = 'User does not exist.'
+    except Exception as e:
+        context['msg'] = e.message
+
+    return render(request, 'home.html', context=context)

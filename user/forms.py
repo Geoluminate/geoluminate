@@ -10,7 +10,6 @@ from django.urls import reverse
 from crispy_bootstrap5.bootstrap5 import FloatingField
 from crispy_forms.layout import Field, HTML
 from django.utils.translation import gettext_lazy as _
-import allauth.account.urls
 
 class UserAdminCreationForm(UserCreationForm):
 

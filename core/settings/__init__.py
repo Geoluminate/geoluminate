@@ -16,9 +16,13 @@ USE_TZ = True
 
 SITE_ID = 1
 
-INTERNAL_IPS = ['127.0.0.1',]
+INTERNAL_IPS = ['127.0.0.1', ]
 
-ALLOWED_HOSTS = ['127.0.0.1','localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+
+ROOT_URLCONF = 'project.urls'
+
+WSGI_APPLICATION = 'project.wsgi.application'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -39,12 +43,12 @@ X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 # Coloured Messages
 MESSAGE_TAGS = {
-        messages.DEBUG: 'alert-secondary',
-        messages.INFO: 'alert-info',
-        messages.SUCCESS: 'alert-success',
-        messages.WARNING: 'alert-warning',
-        messages.ERROR: 'alert-danger',
- }
+    messages.DEBUG: 'debug alert-secondary',
+    messages.INFO: 'info alert-info',
+    messages.SUCCESS: 'success alert-success',
+    messages.WARNING: 'warning alert-warning',
+    messages.ERROR: 'error alert-danger',
+}
 
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
@@ -56,12 +60,15 @@ META_USE_SITES = True
 META_USE_OG_PROPERTIES = True
 META_USE_TWITTER_PROPERTIES = True
 
+TAGGIT_CASE_INSENSITIVE = True
+
+
 LOCKDOWN_ENABLED = os.environ.get('LOCKDOWN')
 LOCKDOWN_FORM = 'lockdown.forms.AuthForm'
 LOCKDOWN_AUTHFORM_STAFF_ONLY = True
 LOCKDOWN_REMOTE_ADDR_EXCEPTIONS = ['127.0.0.1']
 
-GRAPPELLI_SWITCH_USER=True
+GRAPPELLI_SWITCH_USER = True
 
 TEMPLATES = [
     {
@@ -125,8 +132,42 @@ DEBUG_TOOLBAR_PANELS = [
 CKEDITOR_5_CONFIGS = {
     'default': {
         'toolbar': ['outdent', 'indent', '|', 'bold', 'italic', 'underline', 'strikethrough',
-        'subscript', 'superscript', '|', 
+                    'subscript', 'superscript', '|',
                     'bulletedList', 'numberedList',
                     ]
     },
 }
+
+CROSSREF_MODELS = {
+    "work": "publications.Publication",
+}
+
+
+if os.getenv('DJANGO_ENV') == 'development':
+
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+    DATABASES = {
+        'default': {
+            'CONN_MAX_AGE': 0,
+            'NAME': os.environ.get('DB_NAME'),
+            'USER': os.environ.get('DB_USERNAME'),
+            'PASSWORD': os.environ.get('DB_PASSWORD'),
+            'HOST': 'localhost',
+            'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        }
+    }
+else:
+    import django_heroku
+    import dj_database_url
+    STATICFILES_STORAGE = 'project.storage_backends.StaticStorage'
+    STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_STATIC_LOCATION}/"
+
+    SECURE_SSL_REDIRECT = True
+    DATABASES = {
+        'default': dj_database_url.config(
+            conn_max_age=600,
+            ssl_require=True)
+    }
+    django_heroku.settings(locals(), staticfiles=False)
+    DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'

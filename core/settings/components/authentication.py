@@ -1,6 +1,6 @@
 AUTH_USER_MODEL = 'user.User'
 
-ACCOUNT_ADAPTER = 'authentication.adapter.AuthenticationAdapter'
+ACCOUNT_ADAPTER = 'user.adapter.AuthenticationAdapter'
 
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/accounts/login/'
@@ -34,17 +34,17 @@ AUTHENTICATION_BACKENDS = (
 )
 
 ACCOUNT_FORMS = {
-            'login': 'authentication.forms.LoginForm',
-            'signup': 'authentication.forms.SignUpForm',
-            'add_email': 'authentication.forms.AddEmailForm',
-            'change_password': 'authentication.forms.ChangePasswordForm',
-            'set_password': 'authentication.forms.SetPasswordForm',
-            'reset_password': 'authentication.forms.ResetPasswordForm',
-            'reset_password_from_key': 'authentication.forms.ResetPasswordKeyForm',
+            'login': 'user.forms.LoginForm',
+            'signup': 'user.forms.SignUpForm',
+            'add_email': 'user.forms.AddEmailForm',
+            'change_password': 'user.forms.ChangePasswordForm',
+            'set_password': 'user.forms.SetPasswordForm',
+            'reset_password': 'user.forms.ResetPasswordForm',
+            'reset_password_from_key': 'user.forms.ResetPasswordKeyForm',
             'disconnect': 'allauth.socialaccount.forms.DisconnectForm',
         }
 
 SOCIALACCOUNT_FORMS = {
     'disconnect': 'allauth.socialaccount.forms.DisconnectForm',
-    'signup': 'authentication.forms.SocialSignupForm',
+    'signup': 'user.forms.SocialSignupForm',
 }

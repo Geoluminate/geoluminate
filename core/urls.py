@@ -16,5 +16,6 @@ urlpatterns = [
     path('grappelli/', include('grappelli.urls')),
     path("ckeditor5/", include('django_ckeditor_5.urls')),
     path("admin/", admin.site.urls), 
+    path('literature/', include('publications.urls')),
     path('', include("cms.urls")),
 ]

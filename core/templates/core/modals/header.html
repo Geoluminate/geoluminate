@@ -1,9 +1,0 @@
-{% load i18n solo_tags thumbnail %}
-{% get_config 'core.SiteConfiguration' as config %}
-
-<div class="modal-header bg-light">
-  {% thumbnail config.icon 30x30 as icon %}
-  <img src="{{ icon.url }}" width={{thumb.width}} height={{thumb.height}} alt="icon" class="d-inline-block align-text-top">
-  <h3 class='ms-2 modal-title'>{% trans header %}</h3>
-  <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
-</div>

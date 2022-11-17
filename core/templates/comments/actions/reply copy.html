@@ -1,4 +1,0 @@
-{% load i18n %}
-{% if comment.allow_thread and not comment.is_removed %}
-    <a href="#modal" class="comment-reply" data-next="{{ comment.get_absolute_url }}" data-action="{% url 'comments-xtd-reply' comment.pk %}" data-reply-to='{{ comment.id }}'><i class="fas fa-comment" title="{% trans 'reply to comment' %}"></i> {% trans 'Reply' %}</a>
-{% endif %}

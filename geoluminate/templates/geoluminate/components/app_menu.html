@@ -1,0 +1,27 @@
+{% for item in menu %}
+    {% if item.visible %}
+        {% if not forloop.first %}
+            <div class="vr mx-2"></div>
+        {% endif %}
+
+        <li class="{% if item.selected %} active{% endif %}{% if item.children %} dropdown{% endif %}" id="top-menu-{{ item.slug }}">
+            <a class="icon {{item.icon}} {{item.extra_css}}" href
+            hx-get="{{ item.url }}"
+            {% if forloop.first %}
+            hx-trigger='load, click'
+            {% endif %}
+            {% if item.children %} 
+            class="dropdown-toggle" 
+            data-hover="dropdown" 
+            data-toggle="dropdown"{% endif %}>
+                <span>{{ item.title }}</span>
+                {% if item.children %}
+                    &nbsp;<b class="caret"></b>
+                {% endif %}
+            </a>
+            {% if item.children %}
+                {% include 'geoluminate/components/app_submenu.html' with items=item.children %}
+            {% endif %}
+        </li>
+    {% endif %}
+{% endfor %}

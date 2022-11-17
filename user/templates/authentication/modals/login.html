@@ -1,8 +1,8 @@
-{% load static sekizai_tags i18n authentication solo_tags %}
+{% load static sekizai_tags i18n authentication %}
 <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
-      {% include 'core/modals/header.html' with header='Login' %}
+      {% include 'geoluminate/modals/header.html' with header='Login' %}
       <div class='modal-body'>
         <p class='mb-3'>{% trans "Log in using the details you signed up with" %}</p>
         {% authentication_form "login" %}

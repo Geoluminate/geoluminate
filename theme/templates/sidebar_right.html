@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load cms_tags %}
+
+
+{% block content %}
+
+  <div class='flex-grow-1 overflow-auto'>
+    {% block main_window %}{% endblock main_window %}
+  </div>
+  <div class='sidebar border-start w-25'>
+    {% block sidebar_right %}{% endblock sidebar_right %}
+  </div>
+
+{% endblock %}

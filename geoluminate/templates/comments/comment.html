@@ -1,0 +1,38 @@
+{% load i18n gravatar %}
+
+
+<div id="{% if preview %}comment-preview{% else %}c{{ comment.id }}{% endif %}" class="comment-item{% if comment.user_id and comment.user_id == comment.content_object.author_id %} by-author{% endif %}">
+  {% if preview %}<h3>{% trans "Preview of your comment" %}</h3>{% endif %}
+  <div class='comment'>
+    <div class="comment-avatar">{% gravatar comment.email css_class='user-image' %}</div>
+    <div class="comment-body">
+      <div class="comment-header">
+        <h6>
+          {{ comment.submit_date|timesince }} {% if comment.url and not comment.is_removed %}<a href="{{ comment.url }}" target="_new">{% endif %} - {{ comment.name }}{% if comment.url %}</a>{% endif %} <span class="badge bg-secondary">{% trans "moderator" %}</span>
+        </h6>
+        <ul class='icons'>
+          {% comment %} {{comment.nested_count}} {% endcomment %}
+          <a href="#" class='comment-flag'><i class="fas fa-flag" title="{% trans 'flag comment' %}"></i></a>
+
+          {% include "comments/actions/flag.html" %}
+          {% include "comments/actions/delete.html" %}
+        </ul>
+      </div>
+      <div class='comment-content'>
+        {% if comment.is_removed %}
+          <p class="text-muted{% if not allow_feedback and not comment.allow_thread %} pb-3{% endif %}"><em>{% trans "This comment has been removed." %}</em></p>
+        {% else %}
+          <p class="{% if not allow_feedback and not comment.allow_thread %}pb-3{% endif %}">{{ comment.comment }}</p>
+        {% endif %}
+      </div>
+      {% if not comment.is_removed %}
+      <div class='comment-tools'>
+        {% comment %} {% include "comments/actions/like_dislike.html" %} {% endcomment %}
+        {% include "comments/actions/reply.html" %}
+        {% comment %} {% include "comments/actions/view_replies.html" %} {% endcomment %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+

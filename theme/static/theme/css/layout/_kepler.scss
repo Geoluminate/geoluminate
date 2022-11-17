@@ -1,0 +1,16 @@
+.keplerApp-container {
+    flex-grow: 1 !important;
+    display: flex !important;
+
+    >div {
+        position: inherit !important;
+        width: 100% !important;
+        display: flex !important;
+        height: unset !important;
+    }
+
+    .kepler-gl {
+        height: inherit !important;
+        width: 100% !important;
+    }
+}

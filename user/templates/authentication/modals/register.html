@@ -3,10 +3,10 @@
 <div id="createAccountModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
-      {% include 'core/modals/header.html' with header='Register' %}
+      {% include 'geoluminate/modals/header.html' with header='Register' %}
       <div class='modal-body'>
         <p class='mb-3'>Register for an account!</p>
-          {% authentication_form "signup" %}
+        {% authentication_form "signup" %}
         <div class="modal-footer">
           <input form='signupForm' type="submit" name="submit" value="{% trans "Confirm" %}" class="btn btn-primary">
         </div>

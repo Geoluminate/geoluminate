@@ -1,0 +1,5 @@
+import os
+LOCKDOWN_ENABLED = os.environ.get('LOCKDOWN')
+LOCKDOWN_FORM = 'lockdown.forms.AuthForm'
+LOCKDOWN_AUTHFORM_STAFF_ONLY = True
+LOCKDOWN_REMOTE_ADDR_EXCEPTIONS = ['127.0.0.1']

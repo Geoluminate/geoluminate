@@ -1,0 +1,14 @@
+<div class="dropdown-toggle fit" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Publications from: {{ page }}</div>
+<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+  {% for p in page.paginator.pages %}
+  <a
+    class="dropdown-item"
+    hx-get="?page={{ p.number }}{{ parameters }}"
+    hx-trigger="click"
+    hx-target="#publication-list"
+    hx-indicator="#indicator"
+  >{{ p }}</a>
+
+  {% endfor %}
+</div>
+

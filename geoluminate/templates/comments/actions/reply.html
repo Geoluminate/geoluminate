@@ -1,0 +1,5 @@
+{% load i18n %}
+{% comment %} <a href="#modal" class="comment-reply" data-next="{{ comment.get_absolute_url }}" data-action="{% url 'comments-xtd-reply' comment.pk %}" data-reply-to='{{ comment.id }}'><i class="fas fa-comment" title="{% trans 'reply to comment' %}"></i> {% trans 'Reply' %}</a> {% endcomment %}
+{% if USE_THREADEDCOMMENTS and not preview %}
+<a href="#c{{ comment.id }}" data-comment-id="{{ comment.id }}" class="comment-reply-link"><i class="fas fa-comment" title="{% trans 'reply to comment' %}"></i> {% trans "reply" %}</a>
+{% endif %}

@@ -1,11 +1,49 @@
 [[source]]
-name = "pypi"
 url = "https://pypi.org/simple"
 verify_ssl = true
-
-[dev-packages]
+name = "pypi"
 
 [packages]
+pytz = "*"
+django = "<4"
+pip = "*"
+djangocms-bootstrap5 = "*"
+django-grappelli = "*"
+django-allauth = "*"
+django-invitations = "*"
+django-organizations = "*"
+djangocms-file = "*"
+djangocms-video = "*"
+django-celery-beat = "*"
+django-solo = "*"
+django-extensions = "*"
+django-filter = "*"
+django-taggit = "*"
+django-storages = "*"
+django-crispy-forms = "*"
+crispy-bootstrap5 = "*"
+django-social-share = "*"
+django-lockdown = "*"
+django-fluent-comments = "*"
+django-appconf = "*"
+django-threadedcomments = "*"
+django-meta = "*"
+django-gravatar2 = "*"
+django-htmx = "*"
+django-sortedm2m = "*"
+django-ckeditor-5 = "*"
+django-debug-toolbar = "*"
+habanero = "*"
+django-split-settings = "*"
+django-super-deduper = "*"
+django-reverse-admin = "*"
+django-debug-toolbar-template-profiler = "*"
+shortuuid = "*"
+ipython = "*"
+
+[dev-packages]
+autopep8 = "*"
+pycodestyle = "*"
 
 [requires]
-python_version = "3.8"
+python_version = "3.9"

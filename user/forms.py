@@ -11,17 +11,20 @@ from crispy_bootstrap5.bootstrap5 import FloatingField
 from crispy_forms.layout import Field, HTML
 from django.utils.translation import gettext_lazy as _
 
+
 class UserAdminCreationForm(UserCreationForm):
 
     class Meta(UserCreationForm):
         model = auth.get_user_model()
-        fields = ('email','password',)
+        fields = ('email', 'password',)
+
 
 class UserAdminChangeForm(UserChangeForm):
 
     class Meta:
         model = auth.get_user_model()
-        fields = ('email','password',)
+        fields = ('email', 'password',)
+
 
 class LoginForm(auth_forms.LoginForm):
 
@@ -30,7 +33,7 @@ class LoginForm(auth_forms.LoginForm):
         self.helper = FormHelper(self)
         self.helper.form_method = 'POST'
         self.helper.form_id = 'loginForm'
-        self.helper.form_action = reverse('account_login')
+        self.helper.form_action = reverse('user:account_login')
         self.helper.form_show_labels = True
         self.helper.layout = Layout(
             FloatingField('login', label='email'),
@@ -38,20 +41,27 @@ class LoginForm(auth_forms.LoginForm):
             Field('remember', template='forms/checkbox.html'),
         )
 
+
 class SignUpForm(auth_forms.SignupForm):
     first_name = forms.CharField(required=True)
     last_name = forms.CharField(required=True)
 
     class Meta:
         model = auth.get_user_model()
-        fields = ('email','first_name','last_name','password1','password2',)
+        fields = (
+            'email',
+            'first_name',
+            'last_name',
+            'password1',
+            'password2',
+        )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         self.helper = FormHelper(self)
         self.helper.form_method = 'POST'
-        self.helper.form_action = reverse('account_signup')
+        self.helper.form_action = reverse('user:account_signup')
         self.helper.form_id = 'signupForm'
         self.helper.layout = Layout(
             Row(
@@ -63,6 +73,7 @@ class SignUpForm(auth_forms.SignupForm):
             FloatingField('password2'),
         )
 
+
 class AddEmailForm(auth_forms.AddEmailForm):
 
     def __init__(self, *args, **kwargs):
@@ -70,12 +81,13 @@ class AddEmailForm(auth_forms.AddEmailForm):
         self.helper = FormHelper(self)
         self.helper.form_show_labels = False
         self.helper.form_method = 'POST'
-        self.helper.form_action = reverse('account_email')
+        self.helper.form_action = reverse('user:account_email')
         self.helper.form_id = 'addEmailForm'
         self.helper.layout = Layout(
             FloatingField('email', placeholder=''),
             Submit('action_add', value='Submit', hidden=True),
         )
+
 
 class ChangePasswordForm(auth_forms.ChangePasswordForm):
 
@@ -84,15 +96,17 @@ class ChangePasswordForm(auth_forms.ChangePasswordForm):
 
         self.helper = FormHelper(self)
         self.helper.form_method = 'POST'
-        self.helper.form_action = reverse('account_change_password')
+        self.helper.form_action = reverse('user:account_change_password')
         self.helper.form_id = 'ChangePasswordForm'
         self.helper.layout = Layout(
-            HTML(f'<p class="mb-3">{_("Please confirm your current password:")}</p>'),
+            HTML(
+                f'<p class="mb-3">{_("Please confirm your current password:")}</p>'),
             FloatingField('oldpassword'),
             HTML(f'<p class="mb-3">{_("Your new password:")}</p>'),
             FloatingField('password1'),
             FloatingField('password2'),
         )
+
 
 class ResetPasswordForm(auth_forms.ResetPasswordForm):
 
@@ -101,11 +115,12 @@ class ResetPasswordForm(auth_forms.ResetPasswordForm):
 
         self.helper = FormHelper(self)
         self.helper.form_method = 'POST'
-        self.helper.form_action = reverse('account_reset_password')
+        self.helper.form_action = reverse('user:account_reset_password')
         self.helper.form_id = 'resetPasswordForm'
         self.helper.layout = Layout(
             FloatingField('email'),
         )
+
 
 class ResetPasswordKeyForm(auth_forms.ResetPasswordForm):
 
@@ -114,16 +129,15 @@ class ResetPasswordKeyForm(auth_forms.ResetPasswordForm):
 
         self.helper = FormHelper(self)
         self.helper.form_method = 'POST'
-        self.helper.form_action = reverse('account_reset_password_from_key')
+        self.helper.form_action = reverse(
+            'user:account_reset_password_from_key')
         self.helper.form_id = 'ResetPasswordKeyForm'
         self.helper.layout = Layout(
             FloatingField('password1'),
             FloatingField('password2'),
         )
 
+
 class SocialSignupForm(SocialSignUp):
     first_name = forms.CharField(required=True)
     last_name = forms.CharField(required=True)
-
-    
-

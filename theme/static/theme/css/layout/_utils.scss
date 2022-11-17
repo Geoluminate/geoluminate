@@ -1,0 +1,12 @@
+.fill {
+    display: flex;
+    flex-grow: 1!important;
+    overflow: hidden;
+
+    &-col {
+        display: flex;
+        flex-grow: 1!important;
+        overflow: hidden;
+        flex-direction: column;
+    }
+}

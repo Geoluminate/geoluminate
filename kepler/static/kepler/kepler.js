@@ -101,7 +101,7 @@ const app = (function createReactReduxProvider(react, reactRedux, KeplerElement)
 
 /** Render **/
 (function render(react, reactDOM, app) {
-  reactDOM.render(app, document.getElementById('app'));
+  reactDOM.render(app, document.getElementById('keplerApp'));
 }(React, ReactDOM, app));
 
 // The next script will show how to interact directly with Kepler map store -->

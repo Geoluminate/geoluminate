@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load i18n crispy_forms_tags static i18n cms_tags %}
+
+{% block content %}
+<div class='inner container'>
+	<header id="header">
+		<div class="logo"><strong>{% trans "Publications" %}</strong> {% trans "World Heat Flow Project" %}</div>
+		<ul class="icons">
+			{% include "/components/socials.html" %}
+		</ul>
+	</header>
+
+	<section class='d-flex flex-row-reverse '>
+		<div class='w-25 ps-3'>
+			{% crispy filter.form %}
+		</div>
+		<div>
+			{% crispy filter.form %}
+			{% comment %} {% include 'geoluminate/modals/form.html' with modal_id="filterPublicationsModal" form=filter.form helper=filter.helper %} {% endcomment %}
+		</div>
+		<div class='w-75 border-end pe-3'>
+			<section class='main'>
+				<div class='d-flex justify-content-between'>
+					{% include "crossref/paginator.html" %}
+					<a href="#filterPublicationsModal" class="icon solid filter" data-bs-target="#filterPublicationsModal" data-bs-toggle="modal" data-bs-dismiss="modal"></a>
+				</div>	
+				<div id='publication-list'></div>	
+			</section>
+		</div>
+
+	</section>
+</div>
+{% endblock %}
+
+{% block modals %}
+	{% include 'geoluminate/modals/form.html' with modal_id="filterPublicationsModal" form=filter.form helper=filter.helper %}
+{% endblock modals %}
+
+{% block head %}
+<script src="https://unpkg.com/htmx.org@1.8.0" integrity="sha384-cZuAZ+ZbwkNRnrKi05G/fjBX+azI9DNOkNYysZ0I/X5ZFgsmMiBXgDZof30F5ofc" crossorigin="anonymous"></script>
+{% endblock head %}

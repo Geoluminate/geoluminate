@@ -1,0 +1,2035 @@
+[
+    {
+        "model": "auth.group",
+        "pk": 1,
+        "fields": {
+            "name": "Custodian",
+            "permissions": [
+                35,
+                36,
+                37,
+                38,
+                39,
+                40,
+                41,
+                42,
+                201,
+                202,
+                203,
+                204,
+                205,
+                206,
+                207,
+                208,
+                209,
+                210,
+                211,
+                212,
+                213,
+                214,
+                215,
+                216,
+                217,
+                218,
+                219,
+                220,
+                221,
+                222,
+                223,
+                224,
+                225,
+                226,
+                227,
+                228,
+                229,
+                230,
+                231,
+                232,
+                233,
+                234,
+                235,
+                236,
+                237,
+                238,
+                239,
+                240,
+                241,
+                242,
+                243,
+                244,
+                245,
+                246,
+                247,
+                248,
+                249,
+                250,
+                251,
+                252,
+                253,
+                254,
+                255,
+                256,
+                257,
+                258,
+                259,
+                260,
+                261,
+                262,
+                263,
+                264,
+                265,
+                266,
+                267,
+                268,
+                269,
+                270,
+                271,
+                272,
+                273,
+                274,
+                275,
+                276,
+                277,
+                278,
+                279,
+                280,
+                281,
+                282,
+                283,
+                284,
+                285,
+                286,
+                287,
+                288,
+                289,
+                290,
+                291,
+                292,
+                79,
+                80,
+                81,
+                82,
+                75,
+                76,
+                77,
+                78,
+                83,
+                84,
+                85,
+                86,
+                87,
+                2,
+                88,
+                91,
+                90,
+                89,
+                92,
+                93,
+                94,
+                95,
+                96,
+                97,
+                98,
+                99,
+                100,
+                101,
+                102,
+                103,
+                104,
+                105,
+                106,
+                1,
+                107,
+                108,
+                109,
+                110,
+                111,
+                112,
+                113,
+                114,
+                115,
+                116,
+                117,
+                118,
+                119,
+                124,
+                125,
+                126,
+                127,
+                120,
+                121,
+                122,
+                123,
+                3,
+                4,
+                5,
+                6,
+                128,
+                129,
+                130,
+                131,
+                354,
+                355,
+                356,
+                357,
+                358,
+                359,
+                360,
+                361,
+                362,
+                363,
+                364,
+                365,
+                366,
+                367,
+                368,
+                369,
+                370,
+                371,
+                372,
+                373,
+                374,
+                375,
+                376,
+                377,
+                378,
+                379,
+                380,
+                381,
+                345,
+                349,
+                346,
+                347,
+                348,
+                350,
+                351,
+                352,
+                353,
+                181,
+                182,
+                183,
+                184,
+                185,
+                186,
+                187,
+                188,
+                189,
+                190,
+                191,
+                192,
+                193,
+                194,
+                195,
+                196,
+                197,
+                198,
+                199,
+                200,
+                136,
+                137,
+                138,
+                139,
+                293,
+                294,
+                295,
+                296,
+                297,
+                298,
+                299,
+                300,
+                301,
+                302,
+                303,
+                304,
+                169,
+                170,
+                171,
+                172,
+                173,
+                174,
+                175,
+                176,
+                177,
+                178,
+                179,
+                180,
+                140,
+                141,
+                142,
+                143,
+                144,
+                145,
+                146,
+                147,
+                148,
+                149,
+                150,
+                151,
+                152,
+                156,
+                153,
+                154,
+                155,
+                157,
+                158,
+                159,
+                160,
+                161,
+                162,
+                163,
+                164,
+                165,
+                166,
+                167,
+                168,
+                337,
+                338,
+                339,
+                340,
+                55,
+                56,
+                57,
+                58,
+                382,
+                383,
+                384,
+                385,
+                132,
+                133,
+                134,
+                135,
+                59,
+                60,
+                61,
+                62,
+                71,
+                72,
+                73,
+                74,
+                63,
+                64,
+                65,
+                66,
+                67,
+                68,
+                69,
+                70,
+                386,
+                387,
+                388,
+                389,
+                329,
+                330,
+                331,
+                332,
+                333,
+                334,
+                335,
+                336,
+                390,
+                391,
+                392,
+                393,
+                394,
+                395,
+                396,
+                397,
+                406,
+                407,
+                408,
+                409,
+                398,
+                399,
+                400,
+                401,
+                402,
+                403,
+                404,
+                405,
+                341,
+                342,
+                343,
+                344,
+                31,
+                32,
+                33,
+                34
+            ]
+        }
+    },
+    {
+        "model": "auth.group",
+        "pk": 2,
+        "fields": {
+            "name": "CMS Admin",
+            "permissions": [
+                201,
+                202,
+                203,
+                204,
+                205,
+                206,
+                207,
+                208,
+                209,
+                210,
+                211,
+                212,
+                213,
+                214,
+                215,
+                216,
+                217,
+                218,
+                219,
+                220,
+                221,
+                222,
+                223,
+                224,
+                225,
+                226,
+                227,
+                228,
+                229,
+                230,
+                231,
+                232,
+                233,
+                234,
+                235,
+                236,
+                237,
+                238,
+                239,
+                240,
+                241,
+                242,
+                243,
+                244,
+                245,
+                246,
+                247,
+                248,
+                249,
+                250,
+                251,
+                252,
+                253,
+                254,
+                255,
+                256,
+                257,
+                258,
+                259,
+                260,
+                261,
+                262,
+                263,
+                264,
+                265,
+                266,
+                267,
+                268,
+                269,
+                270,
+                271,
+                272,
+                273,
+                274,
+                275,
+                276,
+                277,
+                278,
+                279,
+                280,
+                281,
+                282,
+                283,
+                284,
+                285,
+                286,
+                287,
+                288,
+                289,
+                290,
+                291,
+                292,
+                79,
+                80,
+                81,
+                82,
+                75,
+                76,
+                77,
+                78,
+                83,
+                84,
+                85,
+                86,
+                87,
+                2,
+                88,
+                91,
+                90,
+                89,
+                92,
+                93,
+                94,
+                95,
+                96,
+                97,
+                98,
+                99,
+                100,
+                101,
+                102,
+                103,
+                104,
+                105,
+                106,
+                1,
+                107,
+                108,
+                109,
+                110,
+                111,
+                112,
+                113,
+                114,
+                115,
+                116,
+                117,
+                118,
+                119,
+                124,
+                125,
+                126,
+                127,
+                120,
+                121,
+                122,
+                123,
+                128,
+                129,
+                130,
+                131,
+                378,
+                379,
+                380,
+                381,
+                181,
+                182,
+                183,
+                184,
+                185,
+                186,
+                187,
+                188,
+                189,
+                190,
+                191,
+                192,
+                193,
+                194,
+                195,
+                196,
+                197,
+                198,
+                199,
+                200,
+                136,
+                137,
+                138,
+                139,
+                293,
+                294,
+                295,
+                296,
+                297,
+                298,
+                299,
+                300,
+                301,
+                302,
+                303,
+                304,
+                140,
+                141,
+                142,
+                143,
+                144,
+                145,
+                146,
+                147,
+                148,
+                149,
+                150,
+                151,
+                152,
+                156,
+                153,
+                154,
+                155,
+                157,
+                158,
+                159,
+                160,
+                161,
+                162,
+                163,
+                164,
+                165,
+                166,
+                167,
+                168,
+                390,
+                391,
+                392,
+                393,
+                394,
+                395,
+                396,
+                397,
+                406,
+                407,
+                408,
+                409,
+                398,
+                399,
+                400,
+                401,
+                402,
+                403,
+                404,
+                405
+            ]
+        }
+    },
+    {
+        "model": "sites.site",
+        "pk": 1,
+        "fields": {
+            "domain": "127.0.0.1",
+            "name": "GeoLuminate"
+        }
+    },
+    {
+        "model": "core.globalconfiguration",
+        "pk": 1,
+        "fields": {
+            "site": 1,
+            "logo": 1,
+            "icon": 2,
+            "custodian": 1
+        }
+    },
+    {
+        "model": "user.user",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$260000$PectuKiSbKlnesUsYmQwcI$rVlqT0AOh8L3lwDmT11tRqQ9tNECkWIo39WzU18XpeA=",
+            "last_login": "2022-10-17T09:45:51.879Z",
+            "is_superuser": true,
+            "first_name": "Site",
+            "last_name": "Admin",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2022-10-14T18:08:25.137Z",
+            "email": "admin@admin.com",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "account.emailaddress",
+        "pk": 1,
+        "fields": {
+            "user": 1,
+            "email": "admin@admin.com",
+            "verified": true,
+            "primary": true
+        }
+    },
+    {
+        "model": "cms.usersettings",
+        "pk": 1,
+        "fields": {
+            "user": 1,
+            "language": "en",
+            "clipboard": 1
+        }
+    },
+    {
+        "model": "cms.treenode",
+        "pk": 1,
+        "fields": {
+            "path": "0001",
+            "depth": 1,
+            "numchild": 0,
+            "parent": null,
+            "site": 1
+        }
+    },
+    {
+        "model": "cms.treenode",
+        "pk": 2,
+        "fields": {
+            "path": "0002",
+            "depth": 1,
+            "numchild": 0,
+            "parent": null,
+            "site": 1
+        }
+    },
+    {
+        "model": "cms.treenode",
+        "pk": 3,
+        "fields": {
+            "path": "0003",
+            "depth": 1,
+            "numchild": 0,
+            "parent": null,
+            "site": 1
+        }
+    },
+    {
+        "model": "cms.treenode",
+        "pk": 4,
+        "fields": {
+            "path": "0004",
+            "depth": 1,
+            "numchild": 0,
+            "parent": null,
+            "site": 1
+        }
+    },
+    {
+        "model": "cms.treenode",
+        "pk": 5,
+        "fields": {
+            "path": "0005",
+            "depth": 1,
+            "numchild": 0,
+            "parent": null,
+            "site": 1
+        }
+    },
+    {
+        "model": "cms.page",
+        "pk": 1,
+        "fields": {
+            "created_by": "S.Admin",
+            "changed_by": "S.Admin",
+            "creation_date": "2022-10-14T21:02:31.381Z",
+            "changed_date": "2022-10-17T10:39:44.716Z",
+            "publication_date": "2022-10-14T21:02:31.405Z",
+            "publication_end_date": null,
+            "in_navigation": true,
+            "soft_root": false,
+            "reverse_id": null,
+            "navigation_extenders": null,
+            "template": "fullwidth.html",
+            "login_required": false,
+            "limit_visibility_in_menu": null,
+            "is_home": true,
+            "application_urls": null,
+            "application_namespace": null,
+            "publisher_is_draft": true,
+            "publisher_public": 2,
+            "languages": "en",
+            "xframe_options": 0,
+            "is_page_type": false,
+            "node": 1,
+            "placeholders": [
+                2,
+                3
+            ]
+        }
+    },
+    {
+        "model": "cms.page",
+        "pk": 2,
+        "fields": {
+            "created_by": "S.Admin",
+            "changed_by": "S.Admin",
+            "creation_date": "2022-10-14T21:02:31.405Z",
+            "changed_date": "2022-10-17T12:34:26.321Z",
+            "publication_date": "2022-10-14T21:02:31.405Z",
+            "publication_end_date": null,
+            "in_navigation": true,
+            "soft_root": false,
+            "reverse_id": null,
+            "navigation_extenders": null,
+            "template": "fullwidth.html",
+            "login_required": false,
+            "limit_visibility_in_menu": null,
+            "is_home": true,
+            "application_urls": null,
+            "application_namespace": null,
+            "publisher_is_draft": false,
+            "publisher_public": 1,
+            "languages": "en",
+            "xframe_options": 0,
+            "is_page_type": false,
+            "node": 1,
+            "placeholders": [
+                4,
+                5
+            ]
+        }
+    },
+    {
+        "model": "cms.page",
+        "pk": 3,
+        "fields": {
+            "created_by": "S.Admin",
+            "changed_by": "S.Admin",
+            "creation_date": "2022-10-14T21:02:45.784Z",
+            "changed_date": "2022-10-17T11:20:29.699Z",
+            "publication_date": "2022-10-17T09:50:11.384Z",
+            "publication_end_date": null,
+            "in_navigation": true,
+            "soft_root": false,
+            "reverse_id": null,
+            "navigation_extenders": null,
+            "template": "INHERIT",
+            "login_required": false,
+            "limit_visibility_in_menu": null,
+            "is_home": false,
+            "application_urls": "LiteratureApphook",
+            "application_namespace": "literature",
+            "publisher_is_draft": true,
+            "publisher_public": 8,
+            "languages": "en",
+            "xframe_options": 0,
+            "is_page_type": false,
+            "node": 2,
+            "placeholders": [
+                6,
+                7
+            ]
+        }
+    },
+    {
+        "model": "cms.page",
+        "pk": 4,
+        "fields": {
+            "created_by": "S.Admin",
+            "changed_by": "S.Admin",
+            "creation_date": "2022-10-14T21:02:54.092Z",
+            "changed_date": "2022-10-14T21:02:54.121Z",
+            "publication_date": "2022-10-14T21:46:11.629Z",
+            "publication_end_date": null,
+            "in_navigation": true,
+            "soft_root": false,
+            "reverse_id": null,
+            "navigation_extenders": null,
+            "template": "INHERIT",
+            "login_required": false,
+            "limit_visibility_in_menu": null,
+            "is_home": false,
+            "application_urls": null,
+            "application_namespace": null,
+            "publisher_is_draft": true,
+            "publisher_public": 7,
+            "languages": "en",
+            "xframe_options": 0,
+            "is_page_type": false,
+            "node": 3,
+            "placeholders": [
+                8,
+                9
+            ]
+        }
+    },
+    {
+        "model": "cms.page",
+        "pk": 5,
+        "fields": {
+            "created_by": "S.Admin",
+            "changed_by": "S.Admin",
+            "creation_date": "2022-10-14T21:03:06.020Z",
+            "changed_date": "2022-10-14T21:03:06.054Z",
+            "publication_date": "2022-10-17T09:50:18.482Z",
+            "publication_end_date": null,
+            "in_navigation": true,
+            "soft_root": false,
+            "reverse_id": null,
+            "navigation_extenders": null,
+            "template": "INHERIT",
+            "login_required": false,
+            "limit_visibility_in_menu": null,
+            "is_home": false,
+            "application_urls": null,
+            "application_namespace": null,
+            "publisher_is_draft": true,
+            "publisher_public": 9,
+            "languages": "en",
+            "xframe_options": 0,
+            "is_page_type": false,
+            "node": 4,
+            "placeholders": [
+                10,
+                11
+            ]
+        }
+    },
+    {
+        "model": "cms.page",
+        "pk": 6,
+        "fields": {
+            "created_by": "S.Admin",
+            "changed_by": "S.Admin",
+            "creation_date": "2022-10-14T21:03:12.918Z",
+            "changed_date": "2022-10-14T21:03:12.963Z",
+            "publication_date": "2022-10-17T09:50:25.268Z",
+            "publication_end_date": null,
+            "in_navigation": true,
+            "soft_root": false,
+            "reverse_id": null,
+            "navigation_extenders": null,
+            "template": "INHERIT",
+            "login_required": false,
+            "limit_visibility_in_menu": null,
+            "is_home": false,
+            "application_urls": null,
+            "application_namespace": null,
+            "publisher_is_draft": true,
+            "publisher_public": 10,
+            "languages": "en",
+            "xframe_options": 0,
+            "is_page_type": false,
+            "node": 5,
+            "placeholders": [
+                12,
+                13
+            ]
+        }
+    },
+    {
+        "model": "cms.page",
+        "pk": 7,
+        "fields": {
+            "created_by": "S.Admin",
+            "changed_by": "S.Admin",
+            "creation_date": "2022-10-14T21:46:11.629Z",
+            "changed_date": "2022-10-17T09:49:52.620Z",
+            "publication_date": "2022-10-14T21:46:11.629Z",
+            "publication_end_date": null,
+            "in_navigation": true,
+            "soft_root": false,
+            "reverse_id": null,
+            "navigation_extenders": null,
+            "template": "INHERIT",
+            "login_required": false,
+            "limit_visibility_in_menu": null,
+            "is_home": false,
+            "application_urls": null,
+            "application_namespace": null,
+            "publisher_is_draft": false,
+            "publisher_public": 4,
+            "languages": "en",
+            "xframe_options": 0,
+            "is_page_type": false,
+            "node": 3,
+            "placeholders": [
+                14,
+                15
+            ]
+        }
+    },
+    {
+        "model": "cms.page",
+        "pk": 8,
+        "fields": {
+            "created_by": "S.Admin",
+            "changed_by": "S.Admin",
+            "creation_date": "2022-10-17T09:50:11.384Z",
+            "changed_date": "2022-10-17T11:20:46.510Z",
+            "publication_date": "2022-10-17T09:50:11.384Z",
+            "publication_end_date": null,
+            "in_navigation": true,
+            "soft_root": false,
+            "reverse_id": null,
+            "navigation_extenders": null,
+            "template": "INHERIT",
+            "login_required": false,
+            "limit_visibility_in_menu": null,
+            "is_home": false,
+            "application_urls": "LiteratureApphook",
+            "application_namespace": "literature",
+            "publisher_is_draft": false,
+            "publisher_public": 3,
+            "languages": "en",
+            "xframe_options": 0,
+            "is_page_type": false,
+            "node": 2,
+            "placeholders": [
+                16,
+                17
+            ]
+        }
+    },
+    {
+        "model": "cms.page",
+        "pk": 9,
+        "fields": {
+            "created_by": "S.Admin",
+            "changed_by": "S.Admin",
+            "creation_date": "2022-10-17T09:50:18.482Z",
+            "changed_date": "2022-10-17T09:50:18.482Z",
+            "publication_date": "2022-10-17T09:50:18.482Z",
+            "publication_end_date": null,
+            "in_navigation": true,
+            "soft_root": false,
+            "reverse_id": null,
+            "navigation_extenders": null,
+            "template": "INHERIT",
+            "login_required": false,
+            "limit_visibility_in_menu": null,
+            "is_home": false,
+            "application_urls": null,
+            "application_namespace": null,
+            "publisher_is_draft": false,
+            "publisher_public": 5,
+            "languages": "en",
+            "xframe_options": 0,
+            "is_page_type": false,
+            "node": 4,
+            "placeholders": [
+                18,
+                19
+            ]
+        }
+    },
+    {
+        "model": "cms.page",
+        "pk": 10,
+        "fields": {
+            "created_by": "S.Admin",
+            "changed_by": "S.Admin",
+            "creation_date": "2022-10-17T09:50:25.268Z",
+            "changed_date": "2022-10-17T09:50:25.268Z",
+            "publication_date": "2022-10-17T09:50:25.268Z",
+            "publication_end_date": null,
+            "in_navigation": true,
+            "soft_root": false,
+            "reverse_id": null,
+            "navigation_extenders": null,
+            "template": "INHERIT",
+            "login_required": false,
+            "limit_visibility_in_menu": null,
+            "is_home": false,
+            "application_urls": null,
+            "application_namespace": null,
+            "publisher_is_draft": false,
+            "publisher_public": 6,
+            "languages": "en",
+            "xframe_options": 0,
+            "is_page_type": false,
+            "node": 5,
+            "placeholders": [
+                20,
+                21
+            ]
+        }
+    },
+    {
+        "model": "cms.pageusergroup",
+        "pk": 1,
+        "fields": {
+            "created_by": 1
+        }
+    },
+    {
+        "model": "cms.pageusergroup",
+        "pk": 2,
+        "fields": {
+            "created_by": 1
+        }
+    },
+    {
+        "model": "cms.placeholder",
+        "pk": 1,
+        "fields": {
+            "slot": "clipboard",
+            "default_width": null
+        }
+    },
+    {
+        "model": "cms.placeholder",
+        "pk": 2,
+        "fields": {
+            "slot": "page heading",
+            "default_width": null
+        }
+    },
+    {
+        "model": "cms.placeholder",
+        "pk": 3,
+        "fields": {
+            "slot": "content",
+            "default_width": null
+        }
+    },
+    {
+        "model": "cms.placeholder",
+        "pk": 4,
+        "fields": {
+            "slot": "page heading",
+            "default_width": null
+        }
+    },
+    {
+        "model": "cms.placeholder",
+        "pk": 5,
+        "fields": {
+            "slot": "content",
+            "default_width": null
+        }
+    },
+    {
+        "model": "cms.placeholder",
+        "pk": 6,
+        "fields": {
+            "slot": "page heading",
+            "default_width": null
+        }
+    },
+    {
+        "model": "cms.placeholder",
+        "pk": 7,
+        "fields": {
+            "slot": "content",
+            "default_width": null
+        }
+    },
+    {
+        "model": "cms.placeholder",
+        "pk": 8,
+        "fields": {
+            "slot": "page heading",
+            "default_width": null
+        }
+    },
+    {
+        "model": "cms.placeholder",
+        "pk": 9,
+        "fields": {
+            "slot": "content",
+            "default_width": null
+        }
+    },
+    {
+        "model": "cms.placeholder",
+        "pk": 10,
+        "fields": {
+            "slot": "page heading",
+            "default_width": null
+        }
+    },
+    {
+        "model": "cms.placeholder",
+        "pk": 11,
+        "fields": {
+            "slot": "content",
+            "default_width": null
+        }
+    },
+    {
+        "model": "cms.placeholder",
+        "pk": 12,
+        "fields": {
+            "slot": "page heading",
+            "default_width": null
+        }
+    },
+    {
+        "model": "cms.placeholder",
+        "pk": 13,
+        "fields": {
+            "slot": "content",
+            "default_width": null
+        }
+    },
+    {
+        "model": "cms.placeholder",
+        "pk": 14,
+        "fields": {
+            "slot": "page heading",
+            "default_width": null
+        }
+    },
+    {
+        "model": "cms.placeholder",
+        "pk": 15,
+        "fields": {
+            "slot": "content",
+            "default_width": null
+        }
+    },
+    {
+        "model": "cms.placeholder",
+        "pk": 16,
+        "fields": {
+            "slot": "page heading",
+            "default_width": null
+        }
+    },
+    {
+        "model": "cms.placeholder",
+        "pk": 17,
+        "fields": {
+            "slot": "content",
+            "default_width": null
+        }
+    },
+    {
+        "model": "cms.placeholder",
+        "pk": 18,
+        "fields": {
+            "slot": "page heading",
+            "default_width": null
+        }
+    },
+    {
+        "model": "cms.placeholder",
+        "pk": 19,
+        "fields": {
+            "slot": "content",
+            "default_width": null
+        }
+    },
+    {
+        "model": "cms.placeholder",
+        "pk": 20,
+        "fields": {
+            "slot": "page heading",
+            "default_width": null
+        }
+    },
+    {
+        "model": "cms.placeholder",
+        "pk": 21,
+        "fields": {
+            "slot": "content",
+            "default_width": null
+        }
+    },
+    {
+        "model": "cms.placeholder",
+        "pk": 22,
+        "fields": {
+            "slot": "footer",
+            "default_width": null
+        }
+    },
+    {
+        "model": "cms.placeholder",
+        "pk": 23,
+        "fields": {
+            "slot": "footer",
+            "default_width": null
+        }
+    },
+    {
+        "model": "cms.placeholder",
+        "pk": 24,
+        "fields": {
+            "slot": "page heading",
+            "default_width": null
+        }
+    },
+    {
+        "model": "cms.placeholder",
+        "pk": 25,
+        "fields": {
+            "slot": "page heading",
+            "default_width": null
+        }
+    },
+    {
+        "model": "cms.placeholder",
+        "pk": 26,
+        "fields": {
+            "slot": "test",
+            "default_width": null
+        }
+    },
+    {
+        "model": "cms.placeholder",
+        "pk": 27,
+        "fields": {
+            "slot": "test",
+            "default_width": null
+        }
+    },
+    {
+        "model": "cms.placeholder",
+        "pk": 28,
+        "fields": {
+            "slot": "test placeholder",
+            "default_width": null
+        }
+    },
+    {
+        "model": "cms.placeholder",
+        "pk": 29,
+        "fields": {
+            "slot": "test placeholder",
+            "default_width": null
+        }
+    },
+    {
+        "model": "cms.cmsplugin",
+        "pk": 3,
+        "fields": {
+            "path": "0002",
+            "depth": 1,
+            "numchild": 1,
+            "placeholder": 5,
+            "parent": null,
+            "position": 0,
+            "language": "en",
+            "plugin_type": "Bootstrap5JumbotronPlugin",
+            "creation_date": "2022-10-17T12:30:13.802Z",
+            "changed_date": "2022-10-17T12:34:26.381Z"
+        }
+    },
+    {
+        "model": "cms.cmsplugin",
+        "pk": 4,
+        "fields": {
+            "path": "00020001",
+            "depth": 2,
+            "numchild": 0,
+            "placeholder": 5,
+            "parent": 3,
+            "position": 0,
+            "language": "en",
+            "plugin_type": "Bootstrap5PicturePlugin",
+            "creation_date": "2022-10-17T12:33:19.792Z",
+            "changed_date": "2022-10-17T12:34:26.391Z"
+        }
+    },
+    {
+        "model": "cms.title",
+        "pk": 1,
+        "fields": {
+            "language": "en",
+            "title": "Home",
+            "page_title": null,
+            "menu_title": null,
+            "meta_description": null,
+            "slug": "home",
+            "path": "",
+            "has_url_overwrite": false,
+            "redirect": null,
+            "page": 1,
+            "creation_date": "2022-10-14T21:02:31.384Z",
+            "published": true,
+            "publisher_is_draft": true,
+            "publisher_public": 2,
+            "publisher_state": 1
+        }
+    },
+    {
+        "model": "cms.title",
+        "pk": 2,
+        "fields": {
+            "language": "en",
+            "title": "Home",
+            "page_title": null,
+            "menu_title": null,
+            "meta_description": null,
+            "slug": "home",
+            "path": "",
+            "has_url_overwrite": false,
+            "redirect": null,
+            "page": 2,
+            "creation_date": "2022-10-14T21:02:31.384Z",
+            "published": true,
+            "publisher_is_draft": false,
+            "publisher_public": 1,
+            "publisher_state": 0
+        }
+    },
+    {
+        "model": "cms.title",
+        "pk": 3,
+        "fields": {
+            "language": "en",
+            "title": "Literature",
+            "page_title": "",
+            "menu_title": "",
+            "meta_description": "",
+            "slug": "literature",
+            "path": "literature",
+            "has_url_overwrite": false,
+            "redirect": null,
+            "page": 3,
+            "creation_date": "2022-10-14T21:02:45.788Z",
+            "published": true,
+            "publisher_is_draft": true,
+            "publisher_public": 8,
+            "publisher_state": 0
+        }
+    },
+    {
+        "model": "cms.title",
+        "pk": 4,
+        "fields": {
+            "language": "en",
+            "title": "Viewer",
+            "page_title": "",
+            "menu_title": "",
+            "meta_description": "",
+            "slug": "viewer",
+            "path": "viewer",
+            "has_url_overwrite": false,
+            "redirect": null,
+            "page": 4,
+            "creation_date": "2022-10-14T21:02:54.095Z",
+            "published": true,
+            "publisher_is_draft": true,
+            "publisher_public": 7,
+            "publisher_state": 0
+        }
+    },
+    {
+        "model": "cms.title",
+        "pk": 5,
+        "fields": {
+            "language": "en",
+            "title": "Database",
+            "page_title": "",
+            "menu_title": "",
+            "meta_description": "",
+            "slug": "database",
+            "path": "database",
+            "has_url_overwrite": false,
+            "redirect": null,
+            "page": 5,
+            "creation_date": "2022-10-14T21:03:06.024Z",
+            "published": true,
+            "publisher_is_draft": true,
+            "publisher_public": 9,
+            "publisher_state": 0
+        }
+    },
+    {
+        "model": "cms.title",
+        "pk": 6,
+        "fields": {
+            "language": "en",
+            "title": "More",
+            "page_title": "",
+            "menu_title": "",
+            "meta_description": "",
+            "slug": "more",
+            "path": "more",
+            "has_url_overwrite": false,
+            "redirect": null,
+            "page": 6,
+            "creation_date": "2022-10-14T21:03:12.923Z",
+            "published": true,
+            "publisher_is_draft": true,
+            "publisher_public": 10,
+            "publisher_state": 0
+        }
+    },
+    {
+        "model": "cms.title",
+        "pk": 7,
+        "fields": {
+            "language": "en",
+            "title": "Viewer",
+            "page_title": "",
+            "menu_title": "",
+            "meta_description": "",
+            "slug": "viewer",
+            "path": "viewer",
+            "has_url_overwrite": false,
+            "redirect": null,
+            "page": 7,
+            "creation_date": "2022-10-14T21:02:54.095Z",
+            "published": true,
+            "publisher_is_draft": false,
+            "publisher_public": 4,
+            "publisher_state": 0
+        }
+    },
+    {
+        "model": "cms.title",
+        "pk": 8,
+        "fields": {
+            "language": "en",
+            "title": "Literature",
+            "page_title": "",
+            "menu_title": "",
+            "meta_description": "",
+            "slug": "literature",
+            "path": "literature",
+            "has_url_overwrite": false,
+            "redirect": null,
+            "page": 8,
+            "creation_date": "2022-10-14T21:02:45.788Z",
+            "published": true,
+            "publisher_is_draft": false,
+            "publisher_public": 3,
+            "publisher_state": 0
+        }
+    },
+    {
+        "model": "cms.title",
+        "pk": 9,
+        "fields": {
+            "language": "en",
+            "title": "Database",
+            "page_title": "",
+            "menu_title": "",
+            "meta_description": "",
+            "slug": "database",
+            "path": "database",
+            "has_url_overwrite": false,
+            "redirect": null,
+            "page": 9,
+            "creation_date": "2022-10-14T21:03:06.024Z",
+            "published": true,
+            "publisher_is_draft": false,
+            "publisher_public": 5,
+            "publisher_state": 0
+        }
+    },
+    {
+        "model": "cms.title",
+        "pk": 10,
+        "fields": {
+            "language": "en",
+            "title": "More",
+            "page_title": "",
+            "menu_title": "",
+            "meta_description": "",
+            "slug": "more",
+            "path": "more",
+            "has_url_overwrite": false,
+            "redirect": null,
+            "page": 10,
+            "creation_date": "2022-10-14T21:03:12.923Z",
+            "published": true,
+            "publisher_is_draft": false,
+            "publisher_public": 6,
+            "publisher_state": 0
+        }
+    },
+    {
+        "model": "cms.staticplaceholder",
+        "pk": 1,
+        "fields": {
+            "name": "",
+            "code": "footer",
+            "draft": 22,
+            "public": 23,
+            "dirty": false,
+            "creation_method": "template",
+            "site": null
+        }
+    },
+    {
+        "model": "cms.staticplaceholder",
+        "pk": 2,
+        "fields": {
+            "name": "",
+            "code": "page heading",
+            "draft": 24,
+            "public": 25,
+            "dirty": false,
+            "creation_method": "template",
+            "site": null
+        }
+    },
+    {
+        "model": "cms.staticplaceholder",
+        "pk": 3,
+        "fields": {
+            "name": "",
+            "code": "test",
+            "draft": 26,
+            "public": 27,
+            "dirty": false,
+            "creation_method": "template",
+            "site": null
+        }
+    },
+    {
+        "model": "cms.staticplaceholder",
+        "pk": 4,
+        "fields": {
+            "name": "",
+            "code": "test placeholder",
+            "draft": 28,
+            "public": 29,
+            "dirty": false,
+            "creation_method": "template",
+            "site": null
+        }
+    },
+    {
+        "model": "cms.urlconfrevision",
+        "pk": 1,
+        "fields": {
+            "revision": "ad1df4ab-17b8-4031-be0b-7143f9c44426"
+        }
+    },
+    {
+        "model": "geoluminate_cms.icon",
+        "pk": 1,
+        "fields": {
+            "public_extension": 5,
+            "extended_object": 1,
+            "icon": "fas fa-home"
+        }
+    },
+    {
+        "model": "geoluminate_cms.icon",
+        "pk": 2,
+        "fields": {
+            "public_extension": 7,
+            "extended_object": 3,
+            "icon": "fas fa-book"
+        }
+    },
+    {
+        "model": "geoluminate_cms.icon",
+        "pk": 3,
+        "fields": {
+            "public_extension": 8,
+            "extended_object": 5,
+            "icon": "fas fa-database"
+        }
+    },
+    {
+        "model": "geoluminate_cms.icon",
+        "pk": 4,
+        "fields": {
+            "public_extension": 6,
+            "extended_object": 4,
+            "icon": "fas fa-map-marked-alt"
+        }
+    },
+    {
+        "model": "geoluminate_cms.icon",
+        "pk": 5,
+        "fields": {
+            "public_extension": null,
+            "extended_object": 2,
+            "icon": "fas fa-home"
+        }
+    },
+    {
+        "model": "geoluminate_cms.icon",
+        "pk": 6,
+        "fields": {
+            "public_extension": null,
+            "extended_object": 7,
+            "icon": "fas fa-map-marked-alt"
+        }
+    },
+    {
+        "model": "geoluminate_cms.icon",
+        "pk": 7,
+        "fields": {
+            "public_extension": null,
+            "extended_object": 8,
+            "icon": "fas fa-book"
+        }
+    },
+    {
+        "model": "geoluminate_cms.icon",
+        "pk": 8,
+        "fields": {
+            "public_extension": null,
+            "extended_object": 9,
+            "icon": "fas fa-database"
+        }
+    },
+    {
+        "model": "filer.folder",
+        "pk": 1,
+        "fields": {
+            "level": 0,
+            "lft": 1,
+            "rght": 2,
+            "parent": null,
+            "name": "Literature",
+            "owner": null,
+            "uploaded_at": "2022-10-14T21:50:38.272Z",
+            "created_at": "2022-10-14T21:50:38.272Z",
+            "modified_at": "2022-10-17T13:25:51.354Z",
+            "tree_id": 1
+        }
+    },
+    {
+        "model": "filer.folder",
+        "pk": 2,
+        "fields": {
+            "level": 0,
+            "lft": 1,
+            "rght": 2,
+            "parent": null,
+            "name": "Logos",
+            "owner": null,
+            "uploaded_at": "2022-10-14T21:50:51.866Z",
+            "created_at": "2022-10-14T21:50:51.866Z",
+            "modified_at": "2022-10-17T13:25:56.263Z",
+            "tree_id": 2
+        }
+    },
+    {
+        "model": "filer.folder",
+        "pk": 3,
+        "fields": {
+            "level": 0,
+            "lft": 1,
+            "rght": 2,
+            "parent": null,
+            "name": "Media",
+            "owner": null,
+            "uploaded_at": "2022-10-14T21:50:57.600Z",
+            "created_at": "2022-10-14T21:50:57.600Z",
+            "modified_at": "2022-10-17T13:26:00.651Z",
+            "tree_id": 3
+        }
+    },
+    {
+        "model": "filer.file",
+        "pk": 1,
+        "fields": {
+            "polymorphic_ctype": 42,
+            "folder": 2,
+            "file": "filer_public/9f/ac/9fac002b-949f-43e2-a980-ae88389899f9/geoluminate_logo.svg",
+            "_file_size": 58695,
+            "sha1": "86fe0b3176b098a810f3043ed878bfcf857ced98",
+            "has_all_mandatory_data": false,
+            "original_filename": "GeoLuminate_logo.svg",
+            "name": "",
+            "description": null,
+            "owner": 1,
+            "uploaded_at": "2022-10-14T21:53:07.166Z",
+            "modified_at": "2022-10-14T21:53:07.166Z",
+            "is_public": true,
+            "mime_type": "image/svg+xml"
+        }
+    },
+    {
+        "model": "filer.file",
+        "pk": 2,
+        "fields": {
+            "polymorphic_ctype": 42,
+            "folder": 2,
+            "file": "filer_public/b3/77/b3775128-b799-49cb-8758-4546582dd63f/geoluminate_icon.svg",
+            "_file_size": 61686,
+            "sha1": "11725d6510536b7b7bee9733585253fdfc905934",
+            "has_all_mandatory_data": false,
+            "original_filename": "GeoLuminate_icon.svg",
+            "name": "",
+            "description": null,
+            "owner": 1,
+            "uploaded_at": "2022-10-14T21:53:07.670Z",
+            "modified_at": "2022-10-14T21:53:07.670Z",
+            "is_public": true,
+            "mime_type": "image/svg+xml"
+        }
+    },
+    {
+        "model": "filer.clipboard",
+        "pk": 1,
+        "fields": {
+            "user": 1
+        }
+    },
+    {
+        "model": "filer.image",
+        "pk": 1,
+        "fields": {
+            "_height": 116.01217417322835,
+            "_width": 525.1785448818898,
+            "default_alt_text": null,
+            "default_caption": null,
+            "subject_location": "",
+            "date_taken": "2022-10-14T21:53:07.159Z",
+            "author": null,
+            "must_always_publish_author_credit": false,
+            "must_always_publish_copyright": false
+        }
+    },
+    {
+        "model": "filer.image",
+        "pk": 2,
+        "fields": {
+            "_height": 100.30261322834646,
+            "_width": 114.29251370078741,
+            "default_alt_text": null,
+            "default_caption": null,
+            "subject_location": "",
+            "date_taken": "2022-10-14T21:53:07.662Z",
+            "author": null,
+            "must_always_publish_author_credit": false,
+            "must_always_publish_copyright": false
+        }
+    },
+    {
+        "model": "easy_thumbnails.source",
+        "pk": 1,
+        "fields": {
+            "storage_hash": "f9bde26a1556cd667f742bd34ec7c55e",
+            "name": "filer_public/9f/ac/9fac002b-949f-43e2-a980-ae88389899f9/geoluminate_logo.svg",
+            "modified": "2022-10-14T21:55:55.761Z"
+        }
+    },
+    {
+        "model": "easy_thumbnails.source",
+        "pk": 2,
+        "fields": {
+            "storage_hash": "f9bde26a1556cd667f742bd34ec7c55e",
+            "name": "filer_public/b3/77/b3775128-b799-49cb-8758-4546582dd63f/geoluminate_icon.svg",
+            "modified": "2022-10-14T21:56:22.397Z"
+        }
+    },
+    {
+        "model": "easy_thumbnails.thumbnail",
+        "pk": 1,
+        "fields": {
+            "storage_hash": "f9bde26a1556cd667f742bd34ec7c55e",
+            "name": "filer_public_thumbnails/filer_public/9f/ac/9fac002b-949f-43e2-a980-ae88389899f9/geoluminate_logo.svg__180x180_crop.svg",
+            "modified": "2022-10-14T21:53:07.347Z",
+            "source": 1
+        }
+    },
+    {
+        "model": "easy_thumbnails.thumbnail",
+        "pk": 2,
+        "fields": {
+            "storage_hash": "f9bde26a1556cd667f742bd34ec7c55e",
+            "name": "filer_public_thumbnails/filer_public/b3/77/b3775128-b799-49cb-8758-4546582dd63f/geoluminate_icon.svg__180x180_crop.svg",
+            "modified": "2022-10-14T21:53:07.792Z",
+            "source": 2
+        }
+    },
+    {
+        "model": "easy_thumbnails.thumbnail",
+        "pk": 3,
+        "fields": {
+            "storage_hash": "f9bde26a1556cd667f742bd34ec7c55e",
+            "name": "filer_public_thumbnails/filer_public/b3/77/b3775128-b799-49cb-8758-4546582dd63f/geoluminate_icon.svg__40x40_crop.svg",
+            "modified": "2022-10-14T21:53:08.145Z",
+            "source": 2
+        }
+    },
+    {
+        "model": "easy_thumbnails.thumbnail",
+        "pk": 4,
+        "fields": {
+            "storage_hash": "f9bde26a1556cd667f742bd34ec7c55e",
+            "name": "filer_public_thumbnails/filer_public/9f/ac/9fac002b-949f-43e2-a980-ae88389899f9/geoluminate_logo.svg__40x40_crop.svg",
+            "modified": "2022-10-14T21:53:08.221Z",
+            "source": 1
+        }
+    },
+    {
+        "model": "easy_thumbnails.thumbnail",
+        "pk": 5,
+        "fields": {
+            "storage_hash": "f9bde26a1556cd667f742bd34ec7c55e",
+            "name": "filer_public_thumbnails/filer_public/b3/77/b3775128-b799-49cb-8758-4546582dd63f/geoluminate_icon.svg__80x80_crop.svg",
+            "modified": "2022-10-14T21:55:55.698Z",
+            "source": 2
+        }
+    },
+    {
+        "model": "easy_thumbnails.thumbnail",
+        "pk": 6,
+        "fields": {
+            "storage_hash": "f9bde26a1556cd667f742bd34ec7c55e",
+            "name": "filer_public_thumbnails/filer_public/9f/ac/9fac002b-949f-43e2-a980-ae88389899f9/geoluminate_logo.svg__80x80_crop.svg",
+            "modified": "2022-10-14T21:55:55.772Z",
+            "source": 1
+        }
+    },
+    {
+        "model": "easy_thumbnails.thumbnail",
+        "pk": 7,
+        "fields": {
+            "storage_hash": "f9bde26a1556cd667f742bd34ec7c55e",
+            "name": "filer_public_thumbnails/filer_public/b3/77/b3775128-b799-49cb-8758-4546582dd63f/geoluminate_icon.svg__30x30.svg",
+            "modified": "2022-10-14T21:56:22.475Z",
+            "source": 2
+        }
+    },
+    {
+        "model": "easy_thumbnails.thumbnaildimensions",
+        "pk": 1,
+        "fields": {
+            "thumbnail": 1,
+            "width": 180,
+            "height": 180
+        }
+    },
+    {
+        "model": "easy_thumbnails.thumbnaildimensions",
+        "pk": 2,
+        "fields": {
+            "thumbnail": 2,
+            "width": 180,
+            "height": 180
+        }
+    },
+    {
+        "model": "easy_thumbnails.thumbnaildimensions",
+        "pk": 3,
+        "fields": {
+            "thumbnail": 3,
+            "width": 40,
+            "height": 40
+        }
+    },
+    {
+        "model": "easy_thumbnails.thumbnaildimensions",
+        "pk": 4,
+        "fields": {
+            "thumbnail": 4,
+            "width": 40,
+            "height": 40
+        }
+    },
+    {
+        "model": "easy_thumbnails.thumbnaildimensions",
+        "pk": 5,
+        "fields": {
+            "thumbnail": 5,
+            "width": 80,
+            "height": 80
+        }
+    },
+    {
+        "model": "easy_thumbnails.thumbnaildimensions",
+        "pk": 6,
+        "fields": {
+            "thumbnail": 6,
+            "width": 80,
+            "height": 80
+        }
+    },
+    {
+        "model": "easy_thumbnails.thumbnaildimensions",
+        "pk": 7,
+        "fields": {
+            "thumbnail": 7,
+            "width": 30,
+            "height": 26
+        }
+    },
+    {
+        "model": "bootstrap5_jumbotron.bootstrap5jumbotron",
+        "pk": 3,
+        "fields": {
+            "fluid": true,
+            "tag_type": "div",
+            "attributes": {}
+        }
+    },
+    {
+        "model": "bootstrap5_picture.bootstrap5picture",
+        "pk": 4,
+        "fields": {
+            "template": "default",
+            "picture": null,
+            "external_picture": null,
+            "width": null,
+            "height": null,
+            "alignment": "",
+            "caption_text": "",
+            "attributes": {},
+            "link_url": null,
+            "link_page": null,
+            "link_target": "",
+            "link_attributes": {},
+            "use_automatic_scaling": true,
+            "use_no_cropping": false,
+            "use_crop": false,
+            "use_upscale": false,
+            "use_responsive_image": "inherit",
+            "thumbnail_options": null,
+            "picture_fluid": true,
+            "picture_rounded": false,
+            "picture_thumbnail": false
+        }
+    },
+    {
+        "model": "kepler.configuration",
+        "pk": 1,
+        "fields": {
+            "mapbox_token": null,
+            "mapState": {
+                "bearing": 0,
+                "dragRotate": false,
+                "isSplit": false,
+                "latitude": 34,
+                "longitude": 0,
+                "pitch": 0,
+                "zoom": 1
+            },
+            "mapStyle": {
+                "mapStyles": {},
+                "styleType": "dark",
+                "threeDBuildingColor": [
+                    9.665468314072013,
+                    17.18305478057247,
+                    31.1442867897876
+                ],
+                "topLayerGroups": {},
+                "visibleLayerGroups": {
+                    "3d building": false,
+                    "border": false,
+                    "building": true,
+                    "label": true,
+                    "land": true,
+                    "road": true,
+                    "water": true
+                }
+            },
+            "visState": {
+                "animationConfig": {
+                    "currentTime": null,
+                    "speed": 1
+                },
+                "filters": [],
+                "interactionConfig": {
+                    "brush": {
+                        "enabled": false,
+                        "size": 0.5
+                    },
+                    "coordinate": {
+                        "enabled": false
+                    },
+                    "geocoder": {
+                        "enabled": false
+                    },
+                    "tooltip": {
+                        "compareMode": false,
+                        "compareType": "absolute",
+                        "enabled": true,
+                        "fieldsToShow": {}
+                    }
+                },
+                "layerBlending": "normal",
+                "layers": [],
+                "splitMaps": []
+            },
+            "version": "v1",
+            "theme": "dark",
+            "lang": "en"
+        }
+    }
+]

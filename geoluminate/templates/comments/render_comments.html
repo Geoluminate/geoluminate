@@ -1,0 +1,25 @@
+{% load static sekizai_tags comments authentication %}
+{% get_comment_count for object as comment_count %}
+
+{% if user.is_authenticated %}
+  <p>Hi {{user.first_name}}!
+  {% if not comment_count %} Be the first to comment and let us know what you think about {{object_descr|default:object}}!</p>
+  {% else %}
+    Let us know what you think about {{object_descr|default_if_none:object}}!</p>
+  {% endif %}
+{% else %}
+  <p>Only authenticated users are allowed to comment. Please {% auth_link 'login' 'login' %} or {% auth_link 'register' 'create an account' %}!</p>
+{% endif %}
+
+
+{% if user.is_authenticated %}
+  <div class="comment-form w-100">{% render_comment_form for object %}</div>
+{% endif %}
+{% if comment_count %}
+  <div id='comment-tree' >{% render_comment_list for object %}</div>
+{% endif %}
+
+{% addtoblock "js" %}<script src='{% static "geoluminate/js/comments.js" %}'></script>{% endaddtoblock %}
+
+{% addtoblock "css" %}<link rel="stylesheet" type="text/css" href="{% static 'fluent_comments/css/ajaxcomments.css' %}" />{% endaddtoblock %}
+{% addtoblock "js" %}<script type="text/javascript" src="{% static 'fluent_comments/js/ajaxcomments.js' %}"></script>{% endaddtoblock %}

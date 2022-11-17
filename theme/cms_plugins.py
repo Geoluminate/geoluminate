@@ -7,7 +7,7 @@ from .models import Section, Heading, Image, Feature, PageHeading
 class SectionPlugin(CMSPluginBase):
     module = 'GeoLuminate'
     model = Section
-    render_template = "section.html"
+    render_template = "theme/cms/section.html"
     cache = False
     name = _('Section')
     allow_children = True
@@ -16,7 +16,7 @@ class SectionPlugin(CMSPluginBase):
 @plugin_pool.register_plugin
 class ContentPlugin(CMSPluginBase):
     module = 'GeoLuminate'
-    render_template = "content.html"
+    render_template = "theme/cms/content.html"
     cache = False
     name = _('Content')
     allow_children = True
@@ -26,7 +26,7 @@ class ContentPlugin(CMSPluginBase):
 class HeadingPlugin(CMSPluginBase):
     module = 'GeoLuminate'
     model = Heading
-    render_template = "heading.html"
+    render_template = "theme/cms/heading.html"
     cache = False
     name = _('Heading')
     require_parent = True
@@ -36,7 +36,7 @@ class HeadingPlugin(CMSPluginBase):
 class ImagePlugin(CMSPluginBase):
     module = 'GeoLuminate'
     model = Image
-    render_template = "image.html"
+    render_template = "theme/cms/image.html"
     cache = False
     name = _('Image')
 
@@ -45,7 +45,7 @@ class ImagePlugin(CMSPluginBase):
 class FeaturePlugin(CMSPluginBase):
     module = 'GeoLuminate'
     model = Feature
-    render_template = "feature.html"
+    render_template = "theme/cms/feature.html"
     cache = False
     name = _('Feature')
 
@@ -53,7 +53,7 @@ class FeaturePlugin(CMSPluginBase):
 @plugin_pool.register_plugin
 class FeatureContainerPlugin(CMSPluginBase):
     module = 'GeoLuminate'
-    render_template = "feature_container.html"
+    render_template = "theme/cms/feature_container.html"
     cache = False
     name = _('Feature Container')
     allow_children = True
@@ -63,7 +63,7 @@ class FeatureContainerPlugin(CMSPluginBase):
 class PageHeadingPlugin(CMSPluginBase):
     module = 'GeoLuminate'
     model = PageHeading
-    render_template = "page_heading.html"
+    render_template = "theme/cms/page_heading.html"
     cache = False
     name = _('Page Heading')
     allow_children = True

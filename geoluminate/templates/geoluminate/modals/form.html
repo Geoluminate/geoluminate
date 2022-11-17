@@ -1,0 +1,17 @@
+{% load crispy_forms_tags i18n %}
+
+<div id="{{modal_id}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="{{modal_id}}" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      {% include 'geoluminate/modals/header.html' with header='Filter Publications' %}
+      <div class='modal-body'>
+        <div>
+        {% if helper %}{% crispy form helper %}{% else %}{% crispy form %}{% endif %}
+        </div>
+        <div class="modal-footer">
+          <input form="{{filter.helper.form_id}}" type="submit" name="submit" value="{% trans "confirm" %}" class="btn btn-primary large">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

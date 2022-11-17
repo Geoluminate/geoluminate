@@ -1,0 +1,15 @@
+{% load cms_tags %}
+<nav class="navbar navbar-expand-lg navbar-light p-1">
+  <div class="container-fluid">
+    <header id="header" class='p-2 border-0'>
+      <div class="logo"><strong>{{ request.current_page }}</strong> 
+        {% render_model config.site "name" "name" %}</div>
+    </header>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        {% include 'authentication/navbar_widget.html' %}
+    </div>
+  </div>
+</nav>

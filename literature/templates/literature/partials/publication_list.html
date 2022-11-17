@@ -1,0 +1,22 @@
+{% load i18n %}
+<div class='d-flex justify-content-between'>
+  <form action="/" method='get'
+      hx-trigger="change"
+      hx-target="#publication-list"
+      hx-params="*"
+      hx-get>
+    <div class="input-group mb-3">
+      <label class="input-group-text" for="page">{% trans "Showing publications from:" %}</label>
+      <select name='page' id="page" class="form-select"
+      {% if paginator.num_pages == 1 %} disabled{% endif %}>
+        {% for p in page.paginator.pages %}
+          <option value="{{ p.number }}" {% if p.number == page.number %}selected{% endif %}>{{ p }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </form>
+</div>	
+{% for year, publications in years %}
+{% if not forloop.first %}<hr class="major" />{% endif %}
+  {% include "crossref/publication_group.html" %}
+{% endfor %}

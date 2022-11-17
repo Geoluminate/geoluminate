@@ -1,0 +1,43 @@
+{% load static sekizai_tags %}
+
+<section class='d-flex h-100 w-100 overflow-hidden'>
+    <div class='inner container flex-grow-1 h-100 overflow-auto'>
+      <section class='pt-0'>
+        <div id="tabbedContent" class="tab-content container-fluid pt-3">
+          <header class="main">
+            <div>
+            {% comment %} {% include "crossref/partials/action_list.html" %} {% endcomment %}
+              {% if object.is_verified %}
+              <i class='text-success fas fa-check-circle' data-bs-toggle="tooltip" data-bs-placement="bottom" title="Data from this objectlication have been verified as part of the World Heat Flow Database Project!"></i>
+            {% else %}
+              <i class='text-warning fas fa-exclamation-triangle' data-bs-toggle="tooltip" data-bs-placement="bottom" title="Data from this objectlication are unverified. Use at your own discretion."></i>
+            {% endif %}
+              <i class='me-auto'>{{object.container_title}}, {{ object.objectlished|date:'Y' }}
+                {% if object.issue %}, Iss. {{ object.issue }}{% endif %}
+                {% if object.volume %}, vol. {{ object.volume }}{% endif %}
+                {% if object.page %}, pp. {{ object.page }}{% endif %}
+              </i>
+              <h4 class="card-title">{{ object.title }}</h4>
+              <h5 class="card-subtitle mb-2 text-muted">
+              {% for author in object.author.all %}
+              <a href="{{ author.get_absolute_url }}"><span>{{author}}</span></a>{% if not forloop.last %},{% endif %} 
+              
+              {% endfor %}</h5>
+            </div>
+          </header>
+        
+          {% if object.abstract %}
+            <p>{{ object.abstract|safe }}</p>
+          {% endif %}
+          {% if object.keywords %}
+            {% for keyword in object.keywords.all %}
+              <span class="keyword">{{ keyword }}</span>
+            {% endfor %}
+          {% endif %}
+        {% lorem 4 b random %}
+       
+        {% addtoblock "js" %}<script>$(function(){$('[data-bs-toggle="tooltip"]').tooltip()})</script>{% endaddtoblock %}
+        </div>
+      </section> 
+  </div>
+</section>

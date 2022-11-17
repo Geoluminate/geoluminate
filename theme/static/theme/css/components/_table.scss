@@ -29,10 +29,6 @@ table {
 
 	td {
 		padding: 0.75em 0.75em;
-		text-align:center;
-		&:first-child {
-			text-align: left!important;
-		}
 	}
 
 	th {
@@ -40,10 +36,6 @@ table {
 		font-size: 0.9em;
 		font-weight: _font(weight-bold);
 		padding: 0 0.75em 0.75em 0.75em;
-		text-align: center;
-		&:first-child {
-			text-align: left!important;
-		}
 	}
 
 	thead {

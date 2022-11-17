@@ -1,5 +1,5 @@
 from django import forms
-from django.conf import settings
+from datacite.conf import settings
 from .models import Schema, Right, Subject
 from django_ckeditor_5.widgets import CKEditor5Widget
 from crispy_forms.helper import FormHelper

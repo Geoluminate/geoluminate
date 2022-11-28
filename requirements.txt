@@ -145,8 +145,6 @@ imagesize==1.4.1
 importlib-metadata==5.0.0
 inflection==0.5.1
 Inflector==3.0.1
-ipython==8.5.0
-ipython-genutils==0.2.0
 isbnlib==3.10.12
 jdcal==1.4.1
 jedi==0.18.1

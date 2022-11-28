@@ -1,0 +1,71 @@
+{% extends 'sidebar_right.html' %}
+{% load i18n geoluminate %}
+
+{% block main_window %}
+<div class='content pt-5'>
+  <div class="form-floating mb-3 float-end w-25">
+    <input type="text" class="form-control" id="glossaryFilter" placeholder="{% trans "Search" %}">
+    <label for="glossaryFilter">{% trans "Search" %}</label>
+  </div>
+  {% for model in models %}
+  <header>
+    <h1 id="{{ model.name|slugify }}">{{ model.name }}</h1>
+  </header>
+  {{model.summary}}
+  {{model.description}}
+    <dl class='list-group'>
+    {% for field in model.fields %}
+    {% if field.name not in exclude %}
+    <div class='definition py-2'>
+      <dt><strong>{{ field.name }}</strong> {{ field.verbose|capfirst }}
+        &mdash; {{field.data_type}}
+      </dt>
+      <dd>
+      {% if field.help_text %}
+        {{ field.help_text|capfirst }}
+      {% endif %}
+      </dd>
+      {% if field.choices %}
+      <dd class='pt-1'>
+        {% trans "Choices" %}:
+        <ul class='mb-0'>
+          {% if field.choices.count %}
+            {% for choice in field.choices.all %}
+              <li><strong>{{ choice.code }}</strong> {{ choice.name }}</li>{% if choice.description %}
+              {{choice.description }}{% endif %}
+            {% endfor %}
+          {% else %}
+            {% for choice in field.choices %}
+            <li>{{choice}}</li>
+            {% endfor %}
+          {% endif %}
+        </ul>
+      </dd>
+      {% endif %}
+    </div>
+    {% endif %}
+    {% endfor %}
+    </dl>
+  {% endfor %}
+</div>
+{% endblock main_window %}
+
+{% block sidebar_right %}
+
+<div class='sidebar-header d-flex justify-content-between'>
+  <h5>Database Tables</h5>
+</div>
+<div class='sidebar-body p-3'>
+  <ul class='alt nav flex-column' id="myTab" role="tablist" hx-target="#dashboardContainer">
+    {% for model in models %}
+    <li>
+      <a href="#{{ model.name|slugify }}">
+        <span class='ps-2'>{{ model.name|capfirst }}</span>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+
+
+{% endblock sidebar_right %}

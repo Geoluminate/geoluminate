@@ -4,20 +4,33 @@
             <div class="vr mx-2"></div>
         {% endif %}
 
-        <li class="{% if item.selected %} active{% endif %}{% if item.children %} dropdown{% endif %}" id="top-menu-{{ item.slug }}">
-            <a class="icon {{item.icon}} {{item.extra_css}}" href
-            hx-get="{{ item.url }}"
-            {% if forloop.first %}
-            hx-trigger='load, click'
-            {% endif %}
-            {% if item.children %} 
-            class="dropdown-toggle" 
-            data-hover="dropdown" 
-            data-toggle="dropdown"{% endif %}>
-                <span>{{ item.title }}</span>
-                {% if item.children %}
-                    &nbsp;<b class="caret"></b>
+        <li class="{% if item.selected %} active{% endif %}{% if item.children %} dropdown{% endif %}">
+            <a class="icon {{item.icon}} {{item.extra_css}} {% if item.children %}dropdown-toggle{% endif %}" 
+                href
+                hx-get="{{ item.url }}"
+                {% comment %} hx-swap="beforeend" {% endcomment %}
+                {% if forloop.first %}
+                hx-trigger='load once'
+                {% else %}
+                hx-trigger='click'
+                {% comment %} hx-trigger='click once' {% endcomment %}
                 {% endif %}
+                data-bs-toggle="tab" 
+                data-bs-target="#{{ item.title }}Content" 
+                type="button" role="tab" 
+                aria-controls="{{ item.title }}Content" 
+                aria-selected="{% if item.selected %}true{% else %}false{% endif %}"
+
+
+
+
+                {% if item.children %} 
+                data-hover="dropdown" 
+                data-toggle="dropdown"{% endif %}>
+                    <span>{{ item.title }}</span>
+                    {% if item.children %}
+                        &nbsp;<b class="caret"></b>
+                    {% endif %}
             </a>
             {% if item.children %}
                 {% include 'geoluminate/components/app_submenu.html' with items=item.children %}

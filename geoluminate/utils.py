@@ -3,6 +3,7 @@ from django.conf import settings
 from rest_framework.routers import SimpleRouter
 from django.core.exceptions import ImproperlyConfigured
 from django.apps import apps
+from django.db import models
 
 
 def choices_from_qs(qs, field):
@@ -28,7 +29,7 @@ def import_attribute(path):
 
 def get_core_database():
     """Fetches the geoluminate database model defined by `settings.CORE_DATABASE`"""
-    return getattr(settings, 'GEOLUMINATE_DATABASE')
+    return getattr(settings, 'GEOLUMINATE_DATABASE', None)
 
 
 def get_api_routers():
@@ -51,4 +52,10 @@ def get_form_class(forms, form_id, default_form):
     return form_class
 
 
-DATABASE = apps.get_model(get_core_database())
+db_string = get_core_database()
+if db_string:
+    DATABASE = apps.get_model(get_core_database())
+    db_name = DATABASE._meta.verbose_name
+else:
+    DATABASE = models.Model
+    db_name = 'undefined'

@@ -5,7 +5,8 @@ from .views import (
     ModelFieldSelect2View,
     WorldMap,
     SiteView,
-    DatabaseTableView
+    DatabaseTableView,
+    GlossaryView
 )
 
 urlpatterns = [
@@ -14,7 +15,9 @@ urlpatterns = [
         'model-field-select2/',
         ModelFieldSelect2View.as_view(),
         name='geoluminate_select2'),
+    path("accounts/", include('allauth.urls')),
     path('database/', DatabaseTableView.as_view(), name='database_table'),
+    path('glossary/', GlossaryView.as_view(), name='glossary'),
     path('sites/', WorldMap.as_view(), name='world_map'),
     path('sites/<pk>/', SiteView.as_view(), name='site'),
     path("select2/", include("django_select2.urls")),

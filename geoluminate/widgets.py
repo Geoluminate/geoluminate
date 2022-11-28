@@ -1,7 +1,7 @@
 from multiprocessing.sharedctypes import Value
 from import_export.widgets import ForeignKeyWidget, ManyToManyWidget
 from django.utils.translation import ugettext as _
-from database.models import Choice
+from geoluminate.models import Choice
 
 
 class ChoiceForeignKey(ForeignKeyWidget):

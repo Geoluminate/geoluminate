@@ -22,7 +22,7 @@ class ChoiceFieldBase:
             prevent users being able to select "unspecified" as a value.
             Defaults to True.
         """
-        kwargs['to'] = "database.Choice"
+        kwargs['to'] = "geoluminate.Choice"
         kwargs['limit_choices_to'] = self.choice_limiter
         kwargs['related_name'] = '+'
         kwargs['verbose_name'] = verbose_name
@@ -41,6 +41,13 @@ class ChoiceFieldBase:
         if "limit_choices_to" in kwargs:
             del kwargs['limit_choices_to']
         return name, path, args, kwargs
+
+    def get_choices_queryset(self):
+        model = self.remote_field.model
+        return model.objects.filter(self.choice_limiter())
+
+    # def get_choices(self):
+    #     return [(x.code, x.name) for x in self.get_choices_queryset()]
 
 
 class ChoicesOneToOne(ChoiceFieldBase, OneToOneField):

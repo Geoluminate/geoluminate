@@ -1,6 +1,6 @@
 from django.contrib import admin
 from solo.admin import SingletonModelAdmin
-from geoluminate.models import GlobalConfiguration
+from geoluminate.models import GlobalConfiguration, Choice
 from django.utils.translation import gettext_lazy as _
 from django.contrib.sites.models import Site
 # from django_reverse_admin import ReverseModelAdmin
@@ -27,12 +27,6 @@ class ConfigurationAdmin(FrontendEditableAdminMixin, SingletonModelAdmin):
             'fields': ('logo', 'icon'),
         }),
     )
-    # inline_type = 'tabular'
-
-    # inline_reverse = [{
-    #     'field_name': 'site',
-    #     'admin_class': SiteInline
-    # }]
 
 
 admin.site.unregister(Site)
@@ -41,3 +35,16 @@ admin.site.unregister(Site)
 @admin.register(Site)
 class DjangoSiteAdmin(FrontendEditableAdminMixin, admin.ModelAdmin):
     frontend_editable_fields = ("name",)
+
+
+@admin.register(Choice)
+class ChoiceAdmin(admin.ModelAdmin):
+    list_display = ['type', 'code', 'name', '_description']
+    list_filter = ['type', ]
+    search_fields = ['name', ]
+
+    def _description(self, obj):
+        if obj.description:
+            return obj.description[:50] + '...'
+    _description.admin_order_field = 'description'
+    _description.verbose_name = _('description')

@@ -3,7 +3,11 @@ from drf_auto_endpoint.adapters import BaseAdapter, MetaDataInfo, PROPERTY, GETT
 
 class DataTablesAdapter(BaseAdapter):
     """
-    Here is an example of the expected output
+    A custom `drf_auto_endpoint.adapters` adapter that formats OPTIONS
+    requests in an appropriate format for datatables.js. E.g.
+
+    .. code:: python
+
         [
             {
                 "data": "test",

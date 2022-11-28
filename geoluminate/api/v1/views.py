@@ -16,7 +16,7 @@ from rest_framework.views import get_view_name
 from rest_framework_datatables_editor.filters import DatatablesFilterBackend
 
 
-class CoreViewSet(AccessViewSetMixin, viewsets.ModelViewSet):
+class DataViewSet(AccessViewSetMixin, viewsets.ModelViewSet):
     __doc__ = f"Endpoint to request a set of {DATABASE._meta.verbose_name} data."
 
     access_policy = CoreAccessPolicy
@@ -34,7 +34,7 @@ class CoreViewSet(AccessViewSetMixin, viewsets.ModelViewSet):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.__class__.__name__ = DATABASE._meta.verbose_name
+        # self.__class__.__name__ = DATABASE._meta.verbose_name
 
     def list(self, request, *args, **kwargs):
         if self.is_geojson():

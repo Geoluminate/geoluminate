@@ -10,12 +10,11 @@ router = routers.DefaultRouter()
 urls = []
 for r in get_api_routers():
     urls.append(path('', include(r.urls)))
-
-    # router.registry.extend(r.registry)
+#     router.registry.extend(r.registry)
 
 urlpatterns = [
     path('', SpectacularSwaggerView.as_view(
-        url_name='api:schema'), name='swagger-ui'),
+        url_name='schema'), name='swagger-ui'),
     path('', include(urls)),
     path('schema/', SpectacularAPIView.as_view(), name='schema'),
     path('auth/', include('rest_framework.urls', namespace='rest_framework')),

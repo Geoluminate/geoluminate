@@ -21,7 +21,8 @@ Packages
    menus/geoluminate.menus
    rest_framework/geoluminate.rest_framework
    select2/geoluminate.select2
-
+   templatetags/geoluminate.templatetags.geoluminate
+   
 Modules
 ----------
 

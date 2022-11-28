@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
-<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="geoluminate.gis.utils" href="geoluminate.gis.utils.html" /><link rel="prev" title="geoluminate.gis.serializers" href="geoluminate.gis.serializers.html" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="access_policies.py" href="../geoluminate.access_policies.html" /><link rel="prev" title="geoluminate.select2.widgets" href="../select2/geoluminate.select2.widgets.html" />
 
     <link rel="shortcut icon" href="../../_static/icon.svg"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
-        <title>geoluminate.gis.urls - GeoLuminate</title>
+        <title>templatetags.py - GeoLuminate</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
@@ -134,7 +134,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -211,15 +211,15 @@
 <li class="toctree-l4"><a class="reference internal" href="../core/geoluminate.core.mixins.html">geoluminate.core.mixins</a></li>
 </ul>
 </li>
-<li class="toctree-l3 current has-children"><a class="reference internal" href="geoluminate.gis.html">GIS</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="geoluminate.gis.admin.html">geoluminate.gis.admin</a></li>
-<li class="toctree-l4"><a class="reference internal" href="geoluminate.gis.conf.html">geoluminate.gis.conf</a></li>
-<li class="toctree-l4"><a class="reference internal" href="geoluminate.gis.db_functions.html">geoluminate.gis.db_functions</a></li>
-<li class="toctree-l4"><a class="reference internal" href="geoluminate.gis.managers.html">geoluminate.gis.managers</a></li>
-<li class="toctree-l4"><a class="reference internal" href="geoluminate.gis.models.html">geoluminate.gis.models</a></li>
-<li class="toctree-l4"><a class="reference internal" href="geoluminate.gis.serializers.html">geoluminate.gis.serializers</a></li>
-<li class="toctree-l4 current current-page"><a class="current reference internal" href="#">geoluminate.gis.urls</a></li>
-<li class="toctree-l4"><a class="reference internal" href="geoluminate.gis.utils.html">geoluminate.gis.utils</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../gis/geoluminate.gis.html">GIS</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../gis/geoluminate.gis.admin.html">geoluminate.gis.admin</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gis/geoluminate.gis.conf.html">geoluminate.gis.conf</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gis/geoluminate.gis.db_functions.html">geoluminate.gis.db_functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gis/geoluminate.gis.managers.html">geoluminate.gis.managers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gis/geoluminate.gis.models.html">geoluminate.gis.models</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gis/geoluminate.gis.serializers.html">geoluminate.gis.serializers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gis/geoluminate.gis.urls.html">geoluminate.gis.urls</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../gis/geoluminate.gis.utils.html">geoluminate.gis.utils</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../management/geoluminate.management.html">Management Commands</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -246,7 +246,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../select2/geoluminate.select2.widgets.html">geoluminate.select2.widgets</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../templatetags/geoluminate.templatetags.geoluminate.html">templatetags.py</a></li>
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">templatetags.py</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../geoluminate.access_policies.html">access_policies.py</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../geoluminate.admin.html">admin.py</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../geoluminate.celery.html">celery.py</a></li>
@@ -359,7 +359,7 @@
         </a>
         <div class="content-icon-container">
           <div class="edit-this-page">
-  <a class="muted-link" href="https://github.com/SSJenny90/geoluminate/edit/development/docs/source/geoluminate/gis/geoluminate.gis.urls.rst" title="Edit this page">
+  <a class="muted-link" href="https://github.com/SSJenny90/geoluminate/edit/development/docs/source/geoluminate/templatetags/geoluminate.templatetags.geoluminate.rst" title="Edit this page">
     <svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
       <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
       <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
@@ -375,14 +375,65 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main">
-          <section id="geoluminate-gis-urls">
-<h1>geoluminate.gis.urls<a class="headerlink" href="#geoluminate-gis-urls" title="Permalink to this heading">#</a></h1>
+          <section id="module-geoluminate.templatetags.geoluminate">
+<span id="templatetags-py"></span><h1>templatetags.py<a class="headerlink" href="#module-geoluminate.templatetags.geoluminate" title="Permalink to this heading">#</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="geoluminate.templatetags.geoluminate.addstr">
+<span class="sig-name descname"><span class="pre">addstr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geoluminate.templatetags.geoluminate.addstr" title="Permalink to this definition">#</a></dt>
+<dd><p>concatenate arg1 &amp; arg2</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geoluminate.templatetags.geoluminate.filter_params">
+<span class="sig-name descname"><span class="pre">filter_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geoluminate.templatetags.geoluminate.filter_params" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns curent filter params as a string</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geoluminate.templatetags.geoluminate.get_obj_attr">
+<span class="sig-name descname"><span class="pre">get_obj_attr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geoluminate.templatetags.geoluminate.get_obj_attr" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geoluminate.templatetags.geoluminate.icon">
+<span class="sig-name descname"><span class="pre">icon</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geoluminate.templatetags.geoluminate.icon" title="Permalink to this definition">#</a></dt>
+<dd><p>Gets the correct URL for the icon as set in <cite>GlobalConfiguration</cite>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geoluminate.templatetags.geoluminate.logo">
+<span class="sig-name descname"><span class="pre">logo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geoluminate.templatetags.geoluminate.logo" title="Permalink to this definition">#</a></dt>
+<dd><p>Gets the correct URL for the logo as set in <cite>GlobalConfiguration</cite>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geoluminate.templatetags.geoluminate.menu">
+<span class="sig-name descname"><span class="pre">menu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">menu</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geoluminate.templatetags.geoluminate.menu" title="Permalink to this definition">#</a></dt>
+<dd><p>Renders a menu</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geoluminate.templatetags.geoluminate.panel">
+<span class="sig-name descname"><span class="pre">panel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">template</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">active</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geoluminate.templatetags.geoluminate.panel" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geoluminate.templatetags.geoluminate.tab">
+<span class="sig-name descname"><span class="pre">tab</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">active</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geoluminate.templatetags.geoluminate.tab" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geoluminate.templatetags.geoluminate.verbose_name">
+<span class="sig-name descname"><span class="pre">verbose_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geoluminate.templatetags.geoluminate.verbose_name" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns verbose_name for a field.</p>
+</dd></dl>
+
 </section>
 
         </article>
@@ -390,23 +441,23 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="geoluminate.gis.utils.html">
+          <a class="next-page" href="../geoluminate.access_policies.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">geoluminate.gis.utils</div>
+                <div class="title">access_policies.py</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="geoluminate.gis.serializers.html">
+          <a class="prev-page" href="../select2/geoluminate.select2.widgets.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">geoluminate.gis.serializers</div>
+                <div class="title">geoluminate.select2.widgets</div>
                 
               </div>
             </a>
@@ -430,8 +481,35 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">templatetags.py</a><ul>
+<li><a class="reference internal" href="#geoluminate.templatetags.geoluminate.addstr"><code class="docutils literal notranslate"><span class="pre">addstr()</span></code></a></li>
+<li><a class="reference internal" href="#geoluminate.templatetags.geoluminate.filter_params"><code class="docutils literal notranslate"><span class="pre">filter_params()</span></code></a></li>
+<li><a class="reference internal" href="#geoluminate.templatetags.geoluminate.get_obj_attr"><code class="docutils literal notranslate"><span class="pre">get_obj_attr()</span></code></a></li>
+<li><a class="reference internal" href="#geoluminate.templatetags.geoluminate.icon"><code class="docutils literal notranslate"><span class="pre">icon()</span></code></a></li>
+<li><a class="reference internal" href="#geoluminate.templatetags.geoluminate.logo"><code class="docutils literal notranslate"><span class="pre">logo()</span></code></a></li>
+<li><a class="reference internal" href="#geoluminate.templatetags.geoluminate.menu"><code class="docutils literal notranslate"><span class="pre">menu()</span></code></a></li>
+<li><a class="reference internal" href="#geoluminate.templatetags.geoluminate.panel"><code class="docutils literal notranslate"><span class="pre">panel()</span></code></a></li>
+<li><a class="reference internal" href="#geoluminate.templatetags.geoluminate.tab"><code class="docutils literal notranslate"><span class="pre">tab()</span></code></a></li>
+<li><a class="reference internal" href="#geoluminate.templatetags.geoluminate.verbose_name"><code class="docutils literal notranslate"><span class="pre">verbose_name()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

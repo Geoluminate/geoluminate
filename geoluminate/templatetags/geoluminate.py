@@ -33,12 +33,14 @@ def icon():
     return static('geoluminate/icon.svg')
 
 
-@register.simple_tag
-def verbose_name(instance, field_name):
+@register.filter
+def verbose_name(instance, field_name=None):
     """
     Returns verbose_name for a field.
     """
-    return instance._meta.get_field(field_name).verbose_name.capitalize()
+    if field_name:
+        return instance._meta.get_field(field_name).verbose_name.capitalize()
+    return instance._meta.verbose_name
 
 
 @register.filter

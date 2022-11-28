@@ -1,6 +1,7 @@
 from literature import views
 from django.urls import path, include
 from .menu import PublicationMenu
+
 app_name = 'literature'
 urlpatterns = [
     path('', views.PublicationList.as_view(), name='list'),

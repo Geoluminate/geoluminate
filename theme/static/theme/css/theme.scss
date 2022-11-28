@@ -65,3 +65,10 @@
 @import 'layout/publication';
 @import 'layout/kepler';
 @import 'layout/utils';
+
+
+@media print {
+	#application-sidebar, #appMenu, nav {
+		display: none !important;
+	}
+}

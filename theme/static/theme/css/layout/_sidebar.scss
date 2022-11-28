@@ -26,7 +26,7 @@
 
 
 #application-sidebar {
-	$pad: 2em;
+	$pad: 0.5em;
 	display: flex;
 	flex-direction: column;
 
@@ -38,21 +38,42 @@
 	background-color: _palette(secondary);
 	font-size: 1.1em;
 	position: relative;
-	width: _size(sidebar-width);
+	// width: _size(sidebar-width);
 
-	>.logo {
-		height: 6rem;
-		img {
-			width: 100%;
+	#sidebarLogo {
+		display: none;
+	}
+
+	.toggle {
+		font-size: small;
+		text-align: center;
+		background-color: _palette(border);
+		border: none;
+		padding: 0;
+		height: auto;
+		line-height: inherit;
+		box-shadow: none;
+		border-radius: inherit;
+
+		button {
+			padding: 0;
 		}
 	}
 
-	&.icons-only {
-		width: auto;
+	>.logo {
+		height: 3rem;
+		img {
+			height: 100%;
+		}
 	}
 
-	h2 {
-		font-size: (1.25em / 0.9);
+	i {
+		font-size: 1.3rem;
+		margin: 0 auto;
+	}
+
+	span {
+		display: none!important;
 	}
 
 	>.inner {
@@ -86,65 +107,119 @@
 		}
 	}
 
-	.toggle {
-		font-size: small;
-		text-align: center;
-		background-color: _palette(border);
-		border: none;
-		padding: none;
-		height: auto;
-		line-height: inherit;
-		box-shadow: none;
-		border-radius: inherit;
-	}
 
-	&.inactive {
-		margin-left: (_size(sidebar-width) * -1);
-	}
 
-	&::after {
-		font-size: small;
-		font-weight: 200;
-		text-align: center;
-		border-top: solid 2px _palette(border);
-		font-size: small;
-		content: 'Powered by GeoLuminate';
-	}
+	&.expanded {
+		$pad: 2em;
+		width: _size(sidebar-width);
 
-	@include breakpoint('<=lg') {
-		$pad: 1.5em / 0.9;
-		width: _size(sidebar-width-alt);
+		i {
+			font-size: 1rem;
+		}
+
+		span {
+			display: block!important;
+			flex-grow: 1;
+		}
+
+		#sidebarIcon {
+			display: none;
+		}
+
+		#sidebarLogo {
+			display: block;
+		}
+
+		>.logo {
+			height: 6rem;
+			img {
+				width: 100%;
+			}
+		}
+
+		h2 {
+			font-size: (1.25em / 0.9);
+		}
 
 		>.inner {
+			flex-grow: 1;
 			@include padding($pad, $pad, (0, 0, $pad, 0));
-			width: _size(sidebar-width-alt);
+			position: relative;
+
+			>* {
+				border-bottom: solid 2px _palette(border);
+				margin: 0 0 (_size(element-margin) * 1.75) 0;
+				padding: 0 0 (_size(element-margin) * 1.75) 0;
+
+				> :last-child {
+					margin-bottom: 0;
+				}
+
+				&:last-child {
+					border-bottom: 0;
+					margin-bottom: 0;
+					padding-bottom: 0;
+				}
+			}
 
 			>.alt {
-				margin: ($pad * -1) 0 ($pad * 2) ($pad * -1);
-				padding: $pad;
+				background-color: darken(_palette(secondary), 2);
+				border-bottom: 0;
+				margin: ($pad * -1) 0 ($pad * 1) ($pad * -1);
+				padding: 1rem;
 				width: calc(100% + #{$pad * 2});
+				min-height: 6rem;
 			}
 		}
 
-		.toggle {
+		&::after {
+			font-size: small;
+			font-weight: 200;
+			text-align: center;
+			border-top: solid 2px _palette(border);
+			font-size: small;
+			content: 'Powered by GeoLuminate';
+		}
 
-			height: 6.25em;
-			left: _size(sidebar-width-alt);
-			line-height: 6.25em;
-			text-indent: 5em;
-			width: 5em;
+		@include breakpoint('<=lg') {
+			$pad: 1.5em / 0.9;
+			width: _size(sidebar-width-alt);
 
-			&:before {
-				font-size: 1.5rem;
+			>.inner {
+				@include padding($pad, $pad, (0, 0, $pad, 0));
+				width: _size(sidebar-width-alt);
+
+				>.alt {
+					margin: ($pad * -1) 0 ($pad * 2) ($pad * -1);
+					padding: $pad;
+					width: calc(100% + #{$pad * 2});
+				}
+			}
+
+			.toggle {
+
+				height: 6.25em;
+				left: _size(sidebar-width-alt);
+				line-height: 6.25em;
+				text-indent: 5em;
+				width: 5em;
+
+				&:before {
+					font-size: 1.5rem;
+				}
+			}
+
+			&.inactive {
+				margin-left: (_size(sidebar-width-alt) * -1);
 			}
 		}
 
-		&.inactive {
-			margin-left: (_size(sidebar-width-alt) * -1);
+		@include breakpoint('<=md') {
+			display: none;
 		}
 	}
 
-	@include breakpoint('<=md') {
-		display: none;
-	}
+
+
+
 }

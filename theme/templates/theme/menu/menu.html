@@ -6,7 +6,11 @@
 	{% if child.children %}
 		<div class='accordion-item'>
 			<a href='#' data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-				<span class='opener'><i class="{{ child.attr.icon}}"></i> {{ child.get_menu_title }}</span>
+				<div class='d-flex align-items-center'>
+					<i class="{{ child.attr.icon}}"></i> 
+					<span class='opener'>{{ child.get_menu_title }}</span>
+				</div>
+				{% comment %} <span><i class="{{ child.attr.icon}}"></i> {{ child.get_menu_title }}</span> {% endcomment %}
 			</a>
 			<div id="collapseOne" class="collapse sub-menu" aria-labelledby="headingOne" data-bs-parent="#menu">
 				<ul class='alt nav'>
@@ -15,8 +19,13 @@
 			</div>
 		</div>
 	{% else %}
-		<a href="{{ child.attr.redirect_url|default:child.get_absolute_url }}">
-			<span><i class="{{ child.attr.icon}}"></i> {{ child.get_menu_title }}</span>
+		<a href="{{ child.attr.redirect_url|default:child.get_absolute_url }}"
+			{% comment %} hx-get="{{ child.attr.redirect_url|default:child.get_absolute_url }}" {% endcomment %}
+		>
+			<div class='d-flex align-items-center'>
+				<i class="{{ child.attr.icon}}"></i> 
+				<span>{{ child.get_menu_title }}</span>
+			</div>
 		</a>
 	{% endif %}
 </li>

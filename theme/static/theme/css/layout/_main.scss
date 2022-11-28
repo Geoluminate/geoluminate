@@ -7,68 +7,10 @@
 	max-height: 100vh;
 	overflow-x: auto;
 	position: relative;
-	
-	>.inner {
-		@include padding(0, 6em);
-		margin: 0 auto;
-		// max-width: 110em;
-		max-width: 85em;
 
-		>section {
-			@include padding(6em, 0);
-			border-top: solid 2px _palette(border);
-
-			&:first-of-type {
-				border-top: 0 !important;
-			}
-		}
-
-	}
-
-	@include breakpoint('<=xxl') {
-		>.inner {
-			@include padding(0, 5em);
-
-			>section {
-				@include padding(5em, 0);
-			}
-		}
-	}
-
-	@include breakpoint('<=xl') {
-		>.inner {
-			@include padding(0, 2em);
-
-			>section {
-				@include padding(4em, 0);
-			}
-		}
-	}
-
-	@include breakpoint('<=md') {
-		>.inner {
-			@include padding(0, 1.5em);
-
-			>section {
-				@include padding(3em, 0);
-			}
-
-			&.map {
-				padding: 0;
-			}
-		}
-	}
-
-	@include breakpoint('<=sm') {
-		>.inner {
-			@include padding(0, 0.5em);
-
-			>section {
-				@include padding(3em, 0);
-			}
-
-		}
-
+	.content {
+		padding: 1.5rem 10%;
+		width: 100%;
 	}
 
 }

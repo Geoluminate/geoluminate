@@ -4,10 +4,12 @@
 <head {% meta_namespaces %}>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <title>{% block head_title %}{% endblock head_title %} | {{ config.site.name }}</title>
   {% include 'meta/meta.html' %}
   {% block head %}{% endblock head %}  
   <link rel="icon" type="image/svg+xml" href="{% icon %}">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <script src="https://unpkg.com/htmx.org@1.8.0" integrity="sha384-cZuAZ+ZbwkNRnrKi05G/fjBX+azI9DNOkNYysZ0I/X5ZFgsmMiBXgDZof30F5ofc" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="{% static "theme/css/theme.min.css" %}">
   <link rel="stylesheet" href="{% static "theme/test.min.css" %}">
   {% render_block "css"%}
@@ -21,14 +23,35 @@
   {% include 'theme/navigation/sidebar.html' %}
 
   <div class="fill-col">
-    {% include 'theme/navigation/navbar.html' %}
-    <div id='outer' class='fill-col bg-white'>
-      {% block app_menu %}{% endblock app_menu %}
-      <div id="main" class='fill'>
-        {% include "geoluminate/components/messages.html" %}    
-        <div id='pageContent' class='fill'>
-        {% block content %}{% endblock content %}
+    
+    {% comment %} {% include 'theme/navigation/navbar.html' %} {% endcomment %}
+    <nav class="navbar navbar-expand-lg navbar-light p-1">
+      <div class="container-fluid">
+        <header id="header" class='p-2 border-0'>
+          <div class="logo">
+            <strong>{% block nav_title_bold %}{{ request.current_page }}{% endblock nav_title_bold %}</strong> 
+            <span id='navSubTitle'>
+              {% block nav_title %}
+              {% render_model config.site "name" "name" %}
+              {% endblock nav_title %}
+            </span>
+          </div>
+        </header>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            {% include 'authentication/navbar_widget.html' %}
         </div>
+      </div>
+    </nav>
+
+
+    <div id='outer' class='fill-col bg-white' hx-target="#main">
+      {% block app_menu %}{% endblock app_menu %}
+      {% include "geoluminate/components/messages.html" %}    
+      <div id="main" class='fill'>
+        {% block content %}{% endblock content %}
         <img id='mainIndicator' class="htmx-indicator" src="{% static "geoluminate/spinners/spinning-circles.svg" %}"/>
       </div>
     </div>

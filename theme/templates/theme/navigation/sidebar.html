@@ -1,18 +1,18 @@
-{% load menu_tags thumbnail cms_tags geoluminate %}
+{% load menu_tags thumbnail cms_tags geoluminate sekizai_tags %}
 
-<div id="application-sidebar">
+<div id="application-sidebar" class='expanded'>
   {% render_model_block config "logo" %}
   <div class='logo sidebar-header'>
-    <img src="{% logo %}" alt="logo">
+    <img id='sidebarLogo' src="{% logo %}" alt="logo">
+    <img id='sidebarIcon' src="{% icon %}" alt="icon">
   </div>
   {% endrender_model_block %}
   <button class='toggle'>
     <i class="fas fa-angle-double-left"></i>
   </button>
   <div class="inner">
-
     {% render_model_block request.current_page "changelist" %}
-    <nav id="menu" class='sidebar-menu'>
+    <nav id="menu" class='sidebar-menu' hx-target='#main'>
       <ul>{% show_menu 0 100 100 100 "theme/menu/menu.html" %}</ul>
     </nav>
     {% endrender_model_block %}

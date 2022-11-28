@@ -1,4 +1,4 @@
-geoluminate.api.permissions
+Permissions
 ==================================
 
 .. automodule:: geoluminate.api.permissions

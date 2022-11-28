@@ -1,31 +1,28 @@
-geoluminate.api
+API
 =======================
 
-Subpackages
+.. automodule:: geoluminate.api
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Versions
 -----------
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 1
 
    geoluminate.api.v1
 
-Modules
-----------
+Core Functionality
+--------------
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 1
 
-   geoluminate.api.apps
    geoluminate.api.permissions
    geoluminate.api.renderers
    geoluminate.api.throttling
    geoluminate.api.urls
    geoluminate.api.utils
 
-Module contents
----------------
-
-.. automodule:: geoluminate.api
-   :members:
-   :undoc-members:
-   :show-inheritance:

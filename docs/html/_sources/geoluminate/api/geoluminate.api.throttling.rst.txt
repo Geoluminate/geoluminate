@@ -1,4 +1,4 @@
-geoluminate.api.throttling
+Throttling
 =================================
 
 .. automodule:: geoluminate.api.throttling

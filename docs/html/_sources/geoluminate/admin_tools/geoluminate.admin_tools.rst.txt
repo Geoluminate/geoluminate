@@ -12,6 +12,5 @@ Modules
 .. toctree::
    :maxdepth: 4
 
-   geoluminate.admin_tools.apps
    geoluminate.admin_tools.mixins
    geoluminate.admin_tools.urls

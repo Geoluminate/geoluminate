@@ -30,7 +30,6 @@ Modules
 
    geoluminate.access_policies
    geoluminate.admin
-   geoluminate.apps
    geoluminate.celery
    geoluminate.context_processors
    geoluminate.fields

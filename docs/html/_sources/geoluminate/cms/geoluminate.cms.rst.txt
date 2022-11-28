@@ -13,11 +13,6 @@ Modules
    :maxdepth: 4
 
    geoluminate.cms.admin
-   geoluminate.cms.apps
    geoluminate.cms.cms_menus
    geoluminate.cms.cms_toolbars
    geoluminate.cms.models
-   geoluminate.cms.tests
-
-
-

@@ -1,4 +1,4 @@
-geoluminate.api.utils
+Utils
 ============================
 
 .. automodule:: geoluminate.api.utils

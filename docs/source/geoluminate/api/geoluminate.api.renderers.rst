@@ -1,4 +1,4 @@
-geoluminate.api.renderers
+Renderers
 ================================
 
 .. automodule:: geoluminate.api.renderers

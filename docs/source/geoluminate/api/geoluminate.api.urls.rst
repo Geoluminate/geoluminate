@@ -1,4 +1,4 @@
-geoluminate.api.urls
+URLs
 ===========================
 
 .. automodule:: geoluminate.api.urls

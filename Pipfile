@@ -40,6 +40,8 @@ django-reverse-admin = "*"
 django-debug-toolbar-template-profiler = "*"
 shortuuid = "*"
 ipython = "*"
+sphinx = "*"
+furo = "*"
 
 [dev-packages]
 autopep8 = "*"

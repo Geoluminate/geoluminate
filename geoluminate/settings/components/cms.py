@@ -17,6 +17,7 @@ CMS_LANGUAGES = {
         'hide_untranslated': False,
     },
 }
+""""""
 
 CMS_TEMPLATES = (
     # Customize this
@@ -24,24 +25,32 @@ CMS_TEMPLATES = (
     ('sidebar_left.html', 'Sidebar Left'),
     ('sidebar_right.html', 'Sidebar Right')
 )
+""""""
+
 
 # set to true to hide toolbar
 # Has unintended side effects when adding plugins.
 # Don't use until bug fixed
 CMS_TOOLBAR_HIDE = False
+""""""
 
 CMS_PERMISSION = True
+""""""
 
 CMS_TOOLBAR_ANONYMOUS_ON = False
+""""""
 
 CMS_PLACEHOLDER_CONF = {}
+""""""
 
 DJANGOCMS_ICON_TEMPLATES = [
     ('svg', 'SVG template'),
 ]
+""""""
 
 DJANGOCMS_ICON_SETS = [
     ('fontawesome5regular', 'far', 'Font Awesome 5 Regular', 'lastest'),
     ('fontawesome5solid', 'fas', 'Font Awesome 5 Solid', 'lastest'),
     ('fontawesome5brands', 'fab', 'Font Awesome 5 Brands', 'lastest'),
 ]
+""""""

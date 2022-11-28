@@ -1,3 +1,5 @@
+"""Default API settings"""
+
 # REST_FRAMEWORK = {
 #     'DEFAULT_AUTHENTICATION_CLASSES': [
 #         'rest_framework.authentication.BasicAuthentication',
@@ -15,6 +17,7 @@
 #     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
 #     'PAGE_SIZE': 100
 # }
+
 
 SPECTACULAR_SETTINGS = {
     'SCHEMA_PATH_PREFIX': r'/api/v[0-9]',
@@ -52,3 +55,4 @@ SPECTACULAR_SETTINGS = {
         "datatables.spectacular.preprocessing_filter_spec"
     ],
 }
+""""""

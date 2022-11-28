@@ -100,7 +100,7 @@ INSTALLED_APPS = [
     'geoluminate',
     'user',
     'django.contrib.humanize',
-    'django.contrib.admindocs',
+    # 'django.contrib.admindocs',
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
@@ -157,7 +157,6 @@ INSTALLED_APPS = [
     'crossref.cms',
 
     # GeoLuminate Apps
-    "dashboard",
     'kepler',
     'literature',
     'theme',
@@ -233,7 +232,7 @@ if os.getenv('DJANGO_ENV') == 'development':
 else:
     import django_heroku
     import dj_database_url
-    STATICFILES_STORAGE = 'project.storage_backends.StaticStorage'
+    STATICFILES_STORAGE = 'geoluminate.backends.storage.StaticStorage'
     STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_STATIC_LOCATION}/"
 
     SECURE_SSL_REDIRECT = True

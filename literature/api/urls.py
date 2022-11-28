@@ -1,20 +1,12 @@
-from .views import LiteratureView, AuthorListView, CoreNestedViewSet
+from .views import LiteratureView, AuthorView, CoreNestedViewSet, NestedAuthorList
 from rest_framework.routers import DefaultRouter
 from rest_framework_nested import routers
-from geoluminate.utils import DATABASE
-from django.utils.text import slugify
-
 
 router = DefaultRouter()
-router.register(r'literature', LiteratureView)
-router.register(r'authors', AuthorListView)
+router.register('literature', LiteratureView)
+router.register('authors', AuthorView)
 
 
-lit_router = routers.NestedSimpleRouter(
-    router, r'literature', lookup='lit')
-lit_router.register(
-    slugify(DATABASE._meta.verbose_name),
-    CoreNestedViewSet,
-    basename='literature-core')
-# lit = routers.NestedSimpleRouter(router, r'clients', lookup='client')
-# core_router.register(r'maildrops', MailDropViewSet, basename='maildrops')
+lit_router = routers.NestedSimpleRouter(router, r'literature', lookup='lit')
+lit_router.register('data', CoreNestedViewSet, basename='literature-data')
+lit_router.register('authors', NestedAuthorList, basename='literature-authors')

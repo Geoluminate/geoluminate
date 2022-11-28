@@ -8,15 +8,13 @@ from geoluminate.utils import DATABASE
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from rest_framework import mixins
-from geoluminate.api.v1.views import CoreViewSet
+from geoluminate.api.v1.views import DataViewSet
 from rest_framework_datatables_editor.filters import DatatablesFilterBackend
 
 
-class LiteratureView(mixins.ListModelMixin,
-                     mixins.RetrieveModelMixin,
-                     viewsets.GenericViewSet):
+# class LiteratureView(viewsets.ModelViewSet):
 
-    # class LiteratureViewSet(PaginateByMaxMixin, viewsets.ModelViewSet):
+class LiteratureView(viewsets.ReadOnlyModelViewSet):
     """API endpoint to request a set of  publications."""
     max_paginate_by = 1000
     serializer_class = LiteratureSerializer
@@ -25,15 +23,33 @@ class LiteratureView(mixins.ListModelMixin,
     queryset = Publication.objects.prefetch_related('sites')
 
 
-class AuthorListView(mixins.ListModelMixin, viewsets.GenericViewSet):
+class AuthorView(viewsets.ReadOnlyModelViewSet):
     """API endpoint to request a set of  publications."""
     serializer_class = AuthorSerializer
-    # filterset_fields = ['given', 'family']
-    # filter_backends = (DjangoFilterBackend, DatatablesFilterBackend)
     queryset = Author.objects.with_work_counts()
 
 
-class CoreNestedViewSet(CoreViewSet):
+class NestedAuthorList(AuthorView):
+    def list(self, request, *args, **kwargs):
+        pk = kwargs.pop('lit_pk')
+        if pk:
+            queryset = self.get_queryset().filter(works__pk=pk)
+            serializer = self.get_serializer(
+                queryset, many=True, context={
+                    'request': request})
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None, *args, **kwargs):
+        pk = kwargs.pop('lit_pk')
+        if pk:
+            queryset = self.get_queryset().filter(works__pk=pk)
+            instance = get_object_or_404(queryset, pk=pk)
+            serializer = self.get_serializer(
+                instance, context={'request': request})
+        return Response(serializer.data)
+
+
+class CoreNestedViewSet(DataViewSet):
     serializer_class = CoreNestedSerializer
     queryset = DATABASE.objects.all()
 

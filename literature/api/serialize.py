@@ -11,10 +11,9 @@ from rest_framework.utils.serializer_helpers import (
     ReturnList,
 )
 
-# class AuthorSerializer(serializers.HyperlinkedModelSerializer):
 
+class AuthorSerializer(serializers.HyperlinkedModelSerializer):
 
-class AuthorSerializer(serializers.ModelSerializer):
     as_lead = serializers.IntegerField(
         read_only=True,
         # source='as_lead',
@@ -35,17 +34,19 @@ class AuthorSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-# class LiteratureSerializer(serializers.HyperlinkedModelSerializer):
-class LiteratureSerializer(serializers.ModelSerializer):
-    # author = AuthorSerializer(read_only=True, many=True)
+class LiteratureSerializer(serializers.HyperlinkedModelSerializer):
+
     subject = serializers.StringRelatedField(many=True)
     author_count = serializers.IntegerField(
         source='author.count',
         read_only=True
     )
-
+    authors = serializers.HyperlinkedIdentityField(
+        view_name='literature-authors-list',
+        lookup_url_kwarg='lit_pk',
+    )
     data = serializers.HyperlinkedIdentityField(
-        view_name='literature-core-list',
+        view_name='literature-data-list',
         lookup_url_kwarg='lit_pk',
     )
 
@@ -55,14 +56,22 @@ class LiteratureSerializer(serializers.ModelSerializer):
 
 
 class CoreNestedListSerializer(serializers.ListSerializer):
-    @property
-    def data(self):
-        ret = super().data
-        return ReturnDict(
-            count=len(ret),
-            description="Test description",
-            data=ret,
-            serializer=self)
+    pass
+    # @property
+    # def data(self):
+    #     ret = super().data
+    #     return ReturnDict(
+    #         count=len(ret),
+    #         description="Test description",
+    #         data=ret,
+    #         serializer=self)
+
+
+class AuthorNestedSerializer(
+        NestedHyperlinkedModelSerializer, AuthorSerializer):
+    parent_lookup_kwargs = {
+        'pub_pk': 'author__pk',
+    }
 
 
 class CoreNestedSerializer(NestedHyperlinkedModelSerializer, CoreSerializer):

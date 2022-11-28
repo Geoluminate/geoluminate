@@ -2,7 +2,7 @@ import shlex
 import subprocess
 import sys
 
-from django.geoluminate.management.base import BaseCommand
+from django.core.management.base import BaseCommand
 from django.utils import autoreload
 
 

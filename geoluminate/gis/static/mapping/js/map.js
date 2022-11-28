@@ -2,8 +2,6 @@ $(function () {
   map.fitWorld();
 })
 
-// var $spinner = $('#mainIndicator');
-
 var baseLayers = {
   "Dark Gray": L.esri.basemapLayer('DarkGray', {
     detectRetina: true
@@ -23,7 +21,7 @@ var baseLayers = {
 };
 
 var map = L.map('map', {
-  layers: [baseLayers['Oceans']],
+  layers: [baseLayers['Imagery']],
   minZoom: 3,
   maxZoom: 10,
   worldCopyJump: true,

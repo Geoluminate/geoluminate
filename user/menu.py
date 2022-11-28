@@ -6,5 +6,5 @@ class UserAccountMenu(Menu):
 
     def nodes(self):
         return [
-            Node('account', "user:settings", icon='fa-user'),
+            Node('account', "user:account", icon='fa-user'),
         ]

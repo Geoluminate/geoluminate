@@ -1,24 +1,35 @@
-{% load i18n authentication %}
-<div id="accountPanel" class="tab-pane fade show active" role="tabpanel" aria-labelledby="home-tab">
-  <section>
-    <h4>{% trans "Email" %}</h4>
-    {% include "authentication/email.html" %}
-  </section>
-  <hr class="major">
-  <section>
-    <h4>{% trans "ORCID" %}</h4>
-    {% include "dashboard/sections/orcid.html" %}
-  </section>
-  <hr class="major">
-  <section>
-    <h4>{% trans "Password" %}</h4>
-    <p>{% trans "Click below to change your password." %}</p>
-    {% auth_link '#changePasswordModal' "Change" 'btn button' %}
-  </section>
+{% extends 'sidebar_right.html' %}
+{% load i18n authentication crispy_forms_tags %}
+
+{% block head_title %}{% trans "Account" %}{% endblock %}
+{% block nav_title_bold %}{% trans "Account" %}{% endblock nav_title_bold %}
+{% block nav_title %}{{ request.user.full_name }}{% endblock nav_title %}
+
+
+{% block main_window %}
+<div class='content'>
+  {% for label, template, form in forms %}
+    <section id="{{label|slugify}}" class='searchable border-bottom py-5'>
+      <h4>{{ label }}</h4>
+      {% include template %}
+    </section>
+    {% endfor %}
 </div>
-
-{% block modals %}
-  {% include "authentication/modals/change_password.html" %}
-{% endblock modals %}
+{% endblock main_window %}
 
 
+
+
+{% block sidebar_right %}
+  <div class='sidebar-body p-3'>
+    <ul class='alt nav flex-column' id="myTab" role="tablist" hx-target="#dashboardContainer">
+      {% for label, template, form in forms %}
+      <li>
+        <a href="#{{ label|slugify }}">
+          <span class='ps-2'>{{ label|capfirst }}</span>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock sidebar_right %}

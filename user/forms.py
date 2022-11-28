@@ -33,7 +33,7 @@ class LoginForm(auth_forms.LoginForm):
         self.helper = FormHelper(self)
         self.helper.form_method = 'POST'
         self.helper.form_id = 'loginForm'
-        self.helper.form_action = reverse('user:account_login')
+        self.helper.form_action = reverse('account_login')
         self.helper.form_show_labels = True
         self.helper.layout = Layout(
             FloatingField('login', label='email'),
@@ -61,7 +61,7 @@ class SignUpForm(auth_forms.SignupForm):
 
         self.helper = FormHelper(self)
         self.helper.form_method = 'POST'
-        self.helper.form_action = reverse('user:account_signup')
+        self.helper.form_action = reverse('account_signup')
         self.helper.form_id = 'signupForm'
         self.helper.layout = Layout(
             Row(
@@ -81,7 +81,7 @@ class AddEmailForm(auth_forms.AddEmailForm):
         self.helper = FormHelper(self)
         self.helper.form_show_labels = False
         self.helper.form_method = 'POST'
-        self.helper.form_action = reverse('user:account_email')
+        self.helper.form_action = reverse('account_email')
         self.helper.form_id = 'addEmailForm'
         self.helper.layout = Layout(
             FloatingField('email', placeholder=''),
@@ -96,7 +96,7 @@ class ChangePasswordForm(auth_forms.ChangePasswordForm):
 
         self.helper = FormHelper(self)
         self.helper.form_method = 'POST'
-        self.helper.form_action = reverse('user:account_change_password')
+        self.helper.form_action = reverse('account_change_password')
         self.helper.form_id = 'ChangePasswordForm'
         self.helper.layout = Layout(
             HTML(
@@ -115,7 +115,7 @@ class ResetPasswordForm(auth_forms.ResetPasswordForm):
 
         self.helper = FormHelper(self)
         self.helper.form_method = 'POST'
-        self.helper.form_action = reverse('user:account_reset_password')
+        self.helper.form_action = reverse('account_reset_password')
         self.helper.form_id = 'resetPasswordForm'
         self.helper.layout = Layout(
             FloatingField('email'),
@@ -130,7 +130,7 @@ class ResetPasswordKeyForm(auth_forms.ResetPasswordForm):
         self.helper = FormHelper(self)
         self.helper.form_method = 'POST'
         self.helper.form_action = reverse(
-            'user:account_reset_password_from_key')
+            'account_reset_password_from_key')
         self.helper.form_id = 'ResetPasswordKeyForm'
         self.helper.layout = Layout(
             FloatingField('password1'),

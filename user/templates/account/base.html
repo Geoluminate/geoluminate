@@ -1,9 +1,4 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block content %}
-<div class='inner'>
-  <section>
-  {% block main %}{% endblock main %}
-  </section>
-</div>
-{% endblock %}
+{% block nav_title_bold %}{% trans "Account" %}{% endblock nav_title_bold %}

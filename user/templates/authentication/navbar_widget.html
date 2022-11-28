@@ -14,7 +14,7 @@
         {% if user.is_authenticated %}
           <li><a class="dropdown-item"  href="{% url 'user:profile' %}">{% trans "Profile" %}</a></li>
           <li><a class="dropdown-item"  href="{% url 'user:dashboard' %}">{% trans "Dashboard" %}</a></li>
-          <li><a class="dropdown-item"  href="{% url 'user:settings' %}">{% trans "Settings" %}</a></li>
+          <li><a class="dropdown-item"  href="{% url 'user:account' %}">{% trans "Settings" %}</a></li>
           {% if user.is_staff %}
             <li><a class="dropdown-item"  href="{% url 'admin:index' %}?toolbar_off">{% trans "Admin" %}</a></li>
             {% if request.user|has_group:"CMS" or request.user.is_superuser %}
@@ -22,7 +22,7 @@
             {% endif %}
           {% endif %}
           <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item"  href="{% url 'user:account_logout' %}">{% trans "Logout" %}</a></li>
+          <li><a class="dropdown-item"  href="{% url 'account_logout' %}">{% trans "Logout" %}</a></li>
         {% else %}
           <li>{% auth_link '#loginModal' "Login" "dropdown-item" %}</li>
           <li>{% auth_link '#createAccountModal' "Register" "dropdown-item" %}</li>

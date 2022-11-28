@@ -18,7 +18,9 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ['first_name', 'last_name']
 
     def __str__(self):
-        return str(self.username)
+        if self.username:
+            return str(self.username)
+        return 'User'
 
     @property
     def username(self):
@@ -32,7 +34,8 @@ class User(AbstractUser):
         return f'{self.first_name} {self.last_name}'
 
     def display_name(self):
-        return f'{self.first_name[0]}.{self.last_name}'
+        if self.first_name and self.last_name:
+            return f'{self.first_name[0]}.{self.last_name}'
 
     def initials(self):
         return f'{self.first_name[0]}{self.last_name[0]}'
@@ -41,8 +44,10 @@ class User(AbstractUser):
         return f'{self.first_name}{self.last_name[0].capitalize()}'
 
     def get_provider(self, provider):
-        return self.socialaccount_set.get(provider=provider)
+        qs = self.socialaccount_set.filter(provider=provider)
+        return qs.get() if qs else None
 
+    @property
     def orcid(self):
         return self.get_provider('orcid')
 

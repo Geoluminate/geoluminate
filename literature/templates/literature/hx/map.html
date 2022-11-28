@@ -1,14 +1,14 @@
 {% load static sekizai_tags %}
-
-<div id='map'
-    url="{% url "api:heatflow-list" %}?"
-    data-format='geojson' {% if publication %}
-    data-references='{{publication.pk}}'{% endif %}{% if site %}
-    data-id='{{site.pk}}'{% endif %} 
-    class="{{css_class}}">
-  <div id='shadow'></div>
+<div class="tab-pane fade show active d-flex flex-grow-1" id="MapContent" role="tabpanel" aria-labelledby="nav-home-tab">
+  <div id='map'
+      url="{% url "heatflow-list" %}?"
+      data-format='geojson' {% if publication %}
+      data-references='{{publication.pk}}'{% endif %}{% if site %}
+      data-id='{{site.pk}}'{% endif %} 
+      class="{{css_class}}">
+    <div id='shadow'></div>
+  </div>
 </div>
-
 
 <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.min.js"></script>  

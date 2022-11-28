@@ -1,18 +1,25 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'datatables/datatables.min.css' %}"/>
 
-<div class='container table-responsive fill-available overflow-auto'>
-  <table class="table table-sm table-striped table-hover w-100">
-    <thead class="table-light text-capitalize"></thead>
-  </table>
+<div class="tab-pane fade show w-100 overflow-auto" id="DataContent" role="tabpanel" aria-labelledby="nav-home-tab">
+  <div class='table-responsive'>
+    <table class="table table-sm table-striped table-hover w-100">
+      <thead class="table-light text-capitalize">Data {{ remote_url }}</thead>
+    </table>
+  </div>
 </div>
-      
+   
+
 <script src="{% static 'datatables/datatables.min.js' %}"></script>
 <script src="{% static 'datatables/remoteTable.js' %}"></script>
 
 <script>
   var table = $('table').RemoteDataTable("{{ remote_url }}")
 </script>
+
+
+
+
 
 
 

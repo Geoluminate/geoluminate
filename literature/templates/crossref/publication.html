@@ -13,17 +13,14 @@
 		<i class='me-auto'>{{pub.container_title}}, {{ pub.published|date:'Y' }}</i>
     <h4 class="card-title"><a href="{% url "literature:detail" pk=pub.pk %}">{{ pub.title }}</a></h4>
 		{% if pub.author.exists %}
-			<h5 class="card-subtitle mb-2 text-muted authors">
-				{% for author in pub.author.all %}
-					{% comment %} <a href="{% url author.get_absolute_url %}"> {% endcomment %}
-						{{author.family}}, {{author.given.0 }}
-					{% comment %} </a> {% endcomment %}
-				{% endfor %}
-			</h5>
+		<h5 class="card-subtitle mb-2 text-muted">
+			{% for author in pub.author.all %}
+				<a href="{{ author.get_absolute_url }}"><span>{{author}}</span></a>{% if not forloop.last %},{% endif %} 
+			{% endfor %}
+		</h5>
 		{% endif %}
 		{% if pub.abstract %}
     	<p class="card-text abstract">
-				{% comment %} {{ pub.abstract|safe|truncatewords:75 }} {% endcomment %}
 				{{ pub.abstract|safe }}
 			</p>
 		{% endif %}
@@ -35,4 +32,3 @@
 	</div>
 </div>
 
-{% addtoblock "js" %}<script>$(function(){$('[data-bs-toggle="tooltip"]').tooltip()})</script>{% endaddtoblock %}

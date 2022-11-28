@@ -8,7 +8,7 @@
 {% endblock head %}
 
 {% block main_window %}
-	<div class='inner container pt-5'>
+	<div class='content pt-5'>
 		<section id='publication-list' class='main'>
 			{% include "literature/partials/publication_list.html" %}
 		</section>
@@ -27,16 +27,16 @@
 		<i class='icon fa-filter'></i>
 	</div>
 	<div class='sidebar-body p-3'>
-			<form id='literatureFilter' method='get'
-					hx-trigger="change"
-					hx-target="#publication-list"
-					hx-params="*"
-					hx-get>
-				{% crispy filter.form %}	
-			</form>
+		<form id='literatureFilter' method='get'
+				hx-trigger="change"
+				hx-target="#publication-list"
+				hx-params="*"
+				hx-get>
+			{% crispy filter.form %}	
+		</form>
 	</div>
 
-{% addtoblock "js" %}{{ filter.form.media.js }}{% endaddtoblock %}
+	{% addtoblock "js" %}{{ filter.form.media.js }}{% endaddtoblock %}
 {% endblock sidebar_right %}
 
 
@@ -45,8 +45,7 @@
 
 
 {% block modals %}
-{% include "review/modals/nominate.html" with modal_id='requestToReview' %}
-	{% comment %} {% include 'geoluminate/modals/form.html' with modal_id="filterPublicationsModal" form=filter.form helper=filter.helper %} {% endcomment %}
+{% include "review/modals/nominate.html" with modal_id='genericModal' %}
 {% endblock modals %}
 
 

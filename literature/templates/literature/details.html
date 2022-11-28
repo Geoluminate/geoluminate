@@ -5,41 +5,24 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css"/>
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css"/>
-<script src="https://unpkg.com/htmx.org@1.8.0" integrity="sha384-cZuAZ+ZbwkNRnrKi05G/fjBX+azI9DNOkNYysZ0I/X5ZFgsmMiBXgDZof30F5ofc" crossorigin="anonymous"></script>
 {% endblock head %}
 
 {% block app_menu %}
 <div id='appMenu' class="container-fluid">
-  <ul class='nav w-100' id="myTab" role="tablist" hx-target="#pageContent">
+  <ul class='nav w-100' id="myTab" role="tablist" hx-target='#tabbedContent'>
     {% menu app_menu "geoluminate/components/app_menu.html" %}
     <li class='ms-auto'>
       <a class="icon fa-expand expand" type="button" data-target='#outer'></a>
     </li>
   </ul>
 </div>
-
-{% addtoblock "js" %}
-<script>
-  $(function () {
-    $('.expand').on('click', function () {
-
-      var $target = $($(this).data('target'));
-
-      if ($target.hasClass('fullscreen')) {
-        $(this).removeClass('fa-compress');
-        $(this).addClass('fa-expand');
-        $target.removeClass('fullscreen');
-      } else {
-        $target.addClass('fullscreen');
-        $(this).removeClass('fa-expand');
-        $(this).addClass('fa-compress');
-      }
-
-    })
-  })
-
-</script>{% endaddtoblock %}
-
-
 {% endblock app_menu %}
+
+
+{% block content %}
+<div id="tabbedContent" class="tab-content fill"></div>
+{% endblock content %}
+
+
+
 

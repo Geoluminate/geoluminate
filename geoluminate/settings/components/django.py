@@ -3,9 +3,7 @@ from django.contrib.messages import constants as messages
 
 DEBUG = True if os.environ.get('DEBUG') == 'TRUE' else False
 
-
 BASE_DIR = os.getcwd()
-
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
@@ -88,6 +86,7 @@ INSTALLED_APPS = [
     'geoluminate.admin_tools',
     'grappelli.dashboard',
     'grappelli',
+    # 'djangocms_admin_style',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

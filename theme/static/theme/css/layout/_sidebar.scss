@@ -115,11 +115,13 @@
 
 		i {
 			font-size: 1rem;
+			min-width: 1.3rem;
 		}
 
 		span {
 			display: block!important;
 			flex-grow: 1;
+			padding-left: 0.5rem;
 		}
 
 		#sidebarIcon {

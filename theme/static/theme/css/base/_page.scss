@@ -25,6 +25,7 @@ body {
 	html,
 	body {
 		min-width: 320px;
+		scroll-behavior: smooth;
 	}
 }
 
@@ -39,21 +40,3 @@ html {
 *:after {
 	box-sizing: inherit;
 }
-
-// body {
-// 	background: _palette(bg);
-// 	margin-top: _size(navbar-height);
-
-// 	// Stops initial animations until page loads or stops resizing.
-// 	&.is-preload,
-// 	&.is-resizing {
-
-// 		*,
-// 		*:before,
-// 		*:after {
-// 			@include vendor('animation', 'none !important');
-// 			@include vendor('transition', 'none !important');
-// 		}
-// 	}
-
-// }

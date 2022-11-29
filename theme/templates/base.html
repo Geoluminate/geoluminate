@@ -15,7 +15,7 @@
   {% render_block "css"%}
 </head>
 
-<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-indicator="#mainIndicator">
+<body class='bg-white' hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-indicator="#mainIndicator">
   {% if request.user|has_group:"CMS" or request.user.is_superuser %}
     {% include 'geoluminate/utils/cms_toolbar.html' %}
   {% endif %}
@@ -47,7 +47,7 @@
     </nav>
 
 
-    <div id='outer' class='fill-col bg-white' hx-target="#main">
+    <div id='outer' class='fill-col' hx-target="#main">
       {% block app_menu %}{% endblock app_menu %}
       {% include "geoluminate/components/messages.html" %}    
       <div id="main" class='fill'>

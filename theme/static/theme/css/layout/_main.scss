@@ -7,9 +7,10 @@
 	max-height: 100vh;
 	overflow-x: auto;
 	position: relative;
-
+	scroll-behavior: smooth;
+	
 	.content {
-		padding: 1.5rem 10%;
+		padding: 1.5rem 5%;
 		width: 100%;
 	}
 

@@ -1,21 +1,16 @@
-import testData from '/static/kepler/test_dataset.json' assert { type: "json" };
-
-
 const WARNING_MESSAGE = 'A Mapbox Token is required in order to use Kepler.gl. Please provide a valid token in the Django Kepler admin site.';
-
-const CONFIG = JSON.parse(document.getElementById('keplerConfig').textContent);
 
 const MAPBOX_TOKEN = CONFIG.mapbox_token;
 
 function getTheme() {
   if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches | CONFIG.theme == 'dark') {
-      return {}
+    return {}
   } else {
-    return {'theme': CONFIG.theme}
+    return {
+      'theme': CONFIG.theme
+    }
   }
 }
-
-console.log(getTheme())
 
 /* Validate Mapbox Token */
 if ((MAPBOX_TOKEN || '') === '' || MAPBOX_TOKEN === 'PROVIDE_MAPBOX_TOKEN') {
@@ -68,17 +63,28 @@ var KeplerElement = (function makeKeplerElement(react, keplerGl, mapboxToken) {
     });
     var windowDimension = _useState[0];
     var setDimension = _useState[1];
-    react.useEffect(function sideEffect(){
+    react.useEffect(function sideEffect() {
       function handleResize() {
-        setDimension({width: window.innerWidth, height: window.innerHeight});
+        setDimension({
+          width: window.innerWidth,
+          height: window.innerHeight
+        });
       };
       window.addEventListener('resize', handleResize);
-      return function() {window.removeEventListener('resize', handleResize);};
+      return function () {
+        window.removeEventListener('resize', handleResize);
+      };
     }, []);
     return react.createElement(
-      'div',
-      {style: {position: 'absolute', left: 0, width: '100vw', height: '100vh'}},
-      
+      'div', {
+        style: {
+          position: 'absolute',
+          left: 0,
+          width: '100vw',
+          height: '100vh'
+        }
+      },
+
       react.createElement(keplerGl.KeplerGl, {
         mapboxApiAccessToken: mapboxToken,
         id: "map",
@@ -92,8 +98,9 @@ var KeplerElement = (function makeKeplerElement(react, keplerGl, mapboxToken) {
 
 const app = (function createReactReduxProvider(react, reactRedux, KeplerElement) {
   return react.createElement(
-    reactRedux.Provider,
-    {store},
+    reactRedux.Provider, {
+      store
+    },
     react.createElement(KeplerElement, null)
   )
 }(React, ReactRedux, KeplerElement));
@@ -105,32 +112,35 @@ const app = (function createReactReduxProvider(react, reactRedux, KeplerElement)
 }(React, ReactDOM, app));
 
 // The next script will show how to interact directly with Kepler map store -->
-
-
 (function customize(keplerGl, store) {
-
-
-  // fetch()
-  //     .then((res) => res.json())
-  //     .then((config) => {
-  //         })
-
-
-  const loadedData = keplerGl.KeplerGlSchema.load(
-    testData,
-    CONFIG.default_config
-  );
-
-  store.dispatch(keplerGl.addDataToMap({
-    datasets: loadedData.datasets,
-    // config: loadedData.config,
-    options: {
-      centerMap: true
-    }
-  }));
-
-  // store.dispatch(keplerGl.addDataToMap({
-  //   datasets: loadedData.datasets,
-  // }));
-
+  URLS.forEach(element => addFromAPI(element, keplerGl, store));
 }(KeplerGl, store))
+
+
+function addFromAPI(url, keplerGl, store) {
+  fetch(url).then((response) => response.text())
+    .then((data) => {
+      return {
+        info: {
+          id: 'GHFDB',
+          label: 'Global Heat Flow Database'
+        },
+        data: keplerGl.processCsvData(data)
+      };
+    })
+    .then((data) => {
+      console.log(CONFIG.default_config)
+      store.dispatch(keplerGl.addDataToMap({
+        datasets: [data],
+        options: {
+          centerMap: true,
+          readonly: true
+        },
+        info: {
+          title: 'Taro and Blue',
+          description: 'This is my map'
+        },
+        config: CONFIG.default_config
+      }));
+    })
+}

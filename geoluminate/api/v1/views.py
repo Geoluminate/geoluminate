@@ -11,9 +11,9 @@ from geoluminate.utils import DATABASE
 from django.apps import apps
 from .serializers import GeoFeatureSerializer
 from django.utils.translation import gettext_lazy as _
-from geoluminate.utils import DATABASE
 from rest_framework.views import get_view_name
-from rest_framework_datatables_editor.filters import DatatablesFilterBackend
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 
 
 class DataViewSet(AccessViewSetMixin, viewsets.ModelViewSet):
@@ -27,7 +27,6 @@ class DataViewSet(AccessViewSetMixin, viewsets.ModelViewSet):
     distance_ordering_filter_field = 'geom'
     filterset_fields = ['references', ]
     filter_backends = (
-        DatatablesFilterBackend,
         # DistanceToPointOrderingFilter,
         DistanceToPointFilter, DjangoFilterBackend
     )
@@ -36,6 +35,7 @@ class DataViewSet(AccessViewSetMixin, viewsets.ModelViewSet):
         super().__init__(*args, **kwargs)
         # self.__class__.__name__ = DATABASE._meta.verbose_name
 
+    @method_decorator(cache_page(60 * 60 * 2))
     def list(self, request, *args, **kwargs):
         if self.is_geojson():
             qs = self.filter_queryset(self.get_queryset())

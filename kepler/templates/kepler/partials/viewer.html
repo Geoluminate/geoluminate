@@ -1,9 +1,9 @@
-{% load static sekizai_tags %}
+{% load static sekizai_tags geoluminate %}
 
 {% block css %}{% endblock css %}
 
 {% block content %}
-<div id="{{ kepler_id|default:'keplerApp' }}" class='keplerApp-container'></div>
+<div id="{{ kepler_id|default:'keplerApp' }}" class='keplerApp-container flex-fill'></div>
 
 {% comment %} {{ config|json_script:'keplerConfig' }} {% endcomment %}
 
@@ -13,17 +13,24 @@
 <script src="https://unpkg.com/redux@3.7.2/dist/redux.js" crossorigin></script>
 <script src="https://unpkg.com/react-redux@7.1.3/dist/react-redux.min.js" crossorigin></script>
 <script src="https://unpkg.com/styled-components@4.1.3/dist/styled-components.min.js" crossorigin></script>
-<script src="https://unpkg.com/kepler.gl@2.5.5/umd/keplergl.min.js" crossorigin></script>   
-<script type="module" src="{% static 'kepler/kepler.js' %}"></script>
-
+<script src="https://unpkg.com/kepler.gl@2.5.5/umd/keplergl.min.js" crossorigin></script>  
 
 
 <script>
-$(function(){
-  $("#keplerApp .side-panel-logo").html(
-    "<img src='{{config.logo.url}}' height=55 style='background-color:white;'>"
-  );
-})
+  const CONFIG = {{ config|safe}};
+  const URLS = [
+  '/api/v1/heat-flow/?format=csv',
+  ]
 </script>
+
+<script type="module" src="{% static 'kepler/kepler.js' %}"></script>
+
+
+{% comment %} {% addtoblock "js" %}<script>$(function(){
+    $("#keplerApp .side-panel-logo").html(
+      "<img src='{% logo %}' height=55>"
+    );
+  })</script>{% endaddtoblock %} {% endcomment %}
+
 
 {% endblock content %}

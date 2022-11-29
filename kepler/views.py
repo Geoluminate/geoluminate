@@ -2,7 +2,7 @@ from django.shortcuts import render
 from kepler.models import Configuration
 from django.http import JsonResponse
 from django.views.generic import TemplateView
-
+import json
 # Create your views here.
 
 
@@ -13,12 +13,12 @@ class KeplerFullPageView(TemplateView):
         context = super().get_context_data(**kwargs)
         appconfig = Configuration.get_solo()
 
-        context['config'] = {
+        context['config'] = json.dumps({
             'default_config': appconfig.build_config(),
             'mapbox_token': appconfig.mapbox_token,
             'lang': self.get_lang_code(appconfig.lang),
             'theme': appconfig.theme,
-        }
+        })
 
         return context
 

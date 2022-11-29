@@ -14,6 +14,7 @@ for r in get_api_routers():
 
 urlpatterns = [
     path('', SpectacularSwaggerView.as_view(
+        template_name='geoluminate/spectacular.html',
         url_name='schema'), name='swagger-ui'),
     path('', include(urls)),
     path('schema/', SpectacularAPIView.as_view(), name='schema'),

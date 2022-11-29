@@ -9,6 +9,7 @@
    :maxdepth: 2
    :caption: Contents:
 
+   features
    installation
    getting_started
    configuration

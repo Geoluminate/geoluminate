@@ -6,7 +6,6 @@ from django.contrib.gis.db import models
 from shortuuid.django_fields import ShortUUIDField
 from geoluminate.fields import RangeField
 from geoluminate.gis.managers import SiteManager
-# from django_extensions.db.fields import ShortUUIDField
 
 
 class Site(models.Model):

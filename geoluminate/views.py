@@ -11,10 +11,10 @@ from datatables.views import DatatablesReadOnlyView
 from database.models import HeatFlow
 from django.apps import apps
 import datatables
-# from django.contrib.admindocs import views
+from django.contrib.admindocs import views
 from django.apps import apps
 from django.conf import settings
-# from django.contrib.admindocs.utils import parse_docstring
+from django.contrib.admindocs import utils
 from django.db import models
 from django.utils.translation import gettext as _
 from django.views.generic import TemplateView
@@ -69,10 +69,10 @@ class GlossaryView(TemplateView):
         opts = model._meta
 
         title, body, metadata = utils.parse_docstring(model.__doc__)
-        title = title and utils.parse_rst(
-            title, 'model', _('model:') + model_name)
-        body = body and utils.parse_rst(
-            body, 'model', _('model:') + model_name)
+        # title = title and utils.parse_rst(
+        #     title, 'model', _('model:') + model_name)
+        # body = body and utils.parse_rst(
+        #     body, 'model', _('model:') + model_name)
 
         # Gather fields/field descriptions.
         fields = []
@@ -138,15 +138,15 @@ class GlossaryView(TemplateView):
 
 
 class WorldMap(TemplateView):
-    template_name = 'mapping/application.html'
-    # template_name = 'kepler/application.html'
+    # template_name = 'gis/application.html'
+    template_name = 'kepler/viewer.html'
     filter = MapFilter
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update(dict(
             filter=self.filter(),
-            download_form=self.download_form(),
+            # download_form=self.download_form(),
             # settings=MapSettingsForm(),
         ))
 

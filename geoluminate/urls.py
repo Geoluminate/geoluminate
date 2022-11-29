@@ -9,6 +9,8 @@ from .views import (
     GlossaryView
 )
 
+from kepler.views import KeplerFullPageView
+
 urlpatterns = [
     path("sitemap.xml", sitemap, {"sitemaps": {"cmspages": CMSSitemap}}),
     path(
@@ -18,8 +20,9 @@ urlpatterns = [
     path("accounts/", include('allauth.urls')),
     path('database/', DatabaseTableView.as_view(), name='database_table'),
     path('glossary/', GlossaryView.as_view(), name='glossary'),
-    path('sites/', WorldMap.as_view(), name='world_map'),
-    path('sites/<pk>/', SiteView.as_view(), name='site'),
+    path('viewer/', KeplerFullPageView.as_view(), name='world_map'),
+    path('viewer/', WorldMap.as_view(), name='world_map'),
+    path('database/<pk>/', SiteView.as_view(), name='site'),
     path("select2/", include("django_select2.urls")),
     path('', include('user.urls')),
     path('comments/', include('fluent_comments.urls')),

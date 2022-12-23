@@ -105,7 +105,8 @@ INSTALLED_APPS = [
     "allauth.socialaccount",
     "allauth.socialaccount.providers.orcid",
     "invitations",
-    'organizations',
+    "ror",
+    # 'organizations',
     'cms',
     'geoluminate.cms',
 
@@ -156,9 +157,7 @@ INSTALLED_APPS = [
     'crossref.cms',
 
     # GeoLuminate Apps
-    'kepler',
     'literature',
-    'theme',
 
 ]
 

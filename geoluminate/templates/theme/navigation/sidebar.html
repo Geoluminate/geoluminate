@@ -1,0 +1,15 @@
+{% load menu_tags thumbnail cms_tags geoluminate sekizai_tags %}
+
+<div id="application-sidebar" class="{{ request.COOKIES.sidebarState }}">
+  <button class='toggle'>
+    <i class="fas fa-angle-double-left"></i>
+  </button>
+  <div class="inner">
+    {% render_model_block request.current_page "changelist" %}
+    <nav id="menu" class='sidebar-menu' hx-target='#main'>
+      <ul>{% show_menu 0 100 100 100 "theme/menu/menu.html" %}</ul>
+    </nav>
+    {% endrender_model_block %}
+  </div>
+  <div class='footer'></div>
+</div>

@@ -1,0 +1,4 @@
+{% load socialaccount %}
+<form class='card shadow-sm px-4 pb-2' method="post" action="{% provider_login_url 'orcid' process="login" %}">{% csrf_token %}
+  <input type="image" name="submit" alt="ORCID logo" src="https://upload.wikimedia.org/wikipedia/commons/1/14/ORCID_logo.svg"/ width='100%'>
+</form>

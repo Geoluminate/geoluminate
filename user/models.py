@@ -3,6 +3,8 @@ from django.contrib.auth.models import AbstractUser
 from .managers import UserManager
 from django.db import models
 from invitations.base_invitation import AbstractBaseInvitation
+from django.urls import reverse
+from django_ckeditor_5.fields import CKEditor5Field
 
 
 class User(AbstractUser):
@@ -11,9 +13,8 @@ class User(AbstractUser):
 
     username = None
     email = models.EmailField(_('email address'), unique=True)
-    # organizations = models.ForeignKey("research_organizations:ResearchOrganization",
-    #                                   verbose_name=_('Organizations'),
-    #                                   on_delete=models.SET_NULL)
+    about = CKEditor5Field(_('about'), blank=True, null=True)
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
 
@@ -25,10 +26,6 @@ class User(AbstractUser):
     @property
     def username(self):
         return self.display_name()
-
-    # def get_full_name(self):
-    #     """This method is used by the comments framework as a display name"""
-    #     return self.first_name
 
     def full_name(self):
         return f'{self.first_name} {self.last_name}'
@@ -50,6 +47,9 @@ class User(AbstractUser):
     @property
     def orcid(self):
         return self.get_provider('orcid')
+
+    def get_absolute_url(self):
+        return reverse("user:profile", kwargs={"pk": self.pk})
 
 
 class Invitations(AbstractBaseInvitation):

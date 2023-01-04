@@ -4,12 +4,22 @@
     <div class="modal-content">
       {% include 'geoluminate/modals/header.html' with header='Login' %}
       <div class='modal-body'>
-        <p class='mb-3'>{% trans "Log in using the details you signed up with" %}</p>
+
+        {% comment %} <p class='mb-2'>{% blocktrans %}Easily login or register using your ORCID.{% endblocktrans %}</p> {% endcomment %}
+
+        {% include 'account/orcid/login.html' %}
+
+        <p class='my-2'>{% blocktrans with site.name as site_name %}Login easily using your ORCID. Alternatively, login below using the details you registered with.{% endblocktrans %}</p>
+
         {% authentication_form "login" %}
-          <p class='small'>
-            {% auth_link 'forgot_password' "Forgot your password" %}
+          <p class='my-2 small'>
+            {% url 'account_reset_password' as forgot_password_url %}
+            {% url 'account_signup' as register_url %}
+            {% blocktrans %}
+            <a href="{{ forgot_password_url }}">Forgot your password</a>
             or 
-            {% auth_link 'register' "don't have an account yet?" %}
+            <a href="{{ register_url }}">don't have an account yet?</a>
+            {% endblocktrans %}
           </p>
         <div class="modal-footer">
           <input form='loginForm' type="submit" name="submit" value="Login" class="btn btn-primary">

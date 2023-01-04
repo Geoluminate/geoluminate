@@ -7,7 +7,7 @@
 
 
 {% block main_window %}
-<div class='content'>
+<div class='container'>
   {% for label, template, form in forms %}
     <section id="{{label|slugify}}" class='searchable border-bottom py-5'>
       <h4>{{ label }}</h4>

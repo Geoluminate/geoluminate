@@ -5,7 +5,6 @@ from django.contrib import messages  # import messages
 from allauth.account.models import EmailAddress
 from allauth.account.forms import AddEmailForm
 from allauth.socialaccount.forms import DisconnectForm, SignupForm
-from geoluminate.dashboard import get_dashboard
 from django.utils.translation import gettext as _
 from allauth.socialaccount.views import ConnectionsView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -16,9 +15,10 @@ User = get_user_model()
 
 @login_required
 def dashboard(request):
-    context = dict(
-        dashboard=get_dashboard('user'),
-    )
+    # context = dict(
+    #     dashboard=get_dashboard('user'),
+    # )
+    context = {}
 
     return render(request, 'user/dashboard.html', context=context)
 
@@ -52,14 +52,14 @@ def user_settings(request):
 
 
 @login_required
-def profile(request):
+def profile(request, pk):
     context = dict(
         can_add_email=EmailAddress.objects.can_add_email(request.user),
         email_form=AddEmailForm(request),
         disconnect_form=DisconnectForm(request=request),
     )
 
-    return render(request, 'dashboard/settings.html', context=context)
+    return render(request, 'user/profile.html', context=context)
 
 
 @login_required
@@ -76,3 +76,11 @@ def deactivate(request):
         context['msg'] = e.message
 
     return render(request, 'home.html', context=context)
+
+
+def orcid(request):
+    return render(request, "user/why_orcid.html")
+
+
+def community(request):
+    return render(request, "user/community.html")

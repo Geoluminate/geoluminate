@@ -3,12 +3,12 @@
 
 
 {% block content %}
-
+  <div class='d-flex content container'>
   <div class='flex-grow-1 overflow-auto'>
     {% block main_window %}{% endblock main_window %}
   </div>
   <div class='sidebar border-start w-25'>
     {% block sidebar_right %}{% endblock sidebar_right %}
   </div>
-
+</div>
 {% endblock %}

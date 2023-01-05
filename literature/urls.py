@@ -1,6 +1,6 @@
 from literature import views
 from django.urls import path, include
-from .menu import PublicationMenu
+# from .menus import PublicationMenu
 
 app_name = 'literature'
 urlpatterns = [
@@ -8,5 +8,5 @@ urlpatterns = [
     path('authors/', views.AuthorList.as_view(), name='author_list'),
     path('authors/<pk>/', views.AuthorDetail.as_view(), name='author_detail'),
     path('<pk>/', views.PublicationDetail.as_view(), name='detail'),
-    path('<pk>/', include(PublicationMenu().get_url_patterns())),
+    # path('<pk>/', include(PublicationMenu().get_url_patterns())),
 ]

@@ -1,9 +1,11 @@
 import importlib
-from django.conf import settings
+from geoluminate.conf import settings
 from rest_framework.routers import SimpleRouter
 from django.core.exceptions import ImproperlyConfigured
 from django.apps import apps
 from django.db import models
+from django.utils.module_loading import import_string
+from django.utils.translation import gettext_lazy as _
 
 
 def choices_from_qs(qs, field):
@@ -50,6 +52,10 @@ def get_form_class(forms, form_id, default_form):
     if isinstance(form_class, str):
         form_class = import_attribute(form_class)
     return form_class
+
+
+def get_db_name():
+    return _(getattr(settings, 'SITE_NAME'))
 
 
 db_string = get_core_database()

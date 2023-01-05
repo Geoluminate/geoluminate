@@ -2,6 +2,8 @@ $(function () {
   map.fitWorld();
 })
 
+const offCanvasRight = new bootstrap.Offcanvas($('#offcanvasright'))
+
 var baseLayers = {
   "Dark Gray": L.esri.basemapLayer('DarkGray', {
     detectRetina: true
@@ -44,7 +46,7 @@ clusters = L.markerClusterGroup({
 });
 map.addLayer(clusters);
 
-var geojson = new L.GeoJSON.AJAX(get_url(), { //options object for GeoJSON
+var geojson = new L.GeoJSON.AJAX(get_url() + '?format=geojson', { //options object for GeoJSON
   pointToLayer: function (geoJsonPoint, latlng) {
     return L.circleMarker(latlng, {
       radius: 5,
@@ -65,9 +67,14 @@ geojson.on('data:loading', function () {
 
 geojson.on('data:loaded', function () {
   // Add markers to the cluster layer after the layer has loaded.
-  clusters.addLayer(this);
-  $('#mainIndicator').css('opacity', '0');
   map.flyToBounds(this.getBounds())
+  if (typeof CLUSTER !== 'undefined' || CLUSTER === false) {
+    map.addLayer(this);
+  } else {
+    clusters.addLayer(this);
+  }
+
+  $('#mainIndicator').css('opacity', '0');
 })
 
 function onEachFeature(feature, layer) {
@@ -79,20 +86,40 @@ function onEachFeature(feature, layer) {
 
 function getPopupContent(e) {
   // gets the popup content from the API
-  var marker = this;
-  if (marker.getPopup() == undefined) {
-    $.get(`/api/v1/heat-flow/detail/${marker.feature.id}`, function (content) {
-      marker.bindPopup(content, {
-        maxHeight: 600,
-        maxWidth: 600
-      })
-      marker.openPopup()
+
+
+  // fetch($('#map').attr('url') + this.feature.id + '?format=html')
+  fetch('/database/' + this.feature.id + '/?format=html')
+    .then((response) => response.text())
+    .then((html) => {
+      offCanvasRight.toggle()
+      $('#offcanvasright .offcanvas-body').html(html)
     })
-  }
+
+  // $.get(`/api/v1/heat-flow/detail/${this.feature.id}`, function (content) {
+
+  // })
 }
 
+// function getPopupContent(e) {
+//   // gets the popup content from the API
+//   var marker = this;
+//   if (marker.getPopup() == undefined) {
+//     $.get(`/api/v1/heat-flow/detail/${marker.feature.id}`, function (content) {
+//       marker.bindPopup(content, {
+//         maxHeight: 600,
+//         maxWidth: 600
+//       })
+//       marker.openPopup()
+//     })
+//   }
+// }
+
+
+
 function get_url() {
-  return $('#map').attr('url') + new URLSearchParams($('#map').data()).toString()
+  return $('#map').attr('url')
+  // return $('#map').attr('url')
 }
 
 function updateMap() {

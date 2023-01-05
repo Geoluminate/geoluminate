@@ -5,22 +5,14 @@ from filer.fields.image import FilerImageField
 from django.utils.encoding import force_str
 from django.contrib.sites.models import Site
 from django.contrib.auth import get_user_model
-# from .utils import get_dynamic_choice_enum
-import importlib
-from django.conf import settings
-
-
-def import_attribute(path):
-    assert isinstance(path, str)
-    pkg, attr = path.rsplit(".", 1)
-    ret = getattr(importlib.import_module(pkg), attr)
-    return ret
+from geoluminate.conf import settings
+from django.utils.module_loading import import_string
 
 
 def get_dynamic_choice_enum():
     path = getattr(settings, 'GEOLUMINATE_DYNAMIC_CHOICE_FIELDS', [])
     if path:
-        return import_attribute(path)
+        return import_string(path)
     return models.TextChoices
 
 
@@ -58,31 +50,9 @@ class GlobalConfiguration(SingletonModel):
         return force_str(_('Global Configuration'))
 
 
-class Choice(models.Model):
-    """This is a generic model for storing modifiable choices in a single table.
-    Each `type` relates to a collection of choices that can be utilised by
-    `django.db.models.ChoiceField` fields in other models.
-    """
+# imports the abstract base class specified in the settings
+Base = import_string(getattr(settings, 'GEOLUMINATE_BASE_MODEL'))
 
-    type = models.CharField(_('type'),
-                            choices=get_dynamic_choice_enum().choices,
-                            max_length=16)
-    code = models.CharField(_('code'), max_length=64)
-    name = models.CharField(_('name'), max_length=128)
-    description = models.TextField(_('description'),
-                                   blank=True, null=True)
 
-    class Meta:
-        verbose_name = _('Choice')
-        verbose_name_plural = _('Choices')
-        unique_together = ('type', 'code')
-        ordering = ['type', 'code']
-        db_table = 'dynamic_choices'
-
-    def __str__(self):
-        return self.code
-
-    @staticmethod
-    def autocomplete_search_fields():
-        # For Django Grappelli related lookups
-        return ("name__icontains", "code__icontains",)
+class Geoluminate(Base):
+    pass

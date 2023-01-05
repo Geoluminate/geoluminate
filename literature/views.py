@@ -5,13 +5,9 @@ from .filters import PublicationFilter
 from django.utils.translation import gettext_lazy as _
 from crossref.views import WorksByYearMixin
 from crossref.models import Work
-from .menu import PublicationMenu
 from .api.serialize import AuthorSerializer
 from datatables.views import DatatablesReadOnlyView
-from .api.serialize import AuthorSerializer
 import datatables
-from django.shortcuts import get_object_or_404
-from geoluminate.utils import DATABASE
 
 
 class PublicationList(FilterView, WorksByYearMixin):
@@ -53,22 +49,26 @@ class PublicationDetail(DetailView):
     template_name = "literature/details.html"
     model = Publication
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['app_menu'] = PublicationMenu(context['object'])
-        return context
-
 
 @datatables.register
 class AuthorList(DatatablesReadOnlyView):
     model = Author
     queryset = Author.objects.with_work_counts().filter(as_lead__gt=0)
     search_fields = ('family', 'given')
-    fields = ['family', 'given', 'ORCID', 'id', 'as_lead', 'as_supporting']
+    fields = [
+        'get_absolute_url',
+        'family',
+        'given',
+        'ORCID',
+        'id',
+        'as_lead',
+        'as_supporting']
     ordering_fields = ['-as_lead', '-as_supporting']
     base_serializer = AuthorSerializer
     invisible_fields = ['id', ]
+    hyperlink_fields = ['get_absolute_url',]
     datatables = dict(
+        dom="<'#tableToolBar' if> <'#tableBody' tr>",
         rowId='id',
         scrollY='100vh',
         deferRender=True,
@@ -90,13 +90,4 @@ class HTMXDetail(DetailView):
         return [f"literature/hx/{self.template_name}"]
 
 
-# class MapView(KeplerFullPageView):
-
-
 HX = HTMXDetail.as_view
-
-
-def get_related_publications(request, pk):
-    pub = get_object_or_404(Publication, pk=pk)
-    bbox = pub.bbox
-    DATABASE.object.filter(geom__in=bbox)

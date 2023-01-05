@@ -52,5 +52,11 @@ class User(AbstractUser):
         return reverse("user:profile", kwargs={"pk": self.pk})
 
 
+class Profile(models.Model):
+    is_organization = models.BooleanField(_("is organization?"), default=False)
+    name = models.CharField(max_length=255)
+    about = models.TextField(null=True, blank=True)
+
+
 class Invitations(AbstractBaseInvitation):
     pass

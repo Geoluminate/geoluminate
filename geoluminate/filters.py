@@ -22,12 +22,12 @@ class MapFilter(df.FilterSet):
         field_name='lat',
         lookup_expr='lt',
         label='Latitude')
-    lng_gt = df.NumberFilter(
-        field_name='lng',
+    lon_gt = df.NumberFilter(
+        field_name='lon',
         lookup_expr='gt',
         label='Longitude')
-    lng_lt = df.NumberFilter(
-        field_name='lng',
+    lon_lt = df.NumberFilter(
+        field_name='lon',
         lookup_expr='lt',
         label='Longitude')
     elevation_gt = df.NumberFilter(
@@ -55,8 +55,8 @@ class MapFilter(df.FilterSet):
                                css_class='justify-content-center'
                            ),
                            Row(
-                               Column(FloatingField('lng_gt')),
-                               Column(FloatingField('lng_lt')),
+                               Column(FloatingField('lon_gt')),
+                               Column(FloatingField('lon_lt')),
                            ),
                            Row(
                                Div(FloatingField('lat_gt'), css_class='w-50'),

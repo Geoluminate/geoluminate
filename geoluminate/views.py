@@ -8,7 +8,6 @@ from .filters import MapFilter
 from meta.views import Meta
 from geoluminate.core.mixins import FieldSetMixin
 from datatables.views import DatatablesReadOnlyView
-from database.models import HeatFlow
 from django.apps import apps
 import datatables
 from django.contrib.admindocs import views
@@ -19,35 +18,35 @@ from django.db import models
 from django.utils.translation import gettext as _
 from django.views.generic import TemplateView
 from django.forms import ModelChoiceField
+from django.shortcuts import render
+from geoluminate.conf import settings
 
 
 @datatables.register
 class DatabaseTableView(DatatablesReadOnlyView):
-    model = HeatFlow
+    template_name = 'geoluminate/database_table.html'
+    model = DATABASE
     read_only = True
     search_fields = ('name', )
-    ordering_fields = ['-geographic', ]
-    exclude_fields = [
-        'geom',
-        'expl',
-        'intervals',
-        'references',
-        'q_acq',
-        'q_comment',
-        'continent',
-        'last_modified',
-        'conductivity_logs',
-        'temperature_logs',
-        'site_ptr',
-        'date_added',
-        '__str__',
+    invisible_fields = ['id', ]
+    fields = [
+        'get_absolute_url',
+        'id',
+        'name',
+        'q_date_acq',
+        'environment',
+        'water_temp',
+        'explo_method',
+        'explo_purpose',
     ]
-    include_str = False
     invisible_fields = ['id', ]
     datatables = dict(
+        dom="<'#tableToolBar' if> <'#tableBody' tr>",
+        processing=True,
         scrollY='100vh',
         deferRender=True,
         scroller=True,
+        rowId='id',
     )
 
 
@@ -138,16 +137,14 @@ class GlossaryView(TemplateView):
 
 
 class WorldMap(TemplateView):
-    # template_name = 'gis/application.html'
-    template_name = 'kepler/viewer.html'
+    template_name = 'gis/application.html'
+    # template_name = 'kepler/viewer.html'
     filter = MapFilter
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update(dict(
             filter=self.filter(),
-            # download_form=self.download_form(),
-            # settings=MapSettingsForm(),
         ))
 
         context['meta'] = Meta(
@@ -167,33 +164,18 @@ class WorldMap(TemplateView):
 
 
 class SiteView(FieldSetMixin, DetailView):
-    template_name = "main/site_details.html"
+    template_name = "geoluminate/database/site.html"
     model = DATABASE
     fieldset = [
-        # (None,
-        #     {'fields': [
-        #         'name',
-        #         ('lat','lng'),
-        #         'elevation',
-        #         ]}),
         ("Heat Flow",
             {'fields': [
                 'q',
                 'q_unc',
-                'method',
-                'env',
-                'expl',
-                'wat_temp',
+                'explo_method',
+                'environment',
+                'explo_purpose',
+                'water_temp',
                 'q_comment',
-            ]}),
-        ('Geographic',
-            {'fields': [
-                'country',
-                'political',
-                'continent',
-                'ocean',
-                'province',
-                'plate',
             ]}),
     ]
 

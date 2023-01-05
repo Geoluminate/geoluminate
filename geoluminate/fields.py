@@ -3,9 +3,21 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db.models import Q
 from django.apps import apps
 from django.db.models import OneToOneField, ForeignKey, ManyToManyField
+# from geoluminate.models import ControlledVocabulary
 
 
-class ChoiceFieldBase:
+def field_wrapper(field, **kwargs):
+    for k, v in kwargs.items():
+        if not getattr(field, k, None):
+            setattr(field, k, v)
+        else:
+            raise ValueError(
+                f'The keyword "{k}" conflicts with an attribute on the field.')
+
+    return field
+
+
+class ControlledVocabularyBase:
     """Field mixin that allows choice to be defined in a tree structure
     """
 
@@ -50,19 +62,19 @@ class ChoiceFieldBase:
     #     return [(x.code, x.name) for x in self.get_choices_queryset()]
 
 
-class ChoicesOneToOne(ChoiceFieldBase, OneToOneField):
+class ControlledVocabOneToOne(ControlledVocabularyBase, OneToOneField):
     """Defines a one-to-one relationship with `database.models.Choice`
     """
     pass
 
 
-class ChoicesForeignKey(ChoiceFieldBase, ForeignKey):
+class ChoicesForeignKey(ControlledVocabularyBase, ForeignKey):
     """Defines a foreign relationship with `database.models.Choice`
     """
     pass
 
 
-class ChoicesManyToMany(ChoiceFieldBase, ManyToManyField):
+class ChoicesManyToMany(ControlledVocabularyBase, ManyToManyField):
     """Defines a many-to-many relationship with `database.models.Choice`
     """
     pass

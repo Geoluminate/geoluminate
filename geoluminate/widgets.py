@@ -1,14 +1,14 @@
 from multiprocessing.sharedctypes import Value
 from import_export.widgets import ForeignKeyWidget, ManyToManyWidget
 from django.utils.translation import ugettext as _
-from geoluminate.models import Choice
+from controlled_vocabulary.models import ControlledVocabulary
 
 
-class ChoiceForeignKey(ForeignKeyWidget):
+class VocabularyWidget(ForeignKeyWidget):
 
     def __init__(self, *args, **kwargs):
         self.type = kwargs.pop('type')
-        super().__init__(Choice, 'code', *args, **kwargs)
+        super().__init__(ControlledVocabulary, 'code', *args, **kwargs)
 
     def get_queryset(self, value, row, *args, **kwargs):
         return self.model.objects.filter(type=self.type)
@@ -26,11 +26,11 @@ class ChoiceForeignKey(ForeignKeyWidget):
             return None
 
 
-class ChoiceManyToMany(ManyToManyWidget):
+class VocabularyM2MWidget(ManyToManyWidget):
 
     def __init__(self, *args, **kwargs):
         self.type = kwargs.pop('type')
-        super().__init__(Choice, field='code', *args, **kwargs)
+        super().__init__(ControlledVocabulary, field='code', *args, **kwargs)
 
     def get_queryset(self, value, row, *args, **kwargs):
         return self.model.objects.filter(type=self.type)

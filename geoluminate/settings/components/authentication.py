@@ -3,8 +3,8 @@ import os
 AUTH_USER_MODEL = 'user.User'
 """"""
 
-ACCOUNT_ADAPTER = 'user.adapter.AuthenticationAdapter'
-""""""
+# ACCOUNT_ADAPTER = 'user.adapter.AuthenticationAdapter'
+# """"""
 
 LOGIN_REDIRECT_URL = '/'
 """"""

@@ -1,6 +1,10 @@
 {% extends "sidebar_right.html" %}
 {% load i18n crispy_forms_tags static i18n cms_tags sekizai_tags %}
 
+{% block head_title %}{% trans "Literature" %}{% endblock head_title %}
+{% block nav_title_bold %}{% trans "Literature" %}{% endblock %}
+{% block nav_title %}{% trans "Catalogue" %}{% endblock nav_title %}
+
 {% block head %}
 {{ block.super }}
 	<script src="https://unpkg.com/htmx.org@1.8.0" integrity="sha384-cZuAZ+ZbwkNRnrKi05G/fjBX+azI9DNOkNYysZ0I/X5ZFgsmMiBXgDZof30F5ofc" crossorigin="anonymous"></script>
@@ -8,14 +12,21 @@
 {% endblock head %}
 
 {% block main_window %}
-	<div class='content pt-5'>
+
+
+
+	<div class='container content pt-5'>
+		<header class='header'>
+			<strong>
+				{% trans "Literature Catalogue" %}
+			</strong>
+		</header>
 		<section id='publication-list' class='main'>
 			{% include "literature/partials/publication_list.html" %}
 		</section>
 	</div>
 	{% addtoblock "js" %}<script src="{% static "geoluminate/js/shave.min.js" %}"></script>{% endaddtoblock %}
 	{% addtoblock "js" %}<script>shave('.abstract', 150)</script>{% endaddtoblock %}
-	{% addtoblock "js" %}<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>{% endaddtoblock %}
 	
 {% endblock main_window %}
 
@@ -43,10 +54,10 @@
 
 
 
-
+{% comment %} 
 {% block modals %}
 {% include "review/modals/nominate.html" with modal_id='genericModal' %}
-{% endblock modals %}
+{% endblock modals %} {% endcomment %}
 
 
 

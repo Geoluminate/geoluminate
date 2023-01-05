@@ -5,7 +5,7 @@ from rest_framework_gis.filters import DistanceToPointFilter
 from geoluminate.rest_framework.utils import DjangoFilterBackend
 from rest_framework.response import Response
 from rest_access_policy.access_view_set_mixin import AccessViewSetMixin
-from geoluminate.access_policies import CoreAccessPolicy
+from geoluminate.api.access_policies import CoreAccessPolicy
 from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
 from geoluminate.utils import DATABASE
 from django.apps import apps
@@ -18,7 +18,6 @@ from django.views.decorators.cache import cache_page
 
 class DataViewSet(AccessViewSetMixin, viewsets.ModelViewSet):
     __doc__ = f"Endpoint to request a set of {DATABASE._meta.verbose_name} data."
-
     access_policy = CoreAccessPolicy
     permission_classes = [DjangoModelPermissionsOrAnonReadOnly, ]
     queryset = DATABASE.objects.all().prefetch_related('references')

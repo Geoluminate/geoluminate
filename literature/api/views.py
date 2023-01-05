@@ -10,6 +10,8 @@ from django.shortcuts import get_object_or_404
 from rest_framework import mixins
 from geoluminate.api.v1.views import DataViewSet
 from rest_framework_datatables_editor.filters import DatatablesFilterBackend
+from django.contrib.gis.db.models import Extent, Collect
+from geoluminate.api.v1.serializers import GeoFeatureSerializer
 
 
 # class LiteratureView(viewsets.ModelViewSet):
@@ -17,10 +19,16 @@ from rest_framework_datatables_editor.filters import DatatablesFilterBackend
 class LiteratureView(viewsets.ReadOnlyModelViewSet):
     """API endpoint to request a set of  publications."""
     max_paginate_by = 1000
+    pagination_class = None
     serializer_class = LiteratureSerializer
     filterset_fields = ['container_title', 'published']
     filter_backends = (DjangoFilterBackend,)
-    queryset = Publication.objects.prefetch_related('sites')
+    queryset = (Publication.objects.all()
+                # .prefetch_related('sites')
+                # .annotate(
+                #     bbox=Extent('sites__geom'),
+                # )
+                )
 
 
 class AuthorView(viewsets.ReadOnlyModelViewSet):
@@ -57,11 +65,16 @@ class CoreNestedViewSet(DataViewSet):
     #     return self.serializer_class
 
     def list(self, request, *args, **kwargs):
-        queryset = DATABASE.objects.filter(
+        qs = DATABASE.objects.filter(
             references__pk=kwargs.pop('lit_pk'))
-        serializer = self.get_serializer(
-            queryset, many=True, context={
-                'request': request})
+
+        if self.is_geojson():
+            serializer = GeoFeatureSerializer(qs, many=True)
+            # return Response(serializer.data)
+        else:
+            serializer = self.get_serializer(
+                qs, many=True, context={
+                    'request': request})
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None, *args, **kwargs):

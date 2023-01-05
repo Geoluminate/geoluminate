@@ -31,14 +31,7 @@
   <li class="ms-auto">
     <div class="dropleft no-arrow">
       <a class='icon ellipsis-v' href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="label">Actions</span></a>
-      <div class="dropdown-menu">
-        {% if user.is_authenticated %}
-          {% comment %} <a href='#' hx-trigger='click' class="dropdown-item" data-bs-toggle="modal" data-target="#claimPublication">Claim</a> {% endcomment %}
-          <a class="dropdown-item" onclick="Swal.fire('Confirm', 'Do you want to continue?')">Claim</a>
-        {% else %}
-          {% auth_link '#loginModal' 'Claim' "dropdown-item" %}
-        {% endif %}
-      </div>
+      <div class="dropdown-menu"></div>
     </div>
   </li> 
 </ul>

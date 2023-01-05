@@ -7,9 +7,11 @@ $(function () {
   function toggleSideBar() {
     if (sidebarIsOpen) {
       $sidebar.removeClass('expanded');
+      document.cookie = "sidebarState=closed";
       return false
     } else {
       $sidebar.addClass('expanded');
+      document.cookie = "sidebarState=expanded";
       return true
     }
   }
@@ -17,6 +19,9 @@ $(function () {
   $('.toggle').on('click', function () {
     sidebarIsOpen = toggleSideBar()
   })
+
+
+
 
   $('.expand').on('click', function () {
 
@@ -102,7 +107,13 @@ $(function () {
     });
   });
 
-  $('[data-bs-toggle="tooltip"]').tooltip()
+  $('[data-bs-toggle="tooltip"]').tooltip();
+
+  $("body").popover({
+    selector: '[data-bs-toggle="popover"]',
+    trigger: 'hover',
+  });
+
 
   $('#glossaryFilter').on('keyup', function () {
     $('.definition').hide()

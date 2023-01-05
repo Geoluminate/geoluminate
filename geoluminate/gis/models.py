@@ -1,50 +1,25 @@
-from django.contrib.gis.geos import Point
-from django.contrib.gis.measure import Distance
 from django.utils.translation import gettext_lazy as _
 from django_extensions.db.fields import AutoSlugField
 from django.contrib.gis.db import models
-from shortuuid.django_fields import ShortUUIDField
-from geoluminate.fields import RangeField
-from geoluminate.gis.managers import SiteManager
+from .base import AbstractSite
 
 
-class Site(models.Model):
-    """The geoluminate site model that all GIS enabled apps should inherit from."""
+class BaseSite(AbstractSite):
+    """A concrete base model for GIS enabled databases. 'geoluminate.gis'
+    must be in your installed apps to utilize this model in your application.
 
-    objects = SiteManager.as_manager()
+    .. note:
 
-    id = ShortUUIDField(
-        length=10,
-        blank=True,
-        max_length=15,
-        prefix="GHFS-",
-        alphabet="23456789ABCDEFGHJKLMNPQRSTUVWXYZ",
-        primary_key=True,
-    )
-    geom = models.PointField()
-    elevation = RangeField(_('elevation (m)'),
-                           help_text=_(
-                               'elevation with reference to mean sea level (m)'),
-                           max_value=9000, min_value=-12000,
-                           blank=True, null=True)
-    geographic = models.ForeignKey("geoluminate_gis.GeographicLocation",
-                                   verbose_name=_('geographic location'),
-                                   help_text=_(
-                                       'Represents a single country, sea or ocean.'),
-                                   blank=True, null=True,
-                                   on_delete=models.SET_NULL)
+        Inherit from this class if you plan on working with multiple object types
+        for a given site. If you are working with only a single data type, for
+        performance reasons you may wish to consider inheriting directly from
+        `geoluminate.gis.BaseGIS`.
+    """
 
     class Meta:
         verbose_name = _('Geographic site')
         verbose_name_plural = _('Geographic sites')
         default_related_name = 'site'
-        db_table = 'core_gis_site'
-
-    def nearby(self, radius=25):
-        """Gets nearby sites within x km radius"""
-        point = Point(self.lng, self.lat)
-        return self.objects.filter(
-            geom__distance_lt=(self.geom, Distance(km=radius)))
 
 
 class GeographicLocation(models.Model):
@@ -67,6 +42,7 @@ class GeographicLocation(models.Model):
     poly = models.MultiPolygonField(srid=4326)
 
     class Meta:
+        abstract = True
         ordering = ['name', ]
         verbose_name = _('geographic location')
         verbose_name_plural = _('geographic locations')

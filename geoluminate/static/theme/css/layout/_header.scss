@@ -1,4 +1,4 @@
-	.header {
+	header, .header {
 		@include vendor('display', 'flex');
 		border-bottom: solid 5px _palette(primary);
 		padding-bottom: 0.5rem;
@@ -6,7 +6,9 @@
 		position: relative;
 		font-size: 1.25rem;
 		overflow: hidden;
-
+		color: #3d4449;
+		font-weight: 600;
+		
 		> * {
 			// @include vendor('flex', '1');
 			margin-bottom: 0;

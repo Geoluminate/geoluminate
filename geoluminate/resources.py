@@ -1,8 +1,8 @@
 from import_export.resources import ModelResource
 from django.utils.html import mark_safe
 from tqdm import tqdm
-from .widgets import ChoiceForeignKey, ChoiceManyToMany
-from geoluminate.fields import ChoiceFieldBase
+from .widgets import VocabularyWidget, VocabularyM2MWidget
+from geoluminate.fields import ControlledVocabularyBase
 
 
 class ResourceMixin(ModelResource):
@@ -11,9 +11,11 @@ class ResourceMixin(ModelResource):
 
     WIDGETS_MAP = ModelResource.WIDGETS_MAP
     WIDGETS_MAP.update(**{
-        "ChoicesOneToOne": ChoiceForeignKey,
-        "ChoicesForeignKey": ChoiceForeignKey,
-        "ChoicesManyToMany": ChoiceManyToMany,
+        "ChoicesOneToOne": VocabularyWidget,
+        "ChoicesForeignKey": VocabularyWidget,
+        "ChoicesManyToMany": VocabularyM2MWidget,
+        "ControlledVocabFK": VocabularyWidget,
+        "ControlledVocabM2M": VocabularyM2MWidget,
     })
 
     @classmethod
@@ -24,7 +26,7 @@ class ResourceMixin(ModelResource):
 
         FieldWidget = cls.widget_from_django_field(django_field)
         widget_kwargs = cls.widget_kwargs_for_field(field_name)
-        if issubclass(django_field.__class__, ChoiceFieldBase):
+        if issubclass(django_field.__class__, ControlledVocabularyBase):
             widget_kwargs.update(type=django_field.get_choice())
         field = cls.DEFAULT_RESOURCE_FIELD(
             attribute=field_name,

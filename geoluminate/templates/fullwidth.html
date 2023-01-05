@@ -5,6 +5,11 @@
 
 {% block content %}
 <div class='flex-grow-1 overflow-auto'>
+  <button hx-target='#test'
+          hx-get='/collections/add/'
+          hx-trigger="click"
+  >Add Collection</button>
+  <div id='test'></div>
   {% placeholder "content" %}
 </div>
 {% endblock content %}

@@ -45,14 +45,6 @@ class BaseAdmin(admin.OSMGeoAdmin, SimpleHistoryAdmin):
         return obj._name
     name.admin_order_field = '_name'
 
-    def latitude(self, obj):
-        return obj._lat
-    latitude.admin_order_field = '_latitude'
-
-    def longitude(self, obj):
-        return obj._lng
-    longitude.admin_order_field = '_longitude'
-
     def site_operator(self, obj):
         return obj._operator
     site_operator.admin_order_field = '_operator'

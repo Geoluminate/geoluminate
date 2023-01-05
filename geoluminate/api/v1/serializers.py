@@ -12,7 +12,7 @@ class GeoFeatureSerializer(FeatureSerializer):
         exclude = ['references', 'last_modified']
 
 
-class CoreSerializer(serializers.ModelSerializer):
+class CoreSerializer(serializers.HyperlinkedModelSerializer):
     id = serializers.CharField()  # required for datatables
     lat = serializers.SerializerMethodField()
     lon = serializers.SerializerMethodField()

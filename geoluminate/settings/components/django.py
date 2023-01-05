@@ -87,6 +87,7 @@ INSTALLED_APPS = [
     'grappelli.dashboard',
     'grappelli',
     # 'djangocms_admin_style',
+    'polymorphic',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -99,17 +100,13 @@ INSTALLED_APPS = [
     'geoluminate',
     'user',
     'django.contrib.humanize',
-    # 'django.contrib.admindocs',
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
     "allauth.socialaccount.providers.orcid",
     "invitations",
     "ror",
-    # 'organizations',
     'cms',
-    'geoluminate.cms',
-
     'menus',
     'sekizai',
     'treebeard',
@@ -155,6 +152,9 @@ INSTALLED_APPS = [
     'django_htmx',
     'crossref',
     'crossref.cms',
+    'simple_menu',
+    'controlled_vocabulary',
+    'django_licensing',
 
     # GeoLuminate Apps
     'literature',
@@ -215,12 +215,12 @@ if os.getenv('DJANGO_ENV') == 'development':
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
     DATABASES = {
         'default': {
-            'CONN_MAX_AGE': 0,
-            'NAME': os.environ.get('DB_NAME'),
+            'ENGINE': 'django.contrib.gis.db.backends.postgis',
+            'NAME': os.environ.get('DB_NAME', BASE_DIR + "/db.sqlite3"),
             'USER': os.environ.get('DB_USERNAME'),
             'PASSWORD': os.environ.get('DB_PASSWORD'),
             'HOST': 'localhost',
-            'ENGINE': 'django.contrib.gis.db.backends.postgis',
+            'CONN_MAX_AGE': 0,
         },
         # 'default': {
         #     'ENGINE': 'django.db.backends.sqlite3',

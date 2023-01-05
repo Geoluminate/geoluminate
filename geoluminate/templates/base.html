@@ -1,4 +1,5 @@
-{% load static meta cms_tags menu_tags sekizai_tags authentication thumbnail geoluminate %}
+{% load static meta cms_tags menu_tags sekizai_tags authentication thumbnail geoluminate simple_menu %}
+{% generate_menu %}
 <!doctype html>
 <html lang="en">
 <head {% meta_namespaces %}>
@@ -15,7 +16,6 @@
   <link rel="stylesheet" href="{% static "theme/test.min.css" %}">
   {% render_block "css"%}
 </head>
-
 <body class='bg-white' hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-indicator="#mainIndicator">
   {% if request.user|has_group:"CMS" or request.user.is_superuser %}
     {% include 'geoluminate/utils/cms_toolbar.html' %}

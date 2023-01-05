@@ -1,10 +1,12 @@
 {% load static sekizai_tags %}
-<div class="tab-pane fade show active d-flex flex-grow-1" id="MapContent" role="tabpanel" aria-labelledby="nav-home-tab">
+<div class="tab-pane show active d-flex flex-grow-1 animate__animated" id="MapContent" role="tabpanel" aria-labelledby="nav-home-tab">
   <div id='map'
-      url="{% url "heatflow-list" %}?"
-      data-format='geojson' {% if publication %}
-      data-references='{{publication.pk}}'{% endif %}{% if site %}
-      data-id='{{site.pk}}'{% endif %} 
+      url="{% url "literature-data-list" lit_pk=publication.pk%}"
+      data-format='geojson' 
+      {% comment %} {% if publication %}
+      data-references='{{publication.pk}}'{% endif %}
+      {% if site %}
+      data-id='{{site.pk}}'{% endif %}  {% endcomment %}
       class="{{css_class}}">
     <div id='shadow'></div>
   </div>
@@ -15,5 +17,5 @@
 <script src='https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js'></script>
 <script src="https://unpkg.com/esri-leaflet@2.5.0/dist/esri-leaflet.js" integrity="sha512-ucw7Grpc+iEQZa711gcjgMBnmd9qju1CICsRaryvX7HJklK0pGl/prxKvtHwpgm5ZHdvAil7YPxI1oWPOWK3UQ==" crossorigin=""></script>
 
-
+<script>const CLUSTER = false;</script>
 <script src="{% static 'mapping/js/map.js' %}"></script>

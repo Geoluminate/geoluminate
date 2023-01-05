@@ -1,14 +1,15 @@
-from django.contrib.gis.db import models as geomodels
+from django.contrib.gis.db import models
 from django.contrib.gis.utils import LayerMapping
 import os
 from django.db.models.query import QuerySet
 from django.contrib.postgres.aggregates import JSONBAgg
 from geoluminate.gis.db_functions import AsGeoFeature
+from polymorphic.query import PolymorphicQuerySet
 
 DATA_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data'))
 
 
-class SiteManager(QuerySet):
+class SiteManager(PolymorphicQuerySet):
 
     def get_feature(*args, **kwargs):
         return self.annotate(feature=AsGeoFeature(*args)).get(*args, **kwargs)
@@ -26,7 +27,7 @@ class SiteManager(QuerySet):
         return dict(type='FeatureCollection', **self.feature_collection())
 
 
-class GISManager(geomodels.Manager):
+class GISManager(models.Manager):
 
     def count_in(self, model, field='geom'):
         for instance in self.model.objects.all():

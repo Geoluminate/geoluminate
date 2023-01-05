@@ -3,8 +3,8 @@ from geoluminate import settings
 from geoluminate.settings import *
 
 settings.INSTALLED_APPS.extend([
-    "debug_toolbar",
-    "template_profiler_panel",
+    # "debug_toolbar",
+    # "template_profiler_panel",
 ])
 
 settings.MIDDLEWARE.extend([

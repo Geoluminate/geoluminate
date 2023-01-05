@@ -1,20 +1,16 @@
-WATERMARK = dict(
-    image='collection/images/logo_square.png',
-    position='50%x70%',
-    opacity=0.7,
-    scale='15%',
-)
-""""""
+import os
 
 # EASY_THUMBNAILS SETTINGS
 THUMBNAIL_CACHE_DIMENSIONS = True
 """"""
+
 # THUMBNAIL_CHECK_CACHE_MISS = True
 THUMBNAIL_SUBDIR = 'thumbs'
 """"""
+
 THUMBNAIL_ALIASES = {}
 """"""
-# THUMBNAIL_NAMER = 'easy_thumbnails.namers.alias'
+
 THUMBNAIL_PROCESSORS = [
     'easy_thumbnails.processors.colorspace',
     'easy_thumbnails.processors.autocrop',
@@ -23,5 +19,5 @@ THUMBNAIL_PROCESSORS = [
 ]
 """"""
 
-THUMBNAIL_DEBUG = True
+THUMBNAIL_DEBUG = not os.environ.get('DJANGO_ENV') == 'production'
 """"""

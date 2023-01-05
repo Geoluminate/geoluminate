@@ -2,15 +2,11 @@ from rest_framework import viewsets
 from literature.models import Publication
 from literature.api.serialize import LiteratureSerializer, AuthorSerializer, CoreNestedSerializer
 from geoluminate.rest_framework.utils import DjangoFilterBackend
-from rest_framework_extensions.mixins import PaginateByMaxMixin
 from crossref.models import Author
 from geoluminate.utils import DATABASE
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
-from rest_framework import mixins
 from geoluminate.api.v1.views import DataViewSet
-from rest_framework_datatables_editor.filters import DatatablesFilterBackend
-from django.contrib.gis.db.models import Extent, Collect
 from geoluminate.api.v1.serializers import GeoFeatureSerializer
 
 
@@ -23,12 +19,7 @@ class LiteratureView(viewsets.ReadOnlyModelViewSet):
     serializer_class = LiteratureSerializer
     filterset_fields = ['container_title', 'published']
     filter_backends = (DjangoFilterBackend,)
-    queryset = (Publication.objects.all()
-                # .prefetch_related('sites')
-                # .annotate(
-                #     bbox=Extent('sites__geom'),
-                # )
-                )
+    queryset = Publication.objects.all()
 
 
 class AuthorView(viewsets.ReadOnlyModelViewSet):

@@ -1,15 +1,10 @@
 from rest_framework import serializers
 from literature.models import Publication
 from crossref.models import Author
-from rest_framework_nested.relations import NestedHyperlinkedRelatedField
 from rest_framework_nested.serializers import NestedHyperlinkedModelSerializer
 from geoluminate.api.v1.serializers import CoreSerializer
 from geoluminate.utils import DATABASE
 from django.utils.translation import gettext_lazy as _
-from rest_framework.utils.serializer_helpers import (
-    ReturnDict,
-    ReturnList,
-)
 from django.contrib.gis.geos import Polygon
 from django.contrib.gis.gdal.envelope import Envelope
 from django.contrib.gis.geos import GEOSGeometry

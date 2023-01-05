@@ -1,0 +1,31 @@
+[packages]
+
+MAYBE USEFUL FOR LATER
+django-newsletter = "*"
+django-reverse-admin = "*"
+
+
+ADDED THROUGH EXTERNAL PACKAGES 
+
+django-organizations = "*" [django-ror]
+django-super-deduper = "*" [django-literature]
+
+
+
+
+
+
+[dev-packages]
+autopep8 = "*"
+pycodestyle = "*"
+ipython = "*"
+sphinx = "*"
+furo = "*"
+django-debug-toolbar-template-profiler = "*"
+django-debug-toolbar = "*"
+coverage = "*"
+
+
+
+[requires]
+python_version = "3.9"

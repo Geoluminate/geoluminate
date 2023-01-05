@@ -18,17 +18,19 @@ AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
 }
 """"""
-AWS_S3_REGION_NAME = 'ap-southeast-2'
+AWS_S3_REGION_NAME = os.environ.get('REGION_NAME')
 """"""
+# 'ap-southeast-2'
 
 
 AWS_DEFAULT_ACL = None
 """"""
+
 AWS_STATIC_LOCATION = 'static'
 """"""
 
-
 AWS_PUBLIC_MEDIA_LOCATION = 'media/public'
 """"""
+
 AWS_PRIVATE_MEDIA_LOCATION = 'media/private'
 """"""

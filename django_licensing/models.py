@@ -3,9 +3,9 @@ from django.utils.translation import gettext_lazy as _
 
 
 class License(models.Model):
-    url = models.URLField(
-        _("url"),
-        help_text=_("URL to an online published version of the license."),
+    uri = models.URLField(
+        _("URI"),
+        help_text=_("URI to an online published version of the license."),
         max_length=200, primary_key=True)
     name = models.CharField(_('name'),
                             help_text=_("Short form name of the license."),

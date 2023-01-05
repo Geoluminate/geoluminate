@@ -75,13 +75,15 @@ SOCIALACCOUNT_FORMS = {
 SOCIALACCOUNT_AUTO_SIGNUP = False
 """"""
 
+
 SOCIALACCOUNT_PROVIDERS = {
+
     'orcid': {
-        # Base domain of the API. Default value: 'orcid.org', for the
-        # production API
-        'BASE_DOMAIN': 'sandbox.orcid.org',  # for the sandbox API
-        # Member API or Public API? Default: False (for the public API)
-        'MEMBER_API': not os.environ.get('DEBUG'),
+        # Base domain of the API.
+        'BASE_DOMAIN': 'sandbox.orcid.org' if os.environ.get('DJANGO_ENV') == 'development' else 'orcid.org',
+        # Member API or Public API?
+        'MEMBER_API': False
     }
+
 }
 """"""

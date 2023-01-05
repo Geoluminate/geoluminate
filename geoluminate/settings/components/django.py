@@ -1,7 +1,7 @@
 import os
 from django.contrib.messages import constants as messages
 
-DEBUG = True if os.environ.get('DEBUG') == 'TRUE' else False
+DEBUG = not os.environ.get('DJANGO_ENV') == 'production'
 
 BASE_DIR = os.getcwd()
 
@@ -47,13 +47,10 @@ MESSAGE_TAGS = {
     messages.ERROR: 'error alert-danger',
 }
 
-
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
-
 TAGGIT_CASE_INSENSITIVE = True
-
 
 TEMPLATES = [
     {
@@ -83,11 +80,16 @@ TEMPLATES = [
 ]
 
 INSTALLED_APPS = [
+    # Admin apps
     'geoluminate.admin_tools',
     'grappelli.dashboard',
     'grappelli',
     # 'djangocms_admin_style',
+
     'polymorphic',
+
+
+    # core Django apps
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -97,67 +99,119 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.messages',
     'django.contrib.gis',
+    'django.contrib.humanize',
+
+    # geoluminate configuration and user accounts
     'geoluminate',
     'user',
-    'django.contrib.humanize',
+    "ror",
+
+    # authentication
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
     "allauth.socialaccount.providers.orcid",
     "invitations",
-    "ror",
+
+    # installed by django cms
     'cms',
     'menus',
     'sekizai',
     'treebeard',
 
+    # installed by djangocms-frontend
     'djangocms_text_ckeditor',
     'filer',
-    'easy_thumbnails',
-    'djangocms_file',
-    'djangocms_icon',
-    'djangocms_link',
-    'djangocms_picture',
-    'djangocms_bootstrap5',
-    'djangocms_bootstrap5.contrib.bootstrap5_card',
-    'djangocms_bootstrap5.contrib.bootstrap5_carousel',
-    'djangocms_bootstrap5.contrib.bootstrap5_collapse',
-    'djangocms_bootstrap5.contrib.bootstrap5_content',
-    'djangocms_bootstrap5.contrib.bootstrap5_grid',
-    'djangocms_bootstrap5.contrib.bootstrap5_jumbotron',
-    'djangocms_bootstrap5.contrib.bootstrap5_link',
-    'djangocms_bootstrap5.contrib.bootstrap5_listgroup',
-    'djangocms_bootstrap5.contrib.bootstrap5_media',
-    'djangocms_bootstrap5.contrib.bootstrap5_picture',
-    'djangocms_bootstrap5.contrib.bootstrap5_tabs',
-    'djangocms_bootstrap5.contrib.bootstrap5_utilities',
-    'djangocms_video',
+    "djangocms_icon",
+    "easy_thumbnails",
+    "djangocms_frontend",
+    "djangocms_frontend.contrib.accordion",
+    "djangocms_frontend.contrib.alert",
+    "djangocms_frontend.contrib.badge",
+    "djangocms_frontend.contrib.card",
+    "djangocms_frontend.contrib.carousel",
+    "djangocms_frontend.contrib.collapse",
+    "djangocms_frontend.contrib.content",
+    "djangocms_frontend.contrib.grid",
+    "djangocms_frontend.contrib.image",
+    "djangocms_frontend.contrib.jumbotron",
+    "djangocms_frontend.contrib.link",
+    "djangocms_frontend.contrib.listgroup",
+    "djangocms_frontend.contrib.media",
+    "djangocms_frontend.contrib.tabs",
+    "djangocms_frontend.contrib.utilities",
 
-    "django_celery_beat",
-    'solo',
-    'django_extensions',
-    'django_filters',
-    'taggit',
-    'storages',
-    'crispy_forms',
-    'crispy_bootstrap5',
+    # APPS FOR DJANGO REST FRAMEWORK
+    'rest_framework',
+    'rest_framework.authtoken',
+    'dj_rest_auth',
+    'dj_rest_auth.registration',
+    "drf_spectacular",  # auto documentation of API
+    'drf_spectacular_sidecar',  # supplies static files for drf_spectacular
+    'rest_framework_datatables_editor',
+
+    # commenting system via django-fluent-comments[threadedcomment]
     'fluent_comments',
     'threadedcomments',
     'django_comments',
-    'django_social_share',
-    'meta',
-    "sortedm2m",
-    "django_gravatar",
-    "django_ckeditor_5",
-    'django_htmx',
+
+
+
+    'solo',  # singleton model for storing dynamic global variables in the DB
+    'storages',  # for setting up backend storages
+    'simple_menu',  # for defining non-CMS menus in the application
+
+
+
+
+
+
+    # building nice looking forms and filters
+    'django_filters',
+    'crispy_forms',
+    'crispy_bootstrap5',
+
+    # some other useful apps that are required by the default installation
+    'django_extensions',  # useful extensions for django
+    "sortedm2m",  # sortable m2m relationships
+    'django_htmx',  # context processor for dealing with htmx requests
+    # "django_celery_beat",  # celery based task manager
+    'meta',  # for seo optimization
+    # 'taggit',  # providing taggable keywords to any model
+    'django_social_share',  # easy links to social sharing sites
+    # 'import_export',  # for csv import and export via the admin site
+    # 'import_export_celery',
+
+
+    # not sure if these are explicitly needed or not
+    # 'newsletter',
+    # 'rest_framework_gis',
+    # 'django_json_widget',  # provides a json form field for json_field
+    # 'rosetta',  # in app translations
+    # 'controlled_vocabulary',  # a nice app for controlled vocabulary fields
+    # "menu",  # is this supposed to be here?
+    "django_select2",  # select2 widget integration with models
+
+
+    # GEOLUMINATE DEFAULT PLUGINS
+
+    # automatic API
+    # geoluminate.api
+    "drf_auto_endpoint",
+
+    # literature management
+    'literature',
     'crossref',
     'crossref.cms',
-    'simple_menu',
-    'controlled_vocabulary',
+
+    # research projects
+    # research_projects
     'django_licensing',
 
-    # GeoLuminate Apps
-    'literature',
+    # cataloguing of scientific instruments
+    'django_laboratory',
+
+    # 'geoluminate.gis', # do i need this here?
 
 ]
 
@@ -195,14 +249,14 @@ DEBUG_TOOLBAR_PANELS = [
     'template_profiler_panel.panels.template.TemplateProfilerPanel',
 ]
 
-CKEDITOR_5_CONFIGS = {
-    'default': {
-        'toolbar': ['outdent', 'indent', '|', 'bold', 'italic', 'underline', 'strikethrough',
-                    'subscript', 'superscript', '|',
-                    'bulletedList', 'numberedList',
-                    ]
-    },
-}
+# CKEDITOR_5_CONFIGS = {
+#     'default': {
+#         'toolbar': ['outdent', 'indent', '|', 'bold', 'italic', 'underline', 'strikethrough',
+#                     'subscript', 'superscript', '|',
+#                     'bulletedList', 'numberedList',
+#                     ]
+#     },
+# }
 
 CROSSREF_MODELS = {
     "work": "literature.Publication",
@@ -213,31 +267,18 @@ if os.getenv('DJANGO_ENV') == 'development':
 
     STATIC_ROOT = os.path.join(BASE_DIR, 'static')
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.contrib.gis.db.backends.postgis',
-            'NAME': os.environ.get('DB_NAME', BASE_DIR + "/db.sqlite3"),
-            'USER': os.environ.get('DB_USERNAME'),
-            'PASSWORD': os.environ.get('DB_PASSWORD'),
-            'HOST': 'localhost',
-            'CONN_MAX_AGE': 0,
-        },
-        # 'default': {
-        #     'ENGINE': 'django.db.backends.sqlite3',
-        #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        # }
-    }
-else:
-    import django_heroku
-    import dj_database_url
-    STATICFILES_STORAGE = 'geoluminate.backends.storage.StaticStorage'
-    STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_STATIC_LOCATION}/"
 
-    SECURE_SSL_REDIRECT = True
-    DATABASES = {
-        'default': dj_database_url.config(
-            conn_max_age=600,
-            ssl_require=True)
-    }
-    django_heroku.settings(locals(), staticfiles=False)
-    DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USERNAME'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': 'localhost',
+        'CONN_MAX_AGE': 0,
+    },
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # }
+}

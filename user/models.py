@@ -4,7 +4,6 @@ from .managers import UserManager
 from django.db import models
 from invitations.base_invitation import AbstractBaseInvitation
 from django.urls import reverse
-from django_ckeditor_5.fields import CKEditor5Field
 
 
 class User(AbstractUser):
@@ -13,7 +12,6 @@ class User(AbstractUser):
 
     username = None
     email = models.EmailField(_('email address'), unique=True)
-    about = CKEditor5Field(_('about'), blank=True, null=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']

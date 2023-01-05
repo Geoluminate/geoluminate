@@ -10,6 +10,9 @@ from rest_framework.utils.serializer_helpers import (
     ReturnDict,
     ReturnList,
 )
+from django.contrib.gis.geos import Polygon
+from django.contrib.gis.gdal.envelope import Envelope
+from django.contrib.gis.geos import GEOSGeometry
 
 
 class AuthorSerializer(serializers.HyperlinkedModelSerializer):
@@ -49,10 +52,19 @@ class LiteratureSerializer(serializers.HyperlinkedModelSerializer):
         view_name='literature-data-list',
         lookup_url_kwarg='lit_pk',
     )
+    bbox = serializers.ListField(
+        read_only=True
+    )
+    # bbox = serializers.SerializerMethodField()
 
     class Meta:
         model = Publication
         exclude = ['last_queried_crossref', 'source', 'pdf', 'owner', 'author']
+
+    def get_bbox(self, obj):
+        if obj.bbox:
+            return GEOSGeometry(Envelope(obj.bbox).wkt).json
+        return {}
 
 
 class CoreNestedListSerializer(serializers.ListSerializer):

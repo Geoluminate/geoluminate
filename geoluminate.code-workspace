@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"name": "django-ror",
+			"path": "../django-ror"
+		},
+		{
+			"path": "../django-crossref"
+		},
+		{
+			"name": "django-auto-datatables",
+			"path": "../django-auto-datatables"
+		}
+	],
+	"settings": {
+		"terminal.integrated.env.windows": {
+			"PYTHONPATH": "../django-ror;../django-crossref;../django-auto-datatables"
+		}
+	}
+}

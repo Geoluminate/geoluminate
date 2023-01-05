@@ -1,6 +1,5 @@
 {
-	"folders": [
-		{
+	"folders": [{
 			"path": "."
 		},
 		{
@@ -17,6 +16,9 @@
 	],
 	"settings": {
 		"terminal.integrated.env.windows": {
+			"PYTHONPATH": "../django-ror;../django-crossref;../django-auto-datatables"
+		},
+		"terminal.integrated.env.linux": {
 			"PYTHONPATH": "../django-ror;../django-crossref;../django-auto-datatables"
 		}
 	}

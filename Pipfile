@@ -33,6 +33,7 @@ django-sortedm2m = "*"
 dj-rest-auth = {extras = ["with_social"], version = "*"}
 drf-schema-adapter = "*"
 djangorestframework-datatables-editor = "*"
+drf-auto-endpoint = "*"
 
 [dev-packages]
 django-extensions = "*"

@@ -6,7 +6,7 @@ from django.apps import apps
 from django.db import models
 from django.utils.module_loading import import_string
 from django.utils.translation import gettext_lazy as _
-
+from django_fake_model import models as f
 
 def choices_from_qs(qs, field):
     return [(k, k) for k in (qs.order_by(field)
@@ -63,5 +63,10 @@ if db_string:
     DATABASE = apps.get_model(get_core_database())
     db_name = DATABASE._meta.verbose_name
 else:
-    DATABASE = models.Model
+    class Database(f.FakeModel):
+        class Meta:
+            verbose_name='You need to specify this model in your settings'
+
+    DATABASE = Database
+    # DATABASE = None
     db_name = 'undefined'

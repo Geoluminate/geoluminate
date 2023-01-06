@@ -12,6 +12,28 @@ class GeoluminateConf(AppConf):
 
     DATABASES = []
 
+    DATABASE = None
+
+    TABLE = {
+        'fields': [
+            'get_absolute_url',
+            'id',
+            'name',
+        ]
+    }
+
+    API_ROUTERS = [
+        'geoluminate.gis.urls.router',
+        'literature.api.urls.router',
+        'literature.api.urls.lit_router',
+    ]
+
+    GLOSSARY = [
+        "database.Station",
+        "database.Run",
+        "database.TransferFunction",
+    ]
+
     class Meta:
         """Prefix for all Geoluminate settings."""
         prefix = "GEOLUMINATE"

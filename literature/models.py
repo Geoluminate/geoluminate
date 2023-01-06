@@ -1,6 +1,5 @@
 from django.db import models
-from django.utils.http import urlquote_plus
-from django.utils.translation import gettext as _, pgettext as _p
+from django.utils.translation import gettext as _
 from django.utils.html import mark_safe
 from django.urls import reverse
 from django.apps import apps
@@ -8,6 +7,7 @@ from django.contrib.auth import get_user_model
 import crossref.models as cr_models
 from django.contrib.gis.db.models import Extent, Collect
 from crossref.utils import get_author_model
+from urllib.parse import quote
 
 Author = get_author_model()
 
@@ -44,7 +44,7 @@ class Publication(cr_models.Work):
             return ''
 
     def keywords_escaped(self):
-        return [(keyword.strip(), urlquote_plus(keyword.strip()))
+        return [(keyword.strip(), quote(keyword.strip()))
                 for keyword in self.keywords.split(',')]
 
     def bbox(self):

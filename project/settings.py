@@ -7,7 +7,7 @@ settings.INSTALLED_APPS.extend([
 ])
 
 settings.MIDDLEWARE.extend([
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
 ])
 
 

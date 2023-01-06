@@ -102,8 +102,8 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
 
     # geoluminate configuration and user accounts
-    'geoluminate',
     'user',
+    'geoluminate',
     "ror",
 
     # authentication
@@ -122,7 +122,7 @@ INSTALLED_APPS = [
     # installed by djangocms-frontend
     'djangocms_text_ckeditor',
     'filer',
-    "djangocms_icon",
+    # "djangocms_icon",
     "easy_thumbnails",
     "djangocms_frontend",
     "djangocms_frontend.contrib.accordion",
@@ -161,11 +161,6 @@ INSTALLED_APPS = [
     'storages',  # for setting up backend storages
     'simple_menu',  # for defining non-CMS menus in the application
 
-
-
-
-
-
     # building nice looking forms and filters
     'django_filters',
     'crispy_forms',
@@ -177,7 +172,7 @@ INSTALLED_APPS = [
     'django_htmx',  # context processor for dealing with htmx requests
     # "django_celery_beat",  # celery based task manager
     'meta',  # for seo optimization
-    # 'taggit',  # providing taggable keywords to any model
+    'taggit',  # providing taggable keywords to any model
     'django_social_share',  # easy links to social sharing sites
     # 'import_export',  # for csv import and export via the admin site
     # 'import_export_celery',

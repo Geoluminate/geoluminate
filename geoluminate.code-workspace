@@ -19,7 +19,7 @@
 			"PYTHONPATH": "../django-ror;../django-crossref;../django-auto-datatables"
 		},
 		"terminal.integrated.env.linux": {
-			"PYTHONPATH": "../django-ror;../django-crossref;../django-auto-datatables"
+			"PYTHONPATH": "../django-ror:../django-crossref:../django-auto-datatables"
 		}
 	}
 }

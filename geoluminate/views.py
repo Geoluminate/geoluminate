@@ -4,7 +4,6 @@ from django.utils.module_loading import import_string
 from django.conf import settings
 from django.views.generic import DetailView, TemplateView
 from geoluminate.utils import DATABASE
-from .filters import MapFilter
 from meta.views import Meta
 from geoluminate.core.mixins import FieldSetMixin
 from datatables.views import DatatablesReadOnlyView
@@ -17,7 +16,6 @@ from django.contrib.admindocs import utils
 from django.db import models
 from django.utils.translation import gettext as _
 from django.views.generic import TemplateView
-from django.forms import ModelChoiceField
 from django.shortcuts import render
 from geoluminate.conf import settings
 
@@ -139,13 +137,13 @@ class GlossaryView(TemplateView):
 class WorldMap(TemplateView):
     template_name = 'gis/application.html'
     # template_name = 'kepler/viewer.html'
-    filter = MapFilter
+    # filter = MapFilter
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context.update(dict(
-            filter=self.filter(),
-        ))
+        # context.update(dict(
+        #     filter=self.filter(),
+        # ))
 
         context['meta'] = Meta(
             title='World Map | World Heat Flow Database',

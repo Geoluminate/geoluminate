@@ -14,10 +14,10 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework.views import get_view_name
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
-
+from geoluminate.utils import db_name
 
 class DataViewSet(AccessViewSetMixin, viewsets.ModelViewSet):
-    __doc__ = f"Endpoint to request a set of {DATABASE._meta.verbose_name} data."
+    __doc__ = f"Endpoint to request a set of {db_name} data."
     access_policy = CoreAccessPolicy
     permission_classes = [DjangoModelPermissionsOrAnonReadOnly, ]
     queryset = DATABASE.objects.all().prefetch_related('references')

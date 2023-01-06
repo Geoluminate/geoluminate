@@ -4,5 +4,5 @@ from .models import License
 
 @admin.register(License)
 class LicenseAdmin(admin.ModelAdmin):
-    list_display = ['url', 'name', 'about']
+    list_display = ['uri', 'name', 'about']
     search_fields = ['name']

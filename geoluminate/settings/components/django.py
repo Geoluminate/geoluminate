@@ -15,7 +15,8 @@ SITE_ID = 1
 
 INTERNAL_IPS = ['127.0.0.1', ]
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+if DEBUG:
+    ALLOWED_HOSTS = ['*']
 
 ROOT_URLCONF = 'project.urls'
 
@@ -244,15 +245,6 @@ DEBUG_TOOLBAR_PANELS = [
     'template_profiler_panel.panels.template.TemplateProfilerPanel',
 ]
 
-# CKEDITOR_5_CONFIGS = {
-#     'default': {
-#         'toolbar': ['outdent', 'indent', '|', 'bold', 'italic', 'underline', 'strikethrough',
-#                     'subscript', 'superscript', '|',
-#                     'bulletedList', 'numberedList',
-#                     ]
-#     },
-# }
-
 CROSSREF_MODELS = {
     "work": "literature.Publication",
 }
@@ -266,14 +258,11 @@ if os.getenv('DJANGO_ENV') == 'development':
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': os.environ.get('DB_NAME'),
-        'USER': os.environ.get('DB_USERNAME'),
-        'PASSWORD': os.environ.get('DB_PASSWORD'),
-        'HOST': 'localhost',
+        'NAME': os.environ.get('POSTGRES_DB'),
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('postgres'),
+        'PORT': 5432,
+        'HOST': 'db',
         'CONN_MAX_AGE': 0,
     },
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    # }
 }

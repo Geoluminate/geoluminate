@@ -1,6 +1,8 @@
 from geoluminate import settings
 from geoluminate.settings import *
 
+SITE_NAME = 'Geoluminate'
+
 settings.INSTALLED_APPS.extend([
     # "debug_toolbar",
     # "template_profiler_panel",
@@ -9,7 +11,3 @@ settings.INSTALLED_APPS.extend([
 settings.MIDDLEWARE.extend([
     # 'debug_toolbar.middleware.DebugToolbarMiddleware',
 ])
-
-
-CELERY_BROKER_URL = "redis://localhost:6379"
-CELERY_RESULT_BACKEND = "redis://localhost:6379"

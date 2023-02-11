@@ -2,13 +2,10 @@ import zipfile
 from datetime import datetime as dt
 from io import StringIO
 
-from django.contrib import messages
-from django.contrib.admin.models import ContentType, LogEntry
 from django.contrib.gis import admin
 from django.http import HttpResponse
 from django.utils.html import mark_safe
 from django.utils.translation import gettext as _
-from django_super_deduper.merge import MergedModelInstance
 from simple_history.admin import SimpleHistoryAdmin
 
 from geoluminate.contrib.literature.models import Publication
@@ -16,34 +13,6 @@ from geoluminate.utils import DATABASE
 
 
 class BaseAdmin(admin.OSMGeoAdmin, SimpleHistoryAdmin):
-    # exclude = ['date_added','date_edited']
-
-    def merge(self, request, qs):
-        to_be_merged = [str(x) for x in qs]
-        if len(to_be_merged) > 2:
-            to_be_merged = f"{', '.join(to_be_merged[:-1])} and {to_be_merged[-1]}"
-        else:
-            to_be_merged = " and ".join(to_be_merged)
-        change_message = (
-            f"Merged {to_be_merged} into a single {qs.model._meta.verbose_name}"
-        )
-        merged = MergedModelInstance.create(qs.first(), qs[1:], keep_old=False)
-        LogEntry.objects.log_action(
-            user_id=request.user.pk,
-            content_type_id=ContentType.objects.get_for_model(qs.model).pk,
-            object_id=qs.first().pk,
-            object_repr=str(qs.first()),
-            action_flag=2,  # CHANGE
-            change_message=_(change_message),
-        )
-        self.message_user(request, change_message, messages.SUCCESS)
-
-    merge.short_description = "Merge duplicate entries"
-
-    class Media:
-        js = ("https://kit.fontawesome.com/a08181010c.js",)
-        css = {"all": ["admin/css/table.css"]}
-
     def name(self, obj):
         return obj._name
 

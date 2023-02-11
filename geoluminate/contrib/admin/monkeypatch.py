@@ -1,7 +1,6 @@
 import logging
 from typing import Dict, List
 
-# import jazzmin.utils
 from django.apps import apps
 from django.contrib.auth.models import AbstractUser
 from jazzmin.utils import (

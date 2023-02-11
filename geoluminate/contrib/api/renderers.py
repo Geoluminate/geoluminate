@@ -1,5 +1,4 @@
 from drf_orjson_renderer.renderers import ORJSONRenderer
-from rest_framework_datatables_editor import renderers
 
 
 class GeoJSONRenderer(ORJSONRenderer):

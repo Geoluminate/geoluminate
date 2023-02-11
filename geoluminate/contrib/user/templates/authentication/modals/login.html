@@ -1,0 +1,57 @@
+{% load static sekizai_tags i18n authentication %}
+<div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      {% include 'geoluminate/modals/header.html' with header='Login' %}
+      <div class='modal-body'>
+
+        {% comment %} <p class='mb-2'>{% blocktrans %}Easily login or register using your ORCID.{% endblocktrans %}</p> {% endcomment %}
+
+        {% include 'account/orcid/login.html' %}
+
+        <p class='my-2'>{% blocktrans with site.name as site_name %}Login easily using your ORCID. Alternatively, login below using the details you registered with.{% endblocktrans %}</p>
+
+        {% authentication_form "login" %}
+          <p class='my-2 small'>
+            {% url 'account_reset_password' as forgot_password_url %}
+            {% url 'account_signup' as register_url %}
+            {% blocktrans %}
+            <a href="{{ forgot_password_url }}">Forgot your password</a>
+            or 
+            <a href="{{ register_url }}">don't have an account yet?</a>
+            {% endblocktrans %}
+          </p>
+        <div class="modal-footer">
+          <input form='loginForm' type="submit" name="submit" value="Login" class="btn btn-primary">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% addtoblock "js" %}<script>
+
+$("#loginForm").submit(function(e) {
+
+  e.preventDefault();
+  var form = $(this);
+
+  $.post({
+      url: form.attr('action'),
+      data: form.serialize(),
+      success: function(data)
+      {
+        location.href = '/';
+        window.location.reload(true);
+      },
+      error: function(data)
+      {
+        form.find('.error-message').show()
+        form.find('.success-message').show()
+        form.replaceWith(data.responseJSON.form)
+      },
+  });
+});
+
+</script>{% endaddtoblock %}

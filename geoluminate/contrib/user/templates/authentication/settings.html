@@ -1,0 +1,29 @@
+{% extends "authentication/base.html" %}
+{% load crispy_forms_tags i18n %}
+
+{% block profile_content %}
+<ul class='divided'>
+  <li>
+    <h3>{% trans "Email" %}</h3>
+    <a href="#addEmailModal" class='btn button' data-bs-target="#addEmailModal" data-bs-toggle="modal" data-bs-dismiss="modal">{% trans 'Add email' %}</a>
+
+  </li>
+  <li>
+    <h3>{% trans "Password" %}</h3>
+    <a href="#changePasswordModal" class='btn button' data-bs-target="#changePasswordModal" data-bs-toggle="modal" data-bs-dismiss="modal">{% trans 'Reset' %}</a>
+  </li>
+  <li>
+    <h3>{% trans "Account" %}</h3>
+    <a class='btn button' href="{% url 'account_change_password' %}">{% trans 'Deactivate' %}</a>
+  </li>
+</ul>
+
+{% block "modals" %}
+
+{% include "authentication/modals/password_reset.html" %}
+{% include "authentication/modals/add_email.html" %}
+{% include "authentication/modals/deactivate_account.html" %}
+
+{% endblock %}
+
+{% endblock profile_content %}

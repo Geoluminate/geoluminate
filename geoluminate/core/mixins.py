@@ -1,11 +1,13 @@
-from django.http import JsonResponse
-from django_select2.views import AutoResponseView
-from django.utils.module_loading import import_string
 from django.conf import settings
-from geoluminate.utils import DATABASE
-from django.urls import reverse
 from django.core.exceptions import ImproperlyConfigured
-from geoluminate.api.v1.serializers import CoreSerializer
+from django.http import JsonResponse
+from django.urls import reverse
+from django.utils.module_loading import import_string
+from django_select2.views import AutoResponseView
+
+from geoluminate.contrib.api.v1.serializers import CoreSerializer
+
+# from geoluminate.utils import DATABASE
 
 
 class FieldSetMixin:
@@ -13,7 +15,7 @@ class FieldSetMixin:
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['fieldset'] = self.get_fieldset()
+        context["fieldset"] = self.get_fieldset()
         return context
 
     def get_fieldset(self):
@@ -21,12 +23,17 @@ class FieldSetMixin:
         fieldset = {}
         for fset in self.fieldset:
             fieldset[fset[0]] = []
-            for k in fset[1]['fields']:
+            for k in fset[1]["fields"]:
                 if isinstance(k, str):
                     fieldset[fset[0]].append(
-                        {obj._meta.get_field(k).verbose_name: getattr(obj, k)})
+                        {obj._meta.get_field(k).verbose_name: getattr(obj, k)}
+                    )
                 else:
-                    fieldset[fset[0]].append({obj._meta.get_field(
-                        sub_k).verbose_name: getattr(obj, sub_k) for sub_k in k})
+                    fieldset[fset[0]].append(
+                        {
+                            obj._meta.get_field(sub_k).verbose_name: getattr(obj, sub_k)
+                            for sub_k in k
+                        }
+                    )
 
         return fieldset

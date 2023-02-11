@@ -1,0 +1,5 @@
+{% load i18n %}
+{% url 'account_confirm_email' as resend_link %}
+{% blocktrans %}
+If your email has not arrived within 5 minutes, <a href="{{resend_link}}">click here to resend</a>. Remember to check your spam filter!
+{% endblocktrans %}

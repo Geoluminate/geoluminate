@@ -1,0 +1,108 @@
+{% extends "admin/change_list.html" %}
+{% load i18n static postgres_metrics jazzmin %}
+{% block bodyclass %}{{ block.super }} change-list{% endblock %}
+{% block breadcrumbs %}
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+    </li>
+    <li class="breadcrumb-item">
+      <a href="{% url 'admin:index' %}#postgres-metrics">{% trans 'PostgreSQL Metrics' %}</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">{{ metric.label|capfirst }}</li>
+  </ol>
+{% endblock %}
+{% block object-tools %}
+  {% get_postgres_metrics as metric_list %}
+  <div id="user-tools">
+    <div class="dropdown">
+      <button class="btn {{ jazzmin_ui.button_classes.primary }} dropdown-toggle float-right"
+              type="button"
+              id="dropdownMenuButton"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false">
+        {% trans "Change metric" %}
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        {% for met in metric_list %}
+          <a class="dropdown-item"
+             href="{% url "postgres-metrics:show" name=met.slug %}">{{ met.label }}</a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock object-tools %}
+{% block content_title %}
+  {% trans 'Database Metrics' %}
+{% endblock %}
+{% comment %} {% block content_title %}{{ metric.description|safe }}{% endblock %} {% endcomment %}
+{% block content %}
+  {% block search %}{% endblock %}
+  <div class="col-12">
+    <div id="content-main">
+      <div class="card">
+        <div class='card-body'>
+          <h5 class="card-title">{{ metric.label|capfirst }}</h5>
+          <p class="card-text">{{ metric.description|striptags|safe }}</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body table-responsive p-0">
+          {% for result in results %}
+            <table id="result_list" class="table table-striped" cellspacing="0">
+              <caption>{{ result.alias }} ({{ result.dsn }})</caption>
+              <thead>
+                <tr>
+                  {% for header in metric.headers %}
+                    <th class="sortable{% if header.sort_priority > 0 %} sorted {% if header.ascending %}ascending{% else %}descending{% endif %}{% endif %}"
+                        tabindex="0"
+                        rowspan="1"
+                        colspan="1"
+                        scope="col">
+                      <div class="text">
+                        <a href="?o={{ header.url_primary }}"
+                           title="{% trans "Toggle sorting" %}">{{ header|capfirst }}</a>
+                        {% if header.sort_priority > 0  %}
+                          <a href="?o={{ header.url_remove }}"
+                             title="{% trans "Remove from sorting" %}">
+                            <div style="margin-top: .2em;" class="fa fa-times float-right"></div>
+                          </a>
+                          {% if header.ascending %}
+                            <i style="margin-top: .2em;" class="fa fa-sort-alpha-down"> </i>
+                          {% else %}
+                            <i style="margin-top: .2em;" class="fa fa-sort-alpha-up"> </i>
+                          {% endif %}
+                        {% endif %}
+                      </div>
+                    </th>
+                  {% endfor %}
+                </tr>
+              </thead>
+              <tbody>
+                {% if result.holds_data %}
+                  {% for record in result.records %}
+                    <tr class="{% cycle 'row1' 'row2' %} {% record_style %}">
+                      {% for item in record %}
+                        <td class="{% record_item_style %}">{{ item }}</td>
+                      {% endfor %}
+                    </tr>
+                  {% endfor %}
+                  {% resetcycle %}
+                {% else %}
+                  <tr class="pgm-critical">
+                    <td colspan="{{ metric.headers|length }}">{{ result.reason }}</td>
+                  </tr>
+                {% endif %}
+              </tbody>
+            </table>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+          integrity="sha512-Ua/7Woz9L5O0cwB/aYexmgoaD7lw3dWe9FvXejVdgqu71gRog3oJgjSWQR55fwWx+WKuk8cl7UwA1RS6QCadFA=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer"></script>
+{% endblock %}

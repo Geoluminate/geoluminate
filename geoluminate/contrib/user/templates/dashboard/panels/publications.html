@@ -1,0 +1,14 @@
+{% load i18n authentication %}
+<div id="publicationPanel" class="tab-pane fade show active" role="tabpanel" aria-labelledby="home-tab">
+  <div class='d-flex'>
+    <h2 class='flex-fill'>{% trans "Publications" %}</h2>
+    <h2>
+      <a href="{{ modal_id }}" class="{{classes}}" data-bs-target="{{ modal_id }}" data-bs-toggle="modal" data-bs-dismiss="modal">{% trans link_text %}</a>
+  </div>
+  <hr class="major mt-1">
+  <section>
+    {% for publication in user.publications.all %}
+      {% include "crossref/work.html" %}          
+    {% endfor %}
+  </section>
+</div>

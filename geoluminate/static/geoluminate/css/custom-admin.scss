@@ -1,0 +1,84 @@
+#jazzy-logo {
+    img {
+        height: 100%;
+        padding: 0;
+        opacity: 0!important;
+    }
+}
+
+span.brand-text {
+    display: none;
+}
+
+
+.primary {
+    &-color {
+        color: #08376b;
+    }
+    &-bg {
+        background-color: #08376b;
+    }
+}
+
+body {
+
+    .content-wrapper:before {
+        content: ' ';
+        display: block;
+        position: fixed;
+        left: 0;
+        top: 45px;
+        width: 100%;
+        height: 100%;
+        opacity: 0.15;
+        background-image: url(/static/geoluminate/img/brand/logo.svg);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        background-origin: content-box;
+        padding: 12em;
+
+
+    }
+
+    #jazzy-logo {
+        height: 48px;
+        background-image: url('/static/geoluminate/img/brand/logo.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        background-origin: content-box;
+        padding: 0.5em;
+
+        img {
+            display: none;
+            height: 100%;
+            padding: 0;
+            opacity: 0!important;
+        }
+    }
+
+    &.sidebar-collapse {
+
+        // .content-wrapper:before {
+        //     left: 0;
+        //     // width: calc(100% - 74px);
+
+
+        // }
+
+        #jazzy-logo {
+            background-image: url('/static/geoluminate/img/brand/icon.svg');
+        }
+    }
+}
+
+.cms-pagetree-section h2 {
+    float: none!important;
+    font-weight: inherit!important;
+}
+
+
+.content.popup-content {
+    padding: 0
+}

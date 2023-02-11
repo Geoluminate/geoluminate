@@ -1,18 +1,19 @@
 .navbar {
-    height: 3rem;
+    // height: 3rem;
     background-color: _palette(primary-light);
+    // border-bottom: 0 !important;
 
-    .nav-link {
-        border-bottom: 0 !important;
-    }
+    // .nav-link {
+    //     border-bottom: 0 !important;
+    // }
 
-    &.fixed-top {
-        height: 45px;
-    }
+    // &.fixed-top {
+    //     height: 45px;
+    // }
 }
 
 #appMenu {
-    height: 2rem;
+    // height: 2rem;
     display: flex;
     align-items: center;
     background-color: _palette(secondary);

@@ -1,22 +1,26 @@
 $(function () {
-
-  const $sidebar = $('#application-sidebar');
-  var sidebarIsOpen = $sidebar.hasClass('expanded');
+  const slideInLeft = 'animate__animated animate__slideInLeft';
+  const slideOutLeft = 'animate__animated animate__slideOutLeft';
+  const $sidebar = $('#sidebar');
+  var sidebarIsOpen = $sidebar.hasClass(slideInLeft);
   const $nav = $('.navbar');
 
   function toggleSideBar() {
     if (sidebarIsOpen) {
-      $sidebar.removeClass('expanded');
+      $sidebar.removeClass(slideInLeft);
+      $sidebar.addClass(slideOutLeft);
       document.cookie = "sidebarState=closed";
       return false
     } else {
-      $sidebar.addClass('expanded');
+      $sidebar.removeClass(slideOutLeft);
+      $sidebar.addClass(slideInLeft);
+
       document.cookie = "sidebarState=expanded";
       return true
     }
   }
 
-  $('.toggle').on('click', function () {
+  $('.sidebar-toggler').on('click', function () {
     sidebarIsOpen = toggleSideBar()
   })
 

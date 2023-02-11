@@ -40,32 +40,6 @@
 	position: relative;
 	// width: _size(sidebar-width);
 
-	#sidebarLogo {
-		display: none;
-	}
-
-	.toggle {
-		font-size: small;
-		text-align: center;
-		background-color: _palette(border);
-		border: none;
-		padding: 0;
-		height: auto;
-		line-height: inherit;
-		box-shadow: none;
-		border-radius: inherit;
-
-		button {
-			padding: 0;
-		}
-	}
-
-	>.logo {
-		height: 3rem;
-		img {
-			height: 100%;
-		}
-	}
 
 	i {
 		font-size: 1.3rem;
@@ -180,7 +154,7 @@
 			text-align: center;
 			border-top: solid 2px _palette(border);
 			font-size: small;
-			content: 'Powered by GeoLuminate';
+			content: 'Powered by Geoluminate';
 		}
 
 		@include breakpoint('<=lg') {

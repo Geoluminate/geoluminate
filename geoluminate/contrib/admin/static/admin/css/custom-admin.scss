@@ -1,0 +1,78 @@
+body {
+    background-color: white;
+    height: 100vh;
+    width: 100%;
+}
+
+#grp-navigation {
+    background-image: none!important;
+    background-color: #679bd0!important;
+    border-right: 0;
+
+    a {
+        color: white;
+        &:hover {
+            color: lightgrey;
+        }
+    }
+
+}
+
+#grp-user-tools {
+    border: 0;
+    >li {
+        border-left: 1px solid white;
+        border-right: 0;
+    }
+}
+
+#grp-content-title h1 {
+    background-color: white!important;
+    color: inherit!important;
+
+}
+footer {
+    background-image: none!important;
+    background-color: #679cd096!important;
+}
+
+h1, h2, h3 {
+    background-image: none!important;
+    background-color: #679bd0!important;
+    color: white!important;
+    text-shadow: none!important;
+
+}
+body.grp-login .grp-module-login {
+    background: white!important;
+
+    > h1, {
+        background-image: none;
+        border: none;
+        padding: 0;
+
+        span.grp-admin-title {
+            padding: 20px;
+            margin: auto;
+        }
+
+        img {
+            width: 100%;
+        }
+    }
+    .grp-module {
+        background-color: white!important;
+
+        .grp-connected {
+            background-color: white!important;
+
+        }
+    }
+    // * {
+    //     background-image: none;
+    //     background-color: white;
+    //     border: none;
+
+    // }
+}
+

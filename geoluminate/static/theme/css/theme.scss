@@ -46,7 +46,7 @@
 @import 'layout/page';
 @import 'layout/navbar';
 @import 'layout/main';
-@import 'layout/sidebar';
+// @import 'layout/sidebar';
 @import 'layout/header';
 @import 'layout/menu';
 @import 'layout/publication';
@@ -58,4 +58,22 @@
 	#application-sidebar, #appMenu, nav {
 		display: none !important;
 	}
+}
+
+// #feedback-welcome {
+// 	background: none!important;
+// }
+
+// .feedback-logo {
+// 	margin: 0;
+// }
+
+.vertical-right-aligned {
+    transform: rotate(-90deg);
+    transform-origin: 100% 100%;
+    position: fixed;
+	background-color: _palette(primary-light);
+    right: 0;
+    top: 50%;
+    z-index: 100;
 }

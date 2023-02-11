@@ -1,41 +1,38 @@
 {% load menu_tags thumbnail cms_tags geoluminate sekizai_tags %}
 
-<div id="application-sidebar" class="{{ request.COOKIES.sidebarState }}">
-  <button class='toggle'>
-    <i class="fas fa-angle-double-left"></i>
-  </button>
-  <div class="inner">
-    {% render_model_block request.current_page "changelist" %}
+<div id="sidebar"  class="card border-0 bg-light rounded-0 w-25 {{ request.COOKIES.sidebarState }}" tabindex="-1" aria-labelledby="offcanvasLabel">
+  <div class="card-body">
     <nav id="menu" class='sidebar-menu' hx-target='#main'>
       <ul>
         {% include 'theme/menu/toolbar.html' %}
-{% comment %} 
-        {% for item in menus.toolbar %}
-          {% if item.visible %}
-              {% if item.separator %}
-                <li class="divider-vertical"></li>
-              {% endif %}
-
-              <li class="{% if item.selected %} active{% endif %}{% if item.children %} dropdown{% endif %}" id="top-menu-{{ item.slug }}">
-                  <a href="{{ item.url }}"{% if item.children %} class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown"{% endif %}>
-                      {% if item.icon %}
-                          <i class="icon-{{ item.icon }} icon-white"></i>&nbsp;
-                      {% endif %}
-                      <span>{{ item.title }}</span>
-                      {% if item.children %}
-                          &nbsp;<b class="caret"></b>
-                      {% endif %}
-                  </a>
-                  {% if item.children %}
-                      {% include 'bootstrap-navbar-submenu.html' with items=item.children %}
-                  {% endif %}
-              </li>
-          {% endif %}
-      {% endfor %} {% endcomment %}
-
       </ul>
     </nav>
-    {% endrender_model_block %}
   </div>
   <div class='footer'></div>
 </div>
+
+{% comment %} <script>
+  $(function () {
+   
+   $('#sidebar-toggle').on('click', function (e) {  
+
+       $($(e.target).data('bsTarget')).removeClass('animate__animated animate__slideOutDown');
+       $($(e.target).data('bsTarget')).addClass('animate__animated animate__slideInDown');
+       $($(e.relatedTarget).data('bsTarget')).addClass('animate__animated animate__slideOutDown');
+       $($(e.relatedTarget).data('bsTarget')).removeClass('animate__animated animate__slideInDown');
+   })
+
+  })
+</script> {% endcomment %}
+
+
+{% comment %} <div id="application-sidebar" class="{{ request.COOKIES.sidebarState }}">
+  <div class="inner">
+    <nav id="menu" class='sidebar-menu' hx-target='#main'>
+      <ul>
+        {% include 'theme/menu/toolbar.html' %}
+      </ul>
+    </nav>
+  </div>
+  <div class='footer'></div>
+</div> {% endcomment %}

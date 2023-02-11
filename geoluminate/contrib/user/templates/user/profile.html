@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load i18n crispy_forms_tags socialaccount %}
+
+{% block head_title %}Profile{% endblock %}
+{% block nav_title_bold %}Profile{% endblock nav_title_bold %}
+
+{% block content %}
+
+<div class='flex-grow-1 overflow-auto'>
+  <div class='container content pt-5'>
+    <header class='header'>
+      <strong>
+        {{ user.full_name }}
+      </strong>
+    </header>
+    <section>
+      <h5>TODO:</h5>
+      <p>Create a user profile page</p>
+    </section>
+  </div>
+</div>
+{% endblock %}

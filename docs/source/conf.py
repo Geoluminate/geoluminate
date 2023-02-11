@@ -1,11 +1,9 @@
-from sphinx.util import inspect
 import os
 import sys
 from datetime import datetime
-import django
-from django.templatetags.static import static
 from pprint import pformat
-import enum
+
+import django
 
 
 def object_description(object):
@@ -18,46 +16,46 @@ def object_description(object):
 # inspect.object_description = object_description
 
 for p in sys.path:
-    x = '/geoluminate/'
+    x = "/geoluminate/"
     if x in p:
-        sys.path.append(p.replace(x, '/'))
+        sys.path.append(p.replace(x, "/"))
 
-sys.path.insert(0, os.path.abspath('../..'))
-os.environ['DJANGO_SETTINGS_MODULE'] = 'project.settings'
+sys.path.insert(0, os.path.abspath("../.."))
+os.environ["DJANGO_SETTINGS_MODULE"] = "project.settings"
 django.setup()
 
-project = 'GeoLuminate'
-copyright = f'{datetime.now().year}, Sam Jennings'
-author = 'Sam Jennings'
-release = '0.0.1'
+project = "GeoLuminate"
+copyright = f"{datetime.now().year}, Sam Jennings"
+author = "Sam Jennings"
+release = "0.1.0"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
-    'sphinx.ext.duration',
+    "sphinx.ext.duration",
     # 'sphinx.ext.doctest',
-    'sphinx.ext.autodoc',
-    'sphinx.ext.todo',
-    'sphinx.ext.githubpages',
-    'sphinx.ext.intersphinx',
-    'sphinx.ext.napoleon',
+    "sphinx.ext.autodoc",
+    "sphinx.ext.todo",
+    "sphinx.ext.githubpages",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.napoleon",
     # "sphinx_rtd_theme",
 ]
 
-templates_path = ['_templates']
+templates_path = ["_templates"]
 exclude_patterns = []
 add_module_names = False
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = 'furo'
-html_static_path = ['_static']
+html_theme = "furo"
+html_static_path = ["_static"]
 html_favicon = "../../geoluminate/static/geoluminate/icon.svg"
 html_logo = "../../geoluminate/static/geoluminate/logo.svg"
-html_title = 'GeoLuminate'
-html_short_title = 'GeoLuminate'
+html_title = "GeoLuminate"
+html_short_title = "GeoLuminate"
 
 html_theme_options = {
     "source_repository": "https://github.com/SSJenny90/geoluminate",

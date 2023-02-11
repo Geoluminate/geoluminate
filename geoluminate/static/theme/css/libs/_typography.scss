@@ -1,9 +1,9 @@
 	body, input, select, textarea {
 		color: _palette(fg);
-		font-family: _font(family);
-		font-size: 13pt;
-		font-weight: _font(weight);
-		line-height: 1.65;
+		// font-family: _font(family);
+		// font-size: 12pt;
+		// font-weight: _font(weight);
+		// line-height: 1.65;
 
 		@include breakpoint('<=xxl') {
 			font-size: 12pt;
@@ -23,7 +23,7 @@
 			'color #{_duration(transition)} ease-in-out',
 			'border-bottom-color #{_duration(transition)} ease-in-out'
 		));
-		border-bottom: dotted 1px;
+		// border-bottom: dotted 1px;
 		color: _palette(primary);
 		text-decoration: none;
 

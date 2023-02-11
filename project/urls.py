@@ -4,7 +4,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = i18n_patterns(
-    path("invitations/", include('invitations.urls', namespace='invitations')),
     path('', include('geoluminate.urls')),
 )
 

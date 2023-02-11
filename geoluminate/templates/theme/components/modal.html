@@ -1,0 +1,22 @@
+{% load static geoluminate %}
+
+<div id="{{ modal_id }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="#{{ modal_id }}" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+        <div class="modal-header bg-light">
+          <img src="{% icon %}" alt="icon" height=32>
+          <h3 class='ms-2 modal-title'>
+            {% block title %}{% endblock title %}
+          </h3>
+          <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class='modal-body'>
+        {% block body %}{% endblock body %}
+      </div>
+      <div class="modal-footer">
+        {% block footer %}{% endblock footer %}
+      </div>
+    </div>
+    <img id='modalIndicator' class="htmx-indicator" src="{% static "geoluminate/spinners/spinning-circles.svg" %}"/>
+  </div>
+</div>

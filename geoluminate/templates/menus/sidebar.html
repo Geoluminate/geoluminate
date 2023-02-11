@@ -1,0 +1,9 @@
+<ul class='alt nav flex-column' id="myTab" role="tablist" hx-target="#dashboardContainer">
+  {% for app in dashboard %}
+  <li>
+    <a href hx-get="{% url app.url_name %}" class="icon solid {{app.icon}} {{app.extra_css}}">
+      <span class='ps-2'>{{ app.text }}</span>
+    </a>
+  </li>
+  {% endfor %}
+</ul>

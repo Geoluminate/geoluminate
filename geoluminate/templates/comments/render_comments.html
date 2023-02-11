@@ -1,0 +1,30 @@
+{% load static sekizai_tags comments authentication i18n %}
+{% get_comment_count for object as comment_count %}
+
+{% blocktrans %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+This area is provided to promote meaningful discussion within our research community regarding the publications and datasets found within this database. Before having your say, please become familiar with our community guidelines and code of conduct.
+</div>
+{% endblocktrans %}
+
+
+{% if not user.is_authenticated %}
+{% blocktrans %}
+  Only authenticated users are allowed to comment. Please login first or register!
+{% endblocktrans %}
+
+{% endif %}
+
+
+{% if user.is_authenticated %}
+  <div class="comment-form w-100">{% render_comment_form for object %}</div>
+{% endif %}
+{% if comment_count %}
+  <div id='comment-tree' >{% render_comment_list for object %}</div>
+{% endif %}
+
+{% addtoblock "js" %}<script src='{% static "geoluminate/js/comments.js" %}'></script>{% endaddtoblock %}
+
+{% addtoblock "css" %}<link rel="stylesheet" type="text/css" href="{% static 'fluent_comments/css/ajaxcomments.css' %}" />{% endaddtoblock %}
+{% addtoblock "js" %}<script type="text/javascript" src="{% static 'fluent_comments/js/ajaxcomments.js' %}"></script>{% endaddtoblock %}

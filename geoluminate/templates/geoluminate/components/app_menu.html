@@ -1,0 +1,46 @@
+{% for item in menu %}
+    {% if item.visible %}
+        {% if not forloop.first %}
+            <div class="vr mx-2"></div>
+        {% endif %}
+
+        <li class="{% if item.selected %} active{% endif %}{% if item.children %} dropdown{% endif %}">
+            <a class="icon {{item.icon}} {{item.extra_css}} {% if item.children %}dropdown-toggle{% endif %} {% if forloop.first %}active{% endif %} " 
+                href
+                hx-get="{{ item.url }}"
+                hx-swap="beforeend"
+                {% if forloop.first %}
+                hx-trigger='load once'
+                {% else %}
+                hx-trigger='click once'
+                {% endif %}
+                data-bs-toggle="tab" 
+                data-bs-target="#{{ item.title }}Content" 
+                type="button" 
+                role="tab" 
+                aria-controls="{{ item.title }}Content" 
+                aria-selected="{% if item.selected %}true{% else %}false{% endif %}"
+
+
+
+
+                {% if item.children %} 
+                data-hover="dropdown" 
+                data-toggle="dropdown"{% endif %}>
+                    <span>{{ item.title }}</span>
+                    {% if item.children %}
+                        &nbsp;<b class="caret"></b>
+                    {% endif %}
+            </a>
+            {% if item.children %}
+                {% include 'geoluminate/components/app_submenu.html' with items=item.children %}
+            {% endif %}
+        </li>
+    {% endif %}
+{% endfor %}
+
+<li>
+    <a type="button" class="" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Launch demo modal
+    </a>     
+</li>

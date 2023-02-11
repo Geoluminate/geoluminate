@@ -1,4 +1,4 @@
-.env
+.env*
 dump.json
 project.db
 media
@@ -11,3 +11,5 @@ node_modules
 playground
 __pycache__
 data
+migrations
+original_theme_files

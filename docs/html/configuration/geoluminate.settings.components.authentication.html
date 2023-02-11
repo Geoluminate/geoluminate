@@ -1,0 +1,696 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="CMS" href="geoluminate.settings.components.cms.html" /><link rel="prev" title="API" href="geoluminate.settings.components.api.html" />
+
+    <link rel="shortcut icon" href="../_static/icon.svg"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
+        <title>Authentication - GeoLuminate</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">GeoLuminate</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../_static/logo.svg" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">GeoLuminate</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../configuration.html">Configuration</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="geoluminate.settings.components.api.html">API</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Authentication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="geoluminate.settings.components.cms.html">CMS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="geoluminate.settings.components.comments.html">Comments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="geoluminate.settings.components.configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="geoluminate.settings.components.crossref.html">Crossref</a></li>
+<li class="toctree-l2"><a class="reference internal" href="geoluminate.settings.components.django.html">Django</a></li>
+<li class="toctree-l2"><a class="reference internal" href="geoluminate.settings.components.email.html">Email</a></li>
+<li class="toctree-l2"><a class="reference internal" href="geoluminate.settings.components.grappelli.html">Admin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="geoluminate.settings.components.internationalisation.html">Internationalisation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="geoluminate.settings.components.invitations.html">Invitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="geoluminate.settings.components.lockdown.html">Lockdown</a></li>
+<li class="toctree-l2"><a class="reference internal" href="geoluminate.settings.components.meta.html">Meta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="geoluminate.settings.components.storage.html">Storage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="geoluminate.settings.components.thumbnailer.html">Thumbnailer</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../core.html">Core Packages</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../geoluminate/geoluminate.html">GeoLuminate</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../geoluminate/admin_tools/geoluminate.admin_tools.html">Admin Tools</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../geoluminate/admin_tools/geoluminate.admin_tools.mixins.html">geoluminate.admin_tools.mixins</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../geoluminate/admin_tools/geoluminate.admin_tools.urls.html">geoluminate.admin_tools.urls</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../geoluminate/api/geoluminate.api.html">API</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../geoluminate/api/geoluminate.api.v1.html">Version 1</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../geoluminate/api/geoluminate.api.v1.serializers.html">geoluminate.api.v1.serializers</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../geoluminate/api/geoluminate.api.v1.urls.html">geoluminate.api.v1.urls</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../geoluminate/api/geoluminate.api.v1.views.html">geoluminate.api.v1.views</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../geoluminate/api/geoluminate.api.permissions.html">Permissions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../geoluminate/api/geoluminate.api.renderers.html">Renderers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../geoluminate/api/geoluminate.api.throttling.html">Throttling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../geoluminate/api/geoluminate.api.urls.html">URLs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../geoluminate/api/geoluminate.api.utils.html">Utils</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../geoluminate/cms/geoluminate.cms.html">CMS</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../geoluminate/cms/geoluminate.cms.admin.html">geoluminate.cms.admin</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../geoluminate/cms/geoluminate.cms.cms_menus.html">geoluminate.cms.cms_menus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../geoluminate/cms/geoluminate.cms.cms_toolbars.html">geoluminate.cms.cms_toolbars</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../geoluminate/cms/geoluminate.cms.models.html">geoluminate.cms.models</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../geoluminate/core/geoluminate.core.html">Core</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../geoluminate/core/geoluminate.core.mixins.html">geoluminate.core.mixins</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../geoluminate/gis/geoluminate.gis.html">GIS</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../geoluminate/gis/geoluminate.gis.admin.html">geoluminate.gis.admin</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../geoluminate/gis/geoluminate.gis.conf.html">geoluminate.gis.conf</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../geoluminate/gis/geoluminate.gis.db_functions.html">geoluminate.gis.db_functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../geoluminate/gis/geoluminate.gis.managers.html">geoluminate.gis.managers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../geoluminate/gis/geoluminate.gis.models.html">geoluminate.gis.models</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../geoluminate/gis/geoluminate.gis.serializers.html">geoluminate.gis.serializers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../geoluminate/gis/geoluminate.gis.urls.html">geoluminate.gis.urls</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../geoluminate/gis/geoluminate.gis.utils.html">geoluminate.gis.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../geoluminate/management/geoluminate.management.html">Management Commands</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../geoluminate/management/geoluminate.management.commands.html">geoluminate.management.commands</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../geoluminate/management/geoluminate.management.commands.celery_worker.html">geoluminate.management.commands.celery_worker</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../geoluminate/management/geoluminate.management.commands.geoluminate.html">geoluminate.management.commands.geoluminate</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../geoluminate/management/geoluminate.management.commands.movemodel.html">geoluminate.management.commands.movemodel</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../geoluminate/menus/geoluminate.menus.html">geoluminate.menus</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../geoluminate/menus/geoluminate.menus.menu.html">geoluminate.menus.menu</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../geoluminate/menus/geoluminate.menus.models.html">geoluminate.menus.models</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../geoluminate/menus/geoluminate.menus.permissions.html">geoluminate.menus.permissions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../geoluminate/menus/geoluminate.menus.views.html">geoluminate.menus.views</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../geoluminate/rest_framework/geoluminate.rest_framework.html">geoluminate.rest_framework</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../geoluminate/rest_framework/geoluminate.rest_framework.utils.html">geoluminate.rest_framework.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../geoluminate/select2/geoluminate.select2.html">geoluminate.select2</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../geoluminate/select2/geoluminate.select2.widgets.html">geoluminate.select2.widgets</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../geoluminate/geoluminate.access_policies.html">access_policies.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../geoluminate/geoluminate.admin.html">admin.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../geoluminate/geoluminate.celery.html">celery.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../geoluminate/geoluminate.context_processors.html">context_processors.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../geoluminate/geoluminate.fields.html">fields.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../geoluminate/geoluminate.filters.html">filters.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../geoluminate/geoluminate.forms.html">forms.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../geoluminate/geoluminate.models.html">models.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../geoluminate/geoluminate.paginators.html">paginators.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../geoluminate/geoluminate.resources.html">resources.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../geoluminate/geoluminate.signals.html">signals.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../geoluminate/geoluminate.storage_backends.html">storage_backends.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../geoluminate/geoluminate.tasks.html">tasks.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../geoluminate/geoluminate.urls.html">urls.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../geoluminate/geoluminate.utils.html">utils.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../geoluminate/geoluminate.views.html">views.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../geoluminate/geoluminate.widgets.html">widgets.py</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../apps/literature.html">Literature</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../apps/literature/literature.admin.html">literature.admin</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../apps/literature/literature.api.html">literature.api</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../apps/literature/literature.api.serialize.html">literature.api.serialize</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../apps/literature/literature.api.urls.html">literature.api.urls</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../apps/literature/literature.api.views.html">literature.api.views</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../apps/literature/literature.cms_apps.html">literature.cms_apps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../apps/literature/literature.filters.html">literature.filters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../apps/literature/literature.menu.html">literature.menu</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../apps/literature/literature.models.html">literature.models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../apps/literature/literature.urls.html">literature.urls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../apps/literature/literature.views.html">literature.views</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../apps/theme.html">Theme</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../apps/theme/theme.cms_plugins.html">theme.cms_plugins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../apps/theme/theme.models.html">theme.models</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../apps/user.html">User</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../apps/user/user.adapter.html">user.adapter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../apps/user/user.admin.html">user.admin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../apps/user/user.dashboard.html">user.dashboard</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../apps/user/user.forms.html">user.forms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../apps/user/user.managers.html">user.managers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../apps/user/user.menu.html">user.menu</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../apps/user/user.models.html">user.models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../apps/user/user.signals.html">user.signals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../apps/user/user.urls.html">user.urls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../apps/user/user.utils.html">user.utils</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../apps/user/user.views.html">user.views</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../integrations.html">Integrations</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../apps/dashboard.html">Dashboard</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../apps/dashboard/dashboard.dashboard.html">dashboard.dashboard</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../apps/datacite.html">Datacite</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../apps/datacite/datacite.admin.html">datacite.admin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../apps/datacite/datacite.choices.html">datacite.choices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../apps/datacite/datacite.conf.html">datacite.conf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../apps/datacite/datacite.forms.html">datacite.forms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../apps/datacite/datacite.load.html">datacite.load</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../apps/datacite/datacite.models.html">datacite.models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../apps/datacite/datacite.urls.html">datacite.urls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../apps/datacite/datacite.utils.html">datacite.utils</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../apps/datacite/datacite.views.html">datacite.views</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../apps/datatables.html">Datatables</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../apps/datatables/datatables.adapters.html">datatables.adapters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../apps/datatables/datatables.metadata.html">datatables.metadata</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../apps/datatables/datatables.renderers.html">datatables.renderers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../apps/datatables/datatables.spectacular.html">datatables.spectacular</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../apps/datatables/datatables.urls.html">datatables.urls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../apps/datatables/datatables.views.html">datatables.views</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../apps/kepler.html">Kepler</a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../apps/kepler/kepler.admin.html">kepler.admin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../apps/kepler/kepler.forms.html">kepler.forms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../apps/kepler/kepler.models.html">kepler.models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../apps/kepler/kepler.urls.html">kepler.urls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../apps/kepler/kepler.views.html">kepler.views</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/SSJenny90/geoluminate/edit/development/docs/source/configuration/geoluminate.settings.components.authentication.rst" title="Edit this page">
+    <svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
+      <line x1="13.5" y1="6.5" x2="17.5" y2="10.5" />
+    </svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="module-geoluminate.settings.components.authentication">
+<span id="authentication"></span><h1>Authentication<a class="headerlink" href="#module-geoluminate.settings.components.authentication" title="Permalink to this heading">#</a></h1>
+<dl class="py data">
+<dt class="sig sig-object py" id="geoluminate.settings.components.authentication.ACCOUNT_ADAPTER">
+<span class="sig-name descname"><span class="pre">ACCOUNT_ADAPTER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'user.adapter.AuthenticationAdapter'</span></em><a class="headerlink" href="#geoluminate.settings.components.authentication.ACCOUNT_ADAPTER" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="geoluminate.settings.components.authentication.ACCOUNT_AUTHENTICATION_METHOD">
+<span class="sig-name descname"><span class="pre">ACCOUNT_AUTHENTICATION_METHOD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'email'</span></em><a class="headerlink" href="#geoluminate.settings.components.authentication.ACCOUNT_AUTHENTICATION_METHOD" title="Permalink to this definition">#</a></dt>
+<dd><p>Email authentication is mandatory</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="geoluminate.settings.components.authentication.ACCOUNT_CONFIRM_EMAIL_ON_GET">
+<span class="sig-name descname"><span class="pre">ACCOUNT_CONFIRM_EMAIL_ON_GET</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#geoluminate.settings.components.authentication.ACCOUNT_CONFIRM_EMAIL_ON_GET" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="geoluminate.settings.components.authentication.ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS">
+<span class="sig-name descname"><span class="pre">ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#geoluminate.settings.components.authentication.ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="geoluminate.settings.components.authentication.ACCOUNT_EMAIL_REQUIRED">
+<span class="sig-name descname"><span class="pre">ACCOUNT_EMAIL_REQUIRED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#geoluminate.settings.components.authentication.ACCOUNT_EMAIL_REQUIRED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="geoluminate.settings.components.authentication.ACCOUNT_EMAIL_VERIFICATION">
+<span class="sig-name descname"><span class="pre">ACCOUNT_EMAIL_VERIFICATION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'mandatory'</span></em><a class="headerlink" href="#geoluminate.settings.components.authentication.ACCOUNT_EMAIL_VERIFICATION" title="Permalink to this definition">#</a></dt>
+<dd><p>Email verification is mandatory</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="geoluminate.settings.components.authentication.ACCOUNT_FORMS">
+<span class="sig-name descname"><span class="pre">ACCOUNT_FORMS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{</span>
+<span class="pre">'add_email':</span> <span class="pre">'user.forms.AddEmailForm',</span>
+<span class="pre">'change_password':</span> <span class="pre">'user.forms.ChangePasswordForm',</span>
+<span class="pre">'disconnect':</span> <span class="pre">'allauth.socialaccount.forms.DisconnectForm',</span>
+<span class="pre">'login':</span> <span class="pre">'user.forms.LoginForm',</span>
+<span class="pre">'reset_password':</span> <span class="pre">'user.forms.ResetPasswordForm',</span>
+<span class="pre">'reset_password_from_key':</span> <span class="pre">'user.forms.ResetPasswordKeyForm',</span>
+<span class="pre">'set_password':</span> <span class="pre">'user.forms.SetPasswordForm',</span>
+<span class="pre">'signup':</span> <span class="pre">'user.forms.SignUpForm'</span>
+<span class="pre">}</span></em><a class="headerlink" href="#geoluminate.settings.components.authentication.ACCOUNT_FORMS" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="geoluminate.settings.components.authentication.ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION">
+<span class="sig-name descname"><span class="pre">ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#geoluminate.settings.components.authentication.ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION" title="Permalink to this definition">#</a></dt>
+<dd><p>Log new user in after confirming email</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="geoluminate.settings.components.authentication.ACCOUNT_LOGOUT_ON_GET">
+<span class="sig-name descname"><span class="pre">ACCOUNT_LOGOUT_ON_GET</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#geoluminate.settings.components.authentication.ACCOUNT_LOGOUT_ON_GET" title="Permalink to this definition">#</a></dt>
+<dd><p>Skip confirm logout screen</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="geoluminate.settings.components.authentication.ACCOUNT_MAX_EMAIL_ADDRESSES">
+<span class="sig-name descname"><span class="pre">ACCOUNT_MAX_EMAIL_ADDRESSES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#geoluminate.settings.components.authentication.ACCOUNT_MAX_EMAIL_ADDRESSES" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="geoluminate.settings.components.authentication.ACCOUNT_SIGNUP_REDIRECT_URL">
+<span class="sig-name descname"><span class="pre">ACCOUNT_SIGNUP_REDIRECT_URL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'/'</span></em><a class="headerlink" href="#geoluminate.settings.components.authentication.ACCOUNT_SIGNUP_REDIRECT_URL" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="geoluminate.settings.components.authentication.ACCOUNT_USERNAME_REQUIRED">
+<span class="sig-name descname"><span class="pre">ACCOUNT_USERNAME_REQUIRED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#geoluminate.settings.components.authentication.ACCOUNT_USERNAME_REQUIRED" title="Permalink to this definition">#</a></dt>
+<dd><p>We don’t use usernames so this is False</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="geoluminate.settings.components.authentication.ACCOUNT_USER_MODEL_USERNAME_FIELD">
+<span class="sig-name descname"><span class="pre">ACCOUNT_USER_MODEL_USERNAME_FIELD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#geoluminate.settings.components.authentication.ACCOUNT_USER_MODEL_USERNAME_FIELD" title="Permalink to this definition">#</a></dt>
+<dd><p>Users are identified by email instead of username</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="geoluminate.settings.components.authentication.AUTHENTICATION_BACKENDS">
+<span class="sig-name descname"><span class="pre">AUTHENTICATION_BACKENDS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('allauth.account.auth_backends.AuthenticationBackend',)</span></em><a class="headerlink" href="#geoluminate.settings.components.authentication.AUTHENTICATION_BACKENDS" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="geoluminate.settings.components.authentication.AUTH_USER_MODEL">
+<span class="sig-name descname"><span class="pre">AUTH_USER_MODEL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'user.User'</span></em><a class="headerlink" href="#geoluminate.settings.components.authentication.AUTH_USER_MODEL" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="geoluminate.settings.components.authentication.LOGIN_REDIRECT_URL">
+<span class="sig-name descname"><span class="pre">LOGIN_REDIRECT_URL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'/'</span></em><a class="headerlink" href="#geoluminate.settings.components.authentication.LOGIN_REDIRECT_URL" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="geoluminate.settings.components.authentication.LOGIN_URL">
+<span class="sig-name descname"><span class="pre">LOGIN_URL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'/accounts/login/'</span></em><a class="headerlink" href="#geoluminate.settings.components.authentication.LOGIN_URL" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="geoluminate.settings.components.authentication.SOCIALACCOUNT_AUTO_SIGNUP">
+<span class="sig-name descname"><span class="pre">SOCIALACCOUNT_AUTO_SIGNUP</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#geoluminate.settings.components.authentication.SOCIALACCOUNT_AUTO_SIGNUP" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="geoluminate.settings.components.authentication.SOCIALACCOUNT_FORMS">
+<span class="sig-name descname"><span class="pre">SOCIALACCOUNT_FORMS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{</span>
+<span class="pre">'disconnect':</span> <span class="pre">'allauth.socialaccount.forms.DisconnectForm',</span>
+<span class="pre">'signup':</span> <span class="pre">'user.forms.SocialSignupForm'</span>
+<span class="pre">}</span></em><a class="headerlink" href="#geoluminate.settings.components.authentication.SOCIALACCOUNT_FORMS" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="geoluminate.settings.components.authentication.SOCIALACCOUNT_PROVIDERS">
+<span class="sig-name descname"><span class="pre">SOCIALACCOUNT_PROVIDERS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{</span>
+<span class="pre">'orcid':</span> <span class="pre">{</span>
+<span class="pre">'BASE_DOMAIN':</span> <span class="pre">'sandbox.orcid.org',</span>
+<span class="pre">'MEMBER_API':</span> <span class="pre">False</span>
+<span class="pre">}</span>
+<span class="pre">}</span></em><a class="headerlink" href="#geoluminate.settings.components.authentication.SOCIALACCOUNT_PROVIDERS" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">AUTH_USER_MODEL</span> <span class="o">=</span> <span class="s1">&#39;user.User&#39;</span>
+<span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+
+<span class="n">ACCOUNT_ADAPTER</span> <span class="o">=</span> <span class="s1">&#39;user.adapter.AuthenticationAdapter&#39;</span>
+<span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+
+<span class="n">LOGIN_REDIRECT_URL</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span>
+<span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+
+<span class="n">LOGIN_URL</span> <span class="o">=</span> <span class="s1">&#39;/accounts/login/&#39;</span>
+<span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+
+<span class="n">ACCOUNT_USER_MODEL_USERNAME_FIELD</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="sd">&quot;&quot;&quot;Users are identified by email instead of username&quot;&quot;&quot;</span>
+
+<span class="n">ACCOUNT_EMAIL_REQUIRED</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+
+<span class="n">ACCOUNT_USERNAME_REQUIRED</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="sd">&quot;&quot;&quot;We don&#39;t use usernames so this is False&quot;&quot;&quot;</span>
+
+
+<span class="n">ACCOUNT_LOGOUT_ON_GET</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="sd">&quot;&quot;&quot;Skip confirm logout screen&quot;&quot;&quot;</span>
+
+<span class="n">ACCOUNT_AUTHENTICATION_METHOD</span> <span class="o">=</span> <span class="s1">&#39;email&#39;</span>
+<span class="sd">&quot;&quot;&quot;Email authentication is mandatory&quot;&quot;&quot;</span>
+
+<span class="n">ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="n">ACCOUNT_EMAIL_VERIFICATION</span> <span class="o">=</span> <span class="s1">&#39;mandatory&#39;</span>
+<span class="sd">&quot;&quot;&quot;Email verification is mandatory&quot;&quot;&quot;</span>
+
+<span class="c1"># After signing up</span>
+<span class="n">ACCOUNT_SIGNUP_REDIRECT_URL</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span>
+<span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+
+
+<span class="c1"># After clicking email confirmation link, user is logged in and redirected</span>
+<span class="c1"># to home? page</span>
+<span class="n">ACCOUNT_CONFIRM_EMAIL_ON_GET</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+
+<span class="n">ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="sd">&quot;&quot;&quot;Log new user in after confirming email&quot;&quot;&quot;</span>
+
+<span class="n">ACCOUNT_MAX_EMAIL_ADDRESSES</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+
+<span class="n">AUTHENTICATION_BACKENDS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;allauth.account.auth_backends.AuthenticationBackend&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+
+<span class="n">ACCOUNT_FORMS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;login&#39;</span><span class="p">:</span> <span class="s1">&#39;user.forms.LoginForm&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;signup&#39;</span><span class="p">:</span> <span class="s1">&#39;user.forms.SignUpForm&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;add_email&#39;</span><span class="p">:</span> <span class="s1">&#39;user.forms.AddEmailForm&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;change_password&#39;</span><span class="p">:</span> <span class="s1">&#39;user.forms.ChangePasswordForm&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;set_password&#39;</span><span class="p">:</span> <span class="s1">&#39;user.forms.SetPasswordForm&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;reset_password&#39;</span><span class="p">:</span> <span class="s1">&#39;user.forms.ResetPasswordForm&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;reset_password_from_key&#39;</span><span class="p">:</span> <span class="s1">&#39;user.forms.ResetPasswordKeyForm&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;disconnect&#39;</span><span class="p">:</span> <span class="s1">&#39;allauth.socialaccount.forms.DisconnectForm&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+
+<span class="n">SOCIALACCOUNT_FORMS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;disconnect&#39;</span><span class="p">:</span> <span class="s1">&#39;allauth.socialaccount.forms.DisconnectForm&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;signup&#39;</span><span class="p">:</span> <span class="s1">&#39;user.forms.SocialSignupForm&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+
+<span class="n">SOCIALACCOUNT_AUTO_SIGNUP</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+
+<span class="n">SOCIALACCOUNT_PROVIDERS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;orcid&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="c1"># Base domain of the API. Default value: &#39;orcid.org&#39;, for the</span>
+        <span class="c1"># production API</span>
+        <span class="s1">&#39;BASE_DOMAIN&#39;</span><span class="p">:</span> <span class="s1">&#39;sandbox.orcid.org&#39;</span><span class="p">,</span>  <span class="c1"># for the sandbox API</span>
+        <span class="c1"># Member API or Public API? Default: False (for the public API)</span>
+        <span class="s1">&#39;MEMBER_API&#39;</span><span class="p">:</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;DEBUG&#39;</span><span class="p">),</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="geoluminate.settings.components.cms.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">CMS</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="geoluminate.settings.components.api.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">API</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022, Sam Jennings
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Authentication</a><ul>
+<li><a class="reference internal" href="#geoluminate.settings.components.authentication.ACCOUNT_ADAPTER"><code class="docutils literal notranslate"><span class="pre">ACCOUNT_ADAPTER</span></code></a></li>
+<li><a class="reference internal" href="#geoluminate.settings.components.authentication.ACCOUNT_AUTHENTICATION_METHOD"><code class="docutils literal notranslate"><span class="pre">ACCOUNT_AUTHENTICATION_METHOD</span></code></a></li>
+<li><a class="reference internal" href="#geoluminate.settings.components.authentication.ACCOUNT_CONFIRM_EMAIL_ON_GET"><code class="docutils literal notranslate"><span class="pre">ACCOUNT_CONFIRM_EMAIL_ON_GET</span></code></a></li>
+<li><a class="reference internal" href="#geoluminate.settings.components.authentication.ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS"><code class="docutils literal notranslate"><span class="pre">ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS</span></code></a></li>
+<li><a class="reference internal" href="#geoluminate.settings.components.authentication.ACCOUNT_EMAIL_REQUIRED"><code class="docutils literal notranslate"><span class="pre">ACCOUNT_EMAIL_REQUIRED</span></code></a></li>
+<li><a class="reference internal" href="#geoluminate.settings.components.authentication.ACCOUNT_EMAIL_VERIFICATION"><code class="docutils literal notranslate"><span class="pre">ACCOUNT_EMAIL_VERIFICATION</span></code></a></li>
+<li><a class="reference internal" href="#geoluminate.settings.components.authentication.ACCOUNT_FORMS"><code class="docutils literal notranslate"><span class="pre">ACCOUNT_FORMS</span></code></a></li>
+<li><a class="reference internal" href="#geoluminate.settings.components.authentication.ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION"><code class="docutils literal notranslate"><span class="pre">ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION</span></code></a></li>
+<li><a class="reference internal" href="#geoluminate.settings.components.authentication.ACCOUNT_LOGOUT_ON_GET"><code class="docutils literal notranslate"><span class="pre">ACCOUNT_LOGOUT_ON_GET</span></code></a></li>
+<li><a class="reference internal" href="#geoluminate.settings.components.authentication.ACCOUNT_MAX_EMAIL_ADDRESSES"><code class="docutils literal notranslate"><span class="pre">ACCOUNT_MAX_EMAIL_ADDRESSES</span></code></a></li>
+<li><a class="reference internal" href="#geoluminate.settings.components.authentication.ACCOUNT_SIGNUP_REDIRECT_URL"><code class="docutils literal notranslate"><span class="pre">ACCOUNT_SIGNUP_REDIRECT_URL</span></code></a></li>
+<li><a class="reference internal" href="#geoluminate.settings.components.authentication.ACCOUNT_USERNAME_REQUIRED"><code class="docutils literal notranslate"><span class="pre">ACCOUNT_USERNAME_REQUIRED</span></code></a></li>
+<li><a class="reference internal" href="#geoluminate.settings.components.authentication.ACCOUNT_USER_MODEL_USERNAME_FIELD"><code class="docutils literal notranslate"><span class="pre">ACCOUNT_USER_MODEL_USERNAME_FIELD</span></code></a></li>
+<li><a class="reference internal" href="#geoluminate.settings.components.authentication.AUTHENTICATION_BACKENDS"><code class="docutils literal notranslate"><span class="pre">AUTHENTICATION_BACKENDS</span></code></a></li>
+<li><a class="reference internal" href="#geoluminate.settings.components.authentication.AUTH_USER_MODEL"><code class="docutils literal notranslate"><span class="pre">AUTH_USER_MODEL</span></code></a></li>
+<li><a class="reference internal" href="#geoluminate.settings.components.authentication.LOGIN_REDIRECT_URL"><code class="docutils literal notranslate"><span class="pre">LOGIN_REDIRECT_URL</span></code></a></li>
+<li><a class="reference internal" href="#geoluminate.settings.components.authentication.LOGIN_URL"><code class="docutils literal notranslate"><span class="pre">LOGIN_URL</span></code></a></li>
+<li><a class="reference internal" href="#geoluminate.settings.components.authentication.SOCIALACCOUNT_AUTO_SIGNUP"><code class="docutils literal notranslate"><span class="pre">SOCIALACCOUNT_AUTO_SIGNUP</span></code></a></li>
+<li><a class="reference internal" href="#geoluminate.settings.components.authentication.SOCIALACCOUNT_FORMS"><code class="docutils literal notranslate"><span class="pre">SOCIALACCOUNT_FORMS</span></code></a></li>
+<li><a class="reference internal" href="#geoluminate.settings.components.authentication.SOCIALACCOUNT_PROVIDERS"><code class="docutils literal notranslate"><span class="pre">SOCIALACCOUNT_PROVIDERS</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/scripts/furo.js"></script>
+    </body>
+</html>

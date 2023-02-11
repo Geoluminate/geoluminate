@@ -1,0 +1,32 @@
+#main {
+	flex-grow: 1 !important;
+	flex-shrink: 1 !important;
+	flex-basis: auto !important;
+	display: flex;
+	flex-wrap: nowrap;
+	max-height: 100vh;
+	overflow-x: auto;
+	position: relative;
+	scroll-behavior: smooth;
+	
+	.content {
+		padding: 1.5rem 5%;
+		width: 100%;
+	}
+
+}
+
+.outer {
+	display: flex;
+	flex-direction: column;
+	}
+
+.fullscreen {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	// -webkit-transition: all 1s ease-out;
+	// transition: all 1s ease-out;
+}

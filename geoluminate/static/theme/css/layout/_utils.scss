@@ -1,0 +1,30 @@
+.fill {
+    display: flex;
+    flex-grow: 1!important;
+    overflow: hidden;
+
+    &-col {
+        display: flex;
+        flex-grow: 1!important;
+        overflow: hidden;
+        flex-direction: column;
+    }
+}
+
+.overflow-auto {
+    scroll-behavior: smooth;
+}
+
+.swagger-ui {
+    button {
+        height: inherit;
+        box-shadow: none;
+        padding: inherit;
+    }
+
+    >div>.scheme-container {
+        box-shadow: none;
+        margin: 0;
+        padding: 0;
+    }
+}

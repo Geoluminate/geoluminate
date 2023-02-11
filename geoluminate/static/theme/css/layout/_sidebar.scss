@@ -1,0 +1,227 @@
+.sidebar {
+
+	display: flex !important;
+    flex-direction: column !important;
+    min-width: 250px;
+
+	&-header {
+		background-color: darken(_palette(secondary), 2);
+		border-bottom: 0;
+		display: flex;
+		align-items: center;
+		padding: .5rem;
+		justify-content: space-between;
+	}
+	
+	&-body {
+		overflow-y: auto !important;
+
+	}
+
+	.select2 {
+		width: 100%;
+	}
+}
+
+
+
+#application-sidebar {
+	$pad: 0.5em;
+	display: flex;
+	flex-direction: column;
+
+	@include vendor('flex-grow', '0');
+	@include vendor('flex-shrink', '0');
+	@include vendor('transition', ('margin-left 0.5s ease',
+			'box-shadow 0.5s ease'
+		));
+	background-color: _palette(secondary);
+	font-size: 1.1em;
+	position: relative;
+	// width: _size(sidebar-width);
+
+	#sidebarLogo {
+		display: none;
+	}
+
+	.toggle {
+		font-size: small;
+		text-align: center;
+		background-color: _palette(border);
+		border: none;
+		padding: 0;
+		height: auto;
+		line-height: inherit;
+		box-shadow: none;
+		border-radius: inherit;
+
+		button {
+			padding: 0;
+		}
+	}
+
+	>.logo {
+		height: 3rem;
+		img {
+			height: 100%;
+		}
+	}
+
+	i {
+		font-size: 1.3rem;
+		margin: 0 auto;
+	}
+
+	span {
+		display: none!important;
+	}
+
+	>.inner {
+		flex-grow: 1;
+		@include padding($pad, $pad, (0, 0, $pad, 0));
+		position: relative;
+
+		>* {
+			border-bottom: solid 2px _palette(border);
+			margin: 0 0 (_size(element-margin) * 1.75) 0;
+			padding: 0 0 (_size(element-margin) * 1.75) 0;
+
+			> :last-child {
+				margin-bottom: 0;
+			}
+
+			&:last-child {
+				border-bottom: 0;
+				margin-bottom: 0;
+				padding-bottom: 0;
+			}
+		}
+
+		>.alt {
+			background-color: darken(_palette(secondary), 2);
+			border-bottom: 0;
+			margin: ($pad * -1) 0 ($pad * 1) ($pad * -1);
+			padding: 1rem;
+			width: calc(100% + #{$pad * 2});
+			min-height: 6rem;
+		}
+	}
+
+
+
+	&.expanded {
+		$pad: 2em;
+		width: _size(sidebar-width);
+
+		i {
+			font-size: 1rem;
+			min-width: 1.3rem;
+		}
+
+		span {
+			display: block!important;
+			flex-grow: 1;
+			padding-left: 0.5rem;
+		}
+
+		#sidebarIcon {
+			display: none;
+		}
+
+		#sidebarLogo {
+			display: block;
+		}
+
+		>.logo {
+			height: 6rem;
+			img {
+				width: 100%;
+			}
+		}
+
+		h2 {
+			font-size: (1.25em / 0.9);
+		}
+
+		>.inner {
+			flex-grow: 1;
+			@include padding($pad, $pad, (0, 0, $pad, 0));
+			position: relative;
+
+			>* {
+				border-bottom: solid 2px _palette(border);
+				margin: 0 0 (_size(element-margin) * 1.75) 0;
+				padding: 0 0 (_size(element-margin) * 1.75) 0;
+
+				> :last-child {
+					margin-bottom: 0;
+				}
+
+				&:last-child {
+					border-bottom: 0;
+					margin-bottom: 0;
+					padding-bottom: 0;
+				}
+			}
+
+			>.alt {
+				background-color: darken(_palette(secondary), 2);
+				border-bottom: 0;
+				margin: ($pad * -1) 0 ($pad * 1) ($pad * -1);
+				padding: 1rem;
+				width: calc(100% + #{$pad * 2});
+				min-height: 6rem;
+			}
+		}
+
+		&::after {
+			font-size: small;
+			font-weight: 200;
+			text-align: center;
+			border-top: solid 2px _palette(border);
+			font-size: small;
+			content: 'Powered by GeoLuminate';
+		}
+
+		@include breakpoint('<=lg') {
+			$pad: 1.5em / 0.9;
+			width: _size(sidebar-width-alt);
+
+			>.inner {
+				@include padding($pad, $pad, (0, 0, $pad, 0));
+				width: _size(sidebar-width-alt);
+
+				>.alt {
+					margin: ($pad * -1) 0 ($pad * 2) ($pad * -1);
+					padding: $pad;
+					width: calc(100% + #{$pad * 2});
+				}
+			}
+
+			.toggle {
+
+				height: 6.25em;
+				left: _size(sidebar-width-alt);
+				line-height: 6.25em;
+				text-indent: 5em;
+				width: 5em;
+
+				&:before {
+					font-size: 1.5rem;
+				}
+			}
+
+			&.inactive {
+				margin-left: (_size(sidebar-width-alt) * -1);
+			}
+		}
+
+		@include breakpoint('<=md') {
+			display: none;
+		}
+	}
+
+
+
+
+}

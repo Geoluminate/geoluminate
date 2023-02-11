@@ -1,0 +1,37 @@
+{% load i18n authentication %}
+
+<ul class='icons text-secondary w-100 d-flex m-0'>
+  <li data-bs-toggle="tooltip" data-bs-placement="top" title="Go to article">
+    <a href="https://doi.org/{{pub.DOI}}" class="icon {% if not pub.DOI %}disabled{% endif %} solid globe">
+      <span class="label">{% trans "View article" %}</span>
+    </a>
+  </li>
+  <li data-bs-toggle="tooltip" data-bs-placement="top" title="Access PDF">
+    <a href="https://doi.org/{{pub.doi}}" class="icon pdf {% if not pub.pdf %}disabled{% endif %}">
+      <span class="label">Article</span>
+    </a>
+  </li>
+  <li data-bs-toggle="tooltip" data-bs-placement="top" title="Quick Download">
+    <a href="{% url "literature:detail" pk=pub.pk %}?download" class="icon download">
+      <span class="label">Article</span>
+    </a>
+  </li>
+
+
+  <li data-bs-toggle="tooltip" data-bs-placement="top" title="Export citation">
+    <div class="dropleft no-arrow" data-trigger="hover" data-content="Cite article">
+    <a id='dropdownMenuLink' class='icon export' role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="?plain">Plain Text</a>
+      <a class="dropdown-item" href="?bibtex">Bibtex</a>
+      <a class="dropdown-item" href="?ris">RIS</a>
+    </div>
+  </div>
+</li>
+  <li class="ms-auto">
+    <div class="dropleft no-arrow">
+      <a class='icon ellipsis-v' href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="label">Actions</span></a>
+      <div class="dropdown-menu"></div>
+    </div>
+  </li> 
+</ul>

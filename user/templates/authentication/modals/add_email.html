@@ -1,0 +1,35 @@
+{% load static sekizai_tags i18n authentication %}
+
+<div id="addEmailModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="addEmailModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      {% include 'geoluminate/modals/header.html' with header='Add Email' %}
+      <div class='modal-body'>
+        {% authentication_form "add_email" %}
+        <div class="modal-footer">
+          <input form='signupForm' type="submit" name="submit" value="{% trans "Confirm" %}" class="btn btn-primary">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% addtoblock "js" %}<script>
+  $("#changePasswordModal").submit(function(e) {
+    e.preventDefault();
+    var form = $(this);
+    $.post({
+        url: form.attr('action'),
+        data: form.serialize(),
+        success: function(data)
+        {
+          location.href = '/';
+          window.location.reload(true);
+        },
+        error: function(data)
+        {
+          form.replaceWith(data.responseJSON.form)
+        },
+    });
+  });
+    </script>{% endaddtoblock %}

@@ -1,0 +1,61 @@
+@import 'libs/vars';
+@import 'libs/functions';
+@import 'libs/mixins';
+@import 'libs/vendor';
+@import 'libs/breakpoints';
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,600italic|Roboto+Slab:400,700');
+
+// Breakpoints.
+
+@include breakpoints((xxl: (1400px, null),
+		xl: (1200px, 1399px),
+		lg: (992px, 1199px),
+		md: (768px, 991px),
+		sm: (576px, 767px),
+		xs: (null, 575px),
+		xxl-to-max: '(min-width: 1681px)',
+		md-to-xxl: '(min-width: 481px) and (max-width: 1680px)'
+	));
+
+// Base.
+
+@import 'libs/typography';
+
+// Component.
+
+@import 'components/scrollbar';
+@import 'components/section';
+@import 'components/datatables';
+@import 'components/icon';
+@import 'components/indicators';
+@import 'components/list';
+@import 'components/actions';
+@import 'components/icons';
+@import 'components/pagination';
+@import 'components/table';
+@import 'components/button';
+@import 'components/nav';
+@import 'components/dropdown';
+@import 'components/map';
+@import 'components/comment';
+@import 'components/checkmark';
+@import 'components/publication';
+@import 'components/bibliography';
+
+// Layout.
+@import 'layout/page';
+@import 'layout/navbar';
+@import 'layout/main';
+@import 'layout/sidebar';
+@import 'layout/header';
+@import 'layout/menu';
+@import 'layout/publication';
+@import 'layout/kepler';
+@import 'layout/utils';
+
+
+@media print {
+	#application-sidebar, #appMenu, nav {
+		display: none !important;
+	}
+}

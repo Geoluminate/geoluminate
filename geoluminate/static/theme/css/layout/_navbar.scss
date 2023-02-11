@@ -1,0 +1,28 @@
+.navbar {
+    height: 3rem;
+    background-color: _palette(primary-light);
+
+    .nav-link {
+        border-bottom: 0 !important;
+    }
+
+    &.fixed-top {
+        height: 45px;
+    }
+}
+
+#appMenu {
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    background-color: _palette(secondary);
+    border-top: 0.5px solid _palette(fg-light);
+
+    a {
+        text-decoration: none;
+        border-bottom: none;
+        position: relative;
+        transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
+        color: #679bd0;
+    }
+}

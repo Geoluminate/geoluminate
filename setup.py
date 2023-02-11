@@ -3,15 +3,15 @@
 
 import os
 from setuptools import setup, find_packages
-from core import __version__
+from geoluminate import __version__
 
-REPO_URL = "https://github.com/SSJenny90/core"
+REPO_URL = "https://github.com/SSJenny90/geoluminate"
 
 # allow setup.py to be run from any path
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
-    name='core',
+    name='geoluminate',
     packages=find_packages(),
     include_package_data=True,
     version=__version__,
@@ -23,13 +23,12 @@ setup(
     install_requires=[
         "Django>=3,<4",
         "django-import-export",
-        "tqdm", 
-        'django-solo',  
+        "tqdm",
+        'django-solo',
         'easy-thumbnails',
         'django-contrib-comments',
-        'django-comments-xtd',
-
-        ],
+        "celery",
+    ],
     keywords='scientific django',
     classifiers=[
         'Development Status :: 1 - Development',

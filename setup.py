@@ -1,46 +1,77 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 import os
-from setuptools import setup, find_packages
-from geoluminate import __version__
+import re
+import sys
 
-REPO_URL = "https://github.com/SSJenny90/geoluminate"
+try:
+    from setuptools import setup
+except ImportError:
+    from distutils.core import setup
 
-# allow setup.py to be run from any path
-os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
+
+def get_version(*file_paths):
+    """Retrieves the version from geoluminate/__init__.py"""
+    filename = os.path.join(os.path.dirname(__file__), *file_paths)
+    version_file = open(filename).read()
+    version_match = re.search(r"^__version__ = ['\"]([^'\"]*)['\"]",
+                              version_file, re.M)
+    if version_match:
+        return version_match.group(1)
+    raise RuntimeError('Unable to find version string.')
+
+
+version = get_version("geoluminate", "__init__.py")
+
+
+if sys.argv[-1] == 'publish':
+    try:
+        import wheel
+        print("Wheel version: ", wheel.__version__)
+    except ImportError:
+        print('Wheel library missing. Please run "pip install wheel"')
+        sys.exit()
+    os.system('python setup.py sdist upload')
+    os.system('python setup.py bdist_wheel upload')
+    sys.exit()
+
+if sys.argv[-1] == 'tag':
+    print("Tagging the version on git:")
+    os.system("git tag -a %s -m 'version %s'" % (version, version))
+    os.system("git push --tags")
+    sys.exit()
+
+readme = open('README.rst').read()
+history = open('HISTORY.rst').read().replace('.. :changelog:', '')
+requirements = open('requirements.txt').readlines()
 
 setup(
     name='geoluminate',
-    packages=find_packages(),
-    include_package_data=True,
-    version=__version__,
+    version=version,
+    description="""A highly-opinionated, batteries included jump-starter for creating research databases.""",
+    long_description=readme + '\n\n' + history,
     author='Sam Jennings',
-    author_email='samuel.jennings@pm.me',
-    license='MIT',
-    description='Core functionality and patches for Django projects',
-    url=REPO_URL,
-    install_requires=[
-        "Django>=3,<4",
-        "django-import-export",
-        "tqdm",
-        'django-solo',
-        'easy-thumbnails',
-        'django-contrib-comments',
-        "celery",
+    author_email='samuel<dot>scott<dot>jennings + att + gmail.com',
+    url='https://github.com/SSJenny90/geoluminate',
+    packages=[
+        'geoluminate',
     ],
-    keywords='scientific django',
+    include_package_data=True,
+    install_requires=requirements,
+    license="MIT",
+    zip_safe=False,
+    keywords='geoluminate',
     classifiers=[
-        'Development Status :: 1 - Development',
+        'Development Status :: 3 - Alpha',
+        'Framework :: Django :: 3.2',
+        'Framework :: Django :: 4.0',
         'Intended Audience :: Developers',
-        'Intended Audience :: Science/Research',
-        'License :: OSI Approved :: MIT License',
-        'Operating System :: OS Independent',
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 3',
-        'Framework :: Django',
+        'License :: OSI Approved :: BSD License',
         'Natural Language :: English',
-        'Topic :: Internet :: WWW/HTTP',
-        'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
     ],
 )

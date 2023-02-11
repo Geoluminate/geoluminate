@@ -1,0 +1,1438 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-02-08 15:33+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: geoluminate/admin.py:21
+msgid "Site"
+msgstr ""
+
+#: geoluminate/admin.py:23
+msgid "Custodian"
+msgstr ""
+
+#: geoluminate/admin.py:29
+msgid "Files"
+msgstr ""
+
+#: geoluminate/conf/settings/cms.py:8
+msgid "English"
+msgstr ""
+
+#: geoluminate/conf/setup.py:92
+msgid ""
+"Welcome to the admin site for the {config['DATABASE_NAME']}. Only "
+"administrators can access this section. If you would like to become an "
+"administrator, please contact the {config['GOVERNING_BODY']}"
+msgstr ""
+
+#: geoluminate/contrib/admin/templates/admin/import_export/import.html:119
+#: geoluminate/contrib/admin/templates/admin/mapping/import.html:10
+msgid "Import"
+msgstr ""
+
+#: geoluminate/contrib/admin/templates/admin/import_export/import.html:132
+#: geoluminate/contrib/admin/templates/admin/mapping/import.html:20
+msgid ""
+"Below is a preview of data to be imported. If you are satisfied with the "
+"results, click 'Confirm import'"
+msgstr ""
+
+#: geoluminate/contrib/admin/templates/admin/import_export/import.html:135
+#: geoluminate/contrib/admin/templates/admin/mapping/import.html:23
+msgid "Confirm import"
+msgstr ""
+
+#: geoluminate/contrib/admin/templates/admin/import_export/import.html:142
+#: geoluminate/contrib/admin/templates/admin/mapping/import.html:31
+msgid "This importer will import the following fields: "
+msgstr ""
+
+#: geoluminate/contrib/admin/templates/admin/import_export/import.html:164
+#: geoluminate/contrib/admin/templates/admin/mapping/import.html:52
+#: geoluminate/templates/tellme/tpl-overview.html:15
+msgid "Submit"
+msgstr ""
+
+#: geoluminate/contrib/admin/templates/admin/import_export/import.html:178
+#: geoluminate/contrib/admin/templates/admin/import_export/import.html:215
+#: geoluminate/contrib/admin/templates/admin/mapping/import.html:61
+#: geoluminate/contrib/admin/templates/admin/mapping/import.html:90
+msgid "Errors"
+msgstr ""
+
+#: geoluminate/contrib/admin/templates/admin/import_export/import.html:190
+#: geoluminate/contrib/admin/templates/admin/mapping/import.html:72
+msgid "Line number"
+msgstr ""
+
+#: geoluminate/contrib/admin/templates/admin/import_export/import.html:203
+#: geoluminate/contrib/admin/templates/admin/mapping/import.html:82
+msgid "Some rows failed to validate"
+msgstr ""
+
+#: geoluminate/contrib/admin/templates/admin/import_export/import.html:205
+#: geoluminate/contrib/admin/templates/admin/mapping/import.html:84
+msgid ""
+"Please correct these errors in your data where possible, then reupload it "
+"using the form above."
+msgstr ""
+
+#: geoluminate/contrib/admin/templates/admin/import_export/import.html:214
+#: geoluminate/contrib/admin/templates/admin/mapping/import.html:89
+msgid "Row"
+msgstr ""
+
+#: geoluminate/contrib/admin/templates/admin/import_export/import.html:241
+#: geoluminate/contrib/admin/templates/admin/mapping/import.html:116
+msgid "Non field specific"
+msgstr ""
+
+#: geoluminate/contrib/admin/templates/admin/import_export/import.html:264
+#: geoluminate/contrib/admin/templates/admin/mapping/import.html:137
+msgid "Preview"
+msgstr ""
+
+#: geoluminate/contrib/admin/templates/admin/import_export/import.html:282
+#: geoluminate/contrib/admin/templates/admin/mapping/import.html:152
+msgid "New"
+msgstr ""
+
+#: geoluminate/contrib/admin/templates/admin/import_export/import.html:284
+#: geoluminate/contrib/admin/templates/admin/mapping/import.html:154
+msgid "Skipped"
+msgstr ""
+
+#: geoluminate/contrib/admin/templates/admin/import_export/import.html:286
+#: geoluminate/contrib/admin/templates/admin/mapping/import.html:156
+#: geoluminate/contrib/user/templates/account/email.html:23
+msgid "Delete"
+msgstr ""
+
+#: geoluminate/contrib/admin/templates/admin/import_export/import.html:288
+#: geoluminate/contrib/admin/templates/admin/mapping/import.html:158
+msgid "Update"
+msgstr ""
+
+#: geoluminate/contrib/admin/templates/admin/tchange_list.html:157
+#: geoluminate/contrib/admin/templates/admin/tchange_list_filter_sidebar.html:142
+msgid "Home"
+msgstr ""
+
+#: geoluminate/contrib/admin/templates/admin/tchange_list.html:173
+#: geoluminate/contrib/admin/templates/admin/tchange_list_filter_sidebar.html:160
+#, python-format
+msgid "Add %(name)s"
+msgstr ""
+
+#: geoluminate/contrib/admin/templates/admin/tchange_list.html:208
+#: geoluminate/contrib/admin/templates/admin/tchange_list_filter_sidebar.html:175
+msgid "Filter"
+msgstr ""
+
+#: geoluminate/contrib/admin/templates/admin/tchange_list.html:249
+#: geoluminate/contrib/admin/templates/admin/tchange_list_filter_sidebar.html:221
+#: geoluminate/contrib/admin/templates/admin/tlogin.html:35
+#: jazzmin_translate/templates/jazzmin_translate/application.html:100
+msgid "Please correct the error below."
+msgstr ""
+
+#: geoluminate/contrib/admin/templates/admin/tchange_list.html:251
+#: geoluminate/contrib/admin/templates/admin/tchange_list_filter_sidebar.html:221
+#: geoluminate/contrib/admin/templates/admin/tlogin.html:35
+#: jazzmin_translate/templates/jazzmin_translate/application.html:102
+msgid "Please correct the errors below."
+msgstr ""
+
+#: geoluminate/contrib/admin/templates/admin/tchange_list.html:283
+#: geoluminate/contrib/admin/templates/admin/tchange_list_filter_sidebar.html:248
+#: jazzmin_translate/templates/jazzmin_translate/application.html:264
+msgid "Save"
+msgstr ""
+
+#: geoluminate/contrib/admin/templates/admin/tlogin.html:29
+#: geoluminate/contrib/admin/templates/admin/tlogin.html:71
+msgid "Log in"
+msgstr ""
+
+#: geoluminate/contrib/admin/templates/admin/tlogin.html:64
+msgid "Forgotten your password or username?"
+msgstr ""
+
+#: geoluminate/contrib/gis/base.py:22
+msgid "An International Generic Sample Number for the site."
+msgstr ""
+
+#: geoluminate/contrib/gis/base.py:29 research_project/base.py:139
+msgid "name"
+msgstr ""
+
+#: geoluminate/contrib/gis/base.py:31
+msgid "Specified site name for the related database entry"
+msgstr ""
+
+#: geoluminate/contrib/gis/base.py:35
+msgid "elevation (m)"
+msgstr ""
+
+#: geoluminate/contrib/gis/base.py:36
+msgid "elevation with reference to mean sea level (m)"
+msgstr ""
+
+#: geoluminate/contrib/gis/base.py:51
+msgid "Geographic site"
+msgstr ""
+
+#: geoluminate/contrib/gis/base.py:52
+msgid "Geographic sites"
+msgstr ""
+
+#: geoluminate/contrib/literature/api/serialize.py:18
+msgid "as lead author"
+msgstr ""
+
+#: geoluminate/contrib/literature/api/serialize.py:20
+msgid ""
+"The number of times an author is listed first on a publication within this "
+"database."
+msgstr ""
+
+#: geoluminate/contrib/literature/api/serialize.py:26
+msgid "as Co-author"
+msgstr ""
+
+#: geoluminate/contrib/literature/api/serialize.py:28
+msgid ""
+"The number of times an author is listed as co-author on a publication within "
+"this database."
+msgstr ""
+
+#: geoluminate/contrib/literature/apps.py:7
+#: geoluminate/contrib/literature/templates/literature/details.html:4
+#: geoluminate/contrib/literature/templates/literature/details.html:5
+#: geoluminate/contrib/literature/templates/literature/list.html:4
+#: geoluminate/contrib/literature/templates/literature/list.html:5
+#: geoluminate/menus.py:60
+msgid "Literature"
+msgstr ""
+
+#: geoluminate/contrib/literature/templates/crossref/partials/action_list.html:6
+msgid "View article"
+msgstr ""
+
+#: geoluminate/contrib/literature/templates/crossref/publication_list.html:7
+#: geoluminate/contrib/user/templates/dashboard/panels/publications.html:4
+msgid "Publications"
+msgstr ""
+
+#: geoluminate/contrib/literature/templates/crossref/publication_list.html:7
+msgid "World Heat Flow Project"
+msgstr ""
+
+#: geoluminate/contrib/literature/templates/literature/details.html:60
+msgid "Discussion"
+msgstr ""
+
+#: geoluminate/contrib/literature/templates/literature/list.html:6
+#: geoluminate/menus.py:64
+msgid "Catalogue"
+msgstr ""
+
+#: geoluminate/contrib/literature/templates/literature/list.html:21
+msgid "Literature Catalogue"
+msgstr ""
+
+#: geoluminate/contrib/literature/templates/literature/list.html:36
+#, python-format
+msgid "Filter %(count)s publications"
+msgstr ""
+
+#: geoluminate/contrib/literature/templates/literature/partials/publication_list.html:9
+msgid "Showing publications from:"
+msgstr ""
+
+#: geoluminate/contrib/user/apps.py:8
+msgid "User"
+msgstr ""
+
+#: geoluminate/contrib/user/models.py:14
+msgid "email address"
+msgstr ""
+
+#: geoluminate/contrib/user/models.py:54
+msgid "is organization?"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/account_inactive.html:5
+#: geoluminate/contrib/user/templates/account/account_inactive.html:8
+msgid "Account Inactive"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/account_inactive.html:9
+msgid "This account is inactive."
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/base.html:4
+#: geoluminate/contrib/user/templates/authentication/settings.html:16
+#: geoluminate/contrib/user/templates/user/account.html:4
+#: geoluminate/contrib/user/templates/user/account.html:5
+msgid "Account"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/email.html:13
+#: geoluminate/contrib/user/templates/authentication/email.html:4
+msgid "The following e-mail addresses are associated with your account:"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/email.html:20
+msgid "Primary"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/email.html:21
+msgid "E-mail"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/email.html:22
+#: geoluminate/contrib/user/templates/authentication/email.html:13
+msgid "Verified"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/email.html:35
+msgid "Unverified"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/email.html:49
+msgid "Re-send Verification"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/email.html:59
+msgid "Warning:"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/email.html:59
+msgid ""
+"You currently do not have any e-mail addresses set up. A verified email is "
+"required to claim your own data, receive notifications, reset your password, "
+"etc."
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/email.html:64
+msgid "Add E-mail Address"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/email.html:68
+msgid "Add E-mail"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/email.html:78
+msgid "Do you really want to remove the selected e-mail address?"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/email/base_message.txt:1
+msgid "Hi there!"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/email/base_message.txt:5
+msgid "See you soon!"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/email/email_confirmation_message.txt:5
+#, python-format
+msgid ""
+"You're receiving this e-mail because user %(user_display)s has given your e-"
+"mail address to register an account on %(site_domain)s.\n"
+"\n"
+"To confirm this is correct, go to %(activate_url)s"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/email/email_confirmation_subject.txt:3
+msgid "Please Confirm Your E-mail Address"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/email/password_reset_key_message.txt:4
+msgid ""
+"You're receiving this e-mail because you or someone else has requested a "
+"password for your user account.\n"
+"It can be safely ignored if you did not request a password reset. Click the "
+"link below to reset your password."
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/email/password_reset_key_message.txt:9
+#, python-format
+msgid "In case you forgot, your username is %(username)s."
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/email/password_reset_key_subject.txt:3
+msgid "Password Reset E-mail"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/email_confirm.html:6
+#: geoluminate/contrib/user/templates/account/email_confirm.html:10
+msgid "Confirm E-mail Address"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/email_confirm.html:16
+#, python-format
+msgid ""
+"Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail "
+"address for user %(user_display)s."
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/email_confirm.html:20
+#: geoluminate/contrib/user/templates/authentication/modals/add_email.html:10
+#: geoluminate/contrib/user/templates/authentication/modals/change_password.html:10
+#: geoluminate/contrib/user/templates/authentication/modals/deactivate_account.html:9
+#: geoluminate/contrib/user/templates/authentication/modals/register.html:11
+#: geoluminate/templates/comments/modals/flag.html:18
+msgid "Confirm"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/email_confirm.html:27
+#, python-format
+msgid ""
+"This e-mail confirmation link expired or is invalid. Please <a href="
+"\"%(email_url)s\">issue a new e-mail confirmation request</a>."
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/login.html:4
+#: geoluminate/contrib/user/templates/account/login.html:5
+#: geoluminate/contrib/user/templates/account/login.html:6
+#: geoluminate/contrib/user/templates/account/login.html:18
+#: geoluminate/contrib/user/templates/socialaccount/login.html:4
+msgid "Sign In"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/login.html:11
+msgid "Click the image below to easily sign in using your ORCID."
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/login.html:14
+#, python-format
+msgid ""
+"<p>Don't have an ORCID? Use the details you registered with in the form "
+"below. If you haven't created an account yet, please <a href=\"%(signup_url)s"
+"\">sign up</a> first.</p>"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/login.html:17
+#: geoluminate/contrib/user/templates/account/password_change.html:14
+msgid "Forgot Password?"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/logout.html:5
+#: geoluminate/contrib/user/templates/account/logout.html:8
+#: geoluminate/contrib/user/templates/account/logout.html:17
+msgid "Sign Out"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/logout.html:10
+msgid "Are you sure you want to sign out?"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/messages/cannot_delete_primary_email.txt:2
+#, python-format
+msgid "You cannot remove your primary e-mail address (%(email)s)."
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/messages/email_confirmation_resend.txt:3
+#, python-format
+msgid ""
+"\n"
+"If your email has not arrived within 5 minutes, <a href=\"%(resend_link)s"
+"\">click here to resend</a>. Remember to check your spam filter!\n"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/messages/email_confirmation_sent.txt:2
+#, python-format
+msgid "A verification link has been sent to: %(email)s"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/messages/email_confirmed.txt:2
+#, python-format
+msgid "You have confirmed %(email)s."
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/messages/email_deleted.txt:2
+#, python-format
+msgid "Removed e-mail address %(email)s."
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/messages/logged_in.txt:4
+#, python-format
+msgid "Successfully signed in as %(name)s."
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/messages/logged_out.txt:2
+msgid "You have signed out."
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/messages/password_changed.txt:2
+msgid "Password successfully changed."
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/messages/password_set.txt:2
+msgid "Password successfully set."
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/messages/primary_email_set.txt:2
+msgid "Primary e-mail address set."
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/messages/unverified_primary_email.txt:2
+msgid "Your primary e-mail address must be verified."
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/password_change.html:5
+#: geoluminate/contrib/user/templates/account/password_change.html:8
+#: geoluminate/contrib/user/templates/account/password_change.html:13
+#: geoluminate/contrib/user/templates/account/password_reset_from_key.html:4
+#: geoluminate/contrib/user/templates/account/password_reset_from_key.html:7
+#: geoluminate/contrib/user/templates/account/password_reset_from_key_done.html:4
+#: geoluminate/contrib/user/templates/account/password_reset_from_key_done.html:7
+msgid "Change Password"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/password_reset.html:18
+msgid ""
+"Forgotten your password? Enter your e-mail address below, and we'll send you "
+"an e-mail allowing you to reset it."
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/password_reset.html:23
+msgid "Reset My Password"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/password_reset.html:26
+msgid "Please contact us if you have any trouble resetting your password."
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/password_reset_done.html:6
+#: geoluminate/contrib/user/templates/account/password_reset_done.html:9
+#: geoluminate/contrib/user/views.py:37
+msgid "Password Reset"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/password_reset_done.html:15
+msgid ""
+"We have sent you an e-mail. Please contact us if you do not receive it "
+"within a few minutes."
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/password_reset_from_key.html:7
+msgid "Bad Token"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/password_reset_from_key.html:11
+#, python-format
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</"
+"a>."
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/password_reset_from_key.html:17
+msgid "change password"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/password_reset_from_key.html:20
+#: geoluminate/contrib/user/templates/account/password_reset_from_key_done.html:8
+msgid "Your password is now changed."
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/password_set.html:5
+#: geoluminate/contrib/user/templates/account/password_set.html:8
+#: geoluminate/contrib/user/templates/account/password_set.html:13
+msgid "Set Password"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/signup.html:4
+#: geoluminate/contrib/user/templates/account/signup.html:5
+#: geoluminate/contrib/user/templates/account/signup.html:6
+#: geoluminate/contrib/user/templates/account/signup.html:33
+#: geoluminate/contrib/user/templates/socialaccount/signup.html:8
+#: geoluminate/contrib/user/templates/socialaccount/signup.html:19
+msgid "Sign Up"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/signup.html:9
+#, python-format
+msgid ""
+"\n"
+"    Already have an account? Then please <a href=\"%(login_url)s\">sign in</"
+"a>."
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/signup.html:14
+#, python-format
+msgid ""
+"\n"
+"    <p>We're excited you're choosing to join our specialised community of "
+"%(res_type)s researchers! This community was created so that past, current "
+"and future specialists in our field can actively engage in the revision and "
+"dissemination of past research data while also promoting multi-insitutional "
+"engagement and collaboration on future projects. Depending on your "
+"qualifications, there are many great benefits to joining which you can <a "
+"href=\"%(why_join)s\">read more about here</a>. If you're already convinced, "
+"you can easily register using your ORCID.</p>"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/signup.html:22
+#, python-format
+msgid ""
+"\n"
+"    Some features of this site may not be available until you connect an "
+"authenticated ORCID to your account but you can always do this after you "
+"register. <a href=\"%(why_orcid)s\">Learn more</a> about why we integrate "
+"our services with ORCID and what benefits that brings to both users and this "
+"community as a whole."
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/signup.html:26
+msgid ""
+"Don't have an ORCID? You can still register by filling in your details and "
+"submitting the form below."
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/signup_closed.html:5
+#: geoluminate/contrib/user/templates/account/signup_closed.html:8
+msgid "Sign Up Closed"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/signup_closed.html:10
+msgid "We are sorry, but the sign up is currently closed."
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/verification_sent.html:5
+#: geoluminate/contrib/user/templates/account/verification_sent.html:8
+#: geoluminate/contrib/user/templates/account/verified_email_required.html:5
+#: geoluminate/contrib/user/templates/account/verified_email_required.html:8
+msgid "Verify Your E-mail Address"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/verification_sent.html:9
+msgid ""
+"We have sent an e-mail to you for verification. Follow the link provided to "
+"finalize the signup process. Please contact us if you do not receive it "
+"within a few minutes."
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/verified_email_required.html:12
+msgid ""
+"This part of the site requires us to verify that\n"
+"you are who you claim to be. For this purpose, we require that you\n"
+"verify ownership of your e-mail address. "
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/verified_email_required.html:16
+msgid ""
+"We have sent an e-mail to you for\n"
+"verification. Please click on the link inside this e-mail. Please\n"
+"contact us if you do not receive it within a few minutes."
+msgstr ""
+
+#: geoluminate/contrib/user/templates/account/verified_email_required.html:20
+#, python-format
+msgid ""
+"<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your e-"
+"mail address</a>."
+msgstr ""
+
+#: geoluminate/contrib/user/templates/authentication/base.html:12
+#: geoluminate/contrib/user/templates/authentication/navbar_widget.html:16
+msgid "Settings"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/authentication/connected_accounts.html:4
+#: geoluminate/contrib/user/templates/socialaccount/connections.html:13
+msgid ""
+"You can sign in to your account using any of the following third party "
+"accounts:"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/authentication/connected_accounts.html:25
+#: geoluminate/contrib/user/templates/authentication/email.html:51
+#: geoluminate/contrib/user/templates/socialaccount/connections.html:36
+#: geoluminate/templates/comments/modals/delete.html:20
+msgid "Remove"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/authentication/connected_accounts.html:32
+#: geoluminate/contrib/user/templates/socialaccount/connections.html:52
+msgid ""
+"You currently have no social network accounts connected to this account."
+msgstr ""
+
+#: geoluminate/contrib/user/templates/authentication/connected_accounts.html:35
+#: geoluminate/contrib/user/templates/socialaccount/connections.html:55
+msgid "Add a 3rd Party Account"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/authentication/email.html:11
+msgid "Preferred"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/authentication/email.html:12
+#: geoluminate/contrib/user/templates/authentication/settings.html:7
+msgid "Email"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/authentication/email.html:43
+msgid "Re-send"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/authentication/email.html:62
+msgid "Add New"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/authentication/modals/forgot_password.html:8
+msgid ""
+"Enter your email below and press send to recover your account. If the email "
+"provided matches exists in our system, we will send you a link to reset your "
+"password."
+msgstr ""
+
+#: geoluminate/contrib/user/templates/authentication/modals/forgot_password.html:11
+msgid "Send"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/authentication/modals/login.html:13
+msgid ""
+"Login easily using your ORCID. Alternatively, login below using the details "
+"you registered with."
+msgstr ""
+
+#: geoluminate/contrib/user/templates/authentication/modals/login.html:19
+#, python-format
+msgid ""
+"\n"
+"            <a href=\"%(forgot_password_url)s\">Forgot your password</a>\n"
+"            or \n"
+"            <a href=\"%(register_url)s\">don't have an account yet?</a>\n"
+"            "
+msgstr ""
+
+#: geoluminate/contrib/user/templates/authentication/navbar_widget.html:9
+msgid "Guest"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/authentication/navbar_widget.html:14
+msgid "Profile"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/authentication/navbar_widget.html:15
+#: jazzmin_translate/templates/jazzmin_translate/base.html:51
+msgid "Dashboard"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/authentication/navbar_widget.html:18
+#: geoluminate/templates/theme/menu/user_menu.html:13
+msgid "Admin"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/authentication/navbar_widget.html:20
+msgid "Edit Page"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/authentication/navbar_widget.html:24
+#: geoluminate/templates/theme/menu/user_menu.html:11
+msgid "Logout"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/authentication/settings.html:8
+msgid "Add email"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/authentication/settings.html:12
+msgid "Password"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/authentication/settings.html:13
+msgid "Reset"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/authentication/settings.html:17
+msgid "Deactivate"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/dashboard/panels/projects.html:4
+msgid "Projects"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/dashboard/sections/orcid.html:4
+msgid ""
+"Your {{ config.site.name }} account is connected to the following ORCID "
+"record:"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/dashboard/sections/orcid.html:12
+msgid ""
+"Connect {{ config.site.name }} with your ORCID record to link your research "
+"to your data."
+msgstr ""
+
+#: geoluminate/contrib/user/templates/socialaccount/authentication_error.html:5
+#: geoluminate/contrib/user/templates/socialaccount/authentication_error.html:8
+msgid "Social Network Login Failure"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/socialaccount/authentication_error.html:10
+msgid ""
+"An error occurred while attempting to login via your social network account."
+msgstr ""
+
+#: geoluminate/contrib/user/templates/socialaccount/connections.html:6
+#: geoluminate/contrib/user/templates/socialaccount/connections.html:7
+#: geoluminate/contrib/user/views.py:40
+msgid "Account Connections"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/socialaccount/login.html:11
+#, python-format
+msgid "Connect %(provider)s"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/socialaccount/login.html:13
+#, python-format
+msgid "You are about to connect a new third party account from %(provider)s."
+msgstr ""
+
+#: geoluminate/contrib/user/templates/socialaccount/login.html:15
+#, python-format
+msgid "Sign In Via %(provider)s"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/socialaccount/login.html:17
+#, python-format
+msgid "You are about to sign in using a third party account from %(provider)s."
+msgstr ""
+
+#: geoluminate/contrib/user/templates/socialaccount/login.html:22
+msgid "Continue"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/socialaccount/login_cancelled.html:4
+#: geoluminate/contrib/user/templates/socialaccount/login_cancelled.html:8
+msgid "Login Cancelled"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/socialaccount/login_cancelled.html:11
+#, python-format
+msgid ""
+"You decided to cancel logging in to our site using one of your existing "
+"accounts. If this was a mistake, please proceed to <a href=\"%(login_url)s"
+"\">sign in</a>."
+msgstr ""
+
+#: geoluminate/contrib/user/templates/socialaccount/signup.html:5
+msgid "Signup"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/socialaccount/signup.html:10
+#, python-format
+msgid ""
+"You are about to use your %(provider_name)s account to login to\n"
+"  %(site_name)s. As a final step, please complete the following form:"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/user/community.html:13
+msgid "Our Community"
+msgstr ""
+
+#: geoluminate/contrib/user/templates/user/why_orcid.html:13
+msgid "Why ORCID?"
+msgstr ""
+
+#: geoluminate/contrib/user/views.py:34
+msgid "E-mail Addresses"
+msgstr ""
+
+#: geoluminate/core/validators.py:10
+#, python-format
+msgid "Ensure this value is within the range %(limit_value)s."
+msgstr ""
+
+#: geoluminate/core/validators.py:41
+#, python-format
+msgid "The provided domain is not allowed: %(limit_value)s."
+msgstr ""
+
+#: geoluminate/db/models.py:18
+msgid "comment"
+msgstr ""
+
+#: geoluminate/db/models.py:19
+msgid "General comments regarding the site and/or measurement"
+msgstr ""
+
+#: geoluminate/db/models.py:24
+msgid "Associated literature."
+msgstr ""
+
+#: geoluminate/db/models.py:28
+msgid "date acquired"
+msgstr ""
+
+#: geoluminate/db/models.py:29
+msgid "Date and time of acquisition."
+msgstr ""
+
+#: geoluminate/menus.py:8
+#: geoluminate/templates/geoluminate/database_table.html:3
+msgid "Database"
+msgstr ""
+
+#: geoluminate/menus.py:18
+msgid "Map"
+msgstr ""
+
+#: geoluminate/menus.py:28
+msgid "API"
+msgstr ""
+
+#: geoluminate/menus.py:39 geoluminate/templates/geoluminate/glossary.html:4
+msgid "Glossary"
+msgstr ""
+
+#: geoluminate/menus.py:50
+msgid "Versions"
+msgstr ""
+
+#: geoluminate/menus.py:65
+msgid "Authors"
+msgstr ""
+
+#: geoluminate/models.py:17
+msgid "Logo"
+msgstr ""
+
+#: geoluminate/models.py:24
+msgid "Icon"
+msgstr ""
+
+#: geoluminate/models.py:35
+msgid "custodian"
+msgstr ""
+
+#: geoluminate/models.py:44 geoluminate/models.py:47
+msgid "Configuration"
+msgstr ""
+
+#: geoluminate/templates/api/map_popup.html:13
+msgid "View"
+msgstr ""
+
+#: geoluminate/templates/api/map_popup.html:16
+msgid "Quick Download"
+msgstr ""
+
+#: geoluminate/templates/base.html:22
+#: geoluminate/templates/tellme/tpl-description.html:3
+#: geoluminate/templates/tellme/tpl-highlighter.html:3
+#: geoluminate/templates/tellme/tpl-overview.html:3
+#: geoluminate/templates/tellme/tpl-submit-error.html:3
+#: geoluminate/templates/tellme/tpl-submit-success.html:3
+msgid "Feedback"
+msgstr ""
+
+#: geoluminate/templates/comments/actions/delete.html:4
+msgid "delete comment"
+msgstr ""
+
+#: geoluminate/templates/comments/actions/flag.html:7
+#, python-format
+msgid "A user has flagged this comment as inappropriate."
+msgid_plural "%(counter)s users have flagged this comment as inappropriate."
+msgstr[0] ""
+msgstr[1] ""
+
+#: geoluminate/templates/comments/actions/flag.html:11
+msgid "comment flagged"
+msgstr ""
+
+#: geoluminate/templates/comments/actions/flag.html:13
+#: geoluminate/templates/comments/comment.html:16
+msgid "flag comment"
+msgstr ""
+
+#: geoluminate/templates/comments/actions/reply copy.html:3
+#: geoluminate/templates/comments/actions/reply.html:5
+msgid "reply to comment"
+msgstr ""
+
+#: geoluminate/templates/comments/actions/reply copy.html:3
+msgid "Reply"
+msgstr ""
+
+#: geoluminate/templates/comments/actions/reply.html:5
+#: geoluminate/templates/comments/comment_fluent.html:22
+msgid "reply"
+msgstr ""
+
+#: geoluminate/templates/comments/actions/view_replies.html:3
+msgid "View replies"
+msgstr ""
+
+#: geoluminate/templates/comments/comment.html:5
+#: geoluminate/templates/comments/comment_fluent.html:4
+msgid "Preview of your comment"
+msgstr ""
+
+#: geoluminate/templates/comments/comment.html:11
+msgid "moderator"
+msgstr ""
+
+#: geoluminate/templates/comments/comment.html:24
+msgid "This comment has been removed."
+msgstr ""
+
+#: geoluminate/templates/comments/comment_fluent.html:12
+msgid "Anonymous"
+msgstr ""
+
+#: geoluminate/templates/comments/comment_fluent.html:15
+msgid "moderated"
+msgstr ""
+
+#: geoluminate/templates/comments/comment_fluent.html:16
+msgid "author"
+msgstr ""
+
+#: geoluminate/templates/comments/modals/delete.html:10
+msgid ""
+"You are about to remove the following comment from the website. This action "
+"is irreversible!"
+msgstr ""
+
+#: geoluminate/templates/comments/modals/flag.html:8
+msgid ""
+"You are about to flag the following comment for review by site moderators"
+msgstr ""
+
+#: geoluminate/templates/comments/render_comments.html:4
+msgid ""
+"\n"
+"<div class=\"alert alert-warning alert-dismissible fade show\" role=\"alert"
+"\">\n"
+"<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" aria-"
+"label=\"Close\"></button>\n"
+"This area is provided to promote meaningful discussion within our research "
+"community regarding the publications and datasets found within this "
+"database. Before having your say, please become familiar with our community "
+"guidelines and code of conduct.\n"
+"</div>\n"
+msgstr ""
+
+#: geoluminate/templates/comments/render_comments.html:13
+msgid ""
+"\n"
+"  Only authenticated users are allowed to comment. Please login first or "
+"register!\n"
+msgstr ""
+
+#: geoluminate/templates/geoluminate/glossary.html:9
+#: geoluminate/templates/geoluminate/glossary.html:10
+#: jazzmin_translate/templates/jazzmin_translate/application.html:74
+#: jazzmin_translate/templates/jazzmin_translate/application.html:78
+msgid "Search"
+msgstr ""
+
+#: geoluminate/templates/geoluminate/glossary.html:33
+msgid "Choices"
+msgstr ""
+
+#: geoluminate/templates/geoluminate/modals/form.html:12
+msgid "confirm"
+msgstr ""
+
+#: geoluminate/templates/gis/application.html:4
+msgid "Viewer"
+msgstr ""
+
+#: geoluminate/templates/tellme/tpl-description.html:4
+msgid ""
+"Feedback lets you send us suggestions about this site. We welcome problem "
+"reports, feature ideas and general comments."
+msgstr ""
+
+#: geoluminate/templates/tellme/tpl-description.html:6
+msgid "If you wish to be contacted please leave us your email:"
+msgstr ""
+
+#: geoluminate/templates/tellme/tpl-description.html:9
+msgid "Start by writing a brief description:"
+msgstr ""
+
+#: geoluminate/templates/tellme/tpl-description.html:11
+msgid ""
+"Next we'll let you identify areas of the page related to your description."
+msgstr ""
+
+#: geoluminate/templates/tellme/tpl-description.html:12
+#: geoluminate/templates/tellme/tpl-highlighter.html:15
+msgid "Next"
+msgstr ""
+
+#: geoluminate/templates/tellme/tpl-description.html:13
+#: geoluminate/templates/tellme/tpl-overview.html:18
+msgid "Please enter a description."
+msgstr ""
+
+#: geoluminate/templates/tellme/tpl-highlighter.html:4
+msgid ""
+"Click and drag on the page to help us better understand your feedback. You "
+"can move this dialog if it's in the way."
+msgstr ""
+
+#: geoluminate/templates/tellme/tpl-highlighter.html:7
+msgid "Highlight"
+msgstr ""
+
+#: geoluminate/templates/tellme/tpl-highlighter.html:8
+msgid "Highlight areas relevant to your feedback."
+msgstr ""
+
+#: geoluminate/templates/tellme/tpl-highlighter.html:11
+msgid "Black out"
+msgstr ""
+
+#: geoluminate/templates/tellme/tpl-highlighter.html:12
+msgid "Black out any personal information."
+msgstr ""
+
+#: geoluminate/templates/tellme/tpl-highlighter.html:18
+#: geoluminate/templates/tellme/tpl-overview.html:16
+msgid "Back"
+msgstr ""
+
+#: geoluminate/templates/tellme/tpl-overview.html:5
+msgid "Description"
+msgstr ""
+
+#: geoluminate/templates/tellme/tpl-overview.html:6
+msgid "Additional info"
+msgstr ""
+
+#: geoluminate/templates/tellme/tpl-overview.html:7
+msgid "None"
+msgstr ""
+
+#: geoluminate/templates/tellme/tpl-overview.html:8
+msgid "Browser Info"
+msgstr ""
+
+#: geoluminate/templates/tellme/tpl-overview.html:9
+msgid "Page Info"
+msgstr ""
+
+#: geoluminate/templates/tellme/tpl-overview.html:10
+msgid "Page Structure"
+msgstr ""
+
+#: geoluminate/templates/tellme/tpl-overview.html:13
+msgid "Screenshot"
+msgstr ""
+
+#: geoluminate/templates/tellme/tpl-submit-error.html:4
+msgid "Sadly an error occurred while sending your feedback. Please try again."
+msgstr ""
+
+#: geoluminate/templates/tellme/tpl-submit-error.html:5
+#: geoluminate/templates/tellme/tpl-submit-success.html:6
+msgid "OK"
+msgstr ""
+
+#: geoluminate/templates/tellme/tpl-submit-success.html:4
+msgid ""
+"Thank you for your feedback. We value every piece of feedback we receive."
+msgstr ""
+
+#: geoluminate/templates/tellme/tpl-submit-success.html:5
+msgid ""
+"We cannot respond individually to every one, but we will use your comments "
+"as we strive to improve your experience."
+msgstr ""
+
+#: geoluminate/templates/theme/menu/user_menu.html:5
+msgid "My Account"
+msgstr ""
+
+#: jazzmin_translate/apps.py:8
+msgid "Jazzmin Translate"
+msgstr ""
+
+#: jazzmin_translate/templates/jazzmin_translate/application.html:9
+#: jazzmin_translate/templates/jazzmin_translate/index.html:6
+#: jazzmin_translate/templates/jazzmin_translate/language.html:7
+msgid "Languages"
+msgstr ""
+
+#: jazzmin_translate/templates/jazzmin_translate/application.html:47
+msgid "All"
+msgstr ""
+
+#: jazzmin_translate/templates/jazzmin_translate/application.html:51
+msgid "Untranslated only"
+msgstr ""
+
+#: jazzmin_translate/templates/jazzmin_translate/application.html:55
+msgid "Translated only"
+msgstr ""
+
+#: jazzmin_translate/templates/jazzmin_translate/application.html:59
+msgid "Fuzzy only"
+msgstr ""
+
+#: jazzmin_translate/templates/jazzmin_translate/application.html:86
+#, python-format
+msgid ""
+"Progress: %(percent_translated)s%%\n"
+"      <div class=\"progress\">\n"
+"        <div class=\"progress-bar\" role=\"progressbar\" style=\"width: "
+"%(percent_translated)s%%\" aria-valuenow=\"%(percent_translated)s\" aria-"
+"valuemin=\"0\" aria-valuemax=\"100\"></div>\n"
+"      </div>\n"
+"    "
+msgstr ""
+
+#: jazzmin_translate/templates/jazzmin_translate/application.html:117
+#: jazzmin_translate/templates/jazzmin_translate/application.html:229
+msgid "Reference language"
+msgstr ""
+
+#: jazzmin_translate/templates/jazzmin_translate/application.html:140
+msgid "Original"
+msgstr ""
+
+#: jazzmin_translate/templates/jazzmin_translate/application.html:145
+#: jazzmin_translate/templates/jazzmin_translate/language.html:32
+msgid "Fuzzy entries call for revision by the translator."
+msgstr ""
+
+#: jazzmin_translate/templates/jazzmin_translate/application.html:146
+#: jazzmin_translate/templates/jazzmin_translate/language.html:33
+msgid "Fuzzy"
+msgstr ""
+
+#: jazzmin_translate/templates/jazzmin_translate/application.html:149
+msgid "Occurrences(s)"
+msgstr ""
+
+#: jazzmin_translate/templates/jazzmin_translate/application.html:188
+msgid "suggest"
+msgstr ""
+
+#: jazzmin_translate/templates/jazzmin_translate/application.html:206
+#, python-format
+msgid "%(more_count)s more"
+msgid_plural "%(more_count)s more"
+msgstr[0] ""
+msgstr[1] ""
+
+#: jazzmin_translate/templates/jazzmin_translate/application.html:210
+msgid "Context hint"
+msgstr ""
+
+#: jazzmin_translate/templates/jazzmin_translate/application.html:251
+#, python-format
+msgid ""
+"\n"
+"                            %(hits)s/%(message_number)s message"
+msgid_plural "%(hits)s/%(message_number)s messages"
+msgstr[0] ""
+msgstr[1] ""
+
+#: jazzmin_translate/templates/jazzmin_translate/application.html:257
+msgid "Show all"
+msgstr ""
+
+#: jazzmin_translate/templates/jazzmin_translate/index.html:42
+msgid "Language"
+msgstr ""
+
+#: jazzmin_translate/templates/jazzmin_translate/index.html:43
+msgid "Progress (project)"
+msgstr ""
+
+#: jazzmin_translate/templates/jazzmin_translate/index.html:44
+msgid "Progress (total)"
+msgstr ""
+
+#: jazzmin_translate/templates/jazzmin_translate/index.html:45
+msgid "Applications"
+msgstr ""
+
+#: jazzmin_translate/templates/jazzmin_translate/language.html:27
+msgid "Application"
+msgstr ""
+
+#: jazzmin_translate/templates/jazzmin_translate/language.html:28
+msgid "Progress"
+msgstr ""
+
+#: jazzmin_translate/templates/jazzmin_translate/language.html:29
+msgid "Messages"
+msgstr ""
+
+#: jazzmin_translate/templates/jazzmin_translate/language.html:30
+msgid "Translated"
+msgstr ""
+
+#: jazzmin_translate/templates/jazzmin_translate/language.html:35
+msgid "Obsolete"
+msgstr ""
+
+#: jazzmin_translate/templates/jazzmin_translate/language.html:36
+msgid "File"
+msgstr ""
+
+#: research_project/apps.py:8
+msgid "research project"
+msgstr ""
+
+#: research_project/base.py:33
+msgid "title"
+msgstr ""
+
+#: research_project/base.py:33
+msgid "The project title."
+msgstr ""
+
+#: research_project/base.py:36
+msgid "description"
+msgstr ""
+
+#: research_project/base.py:37
+msgid "A description of the project and expected outcomes."
+msgstr ""
+
+#: research_project/base.py:42
+msgid "status"
+msgstr ""
+
+#: research_project/base.py:46
+msgid "project lead"
+msgstr ""
+
+#: research_project/base.py:47
+msgid "This person will be acknowledged as the project leader."
+msgstr ""
+
+#: research_project/base.py:54
+msgid "start date"
+msgstr ""
+
+#: research_project/base.py:56
+msgid ""
+"Start date of the survey. If this is a project proposal, enter the proposed "
+"start date."
+msgstr ""
+
+#: research_project/base.py:60
+msgid "end date"
+msgstr ""
+
+#: research_project/base.py:60
+msgid "End date of the survey."
+msgstr ""
+
+#: research_project/base.py:64 research_project/base.py:114
+msgid "Choose an open source license for your project."
+msgstr ""
+
+#: research_project/base.py:70
+msgid "inherit license"
+msgstr ""
+
+#: research_project/base.py:72
+msgid "Related datasets must inherit the license set at the project level."
+msgstr ""
+
+#: research_project/base.py:78
+msgid "funding"
+msgstr ""
+
+#: research_project/base.py:79
+msgid "Include details of any funding recieved for this project."
+msgstr ""
+
+#: research_project/base.py:92
+msgid "date created"
+msgstr ""
+
+#: research_project/base.py:93
+msgid "date modified"
+msgstr ""
+
+#: research_project/base.py:101
+msgid "project"
+msgstr ""
+
+#: research_project/base.py:102
+msgid "projects"
+msgstr ""
+
+#: research_project/base.py:133
+msgid "name type"
+msgstr ""
+
+#: research_project/base.py:134
+msgid "Name type specification from Datacite."
+msgstr ""
+
+#: research_project/base.py:141
+msgid ""
+"Name of the contributor. Will be automatically populated from given name and "
+"family name if left blank."
+msgstr ""
+
+#: research_project/base.py:148
+msgid "given name"
+msgstr ""
+
+#: research_project/base.py:149
+msgid "Given name of the contributor."
+msgstr ""
+
+#: research_project/base.py:154
+msgid "family name"
+msgstr ""
+
+#: research_project/base.py:155
+msgid "Family name of the contributor."
+msgstr ""
+
+#: research_project/choices.py:6
+msgid "Inactive"
+msgstr ""
+
+#: research_project/choices.py:7
+msgid "Active"
+msgstr ""
+
+#: research_project/models.py:8
+msgid "Base model for all projects within your database."
+msgstr ""
+
+#: research_project/models.py:13
+msgid "Base model for contributors to projects within your database."
+msgstr ""
+
+#: research_project/models.py:18
+msgid "Base model for datasets to projects within your database."
+msgstr ""

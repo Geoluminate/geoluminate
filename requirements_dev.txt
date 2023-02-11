@@ -1,0 +1,11 @@
+invoke
+twine
+wheel
+zest.releaser
+django-model-utils
+furo
+model-bakery
+ipython
+isort
+flake8
+sphinx

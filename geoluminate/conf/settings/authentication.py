@@ -1,15 +1,38 @@
-import os
+# PASSWORDS
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#password-hashers
+PASSWORD_HASHERS = [
+    # https://docs.djangoproject.com/en/dev/topics/auth/passwords/#using-argon2-with-django
+    "django.contrib.auth.hashers.Argon2PasswordHasher",
+    "django.contrib.auth.hashers.PBKDF2PasswordHasher",
+    "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
+    "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
+]
 
+# https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
+    },
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
+]
+
+# https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
 AUTH_USER_MODEL = "user.User"
 """"""
 
-# ACCOUNT_ADAPTER = 'user.adapter.AuthenticationAdapter'
-# """"""
-
-LOGIN_REDIRECT_URL = "/"
+# https://django-allauth.readthedocs.io/en/latest/configuration.html
+ACCOUNT_ADAPTER = "geoluminate.contrib.user.adapters.AccountAdapter"
 """"""
 
-LOGIN_URL = "/accounts/login/"
+# https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
+LOGIN_REDIRECT_URL = "users:redirect"
+""""""
+
+# https://docs.djangoproject.com/en/dev/ref/settings/#login-url
+LOGIN_URL = "account_login"
 """"""
 
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
@@ -25,6 +48,7 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_LOGOUT_ON_GET = True
 """Skip confirm logout screen"""
 
+# https://django-allauth.readthedocs.io/en/latest/configuration.html
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 """Email authentication is mandatory"""
 
@@ -49,9 +73,14 @@ ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 ACCOUNT_MAX_EMAIL_ADDRESSES = 2
 """"""
 
-AUTHENTICATION_BACKENDS = ("allauth.account.auth_backends.AuthenticationBackend",)
+# https://docs.djangoproject.com/en/dev/ref/settings/#authentication-backends
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
 """"""
 
+# https://django-allauth.readthedocs.io/en/latest/forms.html
 ACCOUNT_FORMS = {
     "login": "geoluminate.contrib.user.forms.LoginForm",
     "signup": "geoluminate.contrib.user.forms.SignUpForm",
@@ -73,15 +102,13 @@ SOCIALACCOUNT_FORMS = {
 SOCIALACCOUNT_AUTO_SIGNUP = False
 """"""
 
-
 SOCIALACCOUNT_PROVIDERS = {
     "orcid": {
-        # Base domain of the API.
-        "BASE_DOMAIN": "sandbox.orcid.org"
-        if os.environ.get("DJANGO_ENV") == "development"
-        else "orcid.org",
-        # Member API or Public API?
+        "BASE_DOMAIN": "orcid.org",
         "MEMBER_API": False,
     }
 }
 """"""
+
+# https://django-allauth.readthedocs.io/en/latest/configuration.html
+SOCIALACCOUNT_ADAPTER = "geoluminate.contrib.user.adapters.SocialAccountAdapter"

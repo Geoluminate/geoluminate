@@ -2,17 +2,18 @@ import os
 
 from django.contrib.messages import constants as messages
 
-DEBUG = not os.environ.get("DJANGO_ENV") == "production"
-
 BASE_DIR = os.getcwd()
+
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
-DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
+# https://docs.djangoproject.com/en/dev/ref/settings/#use-tz
 USE_TZ = True
 
+# https://docs.djangoproject.com/en/dev/ref/settings/#site-id
 SITE_ID = 1
+
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -20,26 +21,13 @@ INTERNAL_IPS = [
 
 ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
-ROOT_URLCONF = "project.urls"
+# URLS
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#root-urlconf
+ROOT_URLCONF = "config.urls"
+# https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
+WSGI_APPLICATION = "config.wsgi.application"
 
-WSGI_APPLICATION = "project.wsgi.application"
-
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    },
-]
-
-X_FRAME_OPTIONS = "SAMEORIGIN"
 
 # Coloured Messages
 MESSAGE_TAGS = {
@@ -50,6 +38,7 @@ MESSAGE_TAGS = {
     messages.ERROR: "error alert-danger",
 }
 
+# http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
@@ -82,15 +71,12 @@ TEMPLATES = [
     },
 ]
 
-
-INSTALLED_APPS = [
+GEOLUMINATE_APPS = [
     # Admin apps
+    "adminactions",
     "geoluminate.contrib.admin",
     "jazzmin",
     "postgres_metrics.apps.PostgresMetrics",
-    # "grappelli.dashboard",
-    # "grappelli",
-    # 'djangocms_admin_style',
     "polymorphic",
     # core Django apps
     "django.contrib.auth",
@@ -104,6 +90,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.gis",
     "django.contrib.humanize",
+    # "django.forms",
     # geoluminate configuration and user accounts
     "geoluminate",
     "geoluminate.contrib.user",
@@ -145,10 +132,11 @@ INSTALLED_APPS = [
     # APPS FOR DJANGO REST FRAMEWORK
     "rest_framework",
     "rest_framework.authtoken",
+    "corsheaders",
     "dj_rest_auth",
     "dj_rest_auth.registration",
     "drf_spectacular",  # auto documentation of API
-    "drf_spectacular_sidecar",  # supplies static files for drf_spectacular
+    "drf_spectacular_sidecar",  # static files for drf_spectacular
     "rest_framework_datatables_editor",
     "drf_auto_endpoint",
     # commenting system via django-fluent-comments[threadedcomment]
@@ -163,14 +151,13 @@ INSTALLED_APPS = [
     "crispy_forms",
     "crispy_bootstrap5",
     # some other useful apps that are required by the default installation
-    "django_extensions",  # useful extensions for django
     "sortedm2m",  # sortable m2m relationships
     "django_htmx",  # context processor for dealing with htmx requests
     "django_celery_beat",  # celery based task manager
     "meta",  # for seo optimization
     "taggit",  # providing taggable keywords to any model
     "django_social_share",  # easy links to social sharing sites
-    # "import_export",  # for csv import and export via the admin site
+    "import_export",  # for csv import and export via the admin site
     # 'import_export_celery',
     # not sure if these are explicitly needed or not
     # 'newsletter',
@@ -181,9 +168,11 @@ INSTALLED_APPS = [
     # "menu",  # is this supposed to be here?
     "django_select2",  # select2 widget integration with models
     "dbbackup",
+    "tellme",  # adds user feedback functionality to the site
+    "django_spaghetti",  # very cool display of entity-relationship diagrams
+    "jazzmin_translate",  # rosetta compatibility with jazzmin
+    "django_better_admin_arrayfield",  # nice admin widget for postgres array fields
     # GEOLUMINATE DEFAULT PLUGINS
-    # "crossref",
-    # "crossref.cms",
     "literature",
     # research projects
     # research_projects
@@ -195,6 +184,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "cms.middleware.utils.ApphookReloadMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -211,41 +201,15 @@ MIDDLEWARE = [
     "geoluminate.middleware.GeoluminateLockdownMiddleware",
 ]
 
-DEBUG_TOOLBAR_PANELS = [
-    "debug_toolbar.panels.versions.VersionsPanel",
-    "debug_toolbar.panels.timer.TimerPanel",
-    "debug_toolbar.panels.settings.SettingsPanel",
-    "debug_toolbar.panels.headers.HeadersPanel",
-    "debug_toolbar.panels.request.RequestPanel",
-    "debug_toolbar.panels.sql.SQLPanel",
-    "debug_toolbar.panels.staticfiles.StaticFilesPanel",
-    "debug_toolbar.panels.templates.TemplatesPanel",
-    "debug_toolbar.panels.cache.CachePanel",
-    "debug_toolbar.panels.signals.SignalsPanel",
-    "debug_toolbar.panels.logging.LoggingPanel",
-    "debug_toolbar.panels.redirects.RedirectsPanel",
-    "debug_toolbar.panels.profiling.ProfilingPanel",
-    "template_profiler_panel.panels.template.TemplateProfilerPanel",
-]
+
+# MEDIA
+# ------------------------------------------------------------------------------
+
+# https://docs.djangoproject.com/en/dev/ref/settings/#media-url
+MEDIA_URL = "/media/"
 
 
-CROSSREF_MODELS = {
-    "work": "literature.Publication",
-}
+# if os.getenv("DJANGO_ENV") == "development":
 
-
-if os.getenv("DJANGO_ENV") == "development":
-
-    STATIC_ROOT = os.path.join(BASE_DIR, "static")
-    MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.contrib.gis.db.backends.postgis",
-        "NAME": os.environ.get("DB_NAME"),
-        "USER": os.environ.get("DB_USERNAME"),
-        "PASSWORD": os.environ.get("DB_PASSWORD"),
-        "HOST": "localhost",
-        "CONN_MAX_AGE": 0,
-    },
-}
+#     STATIC_ROOT = os.path.join(BASE_DIR, "static")
+#     MEDIA_ROOT = os.path.join(BASE_DIR, "media")

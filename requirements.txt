@@ -43,8 +43,6 @@ django-import-export==3.1.0
 django-invitations==2.0.0
 django-jazzmin==2.6.0
 django-js-asset==2.0.0 ; python_version >= '3.6'
-git+https://github.com/SSJenny90/django-laboratory@193ed7342e3228f7c265ac841554946500c05d5a#egg=django-laboratory
-git+https://github.com/SSJenny90/django-literature@2b0d0ceb58391bcee5d7a8c4c7f90b5a0aff979a#egg=django-literature
 django-lockdown==4.0.0
 django-meta==2.1.0
 django-model-utils==4.3.1
@@ -54,7 +52,6 @@ django-organizations==2.1.0
 django-polymorphic==3.1.0
 django-postgres-metrics==0.13.1
 django-rich==1.5.0 ; python_version >= '3.7'
-git+https://github.com/SSJenny90/django-ror@1a82a94322823c641e1cae12a24e6d167c2fa466#egg=django-ror
 django-rosetta==0.9.8
 django-sekizai==4.0.0 ; python_version >= '3.8'
 django-select2==8.1.0 ; python_version >= '3.8'

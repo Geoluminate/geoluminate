@@ -1,0 +1,297 @@
+{% extends "jazzmin_translate/base.html" %}
+{% load static rosetta i18n jazzmin %}
+{% block pagetitle %}
+  {{ block.super }} - {{ rosetta_settings.MESSAGES_SOURCE_LANGUAGE_NAME }} - {{ rosetta_i18n_lang_name }} ({{ rosetta_i18n_pofile.percent_translated }}%)
+{% endblock %}
+{% block breadcrumbs %}
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a href="{% url 'jazzmin_translate.language' lang_id=lang_id %}">{% trans "Languages" %}</a>
+    </li>
+    <li class="breadcrumb-item">
+      <a href="{% url 'jazzmin_translate.language' lang_id=lang_id %}">{{ rosetta_i18n_lang_name }}</a>
+    </li>
+    <li class="breadcrumb-item">
+      <a href class='disabled'>{{ rosetta_i18n_app|title }}</a>
+    </li>
+  </ol>
+{% endblock %}
+{% comment %} {% blocktrans with rosetta_i18n_pofile.percent_translated as percent_translated  %}Progress: {{ percent_translated }}%{% endblocktrans %}
+
+{% if not rosetta_i18n_write %}<p class="errornote read-only">{% trans "File is read-only: download the file when done editing!" %}</p>{% endif %}
+{% if messages %}
+                                                                <div class="messages errornote save-conflict">
+                                                                {% for message in messages %}        <p class="{{message.tags}}">{{ message|linebreaks }}</p>{% endfor %}
+    </div>
+{% endif %} {% endcomment %}
+{% block bodyclass %}{{ block.super }} change-list{% endblock %}
+{% block content_title %}{{ rosetta_i18n_lang_name }}{% endblock %}
+{% block object-tools %}
+  <div id="user-tools">
+    <a href="{% url 'jazzmin_translate.download-file' lang_id=lang_id app_name=app_name %}"
+       class="btn btn-primary">
+      <i class='fas fa-download text-white'></i>
+    </a>
+  </div>
+  <script type="text/javascript"></script>
+{% endblock %}
+{% block content %}
+  {% block search %}
+    <div class="col-12 pb-4" id="change-list-filters">
+      <form id="changelist-search" class="form-inline" method="GET">
+        <div class="form-group">
+          <select class="form-control search-filter" style="width: 100%;">
+            <option value="?{{ filter_query_string_base }}&amp;msg_filter=all"
+                    {% if rosetta_i18n_filter == 'all' %} selected{% endif %}>
+              {% trans "All" %}
+            </option>
+            <option value="?{{ filter_query_string_base }}&amp;msg_filter=untranslated"
+                    {% if rosetta_i18n_filter == 'untranslated' %} selected{% endif %}>
+              {% trans "Untranslated only" %}
+            </option>
+            <option value="?{{ filter_query_string_base }}&amp;msg_filter=translated"
+                    {% if rosetta_i18n_filter == 'translated' %} selected{% endif %}>
+              {% trans "Translated only" %}
+            </option>
+            <option value="?{{ filter_query_string_base }}&amp;msg_filter=fuzzy"
+                    {% if rosetta_i18n_filter == 'fuzzy' %} selected{% endif %}>
+              {% trans "Fuzzy only" %}
+            </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <input class='form-control'
+                 type="text"
+                 size="40"
+                 name="query"
+                 value="{% if query %}{{ query }}{% endif %}"
+                 id="searchbar"
+                 tabindex="0"/>
+          <input class='form-control'
+                 type="submit"
+                 name="s"
+                 value="{% trans "Search" %}"
+                 hidden/>
+        </div>
+        <div class="form-group" id="search_group">
+          <button type="submit" class="btn btn-primary">{% trans "Search" %}</button>
+        </div>
+      </form>
+    </div>
+  {% endblock search %}
+  <div class="col-12">
+    {% comment %} PROGRESS BAR {% endcomment %}
+    {% blocktrans with rosetta_i18n_pofile.percent_translated as percent_translated  %}Progress: {{ percent_translated }}%
+      <div class="progress">
+        <div class="progress-bar" role="progressbar" style="width: {{ percent_translated }}%" aria-valuenow="{{ percent_translated }}" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+    {% endblocktrans %}
+    <form id="changelist-form"
+          method="post"
+          {% if cl.formset and cl.formset.is_multipart %}enctype="multipart/form-data"{% endif %}
+          novalidate>
+      {% csrf_token %}
+      <div id="content-main">
+        {% if cl.formset and cl.formset.errors %}
+          <div class="alert alert-warning" role="alert">
+            {% if cl.formset.total_error_count == 1 %}
+              {% trans "Please correct the error below." %}
+            {% else %}
+              {% trans "Please correct the errors below." %}
+            {% endif %}
+          </div>
+          {{ cl.formset.non_form_errors }}
+        {% endif %}
+        <div class="module{% if cl.has_filters %} filtered{% endif %}{% if rosetta_i18n_lang_bidi %} rtl{% endif %}"
+             id="changelist">
+          <div class="row">
+            <div class="col-12">
+              {% if cl.formset %}<div>{{ cl.formset.management_form }}</div>{% endif %}
+              {% block result_list %}
+                <div class="change-list-actions row pb-3">
+                  <div class="col-12">
+                    {% if rosetta_settings.ENABLE_REFLANG %}
+                      <div class="actions">
+                        <label for="ref-language-selector">{% trans "Reference language" %}:</label>
+                        <select class="select-across"
+                                id="ref-language-selector"
+                                onchange="javascript:window.location.href = this.value;">
+                          {% for langid, langname in LANGUAGES %}
+                            <option {% if ref_lang == langid %} selected="selected"{% endif %}
+                                    value="?ref_lang={{ langid }}">
+                              {{ langname }}
+                            </option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+                <form method="post" action="" class="results">
+                  {% csrf_token %}
+                  <div class="card">
+                    <div class="card-body table-responsive p-0">
+                      <table id="result_list" class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>
+                              <div class="text">{% trans "Original" %}</div>
+                            </th>
+                            {% if main_language %}<th>{{ main_language }}</th>{% endif %}
+                            <th>{{ rosetta_i18n_lang_name }}</th>
+                            <th class="info-tip c"
+                                title="{% trans "Fuzzy entries call for revision by the translator." %}">
+                              {% trans "Fuzzy" %}
+                            </th>
+                            {% if rosetta_settings.SHOW_OCCURRENCES %}
+                              <th>{% trans "Occurrences(s)" %}</th>
+                            {% endif %}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for message in rosetta_messages %}
+                            <tr class="{% cycle 'row1' 'row2' %}">
+                              {% if message.msgid_plural %}
+                                <td class="original plural">
+                                  <div class="plural-container">
+                                    <span class="part">{{ message.msgid|format_message|linebreaksbr }}</span>
+                                    <span class="part">{{ message.msgid_plural|format_message|linebreaksbr }}</span>
+                                  </div>
+                                </td>
+                                <td class="translation">
+                                  {% for k, msgstr in message.msgstr_plural.items %}
+                                    <label for="m_{{ message.md5hash }}_{{ k }}">{{k }}:</label>
+                                    <textarea rows="{{message.msgid|format_message|lines_count}}"
+                                              cols="40"
+                                              id="m_{{message.md5hash}}_{{k}}"
+                                              name="m_{{message.md5hash}}_{{k}}"
+                                              tabindex="{% increment tab_idx %}">{{msgstr}}</textarea>
+                                  {% endfor %}
+                                </td>
+                              {% else %}
+                                <td class="original">
+                                  {% if rosetta_settings.ENABLE_REFLANG %}
+                                    <span class="message">{{ message.ref_txt|format_message|linebreaksbr }}</span>
+                                  {% else %}
+                                    <span class="message">{{ message.msgid|format_message|linebreaksbr }}</span>
+                                  {% endif %}
+                                </td>
+                                {% if main_language %}<td class="original">{{ message.main_lang|format_message|linebreaksbr }}</td>{% endif %}
+                                <td class="translation">
+                                  <textarea rows="{{message.msgid|format_message|lines_count}}"
+                                            cols="40"
+                                            name="m_{{message.md5hash}}"
+                                            tabindex="{% increment tab_idx %}">{{message.msgstr}}</textarea>
+                                  {% if rosetta_settings.ENABLE_TRANSLATION_SUGGESTIONS %}
+                                    <a href="#" class="suggest">{% trans "suggest" %}</a>
+                                  {% endif %}
+                                </td>
+                              {% endif %}
+                              <td class="c">
+                                <input type="checkbox"
+                                       name="f_{{ message.md5hash }}"
+                                       value="1"
+                                       {% if message|is_fuzzy %}checked="checked"{% endif %}/>
+                              </td>
+                              {% if rosetta_settings.SHOW_OCCURRENCES %}
+                                <td class="location">
+                                  {% for fn,lineno in message.occurrences %}
+                                    <code{% if forloop.counter|gt:"3" %} class="hide"{% endif %}>{{ fn }}
+                                      {% if lineno %}:{{ lineno }}{% endif %}
+                                    </code>
+                                  {% endfor %}
+                                  {% if message.occurrences|length|gt:"3" %}
+                                    <a href="#">&hellip; ({% blocktrans count message.occurrences|length|minus:"3" as more_count %}{{ more_count }} more{% plural %}{{ more_count }} more{% endblocktrans %})</a>
+                                  {% endif %}
+                                  {% if message.msgctxt or message.comment %}
+                                    <span class="context">
+                                      {% trans "Context hint" %}:
+                                      {% if message.msgctxt %}{{ message.msgctxt|safe }}{% endif %}
+                                      {% if message.msgctxt and message.comment %}<br/>{% endif %}
+                                      {% if message.comment %}{{ message.comment|safe }}{% endif %}
+                                    </span>
+                                  {% endif %}
+                                </td>
+                              {% endif %}
+                            </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </form>
+                <div class="change-list-actions row pb-3">
+                  <div class="col-12">
+                    {% if rosetta_settings.ENABLE_REFLANG %}
+                      <div class="actions">
+                        <label for="ref-language-selector">{% trans "Reference language" %}:</label>
+                        <select class="select-across"
+                                id="ref-language-selector"
+                                onchange="javascript:window.location.href = this.value;">
+                          {% for langid, langname in LANGUAGES %}
+                            <option {% if ref_lang == langid %} selected="selected"{% endif %}
+                                    value="?ref_lang={{ langid }}">
+                              {{ langname }}
+                            </option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+              {% endblock %}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-5">
+              <div class="dataTables_info" role="status" aria-live="polite">
+                {% with paginator.object_list|length as hits %}
+                  {% blocktrans count rosetta_i18n_pofile|length as message_number %}
+                            {{hits}}/{{message_number}} message{% plural %}{{hits}}/{{message_number}} messages{% endblocktrans %}
+                {% endwith %}
+                {% if show_all_url %}
+                  &nbsp;&nbsp;
+                  <a href="{{ show_all_url }}"
+                     class="btn btn-sm {{ jazzmin_ui.button_classes.secondary }}">{% trans 'Show all' %}</a>
+                {% endif %}
+                {% comment %} {% if cl.formset and cl.result_count %} {% endcomment %}
+                <input type="submit"
+                       class="btn btn-sm {{ jazzmin_ui.button_classes.success }}"
+                       name="_next"
+                       value="{% trans "Save" %}"
+                       tabindex="{% increment tab_idx %}"/>
+                {% comment %} {% endif %} {% endcomment %}
+              </div>
+            </div>
+            <div class="col-7">
+              <ul class="pagination pagination-sm m-0 float-right">
+                {% if needs_pagination %}
+                  {% for i in page_range %}
+                    {% if i == '...' %}
+                      <span class="space">{{ i }}</span>
+                    {% else %}
+                      {% if i == page %}
+                        <li class="page-item">
+                          <a href="?{{ pagination_query_string_base }}&amp;page={{i }}"
+                             class="page-link primary-bg text-white">{{i}}</a>
+                        </li>
+                        {% comment %} <span class="this-page">{{i}}</span> {% endcomment %}
+                      {% else %}
+                        <li class="page-item">
+                          <a href="?{{ pagination_query_string_base }}&amp;page={{i }}"
+                             class="page-link">{{i}}</a>
+                        </li>
+                      {% endif %}
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <br class="clear"/>
+  </div>
+{% endblock %}
+{% if query %}<input type="hidden" name="query" value="{{ query }}"  />{% endif %}

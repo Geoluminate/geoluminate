@@ -1,0 +1,78 @@
+{% extends "jazzmin_translate/base.html" %}
+{% load static rosetta i18n jazzmin %}
+{% block pagetitle %}{{ block.super }} - {{ language }}{% endblock %}
+{% block breadcrumbs %}
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a href="{% url 'jazzmin_translate.index' %}">{% trans "Languages" %}</a>
+    </li>
+    <li class="breadcrumb-item">
+      <a href>{{ language }}</a>
+    </li>
+  </ol>
+{% endblock %}
+{% block bodyclass %}{{ block.super }} change-list{% endblock %}
+{% block content_title %}{{ language }}{% endblock %}
+{% block object-tools %}
+{% endblock object-tools %}
+{% block content %}
+  {% block search %}{% endblock %}
+  <div class="col-12">
+    <div id="content-main">
+      <div class="card">
+        <div class="card-body table-responsive p-0">
+          <table class="table table-striped" cellspacing="0">
+            <thead>
+              <tr>
+                <th>{% trans "Application" %}</th>
+                <th class="r">{% trans "Progress" %}</th>
+                <th class="r">{% trans "Messages" %}</th>
+                <th class="r">{% trans "Translated" %}</th>
+                <th class="info-tip r"
+                    title="{% trans "Fuzzy entries call for revision by the translator." %}">
+                  {% trans "Fuzzy" %}
+                </th>
+                <th class="r">{% trans "Obsolete" %}</th>
+                <th>{% trans "File" %}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for app, path, po in pos %}
+                {% with po.percent_translated as prog %}
+                  <tr {% if prog == 100 %}class="table-success"{% endif %}>
+                    <td>
+                      <a href="{% url 'jazzmin_translate.application' lang_id=lang_code app_name=app %}">{{ app|title }}</a>
+                    </td>
+                    <td class="ch-progress r">
+                      <div class="progress">
+                        <div class="progress-bar {% if prog == 100 %} bg-success{% endif %}"
+                             role="progressbar"
+                             style="width: {{ prog }}%"
+                             aria-valuenow="{{ prog }}"
+                             aria-valuemin="0"
+                             aria-valuemax="100">
+                        </div>
+                      </div>
+                    </td>
+                    {% with po.untranslated_entries|length as len_untranslated_entries %}
+                      <td class="ch-messages r">{{ po.translated_entries|length|add:len_untranslated_entries }}</td>
+                    {% endwith %}
+                    <td class="ch-translated r">{{ po.translated_entries|length }}</td>
+                    <td class="ch-fuzzy r">{{ po.fuzzy_entries|length }}</td>
+                    <td class="ch-obsolete r">{{ po.obsolete_entries|length }}</td>
+                    <td class="hint">
+                      <a href="{% url 'jazzmin_translate.download-file' lang_id=lang_code app_name=app %}"
+                         class="btn btn-primary btn-sm {% if prog == 100 %}border-success bg-success{% endif %}">
+                        <i class='fas fa-download text-white'></i>
+                      </a>
+                    </td>
+                  </tr>
+                {% endwith %}
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

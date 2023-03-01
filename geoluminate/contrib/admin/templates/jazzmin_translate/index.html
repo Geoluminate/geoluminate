@@ -1,0 +1,99 @@
+{% extends "jazzmin_translate/base.html" %}
+{% load static rosetta i18n jazzmin %}
+{% block breadcrumbs %}
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a href="{% url 'jazzmin_translate.index' %}">{% trans "Languages" %}</a>
+    </li>
+  </ol>
+{% endblock %}
+{% block content_title %}{{ language }}{% endblock %}
+{% block object-tools %}
+  <div id="user-tools">
+    <div class="dropdown">
+      {% comment %} <a href="{% add_preserved_filters add_url is_popup to_field %}" class="btn {{ jazzmin_ui.button_classes.success }} float-right">
+        <i class="fa fa-plus-circle"></i> &nbsp; {% blocktrans with cl.opts.verbose_name as name %}Add {{ name }}{% endblocktrans %}
+      </a> {% endcomment %}
+      <button class="btn {{ jazzmin_ui.button_classes.success }} float-right"
+              type="button"
+              id="dropdownMenuButton"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false">
+        <i class="fa fa-plus-circle"></i>  &nbsp; {% trans "Add Language" %}
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        {% for lang in LANGUAGES %}
+          {% if lang.0 not in languages.keys %}
+            <a class="dropdown-item"
+               href="{% url 'jazzmin_translate.create-file' lang_id=lang.0 %}">{{ lang.1 }}</a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock object-tools %}
+{% block content %}
+  {% block search %}{% endblock %}
+  <div class="col-12">
+    <div id="content-main">
+      <div class="card">
+        <div class="card-body table-responsive p-0">
+          <table class="table table-striped" cellspacing="0">
+            <thead>
+              <tr>
+                <th>{% trans "Language" %}</th>
+                <th class="r">{% trans "Progress (project)" %}</th>
+                <th class="r">{% trans "Progress (total)" %}</th>
+                <th class="r">{% trans "Applications" %}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for code, language in languages.items %}
+                <tr>
+                  <td>
+                    <a href="{% url 'jazzmin_translate.language' lang_id=code %}">{{ language.name|title }}</a>
+                  </td>
+                  <td class="ch-progress r">
+                    <div class="progress">
+                      <div class="progress-bar"
+                           role="progressbar"
+                           style="width: {{ language.progress }}%"
+                           aria-valuenow="{{ language.progress }}"
+                           aria-valuemin="0"
+                           aria-valuemax="100">
+                      </div>
+                    </div>
+                  </td>
+                  <td class="ch-progress r">
+                    <div class="progress">
+                      <div class="progress-bar"
+                           role="progressbar"
+                           style="width: {{ language.total_progress }}%"
+                           aria-valuenow="{{ language.total_progress }}"
+                           aria-valuemin="0"
+                           aria-valuemax="100">
+                      </div>
+                    </div>
+                  </td>
+                  <td>{{ language.applications|length }}</td>
+                  {% comment %} {% with po.untranslated_entries|length as len_untranslated_entries %}
+                    <td class="ch-messages r">{{ po.translated_entries|length|add:len_untranslated_entries }}</td>
+                  {% endwith %}
+                  <td class="ch-translated r">{{ po.translated_entries|length }}</td> {% endcomment %}
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+          integrity="sha512-Ua/7Woz9L5O0cwB/aYexmgoaD7lw3dWe9FvXejVdgqu71gRog3oJgjSWQR55fwWx+WKuk8cl7UwA1RS6QCadFA=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer"></script>
+{% endblock %}
+{% comment %} {% block extrajs %} {% endcomment %}
+{% comment %} <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha512-Ua/7Woz9L5O0cwB/aYexmgoaD7lw3dWe9FvXejVdgqu71gRog3oJgjSWQR55fwWx+WKuk8cl7UwA1RS6QCadFA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> {% endcomment %}
+{% comment %} {% endblock %} {% endcomment %}

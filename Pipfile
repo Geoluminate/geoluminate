@@ -55,6 +55,9 @@ django-nested-admin = "*"
 django-better-admin-arrayfield = "*"
 django = {extras = ["argon2"], version = "*"}
 django-tellme = "*"
+django-literature = {git = "https://github.com/SSJenny90/django-literature"}
+django-laboratory = {git = "https://github.com/SSJenny90/django-laboratory"}
+django-ror = {git = "https://github.com/SSJenny90/django-ror"}
 
 [dev-packages]
 cookiecutter = "*"
@@ -73,7 +76,6 @@ django-extensions = "*"
 tldextract = "*"
 tqdm = "*"
 django-taggit = "*"
-
 djlint = "*"
 invoke = "*"
 sphinx-copybutton = "*"

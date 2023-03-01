@@ -1,13 +1,13 @@
-import datatables
-
-# from crossref.models import Work
-# from crossref.views import WorksByYearMixin
-from datatables.views import DatatablesReadOnlyView
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import DetailView
 from django_filters.views import FilterView
 from literature.models import Author, Literature
 
+from geoluminate.core import datatables
+
+# from crossref.models import Work
+# from crossref.views import WorksByYearMixin
+from geoluminate.core.datatables.views import DatatablesReadOnlyView
 from geoluminate.utils import get_filter_params
 
 from .api.serialize import AuthorSerializer

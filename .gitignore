@@ -65,3 +65,4 @@ data
 !**/migrations/__init__.py
 original_theme_files
 locale/*
+geoluminate/core/datatables/static

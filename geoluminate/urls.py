@@ -17,7 +17,7 @@ urlpatterns = [
     path("admin/", include("geoluminate.contrib.admin.urls")),
     path("comments/", include("fluent_comments.urls")),
     path("database/", views.DatabaseTableView.as_view(), name="database_table"),
-    path("datatables/", include("datatables.urls")),
+    # path("datatables/", include("datatables.urls")),
     path("glossary/", views.GlossaryView.as_view(), name="glossary"),
     path("institutions/", include("ror.urls")),
     path("invitations/", include("invitations.urls", namespace="invitations")),

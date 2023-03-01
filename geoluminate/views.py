@@ -1,5 +1,3 @@
-import datatables
-from datatables.views import DatatablesReadOnlyView
 from django.apps import apps
 from django.conf import settings
 from django.contrib.admindocs import utils, views
@@ -12,6 +10,8 @@ from django.views.generic import TemplateView
 from django_select2.views import AutoResponseView
 
 from geoluminate.conf import settings
+from geoluminate.core import datatables
+from geoluminate.core.datatables.views import DatatablesReadOnlyView
 from geoluminate.utils import get_database_models
 
 

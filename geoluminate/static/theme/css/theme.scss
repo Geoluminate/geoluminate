@@ -5,6 +5,13 @@
 @import 'libs/breakpoints';
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,600italic|Roboto+Slab:400,700');
 
+// Bootstrap5 variable overrides
+$primary: #043261;
+
+@import "../../../../node_modules/bootstrap/scss/bootstrap";
+
+
+
 // Breakpoints.
 
 @include breakpoints((xxl: (1400px, null),
@@ -23,35 +30,34 @@
 
 // Component.
 
+@import 'components/sidebar';
 @import 'components/scrollbar';
-@import 'components/section';
-@import 'components/datatables';
-@import 'components/icon';
+// @import 'components/section';
+// @import 'components/datatables';
+// @import 'components/icon';
 @import 'components/indicators';
-@import 'components/list';
-@import 'components/actions';
-@import 'components/icons';
-@import 'components/pagination';
-@import 'components/table';
-@import 'components/button';
-@import 'components/nav';
-@import 'components/dropdown';
-@import 'components/map';
-@import 'components/comment';
-@import 'components/checkmark';
-@import 'components/publication';
-@import 'components/bibliography';
+// @import 'components/list';
+// @import 'components/actions';
+// @import 'components/icons';
+// @import 'components/pagination';
+// @import 'components/table';
+// @import 'components/button';
+// @import 'components/nav';
+// @import 'components/dropdown';
+// @import 'components/map';
+// @import 'components/comment';
+// @import 'components/checkmark';
+// @import 'components/publication';
+// @import 'components/bibliography';
 
 // Layout.
-@import 'layout/page';
 @import 'layout/navbar';
 @import 'layout/main';
-// @import 'layout/sidebar';
 @import 'layout/header';
 @import 'layout/menu';
-@import 'layout/publication';
-@import 'layout/kepler';
-@import 'layout/utils';
+// @import 'layout/publication';
+// @import 'layout/kepler';
+// @import 'layout/utils';
 
 
 @media print {
@@ -68,12 +74,44 @@
 // 	margin: 0;
 // }
 
+// .sidebar {
+// 	transition: .3s;
+
+// 	&.sidebar-left.hidden {
+// 		margin-left: calc(-1 * var(--sidebar-width));
+// 	}
+
+// 	&.sidebar-right.hidden {
+// 		margin-right: calc(-1 * var(--sidebar-width));
+// 	}
+// }
+
+.page {
+	&-wrapper {
+		height: 100vh;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+	}
+
+	&-inner {
+		// height: 100vh;
+		// width: 100%;
+		flex-grow: 1 !important;
+		display: flex;
+		flex-direction: row;
+	}
+}
+
 .vertical-right-aligned {
-    transform: rotate(-90deg);
-    transform-origin: 100% 100%;
+	transform: translateX(-0%) translateY(-200%) rotate(270deg);
+	transform-origin: right bottom;
     position: fixed;
 	background-color: _palette(primary-light);
     right: 0;
     top: 50%;
     z-index: 100;
+	font-size: 0.7rem;
+	border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
 }

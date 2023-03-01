@@ -1,0 +1,48 @@
+{% extends 'admin/base_site.html' %}
+{% block extrahead %}
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vis/4.7.0/vis.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.7.0/vis.min.css"
+        rel="stylesheet"
+        type="text/css"/>
+{% endblock extrahead %}
+{% block page_content %}
+  <div id="visualization"
+       style="position: absolute;
+              top: 0;
+              bottom: 0;
+              width: fit-content"></div>
+  <script>
+  var nodes = new vis.DataSet(
+      {{ meatballs|safe }}
+  );
+
+  var edges = new vis.DataSet(
+      {{ spaghetti|safe }}
+  );
+
+  var data = {
+    nodes: nodes,
+    edges: edges
+  };
+
+  var container = document.getElementById('visualization');
+  var options = {
+    "edges": {
+      "smooth": {
+        "type": "dynamic"
+      }
+    },
+  
+    "layout": {
+        hierarchical: {
+            sortMethod: 'hubsize',
+            direction:'LR'
+        }
+    },
+
+  };
+
+  var timeline = new vis.Network(container, data, options);
+
+  </script>
+{% endblock page_content %}

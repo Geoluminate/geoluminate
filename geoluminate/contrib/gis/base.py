@@ -110,7 +110,7 @@ class AbstractSite(Base):
         if self.name:
             return force_str(self.name)
         elif self.geom:
-            return f"{self.geom.latitude}, {self.geom.longitude}"
+            return f"{self.lat}, {self.lon}"
         return self._meta.verbose_name
 
     def get_absolute_url(self):

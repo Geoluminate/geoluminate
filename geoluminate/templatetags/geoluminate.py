@@ -1,12 +1,16 @@
 from django import template
+
+# from django.conf import settings
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.templatetags.static import static
+from quantityfield import settings
 
 from geoluminate.models import GlobalConfiguration
 from geoluminate.utils import get_filter_params
 
 register = template.Library()
+ureg = getattr(settings, "DJANGO_PINT_UNIT_REGISTER")
 
 
 @register.simple_tag
@@ -15,6 +19,13 @@ def menu(menu, template=None):
     if not template:
         template = menu.template_name
     return render_to_string(template, {"menu": menu})
+
+
+@register.filter
+def unit(unit):
+    """Renders HTML of the specified unit"""
+    u = ureg.Unit(unit)
+    return f"{u:~H}"
 
 
 @register.simple_tag
@@ -32,7 +43,7 @@ def icon():
     icon = GlobalConfiguration.get_solo().icon
     if icon:
         return icon.url
-    return static("geoluminate/icon.svg")
+    return static("geoluminate/img/brand/icon.svg")
 
 
 @register.filter

@@ -1,0 +1,21 @@
+{% load static geoluminate %}
+<div class="card {{ card_class }}">
+  <div class="card-header">
+    {% block header %}
+    {% endblock header %}
+  </div>
+  <div class="card-body">
+    {% block body %}
+      <h5 class="card-title">
+        {% block title %}
+        {% endblock title %}
+      </h5>
+      {% block content %}
+      {% endblock content %}
+    {% endblock body %}
+  </div>
+  <div class="card-footer {{ footer_class }}">
+    {% block footer %}
+    {% endblock footer %}
+  </div>
+</div>

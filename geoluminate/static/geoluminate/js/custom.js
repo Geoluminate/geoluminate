@@ -1,45 +1,4 @@
 $(function () {
-  const slideInLeft = 'animate__animated animate__slideInLeft';
-  const slideOutLeft = 'animate__animated animate__slideOutLeft';
-  const $sidebar = $('#sidebar');
-  var sidebarIsOpen = $sidebar.hasClass(slideInLeft);
-  const $nav = $('.navbar');
-
-  function toggleSideBar() {
-    if (sidebarIsOpen) {
-      $sidebar.removeClass(slideInLeft);
-      $sidebar.addClass(slideOutLeft);
-      document.cookie = "sidebarState=closed";
-      return false
-    } else {
-      $sidebar.removeClass(slideOutLeft);
-      $sidebar.addClass(slideInLeft);
-
-      document.cookie = "sidebarState=expanded";
-      return true
-    }
-  }
-
-  $('.sidebar-toggler').on('click', function () {
-    sidebarIsOpen = toggleSideBar()
-  })
-
-
-
-
-  $('.expand').on('click', function () {
-
-    if ($nav.is(":visible")) {
-      $nav.hide();
-      $sidebar.removeClass('expanded')
-    } else {
-      $nav.show();
-      if (sidebarIsOpen) {
-        $sidebar.addClass('expanded')
-      }
-    }
-  })
-
   $('#emailActionsForm').change(function (e) {
     e.preventDefault();
     var form = $(this);

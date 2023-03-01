@@ -8,7 +8,6 @@ from geoluminate.contrib.gis.serializers import FeatureSerializer
 
 class GeoFeatureSerializer(FeatureSerializer):
     class Meta:
-        # model = DATABASE
         geo_field = "geom"
         exclude = ["references", "last_modified"]
 
@@ -25,6 +24,5 @@ class CoreSerializer(serializers.HyperlinkedModelSerializer):
         return obj.geom.coords[0]
 
     class Meta:
-        # model = DATABASE
         datatables_always_serialize = ("id",)
         exclude = ["date_added", "geom"]

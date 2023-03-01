@@ -6,10 +6,6 @@ from django.urls import include, path
 from . import views
 
 urlpatterns = [
-    path("api/", include("geoluminate.contrib.api.urls")),
-]
-
-urlpatterns += [
     path("sitemap.xml", sitemap, {"sitemaps": {"cmspages": CMSSitemap}}),
     path(
         "model-field-select2/",
@@ -26,9 +22,10 @@ urlpatterns += [
     path("institutions/", include("ror.urls")),
     path("invitations/", include("invitations.urls", namespace="invitations")),
     path("literature/", include("geoluminate.contrib.literature.urls")),
-    # path("rosetta/", include("rosetta.urls")),
     path("select2/", include("django_select2.urls")),
+    path("tellme/", include("tellme.urls")),
     path("vocabularies/", include("controlled_vocabulary.urls")),
     path("", include("geoluminate.contrib.user.urls")),
+    path("", include("geoluminate.contrib.gis.urls")),
     path("", include("cms.urls")),
 ]

@@ -5,13 +5,6 @@ from django.db.models import Count
 from django.shortcuts import render
 from django.utils.translation import gettext as _
 
-# from crossref import models as cr_models
-from django_super_deduper.merge import MergedModelInstance
-from grappelli.forms import GrappelliSortableHiddenMixin
-
-# from crossref.admin import WorkAdminMixin, AuthorAdminMixin
-# from .models import Author, Publication
-
 # class PublicationInline(GrappelliSortableHiddenMixin, admin.TabularInline):
 #     model = Publication.author.through
 #     verbose_name = _("publication")
@@ -114,22 +107,3 @@ from grappelli.forms import GrappelliSortableHiddenMixin
 
 #     def publications(self, obj):
 #         return obj.publications.count()
-
-#     def merge(self, request, qs):
-#         to_be_merged = [str(x) for x in qs]
-#         if len(to_be_merged) > 2:
-#             to_be_merged = f"{', '.join(to_be_merged[:-1])} and {to_be_merged[-1]}"
-#         else:
-#             to_be_merged = ' and '.join(to_be_merged)
-#         change_message = f"Merged {to_be_merged} into a single {qs.model._meta.verbose_name}"
-#         merged = MergedModelInstance.create(qs.first(), qs[1:], keep_old=False)
-#         LogEntry.objects.log_action(
-#             user_id=request.user.pk,
-#             content_type_id=ContentType.objects.get_for_model(qs.model).pk,
-#             object_id=qs.first().pk,
-#             object_repr=str(qs.first()),
-#             action_flag=2,  # CHANGE
-#             change_message=_(change_message),
-#         )
-#         self.message_user(request, change_message, messages.SUCCESS)
-#     merge.short_description = _("Merge duplicate authors")

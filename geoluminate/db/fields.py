@@ -1,14 +1,13 @@
+from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models import ForeignKey, ManyToManyField, OneToOneField, Q
 from shortuuid.django_fields import ShortUUIDField
 
-from geoluminate.conf import settings
-
 
 class PIDField(ShortUUIDField):
     def __init__(self, *args, **kwargs):
-        acronym = getattr(settings, "DATABASE_ACRONYM")
+        acronym = getattr(settings, "GEOLUMINATE")["db_acronym"]
 
         kwargs["max_length"] = 16
         kwargs["prefix"] = acronym + "-"

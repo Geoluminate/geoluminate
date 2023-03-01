@@ -32,7 +32,7 @@ class PublicationList(FilterView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.filterset_class:
-            context["parameters"] = get_filter_params(self.request.GET.copy())
+            context["parameters"] = get_filter_params(self.request)
         context["pub_template"] = self.publication_template
         return context
 

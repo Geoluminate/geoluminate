@@ -7,8 +7,6 @@ from django_select2.views import AutoResponseView
 
 from geoluminate.contrib.api.v1.serializers import CoreSerializer
 
-# from geoluminate.utils import DATABASE
-
 
 class FieldSetMixin:
     """Tries to imitate the functionality of viewsets in the django admin."""

@@ -4,7 +4,7 @@ from django import forms
 from django.contrib.postgres.utils import prefix_validation_error
 from django.utils.translation import gettext_lazy as _
 
-from .widgets import DynamicArrayWidget
+from .widgets import ArraySelect2Widget, DynamicArrayWidget
 
 
 class DynamicArrayField(forms.Field):
@@ -17,7 +17,8 @@ class DynamicArrayField(forms.Field):
         self.base_field = base_field
         self.max_length = kwargs.pop("max_length", None)
         self.default = kwargs.pop("default", None)
-        kwargs.setdefault("widget", DynamicArrayWidget)
+        kwargs.setdefault("widget", ArraySelect2Widget)
+        # kwargs.setdefault("widget", DynamicArrayWidget)
         super().__init__(**kwargs)
 
     def clean(self, value):

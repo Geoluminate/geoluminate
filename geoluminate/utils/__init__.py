@@ -1,13 +1,23 @@
 from django.apps import apps
-from django_fake_model import models as f
 
 from geoluminate.conf import settings
 from geoluminate.db.models import Base
+from geoluminate.models import Geoluminate
 
 
 def get_database_models():
-    """Get a list of all models in the project that subclass from `geoluminate.db.models.Base`."""
-    return [m for m in apps.get_models() if issubclass(m, Base)]
+    """Get a list of all models in the project that subclass from :class:`geoluminate.db.models.Base`."""
+    db_models = []
+    for model in apps.get_models():
+        if (
+            not issubclass(model, Base)
+            or model is Geoluminate
+            or getattr(model, "hide_from_api")
+        ):
+            continue
+
+        db_models.append(model)
+    return db_models
 
 
 def get_filter_params(request):
@@ -20,25 +30,5 @@ def get_filter_params(request):
         return ""
 
 
-# def get_core_database():
-#     """Fetches the geoluminate database model defined by `settings.CORE_DATABASE`"""
-#     return getattr(settings, "GEOLUMINATE_DATABASE", None)
-
-
 def get_db_name():
     return getattr(settings, "DATABASE_NAME")
-
-
-# db_string = get_core_database()
-# if db_string:
-#     DATABASE = apps.get_model(get_core_database())
-#     db_name = DATABASE._meta.verbose_name
-# else:
-
-#     class Database(f.FakeModel):
-#         class Meta:
-#             verbose_name = "You need to specify this model in your settings"
-
-#     DATABASE = Database
-#     # DATABASE = None
-#     db_name = "undefined"

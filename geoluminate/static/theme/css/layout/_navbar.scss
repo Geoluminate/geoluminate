@@ -1,25 +1,16 @@
 .navbar {
-    // height: 3rem;
     background-color: _palette(primary-light);
-    // border-bottom: 0 !important;
-
-    // .nav-link {
-    //     border-bottom: 0 !important;
-    // }
-
-    // &.fixed-top {
-    //     height: 45px;
-    // }
 }
 
 #appMenu {
-    // height: 2rem;
     display: flex;
-    align-items: center;
-    background-color: _palette(secondary);
-    border-top: 0.5px solid _palette(fg-light);
-
-    a {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    button, a {
+        background-color: _palette(secondary);
+        margin-left: 0.25rem;
+        margin-right: 0.25rem;
+        font-size: small;
         text-decoration: none;
         border-bottom: none;
         position: relative;

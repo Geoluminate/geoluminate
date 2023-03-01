@@ -12,14 +12,13 @@ from django.views.generic import TemplateView
 from django_select2.views import AutoResponseView
 
 from geoluminate.conf import settings
-
-# from geoluminate.utils import DATABASE
+from geoluminate.utils import get_database_models
 
 
 # @datatables.register
 class DatabaseTableView(DatatablesReadOnlyView):
     template_name = "geoluminate/database_table.html"
-    # model = DATABASE
+    # model = HeatFlow
     read_only = True
     search_fields = ("name",)
     invisible_fields = [
@@ -55,91 +54,53 @@ class GlossaryView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update(
-            models=[
-                self.get_model_context(x)
-                for x in getattr(settings, "GEOLUMINATE_GLOSSARY")
-            ],
+            models=self.get_model_info(),
             exclude=self.exclude_fields,
         )
         return context
 
-    def get_model_context(self, model_name, **kwargs):
-        model = apps.get_model(model_name)
-        opts = model._meta
+    def get_model_info(self):
+        model_info = []
+        for model in get_database_models():
+            opts = model._meta
 
-        title, body, metadata = utils.parse_docstring(model.__doc__)
-        # title = title and utils.parse_rst(
-        #     title, 'model', _('model:') + model_name)
-        # body = body and utils.parse_rst(
-        #     body, 'model', _('model:') + model_name)
+            title, body, metadata = utils.parse_docstring(model.__doc__)
 
-        # Gather fields/field descriptions.
-        fields = []
-        for field in opts.fields:
-            if isinstance(field, models.ForeignKey):
-                data_type = field.remote_field.model.__name__
-            else:
-                data_type = views.get_readable_field_data_type(field)
-            verbose = field.verbose_name
-            choices = None
-            if field.choices:
-                choices = [x[0] for x in field.get_choices()]
-            if data_type == "Choice":
-                choices = field.get_choices_queryset()
+            # Gather fields/field descriptions.
+            fields = []
+            for field in opts.fields:
+                if isinstance(field, models.ForeignKey):
+                    data_type = field.remote_field.model.__name__
+                else:
+                    data_type = views.get_readable_field_data_type(field)
+                choices = None
+                if field.choices:
+                    choices = [x[0] for x in field.get_choices()]
+                if data_type == "Choice":
+                    choices = field.get_choices_queryset()
 
-            fields.append(
+                fields.append((field, data_type, choices or None))
+
+            # Gather many-to-many fields.
+            for field in opts.many_to_many:
+                choices = None
+                if field.choices:
+                    choices = [x[0] for x in field.get_choices()]
+                if data_type == "Choice":
+                    choices = field.get_choices_queryset()
+                fields.append(
+                    (field, field.remote_field.model.__name__, choices or None)
+                )
+
+            model_info.append(
                 {
-                    "name": field.name,
-                    "data_type": data_type,
-                    "verbose": verbose or "",
-                    "help_text": field.help_text,
-                    "choices": choices or None,
+                    "name": opts.verbose_name,
+                    "summary": title,
+                    "description": body,
+                    "fields": sorted(fields, key=lambda x: x[0].name),
                 }
             )
-
-        # Gather many-to-many fields.
-        for field in opts.many_to_many:
-            choices = None
-            if field.choices:
-                choices = [x[0] for x in field.get_choices()]
-            if data_type == "Choice":
-                choices = field.get_choices_queryset()
-            fields.append(
-                {
-                    "name": field.name,
-                    "data_type": field.remote_field.model.__name__,
-                    "verbose": field.verbose_name,
-                    "help_text": field.help_text,
-                    "choices": choices or None,
-                }
-            )
-
-        # Gather related objects
-        # for rel in opts.related_objects:
-        #     verbose = _("related `%(app_label)s.%(object_name)s` objects") % {
-        #         'app_label': rel.related_model._meta.app_label,
-        #         'object_name': rel.related_model._meta.object_name,
-        #     }
-        #     accessor = rel.get_accessor_name()
-        #     fields.append({
-        #         'name': accessor,
-        #         # 'data_type': field.remote_field.model.__name__,
-        #         'data_type': None,
-        #         'verbose': None,
-        #         # 'help_text': field.help_text,
-        #         'choices': None,
-        #     })
-        #     # accessor = rel.get_accessor_name()
-
-        return super().get_context_data(
-            **{
-                **kwargs,
-                "name": opts.verbose_name,
-                "summary": title,
-                "description": body,
-                "fields": fields,
-            }
-        )
+        return model_info
 
 
 class ModelFieldSelect2View(AutoResponseView):

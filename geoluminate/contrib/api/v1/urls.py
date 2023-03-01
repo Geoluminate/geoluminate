@@ -1,15 +1,12 @@
 from django.urls import include, path
+from drf_auto_endpoint.router import router
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework import routers
 
-from geoluminate.utils.api import get_api_routers
+from geoluminate.utils import get_database_models
 
-router = routers.DefaultRouter()
-
-urls = []
-# for r in get_api_routers():
-# urls.append(path("", include(r.urls)))
-#     router.registry.extend(r.registry)
+for model in get_database_models():
+    router.register(model)
 
 urlpatterns = [
     path(
@@ -19,7 +16,7 @@ urlpatterns = [
         ),
         name="swagger-ui",
     ),
-    # path("", include(urls)),
+    path("", include(router.urls)),
     path("schema/", SpectacularAPIView.as_view(), name="schema"),
     path("auth/", include("rest_framework.urls", namespace="rest_framework")),
 ]

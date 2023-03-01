@@ -12,6 +12,20 @@ from geoluminate.core.forms.fields import DynamicArrayField
 from geoluminate.models import GlobalConfiguration
 
 
+class GeoluminateAdminMixin:
+    def has_add_permission(self, request):
+        return super().has_add_permission(request) or request.user.is_db_admin()
+
+    def has_change_permission(self, request, obj=None):
+        return super().has_add_permission(request, obj) or request.user.is_db_admin()
+
+    def has_view_permission(self, request, obj=None):
+        return super().has_add_permission(request, obj) or request.user.is_db_admin()
+
+    def has_delete_permission(self, request, obj=None):
+        return super().has_add_permission(request, obj) or request.user.is_db_admin()
+
+
 class SiteInline(admin.StackedInline):
     model = Site
     can_delete = False
@@ -21,7 +35,6 @@ class SiteInline(admin.StackedInline):
 class ConfigurationAdmin(FrontendEditableAdminMixin, SingletonModelAdmin):
     frontend_editable_fields = ("logo", "icon")
     fieldsets = (
-        # (_("Site"), {"classes": ("placeholder form-group",), "fields": ()}),
         (
             _("Site"),
             {"fields": ("site", "lockdown_enabled", "custodian")},

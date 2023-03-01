@@ -1,7 +1,7 @@
 from multiprocessing.sharedctypes import Value
 
 from controlled_vocabulary.models import ControlledVocabulary
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 from import_export.widgets import ForeignKeyWidget, ManyToManyWidget
 
 

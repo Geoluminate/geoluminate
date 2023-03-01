@@ -2,7 +2,7 @@ $(function () {
   map.fitWorld();
 })
 
-const offCanvasRight = new bootstrap.Offcanvas($('#offcanvasright'))
+// const offCanvasRight = new bootstrap.Offcanvas($('#offcanvasright'))
 
 var baseLayers = {
   "Dark Gray": L.esri.basemapLayer('DarkGray', {
@@ -73,9 +73,9 @@ geojson.on('data:loaded', function () {
   } else {
     clusters.addLayer(this);
   }
-
   $('#mainIndicator').css('opacity', '0');
 })
+
 
 function onEachFeature(feature, layer) {
   // attaches a click handler to each layer that will fetch the popup content

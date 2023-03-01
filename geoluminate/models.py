@@ -82,8 +82,9 @@ class GlobalConfiguration(SingletonModel):
 
 
 # imports the abstract base class specified in the settings
-Base = import_string(getattr(settings, "BASE_MODEL"))
+Base = import_string(getattr(settings, "GEOLUMINATE")["base_model"])
 
 
 class Geoluminate(Base):
+    hide_from_api = False
     pass

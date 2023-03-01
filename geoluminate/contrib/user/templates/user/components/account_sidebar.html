@@ -1,0 +1,19 @@
+{% extends 'geoluminate/components/sidebar.html' %}
+{% load i18n crispy_forms_tags sekizai_tags %}
+{% block title %}
+ {% trans "Contents:" %}
+{% endblock title %}
+{% block body %}
+ <ul class='alt nav flex-column'
+     id="myTab"
+     role="tablist"
+     hx-target="#dashboardContainer">
+  {% for label, template, form in forms %}
+   <li>
+    <a href="#{{ label|slugify }}">
+     <span class='ps-2'>{{ label|capfirst }}</span>
+    </a>
+   </li>
+  {% endfor %}
+ </ul>
+{% endblock body %}

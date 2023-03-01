@@ -1,149 +1,195 @@
 {% extends "base.html" %}
 {% load geoluminate static sekizai_tags i18n %}
-
-{% block head_title %}{% trans "Literature" %} - {{publication.title}}{% endblock head_title %}
-{% block nav_title_bold %}{% trans "Literature" %}{% endblock %}
-{% block nav_title %}{{publication.title}}{% endblock nav_title %}
-
+{% block head_title %}
+  {% trans "Literature" %} - {{ publication.title }}
+{% endblock head_title %}
+{% block nav_title_bold %}
+  {% trans "Literature" %}
+{% endblock %}
+{% block nav_title %}
+  {{ publication.title }}
+{% endblock nav_title %}
 {% block head %}
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
-<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css"/>
-<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css"/>
+  <link rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossorigin=""/>
+  <link rel="stylesheet"
+        href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css"/>
+  <link rel="stylesheet"
+        href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css"/>
 {% endblock head %}
-
 {% block app_menu %}
-<div id='appMenu' class="container-fluid">
-  <ul class='nav w-100' id="myTab" role="tablist">
-    <li><a href class="icon fa-book active"
-          data-bs-toggle="modal" data-bs-target="#exampleModal"
-          type="button" 
-          role="tab" 
-          aria-controls="{{ item.title }}Content" 
-          aria-selected="{% if item.selected %}true{% else %}false{% endif %}">
+  <div id='appMenu' class="container-fluid">
+    <ul class='nav w-100' id="myTab" role="tablist">
+      <li>
+        <a href
+           class="icon fa-book active"
+           data-bs-toggle="modal"
+           data-bs-target="#exampleModal"
+           type="button"
+           role="tab"
+           aria-controls="{{ item.title }}Content"
+           aria-selected="{% if item.selected %}true{% else %}false{% endif %}">
           <span>About</span>
-    </a></li><div class="vr mx-2"></div>
-
-    <li><a href class="icon fa-th-list"
-        hx-get="{% url 'literature:data' pk=object.pk %}"
-        id='dataPanelToggle'
-        hx-target='#dataPanel .offcanvas-body'
-        hx-trigger='click once'
-        data-bs-toggle="offcanvas" 
-        data-bs-target="#dataPanel"
-        type="button">
-        <span>Data</span>
-    </a></li><div class="vr mx-2"></div>
-
-    <li><a href class="icon fa-chart-area"
-      hx-get="{% url 'literature:data' pk=object.pk %}"
-      id='vizPanelToggle'
-      hx-target='#vizPanel .offcanvas-body'
-      hx-trigger='click once'
-      data-bs-toggle="offcanvas" 
-      data-bs-target="#vizPanel"
-      type="button"
-      ><span>Visualise</span>
-    </a></li><div class="vr mx-2"></div>
-
-    <li><a href class="icon fa-network-wired"
-      data-bs-toggle="offcanvas" 
-      data-bs-target="#exampleModal">
-      <span>Related</span>
-    </a></li><div class="vr mx-2"></div>
-
-    <li><a href class="icon fa-comments"
-      hx-get="{% url 'literature:discussion' pk=object.pk %}"
-      hx-target='#offcanvasright .offcanvas-inner'   
-      data-bs-toggle="offcanvas" 
-      data-bs-target="#offcanvasright"
-      role="button" aria-controls="offcanvasright" 
-      ><span>{% trans "Discussion" %}</span>
-      </a></li><div class="vr mx-2"></div>
-
-    <li class='ms-auto'>
-      <a class="icon fa-expand expand" type="button" data-target='#outer'></a>
-    </li>
-  </ul>
-</div>
+        </a>
+      </li>
+      <div class="vr mx-2"></div>
+      <li>
+        <a href
+           class="icon fa-th-list"
+           hx-get="{% url 'literature:data' pk=object.pk %}"
+           id='dataPanelToggle'
+           hx-target='#dataPanel .offcanvas-body'
+           hx-trigger='click once'
+           data-bs-toggle="offcanvas"
+           data-bs-target="#dataPanel"
+           type="button">
+          <span>Data</span>
+        </a>
+      </li>
+      <div class="vr mx-2"></div>
+      <li>
+        <a href
+           class="icon fa-chart-area"
+           hx-get="{% url 'literature:data' pk=object.pk %}"
+           id='vizPanelToggle'
+           hx-target='#vizPanel .offcanvas-body'
+           hx-trigger='click once'
+           data-bs-toggle="offcanvas"
+           data-bs-target="#vizPanel"
+           type="button"><span>Visualise</span>
+        </a>
+      </li>
+      <div class="vr mx-2"></div>
+      <li>
+        <a href
+           class="icon fa-network-wired"
+           data-bs-toggle="offcanvas"
+           data-bs-target="#exampleModal">
+          <span>Related</span>
+        </a>
+      </li>
+      <div class="vr mx-2"></div>
+      <li>
+        <a href
+           class="icon fa-comments"
+           hx-get="{% url 'literature:discussion' pk=object.pk %}"
+           hx-target='#offcanvasright .offcanvas-inner'
+           data-bs-toggle="offcanvas"
+           data-bs-target="#offcanvasright"
+           role="button"
+           aria-controls="offcanvasright"><span>{% trans "Discussion" %}</span>
+        </a>
+      </li>
+      <div class="vr mx-2"></div>
+      <li class='ms-auto'>
+        <a class="icon fa-expand expand" type="button" data-target='#outer'></a>
+      </li>
+    </ul>
+  </div>
 {% endblock app_menu %}
-
-
 {% block content %}
-<div id="tabbedContent" class="tab-content fill">
-  <div id='map'
-      url="{% url "literature-data-list" lit_pk=object.pk%}"
-      data-format='geojson'
-      class="{{css_class}}">
-    <div id='shadow'></div>
-  </div>
-</div>
-
-
-
-<div class="offcanvas offcanvas-bottom position-absolute h-100" data-bs-backdrop="false" tabindex="-1" id="dataPanel" aria-labelledby="offcanvasLabel">
-  <div class='offcanvas-inner'>
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title">Data</h5>
-      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  <div id="tabbedContent" class="tab-content fill">
+    <div id='map'
+         url="{% url "literature-data-list" lit_pk=object.pk %}"
+         data-format='geojson'
+         class="{{ css_class }}">
+      <div id='shadow'></div>
     </div>
-
-    <div class="offcanvas-body"></div>
   </div>
-  <img id='offcanvasRightIndicator' class="htmx-indicator" src="{% static "geoluminate/spinners/spinning-circles.svg" %}"/>
-</div>
-
-<div class="offcanvas offcanvas-bottom position-absolute h-100" data-bs-backdrop="false" tabindex="-1" id="vizPanel" aria-labelledby="offcanvasLabel">
-  <div class='offcanvas-inner'>
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title">Visualise</h5>
-      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body"></div>
-  </div>
-  <img id='offcanvasRightIndicator' class="htmx-indicator" src="{% static "geoluminate/spinners/spinning-circles.svg" %}"/>
-</div>
-
-
-
-
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasright" aria-labelledby="offcanvasLabel">
-  <div class='offcanvas-inner'>
-    <img src="https://via.placeholder.com/400x200?text=This+is+a+placeholder!" class="card-img-top">
-    <div class='position-absolute w-100'>
+  <div class="offcanvas offcanvas-bottom position-absolute h-100"
+       data-bs-backdrop="false"
+       tabindex="-1"
+       id="dataPanel"
+       aria-labelledby="offcanvasLabel">
+    <div class='offcanvas-inner'>
       <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasLabel">Offcanvas</h5>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <h5 class="offcanvas-title">Data</h5>
+        <button type="button"
+                class="btn-close text-reset"
+                data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body"></div>
+    </div>
+    <img id='offcanvasRightIndicator'
+         class="htmx-indicator"
+         src="{% static "geoluminate/img/spinners/spinning-circles.svg" %}"/>
+  </div>
+  <div class="offcanvas offcanvas-bottom position-absolute h-100"
+       data-bs-backdrop="false"
+       tabindex="-1"
+       id="vizPanel"
+       aria-labelledby="offcanvasLabel">
+    <div class='offcanvas-inner'>
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Visualise</h5>
+        <button type="button"
+                class="btn-close text-reset"
+                data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body"></div>
+    </div>
+    <img id='offcanvasRightIndicator'
+         class="htmx-indicator"
+         src="{% static "geoluminate/img/spinners/spinning-circles.svg" %}"/>
+  </div>
+  <div class="offcanvas offcanvas-end"
+       tabindex="-1"
+       id="offcanvasright"
+       aria-labelledby="offcanvasLabel">
+    <div class='offcanvas-inner'>
+      <img src="https://via.placeholder.com/400x200?text=This+is+a+placeholder!"
+           class="card-img-top">
+      <div class='position-absolute w-100'>
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasLabel">Offcanvas</h5>
+          <button type="button"
+                  class="btn-close text-reset"
+                  data-bs-dismiss="offcanvas"
+                  aria-label="Close"></button>
+        </div>
+      </div>
+      <div class="offcanvas-body"></div>
+    </div>
+    <img id='offcanvasRightIndicator'
+         class="htmx-indicator"
+         src="{% static "geoluminate/img/spinners/spinning-circles.svg" %}"/>
+  </div>
+  <div class="modal fade position-absolute"
+       id="exampleModal"
+       tabindex="-1"
+       aria-labelledby="exampleModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+      <div class="modal-content">
+        <button type="button"
+                class="btn-close float-end"
+                data-bs-dismiss="modal"
+                aria-label="Close"></button>
+        <div class="modal-body">{% include 'literature/hx/about.html' %}</div>
       </div>
     </div>
-    <div class="offcanvas-body"></div>
   </div>
-  <img id='offcanvasRightIndicator' class="htmx-indicator" src="{% static "geoluminate/spinners/spinning-circles.svg" %}"/>
-</div>
-
-<div class="modal fade position-absolute" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
-    <div class="modal-content">
-      <button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button>
-      <div class="modal-body">
-        {% include 'literature/hx/about.html' %}
-      </div>
-    </div>
-  </div>
-</div>
-
-
-{% addtoblock 'js' %}<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>{% endaddtoblock "js" %}
-{% addtoblock 'js' %}<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.min.js"></script>{% endaddtoblock "js" %}
-{% addtoblock 'js' %}<script src='https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js'></script>{% endaddtoblock "js" %}
-{% addtoblock 'js' %}<script src="https://unpkg.com/esri-leaflet@2.5.0/dist/esri-leaflet.js" integrity="sha512-ucw7Grpc+iEQZa711gcjgMBnmd9qju1CICsRaryvX7HJklK0pGl/prxKvtHwpgm5ZHdvAil7YPxI1oWPOWK3UQ==" crossorigin=""></script>{% endaddtoblock "js" %}
-
-<script>const CLUSTER = false;</script>
-{% addtoblock 'js' %}<script src="{% static 'mapping/js/map.js' %}"></script>{% endaddtoblock "js" %}
-
-
-
-{% addtoblock 'js' %}
-<script>
+  {% addtoblock 'js' %}
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+            integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+            crossorigin=""></script>{% endaddtoblock "js" %}
+    {% addtoblock 'js' %}
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.min.js"></script>{% endaddtoblock "js" %}
+      {% addtoblock 'js' %}
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js'></script>{% endaddtoblock "js" %}
+        {% addtoblock 'js' %}
+          <script src="https://unpkg.com/esri-leaflet@2.5.0/dist/esri-leaflet.js"
+                  integrity="sha512-ucw7Grpc+iEQZa711gcjgMBnmd9qju1CICsRaryvX7HJklK0pGl/prxKvtHwpgm5ZHdvAil7YPxI1oWPOWK3UQ=="
+                  crossorigin=""></script>{% endaddtoblock "js" %}
+          <script>const CLUSTER = false;</script>
+          {% addtoblock 'js' %}
+            <script src="{% static 'mapping/js/map.js' %}"></script>{% endaddtoblock "js" %}
+            {% addtoblock 'js' %}
+              <script>
   $(function () {
    
    $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {  
@@ -155,10 +201,6 @@
    })
 
   })
-</script>
-{% endaddtoblock "js" %}
-{% endblock content %}
-
-
-
-
+              </script>
+            {% endaddtoblock "js" %}
+          {% endblock content %}

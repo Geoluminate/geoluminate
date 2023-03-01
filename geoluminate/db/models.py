@@ -6,7 +6,6 @@ from meta.models import ModelMeta
 from model_utils import FieldTracker
 from model_utils.models import TimeStampedModel
 from polymorphic.models import PolymorphicModel
-from shortuuid.django_fields import ShortUUIDField
 from simple_history.models import HistoricalRecords
 
 from geoluminate.db.fields import PIDField
@@ -43,3 +42,18 @@ class Base(ModelMeta, PolymorphicModel, TimeStampedModel):
 
     class Meta:
         abstract = True
+        permissions = [
+            (
+                "geoluminate_database_admin",
+                _(
+                    "Can create, view, update or delete any model associated with the research database"
+                ),
+            ),
+        ]
+
+
+# class Sample(Base):
+#     pass
+
+#     class Meta:
+#         abstract = True

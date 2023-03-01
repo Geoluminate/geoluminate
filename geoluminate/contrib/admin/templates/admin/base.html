@@ -387,7 +387,7 @@
         {% endblock %}
       </div>
       {% block footer %}
-        {% if not is_popup %}
+        {% if is_popup is False %}
           <footer class="main-footer d-flex justify-content-between align-items-center {{ jazzmin_ui.footer_classes }}">
             {% autoescape off %}
               <strong>{% trans 'Copyright' %} &copy; {% now 'Y' %} {{ jazzmin_settings.copyright }}.</strong> {% trans 'All rights reserved.' %}
@@ -449,11 +449,7 @@
     {% endif %}
     {% if jazzmin_settings.show_ui_builder %}
       <script>
-        window.ui_changes = {
-            {
-                jazzmin_ui.raw | as_json | safe
-            }
-        };
+        window.ui_changes = {{ jazzmin_ui.raw|as_json|safe }};
       </script>
       <script src="{% static "jazzmin/js/ui-builder.js" %}"></script>
     {% endif %}

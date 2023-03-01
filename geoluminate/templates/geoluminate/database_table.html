@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 {% load static sekizai_tags i18n %}
-{% block head_title %}{% trans "Database" %}{% endblock head_title %}
+{% block head_title %}
+  {% trans "Database" %}
+{% endblock head_title %}
 {% block content %}
-{% include 'datatables/includes/table.html' %}
-
-{% addtoblock "js" %}
-<script>
+  {% include 'datatables/includes/table.html' %}
+  {% addtoblock "js" %}
+    <script>
 
 
   $('table').on('click', "a .fa-binoculars", function ( e ) {
@@ -19,22 +20,28 @@
       $('#offcanvasRightIndicator').css('opacity', '0')
     })
   })
-</script>{% endaddtoblock %}
-
-
+    </script>
+  {% endaddtoblock %}
 {% endblock content %}
-
-
 {% block modals %}
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasright" aria-labelledby="offcanvasLabel">
-  <img src="https://via.placeholder.com/400x200?text=This+is+a+placeholder!" class="card-img-top">
-  <div class='position-absolute w-100'>
-  <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="offcanvasLabel">Offcanvas</h5>
-    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  <div class="offcanvas offcanvas-end"
+       tabindex="-1"
+       id="offcanvasright"
+       aria-labelledby="offcanvasLabel">
+    <img src="https://via.placeholder.com/400x200?text=This+is+a+placeholder!"
+         class="card-img-top">
+    <div class='position-absolute w-100'>
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasLabel">Offcanvas</h5>
+        <button type="button"
+                class="btn-close text-reset"
+                data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+      </div>
+    </div>
+    <div class="offcanvas-body"></div>
+    <img id='offcanvasRightIndicator'
+         class="htmx-indicator"
+         src="{% static "geoluminate/img/spinners/spinning-circles.svg" %}"/>
   </div>
-</div>
-  <div class="offcanvas-body"></div>
-  <img id='offcanvasRightIndicator' class="htmx-indicator" src="{% static "geoluminate/spinners/spinning-circles.svg" %}"/>
-</div>
 {% endblock modals %}

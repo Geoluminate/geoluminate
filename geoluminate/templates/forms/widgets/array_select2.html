@@ -1,0 +1,9 @@
+{% load static i18n %}
+<select name="{{ widget.name }}"
+        {% include "django/forms/widgets/attrs.html" %}>
+    {% for val in widget.value %}
+        <option value="{{ val }}" selected>
+            {{ val }}
+        </option>
+    {% endfor %}
+</select>

@@ -9,7 +9,7 @@
 	input[type="submit"],
 	input[type="reset"],
 	input[type="button"],
-	button,
+	// button,
 	.button {
 		@include vendor('appearance', 'none');
 		@include vendor('transition', (

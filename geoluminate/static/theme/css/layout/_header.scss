@@ -1,6 +1,6 @@
 	header, .header {
 		@include vendor('display', 'flex');
-		border-bottom: solid 5px _palette(primary);
+		border-bottom: solid 5px shift-color($primary,-50%);
 		padding-bottom: 0.5rem;
 		margin-bottom: 2em;
 		position: relative;

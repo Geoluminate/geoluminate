@@ -1,7 +1,15 @@
 {% load menu_tags thumbnail cms_tags geoluminate sekizai_tags %}
-
-<div id="sidebar"  class="card border-0 bg-light rounded-0 w-25 {{ request.COOKIES.sidebarState }}" tabindex="-1" aria-labelledby="offcanvasLabel">
-  <div class="card-body">
+<nav id="mainSidebar" class="sidebar sidebar-start" tabindex="-1">
+  <div class="sidebar-header">
+    <button type="button"
+            class="btn btn-sm btn-light border"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+            onclick="$('#mainSidebar').toggleClass('show')">
+      <span class="fas fa-caret-left text-muted"></span>
+    </button>
+  </div>
+  <div class="sidebar-body">
     <nav id="menu" class='sidebar-menu' hx-target='#main'>
       <ul>
         {% include 'theme/menu/toolbar.html' %}
@@ -9,30 +17,14 @@
     </nav>
   </div>
   <div class='footer'></div>
+</nav>
+<div id="mainSidebarOpener" class="d-flex opacity-25">
+  <button class="btn sidebar-toggler d-flex"
+          type="button"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+          onclick="$('#mainSidebar').toggleClass('show');">
+    <span class="btn btn-sm fas fa-caret-right mt-1" aria-hidden="true"></span>
+  </button>
 </div>
-
-{% comment %} <script>
-  $(function () {
-   
-   $('#sidebar-toggle').on('click', function (e) {  
-
-       $($(e.target).data('bsTarget')).removeClass('animate__animated animate__slideOutDown');
-       $($(e.target).data('bsTarget')).addClass('animate__animated animate__slideInDown');
-       $($(e.relatedTarget).data('bsTarget')).addClass('animate__animated animate__slideOutDown');
-       $($(e.relatedTarget).data('bsTarget')).removeClass('animate__animated animate__slideInDown');
-   })
-
-  })
-</script> {% endcomment %}
-
-
-{% comment %} <div id="application-sidebar" class="{{ request.COOKIES.sidebarState }}">
-  <div class="inner">
-    <nav id="menu" class='sidebar-menu' hx-target='#main'>
-      <ul>
-        {% include 'theme/menu/toolbar.html' %}
-      </ul>
-    </nav>
-  </div>
-  <div class='footer'></div>
-</div> {% endcomment %}

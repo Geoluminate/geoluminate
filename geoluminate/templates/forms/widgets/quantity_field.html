@@ -1,0 +1,32 @@
+{% load geoluminate %}
+{% spaceless %}
+ {% with widget as superwidget %}
+  <div class='input-group'>
+   {% with superwidget.subwidgets.0 as widget %}
+    <input type="{{ widget.type }}"
+           name="{{ widget.name }}"
+           class="form-control"
+           {% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %}
+           {% include "django/forms/widgets/attrs.html" %}>
+   {% endwith %}
+   {% with superwidget.subwidgets.1 as widget %}
+    <select name="{{ widget.name }}"
+            class="form-control"
+            style='width:fit-content'
+            disabled
+            {% include "django/forms/widgets/attrs.html" %}>
+     {% for group_name, group_choices, group_index in widget.optgroups %}
+      {% if group_name %}<optgroup label="{{ group_name }}">{% endif %}
+      {% for option in group_choices %}
+       <option value="{{ option.value|stringformat:'s' }}"
+               {% include "django/forms/widgets/attrs.html" %}>
+        {{ option.label|unit|safe }}
+       </option>
+      {% endfor %}
+      {% if group_name %}</optgroup>{% endif %}
+     {% endfor %}
+    </select>
+   {% endwith %}
+  </div>
+ {% endwith %}
+{% endspaceless %}

@@ -1,0 +1,21 @@
+<!-- RIGHT SIDEBAR -->
+<div id='rightSidebar' class="sidebar sidebar-end show">
+ <div class="sidebar-header">
+  {% block header %}
+   <h5 class="sidebar-title">
+    {% block title %}
+    {% endblock title %}
+   </h5>
+   <button type="button"
+           class="btn-close text-reset"
+           data-bs-dismiss="offcanvas"
+           aria-label="Close"
+           onclick="$('#rightSidebar').toggleClass('show')">
+   </button>
+  {% endblock header %}
+ </div>
+ <div class="sidebar-body" data-select2-id="5">
+  {% block body %}
+  {% endblock body %}
+ </div>
+</div>

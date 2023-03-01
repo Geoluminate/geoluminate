@@ -9,7 +9,6 @@ from django.utils.translation import gettext as _
 from simple_history.admin import SimpleHistoryAdmin
 
 from geoluminate.contrib.literature.models import Publication
-from geoluminate.utils import DATABASE
 
 
 class BaseAdmin(admin.OSMGeoAdmin, SimpleHistoryAdmin):
@@ -54,21 +53,21 @@ class DownloadMixin:
             if key == "intervals" and qs.exists():
                 # create a csv file and save it to the zip object
                 zf.writestr(f"{key}.csv", qs.values_list().to_csv_buffer())
-                sites = DATABASE.objects.filter(**{f"{key}__in": qs})
+                # sites = DATABASE.objects.filter(**{f"{key}__in": qs})
             elif qs.exists():
                 # create a csv file and save it to the zip object
                 zf.writestr(f"{key}.csv", qs.explode_values().to_csv_buffer())
-                sites = DATABASE.objects.filter(**{f"{key}_logs__in": qs})
+                # sites = DATABASE.objects.filter(**{f"{key}_logs__in": qs})
 
-            references = (
-                references | Publication.objects.filter(sites__in=sites).distinct()
-            )
+            # references = (
+            #     references | Publication.objects.filter(sites__in=sites).distinct()
+            # )
 
         # write references to .bib file
-        if references:
-            zf.writestr(
-                f"{self.get_object()}.bib", self.references_to_bibtex(references)
-            )
+        # if references:
+        #     zf.writestr(
+        #         f"{self.get_object()}.bib", self.references_to_bibtex(references)
+        #     )
 
         return response
 

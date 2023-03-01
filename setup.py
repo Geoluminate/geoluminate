@@ -57,7 +57,12 @@ setup(
         "geoluminate",
     ],
     include_package_data=True,
-    install_requires=requirements,
+    install_requires=requirements
+    + [
+        "django-laboratory @ git+https://github.com/SSJenny90/django-laboratory",
+        "django-literature @ git+https://github.com/SSJenny90/django-literature",
+        "django-ror @ git+https://github.com/SSJenny90/django-ror",
+    ],
     license="MIT",
     zip_safe=False,
     keywords="geoluminate",

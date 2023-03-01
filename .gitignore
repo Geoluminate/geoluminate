@@ -64,3 +64,4 @@ data
 **/migrations/*
 !**/migrations/__init__.py
 original_theme_files
+locale/*

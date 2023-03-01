@@ -38,7 +38,6 @@ djangorestframework-gis = "*"
 django-fake-model = "*"
 drf-nested-routers = "*"
 django-rosetta = "*"
-django = ">3.2"
 drf-schema-adapter = "*"
 pint = "*"
 uncertainties = "*"
@@ -54,6 +53,8 @@ django-jazzmin = "*"
 django-import-export = "*"
 django-nested-admin = "*"
 django-better-admin-arrayfield = "*"
+django = {extras = ["argon2"], version = "*"}
+django-tellme = "*"
 
 [dev-packages]
 cookiecutter = "*"
@@ -72,8 +73,15 @@ django-extensions = "*"
 tldextract = "*"
 tqdm = "*"
 django-taggit = "*"
-django-tellme = "*"
+
 djlint = "*"
+invoke = "*"
+sphinx-copybutton = "*"
+sphinxext-opengraph = "*"
+sphinx-nested-apidoc = "*"
+sphinx-book-theme = "*"
+myst-parser = "*"
+pip-licenses = "*"
 
 [requires]
 python_version = "3.9"

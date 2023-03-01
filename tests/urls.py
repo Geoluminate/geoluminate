@@ -12,12 +12,6 @@ actions.add_to_site(site)
 
 
 urlpatterns = [
-    path("", include("geoluminate.contrib.gis.urls")),
-    path("admin/doc/", include("django.contrib.admindocs.urls")),
-    path("admin/translate/", include("jazzmin_translate.urls")),
-    path("tellme/", include("tellme.urls")),
-    path("plate/", include("django_spaghetti.urls")),
-    path("adminactions/", include("adminactions.urls")),
     path("", include("geoluminate.urls")),
 ]
 

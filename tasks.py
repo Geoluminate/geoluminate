@@ -9,7 +9,7 @@ def open_browser(path):
         from urllib import pathname2url
     except:
         from urllib.request import pathname2url
-    webbrowser.open("file://" + pathname2url(os.path.abspath(path)))
+    webbrowser.open("file://wsl%24/Ubuntu-20.04" + pathname2url(os.path.abspath(path)))
 
 
 @task
@@ -53,7 +53,7 @@ def docs(c):
     c.run("sphinx-apidoc -o docs/ geoluminate")
 
     c.run("sphinx-build -E -b html docs docs/_build")
-    open_browser(path='docs/_build/html/index.html')
+    # open_browser(path="docs/_build/html/index.html")
 
 
 @task
@@ -89,21 +89,26 @@ def lint(c):
     c.run("flake8 geoluminate tests")
 
 
-@task(help={'bumpsize': 'Bump either for a "feature" or "breaking" change'})
-def release(c, bumpsize=''):
+@task(help={"bumpsize": 'Bump either for a "feature" or "breaking" change'})
+def release(c, bumpsize=""):
     """
     Package and upload a release
     """
     clean(c)
     if bumpsize:
-        bumpsize = '--' + bumpsize
+        bumpsize = "--" + bumpsize
 
     c.run("bumpversion {bump} --no-input".format(bump=bumpsize))
 
     import geoluminate
+
     c.run("python setup.py sdist bdist_wheel")
     c.run("twine upload dist/*")
 
-    c.run('git tag -a {version} -m "New version: {version}"'.format(version=geoluminate.__version__))
+    c.run(
+        'git tag -a {version} -m "New version: {version}"'.format(
+            version=geoluminate.__version__
+        )
+    )
     c.run("git push --tags")
     c.run("git push origin master")

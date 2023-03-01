@@ -2,8 +2,8 @@
 Django settings for example project.
 
 """
-from geoluminate.conf import geoluminate_setup
-from geoluminate.conf.global_settings import *
+from geoluminate.conf import auto_setup
+from geoluminate.conf.local_defaults import *
 
 SECRET_KEY = "g8ktwj_nj0s*h54*$rfmg19rdzi@cam5xh!wfh&g9#bvnfhcos"
 
@@ -26,18 +26,9 @@ GOVERNING_BODY = "International Heat Flow Commission"
 GOVERNING_BODY_ACRONYM = "IHFC"
 GOVERNING_BODY_WEBSITE = "ihfc.org"
 
-INSTALLED_APPS = [
-    "adminactions",
-] + INSTALLED_APPS
+INSTALLED_APPS = [] + INSTALLED_APPS
 
-
-INSTALLED_APPS += [
-    "tellme",
-    "django_spaghetti",
-    "jazzmin_translate",
-    "import_export",
-    "django_better_admin_arrayfield",
-]
+INSTALLED_APPS += []
 
 SPAGHETTI_SAUCE = {
     "apps": ["filer", "user", "account", "socialaccount", "ror"],
@@ -45,4 +36,4 @@ SPAGHETTI_SAUCE = {
     # "exclude": {"auth": ["user"]},
 }
 
-geoluminate_setup(globals())
+auto_setup(globals())

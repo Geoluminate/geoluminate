@@ -57,6 +57,10 @@ django-ror = {git = "https://github.com/SSJenny90/django-ror"}
 django-debug-toolbar-template-profiler = "*"
 django-debug-toolbar = "*"
 djangorestframework-datatables-editor = "*"
+sentry-sdk = {extras = ["django"], version = "*"}
+django-environ = "*"
+django-compressor = "*"
+django-libsass = "*"
 
 [dev-packages]
 cookiecutter = "*"

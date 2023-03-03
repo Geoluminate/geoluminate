@@ -1,10 +1,11 @@
 from django.utils.html import mark_safe
 from import_export.resources import ModelResource
-from tqdm import tqdm
 
 from geoluminate.db.fields import ControlledVocabularyBase
 
 from .widgets import VocabularyM2MWidget, VocabularyWidget
+
+# from tqdm import tqdm
 
 
 class ResourceMixin(ModelResource):
@@ -42,7 +43,8 @@ class ResourceMixin(ModelResource):
         return field
 
     def before_import(self, dataset, using_transactions, dry_run, **kwargs):
-        self.pbar = tqdm(total=len(dataset))
+        pass
+        # self.pbar = tqdm(total=len(dataset))
 
     def after_import_row(self, row, row_result, **kwargs):
         self.pbar.update(1)

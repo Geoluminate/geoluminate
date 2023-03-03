@@ -62,6 +62,7 @@ setup(
         "django-laboratory @ git+https://github.com/SSJenny90/django-laboratory",
         "django-literature @ git+https://github.com/SSJenny90/django-literature",
         "django-ror @ git+https://github.com/SSJenny90/django-ror",
+        "django-tellme @git+https://github.com/ludrao/django-tellme",
     ],
     license="MIT",
     zip_safe=False,

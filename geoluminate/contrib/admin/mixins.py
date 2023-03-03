@@ -6,12 +6,13 @@ from django.contrib.gis import admin
 from django.http import HttpResponse
 from django.utils.html import mark_safe
 from django.utils.translation import gettext as _
-from simple_history.admin import SimpleHistoryAdmin
 
 from geoluminate.contrib.literature.models import Publication
 
+# from simple_history.admin import SimpleHistoryAdmin
 
-class BaseAdmin(admin.OSMGeoAdmin, SimpleHistoryAdmin):
+
+class BaseAdmin(admin.OSMGeoAdmin):
     def name(self, obj):
         return obj._name
 

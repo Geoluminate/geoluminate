@@ -50,7 +50,6 @@ django-import-export = "*"
 django-nested-admin = "*"
 django-better-admin-arrayfield = "*"
 django = {extras = ["argon2"], version = "*"}
-django-tellme = "*"
 django-literature = {git = "https://github.com/SSJenny90/django-literature"}
 django-laboratory = {git = "https://github.com/SSJenny90/django-laboratory"}
 django-ror = {git = "https://github.com/SSJenny90/django-ror"}
@@ -61,6 +60,9 @@ sentry-sdk = {extras = ["django"], version = "*"}
 django-environ = "*"
 django-compressor = "*"
 django-libsass = "*"
+django-cors-headers = "*"
+tldextract = "*"
+django-pint = "*"
 
 [dev-packages]
 cookiecutter = "*"
@@ -71,7 +73,6 @@ sphinx = "*"
 coverage = "*"
 json-schema = "*"
 django-extensions = "*"
-tldextract = "*"
 tqdm = "*"
 djlint = "*"
 invoke = "*"

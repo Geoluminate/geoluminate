@@ -6,9 +6,10 @@ from meta.models import ModelMeta
 from model_utils import FieldTracker
 from model_utils.models import TimeStampedModel
 from polymorphic.models import PolymorphicModel
-from simple_history.models import HistoricalRecords
 
 from geoluminate.db.fields import PIDField
+
+# from simple_history.models import HistoricalRecords
 
 
 class Base(ModelMeta, PolymorphicModel, TimeStampedModel):
@@ -37,8 +38,8 @@ class Base(ModelMeta, PolymorphicModel, TimeStampedModel):
         "year": "year",
     }
 
-    if not settings.DEBUG:
-        history = HistoricalRecords()
+    # if not settings.DEBUG:
+    # history = HistoricalRecords()
 
     class Meta:
         abstract = True

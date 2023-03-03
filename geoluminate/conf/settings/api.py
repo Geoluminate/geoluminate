@@ -74,7 +74,9 @@ SPECTACULAR_SETTINGS = {
         "displayRequestDuration": True,
         "tryItOutEnabled": False,
     },
-    "PREPROCESSING_HOOKS": ["datatables.spectacular.preprocessing_filter_spec"],
+    "PREPROCESSING_HOOKS": [
+        "geoluminate.core.datatables.spectacular.preprocessing_filter_spec"
+    ],
 }
 """"""
 

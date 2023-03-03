@@ -1,0 +1,30 @@
+{% extends 'geoluminate/components/modal.html' %}
+  {% load i18n %}
+{% block title %}{% trans "Data Source" %}{% endblock title %}
+  
+{% block body %}
+ <h5 class="modal-title">{{ geoluminate.db_name }}</h5>
+ <div class='d-flex w-100 pt-2'>
+   <div class="card w-25 text-white me-1">
+     <img src="https://via.placeholder.com/300x225?text=Card Image" class="img-fluid rounded-start">
+     <div class="card-img-overlay">
+       <h5 class="card-title">Heat Flow</h5>
+       <p class="card-text">Long description on the heat flow data source.</p>
+     </div>
+   </div>
+   <div class="card w-25 text-white">
+     <img src="https://via.placeholder.com/300x225?text=Card Image" class="img-fluid rounded-start">
+     <div class="card-img-overlay">
+       <h5 class="card-title">Heat Flow</h5>
+       <p class="card-text">Long description on the heat flow data source.</p>
+     </div>
+   </div>
+ </div>
+ <hr>
+ <h5 class="modal-title">From URL</h5>
+ <input type="url" class="form-control" id="urlInput" placeholder="Enter a valid URL to an online geojson source file." />
+{% endblock body %}
+
+{% block footer %}
+ <button class='btn btn-primary'>Save</button>
+{% endblock footer %}

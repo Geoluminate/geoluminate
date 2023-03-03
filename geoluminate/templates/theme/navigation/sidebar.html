@@ -1,8 +1,9 @@
-{% load menu_tags thumbnail cms_tags geoluminate sekizai_tags %}
+{% load menu_tags thumbnail cms_tags geoluminate sekizai_tags static %}
 <nav id="mainSidebar" class="sidebar sidebar-start" tabindex="-1">
-  <div class="sidebar-header">
+  <div class="sidebar-header bg-light">
+    <img src="{% static 'images/brand/WHFDB_logo.svg' %}" alt="" width='100%'>
     <button type="button"
-            class="btn btn-sm btn-light border"
+            class="btn btn-sm btn-light border ms-1"
             data-bs-dismiss="offcanvas"
             aria-label="Close"
             onclick="$('#mainSidebar').toggleClass('show')">

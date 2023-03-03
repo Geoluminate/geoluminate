@@ -1,6 +1,6 @@
 {% load static sekizai_tags %}
 <div id='map'
-     url="{% url "database/heatflows-list" %}?"
+     url="{% url "ghfdb/heatflows-list" %}?"
      data-format='geojson'
      {% if publication %} data-references='{{ publication.pk }}'{% endif %}
      {% if site %} data-id='{{ site.pk }}'{% endif %}

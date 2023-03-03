@@ -31,4 +31,4 @@ def get_filter_params(request):
 
 
 def get_db_name():
-    return getattr(settings, "DATABASE_NAME")
+    return getattr(settings, "GEOLUMINATE")["db_name"]

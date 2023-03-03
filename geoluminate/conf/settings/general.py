@@ -137,7 +137,7 @@ GEOLUMINATE_APPS = [
     "dj_rest_auth.registration",
     "drf_spectacular",  # auto documentation of API
     "drf_spectacular_sidecar",  # static files for drf_spectacular
-    "rest_framework_datatables_editor",
+    # "rest_framework_datatables_editor",
     "drf_auto_endpoint",
     # commenting system via django-fluent-comments[threadedcomment]
     "fluent_comments",

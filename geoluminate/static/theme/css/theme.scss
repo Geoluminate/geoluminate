@@ -8,6 +8,7 @@
 // Bootstrap5 variable overrides
 $primary: #043261;
 
+
 @import "../../../../node_modules/bootstrap/scss/bootstrap";
 
 
@@ -114,4 +115,15 @@ $primary: #043261;
 	font-size: 0.7rem;
 	border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
+}
+
+#appmenu {
+	z-index: 1000;
+}
+
+#mapOverlay {
+	background-color: black;
+	> div {
+		z-index: 1000;
+	}
 }

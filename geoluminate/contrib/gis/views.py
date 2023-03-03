@@ -6,7 +6,6 @@ from django.views.generic import DetailView, TemplateView
 from django_select2.views import AutoResponseView
 from meta.views import Meta
 
-from geoluminate.conf import settings
 from geoluminate.core.mixins import FieldSetMixin
 
 
@@ -15,10 +14,11 @@ class MapView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        db_name = getattr(settings, "DATABASE_NAME")
+        context["app_menu_css"] = "position-absolute"
+        # db_name = getattr(settings, "GEOLUMINATE")["db_name"]
         context["meta"] = Meta(
             title="Viewer",
-            description=f"Interactive mapping application for querying data contained within the {db_name}",
+            # description=f"Interactive mapping application for querying data contained within the {db_name}",
             keywords=[],
         )
         return context

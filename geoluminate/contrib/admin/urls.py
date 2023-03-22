@@ -46,7 +46,6 @@ urlpatterns = [
     path("actions/", include("adminactions.urls")),
     path("docs/", include("django.contrib.admindocs.urls")),
     path("translate/", include(admin_translate_urls)),
-    # path("grappelli/", include("grappelli.urls")),
     path("postgres-metrics/", include("postgres_metrics.urls")),
     path("entity-relationships/", include("django_spaghetti.urls")),
     path("", admin.site.urls),

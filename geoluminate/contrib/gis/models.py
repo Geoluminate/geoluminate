@@ -1,6 +1,5 @@
 from django.contrib.gis.db import models
 from django.utils.translation import gettext_lazy as _
-from django_extensions.db.fields import AutoSlugField
 
 from .base import AbstractSite
 

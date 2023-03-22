@@ -9,17 +9,14 @@ Tests for `geoluminate` models module.
 """
 
 from django.test import TestCase
+from django.urls import reverse
 
-from geoluminate import models
+# class TestGeoluminate(TestCase):
+#     def setUp(self):
+#         pass
 
+#     def test_something(self):
+#         pass
 
-class TestGeoluminate(TestCase):
-
-    def setUp(self):
-        pass
-
-    def test_something(self):
-        pass
-
-    def tearDown(self):
-        pass
+#     def tearDown(self):
+#         pass

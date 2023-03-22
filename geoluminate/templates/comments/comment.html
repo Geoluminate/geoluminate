@@ -1,10 +1,10 @@
-{% load i18n gravatar %}
+{% load i18n %}
 
 
 <div id="{% if preview %}comment-preview{% else %}c{{ comment.id }}{% endif %}" class="comment-item{% if comment.user_id and comment.user_id == comment.content_object.author_id %} by-author{% endif %}">
   {% if preview %}<h3>{% trans "Preview of your comment" %}</h3>{% endif %}
   <div class='comment'>
-    <div class="comment-avatar">{% gravatar comment.email css_class='user-image' %}</div>
+    <div class="comment-avatar"></div>
     <div class="comment-body">
       <div class="comment-header">
         <h6>

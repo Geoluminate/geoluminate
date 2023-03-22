@@ -1,4 +1,4 @@
-{% load static meta cms_tags menu_tags sekizai_tags authentication thumbnail geoluminate simple_menu i18n %}
+{% load static meta cms_tags menu_tags sekizai_tags authentication thumbnail geoluminate simple_menu i18n compress %}
 {% if not request.htmx %}
   {% generate_menu %}
   <!doctype html>
@@ -15,7 +15,11 @@
       {% block head %}
       {% endblock head %}
       <link rel="icon" type="image/svg+xml" href="{% icon %}">
-      <link rel="stylesheet" href="{% static "theme/css/theme.min.css" %}">
+
+
+      {% compress css %}
+        <link rel="stylesheet" type="text/x-scss" href="{% static "theme/css/theme.scss" %}">
+      {% endcompress %}
       <script src="https://unpkg.com/htmx.org@1.8.0"
               integrity="sha384-cZuAZ+ZbwkNRnrKi05G/fjBX+azI9DNOkNYysZ0I/X5ZFgsmMiBXgDZof30F5ofc"
               crossorigin="anonymous"></script>
@@ -87,6 +91,7 @@
       {% endblock modals %}
       {% render_block "modals" %}
       <script>const config = {{ config_json | safe}};</script>
+      
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
               integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
               crossorigin="anonymous"

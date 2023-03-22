@@ -63,6 +63,10 @@ django-libsass = "*"
 django-cors-headers = "*"
 tldextract = "*"
 django-pint = "*"
+django-tellme = {git = "https://github.com/SSJenny90/django-tellme"}
+django-extensions = "*"
+pytest = "*"
+pytest-django = "*"
 
 [dev-packages]
 cookiecutter = "*"
@@ -71,17 +75,8 @@ pycodestyle = "*"
 ipython = "*"
 sphinx = "*"
 coverage = "*"
-json-schema = "*"
-django-extensions = "*"
-tqdm = "*"
 djlint = "*"
 invoke = "*"
-sphinx-copybutton = "*"
-sphinxext-opengraph = "*"
-sphinx-nested-apidoc = "*"
-sphinx-book-theme = "*"
-myst-parser = "*"
-pip-licenses = "*"
 
 [requires]
 python_version = "3.9"

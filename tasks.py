@@ -78,7 +78,8 @@ def unittest(c):
     """
     Run unittests
     """
-    c.run("python manage.py test")
+    c.run("pytest")
+    # c.run("python manage.py test")
 
 
 @task

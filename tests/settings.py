@@ -2,38 +2,81 @@
 Django settings for example project.
 
 """
-from geoluminate.conf import auto_setup
-from geoluminate.conf.local_defaults import *
+from pathlib import Path
 
-SECRET_KEY = "g8ktwj_nj0s*h54*$rfmg19rdzi@cam5xh!wfh&g9#bvnfhcos"
+import environ
+from django.utils.translation import gettext_lazy as _
 
-DEBUG = True
+from geoluminate.conf.base import *  # noqa
+from geoluminate.conf.base import deferred_settings
+
+BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
+
+env = environ.Env()
+
+READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=False)
+if READ_DOT_ENV_FILE:
+    # OS environment variables take precedence over variables from .env
+    env.read_env(str(BASE_DIR / ".env"))
+
+GEOLUMINATE = {
+    "db_name": "Global Heat Flow Database",
+    "db_acronym": "GHFDB",
+    "governing_body": {
+        "name": "International Heat Flow Commission",
+        "short_name": "IHFC",
+        "website": "https://www.ihfc-iugg.org",
+    },
+    "base_model": "geoluminate.contrib.gis.base.AbstractSite",
+    "keywords": ["heat flow", "geothermal", "geoenergy"],
+}
+
+# https://docs.djangoproject.com/en/dev/ref/settings/#admins
+ADMINS = [("Sam Jennings", "jennings@gfz-potsdam.de")]
+
+# https://docs.djangoproject.com/en/dev/ref/settings/#managers
+MANAGERS = ADMINS
+
+
+# DEBUG = True
 
 # Application definition
-ROOT_URLCONF = "tests.urls"
 
-WSGI_APPLICATION = "tests.wsgi.application"
+INSTALLED_APPS = []
 
-BASE_MODEL = "geoluminate.contrib.gis.base.AbstractSite"
-DATABASE_NAME = "Global Heat Flow Database"
-DATABASE_ACRONYM = "GHFDB"
-KEYWORDS = [
-    "heat flow",
-    "geothermal",
-    "geoenergy",
-]
-GOVERNING_BODY = "International Heat Flow Commission"
-GOVERNING_BODY_ACRONYM = "IHFC"
-GOVERNING_BODY_WEBSITE = "ihfc.org"
-
-INSTALLED_APPS = [] + INSTALLED_APPS
-
-INSTALLED_APPS += []
 
 SPAGHETTI_SAUCE = {
     "apps": ["filer", "user", "account", "socialaccount", "ror"],
     "show_fields": False,
-    # "exclude": {"auth": ["user"]},
 }
 
-auto_setup(globals())
+deferred_settings(globals())
+
+from geoluminate.conf.local_defaults import *
+
+DEBUG = True
+ROOT_URLCONF = "tests.urls"
+
+SECRET_KEY = "g8ktwj_nj0s*h54*$rfmg19rdzi@cam5xh!wfh&g9#bvnfhcos"
+
+WSGI_APPLICATION = "tests.wsgi.application"
+
+LOCKDOWN_ENABLED = False
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.dummy.DummyCache",
+    }
+}
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+
+WHITENOISE_AUTOREFRESH = True
+
+# WHITENOISE_USE_FINDERS = True
+# print(WHITENOISE_USE_FINDERS)
+INSTALLED_APPS += ["compressor"]
+
+COMPRESS_OFFLINE = False
+
+COMPRESS_PRECOMPILERS = (("text/x-scss", "django_libsass.SassCompiler"),)

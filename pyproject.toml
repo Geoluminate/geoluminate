@@ -74,7 +74,7 @@ django-pint = "^0.7.1"
 django-extensions = "^3.2.1"
 dj-rest-auth = "^3.0.0"
 django-tellme = "^0.7.3"
-django = {extras = ["argon2"], version = "^4.1.7"}
+django = {extras = ["argon2"], version = "<4"}
 
 
 [tool.poetry.group.dev.dependencies]
@@ -113,3 +113,20 @@ sphinx-autobuild = "^2021.3.14"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.tox
+  | \venv
+  | _build
+  | build
+  | dist
+)/
+'''
+
+[tool.djlint]
+ignore="H023,T003,H006,H031,D018,H021,H025"
+profile="django"

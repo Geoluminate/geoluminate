@@ -76,9 +76,6 @@ django-extensions = "^3.2.1"
 dj-rest-auth = "^3.0.0"
 django-controlled-vocabulary = "^0.12"
 django-tellme = "^0.7.3"
-django-literature = {path = "../django-literature", develop = true}
-django-laboratory = {path = "../django-laboratory", develop = true}
-django-ror = {path = "../django-ror", develop = true}
 
 
 [tool.poetry.group.dev.dependencies]

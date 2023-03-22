@@ -63,7 +63,6 @@ django-jazzmin = "^2.6.0"
 django-import-export = "^3.1.0"
 django-nested-admin = "^4.0.2"
 django-better-admin-arrayfield = "^1.4.2"
-django = "<4"
 djangorestframework-datatables-editor = "^0.3.3"
 sentry-sdk = {extras = ["django"], version = "^1.17.0"}
 django-environ = "^0.10.0"
@@ -74,8 +73,9 @@ tldextract = "^3.4.0"
 django-pint = "^0.7.1"
 django-extensions = "^3.2.1"
 dj-rest-auth = "^3.0.0"
-django-controlled-vocabulary = "^0.12"
 django-tellme = "^0.7.3"
+django = {extras = ["argon2"], version = "^4.1.7"}
+django-controlled-vocabulary = {git = "https://github.com/SSJenny90/django-controlled-vocabulary.git"}
 
 
 [tool.poetry.group.dev.dependencies]

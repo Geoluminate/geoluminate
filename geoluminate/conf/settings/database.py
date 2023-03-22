@@ -8,16 +8,20 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
-    "default": {
-        "ENGINE": "django.contrib.gis.db.backends.postgis",
-        "NAME": env("DB_NAME"),
-        "USER": env("DB_USERNAME"),
-        "PASSWORD": env("DB_PASSWORD"),
-        "HOST": "localhost",
-        "CONN_MAX_AGE": 0,
-        "ATOMIC_REQUESTS": True,
-    },
+    # DATABASE_URL var is set in compose/production/django/entrypoint.sh
+    {"default": env.db("DATABASE_URL")}
+    # "default": {
+    #     "ENGINE": "django.contrib.gis.db.backends.postgis",
+    #     "NAME": env("POSTGRES_DB"),
+    #     "USER": env("POSTGRES_USER"),
+    #     "PASSWORD": env("POSTGRES_PASSWORD"),
+    #     "HOST": "localhost",
+    #     "CONN_MAX_AGE": 0,
+    #     "ATOMIC_REQUESTS": True,
+    # },
 }
+
+DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
 
 DBBACKUP_STORAGE = "django.core.files.storage.FileSystemStorage"

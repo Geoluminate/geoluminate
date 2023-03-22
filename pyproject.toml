@@ -75,7 +75,7 @@ django-extensions = "^3.2.1"
 dj-rest-auth = "^3.0.0"
 django-tellme = "^0.7.3"
 django = {extras = ["argon2"], version = "^4.1.7"}
-django-controlled-vocabulary = {git = "https://github.com/SSJenny90/django-controlled-vocabulary.git"}
+django-controlled-vocabulary = {git = "https://github.com/SSJenny90/django-controlled-vocabulary"}
 
 
 [tool.poetry.group.dev.dependencies]

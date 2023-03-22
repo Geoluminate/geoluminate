@@ -3,11 +3,82 @@ name = "geoluminate"
 version = "0.1.0"
 description = ""
 authors = ["Sam Jennings <samuel.scott.jennings@gmail.com>"]
-license = "GPLv3"
+license = "GPL-3.0-or-later"
 readme = "README.rst"
+homepage = "https://geoluminate.com.au"
+repository = "https://github.com/Geoluminate/geoluminate"
+documentation = "https://geoluminate.readthedocs.io/en/latest/"
+keywords = ["research", "database", "open data", "geoluminate", "FAIR"]
+classifiers=[
+    "Development Status :: 3 - Alpha",
+    "Framework :: Django :: 3.2",
+    "Framework :: Django :: 4.0",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: BSD License",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3",
+]
+
 
 [tool.poetry.dependencies]
 python = "^3.9"
+psycopg2-binary = "^2.9.5"
+django-cms = "^3.11.1"
+djangocms-frontend = "^1.1.0"
+django-allauth = "^0.53.1"
+django-invitations = "^2.0.0"
+django-fluent-comments = {extras = ["threadedcomments"], version = "^3.0"}
+django-storages = "^1.13.2"
+django-crispy-forms = "^2.0"
+crispy-bootstrap5 = "^0.7"
+django-filter = "^22.1"
+djangorestframework = "^3.14.0"
+drf-spectacular = {extras = ["sidecar"], version = "^0.26.1"}
+drf-access-policy = "^1.5.0"
+drf-orjson-renderer = "^1.7.1"
+shortuuid = "^1.0.11"
+whitenoise = "^6.4.0"
+gunicorn = "^20.1.0"
+redis = "^4.5.2"
+django-solo = "^2.0.0"
+django-social-share = "^2.3.0"
+django-simple-menu = "^2.1.1"
+django-split-settings = "^1.2.0"
+django-lockdown = "^4.0.0"
+django-meta = "^2.1.0"
+django-htmx = "^1.14.0"
+djangorestframework-gis = "^1.0"
+drf-nested-routers = "^0.93.4"
+django-rosetta = "^0.9.8"
+drf-schema-adapter = "^3.0.6"
+pint = "^0.20.1"
+uncertainties = "^3.1.7"
+django-model-utils = "^4.3.1"
+django-postgres-metrics = "^0.13.1"
+django-dbbackup = "^4.0.2"
+django-spaghetti-and-meatballs = "^0.4.2"
+django-celery-beat = "^2.5.0"
+django-adminactions = "^2.0.0"
+django-jazzmin = "^2.6.0"
+django-import-export = "^3.1.0"
+django-nested-admin = "^4.0.2"
+django-better-admin-arrayfield = "^1.4.2"
+django = "<4"
+djangorestframework-datatables-editor = "^0.3.3"
+sentry-sdk = {extras = ["django"], version = "^1.17.0"}
+django-environ = "^0.10.0"
+django-compressor = "^4.3.1"
+django-libsass = "^0.9"
+django-cors-headers = "^3.14.0"
+tldextract = "^3.4.0"
+django-pint = "^0.7.1"
+django-extensions = "^3.2.1"
+dj-rest-auth = "^3.0.0"
+django-controlled-vocabulary = "^0.12"
+django-tellme = "^0.7.3"
+django-literature = {path = "../django-literature", develop = true}
+django-laboratory = {path = "../django-laboratory", develop = true}
+django-ror = {path = "../django-ror", develop = true}
 
 
 [tool.poetry.group.dev.dependencies]
@@ -30,13 +101,18 @@ pre-commit = "^3.1.1"
 django-debug-toolbar-template-profiler = "^2.1.0"
 werkzeug = {extras = ["watchdog"], version = "^2.2.3"}
 ipdb = "^0.13.11"
-psycopg2 = "^2.9.5"
 watchfiles = "^0.18.1"
+djlint = "^1.19.16"
+invoke = "^2.0.0"
+
 
 [tool.poetry.group.docs.dependencies]
-
-
-
+sphinx = "^6.1.3"
+sphinx-copybutton = "^0.5.1"
+sphinxext-opengraph = "^0.8.1"
+sphinx-book-theme = "^1.0.0"
+myst-parser = "^1.0.0"
+sphinx-autobuild = "^2021.3.14"
 
 [build-system]
 requires = ["poetry-core"]

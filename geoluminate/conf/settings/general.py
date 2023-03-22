@@ -176,7 +176,7 @@ GEOLUMINATE_APPS = [
     "literature",
     # research projects
     # research_projects
-    "licensing",
+    # "licensing",
     # cataloguing of scientific instruments
     "laboratory",
     # 'geoluminate.contrib.gis', # do i need this here?

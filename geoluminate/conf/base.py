@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 include("settings/*.py")
 
 
-def deferred_settings(config):
+def deferred_settings(config, use_celery=True):
     """This function updates settings that require information provided by the developer.
 
     Args:
@@ -87,10 +87,12 @@ def deferred_settings(config):
     config["MEDIA_ROOT"] = str(basedir / "media")
 
     # https://docs.celeryq.dev/en/stable/userguide/configuration.html#std:setting-broker_url
-    config["CELERY_BROKER_URL"] = env("CELERY_BROKER_URL")
 
-    # https://docs.celeryq.dev/en/stable/userguide/configuration.html#std:setting-result_backend
-    config["CELERY_RESULT_BACKEND"] = config["CELERY_BROKER_URL"]
+    if not use_celery:
+        config["CELERY_BROKER_URL"] = env("CELERY_BROKER_URL", None)
+
+        # https://docs.celeryq.dev/en/stable/userguide/configuration.html#std:setting-result_backend
+        config["CELERY_RESULT_BACKEND"] = config["CELERY_BROKER_URL"]
 
     config["ACCOUNT_ALLOW_REGISTRATION"] = env.bool(
         "DJANGO_ACCOUNT_ALLOW_REGISTRATION", True

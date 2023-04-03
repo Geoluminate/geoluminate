@@ -130,3 +130,38 @@ exclude = '''
 [tool.djlint]
 ignore="H023,T003,H006,H031,D018,H021,H025"
 profile="django"
+
+[tool.wheel]
+universal = 1
+
+[tool.flake8]
+ignore = "D203"
+exclude = [
+    "geoluminate/migrations",
+    "geoluminate/contrib/literature/migrations",
+    "geoluminate/contrib/user/migrations",
+    ".git",
+    ".tox",
+    "docs/conf.py",
+    "build",
+    "dist"
+]
+max-line-length = 119
+
+[tool.pytest]
+DJANGO_SETTINGS_MODULE = "tests.settings"
+FAIL_INVALID_TEMPLATE_VARS = "true"
+addopts = "--reuse-db --disable-warnings"
+python_files = ["tests.py", "test_*.py"]
+
+[tool.coverage.run]
+branch = "true"
+
+[tool.coverage.report]
+omit = [
+    "*site-packages*",
+    "*tests*",
+    "*.tox*",
+    ]
+show_missing = "true"
+# exclude_lines = raise NotImplementedError

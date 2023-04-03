@@ -1,6 +1,8 @@
 *.py[cod]
 __pycache__
-setup.py
+/setup.py
+.pytest_cache
+.venv
 
 # C extensions
 *.so

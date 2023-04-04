@@ -13,7 +13,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # }
 
 # DATABASES["default"]["ATOMIC_REQUESTS"] = True
-
+# DATABASES["default"]["ENGINE"] = "django.contrib.gis.db.backends.postgis"
 
 DBBACKUP_STORAGE = "django.core.files.storage.FileSystemStorage"
 

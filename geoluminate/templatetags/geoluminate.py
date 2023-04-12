@@ -13,6 +13,13 @@ register = template.Library()
 ureg = getattr(settings, "DJANGO_PINT_UNIT_REGISTER")
 
 
+@register.simple_tag(takes_context=True)
+def is_active(context, url):
+    if context["request"].path.startswith(url):
+        return "active"
+    return ""
+    
+
 @register.simple_tag
 def menu(menu, template=None):
     """Renders a menu"""

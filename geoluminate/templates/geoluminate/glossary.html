@@ -16,13 +16,16 @@
       <header>
         <h3 id="{{ model.name|slugify }}">{{ model.name }}</h3>
       </header>
+
+      <hr class="dropdown-divider">
+
       {{ model.summary }}
       {{ model.description }}
       <hr>
-      <dl class='list-group'>
+      <dl class='list-group gap-3'>
         {% for field, dtype, choices in model.fields %}
           {% if field.name not in exclude %}
-            <div class='definition py-2  animate__animated animate__fadeIn'>
+            <div class='definition animate__animated animate__fadeIn'>
               <dt>
                 <strong>{{ field.name }}</strong> {{ field.verbose_name|capfirst }}
                 {% if field.units %}({{ field.units|unit|safe }}){% endif %}

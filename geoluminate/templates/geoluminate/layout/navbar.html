@@ -1,0 +1,27 @@
+{% load cms_tags menu_tags static %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <button class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse " id="navbarSupportedContent">
+      <ul class="navbar-nav w-100">
+        {% show_menu 0 100 100 100 "geoluminate/menus/nav_menu.html" %}
+        <div class='d-inline-flex ms-auto'>
+          {% include 'geoluminate/widgets/nav/user_affiliation.html' %}
+          {% include 'authentication/navbar_widget.html' %}
+          {% include 'geoluminate/widgets/nav/theme_switcher.html' %}
+
+
+
+        </div>
+      </ul>
+    </div>
+  </div>
+</nav>

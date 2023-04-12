@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load sekizai_tags i18n static %}
+{% load sekizai_tags i18n static compress %}
 {% block head_title %}
   API
 {% endblock head_title %}
@@ -8,10 +8,20 @@
   <div class='container'>
     <div id="swagger-ui"></div>
   </div>
-  {% addtoblock "css" %}
-    <link rel="stylesheet"
+  {% comment %} {% addtoblock "css" %}
+    <link rel="stylesheet" 
           href="{% static "drf_spectacular_sidecar/swagger-ui-dist/swagger-ui.css" %}"/>
-  {% endaddtoblock %}
+  {% endaddtoblock %} {% endcomment %}
+
+  {% block style %}
+  {% compress css %}
+    <link rel="stylesheet" type="text/x-scss" href="{% static "vendor/swagger/main.scss" %}"/>
+  {% endcompress %}
+  {% endblock style %}
+
+
+
+
   {% addtoblock "js" %}
     <script src="{% static "drf_spectacular_sidecar/swagger-ui-dist/swagger-ui-bundle.js" %}"></script>{% endaddtoblock %}
     {% addtoblock "js" %}

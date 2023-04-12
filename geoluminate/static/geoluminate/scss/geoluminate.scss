@@ -1,0 +1,51 @@
+@import 'libs/vendor';
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,600italic|Roboto+Slab:400,700');
+
+// import our Bootstap overrids here
+@import "variables";
+
+
+// import the bootstrap 5 source files
+@import "vendor/bootstrap/scss/bootstrap";
+
+
+// Layout.
+@import 'layout/application';
+@import 'layout/navbar';
+@import 'layout/main';
+@import 'layout/menu';
+
+// Components
+@import 'components/dropdown';
+@import 'components/header';
+@import 'components/menu';
+@import 'components/sidebar';
+@import 'components/scrollbar';
+@import 'components/indicators';
+
+
+// @import "overrides/swagger";
+
+
+// this is imported from the user's project directory 
+// it provides a way for users to customize styles without modifying templates
+@import "scss/stylesheet";
+
+
+@media print {
+	#application-sidebar, #appMenu, nav {
+		display: none !important;
+	}
+}
+
+
+#appmenu {
+	z-index: 1000;
+}
+
+#mapOverlay {
+	background-color: black;
+	> div {
+		z-index: 1000;
+	}
+}

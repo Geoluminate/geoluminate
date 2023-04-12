@@ -1,0 +1,97 @@
+.sidebar {
+  // @extend .offcanvas;
+  // display: flex;
+  // position: relative;
+  z-index: 100;
+  flex: 0 0 $sidebar-width;
+  flex-direction: column;
+  max-width: 100%;
+  color: $offcanvas-color;
+  background-color: $offcanvas-bg-color;
+  background-clip: padding-box;
+  outline: 0;
+  @include box-shadow($offcanvas-box-shadow);
+  @include transition(transform $offcanvas-transition-duration ease-in-out);
+	transition: .3s;
+
+  &-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $offcanvas-padding-y $offcanvas-padding-x;
+  
+    .btn-close {
+      padding: ($offcanvas-padding-y * .5) ($offcanvas-padding-x * .5);
+      margin-top: $offcanvas-padding-y * -.5;
+      margin-right: $offcanvas-padding-x * -.5;
+      margin-bottom: $offcanvas-padding-y * -.5;
+    }
+  }
+
+  &-title {
+    margin-bottom: 0;
+    line-height: $offcanvas-title-line-height;
+  }
+
+  &-body {
+    flex-grow: 1;
+    // padding: $offcanvas-padding-y $offcanvas-padding-x;
+    overflow-y: auto;
+    // overflow: auto;
+    height: 1;
+    // overflow-y: hidden;
+  }
+
+  &-start {
+    border-right: $offcanvas-border-width solid $offcanvas-border-color;
+    margin-left: -1 * $sidebar-width;
+  
+    &.show {
+      margin: 0;
+    }
+  }
+
+  &-end {
+    border-left: $offcanvas-border-width solid $offcanvas-border-color;
+    margin-right: -1 * $sidebar-width;
+  
+    &.show{
+      margin: 0;
+    }
+  }
+
+
+}
+
+
+#mainSidebarOpener {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 99;
+  opacity: 0.25;
+
+  &:hover {
+    background-color: lightblue;
+
+    span {
+      background-color: lightblue;
+    }
+  }
+
+  button {
+    border-right: solid;
+    border-radius: 0;
+    padding: 0;
+    width: 1rem;
+    >span {
+      position: absolute;
+      top: 0;
+      left: 100%;
+      border: solid;
+      background-color: #fff;
+      transform: translateX(-50%) !important;
+    }
+  }
+}
+

@@ -1,0 +1,15 @@
+.application {
+    @include vendor('display', 'flex');
+    height: 100vh;
+    width: 100%;
+    flex-direction: column;
+    overflow: hidden!important;
+}
+
+.page {
+	&-inner {
+		flex-grow: 1 !important;
+        @include vendor('display', 'flex');
+		flex-direction: row;
+	}
+}

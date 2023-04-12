@@ -1,5 +1,5 @@
 .navbar {
-    background-color: _palette(primary-light);
+    background-color:$gray-300;
 }
 
 #appMenu {
@@ -7,7 +7,7 @@
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
     button, a {
-        background-color: _palette(secondary);
+        background-color: $secondary;
         margin-left: 0.25rem;
         margin-right: 0.25rem;
         font-size: small;

@@ -1,0 +1,40 @@
+// a combination of Bootstrap list group and accordion
+.menu-group {
+    @extend .accordion;
+    @extend .accordion-flush;
+    @extend .list-group;
+    @extend .list-group-flush;
+
+    .menu-item {
+      @extend .accordion-item;
+
+      i.fas {
+        width: 1.8rem;
+      }
+    }
+    
+    .menu-item-action {
+      @extend .list-group-item;
+      @extend .list-group-item-action;
+      border-width: 0;
+
+      &:hover {
+        background-color: $accordion-button-active-bg;
+        // $accordion-button-active-bg:              tint-color($component-active-bg, 90%);
+// $accordion-button-active-color:
+      }
+    }
+  
+    .menu-item-accordion {
+      @extend .accordion-button;
+      padding: $list-group-item-padding-y $list-group-item-padding-x;
+  
+      &.active {
+        z-index: 2; // Place active items above their siblings for proper border styling
+        color: var(--#{$prefix}list-group-active-color);
+        background-color: var(--#{$prefix}list-group-active-bg);
+        border-color: var(--#{$prefix}list-group-active-border-color);
+      }
+
+    }
+  }

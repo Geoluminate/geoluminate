@@ -25,3 +25,14 @@ CELERY_TASK_EAGER_PROPAGATES = True
 
 
 SOCIALACCOUNT_PROVIDERS["orcid"]["BASE_DOMAIN"] = "sandbox.orcid.org"
+
+# COMPRESS_OFFLINE = False
+
+COMPRESS_PRECOMPILERS = (("text/x-scss", "django_libsass.SassCompiler"),)
+
+# https://github.com/torchbox/django-libsass
+# better for in-browser debugging
+LIBSASS_SOURCEMAPS = True
+
+# don't compress file during development
+COMPRESS_ENABLED = False

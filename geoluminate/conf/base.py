@@ -72,7 +72,10 @@ def deferred_settings(config, use_celery=True):
     config["FIXTURE_DIRS"] = (str(PROJ_DIR / "fixtures"),)
 
     # https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
-    config["STATICFILES_DIRS"] = [str(PROJ_DIR / "static")]
+
+    config["STATICFILES_DIRS"] = [
+        str(PROJ_DIR / "static"),
+    ]
 
     # https://docs.djangoproject.com/en/dev/ref/settings/#locale-paths
     config["LOCALE_PATHS"] = [str(PROJ_DIR / "locale")]

@@ -19,6 +19,7 @@ COMPRESS_STORAGE = "compressor.storage.GzipCompressorFileStorage"
 
 # https://django-compressor.readthedocs.io/en/latest/settings/#django.conf.settings.COMPRESS_OFFLINE
 COMPRESS_OFFLINE = True  # Offline compression is required when using Whitenoise
+
 # https://django-compressor.readthedocs.io/en/latest/settings/#django.conf.settings.COMPRESS_FILTERS
 COMPRESS_FILTERS = {
     "css": [

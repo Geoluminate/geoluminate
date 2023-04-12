@@ -1,8 +1,8 @@
 # Celery
 # ------------------------------------------------------------------------------
-if USE_TZ:
-    # https://docs.celeryq.dev/en/stable/userguide/configuration.html#std:setting-timezone
-    CELERY_TIMEZONE = TIME_ZONE
+# if USE_TZ:
+# https://docs.celeryq.dev/en/stable/userguide/configuration.html#std:setting-timezone
+CELERY_TIMEZONE = True
 
 
 # https://docs.celeryq.dev/en/stable/userguide/configuration.html#result-extended

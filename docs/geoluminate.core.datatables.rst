@@ -17,6 +17,5 @@ Submodules
    geoluminate.core.datatables.metadata
    geoluminate.core.datatables.renderers
    geoluminate.core.datatables.spectacular
-   geoluminate.core.datatables.tests
    geoluminate.core.datatables.urls
    geoluminate.core.datatables.views

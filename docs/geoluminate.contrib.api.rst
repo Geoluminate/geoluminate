@@ -22,6 +22,7 @@ Submodules
 
    geoluminate.contrib.api.access_policies
    geoluminate.contrib.api.apps
+   geoluminate.contrib.api.menus
    geoluminate.contrib.api.permissions
    geoluminate.contrib.api.renderers
    geoluminate.contrib.api.throttling

@@ -40,7 +40,10 @@ jobs:
         
       - name: Install and Build 🔧
         run: poetry run invoke docs
-        
+        run: |
+          sudo apt-get install --no-install-recommends -y binutils libproj-dev gdal-bin libsqlite3-mod-spatialite
+          source .venv/bin/activate
+          poetry run invoke docs
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:

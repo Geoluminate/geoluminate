@@ -23,6 +23,7 @@ Submodules
    geoluminate.contrib.literature.admin
    geoluminate.contrib.literature.apps
    geoluminate.contrib.literature.filters
+   geoluminate.contrib.literature.menus
    geoluminate.contrib.literature.models
    geoluminate.contrib.literature.urls
    geoluminate.contrib.literature.views

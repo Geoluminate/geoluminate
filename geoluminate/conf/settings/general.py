@@ -94,7 +94,6 @@ GEOLUMINATE_APPS = [
     # geoluminate configuration and user accounts
     "geoluminate",
     "geoluminate.contrib.user",
-    "geoluminate.contrib.gis",
     "geoluminate.contrib.api",
     "geoluminate.contrib.literature",
     # "ror",

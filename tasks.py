@@ -1,22 +1,51 @@
-import os
-import webbrowser
-
 from invoke import task
 
 
-def open_browser(path):
-    try:
-        from urllib import pathname2url
-    except:
-        from urllib.request import pathname2url
-    webbrowser.open("file://wsl%24/Ubuntu-20.04" + pathname2url(os.path.abspath(path)))
+@task
+def install(c):
+    """
+    Install the project dependencies
+    """
+    print("🚀 Creating virtual environment using pyenv and poetry")
+    c.run("poetry install")
+    c.run("poetry run pre-commit install")
+    c.run("poetry shell")
+
+
+@task
+def check(c):
+    """
+    Check the consistency of the project using various tools
+    """
+    print("🚀 Checking Poetry lock file consistency with 'pyproject.toml': Running poetry lock --check")
+    c.run("poetry lock --check")
+
+    print("🚀 Linting code: Running pre-commit")
+    c.run("poetry run pre-commit run -a")
+
+    print("🚀 Static type checking: Running mypy")
+    c.run("poetry run mypy")
+
+    print("🚀 Checking for obsolete dependencies: Running deptry")
+    c.run("poetry run deptry .")
+
+
+@task
+def test(c, tox=False):
+    """
+    Run the test suite
+    """
+    if tox:
+        print("🚀 Testing code: Running pytest with all tests")
+        c.run("tox")
+    else:
+        print("🚀 Testing code: Running pytest")
+        c.run("poetry run pytest --cov --cov-config=pyproject.toml --cov-report=html")
 
 
 @task
 def clean_build(c):
-    """
-    Remove build artifacts
-    """
+    print("🚀 Removing old build artifacts")
     c.run("rm -fr build/")
     c.run("rm -fr dist/")
     c.run("rm -fr *.egg-info")
@@ -27,20 +56,10 @@ def clean_pyc(c):
     """
     Remove python file artifacts
     """
+    print("🚀 Removing python file artifacts")
     c.run("find . -name '*.pyc' -exec rm -f {} +")
     c.run("find . -name '*.pyo' -exec rm -f {} +")
     c.run("find . -name '*~' -exec rm -f {} +")
-
-
-@task
-def coverage(c):
-    """
-    check code coverage quickly with the default Python
-    """
-    c.run("coverage run --source geoluminate runtests.py tests")
-    c.run("coverage report -m")
-    c.run("coverage html")
-    c.run("open htmlcov/index.html")
 
 
 @task
@@ -48,20 +67,8 @@ def docs(c):
     """
     Build the documentation and open it in the browser
     """
-    c.run("rm -f docs/geoluminate.rst")
-    c.run("rm -f docs/modules.rst")
-    c.run("sphinx-apidoc -o docs/ geoluminate")
-
+    c.run("sphinx-apidoc -M -T -o docs/ geoluminate **/migrations/* -e --force -d 2")
     c.run("sphinx-build -E -b html docs docs/_build")
-    # open_browser(path="docs/_build/html/index.html")
-
-
-@task
-def test_all(c):
-    """
-    Run tests on every python version with tox
-    """
-    c.run("tox")
 
 
 @task
@@ -74,42 +81,53 @@ def clean(c):
 
 
 @task
-def unittest(c):
+def publish(c, rule=""):
     """
-    Run unittests
+    Publish a new version of the package to PyPI
     """
-    c.run("pytest")
-    # c.run("python manage.py test")
+
+    # 1. Set the current version using the specified rule
+    # see https://python-poetry.org/docs/cli/#version for rules on bumping version
+    if rule:
+        c.run(f"poetry version {rule}")
+
+    # 2. Build the source and wheels archive
+    # https://python-poetry.org/docs/cli/#build
+    print("🔧 Building: Creating wheel file.")
+    c.run("poetry build")
+
+    # 3. Dry run first to make sure everything is working
+    print("🚀 Publishing: Dry run.")
+    c.run("poetry publish --dry-run")
+
+    # This command publishes the package, previously built with the build command, to the remote repository. It will automatically register the package before uploading if this is the first time it is submitted.
+    # https://python-poetry.org/docs/cli/#publish
+    print("📦 Publishing to PyPI")
+    c.run("poetry publish")
 
 
 @task
-def lint(c):
+def tag(c, rule=""):
     """
-    Check style with flake8
+    Create a new git tag and push it to the remote repository
     """
-    c.run("flake8 geoluminate tests")
+    if rule:
+        # bump the current version using the specified rule
+        c.run(f"poetry version {rule}")
 
+    # 1. Get the current version number as a variable
+    version_short = c.run("poetry version -s", hide=True).stdout.strip()
+    version = c.run("poetry version", hide=True).stdout.strip()
 
-@task(help={"bumpsize": 'Bump either for a "feature" or "breaking" change'})
-def release(c, bumpsize=""):
-    """
-    Package and upload a release
-    """
-    clean(c)
-    if bumpsize:
-        bumpsize = "--" + bumpsize
-
-    c.run("bumpversion {bump} --no-input".format(bump=bumpsize))
-
-    import geoluminate
-
-    c.run("python setup.py sdist bdist_wheel")
-    c.run("twine upload dist/*")
-
-    c.run(
-        'git tag -a {version} -m "New version: {version}"'.format(
-            version=geoluminate.__version__
-        )
-    )
+    # 2. create a tag and push it to the remote repository
+    c.run(f'git tag -a v{version_short} -m "{version}"')
     c.run("git push --tags")
-    c.run("git push origin master")
+    c.run("git push origin main")
+
+
+@task
+def live_docs(c):
+    """
+    Build the documentation and open it in a live browser
+    """
+    c.run("sphinx-autobuild -b html --host 0.0.0.0 --port 9000 --watch . -c . . _build/html")

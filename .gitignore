@@ -83,3 +83,23 @@ env.bak/
 venv.bak/
 
 dist
+geoluminate/static/geoluminate/temp/components/_bibliography.scss
+geoluminate/static/geoluminate/temp/components/_checkmark.scss
+geoluminate/static/geoluminate/temp/components/_comment.scss
+geoluminate/static/geoluminate/temp/components/_datatables.scss
+geoluminate/static/geoluminate/temp/components/_dropdown.scss
+geoluminate/static/geoluminate/temp/components/_icon.scss
+geoluminate/static/geoluminate/temp/components/_icons.scss
+geoluminate/static/geoluminate/temp/components/_list.scss
+geoluminate/static/geoluminate/temp/components/_map.scss
+geoluminate/static/geoluminate/temp/components/_nav.scss
+geoluminate/static/geoluminate/temp/components/_pagination.scss
+geoluminate/static/geoluminate/temp/components/_publication.scss
+geoluminate/static/geoluminate/temp/components/_section.scss
+geoluminate/static/geoluminate/temp/components/_table.scss
+geoluminate/static/geoluminate/temp/layout/_kepler.scss
+geoluminate/static/geoluminate/temp/layout/_publication.scss
+geoluminate/static/geoluminate/temp/layout/_sidebar.scss
+geoluminate/static/geoluminate/temp/layout/_utils.scss
+geoluminate/static/geoluminate/temp/libs/_typography.scss
+geoluminate/static/geoluminate/temp/libs/_vars.scss

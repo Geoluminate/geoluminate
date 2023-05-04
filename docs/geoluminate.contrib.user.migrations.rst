@@ -1,21 +1,16 @@
 geoluminate.contrib.user.migrations package
 ===========================================
 
-Submodules
-----------
-
-geoluminate.contrib.user.migrations.0001\_initial module
---------------------------------------------------------
-
-.. automodule:: geoluminate.contrib.user.migrations.0001_initial
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
 .. automodule:: geoluminate.contrib.user.migrations
    :members:
    :undoc-members:
    :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 2
+
+   geoluminate.contrib.user.migrations.0001_initial
+   geoluminate.contrib.user.migrations.0002_auto_20230301_1346

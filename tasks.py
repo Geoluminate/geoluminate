@@ -44,66 +44,12 @@ def test(c, tox=False):
 
 
 @task
-def clean_build(c):
-    print("🚀 Removing old build artifacts")
-    c.run("rm -fr build/")
-    c.run("rm -fr dist/")
-    c.run("rm -fr *.egg-info")
-
-
-@task
-def clean_pyc(c):
-    """
-    Remove python file artifacts
-    """
-    print("🚀 Removing python file artifacts")
-    c.run("find . -name '*.pyc' -exec rm -f {} +")
-    c.run("find . -name '*.pyo' -exec rm -f {} +")
-    c.run("find . -name '*~' -exec rm -f {} +")
-
-
-@task
 def docs(c):
     """
     Build the documentation and open it in the browser
     """
     c.run("sphinx-apidoc -M -T -o docs/ geoluminate **/migrations/* -e --force -d 2")
     c.run("sphinx-build -E -b html docs docs/_build")
-
-
-@task
-def clean(c):
-    """
-    Remove python file and build artifacts
-    """
-    clean_build(c)
-    clean_pyc(c)
-
-
-@task
-def publish(c, rule=""):
-    """
-    Publish a new version of the package to PyPI
-    """
-
-    # 1. Set the current version using the specified rule
-    # see https://python-poetry.org/docs/cli/#version for rules on bumping version
-    if rule:
-        c.run(f"poetry version {rule}")
-
-    # 2. Build the source and wheels archive
-    # https://python-poetry.org/docs/cli/#build
-    print("🔧 Building: Creating wheel file.")
-    c.run("poetry build")
-
-    # 3. Dry run first to make sure everything is working
-    print("🚀 Publishing: Dry run.")
-    c.run("poetry publish --dry-run")
-
-    # This command publishes the package, previously built with the build command, to the remote repository. It will automatically register the package before uploading if this is the first time it is submitted.
-    # https://python-poetry.org/docs/cli/#publish
-    print("📦 Publishing to PyPI")
-    c.run("poetry publish")
 
 
 @task

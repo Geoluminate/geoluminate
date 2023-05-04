@@ -25,9 +25,7 @@ sys.path.insert(0, os.path.abspath("../"))
 parent = os.path.dirname(os.getcwd())
 sys.path.append(parent)
 os.environ["DJANGO_SETTINGS_MODULE"] = "tests.settings"
-os.environ["BUILD_DOCS"] = "True"
-os.environ["DATABASE_URL"] = ""
-
+os.environ["DOCS"] = "1"
 django.setup()
 
 

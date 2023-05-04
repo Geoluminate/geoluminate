@@ -12,6 +12,7 @@ Subpackages
 .. toctree::
    :maxdepth: 2
 
+   geoluminate.contrib.user.migrations
    geoluminate.contrib.user.tests
 
 Submodules

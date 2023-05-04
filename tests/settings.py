@@ -1,6 +1,5 @@
 """
 Django settings for example project.
-
 """
 import os
 from pathlib import Path
@@ -11,7 +10,6 @@ from geoluminate.conf.base import *
 from geoluminate.conf.base import deferred_settings
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
-
 env = environ.Env()
 
 READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=True)
@@ -20,13 +18,18 @@ if READ_DOT_ENV_FILE:
     env.read_env(str(BASE_DIR / ".env"))
 
 # Application definition
-
 INSTALLED_APPS = []
-
 
 SPAGHETTI_SAUCE = {
     "apps": ["filer", "user", "account", "socialaccount"],
     "show_fields": False,
+}
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.contrib.gis.db.backends.spatialite",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+    }
 }
 
 deferred_settings(globals())
@@ -54,20 +57,11 @@ WHITENOISE_AUTOREFRESH = True
 
 # WHITENOISE_USE_FINDERS = True
 
-INSTALLED_APPS += ["example", "compressor"]
+INSTALLED_APPS += ["compressor"]
 
 COMPRESS_OFFLINE = False
 
 COMPRESS_PRECOMPILERS = (("text/x-scss", "django_libsass.SassCompiler"),)
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.contrib.gis.db.backends.spatialite",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
-    }
-}
-
-import sys
-
-# so we can pick up the example application with the test models
-sys.path.append(str(Path(__file__).parent.resolve()))
+if not os.getenv("DOCS"):
+    INSTALLED_APPS += ["example"]

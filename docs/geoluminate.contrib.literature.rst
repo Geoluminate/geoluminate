@@ -13,6 +13,7 @@ Subpackages
    :maxdepth: 2
 
    geoluminate.contrib.literature.api
+   geoluminate.contrib.literature.migrations
 
 Submodules
 ----------

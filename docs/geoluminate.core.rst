@@ -1,38 +1,26 @@
 geoluminate.core package
 ========================
 
+.. automodule:: geoluminate.core
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Subpackages
 -----------
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 2
 
+   geoluminate.core.datatables
    geoluminate.core.forms
    geoluminate.core.management
 
 Submodules
 ----------
 
-geoluminate.core.mixins module
-------------------------------
+.. toctree::
+   :maxdepth: 2
 
-.. automodule:: geoluminate.core.mixins
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-geoluminate.core.validators module
-----------------------------------
-
-.. automodule:: geoluminate.core.validators
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: geoluminate.core
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   geoluminate.core.mixins
+   geoluminate.core.validators

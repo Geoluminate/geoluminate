@@ -1,11 +1,16 @@
 geoluminate.conf package
 ========================
 
+.. automodule:: geoluminate.conf
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Subpackages
 -----------
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 2
 
    geoluminate.conf.backends
    geoluminate.conf.settings
@@ -13,26 +18,9 @@ Subpackages
 Submodules
 ----------
 
-geoluminate.conf.global\_settings module
-----------------------------------------
+.. toctree::
+   :maxdepth: 2
 
-.. automodule:: geoluminate.conf.global_settings
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-geoluminate.conf.setup module
------------------------------
-
-.. automodule:: geoluminate.conf.setup
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: geoluminate.conf
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   geoluminate.conf.base
+   geoluminate.conf.local_defaults
+   geoluminate.conf.production_defaults

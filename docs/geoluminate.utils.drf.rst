@@ -1,19 +1,5 @@
-geoluminate.utils.drf package
-=============================
-
-Submodules
-----------
-
-geoluminate.utils.drf.utils module
-----------------------------------
-
-.. automodule:: geoluminate.utils.drf.utils
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
+geoluminate.utils.drf module
+============================
 
 .. automodule:: geoluminate.utils.drf
    :members:

@@ -1,11 +1,8 @@
 from django.conf import settings
-from django.contrib.contenttypes.fields import GenericForeignKey
-from django.contrib.contenttypes.models import ContentType
 from django.contrib.gis.db import models
 from django.contrib.sites.models import Site
 from django.utils.encoding import force_str
 from django.utils.translation import gettext_lazy as _
-from djangocms_text_ckeditor.fields import HTMLField
 from filer.fields.image import FilerImageField
 from literature.fields import LiteratureM2M
 from meta.models import ModelMeta
@@ -14,7 +11,6 @@ from model_utils.models import TimeStampedModel
 from polymorphic.models import PolymorphicModel
 from solo.models import SingletonModel
 
-from geoluminate import utils
 from geoluminate.contrib.gis.managers import SiteManager
 from geoluminate.db.fields import PIDField, RangeField
 
@@ -161,15 +157,3 @@ class GeoluminateSite(Geoluminate):
         verbose_name = _("Site")
         verbose_name_plural = _("Sites")
         proxy = True
-
-
-class ModelDescriptions(models.Model):
-    content_type = models.OneToOneField(
-        ContentType, limit_choices_to=utils.limit_description_choices, on_delete=models.CASCADE
-    )
-
-    description = HTMLField()
-
-    class Meta:
-        verbose_name = _("Model Description")
-        verbose_name_plural = _("Model Descriptions")

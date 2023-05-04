@@ -7,7 +7,7 @@ Menu.add_item(
     MenuItem(
         _("Database"),
         reverse("database_table"),
-        #   weight=10,
+        weight=1,
         icon="fa-database",
     ),
 )
@@ -17,7 +17,7 @@ Menu.add_item(
     MenuItem(
         _("Map"),
         reverse("viewer"),
-        #   weight=10,
+        weight=2,
         icon="fa-map-marked-alt",
     ),
 )
@@ -25,52 +25,9 @@ Menu.add_item(
 Menu.add_item(
     "toolbar",
     MenuItem(
-        _("API"),
-        reverse("swagger-ui"),
-        #   weight=10,
-        icon="fa-project-diagram",
-    ),
-)
-
-
-Menu.add_item(
-    "toolbar",
-    MenuItem(
-        _("Glossary"),
-        reverse("glossary"),
-        #   weight=10,
-        icon="fa-th-list",
-    ),
-)
-
-
-Menu.add_item(
-    "toolbar",
-    MenuItem(
         _("History"),
         reverse("database_history"),
-        #   weight=10,
+        weight=6,
         icon="fa-history",
-    ),
-)
-
-Menu.add_item(
-    "toolbar",
-    MenuItem(
-        _("Literature"),
-        reverse("literature:list"),
-        icon="fa-book",
-        children=(
-            MenuItem(
-                _("Catalogue"),
-                reverse("literature:list"),
-                icon="fa-list",
-            ),
-            MenuItem(
-                _("Authors"),
-                reverse("literature:author_list"),
-                icon="fa-users",
-            ),
-        ),
     ),
 )

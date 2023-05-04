@@ -30,7 +30,6 @@ internal_urlpatterns = [
     path("admin/", include("geoluminate.contrib.admin.urls")),
     path("database/", views.DatabaseTableView.as_view(), name="database_table"),
     path("history/", TemplateView.as_view(template_name="placeholder.html"), name="database_history"),
-    path("glossary/", views.GlossaryView.as_view(), name="glossary"),
     path("literature/", include("geoluminate.contrib.literature.urls")),
     path("", include("geoluminate.contrib.user.urls")),
     path("", include("geoluminate.contrib.gis.urls")),

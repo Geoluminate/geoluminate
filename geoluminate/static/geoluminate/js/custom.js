@@ -77,13 +77,6 @@ $(function () {
     trigger: 'hover',
   });
 
-
-  $('#glossaryFilter').on('keyup', function () {
-    $('.definition').hide()
-    $(`.definition:contains(${$(this).val()})`).show()
-  })
-
-
 });
 
 

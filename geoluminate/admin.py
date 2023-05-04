@@ -10,7 +10,7 @@ from django.utils.translation import gettext_lazy as _
 from solo.admin import SingletonModelAdmin
 
 from geoluminate.core.forms.fields import DynamicArrayField
-from geoluminate.models import GlobalConfiguration, ModelDescriptions
+from geoluminate.models import GlobalConfiguration
 
 admin.site.site_title = getattr(settings, "GEOLUMINATE", {})["database"]["name"]
 
@@ -74,11 +74,6 @@ admin.site.unregister(Site)
 @admin.register(Site)
 class DjangoSiteAdmin(FrontendEditableAdminMixin, admin.ModelAdmin):
     frontend_editable_fields = ("name",)
-
-
-@admin.register(ModelDescriptions)
-class ModelDescriptionAdmin(admin.ModelAdmin):
-    pass
 
 
 # @admin.register(Choice)

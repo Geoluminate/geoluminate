@@ -39,7 +39,6 @@ jobs:
         uses: ./.github/actions/setup-poetry-env
         
       - name: Install and Build 🔧
-        run: poetry run invoke docs
         run: |
           sudo apt-get install --no-install-recommends -y binutils libproj-dev gdal-bin libsqlite3-mod-spatialite
           source .venv/bin/activate

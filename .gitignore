@@ -1,71 +1,85 @@
+# Temporary and binary files
+*~
+*.ruff_cache
+*.mypy_cache
 *.py[cod]
-__pycache__
-/setup.py
-.pytest_cache
-.venv
-
-# C extensions
 *.so
+*.cfg
+!.isort.cfg
+!setup.cfg
+*.orig
+*.log
+*.pot
+**/__pycache__
+.cache/*
+.*.swp
+*/.ipynb_checkpoints/*
+.DS_Store
+_test*.py
+/node_modules
+test.html
 
-# Packages
-*.egg
-*.egg-info
-dist
-build
-eggs
-parts
-bin
-var
-sdist
-develop-eggs
-.installed.cfg
-lib
-lib64
-
-# Installer logs
-pip-log.txt
-
-# Unit test / coverage reports
-.coverage
-.tox
-nosetests.xml
-htmlcov
-
-# Translations
-*.mo
-
-# Mr Developer
-.mr.developer.cfg
+# Project files
+.ropeproject
 .project
 .pydevproject
-
-# Pycharm/Intellij
+.settings
 .idea
-
-# Complexity
-output/*.html
-output/*/index.html
-
-# Sphinx
-docs/_build
-
-
-
-.env*
-dump.json
-project.db
-media
-/static
 .vscode
-.jsbeautifyrc
-node_modules
-*.pyc
-*.cpython-38.pyc
-playground
-__pycache__
-data
-# **/migrations/*
-!**/migrations/__init__.py
-original_theme_files
-locale/*
-geoluminate/core/datatables/static
+tags
+
+# Package files
+*.egg
+*.eggs/
+.installed.cfg
+*.egg-info
+
+# Unittest and coverage
+htmlcov
+.coverage
+.coverage.*
+.tox
+junit*.xml
+coverage.xml
+.pytest_cache/
+
+# Build and docs folder/files
+build/*
+dist/*
+sdist/*
+docs/api/*
+docs/_rst/*
+docs/_build/*
+cover/*
+MANIFEST
+
+# Per-project virtualenvs
+.venv*/
+.conda*/
+.python-version
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+/static/
+/*.sqlite3
+
+*/static/vendor/*
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+dist

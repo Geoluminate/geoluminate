@@ -4,24 +4,25 @@ version = "0.1.0"
 description = ""
 authors = ["Sam Jennings <samuel.scott.jennings@gmail.com>"]
 license = "GPL-3.0-or-later"
-readme = "README.rst"
-homepage = "https://geoluminate.com.au"
-repository = "https://github.com/Geoluminate/geoluminate"
-documentation = "https://geoluminate.readthedocs.io/en/latest/"
-keywords = ["research", "database", "open data", "geoluminate", "FAIR"]
-classifiers=[
-    "Development Status :: 3 - Alpha",
-    "Framework :: Django :: 3.2",
+readme = "README.md"
+packages = [{include = "geoluminate"}]
+homepage = "https://github.com/Geoluminate/geoluminate"
+keywords = ["research", "database", "research data management", "open data", "geoluminate", "FAIR"]
+classifiers = [
+    "Development Status :: 1 - Development",
     "Framework :: Django :: 4.0",
     "Intended Audience :: Developers",
+    "Intended Audience :: Researchers",
     "License :: OSI Approved :: BSD License",
     "Natural Language :: English",
-    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
 ]
 
-
 [tool.poetry.dependencies]
-python = "^3.9"
+python = ">=3.8,<4.0"
 psycopg2-binary = "^2.9.5"
 django-cms = "^3.11.1"
 djangocms-frontend = "^1.1.0"
@@ -51,8 +52,6 @@ djangorestframework-gis = "^1.0"
 drf-nested-routers = "^0.93.4"
 django-rosetta = "^0.9.8"
 drf-schema-adapter = "^3.0.6"
-pint = "^0.20.1"
-uncertainties = "^3.1.7"
 django-model-utils = "^4.3.1"
 django-postgres-metrics = "^0.13.1"
 django-dbbackup = "^4.0.2"
@@ -71,35 +70,42 @@ django-libsass = "^0.9"
 django-cors-headers = "^3.14.0"
 tldextract = "^3.4.0"
 django-pint = "^0.7.1"
-django-extensions = "^3.2.1"
 dj-rest-auth = "^3.0.0"
 django-tellme = "^0.7.3"
-django = {extras = ["argon2"], version = "<4"}
-
+django = {extras = ["argon2"], version = ">=3.2"}
+pyyaml = "^6.0"
+celery = "^5.2.7"
+polib = "^1.2.0"
+django-select2 = "^8.1.1"
+django-polymorphic = "^3.1.0"
+django-appconf = "^1.0.5"
+django-literature = "^0.1.2"
+django-filer = "^2.2.4"
+django-laboratory = "^0.0.1"
 
 [tool.poetry.group.dev.dependencies]
 coverage = "^7.2.1"
-flake8 = "^6.0.0"
-flake8-isort = "^6.0.0"
 black = "^23.1.0"
 pytest = "^7.2.2"
 factory-boy = "^3.2.1"
-django-debug-toolbar = "^3.8.1"
-django-extensions = "^3.2.1"
 django-coverage-plugin = "^3.0.0"
 pytest-django = "^4.5.2"
 django-stubs = "^1.15.0"
-pytest-sugar = "^0.9.6"
-djangorestframework-stubs = "^1.9.1"
 pylint-django = "^2.5.3"
-pylint-celery = "^0.3"
-pre-commit = "^3.1.1"
-django-debug-toolbar-template-profiler = "^2.1.0"
-werkzeug = {extras = ["watchdog"], version = "^2.2.3"}
-ipdb = "^0.13.11"
-watchfiles = "^0.18.1"
-djlint = "^1.19.16"
+model-bakery = "^1.10.1"
 invoke = "^2.0.0"
+tox = "^4.4.6"
+deptry = "^0.8.0"
+mypy = "^1.2.0"
+pre-commit = "^3.2.2"
+pytest-cov = "^4.0.0"
+types-requests = "^2.28.11.17"
+types-python-dateutil = "^2.8.19.12"
+pytest-sugar = "^0.9.7"
+types-polib = "^1.2.0.0"
+django-extensions = "^3.2.1"
+watchfiles = "^0.19.0"
+djlint = "^1.25.0"
 
 
 [tool.poetry.group.docs.dependencies]
@@ -107,61 +113,195 @@ sphinx = "^6.1.3"
 sphinx-copybutton = "^0.5.1"
 sphinxext-opengraph = "^0.8.1"
 sphinx-book-theme = "^1.0.0"
-myst-parser = "^1.0.0"
+myst-parser = "^0.19.1"
 sphinx-autobuild = "^2021.3.14"
+toml = "^0.10.2"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
+
 [tool.black]
-exclude = '''
-/(
-    \.git
-  | \.hg
-  | \.tox
-  | \venv
-  | _build
-  | build
-  | dist
-)/
-'''
+line-length = 120
+target-version = ['py38']
+preview = true
 
-[tool.djlint]
-ignore="H023,T003,H006,H031,D018,H021,H025"
-profile="django"
+[tool.isort]
+profile = "black"
 
-[tool.wheel]
-universal = 1
-
-[tool.flake8]
-ignore = "D203"
+[tool.mypy]
+files = ["geoluminate"]
+disallow_untyped_defs = "False"
+disallow_any_unimported = "False"
+ignore_missing_imports = "True"
+no_implicit_optional = "True"
+check_untyped_defs = "False"
+warn_return_any = "True"
+warn_unused_ignores = "True"
+follow_imports = "skip"
+pretty = "True"
 exclude = [
-    "geoluminate/migrations",
-    "geoluminate/contrib/literature/migrations",
-    "geoluminate/contrib/user/migrations",
-    ".git",
-    ".tox",
-    "docs/conf.py",
-    "build",
-    "dist"
+    "docs/",
+    "migrations/",
+    "tests/settings.py",
+    "geoluminate/conf/*",
+    "geoluminate/contrib/user/forms/*",
+    ] 
+mypy_path = "./geoluminate/"
+plugins = ["mypy_django_plugin.main"]
+
+[[tool.mypy.overrides]]
+module = "geoluminate.models"
+disable_error_code = [
+    "var-annotated",
 ]
-max-line-length = 119
 
-[tool.pytest]
+[[tool.mypy.overrides]]
+module = "geoluminate.contrib.gis.base"
+disable_error_code = [
+    "var-annotated",
+]
+
+[[tool.mypy.overrides]]
+module = "geoluminate.db.models"
+disable_error_code = [
+    "var-annotated",
+]
+
+[tool.django-stubs]
+django_settings_module = "tests.settings"
+
+[tool.ruff]
+target-version = "py37"
+line-length = 120
+fix = true
+exclude = ['docs/', 'migrations/', 'tests/*.py']
+select = [
+    # flake8-2020
+    "YTT",
+    # flake8-bandit
+    "S",
+    # flake8-bugbear
+    "B",
+    # flake8-builtins
+    "A",
+    # flake8-comprehensions
+    "C4",
+    # flake8-debugger
+    "T10",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I",
+    # mccabe
+    "C90",
+    # pycodestyle
+    "E", "W",
+    # pyflakes
+    "F",
+    # pygrep-hooks
+    "PGH",
+    # pyupgrade
+    "UP",
+    # ruff
+    "RUF",
+    # tryceratops
+    "TRY",
+]
+ignore = [
+    # LineTooLong
+    "E501",
+    # DoNotAssignLambda
+    "E731",
+    "TRY003",
+
+    "A003",
+    "F403",
+    "F405",
+    "C901",
+]
+
+[tool.ruff.per-file-ignores]
+# "tests/*" = ["S101","S105"]
+"**/tests/*" = ["S101","S105"]
+# "**/models.py" = ["A003",]
+# "docs/conf.py" = ["*"]
+
+[tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "tests.settings"
-FAIL_INVALID_TEMPLATE_VARS = "true"
-addopts = "--reuse-db --disable-warnings"
-python_files = ["tests.py", "test_*.py"]
+python_files = ["test_*.py", "*_test.py", "testing/python/*.py"]
+filterwarnings = [
+    "ignore",
+    "default:::geoluminate",
+]
 
-[tool.coverage.run]
-branch = "true"
 
 [tool.coverage.report]
+skip_empty = true
 omit = [
     "*site-packages*",
     "*tests*",
     "*.tox*",
     ]
 show_missing = "true"
-# exclude_lines = raise NotImplementedError
+
+[tool.coverage.run]
+branch = "true"
+source = ["geoluminate"]
+
+
+[tool.deptry]
+extend_exclude = [
+    "tasks.py",
+    "docs",
+    ".*tests",
+]
+ignore_transitive = [
+    "toml",
+]
+# deptry checks imports but doesn't detect apps in djangos installed_apps settings. These must be listed here to avoid dependency errors.
+ignore_obsolete = [
+        "dj-rest-auth",
+        "django-adminactions",
+        "django-celery-beat",
+        "django-compressor",
+        "django-cors-headers",
+        "django-dbbackup",
+        "django-htmx",
+        "django-libsass",
+        "django-nested-admin",
+        "django-postgres-metrics",
+        "django-social-share",
+        "django-spaghetti-and-meatballs",
+        "django-tellme",
+        "djangocms-frontend",
+        "gunicorn",
+        "psycopg2-binary",
+        "redis",
+        "whitenoise",
+]
+
+
+[tool.tox]
+legacy_tox_ini = """
+[tox]
+skipsdist = true
+envlist = py38, py39, py310, py311
+
+[gh-actions]
+python =
+    3.8: py38
+    3.9: py39
+    3.10: py310
+    3.11: py311
+    
+[testenv]
+passenv = PYTHON_VERSION
+allowlist_externals = poetry
+commands =
+    poetry install -v --without docs
+    pytest --doctest-modules tests --cov --cov-config=pyproject.toml --cov-report=xml
+    mypy
+"""
+

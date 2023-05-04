@@ -65,3 +65,10 @@ COMPRESS_PRECOMPILERS = (("text/x-scss", "django_libsass.SassCompiler"),)
 
 if not os.getenv("DOCS"):
     INSTALLED_APPS += ["example"]
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.contrib.gis.db.backends.spatialite",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+    }
+}

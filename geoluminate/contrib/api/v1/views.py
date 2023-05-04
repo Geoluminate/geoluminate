@@ -18,7 +18,10 @@ from .serializers import GeoFeatureSerializer
 
 class SiteViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = SiteSerializer
-    queryset = GeoluminateSite.objects.all()
+
+    # Don't try to set queryset as a class attribute, it will break when building docs because it wants to access ContentTypes for some reason
+    def get_queryset(self):
+        return GeoluminateSite.objects.all()
 
 
 class DataViewSet(AccessViewSetMixin, viewsets.ModelViewSet):

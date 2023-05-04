@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import absolute_import, unicode_literals
-
 import adminactions.actions as actions
 from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns

@@ -2,12 +2,12 @@
 Django settings for example project.
 
 """
+import os
 from pathlib import Path
 
 import environ
-from django.utils.translation import gettext_lazy as _
 
-from geoluminate.conf.base import *  # noqa
+from geoluminate.conf.base import *
 from geoluminate.conf.base import deferred_settings
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -19,47 +19,13 @@ if READ_DOT_ENV_FILE:
     # OS environment variables take precedence over variables from .env
     env.read_env(str(BASE_DIR / ".env"))
 
-GEOLUMINATE = {
-    "db_name": "Global Heat Flow Database",
-    "db_acronym": "GHFDB",
-    "governing_body": {
-        "name": "International Heat Flow Commission",
-        "short_name": "IHFC",
-        "website": "https://www.ihfc-iugg.org",
-    },
-    "base_model": "geoluminate.contrib.gis.base.AbstractSite",
-    "keywords": ["heat flow", "geothermal", "geoenergy"],
-}
-
-# https://docs.djangoproject.com/en/dev/ref/settings/#admins
-ADMINS = [("Sam Jennings", "jennings@gfz-potsdam.de")]
-
-# https://docs.djangoproject.com/en/dev/ref/settings/#managers
-MANAGERS = ADMINS
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.contrib.gis.db.backends.postgis",
-        "NAME": env("POSTGRES_DB"),
-        "USER": env("POSTGRES_USER"),
-        "PASSWORD": env("POSTGRES_PASSWORD"),
-        "HOST": env("POSTGRES_HOST"),
-        "PORT": env("POSTGRES_PORT"),
-        "CONN_MAX_AGE": 0,
-        "ATOMIC_REQUESTS": True,
-    },
-}
-
-
-# DEBUG = True
-
 # Application definition
 
 INSTALLED_APPS = []
 
 
 SPAGHETTI_SAUCE = {
-    "apps": ["filer", "user", "account", "socialaccount", "ror"],
+    "apps": ["filer", "user", "account", "socialaccount"],
     "show_fields": False,
 }
 
@@ -87,9 +53,21 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 WHITENOISE_AUTOREFRESH = True
 
 # WHITENOISE_USE_FINDERS = True
-# print(WHITENOISE_USE_FINDERS)
-INSTALLED_APPS += ["compressor"]
+
+INSTALLED_APPS += ["example", "compressor"]
 
 COMPRESS_OFFLINE = False
 
 COMPRESS_PRECOMPILERS = (("text/x-scss", "django_libsass.SassCompiler"),)
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.contrib.gis.db.backends.spatialite",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+    }
+}
+
+import sys
+
+# so we can pick up the example application with the test models
+sys.path.append(str(Path(__file__).parent.resolve()))

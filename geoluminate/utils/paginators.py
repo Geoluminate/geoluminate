@@ -1,8 +1,9 @@
-from django.core.paginator import InvalidPage
 import string
 
+from django.core.paginator import InvalidPage
 
-class NamePaginator(object):
+
+class NamePaginator:
     """Pagination for string-based objects"""
 
     def __init__(self, object_list, on=None, per_page=25):
@@ -15,10 +16,7 @@ class NamePaginator(object):
         chunks = {}
 
         for obj in self.object_list:
-            if on:
-                obj_str = str(getattr(obj, on))
-            else:
-                obj_str = str(obj)
+            obj_str = str(getattr(obj, on)) if on else str(obj)
 
             letter = str.upper(obj_str[0])
 
@@ -44,9 +42,11 @@ class NamePaginator(object):
             # and an underflow is closer to per_page than an overflow...
             # and the page isn't empty (which means len(sub_list) >
             # per_page)...
-            if new_page_count > per_page and \
-                    abs(per_page - current_page.count) < abs(per_page - new_page_count) and \
-                    current_page.count > 0:
+            if (
+                new_page_count > per_page
+                and abs(per_page - current_page.count) < abs(per_page - new_page_count)
+                and current_page.count > 0
+            ):
                 # make a new page
                 self.pages.append(current_page)
                 current_page = NamePage(self)
@@ -72,7 +72,7 @@ class NamePaginator(object):
         return len(self.pages)
 
 
-class NamePage(object):
+class NamePage:
     def __init__(self, paginator):
         self.paginator = paginator
         self.object_list = []
@@ -112,4 +112,4 @@ class NamePage(object):
         if self.start_letter == self.end_letter:
             return self.start_letter
         else:
-            return '%c-%c' % (self.start_letter, self.end_letter)
+            return "%c-%c" % (self.start_letter, self.end_letter)

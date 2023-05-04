@@ -7,7 +7,7 @@ from shortuuid.django_fields import ShortUUIDField
 
 class PIDField(ShortUUIDField):
     def __init__(self, *args, **kwargs):
-        acronym = getattr(settings, "GEOLUMINATE")["db_acronym"]
+        acronym = settings.GEOLUMINATE["database"]["acronym"]
 
         kwargs["max_length"] = 16
         kwargs["prefix"] = acronym + "-"
@@ -21,9 +21,7 @@ class PIDField(ShortUUIDField):
 class ControlledVocabularyBase:
     """Field mixin that allows choice to be defined in a tree structure"""
 
-    def __init__(
-        self, verbose_name=None, choice_type=None, allow_unspec=True, *args, **kwargs
-    ):
+    def __init__(self, verbose_name=None, choice_type=None, allow_unspec=True, *args, **kwargs):
         """
         Args:
             verbose_name (_type_, optional): _description_. Defaults to None.
@@ -80,7 +78,6 @@ class ChoicesManyToMany(ControlledVocabularyBase, ManyToManyField):
 
 class RangeField(models.FloatField):
     def __init__(self, *args, **kwargs):
-
         validators = kwargs.pop("validators", [])
 
         if kwargs.get("max_value") is not None:
@@ -89,4 +86,6 @@ class RangeField(models.FloatField):
         if kwargs.get("min_value") is not None:
             validators.append(MinValueValidator(kwargs.pop("min_value")))
 
-        super().__init__(validators=validators, *args, **kwargs)
+        kwargs.update({"validators": validators})
+
+        super().__init__(*args, **kwargs)

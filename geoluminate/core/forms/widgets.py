@@ -2,7 +2,6 @@ from django.forms.widgets import SelectMultiple, TextInput
 
 
 class DynamicArrayWidget(TextInput):
-
     template_name = "forms/widgets/postgres_array_widget.html"
 
     class Media:
@@ -24,7 +23,7 @@ class DynamicArrayWidget(TextInput):
         for index, item in enumerate(context["widget"]["value"]):
             widget_attrs = final_attrs.copy()
             if id_:
-                widget_attrs["id"] = "{id_}_{index}".format(id_=id_, index=index)
+                widget_attrs["id"] = f"{id_}_{index}"
             widget = self.subwidget_form()
             widget.is_required = self.is_required
             subwidgets.append(widget.get_context(name, item, widget_attrs)["widget"])

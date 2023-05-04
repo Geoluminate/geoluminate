@@ -4,23 +4,21 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
-        ('literature', '0001_initial'),
+        ("literature", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Publication',
-            fields=[
-            ],
+            name="Publication",
+            fields=[],
             options={
-                'proxy': True,
-                'indexes': [],
-                'constraints': [],
+                "proxy": True,
+                "indexes": [],
+                "constraints": [],
             },
-            bases=('literature.literature',),
+            bases=("literature.literature",),
         ),
     ]

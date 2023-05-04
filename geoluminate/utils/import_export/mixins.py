@@ -1,4 +1,4 @@
-from django.utils.html import mark_safe
+from django.utils.safestring import mark_safe
 from import_export.resources import ModelResource
 
 from geoluminate.db.fields import ControlledVocabularyBase
@@ -68,13 +68,9 @@ class ResourceMixin(ModelResource):
                     if row.values:
                         # Applies a html background to field specific errors to
                         # help user identify issues
-                        if header in row.field_specific_errors.keys():
+                        if header in row.field_specific_errors:
                             row.values = list(row.values)
-                            row.values[i] = mark_safe(
-                                '<span class="bg-danger">{}</span>'.format(
-                                    row.values[i]
-                                )
-                            )
+                            row.values[i] = mark_safe(f'<span class="bg-danger">{row.values[i]}</span>')  # noqa: S308
                         # if a values is found in this column then mark it as
                         # containing data
                         if row.values[i] and row.values[i] != "---":
@@ -89,19 +85,17 @@ class ResourceMixin(ModelResource):
             for i in sorted(remove_these, reverse=True):
                 result.diff_headers.pop(i)
                 for row in result.invalid_rows:
-
                     row.values = list(row.values)
                     row.values.pop(i)
                     # row.values.pop()
 
         else:
-            for i, header in enumerate(result.diff_headers.copy()):
+            for i, _ in enumerate(result.diff_headers.copy()):
                 has_data = False
                 for row in result.rows:
-                    if row.diff:
-                        if row.diff[i]:
-                            has_data = True
-                            break
+                    if row.diff and row.diff[i]:
+                        has_data = True
+                        break
                 if not has_data:
                     remove_these.append(i)
 
@@ -112,6 +106,4 @@ class ResourceMixin(ModelResource):
                     if row.diff:
                         del row.diff[i]
 
-        result.diff_headers = [
-            h.replace("_", " ").capitalize() for h in result.diff_headers
-        ]
+        result.diff_headers = [h.replace("_", " ").capitalize() for h in result.diff_headers]

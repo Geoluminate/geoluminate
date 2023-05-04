@@ -1,4 +1,5 @@
 import os
+from typing import Any, Dict
 
 # EASY_THUMBNAILS SETTINGS
 THUMBNAIL_CACHE_DIMENSIONS = True
@@ -8,7 +9,7 @@ THUMBNAIL_CACHE_DIMENSIONS = True
 THUMBNAIL_SUBDIR = "thumbs"
 """"""
 
-THUMBNAIL_ALIASES = {}
+THUMBNAIL_ALIASES: Dict[str, Any] = {}
 """"""
 
 THUMBNAIL_PROCESSORS = [
@@ -19,5 +20,5 @@ THUMBNAIL_PROCESSORS = [
 ]
 """"""
 
-THUMBNAIL_DEBUG = not os.environ.get("DJANGO_ENV") == "production"
+THUMBNAIL_DEBUG = os.environ.get("DJANGO_ENV") != "production"
 """"""

@@ -15,7 +15,7 @@
       <li><a class="dropdown-item"  href="{% url 'user:profile' %}">{% trans "Profile" %}</a></li>
     {% else %}
       <li>
-        <a href="{% url 'ror:register_affiliations' %}" class="dropdown-item">
+        {% comment %} <a href="{% url 'ror:register_affiliations' %}" class="dropdown-item"> {% endcomment %}
           <i class="fas fa-handshake me-2"></i>{% trans "Register affiliation" %}</a>
       </li>
     {% endif %}

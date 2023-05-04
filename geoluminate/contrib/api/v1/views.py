@@ -1,17 +1,14 @@
-from django.apps import apps
 from django.utils.decorators import method_decorator
-from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_page
 from rest_access_policy.access_view_set_mixin import AccessViewSetMixin
 from rest_framework import viewsets
 from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
 from rest_framework.response import Response
-from rest_framework.views import get_view_name
 from rest_framework_gis.filters import DistanceToPointFilter
 
 from geoluminate.contrib.api.access_policies import CoreAccessPolicy
-from geoluminate.contrib.api.v1.serializers import CoreSerializer
-from geoluminate.utils import DATABASE, db_name
+from geoluminate.contrib.api.v1.serializers import CoreSerializer, SiteSerializer
+from geoluminate.models import GeoluminateSite
 
 # from geoluminate.contrib.api.utils import DistanceToPointOrderingFilter
 from geoluminate.utils.drf import DjangoFilterBackend
@@ -19,13 +16,20 @@ from geoluminate.utils.drf import DjangoFilterBackend
 from .serializers import GeoFeatureSerializer
 
 
+class SiteViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = SiteSerializer
+    queryset = GeoluminateSite.objects.all()
+
+
 class DataViewSet(AccessViewSetMixin, viewsets.ModelViewSet):
-    __doc__ = f"Endpoint to request a set of {db_name} data."
+    # __doc__ = "Endpoint to request a set of {} data.".format(
+    #     settings.GEOLUMINATE['database']['name']
+    # )
     access_policy = CoreAccessPolicy
     permission_classes = [
         DjangoModelPermissionsOrAnonReadOnly,
     ]
-    queryset = DATABASE.objects.all().prefetch_related("references")
+    # queryset = DATABASE.objects.all().prefetch_related("references")
     serializer_class = CoreSerializer
     distance_filter_field = "geom"
     distance_ordering_filter_field = "geom"
@@ -59,5 +63,5 @@ class DataViewSet(AccessViewSetMixin, viewsets.ModelViewSet):
         return Response(serializer.data)
 
     def is_geojson(self):
-        if getattr(self.request, "accepted_renderer"):
+        if self.request.accepted_renderer:
             return self.request.accepted_renderer.format == "geojson"

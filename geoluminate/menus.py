@@ -47,10 +47,10 @@ Menu.add_item(
 Menu.add_item(
     "toolbar",
     MenuItem(
-        _("Versions"),
-        reverse("swagger-ui"),
+        _("History"),
+        reverse("database_history"),
         #   weight=10,
-        icon="fa-code-branch",
+        icon="fa-history",
     ),
 )
 
@@ -61,8 +61,16 @@ Menu.add_item(
         reverse("literature:list"),
         icon="fa-book",
         children=(
-            MenuItem(_("Catalogue"), reverse("literature:list")),
-            MenuItem(_("Authors"), reverse("literature:author_list")),
+            MenuItem(
+                _("Catalogue"),
+                reverse("literature:list"),
+                icon="fa-list",
+            ),
+            MenuItem(
+                _("Authors"),
+                reverse("literature:author_list"),
+                icon="fa-users",
+            ),
         ),
     ),
 )

@@ -2,11 +2,10 @@ import logging
 from os.path import realpath
 
 from django.core.management import call_command
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404
 from django.shortcuts import redirect
 from django.urls.exceptions import NoReverseMatch
 from django.utils.functional import cached_property
-from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 from polib import pofile
 from rosetta import get_version as get_rosetta_version
@@ -16,8 +15,6 @@ from rosetta.conf import settings as rosetta_settings
 from rosetta.poutil import find_pos
 
 logger = logging.getLogger(__name__)
-
-# class EntityRelationship()
 
 
 class BaseMixin:
@@ -44,26 +41,22 @@ class BaseMixin:
         return find_pos(lang_code, True, True, True)
 
     def _get_files(self, path_list):
-        return [
-            (views.get_app_name(lang), realpath(lang), pofile(lang))
-            for lang in path_list
-        ]
+        return [(views.get_app_name(lang), realpath(lang), pofile(lang)) for lang in path_list]
 
     def get_project_languages(self):
         """Gets a dictionary of all languages that have been generated for the
         current project.
         """
-        proj_languages = dict()
+        proj_languages = {}
         for code, language in rosetta_settings.ROSETTA_LANGUAGES:
-
             paths = self.get_project_paths(code)
 
             # if a path exists in the project for the given language
             # AND the user has permission
             if paths and can_translate_language(self.request.user, code):
-                proj_languages[code] = dict(
-                    name=language,
-                )
+                proj_languages[code] = {
+                    "name": language,
+                }
 
         return proj_languages
 
@@ -102,7 +95,7 @@ class TranslationIndexView(BaseMixin, views.RosettaBaseMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        for code in context["languages"].keys():
+        for code in context["languages"]:
             context["languages"][code].update(
                 applications=self.get_all_files(code),
                 progress=self.get_progress(code),
@@ -167,7 +160,7 @@ class ApplicationView(BaseMixin, views.TranslationFormView):
         try:
             return path_dict[self.app_name]
         except KeyError:
-            logger.error("Could not find the specified application.")
+            logger.exception("Could not find the specified application.")
             return Http404
 
 

@@ -1,4 +1,4 @@
-from drf_auto_endpoint.adapters import BaseAdapter, MetaDataInfo, PROPERTY, GETTER
+from drf_auto_endpoint.adapters import GETTER, PROPERTY, BaseAdapter, MetaDataInfo
 
 
 class DataTablesAdapter(BaseAdapter):
@@ -24,12 +24,12 @@ class DataTablesAdapter(BaseAdapter):
     """
 
     metadata_info = [
-        MetaDataInfo('columns', GETTER, []),
-        MetaDataInfo('page_size', PROPERTY, 50),
-        MetaDataInfo('order', GETTER, []),
-        MetaDataInfo('datatables', PROPERTY, {}),
+        MetaDataInfo("columns", GETTER, []),
+        MetaDataInfo("page_size", PROPERTY, 50),
+        MetaDataInfo("order", GETTER, []),
+        MetaDataInfo("datatables", PROPERTY, {}),
     ]
 
     def render(self, config):
-        config.update(**config.pop('datatables'))
+        config.update(**config.pop("datatables"))
         return config

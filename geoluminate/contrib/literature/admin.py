@@ -1,10 +1,3 @@
-from django.conf import settings
-from django.contrib import admin, messages
-from django.contrib.admin.models import ContentType, LogEntry
-from django.db.models import Count
-from django.shortcuts import render
-from django.utils.translation import gettext as _
-
 # class PublicationInline(GrappelliSortableHiddenMixin, admin.TabularInline):
 #     model = Publication.author.through
 #     verbose_name = _("publication")

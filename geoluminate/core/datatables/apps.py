@@ -1,5 +1,4 @@
 from django.apps import AppConfig
-from django.utils.module_loading import autodiscover_modules
 
 
 class DatatablesConfig(AppConfig):
@@ -7,15 +6,16 @@ class DatatablesConfig(AppConfig):
     name = "datatables"
 
     def ready(self):
-        from drf_auto_endpoint.router import router
+        pass
+        # from drf_auto_endpoint.router import router
 
-        # if django modeltranslation is installed, make sure that it gets
-        # auto-discovered before us
-        try:
-            from modeltranslation.models import autodiscover
+        # # if django modeltranslation is installed, make sure that it gets
+        # # auto-discovered before us
+        # try:
+        #     from modeltranslation.models import autodiscover
 
-            autodiscover()
-        except ImportError:
-            pass
+        #     autodiscover()
+        # except ImportError:
+        #     pass
 
-        autodiscover_modules("views", register_to=router)
+        # autodiscover_modules("views", register_to=router)

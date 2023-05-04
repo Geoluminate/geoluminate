@@ -1,5 +1,3 @@
-import django_filters as df
-from django.utils.translation import gettext as _
 from django_filters import rest_framework as df
 
 from .widgets import ModelFieldSelect2MultiWidget, ModelFieldSelect2Widget
@@ -7,7 +5,7 @@ from .widgets import ModelFieldSelect2MultiWidget, ModelFieldSelect2Widget
 
 class Select2ChoiceFilterBase:
     def __init__(self, model, field, *args, **kwargs):
-        super().__init__(
+        kwargs.update(
             queryset=model.objects.filter(**{f"{field}__isnull": False}),
             to_field_name=field,
             widget=self.widget(
@@ -15,9 +13,8 @@ class Select2ChoiceFilterBase:
                     f"{field}__{kwargs.pop('select2_lookup_expr','icontains')}",
                 ]
             ),
-            *args,
-            **kwargs,
         )
+        super().__init__(*args, **kwargs)
 
 
 class Select2ChoiceFilter(Select2ChoiceFilterBase, df.ModelChoiceFilter):
@@ -27,9 +24,7 @@ class Select2ChoiceFilter(Select2ChoiceFilterBase, df.ModelChoiceFilter):
     widget = ModelFieldSelect2Widget
 
 
-class Select2MultipleChoiceFilter(
-    Select2ChoiceFilterBase, df.ModelMultipleChoiceFilter
-):
+class Select2MultipleChoiceFilter(Select2ChoiceFilterBase, df.ModelMultipleChoiceFilter):
     """Same as `Select2ChoiceFilter` but allows selection of multiple values"""
 
     widget = ModelFieldSelect2MultiWidget

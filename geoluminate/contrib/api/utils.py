@@ -1,8 +1,7 @@
-from rest_framework_gis.filters import DistanceToPointOrderingFilter
+from rest_framework_gis import filters
 
 
-class DistanceToPointOrderingFilter(DistanceToPointOrderingFilter):
-
+class DistanceToPointOrderingFilter(filters.DistanceToPointOrderingFilter):
     def get_schema_operation_parameters(self, view):
         params = super().get_schema_operation_parameters(view)
         params.append(

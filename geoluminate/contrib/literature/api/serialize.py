@@ -1,5 +1,5 @@
 from django.contrib.gis.gdal.envelope import Envelope
-from django.contrib.gis.geos import GEOSGeometry, Polygon
+from django.contrib.gis.geos import GEOSGeometry
 from django.utils.translation import gettext_lazy as _
 from literature.models import Author
 from rest_framework import serializers
@@ -11,22 +11,17 @@ from ..models import Publication
 
 
 class AuthorSerializer(serializers.HyperlinkedModelSerializer):
-
     as_lead = serializers.IntegerField(
         read_only=True,
         # source='as_lead',
         label=_("as lead author"),
-        help_text=_(
-            "The number of times an author is listed first on a publication within this database."
-        ),
+        help_text=_("The number of times an author is listed first on a publication within this database."),
     )
     as_supporting = serializers.IntegerField(
         read_only=True,
         # source='as_supporting',
         label=_("as Co-author"),
-        help_text=_(
-            "The number of times an author is listed as co-author on a publication within this database."
-        ),
+        help_text=_("The number of times an author is listed as co-author on a publication within this database."),
     )
 
     class Meta:
@@ -35,7 +30,6 @@ class AuthorSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class LiteratureSerializer(serializers.HyperlinkedModelSerializer):
-
     subject = serializers.StringRelatedField(many=True)
     author_count = serializers.IntegerField(source="author.count", read_only=True)
     authors = serializers.HyperlinkedIdentityField(

@@ -1,9 +1,4 @@
-from django.conf import settings
-from django.http import JsonResponse
-from django.utils.module_loading import import_string
-from django.utils.translation import gettext as _
 from django.views.generic import DetailView, TemplateView
-from django_select2.views import AutoResponseView
 from meta.views import Meta
 
 from geoluminate.core.mixins import FieldSetMixin

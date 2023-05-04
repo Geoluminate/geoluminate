@@ -74,10 +74,8 @@ SPECTACULAR_SETTINGS = {
         "displayRequestDuration": True,
         "tryItOutEnabled": False,
     },
-    "PREPROCESSING_HOOKS": [
-        "geoluminate.core.datatables.spectacular.preprocessing_filter_spec"
-    ],
-}
+    "PREPROCESSING_HOOKS": ["geoluminate.core.datatables.spectacular.preprocessing_filter_spec"],
+}  # type: ignore[var-annotated]
 """"""
 
 # django-cors-headers - https://github.com/adamchainz/django-cors-headers#setup

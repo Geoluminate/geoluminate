@@ -4,11 +4,10 @@ from django import forms
 from django.contrib.postgres.utils import prefix_validation_error
 from django.utils.translation import gettext_lazy as _
 
-from .widgets import ArraySelect2Widget, DynamicArrayWidget
+from .widgets import ArraySelect2Widget
 
 
 class DynamicArrayField(forms.Field):
-
     default_error_messages = {
         "item_invalid": _("Item %(nth)s in the array did not validate: "),
     }

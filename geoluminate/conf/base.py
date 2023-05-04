@@ -1,12 +1,58 @@
 import logging
 import os
 
-from django.utils.translation import gettext_lazy as _
+import tldextract
+import yaml
 from split_settings.tools import include
+
+from .settings.admin import JAZZMIN_SETTINGS
+from .settings.api import SPECTACULAR_SETTINGS
 
 logger = logging.getLogger(__name__)
 
 include("settings/*.py")
+
+config = os.path.join(os.getcwd(), "geoluminate.yml")
+
+with open(config) as f:
+    GEOLUMINATE = yaml.safe_load(f)
+
+WORKDIR = GEOLUMINATE["database"]["acronym"].lower()
+
+SITE_NAME = GEOLUMINATE["database"]["name"]
+
+META_SITE_NAME = SITE_NAME
+
+DB_NAME = GEOLUMINATE["database"]["name"]
+
+JAZZMIN_SETTINGS.update(
+    site_title=DB_NAME,
+    site_header=DB_NAME,
+    copyright=GEOLUMINATE["governance"]["name"],
+)
+
+JAZZMIN_SETTINGS["order_with_respect_to"].append(WORKDIR)
+
+
+SPECTACULAR_SETTINGS.update(
+    {
+        "TITLE": f"{DB_NAME} API",
+        "DESCRIPTION": f"Documentation of API endpoints of {DB_NAME}",
+    }
+)
+
+# https://docs.djangoproject.com/en/dev/ref/settings/#admins
+ADMINS = [("Sam Jennings", "jennings@gfz-potsdam.de")]
+
+# https://docs.djangoproject.com/en/dev/ref/settings/#managers
+MANAGERS = ADMINS
+
+
+BASE_DOMAIN = tldextract.extract(GEOLUMINATE["application"]["domain"]).domain
+
+
+DEFAULT_FROM_EMAIL = f"no-reply@{BASE_DOMAIN}"
+SERVER_EMAIL = f"server-info@{BASE_DOMAIN}"
 
 
 def deferred_settings(config, use_celery=True):
@@ -22,44 +68,18 @@ def deferred_settings(config, use_celery=True):
     env = config["env"]
     basedir = config["BASE_DIR"]
 
-    DEBUG = env.bool("DJANGO_DEBUG", False)
-
-    GEOLUMINATE = config["GEOLUMINATE"]
-
-    WORKDIR = GEOLUMINATE["db_acronym"].lower()
+    env.bool("DJANGO_DEBUG", False)
 
     config["APPS_DIR"] = basedir / "apps"
 
     PROJ_DIR = basedir / "project"
 
-    APPS_DIR = PROJ_DIR / "apps"
-
-    config["SITE_NAME"] = GEOLUMINATE["db_name"]
-
-    config["META_SITE_NAME"] = GEOLUMINATE["db_name"]
+    PROJ_DIR / "apps"
 
     # update admin sidebar so that specified database is listed first
-    config["JAZZMIN_SETTINGS"]["order_with_respect_to"].append(WORKDIR)
 
     # SETUP ADMIN
     # fmt: on/off
-    config["JAZZMIN_SETTINGS"].update(
-        dict(
-            site_title=GEOLUMINATE["db_name"],
-            site_header=GEOLUMINATE["db_name"],
-            # welcome_sign=_(
-            #     f"Welcome to the admin site for the {config['DATABASE_NAME']}. Only administrators can access this section. If you would like to become an administrator, please contact the {config['GOVERNING_BODY']}"
-            # ),
-            copyright=GEOLUMINATE["governing_body"]["name"],
-        )
-    )
-
-    config["SPECTACULAR_SETTINGS"].update(
-        {
-            "TITLE": f"{GEOLUMINATE['db_name']} API",
-            "DESCRIPTION": f"Documentation of API endpoints of {GEOLUMINATE['db_name']}",
-        }
-    )
 
     config["INSTALLED_APPS"] = config["GEOLUMINATE_APPS"] + config["INSTALLED_APPS"]
 
@@ -97,9 +117,7 @@ def deferred_settings(config, use_celery=True):
         # https://docs.celeryq.dev/en/stable/userguide/configuration.html#std:setting-result_backend
         config["CELERY_RESULT_BACKEND"] = config["CELERY_BROKER_URL"]
 
-    config["ACCOUNT_ALLOW_REGISTRATION"] = env.bool(
-        "DJANGO_ACCOUNT_ALLOW_REGISTRATION", True
-    )
+    config["ACCOUNT_ALLOW_REGISTRATION"] = env.bool("DJANGO_ACCOUNT_ALLOW_REGISTRATION", True)
 
     # if staticfiles:
     logger.info("Applying static files configuration to Django settings.")

@@ -19,7 +19,7 @@
       <link rel="icon" type="image/svg+xml" href="{% icon %}">
       {% compress css %}
         <link rel="stylesheet" type="text/x-scss" href="{% static "geoluminate/scss/geoluminate.scss" %}">
-        <link href="{% static 'tellme/vendor/feedback/feedback.css' %}" rel="stylesheet">
+        {% comment %} <link href="{% static 'tellme/vendor/feedback/feedback.css' %}" rel="stylesheet"> {% endcomment %}
       {% endcompress %}
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
       <script src="https://unpkg.com/htmx.org@1.8.0"

@@ -2,7 +2,6 @@ import tldextract
 from django.core.validators import BaseValidator
 from django.utils.deconstruct import deconstructible
 from django.utils.translation import gettext_lazy as _
-from django.utils.translation import ngettext_lazy
 
 
 @deconstructible
@@ -11,7 +10,6 @@ class RangeValidator(BaseValidator):
     code = "range_value"
 
     def compare(self, a, b):
-
         min_is_valid = self.validate(a[0], b)
         max_is_valid = self.validate(a[1], b)
 
@@ -27,12 +25,12 @@ class RangeValidator(BaseValidator):
         allow_equals = False
         try:
             float(val)
-        except ValueError:
+        except ValueError as exc:
             if val.startswith("="):
                 val = float(val.strip("="))
                 allow_equals = True
             else:
-                raise ValueError('String values must only contain a prepended "=".')
+                raise ValueError('String values must only contain a prepended "=".') from exc
         return val, allow_equals
 
 
@@ -42,5 +40,5 @@ class DomainValidator(BaseValidator):
     code = "domain"
 
     def compare(self, a, b):
-        domain = tldextract.extract(a).domain
+        a = tldextract.extract(a).domain
         return super().compare(a, b)

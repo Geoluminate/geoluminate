@@ -1,7 +1,6 @@
 import django_filters as df
-from crispy_bootstrap5.bootstrap5 import Field, FloatingField
+from crispy_bootstrap5.bootstrap5 import Field
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout
 from django_select2.forms import ModelSelect2MultipleWidget
 
 # from geoluminate.utils.generic import get_choices, choices_from_qs
@@ -9,12 +8,11 @@ from literature.models import Author, Literature
 
 from geoluminate.utils.select2.filters import Select2MultipleChoiceFilter
 
-from .models import Publication
-
 
 class Small(Field):
     def __init__(self, *args, **kwargs):
-        super().__init__(css_class="form-control form-control-sm", *args, **kwargs)
+        kwargs.update(css_class="form-control form-control-sm")
+        super().__init__(*args, **kwargs)
 
 
 class PublicationFilter(df.FilterSet):
@@ -32,9 +30,7 @@ class PublicationFilter(df.FilterSet):
     )
     title = df.CharFilter(label="Title", lookup_expr="icontains")
 
-    container_title = Select2MultipleChoiceFilter(
-        Literature, "container_title", select2_lookup_expr="istartswith"
-    )
+    container_title = Select2MultipleChoiceFilter(Literature, "container_title", select2_lookup_expr="istartswith")
     type = Select2MultipleChoiceFilter(Literature, "type")
     # subject = df.ModelMultipleChoiceFilter(
     #     label="Subject/s",

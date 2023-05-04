@@ -1,7 +1,5 @@
 from django.urls import reverse
 
-from geoluminate.contrib.user.models import User
-
 
 class TestUserAdmin:
     def test_changelist(self, admin_client):

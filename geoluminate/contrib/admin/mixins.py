@@ -4,8 +4,7 @@ from io import StringIO
 
 from django.contrib.gis import admin
 from django.http import HttpResponse
-from django.utils.html import mark_safe
-from django.utils.translation import gettext as _
+from django.utils.safestring import mark_safe
 
 from geoluminate.contrib.literature.models import Publication
 
@@ -16,32 +15,32 @@ class BaseAdmin(admin.OSMGeoAdmin):
     def name(self, obj):
         return obj._name
 
-    name.admin_order_field = "_name"
+    name.admin_order_field = "_name"  # type: ignore[attr-defined]
 
     def site_operator(self, obj):
         return obj._operator
 
-    site_operator.admin_order_field = "_operator"
+    site_operator.admin_order_field = "_operator"  # type: ignore[attr-defined]
 
     def reference(self, obj):
         return obj._reference
 
-    reference.admin_order_field = "_reference"
+    reference.admin_order_field = "_reference"  # type: ignore[attr-defined]
 
     def sites(self, obj):
         return obj._site_count
 
-    sites.admin_order_field = "_site_count"
+    sites.admin_order_field = "_site_count"  # type: ignore[attr-defined]
 
     def edit(self, obj):
-        return mark_safe('<i class="fas fa-edit"></i>')
+        return mark_safe('<i class="fas fa-edit"></i>')  # noqa: S308
 
-    edit.short_description = ""
+    edit.short_description = ""  # type: ignore[attr-defined]
 
 
 class DownloadMixin:
     def get(self, request, *args, **kwargs):
-        if "download" in request.GET.keys():
+        if "download" in request.GET:
             return self.download(request, *args, **kwargs)
         else:
             return super().get(self, request, *args, **kwargs)
@@ -49,7 +48,7 @@ class DownloadMixin:
     def download(self, request, *args, **kwargs):
         response, zf = self.prepare_zip_response(fname=self.get_object())
 
-        references = Publication.objects.none()
+        Publication.objects.none()
         for key, qs in self.get_object().get_data().items():
             if key == "intervals" and qs.exists():
                 # create a csv file and save it to the zip object
@@ -74,11 +73,7 @@ class DownloadMixin:
 
     def references_to_bibtex(self, references):
         # add bibtex file to zip object
-        references = (
-            references.distinct()
-            .exclude(bibtex__isnull=True)
-            .values_list("bibtex", flat=True)
-        )
+        references = references.distinct().exclude(bibtex__isnull=True).values_list("bibtex", flat=True)
         buffer = StringIO()
         buffer.write("\n\n".join(references))
         return buffer.getvalue()

@@ -1,17 +1,12 @@
 from urllib.parse import quote
 
-from django.apps import apps
-from django.contrib.auth import get_user_model
-from django.contrib.gis.db.models import Collect, Extent
-from django.db import models
+from django.contrib.gis.db.models import Extent
 from django.urls import reverse
-from django.utils.html import mark_safe
-from django.utils.translation import gettext as _
+from django.utils.safestring import mark_safe
 from literature.models import Literature
 
 
 class Publication(Literature):
-
     # owner = models.ForeignKey(get_user_model(),
     #                           verbose_name=_('owner'),
     #                           related_name='publications',
@@ -25,30 +20,25 @@ class Publication(Literature):
     # status = models.IntegerField(choices=status_choices)
 
     def get_data(self, data_type=None):
-        return dict(
-            intervals=self.intervals.all(),
-            temperature=self.temperature_logs.all(),
-            conductivity=self.conductivity_logs.all(),
-        )
+        return {
+            "intervals": self.intervals.all(),
+            "temperature": self.temperature_logs.all(),
+            "conductivity": self.conductivity_logs.all(),
+        }
 
     def get_absolute_url(self):
         return reverse("literature:detail", kwargs={"pk": self.pk})
 
     def file_download(self):
         if self.file:
-            return mark_safe(
-                '<a href="https://doi.org/{}"><i class="fas fa-globe fa-lg"></i></a>'.format(
-                    self.DOI
-                )
+            return mark_safe(  # noqa: S308
+                f'<a href="https://doi.org/{self.DOI}"><i class="fas fa-globe fa-lg"></i></a>'
             )
         else:
             return ""
 
     def keywords_escaped(self):
-        return [
-            (keyword.strip(), quote(keyword.strip()))
-            for keyword in self.keywords.split(",")
-        ]
+        return [(keyword.strip(), quote(keyword.strip())) for keyword in self.keywords.split(",")]
 
     def bbox(self):
         """Calculate and return a bounding box for sites in the

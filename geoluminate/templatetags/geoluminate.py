@@ -1,7 +1,6 @@
 from django import template
 
 # from django.conf import settings
-from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.templatetags.static import static
 from quantityfield import settings
@@ -10,7 +9,7 @@ from geoluminate.models import GlobalConfiguration
 from geoluminate.utils import get_filter_params
 
 register = template.Library()
-ureg = getattr(settings, "DJANGO_PINT_UNIT_REGISTER")
+ureg = settings.DJANGO_PINT_UNIT_REGISTER
 
 
 @register.simple_tag(takes_context=True)
@@ -18,7 +17,7 @@ def is_active(context, url):
     if context["request"].path.startswith(url):
         return "active"
     return ""
-    
+
 
 @register.simple_tag
 def menu(menu, template=None):
@@ -41,7 +40,7 @@ def logo():
     logo = GlobalConfiguration.get_solo().logo
     if logo:
         return logo.url
-    return static("geoluminate/logo.svg")
+    return static("geoluminate/img/brand/logo.svg")
 
 
 @register.simple_tag
@@ -81,9 +80,7 @@ def get_obj_attr(obj):
             if value == choice[0]:
                 value = choice[1]
 
-    return '<tr><td class="w-50">{}:</td><td>{}</td></tr>'.format(
-        obj.name.replace("_", " ").title(), value
-    )
+    return '<tr><td class="w-50">{}:</td><td>{}</td></tr>'.format(obj.name.replace("_", " ").title(), value)
 
 
 @register.simple_tag(takes_context=True)

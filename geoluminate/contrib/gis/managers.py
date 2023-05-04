@@ -3,7 +3,6 @@ import os
 from django.contrib.gis.db import models
 from django.contrib.gis.utils import LayerMapping
 from django.contrib.postgres.aggregates import JSONBAgg
-from django.db.models.query import QuerySet
 from polymorphic.query import PolymorphicQuerySet
 
 from .db_functions import AsGeoFeature
@@ -12,7 +11,13 @@ DATA_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "data"))
 
 
 class SiteManager(PolymorphicQuerySet):
-    def get_feature(*args, **kwargs):
+    def get_queryset(self):
+        return super().get_queryset().filter(geom__isnull=False)
+
+    def with_distance(self, point):
+        return self.annotate(distance=models.Distance("geom", point))
+
+    def get_feature(self, *args, **kwargs):
         return self.annotate(feature=AsGeoFeature(*args)).get(*args, **kwargs)
 
     def features(self, *args):

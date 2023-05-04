@@ -11,23 +11,63 @@
   </a>
   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
       {% if user.is_authenticated %}
-        <li><a class="dropdown-item"  href="{% url 'user:profile' pk=user.pk %}">{% trans "Profile" %}</a></li>
-        <li><a class="dropdown-item"  href="{% url 'user:dashboard' %}">{% trans "Dashboard" %}</a></li>
-        <li><a class="dropdown-item"  href="{% url 'user:account' %}">{% trans "Settings" %}</a></li>
+      <li>
+        <h6 class="dropdown-header">{% trans "User" %}</h6>
+      </li>
+        <li>
+          <a class="dropdown-item" href="{% url 'user:profile' pk=user.pk %}">
+            <i class="fas fa-user me-2"></i>
+            {% trans "Profile" %}
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item" href="{% url 'user:dashboard' %}">
+            <i class="fas fa-th-large me-2"></i>
+            {% trans "Dashboard" %}</a>
+        </li>
+        <li>
+          <a class="dropdown-item" href="{% url 'user:account' %}">
+            <i class="fas fa-cogs me-2"></i>
+            {% trans "Settings" %}
+          </a>
+        </li>
         {% if user.is_staff %}
-          <li><a class="dropdown-item"  href="{% url 'admin:index' %}?toolbar_off">{% trans "Admin" %}</a></li>
+        <li>
+          <h6 class="dropdown-header">{% trans "Staff" %}</h6>
+        </li>
+          <li><a class="dropdown-item"  href="{% url 'admin:index' %}?toolbar_off">
+            <i class="fas fa-user-shield me-2"></i>
+            {% trans "Admin" %}</a></li>
           {% if request.user|has_group:"CMS" or request.user.is_superuser %}
-            <li><a class="dropdown-item" href="./?edit">{% trans "Edit Page" %}</a></li> 
+            <li><a class="dropdown-item" href="./?edit">
+              <i class="fas fa-pencil-alt me-2"></i>
+              {% trans "Edit Page" %}</a></li> 
           {% endif %}
         {% endif %}
         <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item"  href="{% url 'account_logout' %}">{% trans "Logout" %}</a></li>
+        <li><a class="dropdown-item"  href="{% url 'account_logout' %}">
+          <i class="fas fa-sign-out-alt me-2"></i>
+          {% trans "Logout" %}</a></li>
+          <li>
+            <button type="button"
+                    id="feedback-btn"
+                    class="dropdown-item"
+                    data-bs-toggle="modal"
+                    data-bs-target="#feedback-welcome">
+              <i class="fas fa-bullhorn me-2"></i>
+              {% trans 'Feedback' %} 
+            </button>
+          </li>
       {% else %}
         <li>
-          <a href="{% url 'account_login' %}" class="dropdown-item">Login</a>
+          <a href="{% url 'account_login' %}" class="dropdown-item">
+          <i class="fas fa-sign-in-alt me-2"></i>
+          Login</a>
         </li>
         <li>
-          <a href="{% url 'account_signup' %}" class="dropdown-item">Register</a>
+          <a href="{% url 'account_signup' %}" class="dropdown-item">
+          <i class="fas fa-user-plus me-2"></i>
+          Register</a>
         </li>
         {% endif %}
 

@@ -3,20 +3,19 @@
 from allauth.account.models import EmailAddress
 from allauth.socialaccount.models import SocialAccount
 from django.contrib import admin
-from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from import_export.admin import ImportExportActionModelAdmin
 
+from geoluminate.contrib.user.models import User
+
 # from jazzmin import templatetags
 from .forms import UserAdminChangeForm, UserAdminCreationForm
-
-User = get_user_model()
 
 
 class SocialAccountInline(admin.StackedInline):
     model = SocialAccount
     fields = ["uid", "provider", "extra_data"]
-    readonly_fields = fields
+    readonly_fields = ["uid", "provider", "extra_data"]
     extra = 0
 
 

@@ -1,13 +1,3 @@
-from django.conf import settings
-from django.core.exceptions import ImproperlyConfigured
-from django.http import JsonResponse
-from django.urls import reverse
-from django.utils.module_loading import import_string
-from django_select2.views import AutoResponseView
-
-from geoluminate.contrib.api.v1.serializers import CoreSerializer
-
-
 class FieldSetMixin:
     """Tries to imitate the functionality of viewsets in the django admin."""
 
@@ -23,15 +13,10 @@ class FieldSetMixin:
             fieldset[fset[0]] = []
             for k in fset[1]["fields"]:
                 if isinstance(k, str):
-                    fieldset[fset[0]].append(
-                        {obj._meta.get_field(k).verbose_name: getattr(obj, k)}
-                    )
+                    fieldset[fset[0]].append({obj._meta.get_field(k).verbose_name: getattr(obj, k)})
                 else:
                     fieldset[fset[0]].append(
-                        {
-                            obj._meta.get_field(sub_k).verbose_name: getattr(obj, sub_k)
-                            for sub_k in k
-                        }
+                        {obj._meta.get_field(sub_k).verbose_name: getattr(obj, sub_k) for sub_k in k}
                     )
 
         return fieldset

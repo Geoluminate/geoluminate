@@ -6,10 +6,10 @@ from django.dispatch import receiver
 
 @receiver(user_signed_up)
 def user_signed_up_(request, user, sociallogin=None, **kwargs):
-    '''A
+    """A
     When a social account is created successfully and this signal is received,
     django-allauth passes in the sociallogin param, giving access to metadata on the remote account, e.g.:
-    '''
+    """
     pass
     # if sociallogin:
     #     # Extract first / last names from social nets and store on User record

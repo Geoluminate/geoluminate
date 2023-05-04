@@ -1,9 +1,7 @@
-from django.apps import apps
 from rest_framework import serializers
 
 from geoluminate.contrib.gis.serializers import FeatureSerializer
-
-# from geoluminate.utils import DATABASE
+from geoluminate.models import GeoluminateSite
 
 
 class GeoFeatureSerializer(FeatureSerializer):
@@ -26,3 +24,10 @@ class CoreSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         datatables_always_serialize = ("id",)
         exclude = ["date_added", "geom"]
+
+
+class SiteSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = GeoluminateSite
+        # exclude = ["date_added", ""]
+        fields = "__all__"

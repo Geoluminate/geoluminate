@@ -14,9 +14,9 @@ the following in your project `urlspatterns`:
 
 """
 
-from django.urls import path, include
+from django.urls import include, path
 from drf_auto_endpoint.router import router
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path("", include(router.urls)),
 ]

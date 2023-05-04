@@ -9,39 +9,34 @@ from .managers import UserManager
 
 
 class User(AbstractUser):
+    objects = UserManager()  # type: ignore[var-annotated]
 
-    objects = UserManager()
-
-    username = None
+    username = None  # type: ignore[assignment]
     email = models.EmailField(_("email address"), unique=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name", "last_name"]
 
     def __str__(self):
-        if self.username:
-            return str(self.username)
-        return "User"
-
-    @property
-    def username(self):
-        return self.display_name()
-
-    def full_name(self):
-        return f"{self.first_name} {self.last_name}"
-
-    def display_name(self):
         if self.first_name and self.last_name:
             return f"{self.first_name[0]}.{self.last_name}"
 
-    def initials(self):
+    # @property
+    # def display_name(self):
+    #     if self.first_name and self.last_name:
+    #         return f"{self.first_name[0]}.{self.last_name}"
+
+    def full_name(self) -> str:
+        return f"{self.first_name} {self.last_name}"
+
+    def initials(self) -> str:
         return f"{self.first_name[0]}{self.last_name[0]}"
 
-    def first_l(self):
+    def first_l(self) -> str:
         return f"{self.first_name}{self.last_name[0].capitalize()}"
 
-    def get_provider(self, provider):
-        qs = self.socialaccount_set.filter(provider=provider)
+    def get_provider(self, provider: str):
+        qs = self.socialaccount_set.filter(provider=provider)  # type: ignore[attr-defined]
         return qs.get() if qs else None
 
     @property

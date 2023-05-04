@@ -11,7 +11,8 @@ class QuantityFormField(QuantityFormFieldMixin, forms.FloatField):
     to_number_type = float
 
     def __init__(self, *args, **kwargs):
-        super().__init__(widget=QuantityFieldWidget, *args, **kwargs)
-        self.widget = QuantityFieldWidget(
-            base_units=self.base_units, allowed_types=self.units
+        kwargs.update(
+            widget=QuantityFieldWidget,
         )
+        super().__init__(*args, **kwargs)
+        self.widget = QuantityFieldWidget(base_units=self.base_units, allowed_types=self.units)

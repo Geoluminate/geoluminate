@@ -1,5 +1,6 @@
 # from django_reverse_admin import ReverseModelAdmin
 from cms.admin.placeholderadmin import FrontendEditableAdminMixin
+from django.conf import settings
 from django.contrib import admin
 from django.contrib.postgres.fields import ArrayField
 from django.contrib.sites.models import Site
@@ -9,7 +10,9 @@ from django.utils.translation import gettext_lazy as _
 from solo.admin import SingletonModelAdmin
 
 from geoluminate.core.forms.fields import DynamicArrayField
-from geoluminate.models import GlobalConfiguration
+from geoluminate.models import GlobalConfiguration, ModelDescriptions
+
+admin.site.site_title = getattr(settings, "GEOLUMINATE", {})["database"]["name"]
 
 
 class GeoluminateAdminMixin:
@@ -71,6 +74,11 @@ admin.site.unregister(Site)
 @admin.register(Site)
 class DjangoSiteAdmin(FrontendEditableAdminMixin, admin.ModelAdmin):
     frontend_editable_fields = ("name",)
+
+
+@admin.register(ModelDescriptions)
+class ModelDescriptionAdmin(admin.ModelAdmin):
+    pass
 
 
 # @admin.register(Choice)

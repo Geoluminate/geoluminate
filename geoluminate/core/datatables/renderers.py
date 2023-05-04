@@ -18,7 +18,7 @@ class DatatablesORJSONRenderer(ORJSONRenderer):
         Render `data` into JSON, returning a bytestring.
         """
         if data is None:
-            return bytes()
+            return b""
 
         request = renderer_context["request"]
 
@@ -40,10 +40,7 @@ class DatatablesORJSONRenderer(ORJSONRenderer):
             # new_data['data'] = results
             if view and hasattr(view, "_datatables_filtered_count"):
                 count = view._datatables_filtered_count
-            if view and hasattr(view, "_datatables_total_count"):
-                total_count = view._datatables_total_count
-            else:
-                total_count = count
+            total_count = view._datatables_total_count if view and hasattr(view, "_datatables_total_count") else count
             new_data["draw"] = int(request.query_params.get("draw", "1"))
             new_data["recordsFiltered"] = count
             new_data["recordsTotal"] = total_count
@@ -60,9 +57,7 @@ class DatatablesORJSONRenderer(ORJSONRenderer):
             serializer_class = view.serializer_class
 
         if serializer_class is not None and hasattr(serializer_class, "Meta"):
-            force_serialize = getattr(
-                serializer_class.Meta, "datatables_always_serialize", ()
-            )
+            force_serialize = getattr(serializer_class.Meta, "datatables_always_serialize", ())
         else:
             force_serialize = ()
 
@@ -97,23 +92,18 @@ class DatatablesORJSONRenderer(ORJSONRenderer):
                 except AttributeError:
                     continue
                 for k in keys:
-                    if (
-                        k not in cols
-                        and not k.startswith("DT_Row")
-                        and k not in force_serialize
-                        and k not in keep
-                    ):
+                    if k not in cols and not k.startswith("DT_Row") and k not in force_serialize and k not in keep:
                         result["data"][i].pop(k)
 
     def _filter_extra_json(self, view, result, extra_json_funcs):
         read_only_keys = result.keys()  # don't alter anything
         for func in extra_json_funcs:
             if not hasattr(view, func):
-                raise TypeError("extra_json_funcs: {0} not a view method.".format(func))
+                raise TypeError(f"extra_json_funcs: {func} not a view method.")
             method = getattr(view, func)
             if not callable(method):
-                raise TypeError("extra_json_funcs: {0} not callable.".format(func))
+                raise TypeError(f"extra_json_funcs: {func} not callable.")
             key, val = method()
             if key in read_only_keys:
-                raise ValueError("Duplicate key found: {key}".format(key=key))
+                raise ValueError(f"Duplicate key found: {key}")
             result[key] = val

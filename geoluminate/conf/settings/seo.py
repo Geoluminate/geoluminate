@@ -1,4 +1,4 @@
-META_SITE_PROTOCOL = 'https'
+META_SITE_PROTOCOL = "https"
 """"""
 META_USE_TITLE_TAG = True
 """"""

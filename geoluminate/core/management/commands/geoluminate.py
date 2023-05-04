@@ -2,7 +2,6 @@
 into the users current working directory. Should be used
 in place of ``django-admin startproject``
 """
-import shutil
 from django.core.management.base import BaseCommand
 
 

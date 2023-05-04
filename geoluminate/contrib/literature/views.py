@@ -1,4 +1,3 @@
-from django.utils.translation import gettext_lazy as _
 from django.views.generic import DetailView
 from django_filters.views import FilterView
 from literature.models import Author, Literature
@@ -64,17 +63,17 @@ class AuthorList(DatatablesReadOnlyView):
     hyperlink_fields = [
         "get_absolute_url",
     ]
-    datatables = dict(
-        dom="<'#tableToolBar' if> <'#tableBody' tr>",
-        rowId="id",
-        scrollY="100vh",
-        deferRender=True,
-        scroller=True,
-    )
+    datatables = {
+        "dom": "<'#tableToolBar' if> <'#tableBody' tr>",
+        "rowId": "id",
+        "scrollY": "100vh",
+        "deferRender": True,
+        "scroller": True,
+    }
 
 
 class AuthorDetail(DetailView):
-    template_name = "main/author_detail.html"
+    template_name = "literature/author_detail.html"
     model = Author
 
 

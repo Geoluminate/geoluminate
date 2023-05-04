@@ -1,7 +1,8 @@
+from typing import Any, Union
+
 from django.urls import reverse
 from django.views.generic import TemplateView
 from drf_auto_endpoint.endpoints import Endpoint
-from drf_auto_endpoint.router import register, router
 from rest_framework.renderers import BrowsableAPIRenderer
 from rest_framework.viewsets import ReadOnlyModelViewSet
 from rest_framework_datatables_editor import filters, pagination
@@ -20,11 +21,11 @@ class DatatablesMixin(Endpoint):
     pagination_class = pagination.DatatablesPageNumberPagination
     base_viewset = BaseViewSet
     base_readonly_viewset = BaseViewSet
-    invisible_fields = ()
-    class_names = {}
+    invisible_fields: Union[list, tuple] = ()
+    class_names: dict[str, Any] = {}
     read_only = True
     rowId = "pk"
-    hyperlink_fields = []
+    hyperlink_fields: list[str] = []
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -35,7 +36,6 @@ class DatatablesMixin(Endpoint):
         return f"{self.get_url()}-list"
 
     def get_columns(self):
-
         columns = []
 
         for field in self.get_fields():
@@ -64,17 +64,14 @@ class DatatablesMixin(Endpoint):
             if field.get("default"):
                 new_field["defaultContent"] = field["default"]
 
-            if key in self.class_names.keys():
+            if key in self.class_names:
                 new_field["className"] = self.class_names[key]
 
             columns.append(new_field)
         return columns
 
-    def key_in(self, key, iter):
-        if key in iter:
-            return True
-        else:
-            return False
+    def key_in(self, key, iterable):
+        return key in iterable
 
     def get_sortable_by(self):
         return self.get_iter_or_excludes("sortable_by")

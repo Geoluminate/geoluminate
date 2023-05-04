@@ -1,16 +1,12 @@
-from django.apps import apps
 from django.conf import settings
 from django.contrib.admindocs import utils, views
 from django.db import models
 from django.http import JsonResponse
-from django.shortcuts import render
 from django.utils.module_loading import import_string
-from django.utils.translation import gettext as _
 from django.views.generic import TemplateView
 from django_select2.views import AutoResponseView
 
-from geoluminate.conf import settings
-from geoluminate.core import datatables
+# from geoluminate.conf import settings
 from geoluminate.core.datatables.views import DatatablesReadOnlyView
 from geoluminate.utils import get_database_models
 
@@ -37,14 +33,14 @@ class DatabaseTableView(DatatablesReadOnlyView):
     invisible_fields = [
         "id",
     ]
-    datatables = dict(
-        dom="<'#tableToolBar' if> <'#tableBody' tr>",
-        processing=True,
-        scrollY="100vh",
-        deferRender=True,
-        scroller=True,
-        rowId="id",
-    )
+    datatables = {
+        "dom": "<'#tableToolBar' if> <'#tableBody' tr>",
+        "processing": True,
+        "scrollY": "100vh",
+        "deferRender": True,
+        "scroller": True,
+        "rowId": "id",
+    }
 
 
 class GlossaryView(TemplateView):
@@ -88,9 +84,7 @@ class GlossaryView(TemplateView):
                     choices = [x[0] for x in field.get_choices()]
                 if data_type == "Choice":
                     choices = field.get_choices_queryset()
-                fields.append(
-                    (field, field.remote_field.model.__name__, choices or None)
-                )
+                fields.append((field, field.remote_field.model.__name__, choices or None))
 
             model_info.append(
                 {
@@ -118,9 +112,7 @@ class ModelFieldSelect2View(AutoResponseView):
         self.widget = self.get_widget_or_404()
         self.term = kwargs.get("term", request.GET.get("term", ""))
         field = self.widget.search_fields[0].split("__")[0]
-        self.object_list = (
-            self.get_queryset().values_list(field, flat=True).order_by(field).distinct()
-        )
+        self.object_list = self.get_queryset().values_list(field, flat=True).order_by(field).distinct()
         context = self.get_context_data()
         return JsonResponse(
             {

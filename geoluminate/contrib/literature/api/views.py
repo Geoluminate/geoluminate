@@ -1,17 +1,16 @@
-from crossref.models import Author
 from django.shortcuts import get_object_or_404
+from literature.models import Author
 from rest_framework import viewsets
 from rest_framework.response import Response
 
 from geoluminate.contrib.api.v1.serializers import GeoFeatureSerializer
 from geoluminate.contrib.api.v1.views import DataViewSet
-from geoluminate.utils import DATABASE
+
+# from geoluminate.utils import DATABASE
 from geoluminate.utils.drf import DjangoFilterBackend
 
 from ..models import Publication
 from .serialize import AuthorSerializer, CoreNestedSerializer, LiteratureSerializer
-
-# class LiteratureView(viewsets.ModelViewSet):
 
 
 class LiteratureView(viewsets.ReadOnlyModelViewSet):
@@ -37,9 +36,7 @@ class NestedAuthorList(AuthorView):
         pk = kwargs.pop("lit_pk")
         if pk:
             queryset = self.get_queryset().filter(works__pk=pk)
-            serializer = self.get_serializer(
-                queryset, many=True, context={"request": request}
-            )
+            serializer = self.get_serializer(queryset, many=True, context={"request": request})
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None, *args, **kwargs):
@@ -53,25 +50,23 @@ class NestedAuthorList(AuthorView):
 
 class CoreNestedViewSet(DataViewSet):
     serializer_class = CoreNestedSerializer
-    queryset = DATABASE.objects.all()
+    # queryset = DATABASE.objects.all()
 
     # def get_serializer_class(self):
     #     return self.serializer_class
 
     def list(self, request, *args, **kwargs):
-        qs = DATABASE.objects.filter(references__pk=kwargs.pop("lit_pk"))
+        qs = self.queryset.objects.filter(references__pk=kwargs.pop("lit_pk"))
 
         if self.is_geojson():
             serializer = GeoFeatureSerializer(qs, many=True)
             # return Response(serializer.data)
         else:
-            serializer = self.get_serializer(
-                qs, many=True, context={"request": request}
-            )
+            serializer = self.get_serializer(qs, many=True, context={"request": request})
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None, *args, **kwargs):
-        queryset = DATABASE.objects.filter(pk=pk, references__pk=kwargs.pop("lit_pk"))
+        queryset = self.queryset.objects.filter(pk=pk, references__pk=kwargs.pop("lit_pk"))
         instance = get_object_or_404(queryset, pk=pk)
         serializer = self.get_serializer(instance, context={"request": request})
         return Response(serializer.data)

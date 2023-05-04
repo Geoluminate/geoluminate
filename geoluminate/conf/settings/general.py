@@ -97,7 +97,7 @@ GEOLUMINATE_APPS = [
     "geoluminate.contrib.gis",
     "geoluminate.contrib.api",
     "geoluminate.contrib.literature",
-    "ror",
+    # "ror",
     # authentication
     "allauth",
     "allauth.account",
@@ -164,11 +164,11 @@ GEOLUMINATE_APPS = [
     # 'rest_framework_gis',
     # 'django_json_widget',  # provides a json form field for json_field
     "rosetta",  # in app translations
-    "controlled_vocabulary",  # a nice app for controlled vocabulary fields
+    # "controlled_vocabulary",  # a nice app for controlled vocabulary fields
     # "menu",  # is this supposed to be here?
     "django_select2",  # select2 widget integration with models
     "dbbackup",
-    "tellme",  # adds user feedback functionality to the site
+    # "tellme",  # adds user feedback functionality to the site
     "django_spaghetti",  # very cool display of entity-relationship diagrams
     # "jazzmin_translate",  # rosetta compatibility with jazzmin
     "django_better_admin_arrayfield",  # nice admin widget for postgres array fields

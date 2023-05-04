@@ -31,7 +31,6 @@ def make_menu(
 
     menu = []
     for link in links:
-
         perm_matches = []
         for perm in link.get("permissions", []):
             perm_matches.append(user.has_perm(perm))
@@ -65,9 +64,7 @@ def make_menu(
                     "url": get_admin_url(link["model"], admin_site=admin_site),
                     "children": [],
                     "new_window": link.get("new_window", False),
-                    "icon": options["icons"].get(
-                        link["model"], options["default_icon_children"]
-                    ),
+                    "icon": options["icons"].get(link["model"], options["default_icon_children"]),
                 }
             )
 
@@ -87,38 +84,29 @@ def make_menu(
 
             menu.append(
                 {
-                    "name": getattr(
-                        apps.app_configs[link["app"]], "verbose_name", link["app"]
-                    ).title(),
+                    "name": getattr(apps.app_configs[link["app"]], "verbose_name", link["app"]).title(),
                     "url": "#",
                     "children": children,
-                    "icon": options["icons"].get(
-                        link["app"], options["default_icon_children"]
-                    ),
+                    "icon": options["icons"].get(link["app"], options["default_icon_children"]),
                 }
             )
 
         elif "children" in link:
             children = []
             for child in link.get("children", []):
-
                 if "model" in child:
                     if child["model"].lower() not in model_permissions:
                         continue
 
                     _meta = get_model_meta(child["model"])
 
-                    name = (
-                        _meta.verbose_name_plural.title() if _meta else child["model"]
-                    )
+                    name = _meta.verbose_name_plural.title() if _meta else child["model"]
                     children.append(
                         {
                             "name": name,
                             "url": get_admin_url(child["model"], admin_site=admin_site),
                             "new_window": child.get("new_window", False),
-                            "icon": options["icons"].get(
-                                child["model"], options["default_icon_children"]
-                            ),
+                            "icon": options["icons"].get(child["model"], options["default_icon_children"]),
                         }
                     )
                 else:

@@ -32,6 +32,6 @@ def get_db_name():
     return settings.GEOLUMINATE["db_name"]
 
 
-def limit_description_choices():
-    """Limit the choices for the description field to models that have a description field."""
+def geoluminate_content_types():
+    """A Q filter for all content types that are part of the Geoluminate database."""
     return Q(app_label__in=[model._meta.app_label for model in get_database_models()])

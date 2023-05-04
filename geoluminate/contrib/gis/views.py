@@ -21,7 +21,6 @@ class MapView(TemplateView):
 
 class SiteView(FieldSetMixin, DetailView):
     template_name = "geoluminate/database/site.html"
-    # model = DATABASE
     fieldset = [
         (
             "Heat Flow",

@@ -11,6 +11,9 @@ jobs:
   publish:
     name: Publish on PyPI
     runs-on: ubuntu-latest
+    permissions:
+      # IMPORTANT: this permission is mandatory for trusted publishing
+      id-token: write
     steps:
       - name: Check out
         uses: actions/checkout@v3
@@ -22,14 +25,16 @@ jobs:
         id: vars
         run: echo tag=${GITHUB_REF#refs/*/} >> $GITHUB_OUTPUT
 
-      - name: Build and publish
+      - name: Build source files
         run: |
           source .venv/bin/activate
-          poetry config pypi-token.pypi $PYPI_TOKEN
-          poetry run invoke publish --rule $RELEASE_VERSION
+          poetry version $RELEASE_VERSION
+          poetry build
         env:
-          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
           RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
+
+      - name: Publish package distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
 
       - name: Build Changelog
         id: github_release

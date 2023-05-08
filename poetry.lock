@@ -1447,6 +1447,22 @@ Django = ">=2.2"
 tests = ["coverage"]
 
 [[package]]
+name = "django-laboratory"
+version = "0.0.1"
+description = "A Django application for managing collections of scientific instruments"
+category = "main"
+optional = false
+python-versions = ">=3.8,<4.0"
+files = [
+    {file = "django_laboratory-0.0.1-py3-none-any.whl", hash = "sha256:472708627cbabd88bdc9f49e4dcd1a643001c2a922b5a835134f54582201a9e5"},
+    {file = "django_laboratory-0.0.1.tar.gz", hash = "sha256:742908ec9e9c7389f33c01e17a2e5c1e08d49cd4e126d05bb3ae8a2ffd257881"},
+]
+
+[package.dependencies]
+django = ">=3.2"
+django-model-utils = ">=4.3.1,<5.0.0"
+
+[[package]]
 name = "django-libsass"
 version = "0.9"
 description = "A django-compressor filter to compile SASS files using libsass"
@@ -5313,4 +5329,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.8,<4.0"
-content-hash = "34869516cac3a1774771e59a496002b80338f838f933bebd431ff01a98a6c3b0"
+content-hash = "e83188b6b95bf990a5468c98c97c3a52b3fa0247daba7d6766d92ad0d348540b"

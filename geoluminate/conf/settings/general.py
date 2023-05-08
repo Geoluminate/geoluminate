@@ -168,7 +168,7 @@ GEOLUMINATE_APPS = [
     "django_select2",  # select2 widget integration with models
     "dbbackup",
     # "tellme",  # adds user feedback functionality to the site
-    "django_spaghetti",  # very cool display of entity-relationship diagrams
+    "django_spaghetti",  # entity-relationship diagrams
     # "jazzmin_translate",  # rosetta compatibility with jazzmin
     # "django_better_admin_arrayfield",  # nice admin widget for postgres array fields
     # GEOLUMINATE DEFAULT PLUGINS

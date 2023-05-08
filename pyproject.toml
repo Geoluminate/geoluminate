@@ -78,6 +78,7 @@ polib = "^1.2.0"
 django-select2 = "^8.1.1"
 django-literature = "^0.1.2"
 django-filer = "^2.2.4"
+django-laboratory = "^0.0.1"
 
 [tool.poetry.group.dev.dependencies]
 coverage = "^7.2.1"
@@ -276,6 +277,7 @@ ignore_obsolete = [
         "psycopg2-binary",
         "redis",
         "whitenoise",
+        "django-laboratory",
 ]
 
 

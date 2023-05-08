@@ -170,7 +170,7 @@ GEOLUMINATE_APPS = [
     # "tellme",  # adds user feedback functionality to the site
     "django_spaghetti",  # very cool display of entity-relationship diagrams
     # "jazzmin_translate",  # rosetta compatibility with jazzmin
-    "django_better_admin_arrayfield",  # nice admin widget for postgres array fields
+    # "django_better_admin_arrayfield",  # nice admin widget for postgres array fields
     # GEOLUMINATE DEFAULT PLUGINS
     "literature",
     "formset",

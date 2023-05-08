@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "geoluminate"
-version = "0.0.1"
+version = "0.0.0"
 description = ""
 authors = ["Sam Jennings <samuel.scott.jennings@gmail.com>"]
 license = "GPL-3.0-or-later"
@@ -9,7 +9,7 @@ packages = [{include = "geoluminate"}]
 homepage = "https://github.com/Geoluminate/geoluminate"
 keywords = ["research", "database", "research data management", "open data", "geoluminate", "FAIR"]
 classifiers = [
-    "Development Status :: 1 - Development",
+    "Development Status :: 1 - Planning",
     "Framework :: Django :: 4.0",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: BSD License",

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "geoluminate"
-version = "0.0.2"
+version = "0.0.0"
 description = ""
 authors = ["Sam Jennings <samuel.scott.jennings@gmail.com>"]
 license = "GPL-3.0-or-later"
@@ -12,7 +12,6 @@ classifiers = [
     "Development Status :: 1 - Development",
     "Framework :: Django :: 4.0",
     "Intended Audience :: Developers",
-    "Intended Audience :: Researchers",
     "License :: OSI Approved :: BSD License",
     "Natural Language :: English",
     "Programming Language :: Python :: 3.8",

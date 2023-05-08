@@ -1,0 +1,56 @@
+{% extends 'geoluminate/components/offcanvas.html' %}
+{% load i18n %}
+{% block title %}
+<h5><i class="fas fa-layer-group pe-1"></i>{% trans "Layers" %}</h5>
+{% endblock title %}
+
+{% block content %}
+<h5 class="card-title">{% trans "Data Source" %}</h5>
+<ul class="list-group list-group-flush">
+  <li class="list-group-item d-flex align-items-center">
+    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#dataSourceModal">
+      <i class="fas fa-plus pe-1"></i>
+      {% trans "New Source" %}
+    </button>
+  </li>
+</ul>
+
+<h5 class="card-title">{% trans "Map Layers" %}</h5>
+<ul class="list-group list-group-flush">
+  <li class="list-group-item d-flex align-items-center">
+    <span class='me-auto'>Heat Flow</span>
+    <div class='btn-group'>
+      <button type="button" class="btn p-1 fas fa-table" data-bs-toggle="modal" data-bs-target="#dataTableModal"></button>
+      <button type="button" class="btn p-1 fas fa-cog" data-bs-toggle="modal" data-bs-target="#layerSettingsModal"></button>
+      <button class="btn p-1 fas fas fa-eye"></button>
+    </div>
+  </li>
+  <li class="list-group-item d-flex align-items-center">
+    <span class='me-auto'>Child Flow</span>
+    <div class='btn-group'>
+      <button type="button" class="btn p-1 fas fa-table" data-bs-toggle="modal" data-bs-target="#dataTableModal"></button>
+      <button type="button" class="btn p-1 fas fa-cog" data-bs-toggle="modal" data-bs-target="#layerSettingsModal"></button>
+      <button class="btn p-1 fas fas fa-eye"></button>
+    </div>
+  </li>
+  <li class="list-group-item">
+    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#dataSourceModal">
+      <i class="fas fa-plus pe-1"></i>
+      {% trans "New Layer" %}
+    </button>
+  </li>
+</ul>
+{% endblock content %}
+
+{% block extra %}
+{% include 'geoluminate/mapping/components/modals/datasource.html' with modal_id='dataSourceModal' dialog_css='modal-dialog-centered modal-dialog-scrollable modal-xl' %}
+
+{% include 'geoluminate/mapping/components/modals/datatable.html' with modal_id='dataTableModal' dialog_css='modal-dialog-centered modal-dialog-scrollable modal-xl' body_css='p-0' %}
+
+{% include 'geoluminate/mapping/components/modals/layer_settings.html' with modal_id='layerSettingsModal' dialog_css='modal-dialog-centered modal-dialog-scrollable modal-xl' content_css='h-100' %}
+
+
+
+{% endblock extra %}
+
+

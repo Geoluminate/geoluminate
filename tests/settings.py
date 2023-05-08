@@ -2,6 +2,7 @@
 Django settings for example project.
 """
 import os
+import sys
 from pathlib import Path
 
 import environ
@@ -63,8 +64,8 @@ COMPRESS_OFFLINE = False
 
 COMPRESS_PRECOMPILERS = (("text/x-scss", "django_libsass.SassCompiler"),)
 
-if not os.getenv("DOCS"):
-    INSTALLED_APPS += ["example"]
+# if not os.getenv("DOCS"):
+#     INSTALLED_APPS += ["example"]
 
 DATABASES = {
     "default": {

@@ -1,40 +1,45 @@
 from cms.sitemaps import CMSSitemap
 from django.contrib.sitemaps.views import sitemap
-from django.shortcuts import redirect
 from django.urls import include, path
-from django.views.generic import TemplateView
+from drf_auto_endpoint.router import router as drf_router
 
 from . import views
 
-# urlpatterns required by third party applications
-external_urlpatterns = [
+# these URLS don't require translation capabilities
+NON_I18N_URLS = [
     path("sitemap.xml", sitemap, {"sitemaps": {"cmspages": CMSSitemap}}),
+    path("api/", include("geoluminate.contrib.api.urls")),
+    path("select2/", include("django_select2.urls")),
+    path("comments/", include("fluent_comments.urls")),
+    path("admin/literature/api/", include(drf_router.urls), name="admin_api"),
     path(
         "model-field-select2/",
         views.ModelFieldSelect2View.as_view(),
         name="geoluminate_select2",
     ),
-    path("accounts/", include("allauth.urls")),
-    path("comments/", include("fluent_comments.urls")),
-    # path("institutions/", include("ror.urls")),
-    path("invitations/", include("invitations.urls", namespace="invitations")),
-    path("select2/", include("django_select2.urls")),
     # path("tellme/", include("tellme.urls")),
     # path("vocabularies/", include("controlled_vocabulary.urls")),
+    # *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
+    # *static(settings.STATIC_URL, document_root=settings.STATIC_ROOT),
 ]
 
-# urlpatterns defined by geoluminate
-internal_urlpatterns = [
-    # path("api/", lambda request: redirect("swagger-ui", permanent=False)),
-    path("api/", include("geoluminate.contrib.api.urls")),
+I18N_URLS = [
+    path("invitations/", include("invitations.urls", namespace="invitations")),
+    path("accounts/", include("allauth.urls")),
     path("admin/", include("geoluminate.contrib.admin.urls")),
     path("database/", views.DatabaseTableView.as_view(), name="database_table"),
-    path("history/", TemplateView.as_view(template_name="placeholder.html"), name="database_history"),
-    path("literature/", include("geoluminate.contrib.literature.urls")),
+    path("literature/", include("literature.urls")),
+    # path("literature/", include("geoluminate.contrib.literature.urls")),
     path("", include("geoluminate.contrib.user.urls")),
     path("", include("geoluminate.contrib.gis.urls")),
+    path("", include("cms.urls")),
 ]
 
-urlpatterns = external_urlpatterns + internal_urlpatterns
 
-urlpatterns.append(path("", include("cms.urls")))
+# urlpatterns = (
+#     NON_I18N_URLS
+#     + I18N_URLS
+#     + [path("", include("cms.urls"))]  # must be last
+#     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+#     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+# )

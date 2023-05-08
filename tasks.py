@@ -53,9 +53,23 @@ def docs(c):
 
 
 @task
-def tag(c, rule=""):
+def release(c, rule=""):
     """
-    Create a new git tag and push it to the remote repository
+    Create a new git tag and push it to the remote repository.
+
+    .. note::
+        This will create a new tag and push it to the remote repository, which will trigger a new build and deployment of the package to PyPI.
+
+    RULE	    BEFORE	AFTER
+    major	    1.3.0	2.0.0
+    minor	    2.1.4	2.2.0
+    patch	    4.1.1	4.1.2
+    premajor	1.0.2	2.0.0a0
+    preminor	1.0.2	1.1.0a0
+    prepatch	1.0.2	1.0.3a0
+    prerelease	1.0.2	1.0.3a0
+    prerelease	1.0.3a0	1.0.3a1
+    prerelease	1.0.3b0	1.0.3b1
     """
     if rule:
         # bump the current version using the specified rule
@@ -65,7 +79,10 @@ def tag(c, rule=""):
     version_short = c.run("poetry version -s", hide=True).stdout.strip()
     version = c.run("poetry version", hide=True).stdout.strip()
 
-    # 2. create a tag and push it to the remote repository
+    # 2. commit the changes to pyproject.toml
+    c.run(f'git commit pyproject.toml -m "bump to v{version_short}"')
+
+    # 3. create a tag and push it to the remote repository
     c.run(f'git tag -a v{version_short} -m "{version}"')
     c.run("git push --tags")
     c.run("git push origin main")

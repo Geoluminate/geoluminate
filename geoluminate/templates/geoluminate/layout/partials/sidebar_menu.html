@@ -1,0 +1,34 @@
+{% load geoluminate %}
+<div class="menu-group" id="accordionFlushExample">
+{% for item in menus.sidebar %}{% if item.visible %}
+ 
+<div class="menu-item">   
+  {% if item.children %}
+  <button class="menu-item-accordion collapsed {% is_active item.url %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+    <i class="fas {{ item.icon }} pe-2"></i>
+    {{ item.title }}
+  </button>
+  <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionFlushExample">
+      <div class="menu-group">
+        <div class="menu-item">
+          {% for link in item.children %}
+          <a href="{{ link.url }}" 
+              class="menu-item-action ps-4 bg-light {% is_active item.url %}">
+              <i class="fas {{ link.icon }} pe-2"></i>
+              {{ link.title }}
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+  </div>
+  {% else %}
+  <a href="{{ item.url }}" class="menu-item-action {% is_active item.url %}">
+    <i class="fas {{ item.icon }} pe-2"></i>{{ item.title }}
+  </a>
+</div>
+
+{% endif %}
+
+{% endif %}
+{% endfor %}
+</div>

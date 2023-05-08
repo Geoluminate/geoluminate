@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from simple_menu import Menu, MenuItem
 
 Menu.add_item(
-    "toolbar",
+    "sidebar",
     MenuItem(
         _("API"),
         reverse("swagger-ui"),

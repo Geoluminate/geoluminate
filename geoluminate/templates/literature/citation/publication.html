@@ -1,0 +1,38 @@
+{% load i18n sekizai_tags authentication %}
+
+<div class="publication card animate__animated animate__zoomIn">
+  {% comment %} <div class='card-header d-flex w-100'>	
+		{% include "crossref/partials/action_list.html" %}
+	</div> {% endcomment %}
+	<div class='d-flex'>
+		<img src="https://via.placeholder.com/300x225?text=This+is+a+placeholder!" class="img-fluid rounded-start">
+
+  <div class="card-body">
+			{% if object.is_verified %}
+				<i class='text-success fas fa-check-circle' data-bs-toggle="tooltip" data-bs-placement="bottom" title="Data from this publication have been verified as part of the World Heat Flow Database Project!"></i>
+			{% else %}
+				<i class='text-warning fas fa-exclamation-triangle' data-bs-toggle="tooltip" data-bs-placement="bottom" title="Data from this publication are unverified. Use at your own discretion."></i>
+			{% endif %}
+			<i class='me-auto'>{{pub.container_title}}, {{ pub.published|date:'Y' }}</i>
+			<h4 class="card-title"><a href="{% url "literature:detail" pk=pub.pk %}">{{ pub.title }}</a></h4>
+			{% if pub.author.exists %}
+			<h5 class="card-subtitle mb-2 text-muted">
+				{% for author in pub.author.all %}
+					<a href="{{ author.get_absolute_url }}"><span>{{author}}</span></a>{% if not forloop.last %},{% endif %} 
+				{% endfor %}
+			</h5>
+			{% endif %}
+			{% if pub.abstract %}
+				<p class="card-text abstract">
+					{{ pub.abstract|safe }}
+				</p>
+			{% endif %}
+		</div>
+	</div>
+	<div class='card-footer bg-white'>
+		<span><i class="fas fa-map-marked-alt"></i>{{pub.sites.count|default:0 }}</span>
+		<span><i class="fas fa-stream"></i>{{pub.intervals.count|default:0 }}</span>
+		<span><i class="fas fa-table"></i></i>{{pub.intervals.count|default:0 }}</span>
+	</div>
+</div>
+

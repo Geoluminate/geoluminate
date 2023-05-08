@@ -1,4 +1,0 @@
-{% load i18n %}
-{% if comment.allow_thread and not comment.is_removed %}
-    <a href="#c{{ comment.id }} .comment-replies" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample2">{% trans 'View replies' %}</a>
-{% endif %}

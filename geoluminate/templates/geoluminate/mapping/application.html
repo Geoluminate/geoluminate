@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block head_title %}{% trans "Viewer" %}{% endblock head_title %}
+
+
+{% block content %}
+  <div id='mapOverlay'>
+    {% comment %} BUTTON GROUP BOTTOM {% endcomment %}
+
+    {% comment %} <div class='position-absolute top-0 start-50 translate-middle-x py-3'>
+      <button class='btn btn-sm rounded-pill btn-secondary mx-2' type="button"
+      data-bs-toggle="offcanvas"
+      data-bs-target="#leftSidebar" 
+      aria-controls="leftSidebar">
+        {% trans "Open Left" %}
+      </button>
+      <button class='btn btn-sm rounded-pill btn-secondary mx-2' type="button"
+      data-bs-toggle="offcanvas"
+      data-bs-target="#bottomDrawer" 
+      aria-controls="bottomDrawer">
+        {% trans "Open Drawer" %}
+      </button>
+      <button class='btn btn-sm rounded-pill btn-secondary mx-2' type="button"
+      data-bs-toggle="offcanvas"
+      data-bs-target="#rightSidebar" 
+      aria-controls="rightSidebar">
+        {% trans "Open Right" %}
+      </button>
+
+      <button class="btn btn-sm rounded-pill btn-secondary mx-2"
+              type="button"
+              id="dropdownMenuButton"
+              data-bs-toggle="dropdown"
+              aria-expanded="false">
+        {% trans "Years" %}
+      </button>
+      <ul class="dropdown-menu p-2" aria-labelledby="dropdownMenuButton">
+        <label for="customRange1" class="form-label" hidden>{% trans "Year range" %}</label>
+        <input type="range" class="form-range" id="customRange1">
+      </ul>
+    </div> {% endcomment %}
+
+    {% comment %} BUTTON GROUP BOTTOM {% endcomment %}
+    <div class="position-absolute bottom-0 start-50 translate-middle-x py-3">
+      <div class="rounded-pill p-2 bg-dark" role="group" aria-label="Basic example">
+        <button class='btn btn-dark' type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#layerSidebar" 
+        aria-controls="layerSidebar">
+        <i class="fas fa-layer-group pe-1"></i>
+          {% trans "Layers" %}
+        </button>
+        <button class='btn btn-dark' type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#basemapSidebar" 
+        aria-controls="basemapSidebar">
+          <i class="fas fa-map pe-1"></i>
+          {% trans "Basemap" %}
+        </button>
+
+
+        <button class='btn btn-dark' type="button"
+        data-bs-toggle="modal"
+        data-bs-target="#snapshotModal" 
+        aria-controls="snapshotModal">
+          <i class="fas fa-camera pe-1"></i>
+          {% trans "Snapshot" %}
+        </button>
+        <button class='btn btn-dark' type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#filterSidebar" 
+        aria-controls="filterSidebar">
+          <i class="fas fa-folder-plus pe-1"></i>
+          {% trans "Add to project" %}
+        </button>
+        <button type="button" class="btn btn-dark"         
+        data-bs-toggle="offcanvas"
+        data-bs-target="#rightSidebar" 
+        aria-controls="rightSidebar">On the right</button>
+      </div>
+    </div>
+  </div>
+  {% include "geoluminate/mapping/partials/map.html" with css_class='fullscreen' %}   
+{% endblock content %}
+
+{% block sidebar_right %}
+
+  {% comment %} RIGHT SIDEBAR EXAMPLE {% endcomment %}
+  {% include "geoluminate/components/offcanvas.html" with oc_id="rightSidebar" oc_origin='end' %}
+
+
+
+  <div id='filterSidebar' class="offcanvas offcanvas-start position-absolute bg-transparent" tabindex="-1" 
+  data-bs-scroll="true" data-bs-backdrop="false">
+    <div class='card w-100 h-100 ms-4 my-2'>
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h5><i class="fas fa-filter pe-1"></i>Filters</h5>
+        <button type="button"
+        class="btn-close text-reset"
+        data-bs-dismiss="offcanvas"
+        aria-label="Close">
+        </button>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Special title treatment</h5>
+        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>
+  </div>
+
+  {% comment %} DRAWER EXAMPLE {% endcomment %}
+  <div id='bottomDrawer' class="offcanvas offcanvas-bottom" tabindex="-1">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvas{{ name|title }}Label">{% trans name|title %}</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <form>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+          <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input type="password" class="form-control" id="exampleInputPassword1">
+        </div>
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1">
+          <label class="form-check-label" for="exampleCheck1">Check me out</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+
+
+
+
+  {% include 'geoluminate/mapping/components/sidebars/layers.html' with oc_id='layerSidebar' oc_origin='start' %}
+  {% include 'geoluminate/mapping/components/sidebars/basemaps.html' with oc_id='basemapSidebar' oc_origin='start' %}
+
+ 
+  {% include 'geoluminate/mapping/components/modals/snapshot.html' with modal_id='snapshotModal' dialog_css='modal-dialog-centered modal-xl' %}
+
+
+
+{% endblock sidebar_right %}

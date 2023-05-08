@@ -11,10 +11,8 @@ def get_database_models():
     Geoluminate = import_string("geoluminate.models.Geoluminate")
 
     for model in apps.get_models():
-        if not issubclass(model, Geoluminate) or model._meta.app_label == "geoluminate" or model.hide_from_api:
-            continue
-
-        db_models.append(model)
+        if issubclass(model, Geoluminate) and not model.hide_from_api:
+            db_models.append(model)
     return db_models
 
 

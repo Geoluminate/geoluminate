@@ -4,15 +4,12 @@ from literature.fields import LiteratureM2M
 from meta.models import ModelMeta
 from model_utils import FieldTracker
 from model_utils.models import TimeStampedModel
-from polymorphic.models import PolymorphicModel
 
 from geoluminate.contrib.gis.managers import SiteManager
 from geoluminate.db.fields import PIDField, RangeField
 
-# from simple_history.models import HistoricalRecords
 
-
-class Base(ModelMeta, PolymorphicModel, TimeStampedModel):
+class Base(ModelMeta, TimeStampedModel):
     objects = SiteManager.as_manager()
 
     pid = PIDField()
@@ -79,10 +76,3 @@ class Base(ModelMeta, PolymorphicModel, TimeStampedModel):
                 _("Can create, view, update or delete any model associated with the research database"),
             ),
         ]
-
-
-# class Sample(Base):
-#     pass
-
-#     class Meta:
-#         abstract = True

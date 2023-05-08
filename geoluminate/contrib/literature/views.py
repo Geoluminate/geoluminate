@@ -44,6 +44,8 @@ class PublicationDetail(DetailView):
 @datatables.register
 class AuthorList(DatatablesReadOnlyView):
     model = Author
+    template_name = "literature/authors_list.html"
+
     queryset = Author.objects.with_work_counts().filter(as_lead__gt=0)
     search_fields = ("family", "given")
     fields = [

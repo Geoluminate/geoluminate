@@ -6,23 +6,19 @@ from django.contrib.admin import site
 from django.urls import include, path
 from django.views import defaults as default_views
 
+from geoluminate.urls import I18N_URLS, NON_I18N_URLS
+
 # register all adminactions
 actions.add_to_site(site)
 
-NON_I18N_URLS = [
-    path("api/", include("geoluminate.contrib.api.urls")),
+urlpatterns = [
+    *NON_I18N_URLS,
+    *i18n_patterns(*I18N_URLS),
 ]
 
-urlpatterns = (
-    NON_I18N_URLS
-    # i18n patterns will adapt their language to the end user if translations exist
-    + i18n_patterns(
-        # add any other i18n patterns ABOVE this line
-        path("", include("geoluminate.urls")),
-    )
-    + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
 urlpatterns += [
     path(
         "400/",

@@ -7,18 +7,6 @@ from literature.models import Literature
 
 
 class Publication(Literature):
-    # owner = models.ForeignKey(get_user_model(),
-    #                           verbose_name=_('owner'),
-    #                           related_name='publications',
-    #                           blank=True, null=True,
-    #                           on_delete=models.SET_NULL)
-    # status_choices = [
-    #     (0, 'awaiting review'),
-    #     (1, 'in progress'),
-    #     (2, 'verified'),
-    # ]
-    # status = models.IntegerField(choices=status_choices)
-
     def get_data(self, data_type=None):
         return {
             "intervals": self.intervals.all(),
@@ -51,4 +39,3 @@ class Publication(Literature):
 
     class Meta:
         proxy = True
-        # db_table = 'publications_publication'

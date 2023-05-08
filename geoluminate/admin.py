@@ -52,12 +52,12 @@ class ConfigurationAdmin(FrontendEditableAdminMixin, SingletonModelAdmin):
                 "fields": ("logo", "icon"),
             },
         ),
-        (
-            _("Advanced"),
-            {
-                "fields": ("remote_addr_exceptions", "trusted_proxies"),
-            },
-        ),
+        # (
+        #     _("Advanced"),
+        #     {
+        #         "fields": ("remote_addr_exceptions", "trusted_proxies"),
+        #     },
+        # ),
     )
 
     formfield_overrides = {

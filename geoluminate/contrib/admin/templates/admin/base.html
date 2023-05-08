@@ -52,8 +52,8 @@
             rel="stylesheet">
     {% endif %}
     <!-- Django Tellme: feeback.js CSS file -->
-    <link href="{% static 'tellme/vendor/feedback/feedback.css' %}"
-          rel="stylesheet">
+    {% comment %} <link href="{% static 'tellme/vendor/feedback/feedback.css' %}" {% endcomment %}
+          {% comment %} rel="stylesheet"> {% endcomment %}
     {% block extrastyle %}{% endblock %}
     {% block extrahead %}{% endblock %}
   </head>
@@ -441,8 +441,8 @@
     <script src="{% static "jazzmin/js/main.js" %}"></script>
     <!-- Django TellMe -->
     {% if not is_popup %}
-      <script src="{% static 'tellme/vendor/es6-promise/es6-promise.auto.js' %}"></script>
-      <script src="{% static 'tellme/vendor/feedback/feedback.js' %}"></script>
+      {% comment %} <script src="{% static 'tellme/vendor/es6-promise/es6-promise.auto.js' %}"></script> {% endcomment %}
+      {% comment %} <script src="{% static 'tellme/vendor/feedback/feedback.js' %}"></script> {% endcomment %}
     {% endif %}
     {% if jazzmin_settings.custom_js %}
       <script src="{% static jazzmin_settings.custom_js %}"></script>

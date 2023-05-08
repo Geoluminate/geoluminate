@@ -1,0 +1,17 @@
+{% load static sekizai_tags %}
+<div class='container pt-5'>
+ <header class='header'>
+   <strong>{% trans "Literature Catalogue" %}</strong>
+ </header>
+ <section id='author-list' class='main'>
+   <table id='mainTable' data-url="{{ remote_url }}" class="table table-sm table-striped table-hover w-100" style='margin-top:0 !important;'>
+    <thead class="table-light text-capitalize"></thead>
+  </table>
+ </section>
+</div>
+
+{% addtoblock "css" %}<link rel="stylesheet" type="text/css" href="{% static 'datatables/datatables.min.css' %}"/>{% endaddtoblock %}
+
+{% comment %} Datatables and Editor.js {% endcomment %}
+{% addtoblock "js" %}<script src="{% static 'datatables/datatables.min.js' %}"></script>{% endaddtoblock %}
+{% addtoblock "js" %}<script src="{% static 'datatables/remoteTable.js' %}"></script>{% endaddtoblock %}

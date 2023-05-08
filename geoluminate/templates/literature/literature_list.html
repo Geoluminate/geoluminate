@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+{% load literature %}
+{% load i18n literature crispy_forms_tags static i18n cms_tags sekizai_tags %}
+
+{% block head_title %}
+  {% trans "Literature" %}
+{% endblock head_title %}
+{% block nav_title_bold %}
+  {% trans "Literature" %}
+{% endblock %}
+{% block nav_title %}
+  {% trans "Catalogue" %}
+{% endblock nav_title %}
+{% block head %}
+  {{ block.super }}
+  {{ filter.form.media.css }}
+{% endblock head %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'vendor/DataTables/bootstrap5/datatables.min.css' %}">
+{% endblock style %}
+
+{% block app_menu %}
+<button class='btn btn-sm rounded-pill btn-outline-primary'
+          onclick="$('#rightSidebar').toggleClass('show')">
+    {% trans "Filter" %}
+  </button>
+  <button class="btn btn-sm rounded-pill btn-outline-primary"
+          type="button"
+          id="dropdownMenuButton"
+          data-bs-toggle="dropdown"
+          aria-expanded="false">
+    {% trans "Years" %}
+  </button>
+  <ul class="dropdown-menu p-2" aria-labelledby="dropdownMenuButton">
+    <label for="customRange1" class="form-label" hidden>{% trans "Year range" %}</label>
+    <input type="range" class="form-range" id="customRange1">
+  </ul>
+{% endblock app_menu %}
+
+{% block content %}
+  <div class='container pt-5'>
+    <header class='header'>
+      <strong>{% trans "Literature Catalogue" %}</strong>
+    </header>
+    <section id='publication-list' class='main'>
+      <table id="example" class="display" style="display: none;" cellspacing="0" width="100%"></table>
+      <div id="new-list" style="display: none;" />
+    </section>
+  </div>
+
+
+  <div id='template' style="display: none;">
+    <div class="publication card mt-3">
+      <div class='d-flex'>
+        <img src="https://via.placeholder.com/300x225?text=This+is+a+placeholder!" class="img-fluid w-25 rounded-start">
+        <div class="card-body">
+            <i class='me-auto data-name'></i>
+            <h4 class="card-title data-engine"></h4>
+            <h5 class="card-subtitle mb-2 text-muted data-platform"></h5>
+            <p class="card-text abstract data-version"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% addtoblock "js" %}
+<script src="{% static "vendor/DataTables/bootstrap5/datatables.min.js" %}"></script>
+<script>
+ 
+  $(function () {
+    var table = $('#example').DataTable({
+      "data": [
+         // some rows data
+         {'name':'Trident','engine':'Internet Explorer 4.0','platform':'Win 95+','version':'4','grade':'X'},
+         {'name':'Trident','engine':'Internet Explorer 5.0','platform':'Win 96+','version':'4','grade':'y'},
+         {'name':'Test','engine':'Internet Explorer 4.0','platform':'Win 97+','version':'4','grade':'n'},
+         {'name':'Trident','engine':'Internet Explorer 3.0','platform':'Win 99+','version':'4','grade':'X'},
+         {'name':'Trident','engine':'Internet Explorer 4.0','platform':'Win 985+','version':'4','grade':'e'},
+         {'name':'Trident','engine':'Internet Explorer 1.0','platform':'Win 93+','version':'4','grade':'X'},
+         {'name':'Trident','engine':'Internet Explorer 4.0','platform':'Win 9+','version':'4','grade':'X'},
+         {'name':'Trident','engine':'Internet Explorer 4.0','platform':'Win 92+','version':'4','grade':'X'},
+      ],
+      "columns": [
+        { "title": "Engine", data: 'name' },
+        { "title": "Browser", data: 'engine' },
+        { "title": "Platform", data: 'platform' },
+        { "title": "Version", "class": "center", data: 'version' },
+        { "title": "Grade", "class": "center", data: 'grade' }
+      ],
+      "initComplete": function(settings, json) {
+         // show new container for data
+        $('#new-list').insertBefore('#example');
+        $('#new-list').show();
+      },
+      "rowCallback": function( row, data ) {
+         // on each row callback
+        var template = $("#template").clone().children().first()
+        
+        $.each(data, function(key, val){
+          template.find(".data-" + key).text(val);
+        });
+
+        template.appendTo('#new-list');
+      },
+      "preDrawCallback": function( settings ) {
+         // clear list before draw
+        $('#new-list').empty();
+      },
+      "searchPanes": {
+        layout: 'columns-1'
+      },
+    });
+  
+  new $.fn.dataTable.Buttons(table, {
+       buttons: [
+         {
+           extend: 'print',
+           exportOptions: {
+               columns: ':not(.noPrint) :visible'
+           },
+           className: 'btn btn-sm rounded-pill btn-outline-primary bg-white'
+         },
+         {
+           extend: 'collection',
+           className: 'btn btn-sm rounded-pill btn-outline-primary bg-white',
+           text: 'Export',
+           buttons: [ 
+             {
+               extend: 'csv',
+               exportOptions: {
+                   columns: ':not(.noPrint) :visible'
+               }
+             },
+             {
+               extend: 'excel',
+               exportOptions: {
+                   columns: ':not(.noPrint) :visible'
+               }
+             },
+             {
+               extend: 'pdf',
+               exportOptions: {
+                   columns: ':not(.noPrint) :visible'
+               }
+             },
+         ],
+         },
+           {
+           extend: 'colvis',
+           className: 'btn btn-sm rounded-pill btn-outline-primary bg-white',
+           text: 'Columns',
+           collectionLayout: 'fixed columns',
+           collectionTitle: 'Column visibility control',
+           columns: ':not(.noVis)'
+       },
+        {% comment %} 'colvisRestore', {% endcomment %}
+       ],
+   }); 
+  
+  table.buttons().container().appendTo( $('#appmenu') );
+  table.searchPanes.container().appendTo( $('#rightSidebar>.sidebar-body') );
+  });
+
+</script>
+
+
+
+    {% endaddtoblock %}
+  {% endblock content %}
+{% block sidebar_right %}
+    {% include 'geoluminate/components/sidebar.html' %}
+{% endblock sidebar_right %}
+  {% comment %}
+{% block modals %}
+{% include "review/modals/nominate.html" with modal_id='genericModal' %}
+  {% endblock modals %} {% endcomment %}

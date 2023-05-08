@@ -5,7 +5,7 @@ from geoluminate.core.mixins import FieldSetMixin
 
 
 class MapView(TemplateView):
-    template_name = "gis/application.html"
+    template_name = "geoluminate/mapping/application.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

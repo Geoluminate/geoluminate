@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load literature %}
+{% load i18n literature crispy_forms_tags static i18n cms_tags sekizai_tags %}
+
+{% block head_title %}
+  {% trans "Literature" %}
+{% endblock head_title %}
+{% block nav_title_bold %}
+  {% trans "Literature" %}
+{% endblock %}
+{% block nav_title %}
+  {% trans "Catalogue" %}
+{% endblock nav_title %}
+{% block head %}
+  {{ block.super }}
+  {{ filter.form.media.css }}
+{% endblock head %}
+
+{% comment %} {% block content %}
+<h1 class='display-3'>Literature List</h1>
+<hr>
+{% endblock content %} {% endcomment %}
+
+{% block app_menu %}
+  <button class='btn btn-sm rounded-pill btn-outline-primary'
+          onclick="$('#rightSidebar').toggleClass('show')">
+    {% trans "Filter" %}
+  </button>
+  <button class="btn btn-sm rounded-pill btn-outline-primary"
+          type="button"
+          id="dropdownMenuButton"
+          data-bs-toggle="dropdown"
+          aria-expanded="false">
+    {% trans "Years" %}
+  </button>
+  <ul class="dropdown-menu p-2" aria-labelledby="dropdownMenuButton">
+    <label for="customRange1" class="form-label" hidden>{% trans "Year range" %}</label>
+    <input type="range" class="form-range" id="customRange1">
+  </ul>
+{% endblock app_menu %}
+
+{% block content %}
+  <div class='container pt-5'>
+    <header class='header'>
+      <strong>{% trans "Literature Catalogue" %}</strong>
+    </header>
+    <section id='publication-list' class='main'>
+      {% comment %} {% include "literature/partials/publication_list.html" %} {% endcomment %}
+      {% bibliography literature_list "publication" %}
+
+    </section>
+  </div>
+  {% addtoblock "js" %}
+    <script src="{% static "geoluminate/js/shave.min.js" %}"></script>{% endaddtoblock %}
+    {% addtoblock "js" %}
+      <script>
+        shave('.abstract', 150)
+      </script>
+    {% endaddtoblock %}
+  {% endblock content %}
+  {% comment %} {% block sidebar_right %}
+    {% include 'literature/components/sidebar.html' %}
+  {% endblock sidebar_right %} {% endcomment %}
+  {% comment %}
+{% block modals %}
+{% include "review/modals/nominate.html" with modal_id='genericModal' %}
+  {% endblock modals %} {% endcomment %}

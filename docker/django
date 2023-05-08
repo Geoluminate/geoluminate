@@ -2,7 +2,7 @@
 set -e
 
 python manage.py migrate
-python manage.py collectstatic --noinput
+# python manage.py collectstatic --noinput
 exec python manage.py runserver 0.0.0.0:8000
 
 # it would be nice to run the app with runserver_plus but there appears to be issues with

@@ -3,7 +3,7 @@ from import_export.resources import ModelResource
 
 from geoluminate.db.fields import ControlledVocabularyBase
 
-from .widgets import VocabularyM2MWidget, VocabularyWidget
+# from .widgets import VocabularyM2MWidget, VocabularyWidget
 
 # from tqdm import tqdm
 
@@ -13,15 +13,15 @@ class ResourceMixin(ModelResource):
     cleans the result by removing unneccesary columns"""
 
     WIDGETS_MAP = ModelResource.WIDGETS_MAP
-    WIDGETS_MAP.update(
-        **{
-            "ChoicesOneToOne": VocabularyWidget,
-            "ChoicesForeignKey": VocabularyWidget,
-            "ChoicesManyToMany": VocabularyM2MWidget,
-            "ControlledVocabFK": VocabularyWidget,
-            "ControlledVocabM2M": VocabularyM2MWidget,
-        }
-    )
+    # WIDGETS_MAP.update(
+    #     **{
+    #         "ChoicesOneToOne": VocabularyWidget,
+    #         "ChoicesForeignKey": VocabularyWidget,
+    #         "ChoicesManyToMany": VocabularyM2MWidget,
+    #         "ControlledVocabFK": VocabularyWidget,
+    #         "ControlledVocabM2M": VocabularyM2MWidget,
+    #     }
+    # )
 
     @classmethod
     def field_from_django_field(cls, field_name, django_field, readonly):

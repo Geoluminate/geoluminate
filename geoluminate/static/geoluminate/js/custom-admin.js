@@ -35,6 +35,10 @@ $(function() {
           $btn.attr('id', 'feedback-btn');
       }
   }
+
+
+
+
 //   $.feedback({
 //       ajaxURL: "{% url 'tellme:post_feedback' %}",
 //       html2canvasURL: "{% block html2canvasURL %}{% static 'tellme/vendor/html2canvas/html2canvas.js' %}{%  endblock %}",

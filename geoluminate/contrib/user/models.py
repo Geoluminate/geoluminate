@@ -9,7 +9,7 @@ from .managers import UserManager
 
 
 class User(AbstractUser):
-    objects = UserManager()  # type: ignore[var-annotated]
+    objects = UserManager()
 
     username = None  # type: ignore[assignment]
     email = models.EmailField(_("email address"), unique=True)

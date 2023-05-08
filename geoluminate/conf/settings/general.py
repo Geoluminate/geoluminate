@@ -173,6 +173,7 @@ GEOLUMINATE_APPS = [
     "django_better_admin_arrayfield",  # nice admin widget for postgres array fields
     # GEOLUMINATE DEFAULT PLUGINS
     "literature",
+    "formset",
     # research projects
     # research_projects
     # "licensing",

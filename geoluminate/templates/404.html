@@ -1,12 +1,10 @@
-{% extends "base.html" %}
-{% block title %}Page not found{% endblock %}
-{% block content %}
- <h1>Page not found</h1>
- <p>
-  {% if exception %}
-   {{ exception }}
-  {% else %}
-   This is not the page you were looking for.
-  {% endif %}
- </p>
-{% endblock content %}
+{% extends "geoluminate/base_error.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "404 Not Found" %}{% endblock %}
+
+{% block label %}{% trans "404 Not Found" %}{% endblock %}
+{% block message %}
+{% trans "The requested resource does not exist!" %}
+
+{% endblock %}

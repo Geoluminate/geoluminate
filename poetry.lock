@@ -1084,18 +1084,6 @@ files = [
 django = "*"
 
 [[package]]
-name = "django-better-admin-arrayfield"
-version = "1.4.2"
-description = "Better ArrayField widget for admin"
-category = "main"
-optional = false
-python-versions = "*"
-files = [
-    {file = "django-better-admin-arrayfield-1.4.2.tar.gz", hash = "sha256:b45423e51bbc0aa31ef658248c058ca8b533a541be4dee9fb8bcd059f8a10a58"},
-    {file = "django_better_admin_arrayfield-1.4.2-py2.py3-none-any.whl", hash = "sha256:bfeaa0fa8210a7ea95ee996a6caaa59ecd0c923269f573e6d8319c28dcac5c88"},
-]
-
-[[package]]
 name = "django-celery-beat"
 version = "2.5.0"
 description = "Database-backed Periodic Tasks."
@@ -1459,22 +1447,6 @@ Django = ">=2.2"
 tests = ["coverage"]
 
 [[package]]
-name = "django-laboratory"
-version = "0.0.1"
-description = "A Django application for managing collections of scientific instruments"
-category = "main"
-optional = false
-python-versions = ">=3.8,<4.0"
-files = [
-    {file = "django_laboratory-0.0.1-py3-none-any.whl", hash = "sha256:472708627cbabd88bdc9f49e4dcd1a643001c2a922b5a835134f54582201a9e5"},
-    {file = "django_laboratory-0.0.1.tar.gz", hash = "sha256:742908ec9e9c7389f33c01e17a2e5c1e08d49cd4e126d05bb3ae8a2ffd257881"},
-]
-
-[package.dependencies]
-django = ">=3.2"
-django-model-utils = ">=4.3.1,<5.0.0"
-
-[[package]]
 name = "django-libsass"
 version = "0.9"
 description = "A django-compressor filter to compile SASS files using libsass"
@@ -1492,14 +1464,14 @@ libsass = ">=0.7.0,<1"
 
 [[package]]
 name = "django-literature"
-version = "0.1.2"
+version = "0.1.5"
 description = "A scientific literature management tool for Django"
 category = "main"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "django_literature-0.1.2-py3-none-any.whl", hash = "sha256:3e5864783afaee6f45f6b1ede5dda0037b21700ad42e8a76697af96b1ce65977"},
-    {file = "django_literature-0.1.2.tar.gz", hash = "sha256:2d2ec4e251b4978f7194a635b69bf5eb53a0971e9a2be7efceb04a6720c9d359"},
+    {file = "django_literature-0.1.5-py3-none-any.whl", hash = "sha256:76c1d2362464e6560a828192a6691198e7e78f9dfeaab377f4ae7867be4a5a33"},
+    {file = "django_literature-0.1.5.tar.gz", hash = "sha256:37a975d8d025ff4e8800b922bc79fe757304217c0d37ef85b753e5a8afac6834"},
 ]
 
 [package.dependencies]
@@ -5341,4 +5313,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.8,<4.0"
-content-hash = "b27fb5039df4895e09546d56ab86bf14e2aa87056807f0da2dcc5e29dda70874"
+content-hash = "34869516cac3a1774771e59a496002b80338f838f933bebd431ff01a98a6c3b0"

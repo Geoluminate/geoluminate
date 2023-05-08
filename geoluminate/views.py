@@ -1,14 +1,10 @@
 from django.conf import settings
-from django.contrib.admindocs import utils, views
-from django.db import models
 from django.http import JsonResponse
 from django.utils.module_loading import import_string
-from django.views.generic import TemplateView
 from django_select2.views import AutoResponseView
 
 # from geoluminate.conf import settings
 from geoluminate.core.datatables.views import DatatablesReadOnlyView
-from geoluminate.utils import get_database_models
 
 
 # @datatables.register

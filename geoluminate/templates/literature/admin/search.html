@@ -1,0 +1,64 @@
+{% extends "admin/change_form.html" %}
+{% load i18n admin_urls static admin_modify %}
+
+{% block extrastyle  %}{{ block.super }}
+  {{ form.media.css }}
+  <style>
+    .csl-entry {
+      display: block;
+      margin-bottom: 1em;
+    }
+  </style>
+
+{% endblock %}
+
+{% comment %} {% block branding %}<h1>{% trans "Django Literature" %}</h1> {% endblock %} {% endcomment %}
+
+{% block form_top %}<h1>Online search</h1>{% endblock %}
+{% block field_sets %}
+<div class="col-12 col-lg-9">
+  <div class="card">
+      <div class="card-body">
+          {% comment %} {% get_changeform_template adminform as changeform_template %} {% endcomment %}
+          {% comment %} {% include changeform_template %} {% endcomment %}
+          <fieldset class="module aligned {{ form.classes }}">
+            {% for field in form %}
+              <div class="form-row{% if field.name %} field-{{ field.name }}{% endif %}{% if field.is_hidden %} hidden{% endif %}">
+                <ul class="errorlist"></ul>
+                <div class="flex-container">
+                  {{ field.label_tag }}
+                  {{ field }}
+                </div>
+                {% if field.help_text %}
+                  <div class="help" {% if field.id_for_label %} id="{{ field.id_for_label }}_helptext"{% endif %}>
+                      <div>{{ field.help_text|safe }}</div>
+                  </div>
+                {% endif %}
+                
+              </div>
+          
+            {% endfor %}
+          </fieldset>
+      </div>
+  </div>
+</div>
+{% endblock %}
+
+
+{% block extrajs %}
+{{ block.super }}
+{{ form.media.js }}
+{% endblock extrajs %}
+
+
+{% block submit_buttons_bottom %}
+  <div>
+    <div class="form-group">
+      <input type="submit" value="{% trans 'Save' %}" class="btn {{ jazzmin_ui.button_classes.success }} form-control" name="_save" disabled>
+    </div>
+  </div>
+{% endblock %}
+
+
+
+

@@ -1,0 +1,101 @@
+{% extends "admin/change_list.html" %}
+{% load i18n admin_list static %}
+
+{% block extrastyle %}
+{{ block.super }}
+{% comment %} <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap4.min.css"> {% endcomment %}
+<link href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.13.4/af-2.5.3/b-2.3.6/b-colvis-2.3.6/b-html5-2.3.6/b-print-2.3.6/cr-1.6.2/date-1.4.1/fc-4.2.2/fh-3.3.2/kt-2.9.0/r-2.4.1/rg-1.3.1/rr-1.3.3/sc-2.1.1/sb-1.4.2/sp-2.1.2/sl-1.6.2/sr-1.2.2/datatables.min.css" rel="stylesheet"/>
+{% endblock extrastyle %}
+
+
+
+{% block title %}{% trans "Literature" %} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block object-tools-items %}
+    <a class="related-widget-wrapper-link btn btn-secondary" data-popup="yes" href="{{ request.path }}search/?_popup=1">
+      <i class='fas fa-search'></i>
+      &nbsp; {% trans "Search" %}
+    </a>
+    <a class="related-widget-wrapper-link btn btn-secondary" href="{{ request.path }}upload/?_popup=1">
+      <i class="fas fa-file-upload"></i>
+      &nbsp; {% trans "Upload" %}
+    </a>
+  {{ block.super }}
+{% endblock %}
+
+{% block result_list %}
+<div class="change-list-actions row pb-3">
+  <div class="col-12">
+      {% if action_form and actions_on_top and cl.show_admin_actions %}
+          {% admin_actions %}
+      {% endif %}
+  </div>
+</div>
+
+{% if result_hidden_fields %}
+<div class="hiddenfields">
+    {% for item in result_hidden_fields %}{{ item }}{% endfor %}
+</div>
+{% endif %}
+
+<div class="card">
+  <div class="card-body table-responsive p-0">
+    <table id='result_list' class='table table-striped'>
+      <thead>
+        <tr>
+          <th data-default-content='<input type="checkbox" name="_selected_action" value="0" class="action-select">' 
+            data-visible="true"
+            data-width='16px'
+            data-orderable='false'
+            class="action-checkbox-column djn-checkbox-select-all">
+            <div class="text"><span><input type="checkbox" id="action-toggle"></span></div>
+          </th>
+          <th data-default-content=' '
+            data-width='16px'
+            data-visible="true"
+            data-orderable='false'
+            >
+            <div class="text">{% trans "Edit" %}</div>
+          </th>
+          {% for field, vals in datatables_fields.items %}
+            <th data-default-content=" " 
+                data-data="CSL.{{ field }}" 
+                data-visible="false">
+                <div class="text">{{ vals.title|title }}</div>
+            </th>
+          {% endfor %}
+        </tr>
+      </thead>
+    </table>
+  </div>
+</div>
+
+{% if action_form and actions_on_bottom and cl.show_admin_actions %}
+  <div class="row">
+      <div class="col-12">
+          {% admin_actions %}
+      </div>
+  </div>
+{% endif %}
+
+
+
+
+
+
+
+
+{% endblock %}
+
+{% block extrajs %}
+<script>
+  const iconURL = "{% static 'literature/icons/icons.svg' %}";
+  const URL = "/admin/literature/api/literature/literatures/"
+  
+</script>
+<script src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.13.4/af-2.5.3/b-2.3.6/b-colvis-2.3.6/b-html5-2.3.6/b-print-2.3.6/cr-1.6.2/date-1.4.1/fc-4.2.2/fh-3.3.2/kt-2.9.0/r-2.4.1/rg-1.3.1/rr-1.3.3/sc-2.1.1/sb-1.4.2/sp-2.1.2/sl-1.6.2/sr-1.2.2/datatables.min.js"></script>
+
+{% comment %} <script src="{% static "vendor/DataTables/datatables.min.js" %}"></script> {% endcomment %}
+<script src="{% static "literature/js/datatablesHyperlink.js" %}"></script>
+<script src="{% static "literature/js/admin/change_list.js" %}"></script>
+{% endblock extrajs %}

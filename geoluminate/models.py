@@ -11,7 +11,6 @@ from literature.fields import LiteratureM2M
 from meta.models import ModelMeta
 from model_utils import FieldTracker
 from model_utils.models import TimeStampedModel
-from polymorphic.models import PolymorphicModel
 from solo.models import SingletonModel
 
 from geoluminate.contrib.gis.managers import SiteManager
@@ -85,7 +84,7 @@ class GlobalConfiguration(SingletonModel):
         return force_str(_("Configuration"))
 
 
-class Geoluminate(ModelMeta, PolymorphicModel, TimeStampedModel):
+class Geoluminate(ModelMeta, TimeStampedModel):
     pid = PIDField()
 
     IGSN = models.IntegerField(
@@ -151,12 +150,6 @@ class Geoluminate(ModelMeta, PolymorphicModel, TimeStampedModel):
                 _("Can create, view, update or delete any model associated with the research database"),
             ),
         ]
-
-    def save(self, *args, **kwargs):
-        # round coordinates to the specified precision
-        # self.lat = round(self.lat, self.geom_precision)
-        # self.lon = round(self.lon, self.geom_precision)
-        return super().save(*args, **kwargs)
 
     @property
     def latitude(self):

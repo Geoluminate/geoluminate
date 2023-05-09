@@ -68,6 +68,12 @@ jobs:
           images: ${{ github.repository }}
           tags: latest
 
+      - name: Login to DockerHub
+        uses: docker/login-action@v1 
+        with:
+          username: "geoluminate"
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
       - name: "📦 docker build"
         uses: docker/build-push-action@v2
         with:

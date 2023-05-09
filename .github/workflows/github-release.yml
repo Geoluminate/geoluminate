@@ -1,0 +1,15 @@
+# Publishes a new release to GitHub when a new tag is pushed
+name: Publish GH Release
+on:
+  push:
+    tags:
+      - "v*"
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        
+      - name: Release
+        uses: softprops/action-gh-release@v1

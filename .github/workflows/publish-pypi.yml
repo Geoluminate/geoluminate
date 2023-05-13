@@ -14,6 +14,8 @@ jobs:
     permissions:
       # IMPORTANT: this permission is mandatory for trusted publishing
       id-token: write
+    environment:
+        name: pypi_release
     steps:
       - name: Check out
         uses: actions/checkout@v3

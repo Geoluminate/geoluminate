@@ -14,9 +14,6 @@ jobs:
     permissions:
       # IMPORTANT: this permission is mandatory for trusted publishing
       id-token: write
-    environment:
-      name: pypi
-      url: https://pypi.org/p/geoluminate
     steps:
       - name: Check out
         uses: actions/checkout@v3

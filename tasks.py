@@ -53,7 +53,7 @@ def docs(c):
 
 
 @task
-def release(c, rule=""):
+def release(c, rule="patch"):
     """
     Create a new git tag and push it to the remote repository.
 

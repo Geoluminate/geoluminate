@@ -79,6 +79,9 @@ django-literature = "^0.1.2"
 django-filer = "^2.2.4"
 django-laboratory = "^0.0.1"
 flower = "^1.2.0"
+django-treebeard = "<4.5"
+django-modeltranslation = "^0.18.9"
+django-redis = "^5.2.0"
 
 [tool.poetry.group.dev.dependencies]
 coverage = "^7.2.1"
@@ -155,6 +158,12 @@ disable_error_code = [
 ]
 
 [[tool.mypy.overrides]]
+module = "geoluminate.contrib.controlled_vocabulary.models"
+disable_error_code = [
+    "var-annotated",
+]
+
+[[tool.mypy.overrides]]
 module = "geoluminate.contrib.gis.base"
 disable_error_code = [
     "var-annotated",
@@ -173,7 +182,7 @@ django_settings_module = "tests.settings"
 target-version = "py37"
 line-length = 120
 fix = true
-exclude = ['docs/', 'migrations/', 'tests/*.py']
+exclude = ['docs/', 'migrations/', 'tests/*.py','geoluminate/conf/*',]
 select = [
     # flake8-2020
     "YTT",

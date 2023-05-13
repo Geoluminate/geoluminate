@@ -1,12 +1,50 @@
 import os
+import socket
+import sys
 
+import environ
+import yaml
 from django.contrib.messages import constants as messages
 
-BASE_DIR = os.getcwd()
+# load the geoluminate.yml configuration file
+config = os.getenv("GEOLUMINATE_CONFIG_PATH", os.path.join(BASE_DIR, "geoluminate.yml"))
+
+sys.path.append(os.path.join(BASE_DIR, "project", "apps"))  # at the bottom of the file
+
+with open(config) as f:
+    GEOLUMINATE = yaml.safe_load(f)
+
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False),
+    DJANGO_SECRET_KEY=(str, "HoVcnlU2IqQN1YqvsY7dQ1xtdhLavAeXn1mUEAI0Wu8vkDbodEqRKkJbHyMEQS5F"),
+    SHOW_DEBUG_TOOLBAR=(bool, False),
+    CACHE=(bool, False),
+)
 
 
-SECRET_KEY = os.environ.get("SECRET_KEY")
+# print(env("COMPRESS_ENABLED"))
 
+READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=False)
+if READ_DOT_ENV_FILE:
+    # OS environment variables take precedence over variables from .env
+    env.read_env(str(BASE_DIR / ".env"))
+
+# SECRET_KEY = os.environ.get("SECRET_KEY")
+
+# https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
+SECRET_KEY = env("DJANGO_SECRET_KEY")
+
+# Local time zone. Choices are
+# http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
+# though not all of them may be available with every OS.
+# In Windows, this must be set to your system time zone.
+TIME_ZONE = "UTC"
+""""""
+
+SITE_NAME = GEOLUMINATE["database"]["name"]
+
+META_SITE_NAME = SITE_NAME
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#use-tz
 USE_TZ = True
@@ -15,14 +53,13 @@ USE_TZ = True
 SITE_ID = 1
 
 
-INTERNAL_IPS = [
-    "127.0.0.1",
-]
+# https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "0.0.0.0"]
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+# https://docs.djangoproject.com/en/dev/ref/settings/#admins
+ADMINS = [(admin["name"], admin["email"]) for admin in GEOLUMINATE["application"]["developers"]]
+MANAGERS = ADMINS
 
-# URLS
-# ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#root-urlconf
 ROOT_URLCONF = "config.urls"
 # https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
@@ -78,6 +115,7 @@ GEOLUMINATE_APPS = [
     "jazzmin",
     "postgres_metrics.apps.PostgresMetrics",
     "polymorphic",
+    "modeltranslation",
     # core Django apps
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -93,6 +131,7 @@ GEOLUMINATE_APPS = [
     # "django.forms",
     # geoluminate configuration and user accounts
     "geoluminate",
+    "geoluminate.contrib.controlled_vocabulary",
     "geoluminate.contrib.user",
     "geoluminate.contrib.api",
     "geoluminate.contrib.literature",
@@ -184,6 +223,7 @@ GEOLUMINATE_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "cms.middleware.utils.ApphookReloadMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -201,15 +241,47 @@ MIDDLEWARE = [
     "geoluminate.middleware.GeoluminateLockdownMiddleware",
 ]
 
-
-# MEDIA
-# ------------------------------------------------------------------------------
-
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-url
 MEDIA_URL = "/media/"
 
 
-# if os.getenv("DJANGO_ENV") == "development":
+hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+INTERNAL_IPS = [".".join(ip.split(".")[:-1] + ["1"]) for ip in ips]
 
-#     STATIC_ROOT = os.path.join(BASE_DIR, "static")
-#     MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+# Direct Django to the following directories to search for project fixtures,
+# staticfiles and locales
+# --------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#fixture-dirs
+FIXTURE_DIRS = (str(BASE_DIR / "project" / "fixtures"),)
+
+# https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
+
+STATICFILES_DIRS = [
+    str(BASE_DIR / "project" / "static"),
+]
+
+# https://docs.djangoproject.com/en/dev/ref/settings/#locale-paths
+LOCALE_PATHS = [str(BASE_DIR / "project" / "locale")]
+
+# Collect static and save media to the application base directory
+# --------------------------------------------------------------------------
+
+# https://docs.djangoproject.com/en/dev/ref/settings/#static-root
+STATIC_ROOT = str(BASE_DIR / "static")
+
+# https://docs.djangoproject.com/en/dev/ref/settings/#media-root
+MEDIA_ROOT = str(BASE_DIR / "media")
+
+if env("SHOW_DEBUG_TOOLBAR"):
+    GEOLUMINATE_APPS.append("debug_toolbar")
+    MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
+
+    DEBUG_TOOLBAR_CONFIG = {
+        "DISABLE_PANELS": ["debug_toolbar.panels.redirects.RedirectsPanel"],
+        "SHOW_TEMPLATE_CONTEXT": True,
+    }
+
+    # DEBUG_TOOLBAR_PANELS += [
+    #     "template_profiler_panel.panels.template.TemplateProfilerPanel",
+    # ]

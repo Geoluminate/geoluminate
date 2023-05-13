@@ -1,20 +1,23 @@
-import environ
+import tldextract
 
-env = environ.Env()
+BASE_DOMAIN = tldextract.extract(GEOLUMINATE["application"]["domain"]).domain
 
-# SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
-# """"""
 
-# EMAIL_HOST = "smtp.sendgrid.net"
-# """"""
-# EMAIL_HOST_USER = "apikey"  # this is exactly the value 'apikey'
-# """"""
-# EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
-# """"""
-# EMAIL_PORT = 587
-# """"""
-# EMAIL_USE_TLS = True
-# """"""
+# https://docs.djangoproject.com/en/dev/ref/settings/#default-from-email
+DEFAULT_FROM_EMAIL = env(
+    "DJANGO_DEFAULT_FROM_EMAIL",
+    default=f'{GEOLUMINATE["database"]["name"]} <noreply@{BASE_DOMAIN}>',
+)
+
+# https://docs.djangoproject.com/en/dev/ref/settings/#server-email
+SERVER_EMAIL = f"server@{BASE_DOMAIN}"
+
+
+# https://docs.djangoproject.com/en/dev/ref/settings/#email-host
+EMAIL_HOST = env("EMAIL_HOST", default="mailhog")
+
+# https://docs.djangoproject.com/en/dev/ref/settings/#email-port
+EMAIL_PORT = 1025
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
 EMAIL_BACKEND = env(
@@ -25,3 +28,10 @@ EMAIL_BACKEND = env(
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-timeout
 EMAIL_TIMEOUT = 5
 """"""
+
+
+# https://docs.djangoproject.com/en/dev/ref/settings/#email-subject-prefix
+EMAIL_SUBJECT_PREFIX = env(
+    "DJANGO_EMAIL_SUBJECT_PREFIX",
+    default="[Global Heat Flow Database]",
+)

@@ -1,24 +1,21 @@
 database:
-  name: "Global Heat Flow Database"
-  acronym: "GHFDB"
+  name: "Geoluminate Test Database"
+  acronym: "GTDB"
   keywords: 
-    - "heat flow"
-    - "geothermal"
-    - "geoenergy"
+    - "research"
+    - "data management"
+    - "FAIR data"
 
 governance:
-  name: "International Heat Flow Commission"
-  short_name: "IHFC"
-  website: "https://www.ihfc-iugg.org"
+  name: "Geoluminate"
+  short_name: "Geoluminate"
+  website: "https://www.geoluminate.com.au"
   custodians:
-    - name: Sven Fuchs
-      email: fuchs@gfz-potsdam.de
-    - name: Florian Neumann
-      email: f.neumann@gfz-potsdam.de
+    - name: Test User
+      email: test.user@example.com
 
 application:
-  domain: "www.heatflow.world"
-  # base_model: "geoluminate.contrib.gis.base.AbstractSite"
+  domain: "localhost:8000"
   developers:
-    - name: Sam Jennings
-      email: jennings@gfz-potsdam.de
+    - name: Test User
+      email: test.user@example.com

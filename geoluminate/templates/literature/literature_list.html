@@ -20,16 +20,9 @@
 {% endblock style %}
 
 {% block app_menu %}
-<button class='btn btn-sm rounded-pill btn-outline-primary'
+  <button id='rightSidebarToggle' class='btn btn-sm rounded-pill btn-outline-primary'
           onclick="$('#rightSidebar').toggleClass('show')">
-    {% trans "Filter" %}
-  </button>
-  <button class="btn btn-sm rounded-pill btn-outline-primary"
-          type="button"
-          id="dropdownMenuButton"
-          data-bs-toggle="dropdown"
-          aria-expanded="false">
-    {% trans "Years" %}
+    {% trans "Filters" %}
   </button>
   <ul class="dropdown-menu p-2" aria-labelledby="dropdownMenuButton">
     <label for="customRange1" class="form-label" hidden>{% trans "Year range" %}</label>
@@ -94,7 +87,6 @@
       "rowCallback": function( row, data ) {
          // on each row callback
         var template = $("#template").clone().children().first()
-        
         $.each(data, function(key, val){
           template.find(".data-" + key).text(val);
         });
@@ -106,7 +98,23 @@
         $('#new-list').empty();
       },
       "searchPanes": {
-        layout: 'columns-1'
+        layout: 'columns-1',
+        cascadePanes: true,
+        orderable: false,
+        filterChanged: function (count) {
+          if (count === 0) {
+            $('#rightSidebarToggle').find('span').remove()
+            return
+          }
+          $('#rightSidebarToggle').find('span').remove()
+          $('#rightSidebarToggle').append(`<span class="badge bg-primary">${count}</span>`)
+    
+        },
+        dtOpts: {
+          paging: true,
+          pagingType: 'numbers',
+          searching: true,
+        },
       },
     });
   
@@ -164,12 +172,9 @@
 
 
 
-    {% endaddtoblock %}
-  {% endblock content %}
+{% endaddtoblock %}
+{% endblock content %}
+
 {% block sidebar_right %}
-    {% include 'geoluminate/components/sidebar.html' %}
+    {% include 'geoluminate/components/sidebar.html' with title='Filters' %}
 {% endblock sidebar_right %}
-  {% comment %}
-{% block modals %}
-{% include "review/modals/nominate.html" with modal_id='genericModal' %}
-  {% endblock modals %} {% endcomment %}

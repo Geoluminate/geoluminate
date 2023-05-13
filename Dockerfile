@@ -17,8 +17,14 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
   libpq-dev \
   # Translations dependencies
   gettext \
+  # the python wheels for pycairo will not build without these and therefore package installation will fail. Pycairo is required through the following dependency tree django-cms > django-filer > easy-thumbnails[svg] > reportlab > pycairo
+  libcairo2 libcairo2-dev \
   # geodjango dependencies
   binutils libproj-dev gdal-bin && \
-  # install poetry for dependencies
+  # upgrade pip to the latest version
   pip install --upgrade pip && \
-  pip install "poetry==$POETRY_VERSION"
+  # install poetry for dependencies
+  pip install "poetry==$POETRY_VERSION" && \
+  # cleaning up unused files 
+  apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
+  && rm -rf /var/lib/apt/lists/*

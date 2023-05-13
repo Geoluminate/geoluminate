@@ -1,12 +1,11 @@
 version: '3'
      
 services:
-  django: &django
+  app: &app
     build:
       dockerfile: ./docker/Dockerfile
       context: .
-    image: geoluminate
-    container_name: geoluminate
+    # image: geoluminate_dev
     working_dir: /app
     volumes:
       - ./:/app:z
@@ -16,12 +15,9 @@ services:
     # entrypoint: "tail -f /dev/null"
 
   docs:
-    <<: *django
-    image: geoluminate_docs
-    container_name: geoluminate_docs
+    <<: *app
+    # image: geoluminate_docs
     working_dir: /app/docs
-    volumes:
-      - ./:/app:z
     ports:
       - "9000:9000"
     command: ../docker/docs

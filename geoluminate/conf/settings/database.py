@@ -1,17 +1,13 @@
-import environ
-
-env = environ.Env()
-
+import os
 
 # https://docs.djangoproject.com/en/stable/ref/settings/#std:setting-DEFAULT_AUTO_FIELD
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-if env.db("DATABASE_URL", ""):
-    # https://docs.djangoproject.com/en/dev/ref/settings/#databases
-    DATABASES = {
-        # DATABASE_URL var is set in compose/production/django/entrypoint.sh
-        "default": env.db("DATABASE_URL")
-    }
+# https://docs.djangoproject.com/en/dev/ref/settings/#databases
+
+
+if os.getenv("DATABASE_URL"):
+    DATABASES = {"default": env.db("DATABASE_URL")}
 
     DATABASES["default"]["ATOMIC_REQUESTS"] = True
     DATABASES["default"]["ENGINE"] = "django.contrib.gis.db.backends.postgis"

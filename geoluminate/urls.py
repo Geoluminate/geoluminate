@@ -36,6 +36,8 @@ I18N_URLS = [
 ]
 
 
+GEOLUMINATE_URLS = NON_I18N_URLS + I18N_URLS
+
 # urlpatterns = (
 #     NON_I18N_URLS
 #     + I18N_URLS

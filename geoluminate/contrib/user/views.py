@@ -41,7 +41,7 @@ def user_settings(request):
 
 
 @login_required
-def profile(request, pk):
+def profile(request):
     context = {
         "can_add_email": EmailAddress.objects.can_add_email(request.user),
         "email_form": AddEmailForm(request),

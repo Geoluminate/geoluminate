@@ -1,3 +1,5 @@
+compose-dev.yaml
+
 # Temporary and binary files
 *~
 *.ruff_cache

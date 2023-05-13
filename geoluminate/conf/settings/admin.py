@@ -2,9 +2,9 @@ from django.utils.translation import gettext_lazy as _
 
 JAZZMIN_SETTINGS = {
     # title of the window
-    "site_title": "Geoluminate Admin",
+    "site_title": SITE_NAME,
     # Title on the login screen (19 chars max) (defaults to current_admin_site.site_header if absent or None)
-    "site_header": "Geoluminate",
+    "site_header": SITE_NAME,
     # Title on the brand (19 chars max) (defaults to current_admin_site.site_header if absent or None)
     "site_brand": " ",
     # Logo to use for your site, must be present in static files, used for brand on top left
@@ -21,7 +21,7 @@ JAZZMIN_SETTINGS = {
     # Welcome text on the login screen
     "welcome_sign": "Welcome to the library",
     # Copyright on the footer
-    "copyright": "Geoluminate Ltd",
+    "copyright": GEOLUMINATE["governance"]["name"],
     # List of model admins to search from the search bar, search bar omitted if excluded
     # If you want to use a single search field you dont need to use a list, you can use a simple string
     # "search_model": ["auth.User", "auth.Group"],
@@ -105,7 +105,7 @@ JAZZMIN_SETTINGS = {
     ],
     "hide_models": [],
     # List of apps (and/or models) to order the side menu
-    "order_with_respect_to": ["geoluminate"],
+    "order_with_respect_to": ["geoluminate", GEOLUMINATE["database"]["acronym"].lower()],
     # Custom links to append to app groups, keyed on app name
     "custom_links": {
         "geoluminate": [
@@ -252,4 +252,4 @@ JAZZMIN_UI_TWEAKS = {
 }
 
 # Django Admin URL.
-ADMIN_URL = "admin/"
+ADMIN_URL = env("DJANGO_ADMIN_URL", default="admin/")

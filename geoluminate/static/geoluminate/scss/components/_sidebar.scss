@@ -1,7 +1,7 @@
 .sidebar {
-  // @extend .offcanvas;
-  // display: flex;
-  // position: relative;
+  @extend .offcanvas;
+  display: flex;
+  position: relative;
   z-index: 100;
   flex: 0 0 $sidebar-width;
   flex-direction: column;
@@ -15,10 +15,7 @@
 	transition: .3s;
 
   &-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: $offcanvas-padding-y $offcanvas-padding-x;
+    @extend .offcanvas-header;
   
     .btn-close {
       padding: ($offcanvas-padding-y * .5) ($offcanvas-padding-x * .5);
@@ -34,12 +31,14 @@
   }
 
   &-body {
+    // @extend .offcanvas-body;
+
     flex-grow: 1;
     // padding: $offcanvas-padding-y $offcanvas-padding-x;
     overflow-y: auto;
-    // overflow: auto;
+    overflow: auto;
     height: 1;
-    // overflow-y: hidden;
+    overflow-y: hidden;
   }
 
   &-start {

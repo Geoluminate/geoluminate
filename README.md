@@ -13,12 +13,11 @@
 <!-- ![PyPI - Downloads](https://img.shields.io/pypi/dm/geoluminate) -->
 <!-- ![PyPI - Status](https://img.shields.io/pypi/status/geoluminate) -->
 
-A Django application for managing collections of scientific instruments
 
 Documentation
 -------------
 
-The full documentation is at https://ssjenny90.github.io/geoluminate/
+The full documentation is at https://geoluminate.github.io/geoluminate/
 
 Quickstart
 ----------

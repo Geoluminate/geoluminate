@@ -50,16 +50,10 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
   && rm -rf /var/lib/apt/lists/*
 
 # copy python dependency wheels from python-build-stage
-# COPY --from=builder /requirements.txt ./requirements.txt
-
-# copy python dependency wheels from python-build-stage
 COPY --from=builder /usr/src/app/wheels /wheels/
 
 # use wheels to install python dependencies
 RUN pip install --no-cache-dir --no-index --find-links=/wheels/ /wheels/* \
 	&& rm -rf /wheels/
-
-# # use wheels to install python dependencies
-# RUN pip install requirements.txt --no-cache-dir --no-index
 
 # CMD ["./entrypoint"]

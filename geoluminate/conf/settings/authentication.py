@@ -110,3 +110,6 @@ SOCIALACCOUNT_PROVIDERS = {
 
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
 SOCIALACCOUNT_ADAPTER = "geoluminate.contrib.user.adapters.SocialAccountAdapter"
+
+ACCOUNT_ALLOW_REGISTRATION = env.bool("DJANGO_ACCOUNT_ALLOW_REGISTRATION", True)
+"""allow registration"""

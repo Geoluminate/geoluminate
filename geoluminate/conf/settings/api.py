@@ -43,8 +43,8 @@ REST_FRAMEWORK = {
 # See more configuration options at https://drf-spectacular.readthedocs.io/en/latest/settings.html#settings
 SPECTACULAR_SETTINGS = {
     "SCHEMA_PATH_PREFIX": r"/api/v[0-9]",
-    "TITLE": "World Heat Flow Database API",
-    "DESCRIPTION": "Documentation for version 1.0 of the public API of the World Heat Flow Database Project.",
+    "TITLE": f"{SITE_NAME} API",
+    "DESCRIPTION": f"Documentation of API endpoints of {SITE_NAME}",
     "TOS": None,
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
@@ -59,7 +59,8 @@ SPECTACULAR_SETTINGS = {
     #     'drf_orjson_renderer.renderers.ORJSONRenderer',
     #     # 'rest_framework_csv.renderers.PaginatedCSVRenderer',
     #     ],
-    "SERVERS": [],
+    # Tools that generate code samples can use SERVERS to point to the correct domain
+    "SERVERS": [{"url": GEOLUMINATE["application"]["domain"], "description": "Production server"}],
     # 'ENUM_NAME_OVERRIDES': {
     #     "TCorrTop/TCorrBot": "database.choices.TempCorrectionMethod",
     #     "TMethodTop/TMethodBot": "database.choices.TempMethod",
@@ -80,3 +81,6 @@ SPECTACULAR_SETTINGS = {
 
 # django-cors-headers - https://github.com/adamchainz/django-cors-headers#setup
 CORS_URLS_REGEX = r"^/api/.*$"
+
+
+SPECTACULAR_SETTINGS["SERVERS"] = []  # F405

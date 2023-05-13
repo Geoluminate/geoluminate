@@ -9,7 +9,7 @@ from .managers import UserManager
 
 
 class User(AbstractUser):
-    objects = UserManager()
+    objects = UserManager()  # type: ignore[var-annotated]
 
     username = None  # type: ignore[assignment]
     email = models.EmailField(_("email address"), unique=True)
@@ -20,6 +20,7 @@ class User(AbstractUser):
     def __str__(self):
         if self.first_name and self.last_name:
             return f"{self.first_name[0]}.{self.last_name}"
+        return ""
 
     # @property
     # def display_name(self):

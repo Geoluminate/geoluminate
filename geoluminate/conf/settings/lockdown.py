@@ -1,6 +1,4 @@
-import os
-
-LOCKDOWN_ENABLED = os.environ.get("DJANGO_ENV") == "staging"
+LOCKDOWN_ENABLED = False
 """"""
 
 LOCKDOWN_FORM = "lockdown.forms.AuthForm"

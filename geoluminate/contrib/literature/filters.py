@@ -16,7 +16,7 @@ class Small(Field):
 
 
 class PublicationFilter(df.FilterSet):
-    DOI = df.CharFilter(label="DOI", lookup_expr="exact")
+    # DOI = df.CharFilter(label="DOI", lookup_expr="exact")
     author = df.ModelMultipleChoiceFilter(
         label="Author/s",
         queryset=Author.objects.all(),

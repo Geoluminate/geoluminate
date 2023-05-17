@@ -1,7 +1,7 @@
 {% load static sekizai_tags %}
 <div id='map'
-     {% comment %} url="{% url "sites-list" %}?" {% endcomment %}
-     url="/api/v1/geoluminate?"
+     url="{% url "geoluminate/geoluminates-list" %}?"
+     {% comment %} url="/api/v1/geoluminate?" {% endcomment %}
      data-format='geojson'
      {% if publication %} data-references='{{ publication.pk }}'{% endif %}
      {% if site %} data-id='{{ site.pk }}'{% endif %}
@@ -34,5 +34,5 @@
         <script src="https://unpkg.com/esri-leaflet@2.5.0/dist/esri-leaflet.js"
                 integrity="sha512-ucw7Grpc+iEQZa711gcjgMBnmd9qju1CICsRaryvX7HJklK0pGl/prxKvtHwpgm5ZHdvAil7YPxI1oWPOWK3UQ=="
                 crossorigin=""></script>{% endaddtoblock %}
-        {% addtoblock "js" %}
-          <script src="{% static 'geoluminate/js/map.js' %}"></script>{% endaddtoblock %}
+{% addtoblock "js" %}
+  <script src="{% static 'geoluminate/js/map.js' %}"></script>{% endaddtoblock %}

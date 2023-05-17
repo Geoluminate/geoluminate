@@ -9,22 +9,27 @@ ENV PYTHONFAULTHANDLER=1 \
     PIP_NO_CACHE_DIR=1 \
     POETRY_VERSION=1.3.1
 
+WORKDIR /app
+
+RUN addgroup --system geoluminate \
+    && adduser --system --ingroup geoluminate geoluminate
+
 # Install apt packages
 RUN apt-get update && apt-get install --no-install-recommends -y \
-  # dependencies for building Python packages
-  build-essential \
-  # psycopg2 dependencies
-  libpq-dev \
-  # Translations dependencies
-  gettext \
   # the python wheels for pycairo will not build without these and therefore package installation will fail. Pycairo is required through the following dependency tree django-cms > django-filer > easy-thumbnails[svg] > reportlab > pycairo
   libcairo2 libcairo2-dev \
+  # Translations dependencies
+  gettext \
   # geodjango dependencies
-  binutils libproj-dev gdal-bin && \
-  # upgrade pip to the latest version
-  pip install --upgrade pip && \
-  # install poetry for dependencies
-  pip install "poetry==$POETRY_VERSION" && \
-  # cleaning up unused files 
-  apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
-  && rm -rf /var/lib/apt/lists/*
+  binutils libproj-dev gdal-bin 
+  # # cleaning up unused files
+  # apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
+  # && rm -rf /var/lib/apt/lists/*
+
+COPY --chown=geoluminate:geoluminate ./bin /scripts
+
+# clean file endings and make all scripts executable
+RUN find /scripts/ -type f -iname "*" -exec sed -i 's/\r$//g' {} \; -exec chmod +x {} \;
+
+
+ENTRYPOINT ["/scripts/entrypoint"]

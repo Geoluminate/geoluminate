@@ -2,14 +2,16 @@ from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 from geoluminate.api import PUBLIC
-from geoluminate.models import Site
+from geoluminate.contrib.api.serializers import HyperlinkedModelSerializer
 from geoluminate.utils import get_database_models
 
 for model in get_database_models():
-    PUBLIC.register(model)
+    if not model.hide_from_api and not model._meta.proxy:
+        # model is not a proxy model
+        PUBLIC.register(model, base_serializer=HyperlinkedModelSerializer)
 
 
-PUBLIC.register(Site)
+# PUBLIC.register(GeoluminateSite)
 
 urlpatterns = [
     path(

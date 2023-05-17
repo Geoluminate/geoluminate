@@ -3,15 +3,10 @@ from split_settings.tools import include
 # imports all settings defined in the geoluminate/conf/settings/ directory
 include("settings/general.py", "settings/*.py")
 
+INSTALLED_APPS = GEOLUMINATE_APPS + INSTALLED_APPS + ["compressor"]
+
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["heatflow.world"])
-
-# DATABASES
-# ------------------------------------------------------------------------------
-DATABASES["default"]["CONN_MAX_AGE"] = env.int("CONN_MAX_AGE", default=60)  # noqa F405
-
-
-CACHES["DEFAULT"]["LOCATION"] = env("REDIS_URL")
+ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=[""])
 
 # SECURITY
 # ------------------------------------------------------------------------------

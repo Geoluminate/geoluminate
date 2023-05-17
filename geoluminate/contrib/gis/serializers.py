@@ -1,9 +1,6 @@
 from collections import OrderedDict
 
-from rest_framework.serializers import (
-    LIST_SERIALIZER_KWARGS,
-    ListSerializer,
-)
+from rest_framework.serializers import LIST_SERIALIZER_KWARGS, ListSerializer
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
 
 

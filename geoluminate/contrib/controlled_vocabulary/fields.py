@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 
 
 class ControlledVocabBase:
@@ -19,6 +20,7 @@ class ControlledVocabBase:
         """
         kwargs["to"] = "controlled_vocabulary.ControlledVocabulary"
         kwargs["related_name"] = "+"
+        kwargs["limit_choices_to"] = {"label": vocab_label}
         self.vocab_label = vocab_label
 
         super().__init__(*args, **kwargs)
@@ -27,6 +29,13 @@ class ControlledVocabBase:
         name, path, args, kwargs = super().deconstruct()
         kwargs["vocab_label"] = self.vocab_label
         return name, path, args, kwargs
+
+    def choice_limiter(self):
+        return Q(label=self.vocab_label)
+
+    def get_choices_queryset(self):
+        model = self.remote_field.model
+        return model.objects.get(label=self.vocab_label).descendants()
 
 
 class VocabularyField(ControlledVocabBase, models.ForeignKey):

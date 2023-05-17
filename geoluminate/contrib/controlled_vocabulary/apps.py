@@ -5,7 +5,7 @@ from django.db.models.signals import post_migrate
 from django.utils.translation import gettext_lazy as _
 
 
-def my_callback(
+def create_vocabulary_root_nodes(
     app_config,
     verbosity=2,
     interactive=True,
@@ -29,12 +29,17 @@ def my_callback(
         return
 
     # get list of existing vocab labels
-    labels = ControlledVocabulary.get_root_nodes().values_list("label", flat=True)
+    # labels = ControlledVocabulary.get_root_nodes().values_list("label", flat=True)
 
     for m in app_config.get_models():
         for f in m._meta.get_fields():
             # if the field is a ControlledVocabBase and the vocab_label is not in the list of existing labels
-            if issubclass(type(f), ControlledVocabBase) and f.vocab_label not in labels:
+            if (
+                issubclass(type(f), ControlledVocabBase)  # the field is a ControlledVocabBase
+                and not ControlledVocabulary.get_root_nodes()
+                .filter(label=f.vocab_label)
+                .exists()  # the vocab_label does not already exist
+            ):
                 print(f"Adding {f.vocab_label} to ControlledVocabulary")
                 ControlledVocabulary.add_root(label=f.vocab_label)
 
@@ -45,4 +50,4 @@ class ControlledVocabConfig(AppConfig):
     verbose_name = _("Controlled Vocabulary")
 
     def ready(self):
-        post_migrate.connect(my_callback)
+        post_migrate.connect(create_vocabulary_root_nodes)

@@ -9,14 +9,13 @@ from django.urls import reverse
 from django.utils.encoding import force_str
 from django.utils.translation import gettext_lazy as _
 from filer.fields.image import FilerImageField
-from literature.fields import LiteratureM2M
 from meta.models import ModelMeta
 from model_utils import FieldTracker
 from model_utils.models import TimeStampedModel
 from solo.models import SingletonModel
 
 from geoluminate.contrib.gis.managers import SiteManager
-from geoluminate.db.fields import PIDField, QuantityField
+from geoluminate.db.models import PIDField, QuantityField
 
 
 class GlobalConfiguration(SingletonModel):
@@ -113,11 +112,6 @@ class Geoluminate(ModelMeta, TimeStampedModel):
         validators=[MaxVal(9000), MinVal(-12000)],
         blank=True,
         null=True,
-    )
-
-    literature = LiteratureM2M(
-        help_text=_("Associated literature."),
-        blank=True,
     )
 
     acquired = models.DateTimeField(

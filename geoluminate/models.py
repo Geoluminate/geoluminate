@@ -3,6 +3,8 @@ from django.contrib.gis.db import models
 from django.contrib.gis.geos import Point
 from django.contrib.gis.measure import Distance
 from django.contrib.sites.models import Site
+from django.core.validators import MaxValueValidator as MaxVal
+from django.core.validators import MinValueValidator as MinVal
 from django.urls import reverse
 from django.utils.encoding import force_str
 from django.utils.translation import gettext_lazy as _
@@ -14,7 +16,7 @@ from model_utils.models import TimeStampedModel
 from solo.models import SingletonModel
 
 from geoluminate.contrib.gis.managers import SiteManager
-from geoluminate.db.fields import PIDField, RangeField
+from geoluminate.db.fields import PIDField, QuantityField
 
 
 class GlobalConfiguration(SingletonModel):
@@ -103,11 +105,12 @@ class Geoluminate(ModelMeta, TimeStampedModel):
 
     geom = models.PointField(null=True, blank=True)
 
-    elevation = RangeField(
-        _("elevation (m)"),
-        help_text=_("elevation with reference to mean sea level (m)"),
-        max_value=9000,
-        min_value=-12000,
+    elevation = QuantityField(
+        base_units="m",
+        unit_choices=["m", "ft"],
+        verbose_name=_("elevation"),
+        help_text=_("Elevation with reference to mean sea level"),
+        validators=[MaxVal(9000), MinVal(-12000)],
         blank=True,
         null=True,
     )

@@ -1,10 +1,9 @@
-{% extends "geoluminate/base_error.html" %}
+{% extends "geoluminate/components/static_modal.html" %}
 {% load i18n %}
 
 {% block title %}{% trans "404 Not Found" %}{% endblock %}
 
-{% block label %}{% trans "404 Not Found" %}{% endblock %}
-{% block message %}
-{% trans "The requested resource does not exist!" %}
-
+{% block body %}
+<h5 class="modal-title text-center">{% trans "Sorry, that page doesn't exist!" %}</h5>
+<p class='text-center'>{% trans "The requested resource is no longer available at this location." %}</p>
 {% endblock %}

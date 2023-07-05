@@ -1,8 +1,15 @@
-{% extends "base.html" %}
-{% load cms_tags %}
+{% extends "application.html" %}
+{% load cms_tags menu_tags static authentication %}
+
+{% block app_menu %}
+  {% if request.user|has_group:"CMS" or request.user.is_superuser and current_page %}
+    {% include "geoluminate/layout/partials/cms_menu.html" %}
+  {% endif %}
+{% endblock app_menu %}
+
 {% block head_title %}
   {{ request.current_page }}
 {% endblock head_title %}
 {% block content %}
-  <div class='flex-grow-1 overflow-auto'>{% placeholder "content" %}</div>
+  {% placeholder "content" %}
 {% endblock content %}

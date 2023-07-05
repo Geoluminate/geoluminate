@@ -1,9 +1,9 @@
-{% extends "base.html" %}
-{% block title %}Server Error{% endblock %}
-{% block content %}
- <h1>Ooops!!! 500</h1>
- <h3>Looks like something went wrong!</h3>
- <p>
-  We track these errors automatically, but if the problem persists feel free to contact us. In the meantime, try refreshing.
- </p>
-{% endblock content %}
+{% extends "geoluminate/components/static_modal.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Server Error (500)" %}{% endblock %}
+
+{% block body %}
+<h5 class="modal-title text-center">{% trans "Oops! Something went wrong..." %}</h5>
+<p class='text-center'>{% trans "We track these errors automatically, but if the problem continues feel free to contact us." %}</p>
+{% endblock %}

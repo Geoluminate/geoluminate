@@ -1,0 +1,3 @@
+ <a class="dropdown-item {% if disabled %}disabled {% endif %}" {% if disabled %} tabindex="-1"{% endif %} href="{{ action }}" data-rel="ajax" data-method="{{ method }}" data-post="{{ data }}"{% if question %} data-text="{{ question }}"{% endif %}{% if on_success %} data-on-success="{{ on_success }}"{% endif %}>
+     <span class="{% if active %}fw-bold {% endif %}">{{ name }}</span>
+ </a>

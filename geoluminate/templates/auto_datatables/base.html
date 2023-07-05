@@ -1,0 +1,47 @@
+{% extends 'application.html' %}
+{% load static sekizai_tags i18n %}
+
+
+{% block style %}
+<link rel="stylesheet" href="{% static "geoluminate/css/datatables.min.css" %}">
+<link rel="stylesheet" href="{% static "auto_datatables/css/auto-datatable.css" %}">
+{% endblock %}
+
+{% block app_menu %}
+<div class='badge'>GHFDB Projects</div>
+
+<div class="left">
+</div>
+<div class='right ms-auto p-1 d-flex'>
+  <button class="btn btn-sm me-1 fas fa-filter text-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#filterContainer" aria-controls="filterContainer"></button>
+  <div id="searchButton"></div>
+</div>
+{% endblock %}
+
+
+{% block content %}
+ {% include "auto_datatables/datatable.html" %}
+  <div id="filterContainer" class="offcanvas offcanvas-end" tabindex="-1" aria-labelledby="filterContainerLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="filterContainerLabel">{% trans "Filter" %}</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body"></div>
+  </div>
+{% endblock content %}
+
+
+{% block scripts %}
+{% addtoblock "scripts" %}<script src="{% static "geoluminate/js/datatables.min.js" %}"></script>{% endaddtoblock %}
+{% addtoblock "scripts" %}<script src="{% static "auto_datatables/js/auto-datatables.js" %}"></script>{% endaddtoblock %}
+<script>
+  $('#mainIndicator').toggle()
+  $(document).ready(function() {
+    var $table = $('.datatable').AutoTable({});
+    $(".dataTables_filter input").attr("placeholder", "Search");
+    $table.on( 'init.dt', function () {
+      $('#mainIndicator').toggle()
+    } )
+  })
+</script>
+{% endblock scripts %}

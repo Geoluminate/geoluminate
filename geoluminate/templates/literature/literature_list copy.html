@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'application.html' %}
 {% load literature %}
 {% load i18n literature crispy_forms_tags static i18n cms_tags sekizai_tags %}
 
@@ -50,18 +50,18 @@
 
     </section>
   </div>
-  {% addtoblock "js" %}
+  {% addtoblock "scripts" %}
     <script src="{% static "geoluminate/js/shave.min.js" %}"></script>{% endaddtoblock %}
-    {% addtoblock "js" %}
+    {% addtoblock "scripts" %}
       <script>
         shave('.abstract', 150)
       </script>
     {% endaddtoblock %}
   {% endblock content %}
-  {% comment %} {% block sidebar_right %}
+  {% comment %} {% block before_scripts %}
     {% include 'literature/components/sidebar.html' %}
-  {% endblock sidebar_right %} {% endcomment %}
+  {% endblock before_scripts %} {% endcomment %}
   {% comment %}
-{% block modals %}
+{% block before_scripts %}
 {% include "review/modals/nominate.html" with modal_id='genericModal' %}
-  {% endblock modals %} {% endcomment %}
+  {% endblock before_scripts %} {% endcomment %}

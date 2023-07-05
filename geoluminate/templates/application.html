@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block page %}
+{% include 'geoluminate/layout/sidebar.html' %}
+<div class='application-content' hx-target="#main">
+  <div class="application-menu flex-item flex-shrink border-bottom bg-primary-subtle border-primary-subtle {{ app_menu_css }}">
+    <div class="btn-toolbar align-items-center" role="toolbar" aria-label="Toolbar with button groups">
+      {% block app_menu %}{% endblock %}
+    </div>
+  </div>
+  {% include "geoluminate/components/messages.html" %}
+  <div id="main" class='flex-grow'>
+    {% block content %}{% endblock %}
+    <img id='mainIndicator' class="htmx-indicator" src="{% static "geoluminate/img/spinners/spinning-circles.svg" %}"/>
+  </div>
+  <div class='flex-item flex-shrink'>
+    <div id="appFooter" class='w-100 bg-primary-subtle'>
+      {% block app_footer %}{% endblock %}
+    </div>
+  </div>
+</div>
+{% endblock %}

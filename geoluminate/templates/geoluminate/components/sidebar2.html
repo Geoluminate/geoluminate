@@ -1,7 +1,6 @@
 <!-- RIGHT SIDEBAR -->
-<div id="{% block id %}{% endblock %}" 
-    class="sidebar sidebar-end {% block extra_classes %}{% endblock %}">
- <div class="sidebar-header bg-secondary-subtle">
+<div id='{{ sidebar_id }}' class="sidebar sidebar-end show">
+ <div class="sidebar-header">
   {% block header %}
    <h5 class="sidebar-title">
     {% block title %}
@@ -11,11 +10,12 @@
    <button type="button"
            class="btn-close text-reset"
            data-bs-dismiss="offcanvas"
-           aria-label="Close">
+           aria-label="Close"
+           onclick="$('#rightSidebar').toggleClass('show')">
    </button>
   {% endblock header %}
  </div>
- <div class="sidebar-body overflow-auto">
+ <div class="sidebar-body">
   {% block body %}
   {% endblock body %}
  </div>

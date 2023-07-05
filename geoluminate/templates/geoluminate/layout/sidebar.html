@@ -1,7 +1,6 @@
 {% load menu_tags thumbnail cms_tags geoluminate sekizai_tags static %}
-<nav id="mainSidebar" class="sidebar sidebar-start show" tabindex="-1">
+<nav id="mainSidebar" class="sidebar sidebar-start" tabindex="-1">
   <div class="sidebar-header">
-    {% comment %} <img src="{% static 'images/brand/WHFDB_logo.svg' %}" alt="" width='100%'> {% endcomment %}
     <img src="{% logo %}" alt="" width='100%'>
     <button type="button"
             class="btn btn-sm btn-light border ms-1"
@@ -16,7 +15,7 @@
   </div>
   <div class='footer'></div>
 </nav>
-<div id="mainSidebarOpener" class="d-flex opacity-25">
+{% comment %} <div id="mainSidebarOpener" class="d-flex opacity-25">
   <button class="btn sidebar-toggler d-flex"
           type="button"
           aria-controls="navbarSupportedContent"
@@ -25,4 +24,4 @@
           onclick="$('#mainSidebar').toggleClass('show');">
     <span class="btn btn-sm fas fa-caret-right mt-1" aria-hidden="true"></span>
   </button>
-</div>
+</div> {% endcomment %}

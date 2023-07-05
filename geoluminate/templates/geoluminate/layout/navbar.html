@@ -1,6 +1,10 @@
-{% load cms_tags menu_tags static %}
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+{% load cms_tags menu_tags static authentication %}
+<nav class="navbar navbar-expand-md navbar-dark bg-primary">
   <div class="container-fluid">
+    <button class="navbar-toggler d-block" type="button" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation"
+    onclick="$('#mainSidebar').toggleClass('show');">
+      <span class="navbar-toggler-icon"></span>
+    </button>
     <button class="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
@@ -13,14 +17,13 @@
     <div class="collapse navbar-collapse " id="navbarSupportedContent">
       <ul class="navbar-nav w-100">
         {% show_menu 0 100 100 100 "geoluminate/cms/menu.html" %}
-        <div class='d-inline-flex ms-auto'>
-          {% include 'geoluminate/widgets/nav/user_affiliation.html' %}
+        {% comment %} <div class='d-inline-block ms-auto'> {% endcomment %}
+          {% if request.user|has_group:"CMS" or request.user.is_superuser and current_page %}
+            {% include 'geoluminate/widgets/nav/page_edit_toggle.html' %}
+          {% endif %}
           {% include 'authentication/navbar_widget.html' %}
-          {% include 'geoluminate/widgets/nav/theme_switcher.html' %}
-
-
-
-        </div>
+          {% include 'geoluminate/widgets/nav/theme_toggle.html' %}
+        {% comment %} </div> {% endcomment %}
       </ul>
     </div>
   </div>

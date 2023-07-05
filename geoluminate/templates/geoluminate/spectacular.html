@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'application.html' %}
 {% load sekizai_tags i18n static compress %}
 {% block head_title %}
   API
@@ -22,15 +22,15 @@
 
 
 
-  {% addtoblock "js" %}
+  {% addtoblock "scripts" %}
     <script src="{% static "drf_spectacular_sidecar/swagger-ui-dist/swagger-ui-bundle.js" %}"></script>{% endaddtoblock %}
-    {% addtoblock "js" %}
+    {% addtoblock "scripts" %}
       <script src="{% static "drf_spectacular_sidecar/swagger-ui-dist/swagger-ui-standalone-preset.js" %}"></script>{% endaddtoblock %}
       {% if script_url %}
-        {% addtoblock "js" %}
+        {% addtoblock "scripts" %}
           <script src="{{ script_url }}"></script>{% endaddtoblock %}
         {% else %}
-          {% addtoblock "js" %}
+          {% addtoblock "scripts" %}
             <script>{% include template_name_js %}</script>
           {% endaddtoblock %}
         {% endif %}

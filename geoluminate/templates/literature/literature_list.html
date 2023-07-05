@@ -1,7 +1,6 @@
-{% extends 'base.html' %}
+{% extends 'application.html' %}
 {% load literature %}
 {% load i18n literature crispy_forms_tags static i18n cms_tags sekizai_tags %}
-
 {% block head_title %}
   {% trans "Literature" %}
 {% endblock head_title %}
@@ -16,68 +15,65 @@
   {{ filter.form.media.css }}
 {% endblock head %}
 {% block style %}
-<link rel="stylesheet" href="{% static 'vendor/DataTables/bootstrap5/datatables.min.css' %}">
+  <link rel="stylesheet"
+        href="{% static 'vendor/DataTables/bootstrap5/datatables.min.css' %}">
 {% endblock style %}
-
 {% block app_menu %}
-  <button id='rightSidebarToggle' class='btn btn-sm rounded-pill btn-outline-primary'
-          onclick="$('#rightSidebar').toggleClass('show')">
-    {% trans "Filters" %}
-  </button>
-  <ul class="dropdown-menu p-2" aria-labelledby="dropdownMenuButton">
-    <label for="customRange1" class="form-label" hidden>{% trans "Year range" %}</label>
-    <input type="range" class="form-range" id="customRange1">
-  </ul>
+  {% include 'literature/components/menu.html' %}
 {% endblock app_menu %}
-
 {% block content %}
   <div class='container pt-5'>
     <header class='header'>
       <strong>{% trans "Literature Catalogue" %}</strong>
     </header>
     <section id='publication-list' class='main'>
-      <table id="example" class="display" style="display: none;" cellspacing="0" width="100%"></table>
+      <table id="example"
+             class="display"
+             style="display: none"
+             cellspacing="0"
+             width="100%">
+      </table>
       <div id="new-list" style="display: none;" />
     </section>
   </div>
-
-
   <div id='template' style="display: none;">
     <div class="publication card mt-3">
       <div class='d-flex'>
-        <img src="https://via.placeholder.com/300x225?text=This+is+a+placeholder!" class="img-fluid w-25 rounded-start">
+        <img src="https://via.placeholder.com/300x225?text=This+is+a+placeholder!"
+             class="img-fluid w-25 rounded-start">
         <div class="card-body">
-            <i class='me-auto data-name'></i>
-            <h4 class="card-title data-engine"></h4>
-            <h5 class="card-subtitle mb-2 text-muted data-platform"></h5>
-            <p class="card-text abstract data-version"></p>
+          <i class='me-auto data-name'></i>
+          <h4 class="card-title data-engine"></h4>
+          <h5 class="card-subtitle mb-2 text-muted data-platform"></h5>
+          <p class="card-text abstract data-version"></p>
         </div>
       </div>
     </div>
   </div>
-  {% addtoblock "js" %}
-<script src="{% static "vendor/DataTables/bootstrap5/datatables.min.js" %}"></script>
-<script>
+  {% addtoblock "scripts" %}
+    <script src="{% static "vendor/DataTables/bootstrap5/datatables.min.js" %}"></script>
+    <script>
  
   $(function () {
     var table = $('#example').DataTable({
       "data": [
          // some rows data
-         {'name':'Trident','engine':'Internet Explorer 4.0','platform':'Win 95+','version':'4','grade':'X'},
-         {'name':'Trident','engine':'Internet Explorer 5.0','platform':'Win 96+','version':'4','grade':'y'},
-         {'name':'Test','engine':'Internet Explorer 4.0','platform':'Win 97+','version':'4','grade':'n'},
-         {'name':'Trident','engine':'Internet Explorer 3.0','platform':'Win 99+','version':'4','grade':'X'},
-         {'name':'Trident','engine':'Internet Explorer 4.0','platform':'Win 985+','version':'4','grade':'e'},
-         {'name':'Trident','engine':'Internet Explorer 1.0','platform':'Win 93+','version':'4','grade':'X'},
-         {'name':'Trident','engine':'Internet Explorer 4.0','platform':'Win 9+','version':'4','grade':'X'},
-         {'name':'Trident','engine':'Internet Explorer 4.0','platform':'Win 92+','version':'4','grade':'X'},
+         {'name':'Trident','engine':'Internet Explorer 4.0','platform':'Win 95+','version':'4','grade':'X', "test": 0},
+         {'name':'Trident','engine':'Internet Explorer 5.0','platform':'Win 96+','version':'4','grade':'y', "test": 0},
+         {'name':'Test','engine':'Internet Explorer 4.0','platform':'Win 97+','version':'4','grade':'n', "test": 0},
+         {'name':'Trident','engine':'Internet Explorer 3.0','platform':'Win 99+','version':'4','grade':'X', "test": 0},
+         {'name':'Trident','engine':'Internet Explorer 4.0','platform':'Win 985+','version':'4','grade':'e', "test": 1},
+         {'name':'Trident','engine':'Internet Explorer 1.0','platform':'Win 93+','version':'4','grade':'X', "test": 1},
+         {'name':'Trident','engine':'Internet Explorer 4.0','platform':'Win 9+','version':'4','grade':'X', "test": 1},
+         {'name':'Trident','engine':'Internet Explorer 4.0','platform':'Win 92+','version':'4','grade':'X', "test": 1},
       ],
       "columns": [
         { "title": "Engine", data: 'name' },
         { "title": "Browser", data: 'engine' },
         { "title": "Platform", data: 'platform' },
         { "title": "Version", "class": "center", data: 'version' },
-        { "title": "Grade", "class": "center", data: 'grade' }
+        { "title": "Grade", "class": "center", data: 'grade' },
+        { "title": "Test", "class": "center", data: 'test' },
       ],
       "initComplete": function(settings, json) {
          // show new container for data
@@ -125,11 +121,11 @@
            exportOptions: {
                columns: ':not(.noPrint) :visible'
            },
-           className: 'btn btn-sm rounded-pill btn-outline-primary bg-white'
+           className: ''
          },
          {
            extend: 'collection',
-           className: 'btn btn-sm rounded-pill btn-outline-primary bg-white',
+           className: '',
            text: 'Export',
            buttons: [ 
              {
@@ -154,7 +150,7 @@
          },
            {
            extend: 'colvis',
-           className: 'btn btn-sm rounded-pill btn-outline-primary bg-white',
+           className: '',
            text: 'Columns',
            collectionLayout: 'fixed columns',
            collectionTitle: 'Column visibility control',
@@ -164,17 +160,24 @@
        ],
    }); 
   
-  table.buttons().container().appendTo( $('#appmenu') );
-  table.searchPanes.container().appendTo( $('#rightSidebar>.sidebar-body') );
+  table.buttons().container().appendTo( $('.application-menu .btn-group') );
+  table.searchPanes.container().appendTo( $('#filterSidebar>.sidebar-body') );
   });
 
-</script>
-
-
-
-{% endaddtoblock %}
+    </script>
+  {% endaddtoblock %}
 {% endblock content %}
+{% block before_scripts %}
+  {% include 'literature/components/sidebar.html' %}
+{% endblock before_scripts %}
+{% block scripts %}
+  <script>
+$("#filterToggle").click(function(){
+  $("#filterSidebar").toggleClass("show");
+});
 
-{% block sidebar_right %}
-    {% include 'geoluminate/components/sidebar.html' with title='Filters' %}
-{% endblock sidebar_right %}
+$("#filterSidebar .btn-close").click(function(){
+  $("#filterSidebar").toggleClass("show");
+});
+  </script>
+{% endblock scripts %}

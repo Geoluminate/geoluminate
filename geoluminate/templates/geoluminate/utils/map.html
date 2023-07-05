@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "application.html" %}
 {% load i18n %}
 
 {% block head_title %}{% trans "Viewer" %}{% endblock head_title %}
@@ -84,7 +84,7 @@
   {% include "geoluminate/mapping/partials/map.html" with css_class='fullscreen' %}   
 {% endblock content %}
 
-{% block sidebar_right %}
+{% block before_scripts %}
 
   {% comment %} RIGHT SIDEBAR EXAMPLE {% endcomment %}
   {% include "geoluminate/components/offcanvas.html" with oc_id="rightSidebar" oc_origin='end' %}
@@ -147,4 +147,4 @@
 
 
 
-{% endblock sidebar_right %}
+{% endblock before_scripts %}

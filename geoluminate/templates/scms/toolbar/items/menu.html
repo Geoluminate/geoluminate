@@ -1,0 +1,21 @@
+
+ {% comment %} {% if not sub_level %}
+
+  <h6 class="dropdown-header">{{ title }}</h6>
+
+ {% else %} {% endcomment %}
+
+ <li class="dropdown dropstart {% if sub_level %}cms-toolbar-item-navigation-children {% endif %}{% if active %}cms-toolbar-item-navigation-active {% endif %}{% if disabled %}cms-toolbar-item-navigation-disabled {% endif %}">
+  <a class="dropdown-item dropdown-toggle {% if active %}active {% endif %}{% if disabled %}disabled {% endif %}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+   {{ title }}
+  </a>
+
+ {% comment %} {% endif %}   {% endcomment %}
+ {% if items %}
+ <ul class="dropdown-menu">
+  {% for item in items %}
+  {{ item.render }}
+  {% endfor %}
+  </ul>
+ {% endif %}
+</li>

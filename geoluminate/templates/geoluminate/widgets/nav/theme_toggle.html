@@ -1,0 +1,40 @@
+{% load static i18n %}
+
+<style>
+  .check {
+    display: none;
+  }
+  .active > .check {
+    display: block;
+  }
+</style>
+
+ <li class="nav-item dropdown widget">
+  <a id='bd-theme' class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-display='static'>
+    <i class="d-none d-lg-inline fa-solid fa-sun fa-lg theme-icon-active"></i>
+    <span class="d-lg-none">{% trans "Theme" %}</span>
+  </a>
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme-text" data-bs-popper='static'>
+    <li>
+      <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="light" aria-pressed="true">
+        <i class="fa-solid fa-sun me-2"></i>
+        {% trans "Light" %}
+        <i class="fa-solid fa-check check ms-auto"></i>
+      </button>
+    </li>
+    <li>
+      <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+        <i class="fa-solid fa-moon me-2"></i>
+        {% trans "Dark" %}
+        <i class="fa-solid fa-check check ms-auto"></i>
+      </button>
+    </li>
+    <li>
+      <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto" aria-pressed="false">
+        <i class="fa-solid fa-circle-half-stroke me-2"></i>
+        {% trans "Auto" %}
+        <i class="fa-solid fa-check check ms-auto"></i>
+      </button>
+    </li>
+  </ul>
+</li>

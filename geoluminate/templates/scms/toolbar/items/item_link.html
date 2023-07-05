@@ -1,0 +1,5 @@
+<li class="{% if active %}cms-toolbar-item-navigation-active{% endif %}{% if disabled %} cms-toolbar-item-navigation-disabled{% endif %} {{ extra_classes|join:' ' }}">
+ <a class="dropdown-item" href="{{ url }}">
+  {{ name }}
+ </a>
+</li>

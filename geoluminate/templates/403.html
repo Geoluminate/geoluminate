@@ -1,10 +1,11 @@
-{% extends "geoluminate/base_error.html" %}
+{% extends "geoluminate/components/static_modal.html" %}
 {% load i18n %}
 
-{% block title %}{% trans "Forbidden (403)" %}{% endblock %}
+{% block title %}{% trans "Access Denied" %}{% endblock %}
 
-{% block label %}{% trans "Forbidden (403)" %}{% endblock %}
-{% block message %}
-{% trans "You don't have permission to access this page!" %}
+{% block body %}
+<h5 class="modal-title text-center">{% trans "Access Denied" %}</h5>
+<p class='text-center'>{% trans "You don't have the required permissions to access this page. If you think this is incorrect, please get in contact with us." %}</p>
 {% endblock %}
+
 

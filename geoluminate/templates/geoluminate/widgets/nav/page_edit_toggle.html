@@ -1,0 +1,38 @@
+{% load static i18n %}
+
+<script>
+  function createPageButtonClick() {
+    $('a[href*="/cms_wizard/create/"]')[0].click();
+  }
+  function togglePageStructure() {
+    $('a[title="Toggle structure"]')[0].click();
+  }
+</script>
+
+ <li class="nav-item dropdown widget">
+  <a class="nav-link" href="#" id="cms-dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <svg class="bi" width="90" height="24" preserveAspectRatio="xMinYMid meet">
+          <use xlink:href="{% static "geoluminate/icons/icons.svg" %}#djangocms"/>
+      </svg>
+  </a>
+  <ul class="dropdown-menu dropdown-menu-end" data-bs-popper='static'>
+    <li>
+      <a href="#" onclick="createPageButtonClick();" class="dropdown-item d-flex align-items-center">
+        <i class="fa-solid fa-file-circle-plus me-2"></i>
+        {% trans "Create New" %}
+      </a>
+    </li>
+    <li>
+      <a href="?edit" type="button" class="dropdown-item d-flex align-items-center">
+        <i class="fa-solid fa-file-pen me-2"></i>
+        {% trans "Edit Page" %}
+      </a>
+    </li>
+    <li>
+      <a href="?preview&edit_off" type="button" class="dropdown-item d-flex align-items-center">
+        <i class="fa-solid fa-laptop-file me-2"></i>
+        {% trans "Preview Page" %}
+      </a>
+    </li>
+  </ul>
+</li>

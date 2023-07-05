@@ -1,0 +1,55 @@
+{% extends 'application.html' %}
+{% load i18n formsetify %}
+
+{% block content %}
+<div class='container pt-5'>
+ <header class='header align-items-end'>
+  <strong>{% trans "Project" %}: {{project.name}}</strong>
+  <div class='ms-auto d-flex align-items-end'>
+    <a href="#" class='py-0 px-1 fas fa-link'></a>
+    <a href="#" class='py-0 px-1 fas fa-share'></a>
+    <a href="#" class='py-0 px-1 fas fa-print'></a>
+
+    {% comment %} <input class='form-control'
+    placeholder='Test Input'
+    type="text"
+    size="20"
+    name="query"
+    id="searchbar"
+    tabindex="0"/> {% endcomment %}
+  </div>
+ </header>
+ <section class='card border-0 border-bottom'>
+  <div class='card-body px-0'>
+    <div class='d-flex w-100'>
+      {% include "contributors.html" %}
+    </div>
+  </div>
+ </section>
+ <section class='card border-0 border-bottom'>
+  <div class='card-body px-0'>
+    <h5>{% trans "Description" %}</h5>
+    <p>{{project.description|safe}}</p>
+  </div>
+ </section>
+ <section class='card border-0 border-bottom'>
+  <div class='card-body px-0'>
+  <h5>{% trans "Key dates" %}</h5>
+  <ul class="list-group border-0">
+    {% for date in key_dates %}
+    <li class="list-group-item">{{ date.label|title }}: {{ date.value }}</li>
+    {% endfor %}
+  </ul>
+  </div>
+</section>
+ <section class='card border-0 border-bottom'>
+  <div class='card-body px-0'>
+    <h5>{% trans "Datasets" %}</h5>
+    {% for dataset in project.datasets.all %}
+      {% include "datasets/card.html" %}
+    {% endfor %}
+  </div>
+</section>
+</div>
+
+{% endblock content %}

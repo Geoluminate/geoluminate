@@ -1,0 +1,54 @@
+{% extends 'application.html' %}
+{% load i18n formsetify %}
+
+{% block app_menu %}
+{% if not add %}
+  <div class="btn-group flex-wrap" role="tablist">
+    <button id="description-tab" class="nav-link btn btn-primary active" data-bs-toggle="tab" data-bs-target="#description-panel" type="button" role="tab" aria-controls="description-panel" aria-selected="true">
+      <span>{% trans "About" %}</span>
+    </button>
+    <button id="contributors-tab" class="nav-link btn btn-primary" data-bs-toggle="tab" data-bs-target="#contributors-panel" type="button" role="tab" aria-controls="contributors-panel">
+      <span>{% trans "Contributors" %}</span>
+    </button>  
+    <button id="files-tab" class="nav-link btn btn-primary" data-bs-toggle="tab" data-bs-target="#files-panel" type="button" role="tab" aria-controls="files-panel">
+      <span>{% trans "Files" %}</span>
+    </button>
+    <button id="dataset-tab" class="btn btn-primary" data-bs-toggle="tab" data-bs-target="#dataset-panel" type="button" role="tab" aria-controls="dataset-panel">
+      <span>{% trans "Datasets" %}</span>
+    </button> 
+    <button id="map-tab" class="btn btn-primary" data-bs-toggle="tab" data-bs-target="#map-panel" type="button" role="tab" aria-controls="map-panel">
+      <span>{% trans "Map" %}</span>
+    </button> 
+  </div>
+
+  <div class='ms-auto p-1'>
+    <button id="submit-tab" class="btn btn-sm btn-success" type="button">
+      <span>{% trans "Review & Submit" %}</span>
+    </button>
+  </div>
+{% endif %}
+{% endblock app_menu %}
+
+
+
+
+{% block content %}
+<div class='container pt-5'>
+ <header class='header'>
+  <strong>{% trans "Create a project" %}</strong>
+ </header>
+ <django-formset endpoint="{{ request.path }}" csrf-token="{{ csrf_token }}">
+  {% render_form form "bootstrap" field_classes="mb-2" %}
+
+  <div class='container d-flex justify-content-end pb-3'>
+   {% if add %}
+     <button type="button" class="btn btn-primary" click="submit({add: true}) -> proceed">{% trans "Create" %}</button>
+   {% else %}
+     <button type="button" class="btn btn-primary"  click="submit({update: true}) -> proceed">{% trans "Update" %}</button>
+     <button type="button" class="btn btn-danger"  click="submit({delete: true}) -> proceed">{% trans "Delete" %}</button>
+   {% endif %}
+  </div>
+ </django-formset>
+</div>
+
+{% endblock content %}

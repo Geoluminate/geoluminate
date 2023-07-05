@@ -1,0 +1,55 @@
+{% extends 'application.html' %}
+{% load i18n formsetify %}
+
+{% block content %}
+<div class='container pt-5'>
+ <header class='header'>
+  <strong>{% trans "My Projects" %}</strong>
+  <div class='ms-auto'>
+   <button class='btn btn-sm btn-success' data-bs-toggle="modal" data-bs-target="#createProjectModal">
+    <i class='fas fa-plus'></i>
+    {% trans "Create new" %}
+   </button>
+ </div>
+ </header>
+ {% for project in object_list %}
+  {% include "project/card.html" %}
+ {% empty %}
+  <p>{% trans "It looks like you haven't created any projects yet! Try creating one using the button above." %}</p>
+ {% endfor %}
+
+</div>
+{% endblock content %}
+
+{% block scripts %}
+
+
+<div class="modal fade" id="createProjectModal"
+tabindex="-1" aria-labelledby="createProjectModalLabel" aria-hidden="true"
+>
+  <div class="modal-dialog {{dialog_css}}">
+    <div class="modal-content {{content_css}}">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createProjectModalLabel">
+         {% trans "Create new project" %}
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+       <django-formset endpoint="{% url 'project-add' %}" csrf-token="{{ csrf_token }}">
+        {% render_form form "bootstrap" field_classes="mb-2" %}
+       </django-formset>
+     </div>
+
+      <div class="modal-footer">
+         <button type="button" class="btn btn-success" click="submit({add: true}) -> proceed">{% trans "Create" %}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+{% endblock scripts %}

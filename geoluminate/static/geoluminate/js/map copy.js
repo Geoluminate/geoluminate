@@ -46,35 +46,34 @@ clusters = L.markerClusterGroup({
 });
 map.addLayer(clusters);
 
-$('#mainIndicator').toggle()
+var geojson = new L.GeoJSON.AJAX(get_url(), { //options object for GeoJSON
+  pointToLayer: function (geoJsonPoint, latlng) {
+    return L.circleMarker(latlng, {
+      radius: 5,
+      fill: true,
+      fillOpacity: 0.75,
+      fillColor: 'rgb(255,0,0,1)',
+      color: 'rgb(200,0,0,1)', //stroke colour
+      weight: 1, //stroke weight in pixels
+    });
+  },
+  onEachFeature: onEachFeature,
+});
 
-fetch($('#map').attr('url')).then((response) => response.json()).then((data) => {
 
-  const test = data.results.map((item) => {
-    return {
-      type: 'Feature',
-      geometry: item.geom,
-      properties: {}
-    }
-  })
-
-  console.log(test)
-  var geojson = L.geoJSON(test, {
-    pointToLayer: function (geoJsonPoint, latlng) {
-      return L.circleMarker(latlng, {
-        radius: 5,
-        fill: true,
-        fillOpacity: 0.75,
-        fillColor: 'rgb(255,0,0,1)',
-        color: 'rgb(200,0,0,1)', //stroke colour
-        weight: 1, //stroke weight in pixels
-      });
-    },
-    onEachFeature: onEachFeature,
-  });
-  clusters.addLayer(geojson);
-  map.flyToBounds(geojson.getBounds())
+geojson.on('data:loading', function () {
   $('#mainIndicator').toggle()
+})
+
+geojson.on('data:loaded', function () {
+  // Add markers to the cluster layer after the layer has loaded.
+  map.flyToBounds(this.getBounds())
+  if (typeof CLUSTER !== 'undefined' || CLUSTER === false) {
+    map.addLayer(this);
+  } else {
+    clusters.addLayer(this);
+  }
+  $('#mainIndicator').toggle();
 })
 
 

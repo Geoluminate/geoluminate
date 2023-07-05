@@ -1,7 +1,6 @@
 @import 'libs/vendor';
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,600italic|Roboto+Slab:400,700');
 
-// import our Bootstap overrids here
+// import our Bootstap overrides here
 @import "variables";
 
 
@@ -22,9 +21,15 @@
 @import 'components/sidebar';
 @import 'components/scrollbar';
 @import 'components/indicators';
+@import 'components/form';
+@import 'components/table';
+
+// Overrides
+@import "overrides/datatables";
 
 
 // @import "overrides/swagger";
+@import "djangocms";
 
 
 // this is imported from the user's project directory 
@@ -38,14 +43,61 @@
 	}
 }
 
+.auto-table-wrapper.templated .datatable {
+    display: none;
+  }
+  .auto-table-wrapper #template-container {
+    display: none;
+  }
 
-#appmenu {
-	z-index: 1000;
+  #template-container .card {
+	page-break-inside: avoid;
+  }
+
+  @media print {
+	.datatable tfoot {
+	  position: fixed;
+	  bottom: 0;
+	  display: block!important;
+	}
+	#appFooter {
+		position: fixed;
+		bottom: 0;
+		// display: block!important;
+	  }
+  }
+
+
+
+html {
+	margin: 0!important;
 }
 
 #mapOverlay {
 	background-color: black;
 	> div {
 		z-index: 1000;
+	}
+}
+
+
+.modal.accounts {
+	h1,h2,h3,h4,h5,h6 {
+		// @extend .modal-title;
+		font-size: 1.25rem;
+	}
+
+}
+
+.socialaccount_providers {
+	div {
+		height: 65px;
+	}
+	div.orcid {
+		background-repeat: no-repeat;
+		background-image: url("https://upload.wikimedia.org/wikipedia/commons/1/14/ORCID_logo.svg");
+		background-position: center;
+		background-size: contain;
+
 	}
 }

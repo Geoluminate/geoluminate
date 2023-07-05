@@ -1,0 +1,26 @@
+#cms-top {
+    position: relative;
+    z-index: 100;
+    .cms-toolbar {
+        z-index: 10;
+        position: relative;
+    }
+    .cms-toolbar-item-logo, .cms-toolbar-item-switch-save-edit {
+        display: none;
+    }
+    .cms-structure {
+    //     // top: 59px;
+    //     // z-index: auto;
+        right: 0px !important;
+        &-content {
+            padding: 1rem !important;
+        }
+        .cms-dragarea {
+            margin: 0 !important;
+        }
+    }
+}
+#cms-top > div.cms-toolbar > div.cms-toolbar-left > ul > li:nth-child(1) {
+    display: none;
+}
+

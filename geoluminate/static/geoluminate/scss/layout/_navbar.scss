@@ -1,12 +1,20 @@
 .navbar {
     background-color:$gray-300;
+    .widget {
+        margin-left: auto;
+        ~ .widget {
+            margin: inherit;
+        }
+
+    }
+
 }
 
 #appMenu {
     display: flex;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
-    button, a {
+    > button, a {
         background-color: $secondary;
         margin-left: 0.25rem;
         margin-right: 0.25rem;

@@ -1,4 +1,12 @@
-.application {
+// .application {
+//     @include vendor('display', 'flex');
+//     height: 100vh;
+//     width: 100%;
+//     flex-direction: column;
+//     overflow: hidden!important;
+// }
+
+body {
     @include vendor('display', 'flex');
     height: 100vh;
     width: 100%;
@@ -6,10 +14,35 @@
     overflow: hidden!important;
 }
 
-.page {
-	&-inner {
-		flex-grow: 1 !important;
+.application {
+    &-wrapper {
+        position: relative;
+        overflow-x: hidden;
+        overflow-y: auto;
+        // position-relative overflow-x-hidden overflow-y-auto
+        flex-grow: 1 !important;
         @include vendor('display', 'flex');
-		flex-direction: row;
-	}
+        flex-direction: row;
+    }
+
+    &-content {
+        @include vendor('display', 'flex');
+        flex-direction: column;
+        flex-grow: 1 !important;    
+    }
+    &-menu {
+        width: 100%;
+        > button, .btn-group > button {
+            @extend .btn;
+            border-radius: 0;
+            border-right: 1px solid $primary-bg-subtle;
+        }
+
+    }
+}
+
+.dt-buttons > button {
+    @extend .btn;
+    border-radius: 0;
+    border-right: 1px solid $primary-bg-subtle;
 }

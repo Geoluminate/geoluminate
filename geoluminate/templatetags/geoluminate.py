@@ -19,12 +19,12 @@ def is_active(context, url):
     return ""
 
 
-@register.simple_tag
-def menu(menu, template=None):
-    """Renders a menu"""
-    if not template:
-        template = menu.template_name
-    return render_to_string(template, {"menu": menu})
+# @register.simple_tag
+# def menu(menu, template=None):
+#     """Renders a menu"""
+#     if not template:
+#         template = menu.template_name
+#     return render_to_string(template, {"menu": menu})
 
 
 @register.filter

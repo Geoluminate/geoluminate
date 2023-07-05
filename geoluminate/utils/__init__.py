@@ -1,17 +1,44 @@
 from django.apps import apps
+from django.conf import settings
+from django.db import transaction
 from django.db.models import Q
 from django.utils.module_loading import import_string
 
-from geoluminate.conf import settings
+# from geoluminate.factories import SampleFactory, UserFactory
+from geoluminate.contrib.project.factories import (
+    DatasetFactory,
+    ProjectFactory,
+    SampleFactory,
+)
+from geoluminate.contrib.user.factories import UserFactory
+
+
+@transaction.atomic
+def create_fixtures():
+    def save_model_instances(instance_list):
+        for model in instance_list:
+            model.save()
+
+    # create some users
+    save_model_instances(UserFactory.create_batch(size=200))
+
+    # create some projects
+    save_model_instances(ProjectFactory.create_batch(size=100))
+
+    # create some datasets
+    save_model_instances(DatasetFactory.create_batch(size=250))
+
+    # create some samples
+    save_model_instances(SampleFactory.create_batch(size=1000))
 
 
 def get_database_models():
     """Get a list of all models in the project that subclass from :class:`geoluminate.db.models.Base`."""
     db_models = []
-    Geoluminate = import_string("geoluminate.models.Geoluminate")
+    Measurement = import_string("geoluminate.contrib.project.models.Measurement")
 
     for model in apps.get_models():
-        if issubclass(model, Geoluminate) and not model.hide_from_api:
+        if issubclass(model, Measurement):
             db_models.append(model)
     return db_models
 

@@ -1,7 +1,7 @@
 from django.utils.safestring import mark_safe
 from import_export.resources import ModelResource
 
-from geoluminate.db.fields import ControlledVocabularyBase
+from geoluminate.db.models import ControlledVocabularyBase
 
 # from .widgets import VocabularyM2MWidget, VocabularyWidget
 

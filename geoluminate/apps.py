@@ -15,4 +15,11 @@ class GeoluminateConfig(AppConfig):
 
         jazzmin.utils.make_menu = monkeypatch.make_menu
         # setattr(jazzmin.utils, "make_menu", monkeypatch.make_menu)
+
+        # patch django-filters to not use crispy forms. should be safe to remove on the
+        # next release of geoluminate
+        from django_filters import compat
+
+        compat.is_crispy = lambda: False
+
         return super().ready()

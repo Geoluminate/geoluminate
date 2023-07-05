@@ -74,16 +74,3 @@ admin.site.unregister(Site)
 @admin.register(Site)
 class DjangoSiteAdmin(FrontendEditableAdminMixin, admin.ModelAdmin):
     frontend_editable_fields = ("name",)
-
-
-# @admin.register(Choice)
-# class ControlledVocabularyAdmin(admin.ModelAdmin):
-#     list_display = ['type', 'code', 'name', '_description']
-#     list_filter = ['type', ]
-#     search_fields = ['name', ]
-
-#     def _description(self, obj):
-#         if obj.description:
-#             return obj.description[:50] + '...'
-#     _description.admin_order_field = 'description'
-#     _description.verbose_name = _('description')

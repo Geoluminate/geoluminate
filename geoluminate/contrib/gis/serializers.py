@@ -1,7 +1,13 @@
 from collections import OrderedDict
 
-from rest_framework.serializers import LIST_SERIALIZER_KWARGS, ListSerializer
+from rest_framework.serializers import (
+    LIST_SERIALIZER_KWARGS,
+    HyperlinkedModelSerializer,
+    ListSerializer,
+)
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
+
+from .models import Site
 
 
 class FeatureCollectionSerializer(ListSerializer):
@@ -34,3 +40,15 @@ class FeatureSerializer(GeoFeatureModelSerializer):
     def to_representation(self, data):
         data = data.features()
         return data.get().feature
+
+
+class SiteSerializer(HyperlinkedModelSerializer):
+    class Meta:
+        model = Site
+        fields = "__all__"
+
+
+class GeoFeatureSerializer(FeatureSerializer):
+    class Meta:
+        geo_field = "geom"
+        exclude = ["references", "last_modified"]

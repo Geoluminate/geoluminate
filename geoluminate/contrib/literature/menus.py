@@ -1,23 +1,24 @@
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-from simple_menu import Menu, MenuItem
+from simple_menu import MenuItem
 
-Menu.add_item(
-    "sidebar",
+from geoluminate.menus import Sidebar
+
+Sidebar.add_item(
     MenuItem(
-        _("Literature"),
-        reverse("literature:list"),
+        title=_("Literature"),
+        url=reverse("literature:list"),
         weight=5,
         icon="fa-book",
         children=(
             MenuItem(
-                _("Catalogue"),
-                reverse("literature:list"),
+                title=_("Catalogue"),
+                url=reverse("literature:list"),
                 icon="fa-list",
             ),
             MenuItem(
-                _("Authors"),
-                reverse("literature:author_list"),
+                title=_("Authors"),
+                url=reverse("literature:author_list"),
                 icon="fa-users",
             ),
         ),

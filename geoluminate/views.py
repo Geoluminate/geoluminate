@@ -1,42 +1,10 @@
+from auto_datatables.mixins import AjaxMixin, ScrollerMixin
+from auto_datatables.tables import BaseDataTable
 from django.conf import settings
 from django.http import JsonResponse
+from django.shortcuts import render
 from django.utils.module_loading import import_string
 from django_select2.views import AutoResponseView
-
-# from geoluminate.conf import settings
-from geoluminate.core.datatables.views import DatatablesReadOnlyView
-
-
-# @datatables.register
-class DatabaseTableView(DatatablesReadOnlyView):
-    template_name = "geoluminate/database_table.html"
-    # model = HeatFlow
-    read_only = True
-    search_fields = ("name",)
-    invisible_fields = [
-        "id",
-    ]
-    fields = [
-        "get_absolute_url",
-        "id",
-        "name",
-        "q_date_acq",
-        "environment",
-        "water_temp",
-        "explo_method",
-        "explo_purpose",
-    ]
-    invisible_fields = [
-        "id",
-    ]
-    datatables = {
-        "dom": "<'#tableToolBar' if> <'#tableBody' tr>",
-        "processing": True,
-        "scrollY": "100vh",
-        "deferRender": True,
-        "scroller": True,
-        "rowId": "id",
-    }
 
 
 class ModelFieldSelect2View(AutoResponseView):
@@ -63,3 +31,46 @@ class ModelFieldSelect2View(AutoResponseView):
             },
             encoder=import_string(settings.SELECT2_JSON_ENCODER),
         )
+
+
+def placeholder_view(request):
+    """This is a placeholder view that can be used to add dummy urls to the
+    project. Use it as a placeholder to design things like toolbars, menus,
+    navigation, etc. without having to worry about the underlying view."""
+    return render(request, "geoluminate/placeholder.html")
+
+
+class SmallTableView(AjaxMixin, BaseDataTable):
+    # stateSave = True
+    paging = False
+    fixedHeader = True
+    dom = "PBitf"
+    searchPanes = {  # noqa: RUF012
+        "threshold": 0.5,
+        "layout": "columns-1",
+        "cascadePanes": True,
+        "orderable": False,
+        "dtOpts": {
+            "searching": True,
+            "pagingType": "numbers",
+            "paging": True,
+        },
+    }
+    layout = {  # noqa: RUF012
+        "B": ".application-menu .btn-toolbar .left",
+        "i": "#appFooter",
+        "P": "#filterContainer .offcanvas-body",
+        ".dataTables_filter input": ".application-menu #searchButton",
+    }
+
+
+class LargeTableView(BaseDataTable, ScrollerMixin):
+    # stateSave = True
+    fixedHeader = True
+    dom = "Bit"
+    layout = {  # noqa: RUF012
+        "B": ".application-menu .btn-toolbar .left",
+        "i": "#appFooter",
+        "P": "#filterContainer .offcanvas-body",
+        ".dataTables_filter input": ".application-menu #searchButton",
+    }

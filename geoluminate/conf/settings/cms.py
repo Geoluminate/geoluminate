@@ -10,6 +10,13 @@ CMS_LANGUAGES = {
             "public": True,
             "hide_untranslated": False,
         },
+        {
+            "code": "en-gb",
+            "name": _("English (GB)"),
+            "redirect_on_fallback": True,
+            "public": True,
+            "hide_untranslated": False,
+        },
     ],
     "default": {
         "redirect_on_fallback": True,
@@ -28,11 +35,17 @@ CMS_TEMPLATES = (
 """"""
 
 
-# set to true to hide toolbar
-# Has unintended side effects when adding plugins.
-# Don't use until bug fixed
-CMS_TOOLBAR_HIDE = False
-""""""
+CMS_TOOLBARS = [
+    # CMS Toolbars
+    "cms.cms_toolbars.PlaceholderToolbar",
+    "cms.cms_toolbars.BasicToolbar",
+    "cms.cms_toolbars.PageToolbar",
+    # third-party Toolbar
+    # "geoluminate.cms_toolbars.DjangoCMSToolbarOverride",
+]
+
+
+CMS_ENABLE_HELP = True
 
 CMS_PERMISSION = False
 """"""

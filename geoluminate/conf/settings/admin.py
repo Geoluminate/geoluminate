@@ -1,3 +1,9 @@
+"""Contains settings related to the Django Admin interface including the following packages:
+
+    - [django-jazzmin](https://django-jazzmin.readthedocs.io/en/latest/settings/)
+
+All settings can be overridden in your project settings file.
+"""
 from django.utils.translation import gettext_lazy as _
 
 JAZZMIN_SETTINGS = {

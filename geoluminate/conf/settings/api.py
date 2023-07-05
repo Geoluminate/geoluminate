@@ -1,4 +1,12 @@
-"""Default API settings"""
+"""Contains settings for the following packages:
+
+    - [django-rest-framework](https://www.django-rest-framework.org/api-guide/settings/)
+    - [drf-spectacular](https://drf-spectacular.readthedocs.io/en/latest/settings.html#settings)
+    - [drf-auto-endpoint](https://drf-auto-endpoint.readthedocs.io/en/latest/settings.html)
+    - [django-cors-headers](https://github.com/adamchainz/django-cors-headers#setup)
+
+All settings can be overridden in your project settings file.
+"""
 
 # django-rest-framework - https://www.django-rest-framework.org/api-guide/settings/
 REST_FRAMEWORK = {
@@ -24,11 +32,12 @@ REST_FRAMEWORK = {
         "drf_orjson_renderer.renderers.ORJSONRenderer",
         "geoluminate.contrib.api.renderers.GeoJSONRenderer",
         "rest_framework.renderers.BrowsableAPIRenderer",
+        "rest_framework.renderers.TemplateHTMLRenderer",
         # "rest_framework_csv.renderers.PaginatedCSVRenderer",
         # "datatables.renderers.DatatablesORJSONRenderer",
     ],
-    # 'DEFAULT_FILTER_BACKENDS': (
-    # ),
+    "DEFAULT_FILTER_BACKENDS": ("django_filters.rest_framework.DjangoFilterBackend",),
+    # "DEFAULT_FILTER_BACKENDS": ("geoluminate.utils.drf.DjangoFilterBackend",),
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 100,
     "DEFAULT_PARSER_CLASSES": [
@@ -36,7 +45,7 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_METADATA_CLASS": "drf_auto_endpoint.metadata.AutoMetadata",
-    # 'DEFAULT_METADATA_CLASS': 'datatables.metadata.DatatablesAutoMetadata',
+    "DATETIME_FORMAT": "%Y-%m-%dT, %H:%M:%S",
 }
 
 # By Default swagger ui is available only to admin user(s). You can change permission classes to change that
@@ -75,7 +84,7 @@ SPECTACULAR_SETTINGS = {
         "displayRequestDuration": True,
         "tryItOutEnabled": False,
     },
-    "PREPROCESSING_HOOKS": ["geoluminate.core.datatables.spectacular.preprocessing_filter_spec"],
+    "PREPROCESSING_HOOKS": ["geoluminate.contrib.api.utils.public_api"],
 }  # type: ignore[var-annotated]
 """"""
 

@@ -1,3 +1,11 @@
+"""Authentication related settings including the following external packages:
+
+    - [django-allauth](https://django-allauth.readthedocs.io/en/latest/configuration.html)
+
+All settings can be overridden in your project settings file.
+ """
+
+
 # PASSWORDS
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#password-hashers
@@ -26,7 +34,7 @@ ACCOUNT_ADAPTER = "geoluminate.contrib.user.adapters.AccountAdapter"
 """"""
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
-LOGIN_REDIRECT_URL = "users:redirect"
+LOGIN_REDIRECT_URL = "user:dashboard"
 """"""
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-url
@@ -52,13 +60,13 @@ ACCOUNT_AUTHENTICATION_METHOD = "email"
 
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3
 """"""
+
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 """Email verification is mandatory"""
 
 # After signing up
 ACCOUNT_SIGNUP_REDIRECT_URL = "/"
 """"""
-
 
 # After clicking email confirmation link, user is logged in and redirected
 # to home? page
@@ -79,17 +87,17 @@ AUTHENTICATION_BACKENDS = [
 """"""
 
 # https://django-allauth.readthedocs.io/en/latest/forms.html
-ACCOUNT_FORMS = {
-    "login": "geoluminate.contrib.user.forms.LoginForm",
-    "signup": "geoluminate.contrib.user.forms.SignUpForm",
-    "add_email": "geoluminate.contrib.user.forms.AddEmailForm",
-    "change_password": "geoluminate.contrib.user.forms.ChangePasswordForm",
-    "set_password": "geoluminate.contrib.user.forms.SetPasswordForm",
-    "reset_password": "geoluminate.contrib.user.forms.ResetPasswordForm",
-    "reset_password_from_key": "geoluminate.contrib.user.forms.ResetPasswordKeyForm",
-    "disconnect": "allauth.socialaccount.forms.DisconnectForm",
-}
-""""""
+# ACCOUNT_FORMS = {
+#     "login": "geoluminate.contrib.user.forms.LoginForm",
+#     # "signup": "geoluminate.contrib.user.forms.SignUpForm",
+#     "add_email": "geoluminate.contrib.user.forms.AddEmailForm",
+#     "change_password": "geoluminate.contrib.user.forms.ChangePasswordForm",
+#     "set_password": "geoluminate.contrib.user.forms.SetPasswordForm",
+#     "reset_password": "geoluminate.contrib.user.forms.ResetPasswordForm",
+#     "reset_password_from_key": "geoluminate.contrib.user.forms.ResetPasswordKeyForm",
+#     "disconnect": "allauth.socialaccount.forms.DisconnectForm",
+# }
+# """"""
 
 SOCIALACCOUNT_FORMS = {
     "disconnect": "allauth.socialaccount.forms.DisconnectForm",
@@ -113,3 +121,5 @@ SOCIALACCOUNT_ADAPTER = "geoluminate.contrib.user.adapters.SocialAccountAdapter"
 
 ACCOUNT_ALLOW_REGISTRATION = env.bool("DJANGO_ACCOUNT_ALLOW_REGISTRATION", True)
 """allow registration"""
+
+ACCOUNT_SIGNUP_FORM_CLASS = "geoluminate.contrib.user.forms.SignupExtraForm"

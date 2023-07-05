@@ -25,3 +25,5 @@ CELERY_TASK_EAGER_PROPAGATES = True
 LOCKDOWN_ENABLED = False
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+
+# BASE_SERIALIZER = "geoluminate.contrib.api.serializers.HyperlinkedModelSerializer"

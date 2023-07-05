@@ -11,6 +11,7 @@ config = os.getenv("GEOLUMINATE_CONFIG_PATH", os.path.join(BASE_DIR, "geoluminat
 
 sys.path.append(os.path.join(BASE_DIR, "project", "apps"))  # at the bottom of the file
 
+
 with open(config) as f:
     GEOLUMINATE = yaml.safe_load(f)
 
@@ -129,12 +130,17 @@ GEOLUMINATE_APPS = [
     "django.contrib.gis",
     "django.contrib.humanize",
     # "django.forms",
-    # geoluminate configuration and user accounts
+    "drf_auto_endpoint",
+    # "auto_datatables.apps.AutoDataTablesConfig",
+    # required by geoluminate
     "geoluminate",
+    "geoluminate.contrib.project",
     "geoluminate.contrib.controlled_vocabulary",
     "geoluminate.contrib.user",
     "geoluminate.contrib.api",
+    "geoluminate.contrib.gis",
     "geoluminate.contrib.literature",
+    "auto_datatables",
     # "ror",
     # authentication
     "allauth",
@@ -142,12 +148,12 @@ GEOLUMINATE_APPS = [
     "allauth.socialaccount",
     "allauth.socialaccount.providers.orcid",
     "invitations",
-    # installed by django cms
+    # required by django cms
     "cms",
     "menus",
     "sekizai",
     "treebeard",
-    # installed by djangocms-frontend
+    # required by djangocms-frontend
     "djangocms_text_ckeditor",
     "filer",
     "easy_thumbnails",
@@ -176,7 +182,6 @@ GEOLUMINATE_APPS = [
     "drf_spectacular",  # auto documentation of API
     "drf_spectacular_sidecar",  # static files for drf_spectacular
     # "rest_framework_datatables_editor",
-    "drf_auto_endpoint",
     # commenting system via django-fluent-comments[threadedcomment]
     "fluent_comments",
     "threadedcomments",
@@ -218,7 +223,6 @@ GEOLUMINATE_APPS = [
     # "licensing",
     # cataloguing of scientific instruments
     "laboratory",
-    # 'geoluminate.contrib.gis', # do i need this here?
 ]
 
 MIDDLEWARE = [
@@ -245,6 +249,7 @@ MIDDLEWARE = [
 MEDIA_URL = "/media/"
 
 
+# for django debug toolbar
 hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
 INTERNAL_IPS = [".".join(ip.split(".")[:-1] + ["1"]) for ip in ips]
 
@@ -275,7 +280,7 @@ MEDIA_ROOT = str(BASE_DIR / "media")
 
 if env("SHOW_DEBUG_TOOLBAR"):
     GEOLUMINATE_APPS.append("debug_toolbar")
-    MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
+    MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
 
     DEBUG_TOOLBAR_CONFIG = {
         "DISABLE_PANELS": ["debug_toolbar.panels.redirects.RedirectsPanel"],

@@ -1,0 +1,26 @@
+{% load i18n geoluminate authentication sekizai_tags %}
+
+<div class="sidebar sidebar-end" tabindex="-1" id="userToolbar" aria-labelledby="toolbarLabel">
+  <div class="offcanvas-header">
+   <div class='d-flex align-items-center justify-content-center w-100'>
+    <span class="fa-solid fa-circle-user fa-2xl me-2"></span>
+    <h5 class='m-0'>{{user.full_name}}</h5>
+   </div>
+  </div>
+  <div class="sidebar-body">
+   <div class='list-group list-group-flush h-100'>
+    {% for item in menus.user_toolbar %}
+      {% if item.visible %}
+        <a href="{{ item.url }}" 
+          class="list-group-item list-group-item-action {{ item.extra_classes }}{% is_active item.url %}">
+          <i class="fas {{ item.icon }} pe-2"></i>
+          {{ item.title }}
+        </a>
+      {% endif %}
+    {% endfor %}
+   </div>
+  </div>
+</div>
+
+
+

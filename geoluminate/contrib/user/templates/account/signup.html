@@ -1,39 +1,33 @@
 {% extends "account/base.html" %}
-{% load i18n crispy_forms_tags socialaccount %}
+{% load i18n crispy_forms_tags socialaccount geoluminate formsetify  %}
+
 
 {% block head_title %}{% trans "Sign Up" %}{% endblock %}
 {% block nav_title %}{% trans "Sign Up" %}{% endblock nav_title %}
 {% block heading %}{% trans "Sign Up" %}{% endblock heading %}
 
-{% block inner %}
-
-<div class="alert alert-secondary" role="alert">{% blocktrans %}
-  Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}
-</div>
-{% url "user:community" as why_join %}
-{% blocktrans with settings.RESEARCH_DOMAIN|default:'scientific' as res_type %}
-  <p>We're excited you're choosing to join our specialised community of {{ res_type }} researchers! This community was created so that past, current and future specialists in our field can actively engage in the revision and dissemination of past research data while also promoting multi-insitutional engagement and collaboration on future projects. Depending on your qualifications, there are many great benefits to joining which you can <a href="{{ why_join }}">read more about here</a>. If you're already convinced, you can easily register using your ORCID.</p>{% endblocktrans %}
-
-  <hr>
-
-<div class='row'>
-  <div class="col-8">
-    <p>{% trans "Don't have an ORCID? You can still register by filling in your details and submitting the form below." %}</p>
-    <form class='signup' id="signup_form" method="post" action="{% url 'account_signup' %}">
-      {% csrf_token %}
-      {% crispy form %}
-      {% if redirect_field_value %}
-      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+{% block body %}
+<p>{% blocktrans %}Create a new account below. Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+{% formsetify form "bootstrap" field_classes="mb-3" %}
+<django-formset endpoint="{{ request.path }}" csrf-token="{{ csrf_token }}">
+  <form id="{{ form.form_id }}" method='post'>
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+    {% if redirect_field_value %}
+    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+    {% endif %}
+    {% include "formset/non_field_errors.html" %}
+    {% for field in form %}
+      {% if field.is_hidden %}
+        {{ field }}
+      {% elif field.name == "my_special_field" %}
+        {% include "myproject/my_special_field.html" %}
+      {% else %}
+        {% include "formset/default/field_group.html" %}
       {% endif %}
-      <button type="submit">{% trans "Sign Up" %}</button>
-    </form>
-  </div>
-  <div class="col-4">
-    {% include 'account/orcid/login.html' %}
-  </div>
+    {% endfor %}
+  </form>
+</django-formset>
+<div class='d-flex align-items-end'>
+  <button class="btn btn-lg btn-primary" type="submit" form='{{ form.form_id }}'>{% trans "Submit" %}</button>
 </div>
-
-
-
-
-{% endblock %}
+{% endblock body %}

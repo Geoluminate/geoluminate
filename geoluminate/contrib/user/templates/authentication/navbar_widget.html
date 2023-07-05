@@ -1,75 +1,36 @@
-{% load i18n authentication %}
+{% load i18n authentication sekizai_tags %}
 
-<li class="nav-item dropdown">
-  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    <span class="primary me-1 fas fa-user-circle d-inline-block align-text-middle"></span>
+<li class="nav-item dropdown widget">
+  {% if not user.is_authenticated %}
+    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+  {% else %}
+    <a class="nav-link" href="#" role="button" onclick="$('#userToolbar').toggleClass('show')" aria-expanded="false">
+  {% endif %}
+    <i class="d-none d-lg-inline fa-solid fa-circle-user fa-lg me-2"></i>
     {% if user.is_authenticated %}
-      {{user.display_name}}
+      {{user.display_name|default:"Account"}}
     {% else %}
       {% trans "Guest" %}
     {% endif %}
   </a>
-  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-      {% if user.is_authenticated %}
+  {% if not user.is_authenticated %}
+    {% comment %} // This is the dropdown menu that appears when the user is not logged in {% endcomment %}
+    <!-- Dropdown menu links -->
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
       <li>
-        <h6 class="dropdown-header">{% trans "User" %}</h6>
+        <a href="{% url 'account_login' %}" class="dropdown-item">
+        <i class="fas fa-sign-in-alt me-2"></i>
+        {% trans "Login" %}</a>
       </li>
-        <li>
-          <a class="dropdown-item" href="{% url 'user:profile' %}">
-            <i class="fas fa-user me-2"></i>
-            {% trans "Profile" %}
-          </a>
-        </li>
-        <li>
-          <a class="dropdown-item" href="{% url 'user:dashboard' %}">
-            <i class="fas fa-th-large me-2"></i>
-            {% trans "Dashboard" %}</a>
-        </li>
-        <li>
-          <a class="dropdown-item" href="{% url 'user:account' %}">
-            <i class="fas fa-cogs me-2"></i>
-            {% trans "Settings" %}
-          </a>
-        </li>
-        {% if user.is_staff %}
-        <li>
-          <h6 class="dropdown-header">{% trans "Staff" %}</h6>
-        </li>
-          <li><a class="dropdown-item"  href="{% url 'admin:index' %}?toolbar_off">
-            <i class="fas fa-user-shield me-2"></i>
-            {% trans "Admin" %}</a></li>
-          {% if request.user|has_group:"CMS" or request.user.is_superuser %}
-            <li><a class="dropdown-item" href="./?edit">
-              <i class="fas fa-pencil-alt me-2"></i>
-              {% trans "Edit Page" %}</a></li> 
-          {% endif %}
-        {% endif %}
-        <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item"  href="{% url 'account_logout' %}">
-          <i class="fas fa-sign-out-alt me-2"></i>
-          {% trans "Logout" %}</a></li>
-          <li>
-            <button type="button"
-                    id="feedback-btn"
-                    class="dropdown-item"
-                    data-bs-toggle="modal"
-                    data-bs-target="#feedback-welcome">
-              <i class="fas fa-bullhorn me-2"></i>
-              {% trans 'Feedback' %} 
-            </button>
-          </li>
-      {% else %}
-        <li>
-          <a href="{% url 'account_login' %}" class="dropdown-item">
-          <i class="fas fa-sign-in-alt me-2"></i>
-          Login</a>
-        </li>
-        <li>
-          <a href="{% url 'account_signup' %}" class="dropdown-item">
-          <i class="fas fa-user-plus me-2"></i>
-          Register</a>
-        </li>
-        {% endif %}
-
+      <li>
+        <a href="{% url 'account_signup' %}" class="dropdown-item">
+        <i class="fas fa-user-plus me-2"></i>
+        {% trans "Register" %}</a>
+      </li>
     </ul>
+    {% else %}
+    {% comment %} // This is the user toolbar that slides in from the right when the user is logged in {% endcomment %}
+    {% addtoblock "before_scripts" %}{% include 'user/toolbar.html' %}{% endaddtoblock %}
+  {% endif %}
 </li>
+

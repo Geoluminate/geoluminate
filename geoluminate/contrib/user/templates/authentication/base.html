@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "application.html" %}
 {% load crispy_forms_tags i18n %}
 
 {% block content %}
@@ -7,7 +7,6 @@
     <div class='row'> 
       <div class='col-12 col-md-2'>
         <ul>
-          {% comment %} <li><a href="{% url 'gallery:user_gallery_list' %}">{% trans "Galleries" %}</a></li> {% endcomment %}
           <li><a href="{% url 'user:account' %}">{% trans "Settings" %}</a></li>
         </ul>
       </div>

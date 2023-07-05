@@ -1,22 +1,25 @@
+from typing import Any, Dict
+
 from allauth.account.forms import AddEmailForm
 from allauth.account.models import EmailAddress
+from allauth.account.views import LoginView
 from allauth.socialaccount.forms import DisconnectForm
+from auto_datatables.mixins import AjaxMixin
+from auto_datatables.tables import BaseDataTable
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.utils.translation import gettext as _
-from django.views.generic import TemplateView
+from django.views.generic import ListView, TemplateView, UpdateView
+from formset.views import FileUploadMixin, FormCollectionViewMixin, FormViewMixin
 
+from geoluminate.contrib.project.models import Project
+from geoluminate.contrib.project.views.project import ProjectForm
 
-@login_required
-def dashboard(request):
-    # context = dict(
-    #     dashboard=get_dashboard('user'),
-    # )
-    context = {}
-
-    return render(request, "user/dashboard.html", context=context)
+from .forms import UserForm, UserProfileForm
+from .models import Profile
 
 
 class Account(LoginRequiredMixin, TemplateView):
@@ -33,44 +36,65 @@ class Account(LoginRequiredMixin, TemplateView):
         return context
 
 
-@login_required
-def user_settings(request):
-    context = {}
+class ProfileView(FileUploadMixin, FormViewMixin, LoginRequiredMixin, UpdateView):
+    model = Profile
+    template_name = "user/profile_edit.html"
+    form_class = UserProfileForm
 
-    return render(request, "user/account.html", context=context)
+    def get_object(self, queryset=None):
+        return self.request.user
 
+    # def get_success_url(self):
+    # return reverse_lazy('profile', kwargs={'profile_slug': self.request.user.userpofile.slug})
 
-@login_required
-def profile(request):
-    context = {
-        "can_add_email": EmailAddress.objects.can_add_email(request.user),
-        "email_form": AddEmailForm(request),
-        "disconnect_form": DisconnectForm(request=request),
-    }
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     c_def = self.get_user_context(title='Settings')
 
-    return render(request, "user/profile.html", context=context)
+    # def get_object(self, queryset=None):
+    #     if self.extra_context["add"] is False:
+    #         return super().get_object(queryset)
 
-
-@login_required
-def deactivate(request):
-    context = {}
-    User = get_user_model()
-    try:
-        user = User.objects.get(pk=request.user.pk)
-        user.is_active = False
-        user.save()
-        context["msg"] = "Profile successfully disabled."
-    except User.DoesNotExist:
-        context["msg"] = "User does not exist."
-    except Exception as e:
-        context["msg"] = e.message
-
-    return render(request, "home.html", context=context)
+    def form_valid(self, form):
+        if extra_data := self.get_extra_data() and extra_data.get("delete") is True:
+            self.object.delete()
+            success_url = self.get_success_url()
+            response_data = {"success_url": force_str(success_url)} if success_url else {}
+            return JsonResponse(response_data)
+        return super().form_valid(form)
 
 
-def orcid(request):
-    return render(request, "user/why_orcid.html")
+class UserProjectListView(LoginRequiredMixin, ListView):
+    template_name = "project/list.html"
+    model = Project
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = ProjectForm()
+        return context
+
+    def get_queryset(self):
+        return super().get_queryset().filter(created_by=self.request.user)
 
 
-def community(request):
-    return render(request, "user/community.html")
+class CommunityView(LoginRequiredMixin, TemplateView):
+    template_name = "user/community.html"
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        return context
+
+
+class CommunityDirectoryView(BaseDataTable, AjaxMixin):
+    model = Profile
+    fields = [
+        "name",
+        "about",
+    ]
+    row_template_name = "geoluminate/datatables/profile_item.html"
+    paging = False
+    search_fields = ["name"]
+    # fields = ["name", "about", "status", "date_joined", ]
+    fixedHeader = True
+    # dom = "rsti"
+    app_name = "user"

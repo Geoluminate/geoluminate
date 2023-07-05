@@ -1,5 +1,7 @@
 from django.views.generic import DetailView
 from django_filters.views import FilterView
+from drf_auto_endpoint.endpoints import Endpoint
+from drf_auto_endpoint.router import register, router
 from literature.models import Author, Literature
 
 from geoluminate.core import datatables
@@ -11,6 +13,7 @@ from geoluminate.utils import get_filter_params
 
 from .api.serialize import AuthorSerializer
 from .filters import PublicationFilter
+from .models import Publication
 
 
 class PublicationList(FilterView):
@@ -41,7 +44,7 @@ class PublicationDetail(DetailView):
     model = Literature
 
 
-@datatables.register
+# @datatables.register
 class AuthorList(DatatablesReadOnlyView):
     model = Author
     template_name = "literature/authors_list.html"

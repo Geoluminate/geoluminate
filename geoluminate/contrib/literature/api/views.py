@@ -4,7 +4,7 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 
 from geoluminate.contrib.api.v1.serializers import GeoFeatureSerializer
-from geoluminate.contrib.api.v1.views import DataViewSet
+from geoluminate.contrib.api.viewsets import BaseViewset
 
 # from geoluminate.utils import DATABASE
 from geoluminate.utils.drf import DjangoFilterBackend
@@ -48,7 +48,7 @@ class NestedAuthorList(AuthorView):
         return Response(serializer.data)
 
 
-class CoreNestedViewSet(DataViewSet):
+class CoreNestedViewSet(BaseViewset):
     serializer_class = CoreNestedSerializer
     # queryset = DATABASE.objects.all()
 

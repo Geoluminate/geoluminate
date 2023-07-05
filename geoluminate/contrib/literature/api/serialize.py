@@ -5,8 +5,6 @@ from literature.models import Author
 from rest_framework import serializers
 from rest_framework_nested.serializers import NestedHyperlinkedModelSerializer
 
-from geoluminate.contrib.api.v1.serializers import CoreSerializer
-
 from ..models import Publication
 
 
@@ -71,10 +69,7 @@ class AuthorNestedSerializer(NestedHyperlinkedModelSerializer, AuthorSerializer)
     }
 
 
-class CoreNestedSerializer(NestedHyperlinkedModelSerializer, CoreSerializer):
+class CoreNestedSerializer(NestedHyperlinkedModelSerializer):
     parent_lookup_kwargs = {
         "pub_pk": "references__pk",
     }
-
-    # class Meta(CoreSerializer.Meta):
-    #     list_serializer_class = CoreNestedListSerializer

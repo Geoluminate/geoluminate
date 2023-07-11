@@ -1,5 +1,5 @@
 compose-dev.yaml
-
+**/migrations/*
 # Temporary and binary files
 *~
 *.ruff_cache

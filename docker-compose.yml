@@ -3,22 +3,21 @@ version: '3'
 services:
   app: &app
     build:
-      dockerfile: ./docker/Dockerfile
       context: .
-    # image: geoluminate_dev
+      dockerfile: ./docker/Dockerfile.local
     working_dir: /app
+    env_file:
+      - ./.env
     volumes:
+      - ../:/external_apps
       - ./:/app:z
     ports:
       - "8000:8000"
     command: ./docker/django
-    # entrypoint: "tail -f /dev/null"
 
   docs:
     <<: *app
-    # image: geoluminate_docs
     working_dir: /app/docs
     ports:
       - "9000:9000"
     command: ../docker/docs
-    # entrypoint: "tail -f /dev/null"

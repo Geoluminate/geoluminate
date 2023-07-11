@@ -6,6 +6,14 @@ authors = ["Sam Jennings <samuel.scott.jennings@gmail.com>"]
 license = "GPL-3.0-or-later"
 readme = "README.md"
 packages = [{include = "geoluminate"}]
+include = [
+    "README.md",
+    "LICENSE",
+    "AUTHORS.md",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
+
+]
 homepage = "https://github.com/Geoluminate/geoluminate"
 keywords = ["research", "database", "research data management", "open data", "geoluminate", "FAIR"]
 classifiers = [
@@ -117,6 +125,8 @@ sphinx-book-theme = "^1.0.0"
 myst-parser = "^0.19.1"
 sphinx-autobuild = "^2021.3.14"
 toml = "^0.10.2"
+sphinx-comments = "^0.0.3"
+django-extensions = "^3.2.3"
 
 [build-system]
 requires = ["poetry-core"]

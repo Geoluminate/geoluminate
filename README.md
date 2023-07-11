@@ -29,29 +29,6 @@ Documentation
 
 The full documentation is at https://geoluminate.github.io/geoluminate/
 
-Quickstart
-----------
-
-Install Geoluminate::
-
-    pip install geoluminate
-
-Add it to your `INSTALLED_APPS`:
-
-
-    INSTALLED_APPS = (
-        ...
-        'geoluminate',
-        ...
-    )
-
-Add Geoluminate's URL patterns:
-
-    urlpatterns = [
-        ...
-        path('', include("geoluminate.urls")),
-        ...
-    ]
 
 Features
 --------

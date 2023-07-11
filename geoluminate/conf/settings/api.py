@@ -60,7 +60,7 @@ SPECTACULAR_SETTINGS = {
     "SERVE_PUBLIC": False,
     "SORT_OPERATIONS": False,
     "SORT_OPERATION_PARAMETERS": False,
-    "SERVE_PERMISSIONS": ["rest_framework.permissions.IsAdminUser"],
+    "SERVE_PERMISSIONS": ["rest_framework.permissions.IsAuthenticatedOrReadOnly"],
     # OTHER SETTINGS
     # 'AUTHENTICATION_WHITELIST': ['rest_framework.authentication.BasicAuthentication',],
     "PARSER_WHITELIST": [],

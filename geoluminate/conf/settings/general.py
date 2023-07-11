@@ -9,7 +9,7 @@ from django.contrib.messages import constants as messages
 # load the geoluminate.yml configuration file
 config = os.getenv("GEOLUMINATE_CONFIG_PATH", os.path.join(BASE_DIR, "geoluminate.yml"))
 
-sys.path.append(os.path.join(BASE_DIR, "project", "apps"))  # at the bottom of the file
+sys.path.append(os.path.join(BASE_DIR, "project", "schemas"))  # at the bottom of the file
 
 
 with open(config) as f:
@@ -62,7 +62,8 @@ ADMINS = [(admin["name"], admin["email"]) for admin in GEOLUMINATE["application"
 MANAGERS = ADMINS
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#root-urlconf
-ROOT_URLCONF = "config.urls"
+ROOT_URLCONF = "geoluminate.urls"
+
 # https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
 WSGI_APPLICATION = "config.wsgi.application"
 

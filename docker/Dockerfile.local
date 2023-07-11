@@ -24,27 +24,29 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
   # install poetry for dependencies   
   pip install "poetry==$POETRY_VERSION" && \
   # build requirements.txt file
-  poetry export -o requirements.txt --with dev,docs && \
+  # poetry export -o requirements.txt --with dev,docs && \
   # dependencies for building Python packages
   # # cleaning up unused files
   apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false  && \
   rm -rf /var/lib/apt/lists/*
 
 # Create Python Dependency and Sub-Dependency Wheels.
-RUN pip wheel --wheel-dir /usr/src/app/wheels \
-  -r requirements.txt 
+RUN poetry export -o requirements.txt --with dev,docs && \ 
+    pip wheel --wheel-dir /usr/src/app/wheels -r requirements.txt 
 
 FROM base as final
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
   # psycopg2 dependencies
   # libpq-dev \
+  # for visualizing django models
+  graphviz graphviz-dev \
   # Translations dependencies
   gettext \
   # geodjango dependencies
-  binutils libproj-dev gdal-bin \
+  binutils libproj-dev gdal-bin && \
   # spatialite dependencies
-  libsqlite3-mod-spatialite && \
+  # libsqlite3-mod-spatialite && \
   # cleaning up unused files
   apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
   && rm -rf /var/lib/apt/lists/*
@@ -55,5 +57,6 @@ COPY --from=builder /usr/src/app/wheels /wheels/
 # use wheels to install python dependencies
 RUN pip install --no-cache-dir --no-index --find-links=/wheels/ /wheels/* \
 	&& rm -rf /wheels/
+
 
 # CMD ["./entrypoint"]

@@ -2,9 +2,6 @@ from drf_spectacular.extensions import OpenApiSerializerFieldExtension
 from drf_spectacular.plumbing import get_view_model
 from quantityfield.settings import DJANGO_PINT_UNIT_REGISTER as ureg
 from rest_framework import serializers
-from rest_framework_gis.fields import GeometryField
-
-from geoluminate.db import models
 
 
 class QuantityFieldFix(OpenApiSerializerFieldExtension):
@@ -36,27 +33,3 @@ class QuantityField(serializers.FloatField):
 
     def to_representation(self, value):
         return value.magnitude
-
-
-class GeoluminateSerializerMixin:
-    def __init__(self, *args, **kwargs) -> None:
-        self.serializer_field_mapping.update(
-            {
-                models.QuantityField: QuantityField,
-                models.DecimalQuantityField: QuantityField,
-                models.IntegerQuantityField: QuantityField,
-                models.BigIntegerQuantityField: QuantityField,
-                models.PositiveIntegerQuantityField: QuantityField,
-                # gis_models.SiteField: SiteSerializer,
-                models.PointField: GeometryField,
-            }
-        )
-        super().__init__(*args, **kwargs)
-
-
-class ModelSerializer(GeoluminateSerializerMixin, serializers.ModelSerializer):
-    pass
-
-
-class HyperlinkedModelSerializer(GeoluminateSerializerMixin, serializers.HyperlinkedModelSerializer):
-    pass

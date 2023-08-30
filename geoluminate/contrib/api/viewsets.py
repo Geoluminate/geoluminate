@@ -5,6 +5,7 @@ from rest_framework import viewsets
 from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
 from rest_framework.response import Response
 from rest_framework_gis.filters import DistanceToPointFilter
+from rest_framework_nested.viewsets import NestedViewSetMixin
 
 from geoluminate.contrib.api.access_policies import CoreAccessPolicy
 
@@ -14,9 +15,6 @@ from geoluminate.utils.drf import DjangoFilterBackend
 
 
 class BaseViewSet(AccessViewSetMixin, viewsets.ModelViewSet):
-    # __doc__ = "Endpoint to request a set of {} data.".format(
-    #     settings.GEOLUMINATE['database']['name']
-    # )
     access_policy = CoreAccessPolicy
     permission_classes = [
         DjangoModelPermissionsOrAnonReadOnly,
@@ -50,3 +48,23 @@ class GeoJsonViewset(BaseViewSet):
     def is_geojson(self):
         if self.request.accepted_renderer:
             return self.request.accepted_renderer.format == "geojson"
+
+
+class ViewsetMixin(NestedViewSetMixin, viewsets.ReadOnlyModelViewSet):
+    """A viewset mixin that allows allows both nested and base API routes to be processed by the same viewset. Default lookup is uuid."""
+
+    lookup_field = "uuid"
+
+    def get_queryset(self):
+        if self.is_base_viewset():
+            return self.queryset
+        return super().get_queryset()
+
+    def initialize_request(self, request, *args, **kwargs):
+        if self.is_base_viewset():
+            return viewsets.ReadOnlyModelViewSet.initialize_request(self, request, *args, **kwargs)
+        return super().initialize_request(request, *args, **kwargs)
+
+    def is_base_viewset(self):
+        """Determines if this is a base viewset (e.g. a simple list or detail view) or a nested viewset."""
+        return not self.kwargs or self.kwargs.get("pk", False)

@@ -1,14 +1,14 @@
-{% extends "application.html" %}
+{% extends "geoluminate/layout/full_width.html" %}
 {% load crispy_forms_tags i18n %}
 
 {% block content %}
 <section id='main' class='container'>
   <section>
-    <div class='row'> 
+    <div class='row'>
       <div class='col-12 col-md-2'>
-        <ul>
-          <li><a href="{% url 'user:account' %}">{% trans "Settings" %}</a></li>
-        </ul>
+        {% comment %} <ul>
+          <li><a href="{% url 'account' %}">{% trans "Settings" %}</a></li>
+        </ul> {% endcomment %}
       </div>
       <div class='col-12 col-md-10'>
         <div class='container border-left'>

@@ -3,7 +3,7 @@
 import factory
 from django.contrib.auth import get_user_model
 
-from geoluminate.contrib.gis.models import Site
+from geoluminate.contrib.project.models import Site
 
 from .models import Profile
 

@@ -1,23 +1,61 @@
-from django.urls import path
+from django.urls import include, path
+from django.views.generic import TemplateView
 
 from geoluminate.views import placeholder_view
 
-from . import views
+# from .views.account import AccountEmailView
+from .views.community import CommunityDirectoryView, MemberProfileView
+from .views.users import (
+    Account,
+    AffiliationView,
+    Dashboard,
+    ProfileView,
+    Reviews,
+    UserDatasets,
+    UserProjects,
+)
 
-app_name = "user"
 urlpatterns = [
-    path("community/", placeholder_view, name="community_members"),
-    path("community/directory/", views.CommunityDirectoryView.as_view(), name="member_directory"),
-    path("dashboard/", placeholder_view, name="dashboard"),
-    path("settings/", views.Account.as_view(), name="account"),
+    # path("account/email/", AccountEmailView.as_view(), name="account_email"),
     path(
-        "profile/",
-        views.ProfileView.as_view(extra_context={"add": False}),
-        name="profile-edit",
+        "community/",
+        include(
+            (
+                [
+                    path("", placeholder_view, name="members"),
+                    path("members/", CommunityDirectoryView.as_view(), name="directory"),
+                    path("members/<pk>/", MemberProfileView.as_view(), name="profile"),
+                ],
+                "community",
+            ),
+        ),
+    ),
+    path("", include("allauth.urls")),
+    path(
+        "",
+        include(
+            (
+                [
+                    path("dashboard/", Dashboard.as_view(), name="dashboard"),
+                    path("reviews/", Reviews.as_view(), name="reviews"),
+                    path("settings/", Account.as_view(), name="account"),
+                    path("projects/", UserProjects.as_view(), name="projects"),
+                    path("datasets/", UserDatasets.as_view(), name="datasets"),
+                    # path("samples/", UserProjects.as_view(), name="projects"),
+                    path(
+                        "profile/",
+                        ProfileView.as_view(extra_context={"add": False}),
+                        name="profile_edit",
+                    ),
+                    path("affiliations/", AffiliationView.as_view(), name="affiliations"),
+                ],
+                "user",
+            ),
+        ),
     ),
     path(
-        "projects/",
-        views.UserProjectListView.as_view(),
-        name="projects",
+        "code-of-conduct/",
+        TemplateView.as_view(template_name="geoluminate/generic/code_of_conduct.html"),
+        name="code_of_conduct",
     ),
 ]

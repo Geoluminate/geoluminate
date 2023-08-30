@@ -10,6 +10,7 @@ from geoluminate.contrib.user.models import User
 
 # from jazzmin import templatetags
 from .forms import UserAdminChangeForm, UserAdminCreationForm
+from .models import Profile
 
 
 class SocialAccountInline(admin.StackedInline):
@@ -23,6 +24,18 @@ class AccountEmailInline(admin.StackedInline):
     model = EmailAddress
     fields = [("primary", "verified"), "email"]
     extra = 0
+
+
+class ProfileInline(admin.StackedInline):
+    model = Profile
+    fields = ["about"]
+    extra = 0
+
+
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ["user", "about"]
+    search_fields = ["user__email", "user__first_name", "user__last_name"]
 
 
 @admin.register(User)
@@ -55,6 +68,7 @@ class UserAdmin(BaseUserAdmin, ImportExportActionModelAdmin):
                     "first_name",
                     "last_name",
                     "password",
+                    "profile",
                 )
             },
         ),

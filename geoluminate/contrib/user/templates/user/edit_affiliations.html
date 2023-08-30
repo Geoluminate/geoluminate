@@ -1,0 +1,18 @@
+{% extends 'settings/base.html' %}
+{% load i18n formsetify %}
+
+
+{% block content %}
+<div class='w-100'>
+  <django-formset endpoint="{{ request.path }}" csrf-token="{{ csrf_token }}">
+    {{ form }}
+    <button type="button" class="btn btn-primary"  df-click="submit({update: true}) -> proceed">{% trans "Update" %}</button>
+  </django-formset>
+</div>
+{{ form.media.js }}
+
+{% endblock %}
+
+{% block scripts %}
+{{ form.media.js }}
+{% endblock %}

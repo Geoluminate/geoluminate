@@ -1,23 +1,17 @@
-{% extends 'application.html' %}
+{% extends 'settings/base.html' %}
 {% load i18n formsetify %}
 
 {% block content %}
-<div class='container pt-5'>
- <header class='header'>
-  <strong>{% trans "Edit Profile" %}</strong>
- </header>
+<div class='container mt-3'>
  <django-formset endpoint="{{ request.path }}" csrf-token="{{ csrf_token }}">
-  {% render_form form "bootstrap" field_classes="mb-2" %}
-
-  <div class='container d-flex justify-content-end pb-3'>
-   {% if add %}
-     <button type="button" class="btn btn-primary" click="submit({add: true}) -> proceed">{% trans "Create" %}</button>
-   {% else %}
-     <button type="button" class="btn btn-primary"  click="submit({update: true}) -> proceed">{% trans "Update" %}</button>
-     <button type="button" class="btn btn-danger"  click="submit({delete: true}) -> proceed">{% trans "Delete" %}</button>
-   {% endif %}
-  </div>
- </django-formset>
+  {% render_form form "bootstrap" field_classes="mb-3" %}
+  <button type="button" class="btn btn-primary"  df-click="submit({update: true}) -> proceed">{% trans "Update" %}</button>
+</django-formset>
 </div>
+{% endblock %}
 
-{% endblock content %}
+
+{% block footer_left %}
+<button type="button" class="btn btn-danger"  df-click="submit({delete: true}) -> proceed">{% trans "Delete" %}</button>
+{% endblock %}
+

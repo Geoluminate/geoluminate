@@ -17,7 +17,7 @@
             {% url 'account_signup' as register_url %}
             {% blocktrans %}
             <a href="{{ forgot_password_url }}">Forgot your password</a>
-            or 
+            or
             <a href="{{ register_url }}">don't have an account yet?</a>
             {% endblocktrans %}
           </p>
@@ -30,7 +30,7 @@
 </div>
 
 
-{% addtoblock "scripts" %}<script>
+{% addtoblock "js" %}<script>
 
 $("#loginForm").submit(function(e) {
 

@@ -1,21 +1,14 @@
-{% extends 'base.html' %}
+{% extends 'settings/base.html' %}
+
 {% load i18n authentication crispy_forms_tags %}
-{% block head_title %}
-  {% trans "Account Settings" %}
+{% block title %}{% trans "Account Settings" %}{% endblock %}
+{% block page_title %}{% trans "Account Settings" %}{% endblock %}
+
+
+{% block content_main %}
+<section>
+  {% for label, template, form in forms %}
+    {% include template with card_class='mb-2' %}
+  {% endfor %}
+</section>
 {% endblock %}
-{% block nav_title %}
-  {{ request.user.full_name }}
-{% endblock nav_title %}
-{% block content %}
-  <div class='container pt-5'>
-    <header>
-      {% trans "Account Settings" %}
-    </header>
-    {% for label, template, form in forms %}
-      {% include template with card_class='mb-2' %}
-    {% endfor %}
-  </div>
-{% endblock content %}
-{% block before_scripts %}
-  {% include "user/components/account_sidebar.html" %}
-{% endblock before_scripts %}

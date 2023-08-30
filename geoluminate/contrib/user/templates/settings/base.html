@@ -1,0 +1,39 @@
+{% extends 'geoluminate/layout/fullwidth_sidebar.html' %}
+{% load i18n static geoluminate %}
+
+{% block body_class %}application{% endblock %}
+{% block page_css_class %}container overflow-auto{% endblock %}
+
+{% block toolbar_right %}
+{% if action %}
+  <a href="{{ action.url }}" class='btn btn-sm btn-success'>
+    {{ action.label }}
+  </a>
+{% endif %}
+{% endblock %}
+
+{% block content_sidebar %}
+  <div class='d-flex align-items-center container'>
+  {% render_profile_image user.profile width="40px" height="40px" extra_classes='shadow' %}
+
+    {% comment %} <img src="{{request.user.profile.image.url}}" class="rounded-circle m-3" width=45 height=45 alt=""> {% endcomment %}
+    <span>{{ request.user.profile }}</span>
+  </div>
+  <ul>
+    {% for item in menus.account_sidebar %}
+      {% if not item.url %}
+          <h2>{{ item.title }}</h2>
+      {% elif item.visible %}
+        <li><a href="{{ item.url }}"
+          class="list-group-item list-group-item-action {{ item.extra_classes }}{% is_active item.url %}">
+          <i class="fas {{ item.icon }}"></i>
+          {{ item.title }}
+        </a></li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+{% endblock %}
+
+{% block content %}
+  {% block content_main %}{% endblock %}
+{% endblock %}

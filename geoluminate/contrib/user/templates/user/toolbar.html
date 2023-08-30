@@ -1,17 +1,22 @@
 {% load i18n geoluminate authentication sekizai_tags %}
 
-<div class="sidebar sidebar-end" tabindex="-1" id="userToolbar" aria-labelledby="toolbarLabel">
-  <div class="offcanvas-header">
+<div class="offcanvas offcanvas-end w-25" tabindex="-1" id="userToolbar" aria-labelledby="toolbarLabel">
+  <div class="offcanvas-header px-2 py-3">
    <div class='d-flex align-items-center justify-content-center w-100'>
-    <span class="fa-solid fa-circle-user fa-2xl me-2"></span>
-    <h5 class='m-0'>{{user.full_name}}</h5>
+    {% if user.is_authenicated %}
+      {% render_profile_image user.profile width="40px" height="40px" extra_classes='shadow' %}
+    {% endif %}
+
+    {% comment %} <img src="{{ user.profile.image.url }}" class="img-fluid rounded-circle col-2 pe-1"> {% endcomment %}
+    <h5 class='m-0'>{{user.profile.name}}</h5>
+    <button type="button" class="btn-close ms-auto" data-bs-dismiss="offcanvas" aria-label="Close"></button>
    </div>
   </div>
-  <div class="sidebar-body">
+  <div class="offcanvas-body p-0">
    <div class='list-group list-group-flush h-100'>
     {% for item in menus.user_toolbar %}
       {% if item.visible %}
-        <a href="{{ item.url }}" 
+        <a href="{{ item.url }}"
           class="list-group-item list-group-item-action {{ item.extra_classes }}{% is_active item.url %}">
           <i class="fas {{ item.icon }} pe-2"></i>
           {{ item.title }}

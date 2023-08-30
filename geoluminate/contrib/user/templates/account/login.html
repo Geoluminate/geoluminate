@@ -1,11 +1,11 @@
 {% extends "account/base.html" %}
 {% load i18n crispy_forms_tags account socialaccount formsetify %}
 
-{% block head_title %}{% trans "Sign In" %}{% endblock %}
+{% block title %}{% trans "Sign In" %}{% endblock %}
 {% block nav_title %}{% trans "Sign In" %}{% endblock nav_title %}
 {% block heading %}{% trans "Sign In" %}{% endblock heading %}
 
-{% block body %}
+{% block content %}
 <p>{% trans "Please sign in or register using your preferred third party provider." %}</p>
 <div class='socialaccount_providers d-flex justify-content-center'>
   {% include 'socialaccount/snippets/provider_list.html' with process="login" %}
@@ -20,27 +20,17 @@
 <p>{% blocktrans %}Sign in using your email and password. If you have not created an account with us yet, then please
 <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}
 </p>
-{% formsetify form "bootstrap" field_classes="mb-3" %}
-<django-formset endpoint="{{ request.path }}" csrf-token="{{ csrf_token }}">
-  <form id="{{ form.form_id }}" method='post'>
-    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-    {% if redirect_field_value %}
-    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-    {% endif %}
-    {% include "formset/non_field_errors.html" %}
-    {% for field in form %}
-      {% if field.is_hidden %}
-        {{ field }}
-      {% elif field.name == "my_special_field" %}
-        {% include "myproject/my_special_field.html" %}
-      {% else %}
-        {% include "formset/default/field_group.html" %}
-      {% endif %}
-    {% endfor %}
-  </form>
-</django-formset>
-<div class='d-flex align-items-end'>
-  <button class="btn btn-lg btn-primary" type="submit" form='{{ form.form_id }}'>{% trans "Submit" %}</button>
-  <a class="button secondaryAction ms-auto" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a> 
-</div>
-{% endblock body %}
+
+<form id="loginForm" method='post'>
+  {% csrf_token %}
+  {{ form.as_p }}
+</form>
+
+{% endblock %}
+
+{% block footer_class %}align-items-end justify-content-between{% endblock footer_class %}
+
+{% block footer %}
+  <button class="btn btn-lg btn-primary" form="loginForm" type="submit">{% trans "Submit" %}</button>
+  <a class="button secondaryAction ms-auto" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+{% endblock %}

@@ -1,17 +1,25 @@
-{% load i18n authentication sekizai_tags %}
+{% load i18n authentication sekizai_tags geoluminate %}
 
-<li class="nav-item dropdown widget">
-  {% if not user.is_authenticated %}
-    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+<li class="d-flex flex-column">
+    <a
+        href="#"
+        class='nav-link dropdown-toggle'
+        role="button"
+        aria-expanded="false"
+        {% if user.is_authenticated %}
+        data-bs-toggle="offcanvas"
+        data-bs-target="#userToolbar"
+        {% else %}
+        data-bs-toggle="dropdown"
+        {% endif %}
+        >
+
+  {% if user.is_authenticated %}
+    {% render_profile_image user.profile width="32px" height="32px" extra_classes='shadow me-1' %}
   {% else %}
-    <a class="nav-link" href="#" role="button" onclick="$('#userToolbar').toggleClass('show')" aria-expanded="false">
-  {% endif %}
     <i class="d-none d-lg-inline fa-solid fa-circle-user fa-lg me-2"></i>
-    {% if user.is_authenticated %}
-      {{user.display_name|default:"Account"}}
-    {% else %}
       {% trans "Guest" %}
-    {% endif %}
+  {% endif %}
   </a>
   {% if not user.is_authenticated %}
     {% comment %} // This is the dropdown menu that appears when the user is not logged in {% endcomment %}
@@ -30,7 +38,9 @@
     </ul>
     {% else %}
     {% comment %} // This is the user toolbar that slides in from the right when the user is logged in {% endcomment %}
-    {% addtoblock "before_scripts" %}{% include 'user/toolbar.html' %}{% endaddtoblock %}
+    {% comment %} {% addtoblock "page_right" %}{% include 'user/toolbar.html' %}{% endaddtoblock %} {% endcomment %}
   {% endif %}
-</li>
+  </li>
+
+
 

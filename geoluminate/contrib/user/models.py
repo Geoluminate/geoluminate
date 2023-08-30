@@ -1,14 +1,17 @@
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.urls import reverse
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 from invitations.base_invitation import AbstractBaseInvitation
+from taggit.managers import TaggableManager
+
+from geoluminate.contrib.project.choices import iso_639_1_languages
+from geoluminate.contrib.project.models import Contributor, Dataset, Project, Sample
 
 from .managers import UserManager
-
-# from allauth.account.forms import SignupForm
 
 
 class Identifier(models.Model):
@@ -17,7 +20,7 @@ class Identifier(models.Model):
     user = models.ForeignKey("user.Profile", related_name="identifiers", on_delete=models.CASCADE)
     identifier = models.CharField(max_length=255, verbose_name=_("identifier"))
     scheme = models.CharField(max_length=255, verbose_name=_("scheme"))
-    url = models.URLField(verbose_name=_("url"), blank=True, null=True)
+    url = models.URLField(verbose_name="URL", blank=True, null=True)
 
     def __str__(self):
         return self.identifier
@@ -31,7 +34,6 @@ class User(AbstractUser):
     class AcademicTitle(models.TextChoices):
         DR = "Dr.", _("Dr.")
         PROF = "Prof.", _("Prof.")
-        # PROF_DR = "Prof. Dr.", _("Prof. Dr.")
 
     username = None  # type: ignore[assignment]
     email = models.EmailField(_("email address"), unique=True)
@@ -46,6 +48,11 @@ class User(AbstractUser):
         if self.first_name and self.last_name:
             return f"{self.first_name[0]}.{self.last_name}"
         return ""
+
+    def save(self, *args, **kwargs):
+        if self.pk is None:
+            self.profile = Profile.objects.create(name=self.full_name())
+        super().save(*args, **kwargs)
 
     @property
     def display_name(self):
@@ -82,18 +89,63 @@ class Profile(models.Model):
     to closely resemble the DataCite schema for contributors so that user and/or organization data can easily be added
     to datasets ready for publication."""
 
+    image = models.ImageField(
+        upload_to="profile_images/",
+        verbose_name=_("profile image"),
+        help_text=_("A profile image for the contributor."),
+        blank=True,
+        null=True,
+    )
+
     name = models.CharField(
         max_length=512,
-        verbose_name=_("name"),
-        help_text=_(
-            "Your preferred name for use in thingsName of the contributor. Will be automatically populated from given"
-            " name and family name if left blank."
-        ),
+        verbose_name=_("display name"),
+        help_text=_("This name is displayed publicly within the website."),
         blank=True,
     )
 
+    # publishing_name = models.CharField(
+    #     max_length=512,
+    #     verbose_name=_("publishing name"),
+    #     help_text=_(
+    #         "This name is displayed publicly within the website and may be transmitted to data publishing services."
+    #         " If you typically publish under a pseudonym (e.g maiden name), you can specifiy that here. It is also displayed on your public profile on this site."
+    #     ),
+    #     blank=True,
+    # )
+
     about = models.TextField(null=True, blank=True)
 
+    # slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
+
+    # interests = TaggableManager(
+    #     _("interests"), help_text=_("A list of research interests for the contributor."), blank=True
+    # )
+
+    # languages = models.CharField(
+    #     max_length=2,
+    #     choices=iso_639_1_languages,
+    #     verbose_name=_("alternate language"),
+    #     help_text=_("Alternate language of the contributor."),
+    #     blank=True,
+    #     null=True,
+    # )
+
+    CONTRIBUTOR_STATUS = (
+        ("active", _("Active")),
+        ("inactive", _("Inactive")),
+        # ("suspended", _("Suspended")),
+        ("unclaimed", _("Unclaimed")),
+        ("deleted", _("Deleted")),
+    )
+
+    # status = models.CharField(
+    #     max_length=12,
+    #     choices=CONTRIBUTOR_STATUS,
+    #     verbose_name=_("status"),
+    #     help_text=_("Status of the contributor."),
+    #     default="inactive",
+    # )
     lang = models.CharField(
         max_length=255,
         verbose_name=_("language"),
@@ -101,6 +153,12 @@ class Profile(models.Model):
         blank=True,
         null=True,
     )
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("community:profile", kwargs={"pk": self.pk})
 
     @property
     def type(self):
@@ -120,6 +178,27 @@ class Profile(models.Model):
         if self.user:
             return self.user.last_name
         return ""
+
+    def get_datasets(self):
+        return Dataset.objects.filter(contributors__profile=self).all()
+
+        # return Contributor.objects.filter(
+        #     profile=self,
+        #     content_type__model=ContentType.objects.get_for_model(Dataset),
+        # ).all()
+
+    def get_samples(self):
+        return Contributor.objects.filter(
+            profile=self,
+            content_type=ContentType.objects.get_for_model(Sample),
+        ).all()
+
+    def get_projects(self):
+        return Project.objects.filter(contributors__profile=self).all()
+        # return Contributor.objects.filter(
+        #     profile=self,
+        #     content_type=ContentType.objects.get_for_model(Project),
+        # ).all()
 
 
 class Invitations(AbstractBaseInvitation):

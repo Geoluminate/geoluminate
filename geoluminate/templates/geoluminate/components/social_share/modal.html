@@ -1,0 +1,19 @@
+{% load i18n geoluminate social_share %}
+{% spaceless %}
+<div class="modal fade" id="shareModal" tabindex="-1" aria-labelledby="shareModalLabel" aria-hidden="true">
+ <div class="modal-dialog">
+   <div class="modal-content">
+    {% include 'geoluminate/modals/header.html' with header="Share with others!"%}
+     <div class="modal-body text-center">
+      <div class='card mb-1 shadow-sm'><h1>{% post_to_twitter '' request.path ' ' "fab fa-twitter stretched-link" %}</h1></div>
+      <div class='card mb-1 shadow-sm'><h1>{% post_to_linkedin request.path "fab fa-linkedin stretched-link" %}</h1></div>
+      <div class='card mb-1 shadow-sm'><h1>{% post_to_facebook request.path ' ' "fab fa-facebook-f stretched-link" %}</h1></div>
+      <div class='card mb-1 shadow-sm'><h1>{% post_to_reddit '' request.path ' ' "fab fa-reddit-alien stretched-link" %}</h1></div>
+      <div class='card mb-1 shadow-sm'><h1>{% send_email geoluminate.database.name object request.path ' ' "fas fa-envelope stretched-link" %}</h1></div>
+      <div class='card mb-1 shadow-sm'><h1>{% post_to_telegram object request.path " " "fab fa-telegram stretched-link" %}</h1></div>
+      <div class='card mb-1 shadow-sm'><h1>{% post_to_whatsapp request.path " " "fab fa-whatsapp stretched-link" %}</h1></div>
+    </div>
+  </div>
+ </div>
+</div>
+{% endspaceless %}

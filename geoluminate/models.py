@@ -37,14 +37,6 @@ class GlobalConfiguration(SingletonModel):
         on_delete=models.SET_NULL,
     )
 
-    # Visibility related settings
-    lockdown_enabled = models.BooleanField(
-        _("Access rights"),
-        choices=((True, _("Admin only")), (False, _("Public"))),
-        help_text=_("Locks down the entire application so that only administrators can log in."),
-        default=False,
-    )
-
     class Meta:
         db_table = "global_config"
         verbose_name = _("Configuration")

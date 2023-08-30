@@ -9,16 +9,12 @@ COMMENTS_APP = "fluent_comments"
 
 # --------- FLUENT COMMENTS SETTINGS --------- #
 
-# AKISMET_API_KEY = None
-# AKISMET_BLOG_URL = None
-# AKISMET_IS_TEST = False
-
+# https://django-fluent-comments.readthedocs.io/en/latest/topics/email.html
+FLUENT_COMMENTS_USE_EMAIL_NOTIFICATION = False
+"""Don't send emails to site moderators for every comment. This could get frustrating fast. Instead we will hook up our own signals to send comments only to the project/dataset/sample owner."""
 
 # FLUENT_COMMENTS_REPLACE_ADMIN = True
 
-# Akismet spam fighting
-# FLUENT_CONTENTS_USE_AKISMET = bool(AKISMET_API_KEY)
-# FLUENT_COMMENTS_AKISMET_ACTION = 'soft_delete'
 
 # Moderation
 FLUENT_COMMENTS_DEFAULT_MODERATOR = "default"
@@ -33,9 +29,11 @@ FLUENT_COMMENTS_DEFAULT_MODERATOR = "default"
 # Form layouts
 # FLUENT_COMMENTS_FIELD_ORDER = ()
 FLUENT_COMMENTS_EXCLUDE_FIELDS = ("name", "email", "url", "title")
+"""These are not required as we will only allow logged in users to comment."""
+
+FLUENT_COMMENTS_FORM_CLASS = "fluent_comments.forms.CompactLabelsCommentForm"
 """"""
-FLUENT_COMMENTS_FORM_CLASS = "fluent_comments.forms.captcha.CompactLabelsCommentForm"
-""""""
+
 # FLUENT_COMMENTS_FORM_CSS_CLASS = 'comments-form form-horizontal'
 # FLUENT_COMMENTS_LABEL_CSS_CLASS = 'col-sm-2'
 # FLUENT_COMMENTS_FIELD_CSS_CLASS = 'col-sm-10'

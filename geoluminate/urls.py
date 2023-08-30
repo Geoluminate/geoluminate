@@ -1,48 +1,58 @@
 from cms.sitemaps import CMSSitemap
+from django.conf import settings
+from django.conf.urls.i18n import i18n_patterns
+from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 from django.urls import include, path
+from django.utils.text import slugify
+from django.views import defaults as default_views
+from django.views.generic import TemplateView
 
+from geoluminate.admin import admin_site
+from geoluminate.contrib.user import views
 from geoluminate.views import placeholder_view
 
-from . import views
+PUBLIC_URL = slugify(settings.GEOLUMINATE["database"]["acronym"]) + "/"
 
 # these URLS don't require translation capabilities
 NON_I18N_URLS = [
     path("sitemap.xml", sitemap, {"sitemaps": {"cmspages": CMSSitemap}}),
-    path("api/", include("geoluminate.contrib.api.urls")),
-    path("select2/", include("django_select2.urls")),
     path("comments/", include("fluent_comments.urls")),
-    # path("admin/literature/api/", include(drf_router.urls), name="admin_api"),
-    path(
-        "model-field-select2/",
-        views.ModelFieldSelect2View.as_view(),
-        name="geoluminate_select2",
-    ),
-    # path("tellme/", include("tellme.urls")),
+    path("api/", include("geoluminate.contrib.api.urls")),
     # path("vocabularies/", include("controlled_vocabulary.urls")),
-    # *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
-    # *static(settings.STATIC_URL, document_root=settings.STATIC_ROOT),
 ]
 
 I18N_URLS = [
+    path(
+        PUBLIC_URL,
+        include(
+            [
+                path("", include("geoluminate.contrib.project.public_urls")),
+                path("explorer/", TemplateView.as_view(template_name="geoluminate/components/map.html"), name="viewer"),
+                path("glossary/", include("glossary.urls")),
+                path("literature/", include("literature.urls")),
+            ]
+        ),
+    ),
     path("invitations/", include("invitations.urls", namespace="invitations")),
-    path("accounts/", include("allauth.urls")),
     path("admin/", include("geoluminate.contrib.admin.urls")),
-    path("literature/", include("literature.urls")),
+    path("contact/", include("django_contact_form.urls")),
+    path("", include("geoluminate.contrib.user.urls")),
     path("", include("geoluminate.contrib.project.urls")),
-    path("user/", include("geoluminate.contrib.user.urls")),
-    path("", include("geoluminate.contrib.gis.urls")),
-    path("", include("cms.urls")),
 ]
 
+urlpatterns = NON_I18N_URLS + I18N_URLS
 
-GEOLUMINATE_URLS = NON_I18N_URLS + I18N_URLS + [path("", include("cms.urls"))]
 
-# urlpatterns = (
-#     NON_I18N_URLS
-#     + I18N_URLS
-#     + [path("", include("cms.urls"))]  # must be last
-#     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-#     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-# )
-# )
+# adds the debug toolbar to templates if installed
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+    if "debug_toolbar" in settings.INSTALLED_APPS:
+        import debug_toolbar
+
+        urlpatterns.insert(0, path("__debug__/", include(debug_toolbar.urls)))
+
+
+urlpatterns += [path("", include("cms.urls"))]  # must be last

@@ -24,8 +24,6 @@ env = environ.Env(
 )
 
 
-# print(env("COMPRESS_ENABLED"))
-
 READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=False)
 if READ_DOT_ENV_FILE:
     # OS environment variables take precedence over variables from .env
@@ -110,121 +108,6 @@ TEMPLATES = [
     },
 ]
 
-GEOLUMINATE_APPS = [
-    # Admin apps
-    "adminactions",
-    "geoluminate.contrib.admin",
-    "jazzmin",
-    "postgres_metrics.apps.PostgresMetrics",
-    "polymorphic",
-    "modeltranslation",
-    # core Django apps
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.admin",
-    "django.contrib.admindocs",
-    "django.contrib.sites",
-    "django.contrib.sitemaps",
-    "django.contrib.staticfiles",
-    "django.contrib.messages",
-    "django.contrib.gis",
-    "django.contrib.humanize",
-    # "django.forms",
-    "drf_auto_endpoint",
-    # "auto_datatables.apps.AutoDataTablesConfig",
-    # required by geoluminate
-    "geoluminate",
-    "geoluminate.contrib.project",
-    "geoluminate.contrib.controlled_vocabulary",
-    "geoluminate.contrib.user",
-    "geoluminate.contrib.api",
-    "geoluminate.contrib.gis",
-    "geoluminate.contrib.literature",
-    "auto_datatables",
-    # "ror",
-    # authentication
-    "allauth",
-    "allauth.account",
-    "allauth.socialaccount",
-    "allauth.socialaccount.providers.orcid",
-    "invitations",
-    # required by django cms
-    "cms",
-    "menus",
-    "sekizai",
-    "treebeard",
-    # required by djangocms-frontend
-    "djangocms_text_ckeditor",
-    "filer",
-    "easy_thumbnails",
-    "djangocms_frontend",
-    "djangocms_frontend.contrib.accordion",
-    "djangocms_frontend.contrib.alert",
-    "djangocms_frontend.contrib.badge",
-    "djangocms_frontend.contrib.card",
-    "djangocms_frontend.contrib.carousel",
-    "djangocms_frontend.contrib.collapse",
-    "djangocms_frontend.contrib.content",
-    "djangocms_frontend.contrib.grid",
-    "djangocms_frontend.contrib.image",
-    "djangocms_frontend.contrib.jumbotron",
-    "djangocms_frontend.contrib.link",
-    "djangocms_frontend.contrib.listgroup",
-    "djangocms_frontend.contrib.media",
-    "djangocms_frontend.contrib.tabs",
-    "djangocms_frontend.contrib.utilities",
-    # APPS FOR DJANGO REST FRAMEWORK
-    "rest_framework",
-    "rest_framework.authtoken",
-    "corsheaders",
-    "dj_rest_auth",
-    "dj_rest_auth.registration",
-    "drf_spectacular",  # auto documentation of API
-    "drf_spectacular_sidecar",  # static files for drf_spectacular
-    # "rest_framework_datatables_editor",
-    # commenting system via django-fluent-comments[threadedcomment]
-    "fluent_comments",
-    "threadedcomments",
-    "django_comments",
-    "solo",  # singleton model for storing dynamic global variables in the DB
-    "storages",  # for setting up backend storages
-    "simple_menu",  # for defining non-CMS menus in the application
-    # building nice looking forms and filters
-    "django_filters",
-    "crispy_forms",
-    "crispy_bootstrap5",
-    # some other useful apps that are required by the default installation
-    "sortedm2m",  # sortable m2m relationships
-    "django_htmx",  # context processor for dealing with htmx requests
-    "django_celery_beat",  # celery based task manager
-    "meta",  # for seo optimization
-    "taggit",  # providing taggable keywords to any model
-    "django_social_share",  # easy links to social sharing sites
-    "import_export",  # for csv import and export via the admin site
-    # 'import_export_celery',
-    # not sure if these are explicitly needed or not
-    # 'newsletter',
-    # 'rest_framework_gis',
-    # 'django_json_widget',  # provides a json form field for json_field
-    "rosetta",  # in app translations
-    # "controlled_vocabulary",  # a nice app for controlled vocabulary fields
-    # "menu",  # is this supposed to be here?
-    "django_select2",  # select2 widget integration with models
-    "dbbackup",
-    # "tellme",  # adds user feedback functionality to the site
-    "django_spaghetti",  # entity-relationship diagrams
-    # "jazzmin_translate",  # rosetta compatibility with jazzmin
-    # "django_better_admin_arrayfield",  # nice admin widget for postgres array fields
-    # GEOLUMINATE DEFAULT PLUGINS
-    "literature",
-    "formset",
-    # research projects
-    # research_projects
-    # "licensing",
-    # cataloguing of scientific instruments
-    "laboratory",
-]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -242,8 +125,8 @@ MIDDLEWARE = [
     "cms.middleware.page.CurrentPageMiddleware",
     "cms.middleware.toolbar.ToolbarMiddleware",
     "cms.middleware.language.LanguageCookieMiddleware",
-    "django_htmx.middleware.HtmxMiddleware",
-    "geoluminate.middleware.GeoluminateLockdownMiddleware",
+    # "django_htmx.middleware.HtmxMiddleware",
+    "lockdown.middleware.LockdownMiddleware",
 ]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-url
@@ -265,6 +148,7 @@ FIXTURE_DIRS = (str(BASE_DIR / "project" / "fixtures"),)
 
 STATICFILES_DIRS = [
     str(BASE_DIR / "project" / "static"),
+    ("node_modules", BASE_DIR / "node_modules"),
 ]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#locale-paths
@@ -280,7 +164,7 @@ STATIC_ROOT = str(BASE_DIR / "static")
 MEDIA_ROOT = str(BASE_DIR / "media")
 
 if env("SHOW_DEBUG_TOOLBAR"):
-    GEOLUMINATE_APPS.append("debug_toolbar")
+    # GEOLUMINATE_APPS.append("debug_toolbar")
     MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
 
     DEBUG_TOOLBAR_CONFIG = {
@@ -291,3 +175,6 @@ if env("SHOW_DEBUG_TOOLBAR"):
     # DEBUG_TOOLBAR_PANELS += [
     #     "template_profiler_panel.panels.template.TemplateProfilerPanel",
     # ]
+
+#
+FORM_RENDERER = "geoluminate.utils.forms.DefaultFormRenderer"

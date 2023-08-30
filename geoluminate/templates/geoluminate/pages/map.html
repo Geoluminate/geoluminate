@@ -1,0 +1,7 @@
+{% extends "geoluminate/layout/full_screen.html" %}
+
+{% block title %}{{ geoluminate.database.acronym }} {% trans "Explorer" %}{% endblock title %}
+
+{% block content %}
+{% include 'geoluminate/components/map.html' %}
+{% endblock content %}

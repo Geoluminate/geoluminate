@@ -1,8 +1,5 @@
-@import 'libs/vendor';
-
 // import our Bootstap overrides here
 @import "variables";
-
 
 // import the bootstrap 5 source files
 @import "vendor/bootstrap/scss/bootstrap";
@@ -11,7 +8,6 @@
 // Layout.
 @import 'layout/application';
 @import 'layout/navbar';
-@import 'layout/main';
 @import 'layout/menu';
 
 // Components
@@ -21,18 +17,21 @@
 @import 'components/sidebar';
 @import 'components/scrollbar';
 @import 'components/indicators';
-@import 'components/form';
-@import 'components/table';
+@import 'components/formset';
+@import 'components/card';
+@import 'components/comments';
+// @import 'components/table';
 
 // Overrides
 @import "overrides/datatables";
+@import "overrides/spectacular";
 
 
 // @import "overrides/swagger";
 @import "djangocms";
 
 
-// this is imported from the user's project directory 
+// this is imported from the user's project directory
 // it provides a way for users to customize styles without modifying templates
 @import "scss/stylesheet";
 
@@ -60,14 +59,12 @@
 	  bottom: 0;
 	  display: block!important;
 	}
-	#appFooter {
+	.application-footer {
 		position: fixed;
 		bottom: 0;
 		// display: block!important;
 	  }
   }
-
-
 
 html {
 	margin: 0!important;
@@ -101,3 +98,15 @@ html {
 
 	}
 }
+
+#id_loginform {
+  ul.dj-errorlist {
+    list-style: none;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-left: 0;
+    color: var(--django-formset-color-invalid);
+  }
+}
+

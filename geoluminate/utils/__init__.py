@@ -1,16 +1,31 @@
+"""
+The utils module contains various helper functions and classes that are used throughout the project. 
+
+.. autosummary::
+    :toctree: generated/
+    :nosignatures:
+
+    create_fixtures
+    get_database_models
+    get_filter_params
+    get_db_name
+    geoluminate_content_types
+    
+"""
+
+
 from django.apps import apps
 from django.conf import settings
 from django.db import transaction
 from django.db.models import Q
 from django.utils.module_loading import import_string
 
-# from geoluminate.factories import SampleFactory, UserFactory
-from geoluminate.contrib.project.factories import (
+from geoluminate.utils.factories import (
     DatasetFactory,
     ProjectFactory,
     SampleFactory,
+    UserFactory,
 )
-from geoluminate.contrib.user.factories import UserFactory
 
 
 @transaction.atomic
@@ -20,15 +35,19 @@ def create_fixtures():
             model.save()
 
     # create some users
+    print("Creating users...")
     save_model_instances(UserFactory.create_batch(size=200))
 
     # create some projects
+    print("Creating projects...")
     save_model_instances(ProjectFactory.create_batch(size=100))
 
     # create some datasets
+    print("Creating datasets...")
     save_model_instances(DatasetFactory.create_batch(size=250))
 
     # create some samples
+    print("Creating samples...")
     save_model_instances(SampleFactory.create_batch(size=1000))
 
 

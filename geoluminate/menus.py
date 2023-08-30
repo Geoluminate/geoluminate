@@ -37,38 +37,28 @@ class Sidebar(GeoluminateMenuBase):
 
 Sidebar.add_item(
     MenuItem(
-        title=_("Projects"),
-        url=reverse("ProjectDataTable:view"),
-        weight=1,
-        icon="fa-project-diagram",
-    ),
-)
-
-Sidebar.add_item(
-    MenuItem(
-        title=_("Datasets"),
-        url=reverse("DatasetDataTable:view"),
-        weight=2,
-        icon="fa-folder-open",
-    ),
-)
-
-Sidebar.add_item(
-    MenuItem(
-        title=_("Samples"),
-        # check=lambda request: request.user.is_staff,
-        url=reverse("SampleDataTable:view"),
-        weight=3,
-        icon="fa-database",
-    ),
-)
-
-Sidebar.add_item(
-    MenuItem(
-        title=_("Sites"),
+        title=_("Explorer"),
         url=reverse("viewer"),
-        weight=4,
+        weight=5,
         icon="fa-map-marked-alt",
+    ),
+)
+
+Sidebar.add_item(
+    MenuItem(
+        title=_("Literature"),
+        url=reverse("literature:list"),
+        weight=5,
+        icon="fa-book",
+    ),
+)
+
+Sidebar.add_item(
+    MenuItem(
+        title=_("Community"),
+        url=reverse("community:members"),
+        weight=6,
+        icon="fa-user-group",
     ),
 )
 
@@ -76,7 +66,7 @@ Sidebar.add_item(
     MenuItem(
         title=_("API"),
         url=reverse("swagger-ui"),
-        weight=5,
+        weight=7,
         icon="fa-gears",
     ),
 )

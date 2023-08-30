@@ -2,9 +2,9 @@
 {% load literature %}
 {% load i18n literature crispy_forms_tags static i18n cms_tags sekizai_tags %}
 
-{% block head_title %}
+{% block title %}
   {% trans "Literature" %}
-{% endblock head_title %}
+{% endblock title %}
 {% block nav_title_bold %}
   {% trans "Literature" %}
 {% endblock %}
@@ -50,18 +50,18 @@
 
     </section>
   </div>
-  {% addtoblock "scripts" %}
+  {% addtoblock "js" %}
     <script src="{% static "geoluminate/js/shave.min.js" %}"></script>{% endaddtoblock %}
-    {% addtoblock "scripts" %}
+    {% addtoblock "js" %}
       <script>
         shave('.abstract', 150)
       </script>
     {% endaddtoblock %}
   {% endblock content %}
-  {% comment %} {% block before_scripts %}
+  {% comment %} {% block page_right %}
     {% include 'literature/components/sidebar.html' %}
-  {% endblock before_scripts %} {% endcomment %}
+  {% endblock page_right %} {% endcomment %}
   {% comment %}
-{% block before_scripts %}
+{% block page_right %}
 {% include "review/modals/nominate.html" with modal_id='genericModal' %}
-  {% endblock before_scripts %} {% endcomment %}
+  {% endblock page_right %} {% endcomment %}

@@ -7,8 +7,9 @@
 
     .menu-item {
       @extend .accordion-item;
+      border-radius: 0 !important;
 
-      i.fas {
+      i {
         width: 1.8rem;
       }
     }
@@ -20,8 +21,7 @@
 
       &:hover {
         background-color: $accordion-button-active-bg;
-        // $accordion-button-active-bg:              tint-color($component-active-bg, 90%);
-// $accordion-button-active-color:
+
       }
     }
   

@@ -1,9 +1,10 @@
-{% extends "geoluminate/components/static_modal.html" %}
-{% load i18n %}
+{% extends "geoluminate/layout/full_screen_form.html" %}{% load i18n %}
 
-{% block title %}{% trans "Server Error (500)" %}{% endblock %}
+{% block title %}{% trans "Oops! Server Error..." %}{% endblock %}
+{% block page_title %}{% trans "Oops! Server Error..." %}{% endblock %}
 
-{% block body %}
-<h5 class="modal-title text-center">{% trans "Oops! Something went wrong..." %}</h5>
-<p class='text-center'>{% trans "We track these errors automatically, but if the problem continues feel free to contact us." %}</p>
+{% block content %}
+
+<h5 class="modal-title text-center mb-3">{% trans "Oops! Server Error..." %}</h5>
+<p class=''>{% trans "Whoops! Something went wrong on our end. Our technical team is already working to fix this issue. We apologize for any inconvenience. In the meantime, you might want to try again later or contact our support team to report the problem. Thank you for your patience!" %}</p>
 {% endblock %}

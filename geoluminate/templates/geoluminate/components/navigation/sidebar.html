@@ -1,0 +1,21 @@
+{% load i18n menu_tags thumbnail cms_tags geoluminate sekizai_tags static %}
+{% spaceless %}
+<nav id="mainSidebar" class="sidebar sidebar-start small" tabindex="-1">
+  <div class="sidebar-header">
+    <img src="{% logo %}" alt="" width='100%'>
+    <button type="button"
+            class="btn btn-sm btn-light border ms-1"
+            aria-label="Close"
+            onclick="$('#mainSidebar').toggleClass('show')"
+            >
+      <span class="fas fa-caret-left text-muted"></span>
+    </button>
+  </div>
+  <div class="sidebar-body">
+    <div class='container py-1 small bg-secondary-subtle'>{% trans "Browse quality-assured, publicly available data within the " %}{{ geoluminate.database.acronym }}.
+    </div>
+    {% include 'geoluminate/components/navigation/partials/sidebar_menu.html' %}
+  </div>
+  <div class='footer'></div>
+</nav>
+{% endspaceless %}

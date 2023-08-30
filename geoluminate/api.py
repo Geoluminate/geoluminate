@@ -1,11 +1,12 @@
 # import improperlyconfigured
 from django.core.exceptions import ImproperlyConfigured
+
+# import redirect
+from django.shortcuts import redirect
 from drf_auto_endpoint.endpoints import Endpoint
 from drf_auto_endpoint.router import EndpointRouter
 from rest_framework.response import Response
 from rest_framework.viewsets import ReadOnlyModelViewSet
-
-from geoluminate.contrib.api.serializers import HyperlinkedModelSerializer
 
 API = EndpointRouter()
 
@@ -16,7 +17,8 @@ class BaseViewSet(ReadOnlyModelViewSet):
     def retrieve(self, request, *args, **kwargs):
         response = super().retrieve(request, *args, **kwargs)
         if request.accepted_renderer.format == "html":
-            return Response({"data": response.data}, template_name=self.get_template())
+            # return Response({"data": response.data}, template_name=self.get_template())
+            return redirect(self.get_object().get_absolute_url())
         return response
 
     def get_template(self):
@@ -29,7 +31,7 @@ class BaseViewSet(ReadOnlyModelViewSet):
 
 
 class Endpoint(Endpoint):
-    base_serializer = HyperlinkedModelSerializer
+    # base_serializer = HyperlinkedModelSerializer
     include_str = False
     read_only = True
     base_viewset = BaseViewSet

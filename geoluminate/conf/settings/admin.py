@@ -14,16 +14,16 @@ JAZZMIN_SETTINGS = {
     # Title on the brand (19 chars max) (defaults to current_admin_site.site_header if absent or None)
     "site_brand": " ",
     # Logo to use for your site, must be present in static files, used for brand on top left
-    "site_logo": "geoluminate/img/brand/logo.svg",
+    "site_logo": "img/brand/logo.svg",
     # Logo to use for your site, must be present in static files, used for login form logo (defaults to site_logo)
-    "login_logo": "geoluminate/img/brand/logo.svg",
+    "login_logo": "img/brand/logo.svg",
     # Logo to use for login form in dark themes (defaults to login_logo)
-    "login_logo_dark": "geoluminate/img/brand/logo.svg",
+    "login_logo_dark": "img/brand/logo.svg",
     # CSS classes that are applied to the logo above
     # "site_logo_classes": "img-circle",
     "site_logo_classes": "img-thumbnail shadow-none border-0",
     # Relative path to a favicon for your site, will default to site_logo if absent (ideally 32x32 px)
-    "site_icon": "geoluminate/img/brand/icon.svg",
+    "site_icon": "img/brand/icon.svg",
     # Welcome text on the login screen
     "welcome_sign": "Welcome to the library",
     # Copyright on the footer
@@ -32,7 +32,7 @@ JAZZMIN_SETTINGS = {
     # If you want to use a single search field you dont need to use a list, you can use a simple string
     # "search_model": ["auth.User", "auth.Group"],
     # Field name on user model that contains avatar ImageField/URLField/Charfield or a callable that receives the user
-    "user_avatar": False,
+    "user_avatar": "user.profile.image",
     ############
     # Top Menu #
     ############
@@ -109,7 +109,10 @@ JAZZMIN_SETTINGS = {
         "literature",
         "fluent_comments",
     ],
-    "hide_models": [],
+    "hide_models": [
+        "project.Contributor",
+        "project.KeyDate",
+    ],
     # List of apps (and/or models) to order the side menu
     "order_with_respect_to": ["geoluminate", GEOLUMINATE["database"]["acronym"].lower()],
     # Custom links to append to app groups, keyed on app name
@@ -177,10 +180,9 @@ JAZZMIN_SETTINGS = {
     # for the full list of 5.13.0 free icon classes
     "icons": {
         "auth": "fas fa-users-cog",
-        "auth.User": "fas fa-user",
+        "user.User": "fas fa-user",
         "auth.Group": "fas fa-users",
         "literature.Literature": "fas fa-book",
-        "literature.Author": "fas fa-users",
         "fluent_comments.fluentcomment": "fas fa-comments",
         "geoluminate.globalconfiguration": "fas fa-cogs",
         "user.User": "fas fa-user",
@@ -204,9 +206,9 @@ JAZZMIN_SETTINGS = {
     "custom_css": "geoluminate/css/custom-admin.min.css",
     # "custom_js": "geoluminate/js/custom-admin.js",
     # Whether to link font from fonts.googleapis.com (use custom_css to supply font otherwise)
-    "use_google_fonts_cdn": True,
+    "use_google_fonts_cdn": False,
     # Whether to show the UI customizer on the sidebar
-    "show_ui_builder": True,
+    "show_ui_builder": False,
     ###############
     # Change view #
     ###############
@@ -216,7 +218,7 @@ JAZZMIN_SETTINGS = {
     # - vertical_tabs
     # - collapsible
     # - carousel
-    "changeform_format": "vertical_tabs",
+    "changeform_format": "horizontal_tabs",
     # override change forms on a per modeladmin basis
     "changeform_format_overrides": {
         "auth.user": "collapsible",

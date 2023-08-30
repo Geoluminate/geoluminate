@@ -1,9 +1,9 @@
 {% extends 'application.html' %}
 {% load literature %}
 {% load i18n literature crispy_forms_tags static i18n cms_tags sekizai_tags %}
-{% block head_title %}
+{% block title %}
   {% trans "Literature" %}
-{% endblock head_title %}
+{% endblock title %}
 {% block nav_title_bold %}
   {% trans "Literature" %}
 {% endblock %}
@@ -14,10 +14,10 @@
   {{ block.super }}
   {{ filter.form.media.css }}
 {% endblock head %}
-{% block style %}
+{% block css %}
   <link rel="stylesheet"
         href="{% static 'vendor/DataTables/bootstrap5/datatables.min.css' %}">
-{% endblock style %}
+{% endblock css %}
 {% block app_menu %}
   {% include 'literature/components/menu.html' %}
 {% endblock app_menu %}
@@ -50,10 +50,10 @@
       </div>
     </div>
   </div>
-  {% addtoblock "scripts" %}
+  {% addtoblock "js" %}
     <script src="{% static "vendor/DataTables/bootstrap5/datatables.min.js" %}"></script>
     <script>
- 
+
   $(function () {
     var table = $('#example').DataTable({
       "data": [
@@ -104,7 +104,7 @@
           }
           $('#rightSidebarToggle').find('span').remove()
           $('#rightSidebarToggle').append(`<span class="badge bg-primary">${count}</span>`)
-    
+
         },
         dtOpts: {
           paging: true,
@@ -113,7 +113,7 @@
         },
       },
     });
-  
+
   new $.fn.dataTable.Buttons(table, {
        buttons: [
          {
@@ -127,7 +127,7 @@
            extend: 'collection',
            className: '',
            text: 'Export',
-           buttons: [ 
+           buttons: [
              {
                extend: 'csv',
                exportOptions: {
@@ -158,8 +158,8 @@
        },
         {% comment %} 'colvisRestore', {% endcomment %}
        ],
-   }); 
-  
+   });
+
   table.buttons().container().appendTo( $('.application-menu .btn-group') );
   table.searchPanes.container().appendTo( $('#filterSidebar>.sidebar-body') );
   });
@@ -167,9 +167,9 @@
     </script>
   {% endaddtoblock %}
 {% endblock content %}
-{% block before_scripts %}
+{% block page_right %}
   {% include 'literature/components/sidebar.html' %}
-{% endblock before_scripts %}
+{% endblock page_right %}
 {% block scripts %}
   <script>
 $("#filterToggle").click(function(){

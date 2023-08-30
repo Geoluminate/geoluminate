@@ -1,0 +1,88 @@
+// styles for django-formset
+
+.dj-help-text {
+    @extend .form-text;
+    @extend .mb-3;
+    // @extend .text-muted;
+}
+
+.collection-siblings {
+
+    > django-form-collection {
+        @extend .card;
+        @extend .mb-3;
+        @extend .shadow-sm;
+        // border: 0;
+
+        django-form-collection {
+          @extend .mx-2;
+        }
+
+        legend  {
+            display: none;
+        }
+
+        // &::before {
+        //     @extend .card-header;
+        //     content: attr(title);
+        // }
+        fieldset {
+            @extend .card-body;
+        }
+        .remove-collection {
+            // @extend .card-footer;
+            @extend .btn;
+            @extend .btn-sm;
+            @extend .btn-outline-danger;
+            top: 0.3rem;
+            // scale: 0.7;
+            // @extend .btn-danger;
+            // @extend .text-danger;
+            // @extend .float-end;
+            // position: absolute;
+            // right: 0;
+
+            // svg {
+            //     height: 1rem;
+            //     width: 1rem;
+            // }
+        }
+
+
+        // &.dj-marked-for-removal {
+
+        //     fieldset {
+        //         @extend .bg-danger;
+        //     @extend .progress-bar-striped;
+        //     background-size: 3rem 3rem;
+        //     opacity: 0.5;
+
+        //     &::after {
+        //         content: "This item will be removed when you save.";
+        //         @extend .top-50;
+        //         @extend .start-50;
+        //         @extend .translate-middle;
+        //         position: absolute;
+        //         @extend .bg-white;
+        //         @extend .h5;
+        //         @extend .p-3;
+        //         @extend .rounded;
+        //     }
+        //     }
+
+        // }
+    }
+    .add-collection {
+        @extend .btn;
+        @extend .btn-success;
+        @extend .btn-sm;
+        // @extend .float-end;
+        // max-width: 100px;
+    }
+}
+
+
+
+.dj-richtext-wrapper {
+    min-height: 300px !important;
+}

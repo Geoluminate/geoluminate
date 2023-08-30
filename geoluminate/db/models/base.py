@@ -1,9 +1,13 @@
+import uuid
+from typing import Iterable, Optional
+
+from django.db import models
+from django.utils.translation import gettext_lazy as _
 from meta.models import ModelMeta
 from model_utils import FieldTracker
-from model_utils.models import TimeStampedModel
 
 
-class Model(ModelMeta, TimeStampedModel):
+class Model(ModelMeta, models.Model):
     """Helpful base model that can be used to kickstart your Geoluminate database models with common fields and methods.
     Use like this:
 
@@ -28,6 +32,19 @@ class Model(ModelMeta, TimeStampedModel):
 
         See: https://django-meta.readthedocs.io/en/latest/models.html#models for usage details
     """
+
+    uuid = models.UUIDField(
+        default=uuid.uuid4,
+        editable=False,
+        unique=True,
+        verbose_name="UUID",
+        help_text=_("Universally unique identifier for this record."),
+    )
+    # id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, verbose_name="PID", primary_key=True)
+    created = models.DateTimeField(auto_now_add=True, verbose_name="Created", help_text="When this record was created.")
+    modified = models.DateTimeField(
+        auto_now=True, verbose_name="Modified", help_text="When this record was last modified."
+    )
 
     tracker = FieldTracker()
 

@@ -1,11 +1,11 @@
-{% extends "application.html" %}
+{% extends "geoluminate/layout/full_width.html" %}
 {% load static sekizai_tags i18n %}
-{% block head_title %}
+{% block title %}
   {% trans "Database" %}
-{% endblock head_title %}
+{% endblock title %}
 {% block content %}
   {% include 'datatables/includes/table.html' %}
-  {% addtoblock "scripts" %}
+  {% addtoblock "js" %}
     <script>
 
 
@@ -23,7 +23,7 @@
     </script>
   {% endaddtoblock %}
 {% endblock content %}
-{% block before_scripts %}
+{% block page_right %}
   <div class="offcanvas offcanvas-end"
        tabindex="-1"
        id="offcanvasright"
@@ -44,4 +44,4 @@
          class="htmx-indicator"
          src="{% static "geoluminate/img/spinners/spinning-circles.svg" %}"/>
   </div>
-{% endblock before_scripts %}
+{% endblock page_right %}

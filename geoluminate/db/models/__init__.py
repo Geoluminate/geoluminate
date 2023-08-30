@@ -1,6 +1,7 @@
 from django.db.models import *  # NOQA isort:skip
 from django.contrib.gis.db.models import *  # NOQA isort:skip
 from django.contrib.gis.db.models import __all__ as models_all
+from multiselectfield import MultiSelectField
 
 from geoluminate.contrib.controlled_vocabulary.fields import VocabularyField
 from geoluminate.contrib.gis.fields import SiteField
@@ -12,6 +13,7 @@ from geoluminate.db.models.fields import (
     PIDField,
     PositiveIntegerQuantityField,
     QuantityField,
+    TextField,
 )
 
 __all__ = [
@@ -25,4 +27,6 @@ __all__ = [
     "PIDField",
     "SiteField",
     "VocabularyField",
+    "TextField",
+    "MultiSelectField",
 ]

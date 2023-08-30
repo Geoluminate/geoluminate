@@ -1,36 +1,35 @@
-{% extends 'application.html' %}
+{% extends 'geoluminate/layout/full_width.html' %}
 {% load sekizai_tags i18n static compress %}
-{% block head_title %}
-  API
-{% endblock head_title %}
-{% block nav_title_bold %}API{% endblock %}
+
+{% block app_menu_wrapper %}{% endblock %}
+
+{% block title %}{{ geoluminate.database.acronym }} API{% endblock title %}
+
 {% block content %}
-  <div class='container'>
     <div id="swagger-ui"></div>
-  </div>
   {% comment %} {% addtoblock "css" %}
-    <link rel="stylesheet" 
+    <link rel="stylesheet"
           href="{% static "drf_spectacular_sidecar/swagger-ui-dist/swagger-ui.css" %}"/>
   {% endaddtoblock %} {% endcomment %}
 
-  {% block style %}
+  {% block css %}
   {% compress css %}
     <link rel="stylesheet" type="text/x-scss" href="{% static "vendor/swagger/main.scss" %}"/>
   {% endcompress %}
-  {% endblock style %}
+  {% endblock css %}
 
 
 
 
-  {% addtoblock "scripts" %}
+  {% addtoblock "js" %}
     <script src="{% static "drf_spectacular_sidecar/swagger-ui-dist/swagger-ui-bundle.js" %}"></script>{% endaddtoblock %}
-    {% addtoblock "scripts" %}
+    {% addtoblock "js" %}
       <script src="{% static "drf_spectacular_sidecar/swagger-ui-dist/swagger-ui-standalone-preset.js" %}"></script>{% endaddtoblock %}
       {% if script_url %}
-        {% addtoblock "scripts" %}
+        {% addtoblock "js" %}
           <script src="{{ script_url }}"></script>{% endaddtoblock %}
         {% else %}
-          {% addtoblock "scripts" %}
+          {% addtoblock "js" %}
             <script>{% include template_name_js %}</script>
           {% endaddtoblock %}
         {% endif %}

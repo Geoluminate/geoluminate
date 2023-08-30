@@ -1,0 +1,18 @@
+{% extends 'geoluminate/layout/full_width.html' %}
+{% load static i18n formsetify geoluminate sekizai_tags %}
+
+{% block page_css_class %}{% endblock %}
+
+{% block body_class %}application{% endblock body_class %}
+
+{% block before_page %}
+<div class='content-sidebar'>
+  <div class='content-sidebar-inner'>
+    {% block content_sidebar %}{% endblock %}
+  </div>
+</div>
+{% endblock before_page %}
+
+{% block content %}
+   {% block content_main %}{% endblock %}
+{% endblock content %}

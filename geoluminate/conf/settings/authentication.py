@@ -76,7 +76,7 @@ ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 """Log new user in after confirming email"""
 
-ACCOUNT_MAX_EMAIL_ADDRESSES = 2
+ACCOUNT_MAX_EMAIL_ADDRESSES = 5
 """"""
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#authentication-backends

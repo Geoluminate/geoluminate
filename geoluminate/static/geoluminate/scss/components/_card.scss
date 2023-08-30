@@ -1,0 +1,21 @@
+
+.card {
+    &.project {
+        img {
+            @extend .border-5;
+            @extend .border-start;
+            &.status-1 {
+                @extend .border-success;
+            }
+            &.status-2 {
+                @extend .border-danger;
+            }
+            &.status-3 {
+                @extend .border-warning;
+            }
+            &.status-4 {
+                @extend .border-info;
+            }
+        }
+    }
+}

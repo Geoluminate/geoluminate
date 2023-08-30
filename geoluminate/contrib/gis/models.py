@@ -1,21 +1,12 @@
-from django.contrib.gis.geos import Point
 from django.contrib.gis.measure import Distance
-from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-
-from geoluminate.contrib.project.models import Sample
 
 from .managers import SiteManager
 
 
-class Site(Sample):
+class SiteMixin:
     objects = SiteManager.as_manager()
-
-    class Meta:
-        verbose_name = _("Site")
-        verbose_name_plural = _("Sites")
-        proxy = True
 
     @property
     def latitude(self):

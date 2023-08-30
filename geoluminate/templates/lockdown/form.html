@@ -1,20 +1,15 @@
-{% extends 'application.html' %}
-{% load static %}
-{% block wrapper %}
- <div class='card w-25 position-absolute top-50 start-50 translate-middle'>
-  <div class='card-header'>
-   <h5>{{ config.site.name }}</h5>
-  </div>
-  <div class='card-body'>
-   {% if form %}
-    <form action="" method="post">
-     {% csrf_token %}
-     {{ form.as_p }}
-     <p>
-      <input type="submit" value="Login" />
-     </p>
-    </form>
-   {% endif %}
-  </div>
- </div>
-{% endblock wrapper %}
+{% extends 'geoluminate/layout/full_screen_form.html' %}
+{% load i18n %}
+{% block page_title %}{% trans "Lockdown Enabled" %}{% endblock %}
+
+{% block content %}
+<p>{% trans "This research community has been locked down by site administrators and can only be accessed by staff members." %}</p>
+<form id="form" method='post'>
+  {% csrf_token %}
+  {{ form.as_p }}
+</form>
+{% endblock %}
+
+{% block footer %}
+  <button class="btn btn-lg btn-primary" form="form" type="submit">{% trans "Submit" %}</button>
+{% endblock %}

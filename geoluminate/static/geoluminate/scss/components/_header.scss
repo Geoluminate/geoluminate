@@ -1,12 +1,12 @@
 	header, .header {
-		@include vendor('display', 'flex');
+    @extend .d-flex;
 		border-bottom: solid 4px var(--bs-primary-border-subtle);;
 		padding-bottom: 0.5rem;
 		margin-bottom: 1em;
 		position: relative;
 		overflow: hidden;
 		color: var(--bs-primary);
-		
+
 		> * {
 			margin-bottom: 0;
 		}

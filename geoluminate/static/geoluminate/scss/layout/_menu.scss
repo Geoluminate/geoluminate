@@ -1,18 +1,5 @@
-///
-/// Editorial by Pixelarity
-/// pixelarity.com | hello@pixelarity.com
-/// License: pixelarity.com/license
-///
-
-/* Menu */
-
 	#menu, .sidebar-menu {
 		ul {
-			// @include vendor('user-select', 'none');
-			// color: _palette(fg-bold);
-			// font-family: _font(family-heading);
-			// font-weight: _font(weight-heading-alt);
-			// letter-spacing: _font(kerning-heading);
 			list-style: none;
 			margin-bottom: 0;
 			padding: 0;
@@ -31,17 +18,10 @@
 				}
 
 				&.opener {
-					// @include vendor('transition', 'color #{_duration(transition)} ease-in-out');
-					// @include icon(false, solid);
 					-webkit-tap-highlight-color: rgba(255,255,255,0);
 					position: relative;
 
 					&:before {
-						// @include vendor('transition', (
-						// 	'color #{_duration(transition)} ease-in-out',
-						// 	'transform #{_duration(transition)} ease-in-out'
-						// ));
-						// color: _palette(fg-light);
 						content: '\f078';
 						position: absolute;
 						right: 0;
@@ -61,7 +41,6 @@
 						}
 
 						&:before {
-							// @include vendor('transform', 'rotate(-180deg)');
 							transform: rotate(-180deg);
 						}
 					}
@@ -74,11 +53,9 @@
 				border-top: solid 1px $secondary;
 				margin: 0;
 				padding: 0;
-				// padding: 0.5em 0 0 0;
 
 				> ul {
 					color: $gray-300;
-					// display: none;
 					margin: 0.5em 0 1.5em 0;
 					padding-left: 1em;
 
@@ -101,8 +78,6 @@
 		}
 
 	.sub-menu {
-		// padding: var(--bs-dropdown-padding-y) var(--bs-dropdown-padding-x);
-		// margin: 0;
 		font-size: smaller;
 		background-color: $secondary;
 		min-width: 100%;
@@ -117,12 +92,5 @@
 				padding: 0;
 			}
 		}
-		// text-align: left;
-		// list-style: none;
-		// background-color: var(--bs-dropdown-bg);
-		// background-clip: padding-box;
-		// border: var(--bs-dropdown-border-width) solid var(--bs-dropdown-border-color);
-		// border-radius: var(--bs-dropdown-border-radius);
-
 	}
 }

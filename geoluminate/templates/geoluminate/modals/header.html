@@ -1,12 +1,7 @@
-{% load i18n thumbnail geoluminate %}
+{% load i18n geoluminate %}
+<div class="modal-header">
+  <img src="{% icon %}" class='me-2' height=30 alt="{{ geoluminate.database.acronym }} Icon">
+  <h1 id='shareModalLabel' class="modal-title fs-5">{% trans header %}</h1>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
 
-{% comment %} <div class='bg-light d-flex align-items-center'> {% endcomment %}
-  
-  <div class="modal-header py-0">
-    <div class='py-2 pe-2 align-self-stretch'>
-    <img src="{% icon %}" height="100%" alt="icon">
-  </div>
-    <h3 class='ms-2 modal-title py-2'>{% trans header %}</h3>
-    <button type="button" class="btn-close shadow-none p-2" data-bs-dismiss="modal" aria-label="Close"></button>
-  </div>
-{% comment %} </div> {% endcomment %}

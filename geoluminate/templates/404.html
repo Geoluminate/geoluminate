@@ -1,9 +1,8 @@
-{% extends "geoluminate/components/static_modal.html" %}
-{% load i18n %}
+{% extends "geoluminate/layout/full_screen_form.html" %}{% load i18n %}
 
-{% block title %}{% trans "404 Not Found" %}{% endblock %}
+{% block title %}{% trans "Page Not Found!" %}{% endblock %}
+{% block page_title %}{% trans "Page Not Found!" %}{% endblock %}
 
-{% block body %}
-<h5 class="modal-title text-center">{% trans "Sorry, that page doesn't exist!" %}</h5>
-<p class='text-center'>{% trans "The requested resource is no longer available at this location." %}</p>
+{% block content %}
+<p>{% trans "We're sorry, but the page or resource you're looking for couldn't be found. It might have been moved, deleted, or never existed in the first place. Double-check the URL or try navigating back to our homepage. If you're still having trouble, feel free to contact us for more information." %}</p>
 {% endblock %}

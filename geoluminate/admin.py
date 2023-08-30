@@ -1,5 +1,6 @@
 # from django_reverse_admin import ReverseModelAdmin
 from cms.admin.placeholderadmin import FrontendEditableAdminMixin
+from cms.models import Page, Placeholder, Title
 from django.conf import settings
 from django.contrib import admin
 from django.contrib.postgres.fields import ArrayField
@@ -9,10 +10,21 @@ from django.forms.widgets import RadioSelect
 from django.utils.translation import gettext_lazy as _
 from solo.admin import SingletonModelAdmin
 
-from geoluminate.core.forms.fields import DynamicArrayField
 from geoluminate.models import GlobalConfiguration
 
 admin.site.site_title = getattr(settings, "GEOLUMINATE", {})["database"]["name"]
+
+
+class CMSAdmin(admin.AdminSite):
+    site_header = "Django CMS"
+    site_title = "Django CMS"
+    index_template = "admin/cms/index.html"
+    index_title = "Content Management"
+
+
+# admin.site.unregister(Page)
+admin_site = CMSAdmin(name="cms_admin")
+admin_site.register(Page)
 
 
 class GeoluminateAdminMixin:
@@ -61,9 +73,6 @@ class ConfigurationAdmin(FrontendEditableAdminMixin, SingletonModelAdmin):
     )
 
     formfield_overrides = {
-        ArrayField: {
-            "form_class": DynamicArrayField,
-        },
         models.BooleanField: {"widget": RadioSelect},
     }
 

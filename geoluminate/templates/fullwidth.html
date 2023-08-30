@@ -1,15 +1,20 @@
-{% extends "application.html" %}
+{% extends "geoluminate/layout/full_width.html" %}
 {% load cms_tags menu_tags static authentication %}
 
-{% block app_menu %}
-  {% if request.user|has_group:"CMS" or request.user.is_superuser and current_page %}
-    {% include "geoluminate/layout/partials/cms_menu.html" %}
-  {% endif %}
-{% endblock app_menu %}
+{% block app_menu_wrapper %}
+{% if request.user|has_group:"CMS" or request.user.is_superuser and current_page %}
+{% include "geoluminate/components/navigation/partials/cms_menu.html" %}
+{% endif %}
+  {% comment %} {% if request.user|has_group:"CMS" or request.user.is_superuser and current_page %}
+    {% include "geoluminate/components/navigation/partials/cms_menu.html" %}
+  {% endif %} {% endcomment %}
+{% endblock %}
 
-{% block head_title %}
+{% block title %}
   {{ request.current_page }}
-{% endblock head_title %}
+{% endblock title %}
+
 {% block content %}
+
   {% placeholder "content" %}
 {% endblock content %}

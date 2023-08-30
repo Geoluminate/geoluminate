@@ -7,7 +7,7 @@ from rest_framework.serializers import (
 )
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
 
-from .models import Site
+from geoluminate.contrib.project.models import Site
 
 
 class FeatureCollectionSerializer(ListSerializer):

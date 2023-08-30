@@ -1,0 +1,13 @@
+{% extends 'application.html' %}
+{% load i18n formsetify geoluminate %}
+
+{% block content %}
+<div class='row w-100'>
+ <div class='border-end col-3'>
+   {% block sidebar_left %}{% endblock %}
+ </div>
+ <div class='col'>
+   {% block main %}{% endblock %}
+ </div>
+</div>
+{% endblock content %}

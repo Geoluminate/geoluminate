@@ -2,6 +2,7 @@ from typing import Any, Optional
 
 from django import forms
 from django.conf import settings
+from django_bleach.models import BleachField
 from pint import Quantity
 from quantityfield import fields
 from quantityfield.fields import QuantityFormFieldMixin
@@ -66,3 +67,11 @@ class PIDField(ShortUUIDField):
         kwargs["alphabet"] = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ"
 
         super().__init__(*args, **kwargs)
+
+
+class TextField(BleachField):
+    """We are not changing an aspects of BleachField, we are simply redefining it so that users who import from `geoluminate.db.models` will always get a text field that bleaches unwanted HTML. Allowed tags and attributes are defined in `geoluminate/conf/settings/security.py`.
+    Overrides can be passed to the field as kwargs. See https://github.com/marksweb/django-bleach for more information.
+    """
+
+    pass

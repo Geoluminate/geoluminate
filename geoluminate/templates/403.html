@@ -1,11 +1,10 @@
-{% extends "geoluminate/components/static_modal.html" %}
-{% load i18n %}
+{% extends "geoluminate/layout/full_screen_form.html" %}{% load i18n %}
 
-{% block title %}{% trans "Access Denied" %}{% endblock %}
+{% block title %}{% trans "Forbidden" %}{% endblock %}
+{% block page_title %}{% trans "Forbidden" %}{% endblock %}
 
-{% block body %}
-<h5 class="modal-title text-center">{% trans "Access Denied" %}</h5>
-<p class='text-center'>{% trans "You don't have the required permissions to access this page. If you think this is incorrect, please get in contact with us." %}</p>
+{% block content %}
+<p class=''>{% trans "Oops! It seems like you don't have permission to access this resource. If you believe this is a mistake, please reach out to our support team for assistance. We're here to help you get the access you need!" %}</p>
 {% endblock %}
 
 

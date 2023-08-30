@@ -4,33 +4,65 @@
 
 <html lang="{{ LANGUAGE_CODE }}" data-bs-theme="auto">
   <head {% meta_namespaces %}>
-    <title>{% block head_title %}{% endblock head_title %} | {{ config.site.name }}</title>
+    <title>{% block title %}{{title}}{% endblock %} | {% block title_after %}{{ geoluminate.database.name }}{% endblock %}</title>
     {% include "geoluminate/utils/head.html" %}
-    
     {% block head %}{% endblock head %}
-    {% block style %}{% endblock style %}
+    {% block css %}{% endblock css %}
     {% render_block "css" %}
 
     {% compress css %}
       <link rel="stylesheet" type="text/x-scss" href="{% static "geoluminate/scss/geoluminate.scss" %}" crossorigin="anonymous">
     {% endcompress %}
   </head>
-  <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
-        hx-indicator="#mainIndicator"
-        hx-target='#main'>
-    {% include 'geoluminate/layout/navbar.html' %}
-
-    <div class='application-wrapper'>
-      {% block page %}{% endblock page %}  
-      {% block before_scripts %}{% endblock before_scripts %}
-      {% render_block "before_scripts" %}
+  <body class="{% block body_class %}{% endblock %}">
+    {% block body %}
+    <nav class="navbar navbar-expand-md navbar-dark bg-primary">
+      <div class="container-fluid">
+        <button class="navbar-toggler d-block bg-primary-subtle" type="button" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation"
+        onclick="$('#mainSidebar').toggleClass('show');">
+          <img src="{% icon %}" alt="Logo" class="d-inline-block align-text-top" style="height: 2rem;">
+        </button>
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse " id="navbarSupportedContent">
+          <ul class="navbar-nav w-100">
+            {% block navbar_menu %}{% show_menu 0 100 100 100 "geoluminate/cms/menu.html" %}{% endblock navbar_menu %}
+            {% include 'geoluminate/widgets/nav/theme_toggle.html' %}
+            {% include 'authentication/navbar_widget.html' %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+    {% block prepage %}{% endblock %}
+    {% comment %} {% include 'geoluminate/components/navigation/navbar.html' %} {% endcomment %}
+    <div class='page-wrapper'>
+      {% include 'geoluminate/components/navigation/sidebar.html' %}
+      {% block before_page %}{% endblock before_page %}
+      <div class="page {% block page_css_class %}{% endblock %}">
+        {% block page %}{% endblock page %}
+      </div>
+      {% block after_page %}{% endblock after_page %}
+      {% comment %} {% block page_right %}{% endblock %} {% endcomment %}
+      {% include "user/toolbar.html" %}
     </div>
+    {% endblock body %}
+      {% render_block "page_right" %}
+
+    {% block modals %}{% endblock modals %}
+    {% render_block "modals" %}
 
     {% include "geoluminate/utils/scripts.html" %}
-    {% render_block "scripts" %}
+
     {% block scripts %}{% endblock scripts %}
+    {% render_block "js" %}
 
     {% include 'geoluminate/utils/screen-size-indicator.html' %}
-
   </body>
 </html>

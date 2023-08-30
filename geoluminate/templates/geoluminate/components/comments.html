@@ -1,14 +1,87 @@
-{% load comments %}
+{% load i18n static comments sekizai_tags geoluminate %}
+
+<div class='container pt-3'>
+  {% if user.is_authenticated %}
+  <div class="alert alert-primary" role="alert">
+    This section aims to promote healthy discussion within the community. Before contributing, please read and fully understand the community's expectations regarding respectful and professional communication laid out in our <a href="{% url "code_of_conduct" %}" class="alert-link">code of conduct</a>.
+  </div>
+  {% endif %}
+
+
+
 {% get_comment_count for object as comment_count %}
+
+<div class="page-menu page-layout mb-3">
+  <strong>{% trans "Discussion" %}</strong>
+  <div class='toolbar'>
+    <div class="toolbar-left"></div>
+    <div class="toolbar-right">
+      {% if user.is_authenticated %}
+        <button class='btn btn-sm btn-success'
+                data-bs-toggle="collapse"
+                data-bs-target="#top-level-comment"
+                aria-expanded="false"
+                aria-controls="top-level-comment"
+                >
+          <i class='fas fa-plus'></i>
+          <span>{% trans "Add Comment" %}</span>
+        </button>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<div id="top-level-comment" class="collapse">
+  <div class="d-flex">
+    <div class="flex-shrink-0">
+      {% render_profile_image user.profile width="75px" height="75px" extra_classes='shadow' %}
+
+    </div>
+    <div class="flex-grow-1 ms-3">
+      <h5>
+          {{ user.profile.name }} - <span class="comment-date">{{ comment.submit_date }}</span>
+          {% if comment.user_id and comment.user_id == comment.content_object.author_id %}<span class="comment-author-flag">[{% trans "author" %}]</span>{% endif %}
+      </h5>
+      {% render_comment_form for object %}
+    </div>
+  </div>
+</div>
 
 {% render_comment_list for object %}
 
-{% if user.is_authenticated %}
-<div class='my-2'>
-  Hi {{ user.first_name }}!
-  {% if comment_count == 0 %} Be the first to leave a comment:
-  {% else %} Leave you comment below:
-  {% endif %}
 </div>
-{% endif %}
-{% render_comment_form for object %}
+
+
+{% addtoblock 'css' %}<link rel="stylesheet" type="text/css" href="{% static 'fluent_comments/css/ajaxcomments.css' %}" />{% endaddtoblock %}
+{% addtoblock 'js' %}<script type="text/javascript" src="{% static 'fluent_comments/js/ajaxcomments.js' %}"></script>{% endaddtoblock %}
+
+
+{% comment %}
+{% if user.is_authenticated %}
+{% addtoblock 'modals' %}
+
+<div id="top-level-comment" class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="d-flex">
+        <div class="flex-shrink-0">
+          <img src="{{ user.profile.image.url }}" class="rounded-circle" alt="Sample Image" width="75px">
+        </div>
+        <div class="flex-grow-1 ms-3">
+          <h5>
+              {{ user.profile.name }} - <span class="comment-date">{{ comment.submit_date }}</span>
+              {% if comment.user_id and comment.user_id == comment.content_object.author_id %}<span class="comment-author-flag">[{% trans "author" %}]</span>{% endif %}
+          </h5>
+          {% render_comment_form for object %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+{% endaddtoblock %}
+{% endif %} {% endcomment %}
+
+

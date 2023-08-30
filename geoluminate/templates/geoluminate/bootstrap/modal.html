@@ -1,8 +1,5 @@
 {% load static geoluminate %}
-<div id="{{ modal_id }}"
-     class="modal fade"
-     tabindex="-1"
-     role="dialog"
+<div id="{{ modal_id }}" class="modal fade" tabindex="-1" role="dialog"
      aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -12,14 +9,8 @@
             <div class='py-2 pe-2 align-self-stretch'>
               <img src="{% icon %}" height="100%" alt="icon">
             </div>
-            <h3 class='modal-title'>
-              {% block title %}
-              {% endblock title %}
-            </h3>
-            <button type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"></button>
+            <h3 class='modal-title'>{% block title %}{% endblock title %}</h3>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           {% endblock header %}
         </div>
         <div class="modal-body">

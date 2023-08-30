@@ -1,0 +1,26 @@
+{% load cms_tags menu_tags static authentication geoluminate %}
+<nav class="navbar navbar-expand-md navbar-dark bg-primary">
+  <div class="container-fluid">
+    <button class="navbar-toggler d-block bg-primary-subtle" type="button" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation"
+    onclick="$('#mainSidebar').toggleClass('show');">
+      {% comment %} <span class="navbar-toggler-icon"></span> {% endcomment %}
+      <img src="{% icon %}" alt="Logo" class="d-inline-block align-text-top" style="height: 2rem;">
+    </button>
+    <button class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse " id="navbarSupportedContent">
+      <ul class="navbar-nav w-100">
+        {% show_menu 0 100 100 100 "geoluminate/cms/menu.html" %}
+        {% include 'geoluminate/widgets/nav/theme_toggle.html' %}
+        {% include 'authentication/navbar_widget.html' %}
+      </ul>
+    </div>
+  </div>
+</nav>

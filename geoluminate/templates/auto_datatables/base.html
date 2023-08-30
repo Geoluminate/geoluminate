@@ -1,47 +1,55 @@
 {% extends 'application.html' %}
-{% load static sekizai_tags i18n %}
+{% load static sekizai_tags i18n autotables geoluminate %}
+
+{% block body_class %}application{% endblock %}
+
+{% block title %}{{ geoluminate.database.acronym }} {{ table.model|verbose_name_plural|title }}{% endblock %}
 
 
-{% block style %}
-<link rel="stylesheet" href="{% static "geoluminate/css/datatables.min.css" %}">
-<link rel="stylesheet" href="{% static "auto_datatables/css/auto-datatable.css" %}">
+{% block toolbar_right %}
+{% if table.row_template %}
+<a class="btn text-primary" href="#" role="button" onclick="$('#filterContainer').toggleClass('show')" aria-expanded="true">
+  <i class="fas fa-filter"></i>
+</a>
+{% else %}
+<a class="btn text-primary" href="#" role="button" data-bs-toggle="offcanvas" data-bs-target="#filterContainer" aria-controls="filterContainer" aria-expanded="false">
+  <i class="fas fa-filter"></i>
+</a>
+{% endif %}
+
+<div id="searchButton"></div>
 {% endblock %}
 
-{% block app_menu %}
-<div class='badge'>GHFDB Projects</div>
-
-<div class="left">
-</div>
-<div class='right ms-auto p-1 d-flex'>
-  <button class="btn btn-sm me-1 fas fa-filter text-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#filterContainer" aria-controls="filterContainer"></button>
-  <div id="searchButton"></div>
-</div>
-{% endblock %}
-
+{% block app_menu_css %}{% if not table.row_template %}app-layout{% else %}page-layout{% endif %}{% endblock %}
 
 {% block content %}
- {% include "auto_datatables/datatable.html" %}
-  <div id="filterContainer" class="offcanvas offcanvas-end" tabindex="-1" aria-labelledby="filterContainerLabel">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="filterContainerLabel">{% trans "Filter" %}</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body"></div>
+{% comment %} <div class='container g-0'> {% endcomment %}
+  {% comment %} <div class='row'> {% endcomment %}
+    {% comment %} <div class='colu'></div> {% endcomment %}
+{% if table.row_template %}
+<div id="filterContainer" class="sidebar sidebar-start show" tabindex="-1" aria-labelledby="filterContainerLabel">
+{% else %}
+<div id="filterContainer" class="offcanvas offcanvas-end" tabindex="-1" aria-labelledby="filterContainerLabel">
+{% endif %}
+  <div class="sidebar-body"></div>
+</div>
+
+
+<div class="auto-table-wrapper {% if table.row_template %}templated{% endif %}">
+  {% render_table_for_url table True %}
+  <div class='container mt-3'>
+    <div id="template-container"></div>
   </div>
-{% endblock content %}
+</div>
 
-
-{% block scripts %}
-{% addtoblock "scripts" %}<script src="{% static "geoluminate/js/datatables.min.js" %}"></script>{% endaddtoblock %}
-{% addtoblock "scripts" %}<script src="{% static "auto_datatables/js/auto-datatables.js" %}"></script>{% endaddtoblock %}
-<script>
-  $('#mainIndicator').toggle()
-  $(document).ready(function() {
-    var $table = $('.datatable').AutoTable({});
-    $(".dataTables_filter input").attr("placeholder", "Search");
-    $table.on( 'init.dt', function () {
-      $('#mainIndicator').toggle()
-    } )
-  })
+{% if template %}
+<script id='template-card'>
+  {% include template %}
 </script>
-{% endblock scripts %}
+{% endif %}
+
+{% comment %} <div class='page-footer'></div> {% endcomment %}
+
+{% comment %} </div> {% endcomment %}
+{% comment %} </div> {% endcomment %}
+{% endblock content %}

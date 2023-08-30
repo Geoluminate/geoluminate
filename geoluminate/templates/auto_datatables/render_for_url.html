@@ -1,0 +1,42 @@
+{% load static sekizai_tags %}
+
+{% spaceless %}
+<div id="{{ table.get_id }}" class="auto-table-wrapper {% if table.row_template %}templated{% endif %}">
+  <table  class="datatable w-100 {{ table_css_class }}" data-ajax="{{ table.url|default_if_none:request.path }}?format=datatables">
+  <thead>
+    <tr>
+      {% for f in table.build_columns %}
+        <th {% for k, v in f.items %}{% if k != "title" %}
+          data-{{ k }}= "{{ v }}"
+          {% endif %}{% endfor %}
+          class='{{ f.class }} {{f.name}}'
+          >{{ f.title|capfirst }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  </table>
+  {% if table.row_template %}
+  <div class="template-container"></div>
+  <script>{% include table.row_template %}</script>
+  {% endif %}
+</div>
+
+{% endspaceless %}
+{% addtoblock "styles" %}<link rel="stylesheet" href="{% static "geoluminate/css/datatables.min.css" %}">{% endaddtoblock %}
+{% addtoblock "styles" %}<link rel="stylesheet" href="{% static "auto_datatables/css/auto-datatable.css" %}">{% endaddtoblock %}
+{% addtoblock "js" %}<script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/2.3.1/luxon.min.js" crossorigin="anonymous"></script>{% endaddtoblock %}
+{% addtoblock "js" %}<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.min.js" integrity="sha512-E1dSFxg+wsfJ4HKjutk/WaCzK7S2wv1POn1RRPGh8ZK+ag9l244Vqxji3r6wgz9YBf6+vhQEYJZpSjqWFPg9gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>{% endaddtoblock %}
+{% addtoblock "js" %}<script src="{% static "geoluminate/js/datatables.min.js" %}"></script>{% endaddtoblock %}
+{% addtoblock "js" %}<script src="{% static "auto_datatables/js/auto-datatables.js" %}"></script>{% endaddtoblock %}
+
+{% addtoblock "js" %}
+<script>
+  $('#mainIndicator').toggle()
+  $(document).ready(function() {
+    var $table = $('#{{ table.get_id }}').AutoTable({{ table.get_js_config }});
+    {% comment %} $table.on( 'init.dt', function () {
+      $('#mainIndicator').toggle()
+    } ) {% endcomment %}
+  })
+</script>
+{% endaddtoblock %}

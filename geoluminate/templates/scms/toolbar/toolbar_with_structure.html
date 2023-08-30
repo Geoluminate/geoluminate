@@ -13,7 +13,7 @@
         <div class="cms-messages-inner"></div>
     </div>
     {# end: messages #}
-    {% addtoblock "before_scripts" %}
+    {% addtoblock "page_right" %}
     <div class="cms-sideframe offcanvas offcanvas-start">
         {% spaceless %}
         <div class="cms-sideframe-controls offcanvas-header z-3">
@@ -33,7 +33,7 @@
         {% include 'cms/toolbar/clipboard.html' with clipboard_plugin=cms_toolbar.clipboard_plugin %}
     {% endif %}
 
-    {% addtoblock "before_scripts" %}
+    {% addtoblock "page_right" %}
     <div class="cms-modal" tabindex="-1" data-touch-action="none">
         <div class="cms-modal-head" data-touch-action="none">
             <span class="cms-modal-title" data-touch-action="none">

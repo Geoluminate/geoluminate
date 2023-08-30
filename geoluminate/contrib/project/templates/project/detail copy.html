@@ -1,0 +1,115 @@
+{% extends 'base_detail_view.html' %}
+{% load static i18n formsetify %}
+
+{% block page_title %}{% endblock page_title %}
+
+{% block app_menu_wrapper %}{% endblock app_menu_wrapper %}
+
+
+{% block content_side %}
+  {% include 'partials/cover_image.html' %}
+  <section class='card border-0 border-bottom'>
+    <div class='card-body px-0'>
+    <h5>{% trans "Status" %}</h5>
+    {{project.get_status_display}}
+    </div>
+  </section>
+
+  {{ block.super }}
+
+{% endblock %}
+
+{% block content_main %}
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Description</button>
+  </li>
+  {% comment %} <li class="nav-item" role="presentation">
+    <button class="nav-link" id="Timeline-tab" data-bs-toggle="tab" data-bs-target="#Timeline-tab-pane" type="button" role="tab" aria-controls="Timeline-tab-pane" aria-selected="false">Timeline</button>
+  </li> {% endcomment %}
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Datasets</button>
+  </li>
+  {% comment %} <li class="nav-item" role="presentation">
+    <button class="nav-link" id="Map-tab" data-bs-toggle="tab" data-bs-target="#Map-tab-pane" type="button" role="tab" aria-controls="Map-tab-pane" aria-selected="false">Map</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="Visualise-tab" data-bs-toggle="tab" data-bs-target="#Visualise-tab-pane" type="button" role="tab" aria-controls="Visualise-tab-pane" aria-selected="false">Visualise</button>
+  </li> {% endcomment %}
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="Files-tab" data-bs-toggle="tab" data-bs-target="#Files-tab-pane" type="button" role="tab" aria-controls="Files-tab-pane" aria-selected="false">Files</button>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+    <section class='card border-0 border-bottom'>
+      <div class='card-body px-0'>
+        {% for description in project.descriptions.all %}
+          <h5 class='card-title'>{{ description.get_type_display}}</h5>
+          <p>{{description.description|safe}}</p>
+        {% endfor %}
+      </div>
+      </section>
+  </div>
+  <div class="tab-pane fade" id="Timeline-tab-pane" role="tabpanel" aria-labelledby="Timeline-tab" tabindex="0">
+    <section class='card border-0 border-bottom'>
+      <div class='card-body px-0'>
+        <svg id="gantt"></svg>
+      </div>
+    </section>
+  </div>
+  <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+    <section class='card border-0 border-bottom'>
+      <div class='card-body px-0'>
+        <h5>{% trans "Datasets" %}</h5>
+        {% for object in project.datasets.all %}
+          {% include "dataset/card.html" %}
+        {% endfor %}
+      </div>
+    </section>
+  </div>
+</div>
+
+
+
+
+
+
+{% endblock %}
+
+{% block css %}
+{{ block.super }}
+
+<link rel="stylesheet" href="{% static 'node_modules/frappe-gantt/dist/frappe-gantt.min.css' %}">
+{% endblock css %}
+
+
+
+
+{% block scripts %}
+{{ block.super }}
+
+
+{% comment %} https://frappe.io/gantt {% endcomment %}
+<script src="{% static 'node_modules/frappe-gantt/dist/frappe-gantt.min.js' %}"></script>
+<script>
+  var tasks = [
+          {
+          id: 'Task 1',
+          name: 'Test Gannt Chart',
+          start: '2016-12-28',
+          end: '2016-12-31',
+          progress: 20,
+          },
+        ];
+  $(function () {
+    var gantt = new Gantt("#gantt", tasks);
+    {% comment %} gantt.change_view_mode('Month') {% endcomment %}
+  })
+
+
+</script>
+{% endblock scripts %}
+
+

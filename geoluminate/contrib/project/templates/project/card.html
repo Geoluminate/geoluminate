@@ -1,20 +1,19 @@
+{% extends 'base_card.html' %}
 {% load i18n %}
-<div class="card mt-3">
- <div class='d-flex'>
-   <img src="https://via.placeholder.com/300x225?text=This+is+a+placeholder!"
-        class="img-fluid w-25 rounded-start">
-   <div class='d-flex flex-column w-100'>
-     <div class="card-body">
-       <i class='me-auto data-status'></i>
-       <h4 class="card-title data-title">{{project.title}}</h4>
-       <p class="card-text abstract data-description">{{project.description}}</p>
-     </div>
-     <div class='card-footer d-flex justify-content-end'>
-       <a href="{% url 'project-edit' pk=project.pk %}" class="btn btn-primary btn-sm">
-        <i class='fas fa-edit'></i>
-        {% trans "Edit" %}
-       </a>
-     </div>
-  </div>
- </div>
-</div>
+
+{% block card_css %}project{% endblock %}
+
+{% block image %}
+  {{ block.super }}
+  <img src="{{ project.image }}" alt="{{ project.name }}" class="img-fluid w-25 rounded-start status-{{ object.status }}">
+
+{% endblock image %}
+
+{% block body %}
+  <h6 class='card-subtitle text-muted'>{{ object.status }}</h6>
+  {{ block.super }}
+{% endblock body %}
+
+{% block footer %}
+  {{ block.super }}
+{% endblock footer %}

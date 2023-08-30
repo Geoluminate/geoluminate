@@ -1,0 +1,22 @@
+{% extends 'geoluminate/partials/page_layout.html' %}
+{% load i18n %}
+
+
+{% block header %}{{ object.title }}{% endblock header %}
+
+{% block content %}
+  {% if edit %}
+    <django-formset endpoint="{{ request.path }}" csrf-token="{{ csrf_token }}">
+      {{ form_collection }}
+    </django-formset>
+  {% else %}
+    {% for description in object.descriptions.all %}
+    <section>
+      <h5>{{ description.get_type_display}}</h5>
+      <p>{{description.description|safe}}</p>
+    </section>
+    {% endfor %}
+  {% endif %}
+
+
+{% endblock %}

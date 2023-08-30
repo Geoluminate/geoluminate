@@ -7,12 +7,10 @@
 {% endblock image %}
 
 {% block body %}
+  <i class='me-auto'>{{ object.type }}</i>
   {{ block.super }}
-  {% comment %} <p class="card-text">{{ object.description }}</p> {% endcomment %}
 {% endblock body %}
 
 {% block footer %}
-<a href="{{ object.get_absolute_url }}" class="btn btn-primary btn-sm">
-  {% trans "View Details" %}
-</a>
+{{ block.super }}
 {% endblock footer %}

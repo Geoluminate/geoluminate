@@ -1,0 +1,11 @@
+{% load i18n geoluminate %}
+
+
+<div class="modal fade" id="coverImage-{{project.id}}" tabindex="-1" aria-labelledby="coverImage-{{project.id}}-label" aria-hidden="true">
+ <div class="modal-dialog modal-lg modal-dialog-centered">
+   <div class="modal-content">
+    <img src="{{ project.image.url }}" alt="" class='w-100'>
+
+   </div>
+ </div>
+</div>

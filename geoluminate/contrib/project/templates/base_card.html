@@ -1,0 +1,23 @@
+{% load i18n %}
+<div class="card mt-3 {% block card_css %}{% endblock %}">
+ {% block card %}
+ <div class='d-flex'>
+   {% block image %}{% endblock image %}
+   <div class='d-flex flex-column w-100'>
+     <div class="card-body">
+      {% block body %}
+        <h6 class="card-title">{{ object.title }}</h6>
+        <p class="card-text">{{ object.description|default_if_none:"No description provided." }}</p>
+      {% endblock body %}
+     </div>
+     <div class='card-footer d-flex justify-content-end border-0'>
+      {% block footer %}
+        <a href="{{ object.absolute_url }}" class="btn btn-primary btn-sm">
+          {% trans "View Details" %}
+        </a>
+      {% endblock footer %}
+     </div>
+   </div>
+ </div>
+ {% endblock card %}
+</div>

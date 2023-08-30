@@ -1,68 +1,205 @@
-from django.forms import fields, forms
+from client_side_image_cropping import ClientsideCroppingWidget
+from django import forms
+from django.forms import widgets
+from django.forms.fields import IntegerField
 from django.forms.models import ModelForm, construct_instance, model_to_dict
+from django.forms.widgets import HiddenInput
 from django.utils.translation import gettext as _
 from formset.collection import FormCollection
-from formset.fieldset import FieldsetMixin
+from formset.fieldset import Fieldset, FieldsetMixin
 from formset.renderers import bootstrap
 from formset.richtext.widgets import RichTextarea
 from formset.utils import FormMixin
-from formset.widgets import DateInput, DualSortableSelector, UploadedFileInput
+from formset.widgets import (
+    DateInput,
+    DateTimeInput,
+    DualSortableSelector,
+    Selectize,
+    SelectizeMultiple,
+    UploadedFileInput,
+)
 
-from .models import Dataset, Project
+from geoluminate.contrib.user.forms import ProfileFormNoImage
+from geoluminate.contrib.user.models import Profile
+from geoluminate.utils.forms import DefaultFormRenderer
+
+from .models import Contributor, Dataset, Description, KeyDate, Project
+
+# ===================== FORMS =====================
 
 
-class ProjectForm(ModelForm):
-    default_renderer = bootstrap.FormRenderer()
+class ProjectForm(FieldsetMixin, ModelForm):
+    # legend = _("Project")
+    # help_text = _("Add a new project.")
+    # template_name = "forms/fieldset.html"
 
     class Meta:
         model = Project
-        fields = [  # noqa: RUF012
+        fields = [
+            "title",
             "status",
-            "start_date",
-            "end_date",
-            "name",
-            "description",
+            # "image",
+            "tags",
         ]
         widgets = {  # noqa: RUF012
-            "description": RichTextarea(attrs={"min-height": "300px"}),
-            "start": DateInput(attrs={"show-if": ".status!=0"}),
-            "end": DateInput(attrs={"show-if": ".status!=0"}),
-            # "authors": DualSortableSelector,  # or DualSelector
+            "tags": SelectizeMultiple(choices=Project.PROJECT_TAGS.choices),
+            # "image": ImageWidget(
+            #     width=1200,
+            #     height=630,
+            #     preview_width=300,
+            #     preview_height=157,
+            #     format="webp",
+            # ),
+            "image": UploadedFileInput(),
+            # "image": ImageWidget(),
+            "status": widgets.RadioSelect(),
         }
 
 
-# class DatasetFileForm(ModelForm):
+
+
+class GenericForm(FieldsetMixin, ModelForm):
+    pass
+    id = IntegerField(required=False, widget=HiddenInput)
+
+    # @property
+    # def legend(self):
+    #     return self.instance._meta.verbose_name.title()
+
+
+class DatasetForm(FieldsetMixin, ModelForm):
+    class Meta:
+        model = Dataset
+        fields = ["title"]
+
+class KeyDateForm(GenericForm):
+    class Meta:
+        model = KeyDate
+        fields = ["id", "type", "date"]
+        widgets = {"date": DateTimeInput()}
+
+
+# class DatasetForm(GenericForm):
 #     class Meta:
 #         model = Dataset
-#         fields = ["file"]
-#         widgets = {
-#             "file": UploadedFileInput(),
-#         }
+#         fields = ["title"]
 
 
-# class DatasetFileCollection(FormCollection):
-#     legend = "Supplementary Material"
-#     min_siblings = 0
-#     extra_siblings = 1
-#     default_renderer = bootstrap.FormRenderer()
+class DescriptionForm(GenericForm):
+    class Meta:
+        model = Description
+        fields = ["id", "type", "description"]
+        widgets = {"description": RichTextarea()}
 
-#     supplementary_material = DatasetFileForm()
 
-# def model_to_dict(self, literature):
-#     opts = self.declared_holders["supps"]._meta
-#     return [{"supp": model_to_dict(supp, fields=opts.fields)} for supp in literature.supplementary.all()]
+class ContributorForm(GenericForm):
+    profile = forms.ModelChoiceField(
+        queryset=Profile.objects.all(),
+        widget=Selectize(
+            search_lookup="name__icontains",
+            placeholder="Select contributor",
+        ),
+    )
 
-# def construct_instance(self, literature, data):
-#     for d in data:
-#         try:
-#             supp_object = literature.supplementary.get(id=d["supplementary"]["id"])
-#         except (KeyError, Dataset.DoesNotExist):
-#             supp_object = Dataset(literature=literature)
-#         form_class = self.declared_holders["supps"].__class__
-#         form = form_class(data=d["supplementary"], instance=supp_object)
-#         if form.is_valid():
-#             if form.marked_for_removal:
-#                 supp_object.delete()
-#             else:
-#                 construct_instance(form, supp_object)
-#                 form.save()
+    class Meta:
+        model = Contributor
+        fields = [
+            "id",
+            "profile",
+            "roles",
+        ]
+        widgets = {"roles": SelectizeMultiple(choices=Contributor.CONTRIBUTOR_ROLES.choices)}
+
+
+# ===================== FORM COLLECTIONS =====================
+
+
+class KeyDateFormCollection(FormCollection):
+    min_siblings = 0
+    key_date = KeyDateForm(renderer=DefaultFormRenderer(field_css_classes={"*": "col", "type": "col-4"}))
+    legend = _("Key Dates")
+    add_label = _("Add new")
+    related_field = "project"
+
+    def retrieve_instance(self, data):
+        if data := data.get("key_date"):
+            try:
+                return self.instance.key_dates.get(id=data.get("id") or 0)
+            except (AttributeError, Dataset.DoesNotExist, ValueError):
+                return KeyDate(date=data.get("date"), project=self.instance)
+
+
+class DescriptionFormCollection(FormCollection):
+    min_siblings = 0
+    extra_siblings = 0
+    descriptions = DescriptionForm()
+    legend = _("Descriptions")
+    add_label = _("Add new")
+    related_field = "project"
+
+    help_text = _(
+        "Create descriptions for your project using the available description types. These descriptions greatly enhance"
+        " the discoverability of your project and can help you reach a wider audience."
+    )
+
+    def retrieve_instance(self, data):
+        if data := data.get("dataset"):
+            try:
+                return self.instance.descriptions.get(id=data.get("id") or 0)
+            except (AttributeError, Description.DoesNotExist, ValueError):
+                return Description(title=data.get("type"), project=self.instance)
+
+
+class DatasetFormCollection(FormCollection):
+    min_siblings = 0
+    extra_siblings = 0
+    dataset = DatasetForm()
+    # descriptions = DescriptionFormCollection(min_siblings=1, extra_siblings=1)
+
+    legend = _("Datasets")
+    add_label = _("Add new")
+    related_field = "project"
+
+    help_text = _("Add datasets to your project.")
+
+    def retrieve_instance(self, data):
+        if data := data.get("dataset"):
+            try:
+                return self.instance.datasets.get(id=data.get("id") or 0)
+            except (AttributeError, Dataset.DoesNotExist, ValueError):
+                return Dataset(title=data.get("title"), project=self.instance)
+
+
+class ContributorFormCollection(FormCollection):
+    min_siblings = 0
+    extra_siblings = 0
+    contributors = ContributorForm()
+    # descriptions = DescriptionFormCollection(min_siblings=1, extra_siblings=1)
+
+    legend = _("Contributors")
+    add_label = _("Add new")
+    related_field = "contributors"
+
+    help_text = _("Add contributors to your project.")
+
+    def retrieve_instance(self, data):
+        if data := data.get("contributors"):
+            try:
+                return self.instance.contributors.get(id=data.get("id") or 0)
+            except (AttributeError, Contributor.DoesNotExist, ValueError):
+                return Contributor(title=data.get("title"), project=self.instance)
+
+
+class ProjectFormCollection(FormCollection):
+    project = ProjectForm()
+    descriptions = DescriptionFormCollection()
+    contributors = ContributorFormCollection()
+    key_dates = KeyDateFormCollection()
+    datasets = DatasetFormCollection()
+
+
+class DatasetFormCollection(FormCollection):
+    dataset = DatasetForm()
+    descriptions = DescriptionFormCollection()
+    contributors = ContributorFormCollection()
+    key_dates = KeyDateFormCollection()

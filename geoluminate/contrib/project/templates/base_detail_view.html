@@ -1,0 +1,143 @@
+{% extends 'geoluminate/layout/fullwidth_sidebar.html' %}
+
+{% load static i18n formsetify geoluminate sekizai_tags %}
+
+{% block title %}{{ geoluminate.database.acronym}} {{ view.model|verbose_name|title }}{% endblock %}
+
+{% block title_after %}{{ object.title|title }}{% endblock %}
+
+{% block app_menu_wrapper %}{% endblock %}
+
+
+{% block prepage %}
+  <ul class="nav nav-pills nav-pills-alternate" id="myTab" role="tablist">
+    {% for panel in panels %}
+      <li class="nav-item" role="presentation">
+        <button class="nav-link {% if forloop.first %}active{% endif %}" id="{{panel.title}}-tab" data-bs-toggle="pill" data-bs-target="#{{panel.title}}" type="button" role="tab" aria-controls="{{panel.title}}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">
+          <i class="{{panel.icon}}"></i>
+          <span>{{panel.title}}</span>
+        </button>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}
+
+
+{% block navbar_menu %}
+  <li class="nav-item child">
+    <a class="nav-link" href="{{ object.get_list_url}}">
+      <div class="d-flex align-items-center">
+        <span>{{ geoluminate.database.acronym}} {{ view.model|verbose_name_plural|title }}</span>
+      </div>
+    </a>
+  </li>
+  <span class='nav-link'>/</span>
+  <li class="nav-item child">
+    <a class="nav-link" href="{{ object.get_absolute_url }}">
+      <div class="d-flex align-items-center">
+        <span>{{object.title}}</span>
+      </div>
+    </a>
+  </li>
+{% endblock %}
+
+
+{% block content_sidebar %}
+  <div class='w-100 d-flex justify-content-center'>
+    {% if object.image %}
+      <img src="{{object.image.url}}" class='w-100' alt="">
+    {% else %}
+      <img src="http://placekitten.com/1200/630" class='w-100' alt="">
+    {% endif %}
+  </div>
+  <section>
+    <h5>{% trans "Title" %}</h5>
+    <div class='sidebar-section-content'>
+    {{object.title}}
+    </div>
+  </section>
+  {% with "Contact Persons" as title  %}
+    {% include "partials/contributors.html" with contributors=object.get_contact_persons %}
+  {% endwith %}
+{% endblock %}
+
+{% block content_main %}
+  <div class="tab-content flex-grow-1 d-flex">
+    {% for panel in panels %}
+      <div class="tab-pane fade w-100 {% if forloop.first %}show active{% endif %}" id="{{panel.title}}" role="tabpanel" aria-labelledby="{{panel.title}}-tab" tabindex="0">
+        {% include panel.template_name %}
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
+
+
+{% block toolbar_right %}
+<a href="#" class='py-0 px-1 fas fa-link'></a>
+{% include "geoluminate/components/social_share/icon_link.html" %}
+<a id='printPage' href="#" class='py-0 px-1 fas fa-print'></a>
+
+{% endblock toolbar_right %}
+
+
+{% block scripts %}
+{% addtoblock "modals" %}
+  {% include "partials/contributor_modal.html" %}
+{% endaddtoblock %}
+
+{% addtoblock 'js' %}
+  <script>
+    $("#contributorModal").on("show.bs.modal", function (event) {
+      var button = $(event.relatedTarget);
+      var modal = $(this);
+      modal.find(".contributor-name").text(button.data("bs-name"));
+      modal.find(".profile-image").html(button.data("bs-image"));
+      modal.find(".contributor-roles").text(button.data("bs-roles"));
+      modal.find(".contributor-bio").html(button.data("bs-bio"));
+      modal.find(".modal-footer a").attr("href", button.data("bs-url"))
+    });
+  </script>
+{% endaddtoblock %}
+
+<script>
+  $("#Map-tab").on('shown.bs.tab', function (e) {
+    map.invalidateSize();
+  })
+</script>
+
+{% comment %} https://github.com/jasonday/printThis {% endcomment %}
+<script src="{% static 'node_modules/print-this/printThis.js' %}"></script>
+
+{% comment %} <script>
+$("#printPage").click(function() {
+  $("section").printThis({
+    importCSS: true,
+    importStyle: true,
+    loadCSS: "{% static 'css/print.css' %}",
+    header: "<h1>{{ object|verbose_name|title }}: {{ object.title }}</h1>",
+    footer: "<p>Printed on {{ now|date:'SHORT_DATE_FORMAT' }}</p>",
+    pageTitle: "{{ object|verbose_name|title }}: {{ object.title }}",
+    base: true,
+    canvas: true,
+    removeScripts: true,
+    copyTagClasses: true,
+    header: "<h1>{{ object.title }}</h1>",
+    footer: "<p>Printed on {{ now|date:'SHORT_DATE_FORMAT' }}</p>",
+    pageTitle: "{{ object.title }}",
+    base: true,
+    canvas: true,
+    removeScripts: true,
+    copyTagClasses: true,
+    beforePrint: function() {
+      $("section").addClass("printable-printing");
+    },
+    afterPrint: function() {
+      $("section").removeClass("printable-printing");
+    }
+  });
+}
+);
+
+</script> {% endcomment %}
+{% endblock scripts %}
+

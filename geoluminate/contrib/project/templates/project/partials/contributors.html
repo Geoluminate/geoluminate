@@ -1,0 +1,20 @@
+{% load i18n sekizai_tags geoluminate %}
+<div class='container'>
+<section>
+  <h5>{% trans "Contributors" %}</h5>
+  <p>The following people and organisations have contributed to this project in some way:</p>
+  <div class='d-flex'>
+    {% for contributor in contributors %}
+      <div class='p-1'>
+        <a href="#" type="button" data-bs-toggle="modal" data-bs-target="#contributor-{{contributor.id}}">
+          {% render_profile_image contributor.profile width="75px" %}
+        </a>
+      </div>
+      {% addtoblock "modals" %}
+      {% include "partials/contributor_modal.html" %}
+      {% endaddtoblock %}
+    {% endfor %}
+  </div>
+
+</section>
+</div>

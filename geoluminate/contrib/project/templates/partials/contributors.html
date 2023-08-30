@@ -1,0 +1,12 @@
+{% extends 'partials/base.html' %}
+
+{% load i18n sekizai_tags geoluminate %}
+{% block heading %}{% trans title %}{% endblock %}
+{% block content %}
+<div class='d-flex flex-wrap justify-content-start'>
+ {% for contributor in contributors %}
+  {% render_contributor_icon contributor "p-1 w-25" %}
+ {% endfor %}
+</div>
+
+{% endblock %}

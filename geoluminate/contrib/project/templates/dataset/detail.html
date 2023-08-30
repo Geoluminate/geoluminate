@@ -1,43 +1,14 @@
-{% extends 'application.html' %}
-{% load i18n formsetify %}
+{% extends 'base_detail_view.html' %}
+{% load static i18n formsetify sekizai_tags geoluminate autotables %}
 
-{% block content %}
-<div class='container pt-5'>
- <header class='header'>
-  <strong>{{dataset.name}}</strong>
- </header>
- <section class='card border-0 border-bottom'>
-  <div class='card-body px-0'>
-    <div class='d-flex w-100'>
-      {% include "contributors.html" %}
-    </div>
-  </div>
- </section>
- <section class='card border-0 border-bottom'>
-  <div class='card-body px-0'>
-    <h5>{% trans "Description" %}</h5>
-    <p>{{dataset.description|safe}}</p>
-  </div>
- </section>
- <section class='card border-0 border-bottom'>
-  <div class='card-body px-0'>
-
-  <h5>{% trans "Key dates" %}</h5>
-  <ul class="list-group border-0">
-    {% for date in key_dates %}
-    <li class="list-group-item">{{ date.label|title }}: {{ date.value }}</li>
-    {% endfor %}
-  </ul>
+{% block content_sidebar %}
+{{ block.super }}
+<section>
+  <h5>{% trans "Reference" %}</h5>
+  <div class='sidebar-section-content'>
+    <p>{{ object.reference|default_if_none:"This dataset has not been formally published." }}</p>
   </div>
 </section>
- <section class='card border-0 border-bottom'>
-  <div class='card-body px-0'>
-    <h5>{% trans "Datasets" %}</h5>
-    {% for dataset in project.datasets.all %}
-      {% include "datasets/card.html" %}
-    {% endfor %}
-  </div>
-</section>
-</div>
-
-{% endblock content %}
+{% include "partials/contributors.html" with title='Dataset Contributors' contributors=object.contributors.all %}
+{% include "partials/key_dates.html" %}
+{% endblock %}

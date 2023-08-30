@@ -1,0 +1,15 @@
+{% extends 'geoluminate/partials/page_layout.html' %}
+{% load i18n autotables geoluminate %}
+
+{% block header %}{% trans "Datasets" %}{% endblock %}
+
+{% block header_actions_right %}
+<button class='btn btn-sm btn-success' data-bs-toggle="modal" data-bs-target="#createEntityModal">
+  <i class='fas fa-plus'></i>
+  {% trans "Create new" %}
+</button>
+{% endblock %}
+
+{% block content %}{% render_object_list object.get_datasets %}{% endblock %}
+
+

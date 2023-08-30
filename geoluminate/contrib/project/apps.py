@@ -7,3 +7,7 @@ class ProjectConfig(AppConfig):
     label = "project"
     verbose_name = _("Project")
     verbose_name_plural = _("Projects")
+
+    def ready(self):
+        # This installs the comment_will_be_posted signal
+        from . import signals  # noqa

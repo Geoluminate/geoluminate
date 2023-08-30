@@ -1,59 +1,41 @@
-{% extends 'application.html' %}
-{% load i18n formsetify %}
+{% extends 'base_detail_view.html' %}
 
-{% block content %}
-<div class='container pt-5'>
- <header class='header'>
-  <strong>{% trans "Sample Name" %}: {{ sample.name }}</strong>
- </header>
+{% load static i18n formsetify geoluminate autotables %}
 
- <div class='row'>
-  <div class='col-3 border-end'>
-    <div class='bg-secondary-subtle'>
-      <img src="http://placekitten.com/400/600" class="object-fit-contain w-100" height=200>
+
+
+{% block content_sidebar %}
+<div id="carouselExample" class="carousel slide">
+  <div class="carousel-inner">
+    <div class="carousel-item active bg-secondary-subtle">
+      <img src="http://placekitten.com/400/600" class="object-fit-contain w-100" height=200 alt="...">
     </div>
-    <h5 class='py-3'>{% trans "Sampled by" %}</h5>
-    <div class='me-2'>
-      <img src="http://placekitten.com/100/100" class="img-fluid rounded-circle">
-    </div>    
-    <h5 class='py-3'>{% trans "Key dates" %}</h5>
-    <ul class="list-group border-0">
-      {% for date in key_dates %}
-        <li class="list-group-item">{{ date.label|title }}: {{ date.value }}</li>
-      {% endfor %}
-    </ul>
-    <h5 class='py-3'>{% trans "Belongs to" %}</h5>
-    {% include "dataset/card.html" with dataset=sample.dataset %}
-    {% include "project/card.html" with project=sample.dataset.project %}
+    <div class="carousel-item bg-secondary-subtle">
+      <img src="http://placekitten.com/600/400" class="object-fit-contain w-100" height=200 alt="...">
+    </div>
+    <div class="carousel-item bg-secondary-subtle">
+      <img src="http://placekitten.com/400/400" class="object-fit-contain w-100" height=200 alt="...">
+    </div>
   </div>
-  <div class='col-9'>
-    <section class='card border-0 border-bottom'>
-      <div class='card-body px-0'>
-        <h5>{% trans "Description" %}</h5>
-        {% comment %} <p>{{sample.description|safe}}</p> {% endcomment %}
-      </div>
-     </section>
-     <section class='card border-0 border-bottom'>
-      <div class='card-body px-0'>
-        <h5 class="card-title">{% trans "Measurements" %}</h5>
-        <div class='d-flex w-100'>
-          {% for measurement in measurements %}
-            {% include "measurement/card.html" %}
-          {% empty %}
-            {% trans "No measurements have been made on this sample yet." %}
-          {% endfor %}
-        </div>
-      </div>
-     </section>
-  </div>
- </div>
-
-
-
-
-
-
-
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
 </div>
+{{ block.super }}
+{% include "partials/contributors.html" with title='Dataset Contributors' contributors=object.contributors.all %}
+{% include "partials/key_dates.html" %}
+{% endblock %}
 
-{% endblock content %}
+{% comment %} {% block toolbar_right %}
+<a href="#" class='btn btn-sm btn-outline-primary'>
+  <i class='fas fa-edit'></i>
+  {% trans "Edit" %}
+</a>
+{% endblock  %} {% endcomment %}
+
+

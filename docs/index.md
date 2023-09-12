@@ -1,4 +1,4 @@
-```{figure} static/logo.svg
+```{figure} _static/logo.svg
 :align: center
 :target: https://www.geoluminate.com.au
 :width: 100%
@@ -19,47 +19,52 @@ ______________________________________________________________________
 [![Join our Discord](https://img.shields.io/badge/Discord-cookiecutter-5865F2?style=flat&logo=discord&logoColor=white)](https://discord.gg/uFXweDQc5a)
 [![Code Helpers Badge](https://www.codetriage.com/cookiecutter/cookiecutter-django/badges/users.svg)](https://www.codetriage.com/cookiecutter/cookiecutter-django) -->
 
+```{include} overview/introduction.md
+```
 
-```{epigraph}
-Geoluminate is a highly-opinionated, batteries included Django application for jump-starting the creation and assisting in the continued maintenance of community-driven research databases.
+
+```{toctree}
+:maxdepth: 1
+:hidden:
+
+overview/foreword
+index
+background/index
+features/index
+usage/index
+
+
+
 ```
 
 ```{toctree}
-:caption: Getting started
-:maxdepth: 2
+:caption: Guides
+:maxdepth: 1
+:hidden:
 
-introduction
-projects
-overview
-tutorial
+guides/developer_guide/index
+guides/user_guide/index
+
 ```
 
-```{toctree}
-:caption: API Reference
-:maxdepth: 2
-
-geoluminate/geoluminate
-geoluminate/geoluminate.conf
-geoluminate/geoluminate.contrib
-
-.. modules
-```
 
 ```{toctree}
 :caption: More
 :maxdepth: 1
+:hidden:
 
-contributing
-authors
-history
-
-.. configuration
-.. core
-.. integrations
+apidocs/index
+more/support
+more/roadmap
+more/current_projects
+more/contributing
+more/authors
+more/history
+more/configuration
 ```
 
-## Indices and tables
+<!-- ## Indices and tables
 
 - {ref}`genindex`
 - {ref}`modindex`
-- {ref}`search`
+- {ref}`search` -->

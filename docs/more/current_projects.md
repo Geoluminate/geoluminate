@@ -4,9 +4,9 @@ The following is a list of database development projects that are currently maki
 
 ```{container} full-width
 
-| Database | Governing Body | Custodian | Developer |  Project Homepage |
-| -------------- | --------- | ---------- | ---------- | :----------: |
-| [Global Heat Flow Database][GHFDB]     | [International Heat Flow Commission][IHFC]       | Sven Fuchs    | Sam Jennings  | [<i class='fab fa-github' />](https://github.com/SSJenny90/world-heat-flow-database) |
+| Database | Governing Body | Project Homepage |
+| -------------- | --------- | :----------: |
+| [Global Heat Flow Database][GHFDB]     | [International Heat Flow Commission][IHFC]       |  [<i class='fab fa-github' />](https://github.com/SSJenny90/world-heat-flow-database) |
 
 ```
 

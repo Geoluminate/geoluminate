@@ -29,12 +29,12 @@ from formset.views import (
 )
 from organizations.models import Organization
 
-from geoluminate.contrib.project.tables import DatasetTable, ProjectTable
+from geoluminate.contrib.core.tables import DatasetTable, ProjectTable
 from geoluminate.tables import ClientSideProcessing
 from geoluminate.views import GeoluminateTableView
 
 from ..forms import UserForm, UserProfileForm
-from ..models import Profile, User
+from ..models import Contributor, User
 from ..tables import Datasets, Projects
 
 
@@ -48,7 +48,7 @@ class CommunityView(LoginRequiredMixin, TemplateView):
 
 class CommunityDirectoryView(LoginRequiredMixin, GeoluminateTableView):
     table_config_class = ClientSideProcessing
-    model = Profile
+    model = Contributor
     fields = [
         "name",
         "about",
@@ -57,7 +57,7 @@ class CommunityDirectoryView(LoginRequiredMixin, GeoluminateTableView):
 
 
 class MemberProfileView(DetailView):
-    model = Profile
+    model = Contributor
     template_name = "user/member_profile.html"
 
     def get_context_data(self, **kwargs):

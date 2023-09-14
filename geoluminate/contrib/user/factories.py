@@ -3,9 +3,7 @@
 import factory
 from django.contrib.auth import get_user_model
 
-from geoluminate.contrib.project.models import Site
-
-from .models import Profile
+from .models import Contributor
 
 
 class UserFactory(factory.django.DjangoModelFactory):
@@ -20,7 +18,7 @@ class UserFactory(factory.django.DjangoModelFactory):
 
 class ProfileFactory(factory.django.DjangoModelFactory):
     class Meta:
-        model = Profile
+        model = Contributor
         django_get_or_create = ("user",)
 
     user = factory.SubFactory(UserFactory)

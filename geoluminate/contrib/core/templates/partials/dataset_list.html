@@ -1,0 +1,40 @@
+{% extends 'geoluminate/partials/page_layout.html' %}
+{% load i18n autotables geoluminate sekizai_tags %}
+
+{% block header %}{% trans "Datasets" %}{% endblock %}
+
+{% block header_actions_right %}
+<button class='btn btn-sm btn-success' data-bs-toggle="modal" data-bs-target="#createEntityModal">
+  <i class='fas fa-plus'></i>
+  {% trans "Create new" %}
+</button>
+{% endblock %}
+
+{% block content %}
+{% render_object_list object.get_datasets %}
+
+{% with object_type as object.get_datasets|verbose_name %}
+{% addtoblock 'modals' %}
+<div class="modal fade" id="createEntityModal" tabindex="-1" aria-labelledby="createEntityModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <django-formset endpoint="{{ request.path }}" csrf-token="{{ csrf_token }}">
+        <div class="modal-header">
+          <h5 class="modal-title" id="createEntityModalLabel">
+            {% trans "Create new" %} {{ object_type }}
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">{{ add_dataset_form }}</div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" df-click="submit({add: true}) -> proceed">{% trans "Create" %}</button>
+        </div>
+      </django-formset>
+    </div>
+  </div>
+</div>
+{% endaddtoblock %}
+{% endwith %}
+
+{% endblock %}
+

@@ -10,3 +10,8 @@ def get_choices(model, field):
         return [(k, k) for k in (model.objects.order_by(field).values_list(field, flat=True).distinct())]
 
     return func
+
+
+def max_length_from_choices(choices):
+    """Return the max length from a list of choices"""
+    return max([len(choice[0]) for choice in choices])

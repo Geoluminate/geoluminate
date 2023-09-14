@@ -2,28 +2,24 @@ import random
 
 import factory
 import faker
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.gis.geos import Point
 from django.db import models
 from django.utils import timezone
+from factory.fuzzy import FuzzyChoice
 
 # from faker import factory.Faker as provider
-from geoluminate.contrib.controlled_vocabulary.models import ControlledVocabulary
-from geoluminate.contrib.project.models import (
-    Contributor,
+from geoluminate.contrib.core.models import (
+    Contribution,
     Dataset,
     Description,
     KeyDate,
+    Location,
     Project,
     Sample,
 )
-from geoluminate.contrib.user.models import Profile, User
-
-
-class VocabularyIterator(factory.Iterator):
-    def __init__(self, label, *args, **kwargs):
-        iterator = ControlledVocabulary.objects.get(label=label).get_descendants()
-        super().__init__(iterator, *args, **kwargs)
+from geoluminate.contrib.user.models import Contributor, User
 
 
 class GeoluminateProvider(faker.providers.BaseProvider):
@@ -64,10 +60,10 @@ class UserFactory(factory.django.DjangoModelFactory):
 
 
 class ProfileFactory(factory.django.DjangoModelFactory):
-    """A factory for creating Profile objects."""
+    """A factory for creating Contributor objects."""
 
     class Meta:
-        model = Profile
+        model = Contributor
         django_get_or_create = ("user",)
 
     user = factory.SubFactory(UserFactory)
@@ -84,7 +80,7 @@ class DescriptionFactory(factory.django.DjangoModelFactory):
         model = Description
 
     type = factory.Iterator(Description.DESCRIPTION_TYPES)
-    description = factory.Faker("html_paragraphs", nb=randint(3, 6), nb_sentences=12)
+    text = factory.Faker("html_paragraphs", nb=randint(3, 6), nb_sentences=12)
 
 
 class KeyDateFactory(factory.django.DjangoModelFactory):
@@ -97,37 +93,20 @@ class KeyDateFactory(factory.django.DjangoModelFactory):
     date = factory.Faker("date_time", tzinfo=timezone.get_current_timezone())
 
 
-class ContributorFactory(factory.django.DjangoModelFactory):
-    """A factory for creating Contributor objects."""
+class ContributionFactory(factory.django.DjangoModelFactory):
+    """A factory for creating Contribution objects."""
 
     class Meta:
-        model = Contributor
+        model = Contribution
 
-    # type = factory.LazyFunction(multiple_choice_iterator(Contributor.CONTRIBUTOR_ROLES))
-    roles = factory.Faker("choice_list", choices=Contributor.CONTRIBUTOR_ROLES)
+    roles = factory.Faker("choice_list", choices=Contribution.CONTRIBUTOR_ROLES)
     profile = factory.SubFactory(ProfileFactory)
-
-
-class SampleFactory(factory.django.DjangoModelFactory):
-    """A factory for creating Sample objects."""
-
-    dataset = factory.Iterator(Dataset.objects.all())
-    type = factory.Faker("pystr", min_chars=1, max_chars=12)
-    title = factory.Faker("sentence", nb_words=2, variable_nb_words=True)
-    description = factory.Faker("html_paragraphs", nb=randint(3, 6), nb_sentences=12)
-    acquired = factory.Faker("date_time", tzinfo=timezone.get_current_timezone())
-    elevation = factory.Faker("pyfloat", min_value=-12000, max_value=10000)
-    comment = factory.Faker("text")
-    geom = factory.Faker("geo_point")
-
-    class Meta:
-        model = Sample
 
 
 class DatasetFactory(factory.django.DjangoModelFactory):
     """A factory for creating Dataset objects."""
 
-    project = factory.Iterator(Project.objects.all())
+    # project = factory.Iterator(Project.objects.all())
     # reference = factory.SubFactory(ReferenceFactory)
     title = factory.Faker("sentence", nb_words=8, variable_nb_words=True)
     descriptions = factory.RelatedFactoryList(
@@ -135,12 +114,39 @@ class DatasetFactory(factory.django.DjangoModelFactory):
     )
     key_dates = factory.RelatedFactoryList(KeyDateFactory, factory_related_name="content_object", size=randint(1, 3))
     contributors = factory.RelatedFactoryList(
-        ContributorFactory, factory_related_name="content_object", size=randint(1, 5)
+        ContributionFactory, factory_related_name="content_object", size=randint(1, 5)
     )
-    samples = factory.RelatedFactoryList(SampleFactory, size=randint(10, 20))
+    # samples = factory.RelatedFactoryList(SampleFactory, size=randint(10, 20))
 
     class Meta:
         model = Dataset
+
+
+class LocationFactory(factory.django.DjangoModelFactory):
+    name = factory.Faker("sentence", nb_words=2, variable_nb_words=True)
+    point = factory.Faker("geo_point")
+    elevation = factory.Faker("pyfloat", min_value=-12000, max_value=10000)
+
+    class Meta:
+        model = Location
+
+
+class SampleFactory(factory.django.DjangoModelFactory):
+    """A factory for creating Sample objects."""
+
+    # dataset = factory.Iterator(Dataset.objects.all())
+
+    dataset = factory.SubFactory(DatasetFactory)
+
+    location = factory.SubFactory(LocationFactory)
+    type = FuzzyChoice(settings.GEOLUMINATE_SAMPLE_TYPES)
+    title = factory.Faker("sentence", nb_words=2, variable_nb_words=True)
+    description = factory.Faker("html_paragraphs", nb=randint(3, 6), nb_sentences=12)
+    acquired = factory.Faker("date_time", tzinfo=timezone.get_current_timezone())
+    comment = factory.Faker("text")
+
+    class Meta:
+        model = Sample
 
 
 class ProjectFactory(factory.django.DjangoModelFactory):
@@ -158,7 +164,13 @@ class ProjectFactory(factory.django.DjangoModelFactory):
     )
     key_dates = factory.RelatedFactoryList(KeyDateFactory, factory_related_name="content_object", size=randint(1, 3))
     contributors = factory.RelatedFactoryList(
-        ContributorFactory, factory_related_name="content_object", size=randint(1, 5)
+        ContributionFactory, factory_related_name="content_object", size=randint(1, 5)
     )
     datasets = factory.RelatedFactoryList(DatasetFactory, size=randint(2, 8))
     # created_by = factory.Iterator(User.objects.all())
+
+
+class MeasurementFactory(factory.django.DjangoModelFactory):
+    """A factory for creating Measurement objects."""
+
+    sample = factory.SubFactory(SampleFactory)

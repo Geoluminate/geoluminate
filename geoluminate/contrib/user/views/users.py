@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type
+from typing import Any, Dict, List, Optional, Type
 
 from allauth.account.forms import AddEmailForm
 from allauth.account.models import EmailAddress
@@ -25,14 +25,14 @@ from formset.views import (
 )
 from organizations.models import Organization
 
-from geoluminate.contrib.project.forms import DatasetForm, ProjectForm
-from geoluminate.contrib.project.models import Dataset, Project
-from geoluminate.contrib.project.views.base import ContributionView
+from geoluminate.contrib.core.forms import DatasetForm, ProjectForm
+from geoluminate.contrib.core.models import Dataset, Project
+from geoluminate.contrib.core.views.base import ContributionView
 
 from ..forms import OrganisationFormCollection, UserForm, UserProfileForm
-from ..models import Profile, User
+from ..models import Contributor, User
 from ..tables import Datasets, Projects
-from geoluminate.contrib.project.models import Dataset, Project
+
 
 class Dashboard(LoginRequiredMixin, TemplateView):
     template_name = "user/dashboard.html"
@@ -55,12 +55,12 @@ class Account(LoginRequiredMixin, TemplateView):
 
 
 class ProfileView(FileUploadMixin, FormViewMixin, LoginRequiredMixin, UpdateView):
-    model = Profile
+    model = Contributor
     form_class = UserProfileForm
     template_name = "user/profile_edit.html"
 
     def get_object(self, queryset=None):
-        obj, created = Profile.objects.get_or_create(user=self.request.user)
+        obj, created = Contributor.objects.get_or_create(user=self.request.user)
         if created:
             self.request.user.save()
         return obj
@@ -98,9 +98,10 @@ class UserProjects(ContributionView):
     form_fields = ["title"]
     title = _("Your Projects")
     success_url = "project-edit"
+    model = Contributor
 
-    def get_queryset(self):
-        return self.request.user.profile.get_projects()
+    def get_object(self):
+        return self.request.user.profile
 
     def form_valid(self, form):
         """If the form is valid, save the associated model."""
@@ -120,6 +121,13 @@ class UserProjects(ContributionView):
 
         return super().form_valid(form)
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        # kwargs["instance"] = Project(
+        #     contributors=[self.get_object()],
+        # )
+        return kwargs
+
 
 class UserDatasets(ContributionView):
     template_name = "user/contributor/projects.html"
@@ -129,8 +137,11 @@ class UserDatasets(ContributionView):
     success_url = "dataset-edit"
     model = Dataset
 
-    def get_queryset(self):
-        return self.request.user.profile.get_datasets()
+    def get_object(self, queryset):
+        return self.request.user.profile
+
+    # def get_queryset(self):
+    #     return self.request.user.profile.get_datasets()
 
 
 class Reviews(ContributionView):

@@ -14,20 +14,20 @@ from formset.widgets import (
 )
 from organizations.models import Organization
 
-from geoluminate.contrib.project.choices import iso_639_1_languages
+from geoluminate.contrib.core.choices import iso_639_1_languages
 
-from .models import Profile
+from .models import Contributor
 
 
 class BaseUserForm(ModelForm):
     class Meta:
         model = get_user_model()
-        fields = ["academic_title", "first_name", "last_name", "email"]
+        fields = ["first_name", "last_name", "email"]
 
 
 class ProfileFormNoImage(ModelForm):
     class Meta:
-        model = Profile
+        model = Contributor
         fields = ["name", "about", "lang"]
 
         widgets = {  # noqa: RUF012
@@ -43,7 +43,7 @@ class UserProfileForm(ModelForm):
     )
 
     class Meta:
-        model = Profile
+        model = Contributor
         fields = [
             "lang",
             "name",

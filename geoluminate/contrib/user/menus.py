@@ -18,11 +18,11 @@ UserToolbar.add_items(
         reverse("user:profile_edit"),
         icon="fas fa-user",
     ),
-    MenuItem(
-        _("Dashboard"),
-        reverse("user:dashboard"),
-        icon="fas fa-th-large",
-    ),
+    # MenuItem(
+    #     _("Dashboard"),
+    #     reverse("user:dashboard"),
+    #     icon="fas fa-th-large",
+    # ),
     MenuItem(
         _("Projects"),
         reverse("user:projects"),
@@ -67,11 +67,11 @@ class AccountSidebar(GeoluminateMenuBase):
 
 
 AccountSidebar.add_items(
-    MenuItem(
-        _("Dashboard"),
-        url=reverse("user:dashboard"),
-        icon="fas fa-table-cells-large",
-    ),
+    # MenuItem(
+    #     _("Dashboard"),
+    #     url=reverse("user:dashboard"),
+    #     icon="fas fa-table-cells-large",
+    # ),
     MenuItem(
         _("Your Contributions"),
         url="",

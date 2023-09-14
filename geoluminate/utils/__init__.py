@@ -1,16 +1,6 @@
 """
-The utils module contains various helper functions and classes that are used throughout the project. 
+The utils module contains various helper functions and classes that are used throughout the project.
 
-.. autosummary::
-    :toctree: generated/
-    :nosignatures:
-
-    create_fixtures
-    get_database_models
-    get_filter_params
-    get_db_name
-    geoluminate_content_types
-    
 """
 
 
@@ -26,6 +16,20 @@ from geoluminate.utils.factories import (
     SampleFactory,
     UserFactory,
 )
+
+
+def context_processor(request):
+    """A context processor that adds the following variables to the context:
+
+    - ``geoluminate``: The ``GEOLUMINATE`` setting.
+    - ``ACCOUNT_ALLOW_REGISTRATION``: The ``ACCOUNT_ALLOW_REGISTRATION`` setting.
+    """
+    return {
+        # "config": GlobalConfiguration.get_solo(),
+        "geoluminate": settings.GEOLUMINATE,
+        # "config_json": json.dumps(GlobalConfiguration.objects.values()[0]),
+        "ACCOUNT_ALLOW_REGISTRATION": settings.ACCOUNT_ALLOW_REGISTRATION,
+    }
 
 
 @transaction.atomic
@@ -51,10 +55,21 @@ def create_fixtures():
     save_model_instances(SampleFactory.create_batch(size=1000))
 
 
+def get_measurement_types():
+    """Returns a dictionary of all models in the project that subclass from :class:`geoluminate.contrib.core.models.Measurement`."""
+    measurement_types = {}
+    Measurement = import_string("geoluminate.contrib.core.models.Measurement")
+
+    for model in apps.get_models():
+        if issubclass(model, Measurement):
+            measurement_types[model._meta.verbose_name] = model
+    return measurement_types
+
+
 def get_database_models():
-    """Get a list of all models in the project that subclass from :class:`geoluminate.db.models.Base`."""
+    """Get a list of all models in the project that subclass from :class:`geoluminate.models.Base`."""
     db_models = []
-    Measurement = import_string("geoluminate.contrib.project.models.Measurement")
+    Measurement = import_string("geoluminate.contrib.core.models.Measurement")
 
     for model in apps.get_models():
         if issubclass(model, Measurement):
@@ -70,10 +85,6 @@ def get_filter_params(request):
         return "&" + params.urlencode()
     else:
         return ""
-
-
-def get_db_name():
-    return settings.GEOLUMINATE["db_name"]
 
 
 def geoluminate_content_types():

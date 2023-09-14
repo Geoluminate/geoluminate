@@ -12,13 +12,16 @@
 {% endif %}
 {% endblock %}
 
-{% block content_sidebar %}
-  <div class='d-flex align-items-center container'>
-  {% render_profile_image user.profile width="40px" height="40px" extra_classes='shadow' %}
+{% block sidebar_header %}
+<div>
+  {% render_profile_image user.profile width="40px" height="40px" extra_classes='shadow me-2 rounded-circle' %}
+  <span>{{ request.user.profile }}</span>
+</div>
 
-    {% comment %} <img src="{{request.user.profile.image.url}}" class="rounded-circle m-3" width=45 height=45 alt=""> {% endcomment %}
-    <span>{{ request.user.profile }}</span>
-  </div>
+{% endblock sidebar_header %}
+
+{% block content_sidebar %}
+
   <ul>
     {% for item in menus.account_sidebar %}
       {% if not item.url %}

@@ -1,0 +1,28 @@
+{% extends 'geoluminate/layout/fullwidth_sidebar.html' %}
+{% load i18n formsetify autotables geoluminate %}
+
+{% block page_title %}{{ object_list.model|verbose_name_plural|title }}{% endblock %}
+
+
+{% block toolbar_right %}
+<a class="btn text-primary content-sidebar-toggle" href="#pageSidebar" data-bs-toggle="offcanvas" role="button" aria-controls="pageSidebar" aria-expanded="true">
+  <i class="fas fa-filter"></i>
+</a>
+{% endblock %}
+
+{% block sidebar_header %}
+<h5 class='offcanvas-title'>{% trans "Filters" %}</h5>
+<button type="button" class="btn-close d-lg-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+{% endblock sidebar_header %}
+
+{% block content_sidebar %}
+  <div id="searchButton"></div>
+  {{ filter.form }}
+{% endblock %}
+
+{% block content_main %}
+{% render_table_for_url table True %}
+{% if template %}<script id='template-card'>{% include template %}</script>{% endif %}
+{% endblock %}
+
+

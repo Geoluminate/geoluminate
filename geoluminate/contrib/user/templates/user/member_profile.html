@@ -5,7 +5,7 @@
 
 {% block title_after %}{{ object.name|title }}{% endblock %}
 
-{% block app_menu_wrapper %}{% endblock %}
+{% block page_header %}{% endblock %}
 
 {% block content_sidebar %}
   <div class='w-100 d-flex justify-content-center'>
@@ -27,7 +27,7 @@
 {% block content_main %}
   <div class="tab-content container">
     <div class="tab-pane fade show active" id="Profile" role="tabpanel" aria-labelledby="Profile-tab" tabindex="0">
-      <div class="page-menu page-layout">
+      <div class="page-header page-layout">
         <strong>{{ profile }}</strong>
         <div class='toolbar'>
           <div class="toolbar-left">

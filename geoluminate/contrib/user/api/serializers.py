@@ -3,7 +3,7 @@ from rest_framework import serializers
 from rest_framework_nested.relations import NestedHyperlinkedRelatedField
 from rest_framework_nested.serializers import NestedHyperlinkedModelSerializer
 
-from ..models import Profile
+from ..models import Contributor
 
 User = get_user_model()
 
@@ -18,5 +18,5 @@ class ProfileSerializer(NestedHyperlinkedModelSerializer):
     web_url = serializers.HyperlinkedIdentityField(view_name="community:profile")
 
     class Meta:
-        model = Profile
+        model = Contributor
         fields = ["url", "web_url", "name"]

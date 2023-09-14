@@ -1,6 +1,6 @@
 from django.urls import reverse
 
-from geoluminate.contrib.project.tables import DatasetTable, ProjectTable
+from geoluminate.contrib.core.tables import DatasetTable, ProjectTable
 from geoluminate.tables import ClientSideProcessing
 
 

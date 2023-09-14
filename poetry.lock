@@ -313,6 +313,27 @@ jupyter = ["ipython (>=7.8.0)", "tokenize-rt (>=3.2.0)"]
 uvloop = ["uvloop (>=0.15.2)"]
 
 [[package]]
+name = "bleach"
+version = "5.0.1"
+description = "An easy safelist-based HTML-sanitizing tool."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "bleach-5.0.1-py3-none-any.whl", hash = "sha256:085f7f33c15bd408dd9b17a4ad77c577db66d76203e5984b1bd59baeee948b2a"},
+    {file = "bleach-5.0.1.tar.gz", hash = "sha256:0d03255c47eb9bd2f26aa9bb7f2107732e7e8fe195ca2f64709fcf3b0a4a085c"},
+]
+
+[package.dependencies]
+six = ">=1.9.0"
+tinycss2 = {version = ">=1.1.0,<1.2", optional = true, markers = "extra == \"css\""}
+webencodings = "*"
+
+[package.extras]
+css = ["tinycss2 (>=1.1.0,<1.2)"]
+dev = ["Sphinx (==4.3.2)", "black (==22.3.0)", "build (==0.8.0)", "flake8 (==4.0.1)", "hashin (==0.17.0)", "mypy (==0.961)", "pip-tools (==6.6.2)", "pytest (==7.1.2)", "tox (==3.25.0)", "twine (==4.0.1)", "wheel (==0.37.1)"]
+
+[[package]]
 name = "cachetools"
 version = "5.3.0"
 description = "Extensible memoizing collections and decorators"
@@ -950,18 +971,6 @@ pathspec = ">=0.9.0"
 tomli = {version = ">=2.0.1,<3.0.0", markers = "python_version < \"3.11\""}
 
 [[package]]
-name = "diff-match-patch"
-version = "20200713"
-description = "Repackaging of Google's Diff Match and Patch libraries. Offers robust algorithms to perform the operations required for synchronizing plain text."
-category = "main"
-optional = false
-python-versions = ">=2.7"
-files = [
-    {file = "diff-match-patch-20200713.tar.gz", hash = "sha256:da6f5a01aa586df23dfc89f3827e1cafbb5420be9d87769eeb079ddfd9477a18"},
-    {file = "diff_match_patch-20200713-py3-none-any.whl", hash = "sha256:8bf9d9c4e059d917b5c6312bac0c137971a32815ddbda9c682b949f2986b4d34"},
-]
-
-[[package]]
 name = "dill"
 version = "0.3.6"
 description = "serialize all of python"
@@ -1084,6 +1093,22 @@ files = [
 django = "*"
 
 [[package]]
+name = "django-bleach"
+version = "3.0.1"
+description = "Easily use bleach with Django models and templates"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "django-bleach-3.0.1.tar.gz", hash = "sha256:0e5f145bca1a52e822097853403832d92e957e4a1d47bb90233de9d07219247b"},
+    {file = "django_bleach-3.0.1-py2.py3-none-any.whl", hash = "sha256:093973e02e02f88bbe38f6bbc903d28ef762ba9f3f84aafb3823f27922e819ed"},
+]
+
+[package.dependencies]
+bleach = {version = ">=5,<6", extras = ["css"]}
+Django = ">=3.2"
+
+[[package]]
 name = "django-celery-beat"
 version = "2.5.0"
 description = "Database-backed Periodic Tasks."
@@ -1156,6 +1181,26 @@ files = [
 django-appconf = ">=1.0.3"
 rcssmin = "1.1.1"
 rjsmin = "1.2.1"
+
+[[package]]
+name = "django-contact-form"
+version = "2.1"
+description = "A generic contact-form application for Django"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "django-contact-form-2.1.tar.gz", hash = "sha256:7202488b6f1ba331a1dc9ae052ddd2129760e00ccf5ebb2dd95a42974a6fdb75"},
+    {file = "django_contact_form-2.1-py3-none-any.whl", hash = "sha256:2b68c5d42c64f4ed14379c39f694e1a2be3f691be49be9e621cf6f2cb4d12c88"},
+]
+
+[package.dependencies]
+Django = ">=3.2,<4.0.0 || >=4.1.0"
+
+[package.extras]
+akismet = ["akismet"]
+docs = ["furo", "sphinx", "sphinx-copybutton", "sphinx-inline-tabs", "sphinx-notfound-page", "sphinxcontrib-django", "sphinxext-opengraph"]
+tests = ["akismet", "coverage", "tomli"]
 
 [[package]]
 name = "django-contrib-comments"
@@ -1367,36 +1412,26 @@ files = [
 Django = ">=2.2"
 
 [[package]]
-name = "django-htmx"
-version = "1.14.0"
-description = "Extensions for using Django with htmx."
+name = "django-imagekit"
+version = "4.1.0"
+description = "Automated image processing for Django models."
 category = "main"
 optional = false
-python-versions = ">=3.7"
+python-versions = "*"
 files = [
-    {file = "django_htmx-1.14.0-py3-none-any.whl", hash = "sha256:393e2a4a963aff691b3973c898dbca1363139d7c7bf2e8cc4c605e2ad808a779"},
-    {file = "django_htmx-1.14.0.tar.gz", hash = "sha256:b689a8d6f7052a96a373411ec55ba81c1ddffb4d66b1f5ab4d6e3d28420842fd"},
+    {file = "django-imagekit-4.1.0.tar.gz", hash = "sha256:e559aeaae43a33b34f87631a9fa5696455e4451ffa738a42635fde442fedac5c"},
+    {file = "django_imagekit-4.1.0-py2.py3-none-any.whl", hash = "sha256:87e36f8dc1d8745647881f4366ef4965225f048042dacebbee0dcb87425defef"},
 ]
 
 [package.dependencies]
-Django = ">=3.2"
+django-appconf = {version = "*", markers = "python_version > \"3\""}
+pilkit = ">=0.2.0"
+six = "*"
 
-[[package]]
-name = "django-import-export"
-version = "3.2.0"
-description = "Django application and library for importing and exporting data with included admin integration."
-category = "main"
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "django-import-export-3.2.0.tar.gz", hash = "sha256:38fd7b9439b9e3aa1a4747421c1087a5bc194e915a28d795fb8429a5f8028f2d"},
-    {file = "django_import_export-3.2.0-py3-none-any.whl", hash = "sha256:1d3f2cb2ee3cca0386ed60651fa1623be989f130d9fbdf98a67f7dc3a94b8a37"},
-]
-
-[package.dependencies]
-diff-match-patch = "*"
-Django = ">=3.2"
-tablib = {version = ">=3.4.0", extras = ["html", "ods", "xls", "xlsx", "yaml"]}
+[package.extras]
+async = ["django-celery (>=3.0)"]
+async-dramatiq = ["django-dramatiq (>=0.4.0)"]
+async-rq = ["django-rq (>=0.6.0)"]
 
 [[package]]
 name = "django-invitations"
@@ -1547,22 +1582,6 @@ files = [
 Django = ">=3.2"
 
 [[package]]
-name = "django-modeltranslation"
-version = "0.18.9"
-description = "Translates Django models using a registration approach."
-category = "main"
-optional = false
-python-versions = "*"
-files = [
-    {file = "django-modeltranslation-0.18.9.tar.gz", hash = "sha256:d92bcd004e48946ae3824289ee76d36faa670f6e3da4a0412cdaeb4fc2526627"},
-    {file = "django_modeltranslation-0.18.9-py3-none-any.whl", hash = "sha256:f79ec5548053ffa2153b7b5ca646f59da1bf9e4c2c62085e21ead662a9c2faf8"},
-]
-
-[package.dependencies]
-Django = ">=3.2"
-typing-extensions = "*"
-
-[[package]]
 name = "django-mptt"
 version = "0.14.0"
 description = "Utilities for implementing Modified Preorder Tree Traversal with your Django Models and working with trees of Model instances."
@@ -1581,23 +1600,35 @@ django-js-asset = "*"
 tests = ["coverage", "mock-django"]
 
 [[package]]
-name = "django-nested-admin"
-version = "4.0.2"
-description = "Django admin classes that allow for nested inlines"
+name = "django-multiselectfield"
+version = "0.1.12"
+description = "Django multiple select field"
 category = "main"
 optional = false
-python-versions = ">=3.6"
+python-versions = "*"
 files = [
-    {file = "django-nested-admin-4.0.2.tar.gz", hash = "sha256:79a5ce80b81c41a0f48f778fb556a3721029df48580bfce60a5962ffa2ef2d47"},
-    {file = "django_nested_admin-4.0.2-py3-none-any.whl", hash = "sha256:74d8fc0d0f17862ffcece66d39b8814cb649878b3b6ba8438076145a688ea473"},
+    {file = "django-multiselectfield-0.1.12.tar.gz", hash = "sha256:d0a4c71568fb2332c71478ffac9f8708e01314a35cf923dfd7a191343452f9f9"},
+    {file = "django_multiselectfield-0.1.12-py3-none-any.whl", hash = "sha256:c270faa7f80588214c55f2d68cbddb2add525c2aa830c216b8a198de914eb470"},
 ]
 
 [package.dependencies]
-python-monkey-business = ">=1.0.0"
+django = ">=1.4"
 
-[package.extras]
-dev = ["Pillow", "black", "dj-database-url", "django-selenosis", "flake8", "pytest", "pytest-cov", "pytest-django", "pytest-xdist", "selenium"]
-test = ["Pillow", "dj-database-url", "django-selenosis", "pytest", "pytest-cov", "pytest-django", "pytest-xdist", "selenium"]
+[[package]]
+name = "django-organizations"
+version = "2.1.0"
+description = "Group accounts for Django"
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "django-organizations-2.1.0.tar.gz", hash = "sha256:300bdbbd857749f1cdd0e6613417e3b2a40516c3a688bfd1d5228fbb994713c1"},
+    {file = "django_organizations-2.1.0-py2.py3-none-any.whl", hash = "sha256:3f9f30e52f5c31427b4e9b2a494f984f126053024f07c76dd83d24aedcfbd5a6"},
+]
+
+[package.dependencies]
+Django = ">=2.2.0"
+six = "*"
 
 [[package]]
 name = "django-pint"
@@ -1635,26 +1666,6 @@ files = [
 Django = ">=2.1"
 
 [[package]]
-name = "django-postgres-metrics"
-version = "0.13.1"
-description = "A Django app that exposes a bunch of PostgreSQL database metrics."
-category = "main"
-optional = false
-python-versions = ">=3.6"
-files = [
-    {file = "django-postgres-metrics-0.13.1.tar.gz", hash = "sha256:ca9df75d01f0b2951d25246454cfa6441a7503675ceea4a1a8731381dd824acb"},
-    {file = "django_postgres_metrics-0.13.1-py3-none-any.whl", hash = "sha256:d3c7e0e827397437f746bb2f553578d6ea59f39c184a7aaf10ffbf83c935bb21"},
-]
-
-[package.dependencies]
-django-rich = ">=1.0"
-
-[package.extras]
-dev = ["pre-commit"]
-docs = ["Django", "Sphinx (>=4.0,<5.0)", "psycopg2", "sphinx-rtd-theme (>=1.0,<2.0)"]
-test = ["Django", "coverage[toml] (>=5,<6)", "psycopg2", "selenium (==3.141.0)"]
-
-[[package]]
 name = "django-redis"
 version = "5.2.0"
 description = "Full featured redis cache backend for Django."
@@ -1672,39 +1683,6 @@ redis = ">=3,<4.0.0 || >4.0.0,<4.0.1 || >4.0.1"
 
 [package.extras]
 hiredis = ["redis[hiredis] (>=3,!=4.0.0,!=4.0.1)"]
-
-[[package]]
-name = "django-rich"
-version = "1.5.0"
-description = "Extensions for using Rich with Django."
-category = "main"
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "django_rich-1.5.0-py3-none-any.whl", hash = "sha256:62562169c4117a7e930ddea1a402f0b0afcfa9d296bb5a08fe0fc865c1df590f"},
-    {file = "django_rich-1.5.0.tar.gz", hash = "sha256:cd09c53cf5d9313ef1c06c0ff71297839dc9e239269fa85b4672daf8b6e98a96"},
-]
-
-[package.dependencies]
-Django = ">=3.2"
-rich = ">=10.0.0"
-
-[[package]]
-name = "django-rosetta"
-version = "0.9.9"
-description = "A Django application that eases the translation of Django projects"
-category = "main"
-optional = false
-python-versions = "*"
-files = [
-    {file = "django-rosetta-0.9.9.tar.gz", hash = "sha256:776ac03f43974ea780ca25e7d805862b06c8ede4698f999c771a5ed78da4b87f"},
-    {file = "django_rosetta-0.9.9-py3-none-any.whl", hash = "sha256:269d9ce7e9972002ac216e7bca33b4d9f578bd38b6043d98e28c9b69c04c1f59"},
-]
-
-[package.dependencies]
-Django = ">=2.2"
-polib = ">=1.1.0"
-requests = ">=2.1.0"
 
 [[package]]
 name = "django-sekizai"
@@ -1771,21 +1749,6 @@ files = [
 ]
 
 [[package]]
-name = "django-solo"
-version = "2.0.0"
-description = "Django Solo helps working with singletons"
-category = "main"
-optional = false
-python-versions = ">=3.6"
-files = [
-    {file = "django-solo-2.0.0.tar.gz", hash = "sha256:7c6dbe04ae858a4645b580ec83a31a960a067ad4525d8227cca50b7fc5983a62"},
-    {file = "django_solo-2.0.0-py3-none-any.whl", hash = "sha256:9046eca738f2ed64dbef38c2107a02af1065a8899b4f9fabf61b06b8325de1b4"},
-]
-
-[package.dependencies]
-django = ">=2.2"
-
-[[package]]
 name = "django-sortedm2m"
 version = "3.1.1"
 description = "Drop-in replacement for Django's many to many field with sorted relations."
@@ -1796,21 +1759,6 @@ files = [
     {file = "django-sortedm2m-3.1.1.tar.gz", hash = "sha256:136f3d4e0820b351608a7141d88ac3ba7fafcd37a9b8361ad00ffe616a790be5"},
     {file = "django_sortedm2m-3.1.1-py2.py3-none-any.whl", hash = "sha256:c67ae0757e8e60ded15a9ba04d0862fe39fba3d5b865899c2472166ff0050f2c"},
 ]
-
-[[package]]
-name = "django-spaghetti-and-meatballs"
-version = "0.4.2"
-description = "Its a spicy meatball for serving up fresh hot entity-relationship diagrams straight from your django models."
-category = "main"
-optional = false
-python-versions = ">=3.6,<4.0"
-files = [
-    {file = "django-spaghetti-and-meatballs-0.4.2.tar.gz", hash = "sha256:ad1341aa2de9bd989d1f242455980b94ba289836b5a9b67015d1b11fcb33932e"},
-    {file = "django_spaghetti_and_meatballs-0.4.2-py3-none-any.whl", hash = "sha256:daebe5a4000f70b0a538106df27e34ab46d1303e1ee50257d6546aa2ef5330ba"},
-]
-
-[package.dependencies]
-django = ">=2.2"
 
 [[package]]
 name = "django-split-settings"
@@ -1913,20 +1861,6 @@ files = [
 
 [package.dependencies]
 Django = ">=3.2"
-
-[[package]]
-name = "django-tellme"
-version = "0.7.3"
-description = "A simple Django app that enables user feedback."
-category = "main"
-optional = false
-python-versions = ">=2.7"
-files = [
-    {file = "django-tellme-0.7.3.tar.gz", hash = "sha256:bebff4b5e2228583ed52baf372299d7d70a9c86da44ce357bb87ccad7f875fc8"},
-]
-
-[package.dependencies]
-Pillow = ">=8.4.0"
 
 [[package]]
 name = "django-threadedcomments"
@@ -2286,16 +2220,19 @@ files = [
 ]
 
 [[package]]
-name = "et-xmlfile"
-version = "1.1.0"
-description = "An implementation of lxml.xmlfile for the standard library"
+name = "elementpath"
+version = "4.1.4"
+description = "XPath 1.0/2.0/3.0/3.1 parsers and selectors for ElementTree and lxml"
 category = "main"
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=3.7"
 files = [
-    {file = "et_xmlfile-1.1.0-py3-none-any.whl", hash = "sha256:a2ba85d1d6a74ef63837eed693bcb89c3f752169b0e3e7ae5b16ca5e1b3deada"},
-    {file = "et_xmlfile-1.1.0.tar.gz", hash = "sha256:8eb9e2bc2f8c97e37a2dc85a09ecdcdec9d8a396530a6d5a33b30b9a92da0c5c"},
+    {file = "elementpath-4.1.4-py3-none-any.whl", hash = "sha256:e7c6d25546dfb381a2c9cde3b78c0c40f52811e06eb810faf019e16c531a74bf"},
+    {file = "elementpath-4.1.4.tar.gz", hash = "sha256:f991c42ff66fa06e219141ccf65890261e6635b448e7d4c2d8b62dc5bf1de9e8"},
 ]
+
+[package.extras]
+dev = ["Sphinx", "coverage", "flake8", "lxml", "lxml-stubs", "memory-profiler", "memray", "mypy", "tox", "xmlschema (>=2.0.0)"]
 
 [[package]]
 name = "exceptiongroup"
@@ -2972,7 +2909,7 @@ source = ["Cython (>=0.29.7)"]
 name = "markdown-it-py"
 version = "2.2.0"
 description = "Python port of markdown-it. Markdown parsing, done right!"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -2992,17 +2929,6 @@ plugins = ["mdit-py-plugins"]
 profiling = ["gprof2dot"]
 rtd = ["attrs", "myst-parser", "pyyaml", "sphinx", "sphinx-copybutton", "sphinx-design", "sphinx_book_theme"]
 testing = ["coverage", "pytest", "pytest-cov", "pytest-regressions"]
-
-[[package]]
-name = "markuppy"
-version = "1.14"
-description = "An HTML/XML generator"
-category = "main"
-optional = false
-python-versions = "*"
-files = [
-    {file = "MarkupPy-1.14.tar.gz", hash = "sha256:1adee2c0a542af378fe84548ff6f6b0168f3cb7f426b46961038a2bcfaad0d5f"},
-]
 
 [[package]]
 name = "markupsafe"
@@ -3163,7 +3089,7 @@ testing = ["coverage", "pytest", "pytest-cov", "pytest-regressions"]
 name = "mdurl"
 version = "0.1.2"
 description = "Markdown URL utilities"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -3343,35 +3269,6 @@ signals = ["blinker (>=1.4.0)"]
 signedtoken = ["cryptography (>=3.0.0)", "pyjwt (>=2.0.0,<3)"]
 
 [[package]]
-name = "odfpy"
-version = "1.4.1"
-description = "Python API and tools to manipulate OpenDocument files"
-category = "main"
-optional = false
-python-versions = "*"
-files = [
-    {file = "odfpy-1.4.1.tar.gz", hash = "sha256:db766a6e59c5103212f3cc92ec8dd50a0f3a02790233ed0b52148b70d3c438ec"},
-]
-
-[package.dependencies]
-defusedxml = "*"
-
-[[package]]
-name = "openpyxl"
-version = "3.1.2"
-description = "A Python library to read/write Excel 2010 xlsx/xlsm files"
-category = "main"
-optional = false
-python-versions = ">=3.6"
-files = [
-    {file = "openpyxl-3.1.2-py2.py3-none-any.whl", hash = "sha256:f91456ead12ab3c6c2e9491cf33ba6d08357d802192379bb482f1033ade496f5"},
-    {file = "openpyxl-3.1.2.tar.gz", hash = "sha256:a6f5977418eff3b2d5500d54d9db50c8277a368436f4e4f8ddb1be3422870184"},
-]
-
-[package.dependencies]
-et-xmlfile = "*"
-
-[[package]]
 name = "orjson"
 version = "3.8.10"
 description = "Fast, correct Python JSON library supporting dataclasses, datetimes, and numpy"
@@ -3462,6 +3359,17 @@ python-versions = ">=3.7"
 files = [
     {file = "pathspec-0.11.1-py3-none-any.whl", hash = "sha256:d8af70af76652554bd134c22b3e8a1cc46ed7d91edcdd721ef1a0c51a84a5293"},
     {file = "pathspec-0.11.1.tar.gz", hash = "sha256:2798de800fa92780e33acca925945e9a19a133b715067cf165b8866c15a31687"},
+]
+
+[[package]]
+name = "pilkit"
+version = "2.0"
+description = "A collection of utilities and processors for the Python Imaging Libary."
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "pilkit-2.0.tar.gz", hash = "sha256:ddb30c2f0198a147e56b151476c3bb9fe045fbfd5b0a0fa2a3148dba62d1559f"},
 ]
 
 [[package]]
@@ -3609,18 +3517,6 @@ files = [
 [package.extras]
 dev = ["pre-commit", "tox"]
 testing = ["pytest", "pytest-benchmark"]
-
-[[package]]
-name = "polib"
-version = "1.2.0"
-description = "A library to manipulate gettext files (po and mo files)."
-category = "main"
-optional = false
-python-versions = "*"
-files = [
-    {file = "polib-1.2.0-py2.py3-none-any.whl", hash = "sha256:1c77ee1b81feb31df9bca258cbc58db1bbb32d10214b173882452c73af06d62d"},
-    {file = "polib-1.2.0.tar.gz", hash = "sha256:f3ef94aefed6e183e342a8a269ae1fc4742ba193186ad76f175938621dbfc26b"},
-]
 
 [[package]]
 name = "pre-commit"
@@ -3786,7 +3682,7 @@ test = ["codecov", "pytest", "pytest-cov", "pytest-regressions"]
 name = "pygments"
 version = "2.15.1"
 description = "Pygments is a syntax highlighting package written in Python."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -3796,17 +3692,6 @@ files = [
 
 [package.extras]
 plugins = ["importlib-metadata"]
-
-[[package]]
-name = "pygraphviz"
-version = "1.11"
-description = "Python interface to Graphviz"
-category = "dev"
-optional = false
-python-versions = ">=3.8"
-files = [
-    {file = "pygraphviz-1.11.zip", hash = "sha256:a97eb5ced266f45053ebb1f2c6c6d29091690503e3a5c14be7f908b37b06f2d4"},
-]
 
 [[package]]
 name = "pyjwt"
@@ -4095,21 +3980,6 @@ files = [
 
 [package.dependencies]
 six = ">=1.5"
-
-[[package]]
-name = "python-monkey-business"
-version = "1.0.0"
-description = "Utility functions for monkey-patching python code"
-category = "main"
-optional = false
-python-versions = "*"
-files = [
-    {file = "python-monkey-business-1.0.0.tar.gz", hash = "sha256:9976522989766f00b2aaa24ec96eacb91a6de7b7001d1452079323b071988e0e"},
-    {file = "python_monkey_business-1.0.0-py2.py3-none-any.whl", hash = "sha256:6d4cf47f011945db838ccf04643acd49b82f7ad6ab7ecba4c8165385687a828a"},
-]
-
-[package.dependencies]
-six = ">=1.7.0"
 
 [[package]]
 name = "python3-openid"
@@ -4462,26 +4332,6 @@ requests = ">=2.0.0"
 rsa = ["oauthlib[signedtoken] (>=3.0.0)"]
 
 [[package]]
-name = "rich"
-version = "13.3.4"
-description = "Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal"
-category = "main"
-optional = false
-python-versions = ">=3.7.0"
-files = [
-    {file = "rich-13.3.4-py3-none-any.whl", hash = "sha256:22b74cae0278fd5086ff44144d3813be1cedc9115bdfabbfefd86400cb88b20a"},
-    {file = "rich-13.3.4.tar.gz", hash = "sha256:b5d573e13605423ec80bdd0cd5f8541f7844a0e71a13f74cf454ccb2f490708b"},
-]
-
-[package.dependencies]
-markdown-it-py = ">=2.2.0,<3.0.0"
-pygments = ">=2.13.0,<3.0.0"
-typing-extensions = {version = ">=4.0.0,<5.0", markers = "python_version < \"3.9\""}
-
-[package.extras]
-jupyter = ["ipywidgets (>=7.5.1,<9)"]
-
-[[package]]
 name = "rjsmin"
 version = "1.2.1"
 description = "Javascript Minifier"
@@ -4573,18 +4423,6 @@ files = [
 docs = ["furo", "jaraco.packaging (>=9)", "jaraco.tidelift (>=1.4)", "pygments-github-lexers (==0.0.5)", "rst.linker (>=1.9)", "sphinx (>=3.5)", "sphinx-favicon", "sphinx-hoverxref (<2)", "sphinx-inline-tabs", "sphinx-lint", "sphinx-notfound-page (==0.8.3)", "sphinx-reredirects", "sphinxcontrib-towncrier"]
 testing = ["build[virtualenv]", "filelock (>=3.4.0)", "flake8 (<5)", "flake8-2020", "ini2toml[lite] (>=0.9)", "jaraco.envs (>=2.2)", "jaraco.path (>=3.2.0)", "pip (>=19.1)", "pip-run (>=8.8)", "pytest (>=6)", "pytest-black (>=0.3.7)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=1.3)", "pytest-flake8", "pytest-mypy (>=0.9.1)", "pytest-perf", "pytest-timeout", "pytest-xdist", "tomli-w (>=1.0.0)", "virtualenv (>=13.0.0)", "wheel"]
 testing-integration = ["build[virtualenv]", "filelock (>=3.4.0)", "jaraco.envs (>=2.2)", "jaraco.path (>=3.2.0)", "pytest", "pytest-enabler", "pytest-xdist", "tomli", "virtualenv (>=13.0.0)", "wheel"]
-
-[[package]]
-name = "shortuuid"
-version = "1.0.11"
-description = "A generator library for concise, unambiguous and URL-safe UUIDs."
-category = "main"
-optional = false
-python-versions = ">=3.5"
-files = [
-    {file = "shortuuid-1.0.11-py3-none-any.whl", hash = "sha256:27ea8f28b1bd0bf8f15057a3ece57275d2059d2b0bb02854f02189962c13b6aa"},
-    {file = "shortuuid-1.0.11.tar.gz", hash = "sha256:fc75f2615914815a8e4cb1501b3a513745cb66ef0fd5fc6fb9f8c3fa3481f789"},
-]
 
 [[package]]
 name = "six"
@@ -4689,6 +4527,29 @@ sphinx = "*"
 
 [package.extras]
 test = ["pytest", "pytest-cov"]
+
+[[package]]
+name = "sphinx-autodoc2"
+version = "0.4.2"
+description = "Analyse a python project and create documentation for it."
+category = "dev"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "sphinx-autodoc2-0.4.2.tar.gz", hash = "sha256:06da226a25a4339e173b34bb0e590e0ba9b4570b414796140aee1939d09acb3a"},
+    {file = "sphinx_autodoc2-0.4.2-py3-none-any.whl", hash = "sha256:00835ba8c980b9c510ea794c3e2060e5a254a74c6c22badc9bfd3642dc1034b4"},
+]
+
+[package.dependencies]
+astroid = ">=2.7"
+tomli = {version = "*", markers = "python_version < \"3.11\""}
+typing-extensions = "*"
+
+[package.extras]
+cli = ["typer[all]"]
+docs = ["furo", "myst-parser", "sphinx (>=4.0.0)"]
+sphinx = ["sphinx (>=4.0.0)"]
+testing = ["pytest", "pytest-cov", "pytest-regressions", "sphinx (>=4.0.0)"]
 
 [[package]]
 name = "sphinx-book-theme"
@@ -4896,36 +4757,6 @@ reportlab = "*"
 tinycss2 = ">=0.6.0"
 
 [[package]]
-name = "tablib"
-version = "3.4.0"
-description = "Format agnostic tabular data library (XLS, JSON, YAML, CSV, etc.)"
-category = "main"
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "tablib-3.4.0-py3-none-any.whl", hash = "sha256:0f9c45141195c472202f30d82c0c035bf7e0dd7e4da2257815e506acff4ab364"},
-    {file = "tablib-3.4.0.tar.gz", hash = "sha256:77ea97faf6f92a7e198c05bd0c690f3cba57b83ea45a636b72f967cb6fe6f160"},
-]
-
-[package.dependencies]
-markuppy = {version = "*", optional = true, markers = "extra == \"html\""}
-odfpy = {version = "*", optional = true, markers = "extra == \"ods\""}
-openpyxl = {version = ">=2.6.0", optional = true, markers = "extra == \"xlsx\""}
-pyyaml = {version = "*", optional = true, markers = "extra == \"yaml\""}
-xlrd = {version = "*", optional = true, markers = "extra == \"xls\""}
-xlwt = {version = "*", optional = true, markers = "extra == \"xls\""}
-
-[package.extras]
-all = ["markuppy", "odfpy", "openpyxl (>=2.6.0)", "pandas", "pyyaml", "tabulate", "xlrd", "xlwt"]
-cli = ["tabulate"]
-html = ["markuppy"]
-ods = ["odfpy"]
-pandas = ["pandas"]
-xls = ["xlrd", "xlwt"]
-xlsx = ["openpyxl (>=2.6.0)"]
-yaml = ["pyyaml"]
-
-[[package]]
 name = "termcolor"
 version = "2.3.0"
 description = "ANSI color formatting for output in terminal"
@@ -4942,14 +4773,14 @@ tests = ["pytest", "pytest-cov"]
 
 [[package]]
 name = "tinycss2"
-version = "1.2.1"
+version = "1.1.1"
 description = "A tiny CSS parser"
 category = "main"
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.6"
 files = [
-    {file = "tinycss2-1.2.1-py3-none-any.whl", hash = "sha256:2b80a96d41e7c3914b8cda8bc7f705a4d9c49275616e886103dd839dfc847847"},
-    {file = "tinycss2-1.2.1.tar.gz", hash = "sha256:8cff3a8f066c2ec677c06dbc7b45619804a6938478d9d73c284b29d14ecb0627"},
+    {file = "tinycss2-1.1.1-py3-none-any.whl", hash = "sha256:fe794ceaadfe3cf3e686b22155d0da5780dd0e273471a51846d0a02bc204fec8"},
+    {file = "tinycss2-1.1.1.tar.gz", hash = "sha256:b2e44dd8883c360c35dd0d1b5aad0b610e5156c2cb3b33434634e539ead9d8bf"},
 ]
 
 [package.dependencies]
@@ -4957,7 +4788,7 @@ webencodings = ">=0.4"
 
 [package.extras]
 doc = ["sphinx", "sphinx_rtd_theme"]
-test = ["flake8", "isort", "pytest"]
+test = ["coverage[toml]", "pytest", "pytest-cov", "pytest-flake8", "pytest-isort"]
 
 [[package]]
 name = "tldextract"
@@ -5162,7 +4993,7 @@ files = [
 name = "typing-extensions"
 version = "4.5.0"
 description = "Backported and Experimental Type Hints for Python 3.7+"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -5445,6 +5276,26 @@ files = [
 ]
 
 [[package]]
+name = "xmlschema"
+version = "2.3.1"
+description = "An XML Schema validator and decoder"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "xmlschema-2.3.1-py3-none-any.whl", hash = "sha256:eac0e10957723689ff0691785da4ffee1e95df3a874e685a179047f7bf07f8fb"},
+    {file = "xmlschema-2.3.1.tar.gz", hash = "sha256:2eb426c5710833a05610c22c8766713a1b87e9405e3eca0b7c658375bf7ec810"},
+]
+
+[package.dependencies]
+elementpath = ">=4.1.2,<5.0.0"
+
+[package.extras]
+codegen = ["elementpath (>=4.1.2,<5.0.0)", "jinja2"]
+dev = ["Sphinx", "coverage", "elementpath (>=4.1.2,<5.0.0)", "flake8", "jinja2", "lxml", "lxml-stubs", "memory-profiler", "mypy", "sphinx-rtd-theme", "tox"]
+docs = ["Sphinx", "elementpath (>=4.1.2,<5.0.0)", "jinja2", "sphinx-rtd-theme"]
+
+[[package]]
 name = "zipp"
 version = "3.15.0"
 description = "Backport of pathlib-compatible object wrapper for zip files"
@@ -5463,4 +5314,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.8,<4.0"
-content-hash = "6a1376392ebcece1891f20345549faa42de9eaa46ff585ac08b16089507e6a16"
+content-hash = "caaed6166501c44adc6a5b79ecbb07ac41a1b25c31cca76073989f14baf5bcb2"

@@ -44,30 +44,22 @@ djangorestframework = "^3.14.0"
 drf-spectacular = {extras = ["sidecar"], version = "^0.26.1"}
 drf-access-policy = "^1.5.0"
 drf-orjson-renderer = "^1.7.1"
-shortuuid = "^1.0.11"
 whitenoise = "^6.4.0"
 gunicorn = "^20.1.0"
 redis = "^4.5.2"
-django-solo = "^2.0.0"
 django-social-share = "^2.3.0"
 django-simple-menu = "^2.1.1"
 django-split-settings = "^1.2.0"
 django-lockdown = "^4.0.0"
 django-meta = "^2.1.0"
-django-htmx = "^1.14.0"
 djangorestframework-gis = "^1.0"
 drf-nested-routers = "^0.93.4"
-django-rosetta = "^0.9.8"
 drf-schema-adapter = "^3.0.6"
 django-model-utils = "^4.3.1"
-django-postgres-metrics = "^0.13.1"
 django-dbbackup = "^4.0.2"
-django-spaghetti-and-meatballs = "^0.4.2"
 django-celery-beat = "^2.5.0"
 django-adminactions = "^2.0.0"
 django-jazzmin = "^2.6.0"
-django-import-export = "^3.1.0"
-django-nested-admin = "^4.0.2"
 djangorestframework-datatables-editor = "^0.3.3"
 sentry-sdk = {extras = ["django"], version = "^1.17.0"}
 django-environ = "^0.10.0"
@@ -77,20 +69,23 @@ django-cors-headers = "^3.14.0"
 tldextract = "^3.4.0"
 django-pint = "^0.7.1"
 dj-rest-auth = "^3.0.0"
-django-tellme = "^0.7.3"
 django = {extras = ["argon2"], version = ">=3.2"}
 pyyaml = "^6.0"
 celery = "^5.2.7"
-polib = "^1.2.0"
 django-select2 = "^8.1.1"
 django-literature = "^0.1.2"
 django-filer = "^2.2.4"
 django-laboratory = "^0.0.1"
 flower = "^1.2.0"
 django-treebeard = "<4.5"
-django-modeltranslation = "^0.18.9"
 django-redis = "^5.2.0"
 djangorestframework-datatables = "^0.7.0"
+xmlschema = "^2.3.1"
+django-bleach = "^3.0.1"
+django-multiselectfield = "^0.1.12"
+django-contact-form = "^2.1"
+django-organizations = "^2.1.0"
+django-imagekit = "^4.1.0"
 
 [tool.poetry.group.dev.dependencies]
 coverage = "^7.2.1"
@@ -127,6 +122,7 @@ sphinx-autobuild = "^2021.3.14"
 toml = "^0.10.2"
 sphinx-comments = "^0.0.3"
 django-extensions = "^3.2.3"
+sphinx-autodoc2 = "^0.4.2"
 
 [build-system]
 requires = ["poetry-core"]
@@ -158,7 +154,7 @@ exclude = [
     "tests/settings.py",
     "geoluminate/conf/*",
     "geoluminate/contrib/user/forms/*",
-    ] 
+    ]
 mypy_path = "./geoluminate/"
 plugins = ["mypy_django_plugin.main"]
 
@@ -169,19 +165,13 @@ disable_error_code = [
 ]
 
 [[tool.mypy.overrides]]
-module = "geoluminate.contrib.controlled_vocabulary.models"
+module = "geoluminate.utils.gis.base"
 disable_error_code = [
     "var-annotated",
 ]
 
 [[tool.mypy.overrides]]
-module = "geoluminate.contrib.gis.base"
-disable_error_code = [
-    "var-annotated",
-]
-
-[[tool.mypy.overrides]]
-module = "geoluminate.db.models"
+module = "geoluminate.models"
 disable_error_code = [
     "var-annotated",
 ]
@@ -313,7 +303,7 @@ python =
     3.9: py39
     3.10: py310
     3.11: py311
-    
+
 [testenv]
 passenv = PYTHON_VERSION
 allowlist_externals = poetry

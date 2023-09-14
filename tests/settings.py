@@ -2,6 +2,7 @@
 Django settings for example project.
 """
 import os
+import sys
 from pathlib import Path
 
 import geoluminate
@@ -9,7 +10,6 @@ import geoluminate
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 os.environ.setdefault("DATABASE_URL", "")
 os.environ.setdefault("CACHE", "False")
-
 
 # Application definition
 INSTALLED_APPS = ["example"]
@@ -27,7 +27,9 @@ DATABASES = {
     }
 }
 
-STATICFILES_DIRS = []
+STATICFILES_DIRS = [
+    ("node_modules", BASE_DIR / "node_modules"),
+]
 
 ROOT_URLCONF = "tests.urls"
 

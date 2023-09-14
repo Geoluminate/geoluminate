@@ -2,7 +2,7 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from simple_menu import Menu, MenuItem
 
-# from geoluminate.contrib.projects.models import
+# from geoluminate.contrib.cores.models import
 
 
 class GeoluminateMenuBase:

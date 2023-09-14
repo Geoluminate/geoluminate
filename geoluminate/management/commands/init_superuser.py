@@ -14,7 +14,12 @@ class Command(BaseCommand):
                 f"Creating superuser account for {email} with password 'admin'. Be sure to change this as soon as"
                 " possible!"
             )
-            admin = User.objects.create_superuser(email=email, password=password)
+            admin = User.objects.create_superuser(
+                email=email,
+                password=password,
+                first_name="Super",
+                last_name="User",
+            )
             admin.save()
         else:
             print("This command only works when no users exists.")

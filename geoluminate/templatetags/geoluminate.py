@@ -6,7 +6,6 @@ from django.templatetags.static import static
 from django.utils.safestring import mark_safe
 from quantityfield import settings
 
-from geoluminate.models import GlobalConfiguration
 from geoluminate.utils import get_filter_params
 
 register = template.Library()
@@ -37,19 +36,13 @@ def unit(unit):
 
 @register.simple_tag
 def logo():
-    """Gets the correct URL for the logo as set in `GlobalConfiguration`."""
-    logo = GlobalConfiguration.get_solo().logo
-    if logo:
-        return logo.url
+    """Returns the static url for the logo"""
     return static("img/brand/logo.svg")
 
 
 @register.simple_tag
 def icon():
-    """Gets the correct URL for the icon as set in `GlobalConfiguration`."""
-    icon = GlobalConfiguration.get_solo().icon
-    if icon:
-        return icon.url
+    """Gets the correct URL for the icon."""
     return static("img/brand/icon.svg")
 
 
@@ -115,7 +108,6 @@ def render_profile_image(profile, width=75, height=None, extra_classes=""):
 
 @register.simple_tag
 def render_contributor_icon(contributor, extra_classes=""):
-    """Gets the correct URL for the logo as set in `GlobalConfiguration`."""
     return render_to_string(
         "partials/contributor/icon.html", context={"contributor": contributor, "extra_classes": extra_classes}
     )

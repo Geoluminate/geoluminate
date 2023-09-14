@@ -44,8 +44,8 @@ class TableConfigMixin:
             # "collectionTitle": "Column visibility control",
             "columns": ":not(.noVis)",
         },
-        {"extend": "searchBuilder", "config": {"depthLimit": 2}},
-        "createState",
+        # {"extend": "searchBuilder", "config": {"depthLimit": 2}},
+        # "createState",
     ]
     searchPanes = {  # noqa: RUF012
         "threshold": 0.5,
@@ -88,7 +88,7 @@ class GeoluminateTable(DataTable):
     debug = settings.DEBUG
 
     layout_overrides = {  # noqa: RUF012
-        "B": ".page-menu .toolbar-left",
+        "B": ".page-header .toolbar-left",
         "i": ".footer-left",
         # "P": "#filterContainer .sidebar-body",
         ".dataTables_filter input": "#searchButton",

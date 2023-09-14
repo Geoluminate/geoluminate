@@ -17,9 +17,9 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.TokenAuthentication",
     ],
     "DEFAULT_THROTTLE_CLASSES": [
-        "geoluminate.contrib.api.throttling.AnonBurstRate",
-        "geoluminate.contrib.api.throttling.AnonSustainedRate",
-        "geoluminate.contrib.api.throttling.UserBurstRate",
+        "geoluminate.api.throttling.AnonBurstRate",
+        "geoluminate.api.throttling.AnonSustainedRate",
+        "geoluminate.api.throttling.UserBurstRate",
     ],
     "DEFAULT_THROTTLE_RATES": {
         "anon_burst": "4/second",
@@ -27,11 +27,11 @@ REST_FRAMEWORK = {
         "user_burst": "25/second",
     },
     "DEFAULT_PERMISSION_CLASSES": [
-        "geoluminate.contrib.api.access_policies.CoreAccessPolicy",
+        "geoluminate.api.access_policies.CoreAccessPolicy",
     ],
     "DEFAULT_RENDERER_CLASSES": [
         "drf_orjson_renderer.renderers.ORJSONRenderer",
-        "geoluminate.contrib.api.renderers.GeoJSONRenderer",
+        "geoluminate.api.renderers.GeoJSONRenderer",
         "rest_framework.renderers.TemplateHTMLRenderer",
         # "rest_framework.renderers.BrowsableAPIRenderer",
         # "rest_framework_csv.renderers.PaginatedCSVRenderer",
@@ -104,7 +104,7 @@ SPECTACULAR_SETTINGS = {
         "tryItOutEnabled": False,
         "docExpansion": "none",
     },
-    "PREPROCESSING_HOOKS": ["geoluminate.contrib.api.utils.public_api"],
+    "PREPROCESSING_HOOKS": ["geoluminate.api.utils.public_api"],
 }  # type: ignore[var-annotated]
 """"""
 

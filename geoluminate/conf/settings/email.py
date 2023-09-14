@@ -1,12 +1,13 @@
 import tldextract
 
-BASE_DOMAIN = tldextract.extract(GEOLUMINATE["application"]["domain"]).domain
+BASE_DOMAIN = tldextract.extract(GEOLUMINATE["application"]["domain"]).registered_domain
 
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#default-from-email
 DEFAULT_FROM_EMAIL = env(
     "DJANGO_DEFAULT_FROM_EMAIL",
-    default=f'{GEOLUMINATE["database"]["name"]} <noreply@{BASE_DOMAIN}>',
+    default=f"noreply@{BASE_DOMAIN}",
+    # default=f'{GEOLUMINATE["database"]["name"]} <noreply@{BASE_DOMAIN}>',
 )
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#server-email

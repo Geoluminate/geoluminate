@@ -53,7 +53,7 @@ SITE_ID = 1
 
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "0.0.0.0"]
+ALLOWED_HOSTS = ["*"]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = [(admin["name"], admin["email"]) for admin in GEOLUMINATE["application"]["developers"]]
@@ -97,7 +97,7 @@ TEMPLATES = [
                 "django.template.context_processors.tz",
                 "sekizai.context_processors.sekizai",
                 "django.template.context_processors.static",
-                "geoluminate.context_processors.global_config",
+                "geoluminate.utils.context_processor",
                 "cms.context_processors.cms_settings",
             ],
             "loaders": [

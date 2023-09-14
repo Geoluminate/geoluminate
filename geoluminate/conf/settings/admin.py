@@ -6,6 +6,9 @@ All settings can be overridden in your project settings file.
 """
 from django.utils.translation import gettext_lazy as _
 
+DB_NAME = GEOLUMINATE["database"]["acronym"]
+
+
 JAZZMIN_SETTINGS = {
     # title of the window
     "site_title": SITE_NAME,
@@ -19,53 +22,27 @@ JAZZMIN_SETTINGS = {
     "login_logo": "img/brand/logo.svg",
     # Logo to use for login form in dark themes (defaults to login_logo)
     "login_logo_dark": "img/brand/logo.svg",
-    # CSS classes that are applied to the logo above
-    # "site_logo_classes": "img-circle",
     "site_logo_classes": "img-thumbnail shadow-none border-0",
-    # Relative path to a favicon for your site, will default to site_logo if absent (ideally 32x32 px)
     "site_icon": "img/brand/icon.svg",
     # Welcome text on the login screen
-    "welcome_sign": "Welcome to the library",
+    "welcome_sign": f"Welcome to the {DB_NAME} admin site",
     # Copyright on the footer
     "copyright": GEOLUMINATE["governance"]["name"],
     # List of model admins to search from the search bar, search bar omitted if excluded
     # If you want to use a single search field you dont need to use a list, you can use a simple string
     # "search_model": ["auth.User", "auth.Group"],
-    # Field name on user model that contains avatar ImageField/URLField/Charfield or a callable that receives the user
-    "user_avatar": "user.profile.image",
+    "user_avatar": "profile_image",
     ############
     # Top Menu #
     ############
-    # Links to put along the top menu
     "topmenu_links": [
         # Url that gets reversed (Permissions can be added)
-        {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
+        {"name": "Admin Home", "url": "admin:index", "permissions": ["auth.view_user"]},
+        {"name": "Visit Website", "url": "/", "new_window": True},
         {
-            "name": "Database",
-            "children": [
-                {
-                    "name": "ERD",
-                    "url": "/admin/entity-relationships/",
-                },
-                {
-                    "name": "Metrics",
-                    "url": "/admin/postgres-metrics/detailed-index-usage/",
-                },
-                {"model": "django_celery_beat.PeriodicTask"},
-            ],
-        },
-        # model admin to link to (Permissions checked against model)
-        # {"model": "user.User"},
-        # App with dropdown menu to all its models pages (Permissions checked against models)
-        {
-            "name": "CMS",
-            "url": "admin:cms_page_changelist",
-            "permissions": ["auth.view_user"],
-        },
-        {
-            "name": "Translations",
-            "url": "/admin/translate/",
-            # "permissions": ["auth.is_super_user"],
+            "name": "Invite Someone",
+            "url": "http://127.0.0.1:8000/admin/invitations/invitation/add/",
+            "permissions": ["user.is_staff"],
         },
     ],
     #############
@@ -75,7 +52,7 @@ JAZZMIN_SETTINGS = {
     "usermenu_links": [
         {
             "name": "Support",
-            "url": "https://github.com/GeoLuminate/geoluminate/issues",
+            "url": "https://github.com/Geoluminate/geoluminate/issues",
             "new_window": True,
         },
         {"model": "user.user"},
@@ -93,100 +70,85 @@ JAZZMIN_SETTINGS = {
         "socialaccount",
         "taggit",
         "authtoken",
-        "cms",
+        # "cms",
         "invitations",
         "django_celery_beat",
         "filer",
-        # "tellme",
-        "user",
+        "organizations",
+        "glossary",
+        # "user",
         "auth",
         "sites",
-        # "ror",
         "threadedcomments",
         "licensing",
         "laboratory",
-        # "controlled_vocabulary",
         "literature",
         "fluent_comments",
     ],
     "hide_models": [
-        "project.Contributor",
-        "project.KeyDate",
+        "core.Contribution",
+        "core.KeyDate",
     ],
     # List of apps (and/or models) to order the side menu
-    "order_with_respect_to": ["geoluminate", GEOLUMINATE["database"]["acronym"].lower()],
+    "order_with_respect_to": [
+        "core",
+        "user",
+        "cms",
+    ],
     # Custom links to append to app groups, keyed on app name
     "custom_links": {
-        "geoluminate": [
-            {
-                "name": _("Files"),
-                "url": "admin:filer_folder_changelist",
-                "icon": "fas fa-folder",
-                "permissions": ["user.is_staff"],
-            },
-            {
-                "name": _("Users"),
-                "url": "admin:user_user_changelist",
-                "icon": "fas fa-user",
-                "permissions": ["user.is_staff"],
-            },
-            {
-                "name": _("Groups"),
-                "url": "admin:auth_group_changelist",
-                "icon": "fas fa-users",
-                "permissions": ["user.is_staff"],
-            },
-            # {
-            #     "name": _("Organizations"),
-            #     "url": "admin:ror_organization_changelist",
-            #     "icon": "fas fa-university",
-            #     "permissions": ["user.is_staff"],
-            # },
+        "core": [
             {
                 "name": _("Literature"),
                 "url": "admin:literature_literature_changelist",
                 "icon": "fas fa-book",
                 "permissions": ["user.is_staff"],
             },
-            # {
-            #     "name": _("Vocabularies"),
-            #     "url": "admin:controlled_vocabulary_controlledvocabulary_changelist",
-            #     "icon": "fas fa-list",
-            #     "permissions": ["user.is_staff"],
-            # },
             {
                 "name": _("Moderation"),
                 "url": "admin:fluent_comments_fluentcomment_changelist",
                 "icon": "fas fa-comments",
                 "permissions": ["user.is_staff"],
             },
-            # {
-            #     "name": _("Feedback"),
-            #     "url": "admin:tellme_feedback_changelist",
-            #     "icon": "fas fa-bullhorn",
-            #     "permissions": ["user.is_staff"],
-            # },
+        ],
+        "cms": [
+            {
+                "name": _("Files"),
+                "url": "admin:filer_folder_changelist",
+                "icon": "fas fa-folder",
+                "permissions": ["user.is_staff"],
+            },
         ],
         "user": [
             {
-                "name": "Invite New",
-                "url": "http://127.0.0.1:8000/admin/invitations/invitation/add/",
-                "icon": "fas fa-user-plus",
+                "name": _("Groups"),
+                "url": "admin:auth_group_changelist",
+                "icon": "fas fa-users",
                 "permissions": ["user.is_staff"],
-            }
+            },
+            {
+                "name": _("Organizations"),
+                "url": "admin:organizations_organization_changelist",
+                "icon": "fas fa-university",
+                "permissions": ["user.is_staff"],
+            },
         ],
     },
     # Custom icons for side menu apps/models
     # for the full list of 5.13.0 free icon classes
     "icons": {
         "auth": "fas fa-users-cog",
+        "core.Project": "fas fa-project-diagram",
+        "core.Dataset": "fas fa-folder-open",
+        "core.Sample": "fas fa-database",
+        "core.Location": "fas fa-map-marker-alt",
+        "cms.Page": "fas fa-file-alt",
         "user.User": "fas fa-user",
+        "user.Contributor": "fas fa-id-card-alt",
         "auth.Group": "fas fa-users",
         "literature.Literature": "fas fa-book",
         "fluent_comments.fluentcomment": "fas fa-comments",
-        "geoluminate.globalconfiguration": "fas fa-cogs",
         "user.User": "fas fa-user",
-        # "ror.Organization": "fas fa-university",
         "filer.Folder": "fas fa-file",
         "laboratory.Laboratory": "fas fa-microscope",
         "laboratory.Manufacturer": "fas fa-industry",
@@ -222,7 +184,6 @@ JAZZMIN_SETTINGS = {
     # override change forms on a per modeladmin basis
     "changeform_format_overrides": {
         "auth.user": "collapsible",
-        "geoluminate.globalconfiguration": "vertical_tabs",
     },
     # Add a language dropdown into the admin
     # "language_chooser": True,

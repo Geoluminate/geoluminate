@@ -4,7 +4,6 @@ GEOLUMINATE_APPS = [
     # Admin apps
     # "djangocms_admin_style",
     "adminactions",
-    "geoluminate.contrib.admin",
     "jazzmin",
     "postgres_metrics.apps.PostgresMetrics",
     "polymorphic",
@@ -23,11 +22,8 @@ GEOLUMINATE_APPS = [
     "django.contrib.humanize",
     # GEOLUMINATE CORE
     "geoluminate",
-    "geoluminate.contrib.project",
-    "geoluminate.contrib.controlled_vocabulary",
+    "geoluminate.contrib.core",
     "geoluminate.contrib.user",
-    "geoluminate.contrib.api",
-    "geoluminate.contrib.gis",
     "auto_datatables",
     # AUTHENTICATION AND USERS
     "allauth",
@@ -85,23 +81,22 @@ GEOLUMINATE_APPS = [
     "crispy_bootstrap5",
     # some other useful apps that are required by the default installation
     "sortedm2m",  # sortable m2m relationships
-    "django_htmx",  # context processor for dealing with htmx requests
+    # "django_htmx",  # context processor for dealing with htmx requests
     "django_celery_beat",  # celery based task manager
     "meta",  # for seo optimization
     "taggit",  # providing taggable keywords to any model
     "django_social_share",  # easy links to social sharing sites
-    "import_export",  # for csv import and export via the admin site
+    # "import_export",  # for csv import and export via the admin site
     "django_bleach",  # for sanitizing html input
     # 'import_export_celery',
     # not sure if these are explicitly needed or not
     # 'newsletter',
     # 'rest_framework_gis',
     # 'django_json_widget',  # provides a json form field for json_field
-    "rosetta",  # in app translations
-    # "controlled_vocabulary",  # a nice app for controlled vocabulary fields
+    # "rosetta",  # in app translations
     # "menu",  # is this supposed to be here?
     "django_select2",  # select2 widget integration with models
-    "client_side_image_cropping",
+    # "client_side_image_cropping",
     "dbbackup",
     # "tellme",  # adds user feedback functionality to the site
     "django_spaghetti",  # entity-relationship diagrams

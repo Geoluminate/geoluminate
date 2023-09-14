@@ -94,3 +94,19 @@ def live_docs(c):
     Build the documentation and open it in a live browser
     """
     c.run("sphinx-autobuild -b html --host 0.0.0.0 --port 9000 --watch . -c . . _build/html")
+
+
+@task
+def shell(c):
+    """
+    Build the documentation and open it in a live browser
+    """
+    c.run("docker compose -f local.yml run django python manage.py shell")
+
+
+@task
+def makemigrations(c):
+    """
+    Build the documentation and open it in a live browser
+    """
+    c.run("docker compose -f local.yml run django python manage.py makemigrations")

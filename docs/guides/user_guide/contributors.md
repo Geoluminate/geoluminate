@@ -1,9 +1,20 @@
-# Users & Contributors
+# Users, Organisations & Contributors
 
 
 ## What is a user?
 
+A user is any person who has signed up for an account with the online platform and has verified their email address. Users can create and manage datasets, upload files, and publish their datasets to make them publicly available. Users can also create and manage organizations, which are groups of users that can collaborate on datasets and share resources. Information stored with the user account is used to ensure the application runs smoothly and to provide a personalized experience for each user. 
 
+<!-- Each user is associated with a public ContributorProfile containing data that can be displayed within the application. This data includes the user's preferred name, related identifiers (ORCID, etc) and institutional affiliation. Users can also add additional information to their profile, such as a biography, website, and social media links. This information is used to identify and properly attribute the user's contributions to data submissions within the context of the application. -->
+
+<!-- Include an ERD here of the relationship between user/profile/contribution objects -->
+
+
+## What is a Contributor?
+
+In order to facilitate formal publishing of datasets, Geoluminate closely follows the DataCite metadata schema for contributors. Within the DataCite schema, a contributor can be assigned to either a person **or** an organization. To handle this within the application, users and organisations are both associated with a public ContributorProfile, which is used to populate the required fields for a contributor as per the DataCite schema.
+
+A ContributorProfile is a public profile associated with a user account. It contains information about the user, such as their preferred name, institutional affiliation, and related identifiers (ORCID, etc). Users can also add additional information to their profile, such as a biography, website, and social media links. This information is used to identify and properly attribute the user's contributions to data submissions within the context of the application.
 
 
 ## What is a contributor?

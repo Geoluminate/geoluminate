@@ -110,3 +110,8 @@ html {
   }
 }
 
+.dt-buttons > button {
+  @extend .btn;
+  @extend .btn-outline-primary;
+  border-right: none;
+}

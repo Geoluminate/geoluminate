@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block page %}
-<div class='page-inner h-100 d-flex flex-column'>
-  {% block app_menu_wrapper %}
-  <div class="page-menu {% block app_menu_css %}page-layout{% endblock %}">
+{% comment %} {% block page %}
+<div class='page-inner'>
+  {% block page_header %}
+  <div class="page-header {% block app_menu_css %}page-layout{% endblock %}">
     <strong>{% block page_title %}{{ title }}{% endblock %}</strong>
     <div class='toolbar'>
       <div class="toolbar-left">
@@ -16,21 +16,21 @@
     </div>
     {% block app_menu %}{% endblock %}
   </div>
-  {% endblock app_menu_wrapper %}
+  {% endblock page_header %}
   {% include "geoluminate/components/messages.html" %}
-  <div id="main" class='page-content flex-grow'>
+  <div class='page-content'>
     {% block content %}{% endblock %}
     <img id='mainIndicator' class="htmx-indicator" src="{% static "geoluminate/img/spinners/spinning-circles.svg" %}"/>
   </div>
-  <div class='page-footer'>
-    {% block app_footer %}
-      <div class='footer-left'>
-        {% block footer_left %}{% endblock %}
-      </div>
-      <div class='footer-right'>
-        {% block footer_right %}{% endblock %}
-      </div>
-    {% endblock %}
-  </div>
 </div>
-{% endblock %}
+<div class='page-footer'>
+  {% block app_footer %}
+    <div class='footer-left'>
+      {% block footer_left %}{% endblock %}
+    </div>
+    <div class='footer-right'>
+      {% block footer_right %}{% endblock %}
+    </div>
+  {% endblock %}
+</div>
+{% endblock %} {% endcomment %}

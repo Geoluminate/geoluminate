@@ -9,51 +9,56 @@
     {% block head %}{% endblock head %}
     {% block css %}{% endblock css %}
     {% render_block "css" %}
-
     {% compress css %}
       <link rel="stylesheet" type="text/x-scss" href="{% static "geoluminate/scss/geoluminate.scss" %}" crossorigin="anonymous">
     {% endcompress %}
   </head>
-  <body class="{% block body_class %}{% endblock %}">
-    {% block body %}
-    <nav class="navbar navbar-expand-md navbar-dark bg-primary">
-      <div class="container-fluid">
-        <button class="navbar-toggler d-block bg-primary-subtle" type="button" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation"
-        onclick="$('#mainSidebar').toggleClass('show');">
-          <img src="{% icon %}" alt="Logo" class="d-inline-block align-text-top" style="height: 2rem;">
-        </button>
-        <button class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse " id="navbarSupportedContent">
-          <ul class="navbar-nav w-100">
-            {% block navbar_menu %}{% show_menu 0 100 100 100 "geoluminate/cms/menu.html" %}{% endblock navbar_menu %}
-            {% include 'geoluminate/widgets/nav/theme_toggle.html' %}
-            {% include 'authentication/navbar_widget.html' %}
-          </ul>
+  <body>
+    <div class="application-wrapper {% block wrapper_class %}{% endblock %}">
+    {% block application %}
+      {% include 'geoluminate/components/navigation/navbar.html' %}
+      <div class='page-nav'>{% block page_nav %}{% endblock %}</div>
+      <div class='page-wrapper'>
+        <div class='page-messages'>
+          {% include "geoluminate/components/messages.html" %}
         </div>
+        {% block before_page %}{% endblock before_page %}
+        <div class="page {% block page_css_class %}{% endblock %}">
+          {% block page_header %}
+          <div class="page-header {% block app_menu_css %}page-layout{% endblock %}">
+            {% block page_title %}{% endblock %}
+            <div class='toolbar'>
+              <div class="toolbar-left">{% block toolbar_left %}{% endblock %}</div>
+              <div class="toolbar-right">{% block toolbar_right %}{% endblock %}</div>
+            </div>
+          </div>
+          {% endblock page_header %}
+          {% include "geoluminate/components/messages.html" %}
+          <div class='page-content'>
+            {% block content %}{% endblock %}
+            <img id='mainIndicator' class="htmx-indicator" src="{% static "geoluminate/img/spinners/spinning-circles.svg" %}"/>
+          </div>
+          <div class='page-footer'>
+            {% block app_footer %}
+              <div class='footer-left'>
+                {% block footer_left %}{% endblock %}
+              </div>
+              <div class='footer-right'>
+                {% block footer_right %}{% endblock %}
+              </div>
+            {% endblock %}
+          </div>
+          {% comment %} {% block page %}{% endblock page %} {% endcomment %}
+        </div>
+        {% block after_page %}{% endblock after_page %}
       </div>
-    </nav>
-    {% block prepage %}{% endblock %}
-    {% comment %} {% include 'geoluminate/components/navigation/navbar.html' %} {% endcomment %}
-    <div class='page-wrapper'>
-      {% include 'geoluminate/components/navigation/sidebar.html' %}
-      {% block before_page %}{% endblock before_page %}
-      <div class="page {% block page_css_class %}{% endblock %}">
-        {% block page %}{% endblock page %}
-      </div>
-      {% block after_page %}{% endblock after_page %}
-      {% comment %} {% block page_right %}{% endblock %} {% endcomment %}
-      {% include "user/toolbar.html" %}
+      {% comment %} {% render_block "page_right" %} {% endcomment %}
+    {% endblock application %}
     </div>
-    {% endblock body %}
-      {% render_block "page_right" %}
+
+    {% comment %} OFFCANVAS AND MODALS {% endcomment %}
+    {% include 'geoluminate/components/navigation/sidebar.html' %}
+    {% include "user/toolbar.html" %}
 
     {% block modals %}{% endblock modals %}
     {% render_block "modals" %}

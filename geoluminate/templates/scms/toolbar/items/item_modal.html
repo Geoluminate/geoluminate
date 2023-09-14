@@ -1,5 +1,0 @@
-<li class="{% if active %}cms-toolbar-item-navigation-active{% endif %}{% if disabled %} cms-toolbar-item-navigation-disabled{% endif %} {{ extra_classes|join:' ' }}">
- <a class="dropdown-item {% if disabled %}disabled {% endif %}" {% if disabled %} tabindex="-1"{% endif %} href="{{ url }}" data-rel="modal"{% if on_close %} data-on-close="{{ on_close }}"{% endif %}>
-  <span>{{ name }}</span>
- </a>
-</li>

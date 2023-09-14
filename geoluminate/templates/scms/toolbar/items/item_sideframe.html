@@ -1,9 +1,0 @@
-<li class="{% if active %}cms-toolbar-item-navigation-active{% endif %}{% if disabled %} cms-toolbar-item-navigation-disabled{% endif %} {{ extra_classes|join:' ' }}">
- <a class="dropdown-item {% if active %}active {% endif %}{% if disabled %}disabled {% endif %}" {% if disabled %} tabindex="-1"{% endif %} href="{{ url }}" data-rel="sideframe"{% if on_close %} data-on-close="{{ on_close }}"{% endif %}
- data-bs-toggle="offcanvas" 
- data-bs-target=".cms-sideframe" 
- role="button" 
- aria-controls="offcanvasExample">
-     <span>{{ name }}</span>
- </a>
-</li>

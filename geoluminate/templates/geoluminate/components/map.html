@@ -2,7 +2,7 @@
 
 
 <div id='map' class='w-100 h-100'
-     url="/api/v1/sites/?"
+     url="/api/v1/locations/?"
      data-format='geojson'
      {% if publication %} data-references='{{ publication.pk }}'{% endif %}
      {% if site %} data-id='{{ site.pk }}'{% endif %}

@@ -3,11 +3,14 @@
 
 {% block page_css_class %}{% endblock %}
 
-{% block body_class %}application{% endblock body_class %}
+{% comment %} {% block body_class %}application{% endblock body_class %} {% endcomment %}
 
 {% block before_page %}
-<div class='content-sidebar'>
-  <div class='content-sidebar-inner'>
+<div id="pageSidebar" class='offcanvas offcanvas-start sidebar' data-bs-backdrop="false">
+  <div class='offcanvas-header'>
+    {% block sidebar_header %}{% endblock sidebar_header %}
+  </div>
+  <div class='offcanvas-body content-sidebar-inner'>
     {% block content_sidebar %}{% endblock %}
   </div>
 </div>

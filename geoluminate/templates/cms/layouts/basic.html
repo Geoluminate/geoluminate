@@ -1,7 +1,7 @@
 {% extends "geoluminate/layout/full_width.html" %}
 {% load cms_tags menu_tags static authentication %}
 
-{% block app_menu_wrapper %}
+{% block page_header %}
 {% if request.user|has_group:"CMS" or request.user.is_superuser and current_page %}
 {% include "geoluminate/components/navigation/partials/cms_menu.html" %}
 {% endif %}

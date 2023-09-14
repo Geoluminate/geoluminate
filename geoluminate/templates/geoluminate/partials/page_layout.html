@@ -1,5 +1,6 @@
 <div class='container'>
-  <div class="page-menu page-layout">
+  {% block page_header %}
+  <div class="page-header page-layout">
     <strong>{% block header %}{% endblock %}</strong>
     <div class='toolbar'>
       <div class="toolbar-left">
@@ -10,6 +11,7 @@
       </div>
     </div>
   </div>
+  {% endblock %}
   <div>
     {% block content %}{% endblock content %}
   </div>

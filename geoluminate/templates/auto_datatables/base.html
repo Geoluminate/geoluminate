@@ -23,9 +23,6 @@
 {% block app_menu_css %}{% if not table.row_template %}app-layout{% else %}page-layout{% endif %}{% endblock %}
 
 {% block content %}
-{% comment %} <div class='container g-0'> {% endcomment %}
-  {% comment %} <div class='row'> {% endcomment %}
-    {% comment %} <div class='colu'></div> {% endcomment %}
 {% if table.row_template %}
 <div id="filterContainer" class="sidebar sidebar-start show" tabindex="-1" aria-labelledby="filterContainerLabel">
 {% else %}
@@ -47,9 +44,4 @@
   {% include template %}
 </script>
 {% endif %}
-
-{% comment %} <div class='page-footer'></div> {% endcomment %}
-
-{% comment %} </div> {% endcomment %}
-{% comment %} </div> {% endcomment %}
 {% endblock content %}

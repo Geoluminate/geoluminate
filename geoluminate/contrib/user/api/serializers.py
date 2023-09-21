@@ -3,19 +3,11 @@ from rest_framework import serializers
 from rest_framework_nested.relations import NestedHyperlinkedRelatedField
 from rest_framework_nested.serializers import NestedHyperlinkedModelSerializer
 
-from ..models import Contributor
-
-User = get_user_model()
-
-
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = User
-        fields = "__all__"
+from geoluminate.contrib.contributor.models import Contributor
 
 
 class ProfileSerializer(NestedHyperlinkedModelSerializer):
-    web_url = serializers.HyperlinkedIdentityField(view_name="community:profile")
+    web_url = serializers.HyperlinkedIdentityField(view_name="contributor:detail")
 
     class Meta:
         model = Contributor

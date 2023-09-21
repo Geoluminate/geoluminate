@@ -1,0 +1,15 @@
+{% load static i18n formsetify geoluminate autotables %}
+
+<div class='container my-3'>
+  <div class='d-flex align-items-center'>
+    {% render_profile_image user.profile width="150px" extra_classes='shadow me-2 rounded-circle' %}
+    <div class='ms-3 w-100'>
+      <header class="page-header">
+        <h1>{{ request.user.profile }}</h1>
+      </header>
+    </div>
+  </div>
+  <div class='page-content mt-3 d-block'>
+    {{contributor.about|safe}}
+  </div>
+</div>

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load i18n formsetify geoluminate %}
+
+{% block title %}{% trans "Create a new" %} {{form.instance|verbose_name}}{% endblock %}
+
+{% block main %}
+{% with form.instance|verbose_name as model_name %}
+<div class='container col-lg-7'>
+  <header class="page-header {% block page_header_css %}page-layout{% endblock %}">
+    {% trans "Create a new" %} {{ model_name }}
+  </header>
+  <div class='page-content d-block container'>
+    <django-formset endpoint="{{ request.path }}" csrf-token="{{ csrf_token }}">
+      {% render_form form %}
+      <button type="button" class="btn btn-success float-end"  df-click="submit({create: true}) -> proceed">{% trans "Create" %} {{model_name}}</button>
+    </django-formset>
+  </div>
+</div>
+{% endwith %}
+{% endblock main %}

@@ -1,0 +1,20 @@
+{% load i18n geoluminate %}
+
+<div class="modal fade" id="contributorModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class='profile-image' style='width:60px'></div>
+        <h5 class="modal-title contributor-name ms-2"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <span class='text-muted contributor-roles'></span>
+        <div class="contributor-bio"></div>
+      </div>
+     <div class="modal-footer">
+       <a href class="btn btn-primary">{% trans "View Full Profile" %}</a>
+     </div>
+   </div>
+ </div>
+</div>

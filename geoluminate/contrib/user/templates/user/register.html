@@ -1,0 +1,19 @@
+{% load i18n %}
+
+<p>{% trans "Using a third-party authentication service:" %}</p>
+<div class='socialaccount_providers d-flex justify-content-center'>
+  {% include 'socialaccount/snippets/provider_list.html' with process="signup" %}
+</div>
+{% include "user/utils/or_divider.html" %}
+<p>{% trans "Use the form below:" %}</p>
+
+<form id="signup_form" action="{% url 'account_signup' %}"method='post' class='standard'>
+  {% csrf_token %}
+  {{ register_form.as_p }}
+</form>
+
+<div class='d-flex align-items-end'>
+  <button class="btn btn-lg btn-primary" type="submit" form="signup_form">{% trans "Submit" %}</button>
+</div>
+
+

@@ -21,8 +21,6 @@ from geoluminate import models
 # from geoluminate.utils.gis.managers import LocationManager
 from . import choices
 
-# from .datacite import choices as datacite
-
 
 def project_image_path(instance, filename):
     """Returns the path to the image file for the project."""
@@ -76,7 +74,7 @@ class Abstract(models.Model):
         help_text=_("Add some descriptions."),
     )
     contributors = GenericRelation(
-        "Contribution",
+        "contributor.Contribution",
         verbose_name=_("contributors"),
         related_name="%(app_label)ss",
         related_query_name="%(app_label)ss",
@@ -99,20 +97,30 @@ class Abstract(models.Model):
 
     class Meta:
         abstract = True
+        ordering = ["-modified"]
 
     def __str__(self):
         return force_str(self.title)
 
     def get_absolute_url(self):
-        return reverse(f"{type(self).__name__.lower()}_detail", kwargs={"uuid": self.uuid})
+        return reverse(f"core:{type(self).__name__.lower()}-detail", kwargs={"uuid": self.uuid})
+
+    def get_edit_url(self):
+        return reverse(f"{type(self).__name__.lower()}-edit", kwargs={"uuid": self.uuid})
+
+    def get_create_url(self):
+        return reverse(f"{type(self).__name__.lower()}-add")
 
     def get_list_url(self):
-        return reverse(f"{type(self).__name__.lower()}_list")
+        return reverse(f"{type(self).__name__.lower()}-list")
+
+    def get_api_url(self):
+        return reverse(f"{type(self).__name__.lower()}-detail", kwargs={"uuid": self.uuid})
 
     def get_abstract(self):
         """Returns the abstract description of the project."""
         try:
-            return self.descriptions.get(type=Description.DESCRIPTION_TYPES.Abstract)
+            return self.descriptions.get(type=Description.DESCRIPTION_TYPES.ABSTRACT)
         except Description.DoesNotExist:
             return None
 
@@ -139,7 +147,7 @@ class Abstract(models.Model):
 
     def get_contact_persons(self):
         """Returns all contributors with the ContactPerson role."""
-        return self.contributors.filter(roles__contains=choices.ContributionnnRoles.CONTACT_PERSON)
+        return self.contributors.get_contact_persons()
 
 
 class Project(Abstract):
@@ -195,14 +203,6 @@ class Project(Abstract):
     def get_contributors(self):
         """Returns all contributors of the project"""
         return None
-
-    def lead_contributors(self):
-        """Returns all project leads"""
-        return self.contributors.filter(roles__contains=choices.ContributionRoles.PROJECT_LEADER)
-
-    def funding_contributors(self):
-        """Returns all project leads"""
-        return self.contributors.filter(roles__contains=choices.ContributionRoles.SPONSOR)
 
 
 class Dataset(Abstract):
@@ -430,6 +430,7 @@ class Sample(Abstract):
     class Meta:
         verbose_name = _("sample")
         verbose_name_plural = _("samples")
+        ordering = ["-modified"]
 
 
 class Measurement(models.Model):
@@ -442,6 +443,7 @@ class Measurement(models.Model):
 
     class Meta:
         abstract = True
+        ordering = ["-modified"]
 
     @cached_property
     def get_sample(self):
@@ -453,53 +455,6 @@ class Measurement(models.Model):
 
     def get_absolute_url(self):
         return reverse("site", kwargs={"pk": self.pk})
-
-
-class Contribution(django_models.Model):
-    """A contributor is a person or organisation that has contributed to the project or
-    dataset. This model is based on the Datacite schema for contributors."""
-
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey("content_type", "object_id")
-
-    CONTRIBUTOR_ROLES = choices.ContributionRoles
-    PERSONAL_ROLES = choices.PersonalRoles
-    ORGANIZATIONAL_ROLES = choices.OrganizationalRoles
-    OTHER_ROLES = choices.OtherRoles
-
-    roles = models.MultiSelectField(
-        choices=CONTRIBUTOR_ROLES.choices,
-        max_length=get_max_length(CONTRIBUTOR_ROLES.choices, None),
-        verbose_name=_("roles"),
-        help_text=_("Contribution roles as per the Datacite ContributionType vocabulary."),
-    )
-    profile = models.ForeignKey(
-        "user.Contributor",
-        verbose_name=_("contributor"),
-        help_text=_("The person or organisation that contributed to the project or dataset."),
-        related_name="contributions",
-        on_delete=models.CASCADE,
-    )
-
-    class Meta:
-        verbose_name = _("contributor")
-        verbose_name_plural = _("contributors")
-        unique_together = ("profile", "content_type", "object_id")
-        indexes = [
-            models.Index(fields=["content_type", "object_id"]),
-        ]
-
-    def __str__(self):
-        return force_str(self.profile)
-
-    def get_absolute_url(self):
-        """Returns the absolute url of the contributor's profile."""
-        return self.profile.get_absolute_url()
-
-    def roles_list(self):
-        """Returns a string containg a '|' separated list of the contributor's roles."""
-        return "|".join(self.roles)
 
 
 class KeyDate(django_models.Model):
@@ -587,13 +542,3 @@ class Review(models.Model):
 
     def __str__(self):
         return f"Review of {self.dataset} by {self.reviewer}"
-
-
-def get_measurement_types():
-    """Get a list of all models in the project that subclass from :class:`geoluminate.models.Base`."""
-    measurment_types = []
-
-    for model in apps.get_models():
-        if issubclass(model, Measurement):
-            measurment_types.append(model)
-    return measurment_types

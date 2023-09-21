@@ -1,20 +1,14 @@
 from django.contrib.auth import get_user_model
 from rest_framework import viewsets
 
+from geoluminate.contrib.contributor.models import Contributor
 from geoluminate.contrib.core.api.serializers import (
     DatasetSerializer,
     ProjectSerializer,
 )
-from geoluminate.contrib.core.models import Contribution, Dataset, Project
+from geoluminate.contrib.core.models import Dataset, Project
 
-from ..models import Contributor, User
-from .serializers import ProfileSerializer, UserSerializer
-
-
-class UserViewset(viewsets.ReadOnlyModelViewSet):
-    max_paginate_by = 1000
-    serializer_class = UserSerializer
-    queryset = User.objects.select_related("profile").all()
+from .serializers import ProfileSerializer
 
 
 class ProfileViewset(viewsets.ReadOnlyModelViewSet):

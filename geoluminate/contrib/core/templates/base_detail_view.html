@@ -1,17 +1,14 @@
-{% extends 'geoluminate/layout/fullwidth_sidebar.html' %}
+{% extends 'geoluminate/layout/sidebar_left.html' %}
 
 {% load static i18n formsetify geoluminate sekizai_tags %}
 
-{% block title %}{{ geoluminate.database.acronym}} {{ view.model|verbose_name|title }}{% endblock %}
+{% block title %}{{ geoluminate.database.acronym}} {{ object|verbose_name|title }}{% endblock %}
 
-{% block title_after %}{{ object.title|title }}{% endblock %}
-
-{% block page_header %}{% endblock %}
-
+{% block title_after %}{{ object|title }}{% endblock %}
 
 {% block page_nav %}
-  <ul class="nav nav-pills nav-pills-alternate d-print-none" id="myTab" role="tablist">
-    {% for panel in panels %}
+  <ul class="nav nav-pills nav-pills-alternate d-print-none" role="tablist">
+    {% for panel in navigation %}
       <li class="nav-item" role="presentation">
         <button class="nav-link {% if forloop.first %}active{% endif %}" id="{{panel.title}}-tab" data-bs-toggle="pill" data-bs-target="#{{panel.title}}" type="button" role="tab" aria-controls="{{panel.title}}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">
           <i class="{{panel.icon}}"></i>
@@ -35,14 +32,15 @@
   <li class="nav-item child">
     <a class="nav-link" href="{{ object.get_absolute_url }}">
       <div class="d-flex align-items-center">
-        <span>{{object.title}}</span>
+        <span>{{object}}</span>
       </div>
     </a>
   </li>
 {% endblock %}
 
+{% block sidebar_header %}<small class='text-muted'>{{object.uuid}}</small>{% endblock %}
 
-{% block content_sidebar %}
+{% block sidebar_content %}
   <div class='w-100 d-flex justify-content-center'>
     {% if object.image %}
       <img src="{{object.image.url}}" class='w-100' alt="">
@@ -56,16 +54,14 @@
     {{object.title}}
     </div>
   </section>
-  {% with "Contact Persons" as title  %}
-    {% include "partials/contributors.html" with contributors=object.get_contact_persons %}
-  {% endwith %}
+  {% include "partials/contributors.html" with title="Contact Person" contributors=object.get_contact_persons %}
 {% endblock %}
 
-{% block content_main %}
+{% block main %}
   <div class="tab-content flex-grow-1 d-flex">
     {% for panel in panels %}
       <div class="tab-pane fade w-100 {% if forloop.first %}show active{% endif %}" id="{{panel.title}}" role="tabpanel" aria-labelledby="{{panel.title}}-tab" tabindex="0">
-        {% include panel.template_name %}
+        {% include panel.template_name with title=panel.title %}
       </div>
     {% endfor %}
   </div>
@@ -76,14 +72,10 @@
 <a href="#" class='py-0 px-1 fas fa-link'></a>
 {% include "geoluminate/components/social_share/icon_link.html" %}
 <a id='printPage' href="#" class='py-0 px-1 fas fa-print'></a>
-
 {% endblock toolbar_right %}
 
 
 {% block scripts %}
-{% addtoblock "modals" %}
-  {% include "partials/contributor_modal.html" %}
-{% endaddtoblock %}
 
 {% addtoblock 'js' %}
   <script>

@@ -2,12 +2,12 @@ from django.urls import include, path
 
 from .views import dataset, project, sample
 
+# app_name = "core"
 urlpatterns = [
     path(
         "projects/",
         include(
             [
-                path("add/", project.add_view, name="project-add"),
                 path("<uuid:uuid>/", project.edit_view, name="project-edit"),
             ],
         ),
@@ -16,7 +16,6 @@ urlpatterns = [
         "datasets/",
         include(
             [
-                path("add/", dataset.add_view, name="dataset-add"),
                 path("<uuid:uuid>/", dataset.edit_view, name="dataset-edit"),
             ]
         ),
@@ -27,4 +26,14 @@ urlpatterns = [
     #         path("<uuid:uuid>/edit/", views.SampleEdit.as_view(extra_context={"add": False}), name="sample-edit"),
     #     ])
     # ),
+    path(
+        "new/",
+        include(
+            [
+                path("project/", project.add_view, name="project-add"),
+                path("dataset/", dataset.add_view, name="dataset-add"),
+                # path("sample/", sample.add_view, name="sample-add"),
+            ]
+        ),
+    ),
 ]

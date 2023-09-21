@@ -1,0 +1,19 @@
+{% extends "geoluminate/htmx/page.html" %}
+
+{% load i18n formsetify geoluminate static %}
+
+{% block title %}{{ object_list.model|verbose_name_plural|title }}{% endblock title %}
+
+{% block toolbar_right %}
+{% if can_create %}
+  <a class='btn btn-sm btn-success' href={% create_url object_list %}>
+    <i class='fas fa-plus'></i>
+    {% trans "New" %}
+  </a>
+{% endif %}
+{% endblock %}
+
+{% block content %}<div>{% include page_template|default:"core/object_list_page.html" %}</div>{% endblock %}
+
+
+

@@ -1,4 +1,4 @@
-{% extends 'geoluminate/layout/fullwidth_sidebar.html' %}
+{% extends 'geoluminate/layout/sidebar_left.html' %}
 {% load i18n formsetify autotables geoluminate %}
 
 {% block page_title %}{{ object_list.model|verbose_name_plural|title }}{% endblock %}
@@ -15,13 +15,15 @@
 <button type="button" class="btn-close d-lg-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 {% endblock sidebar_header %}
 
-{% block content_sidebar %}
+{% block sidebar_content %}
   <div id="searchButton"></div>
   {{ filter.form }}
 {% endblock %}
 
 {% block content_main %}
+<div class='container'>
 {% render_table_for_url table True %}
+</div>
 {% if template %}<script id='template-card'>{% include template %}</script>{% endif %}
 {% endblock %}
 

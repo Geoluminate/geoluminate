@@ -1,4 +1,4 @@
-{% extends 'geoluminate/layout/fullwidth_sidebar.html' %}
+{% extends 'geoluminate/layout/sidebar_left.html' %}
 {% load i18n formsetify autotables geoluminate %}
 
 {% block toolbar_right %}
@@ -8,7 +8,7 @@
 
 {% endblock %}
 
-{% block content_sidebar %}
+{% block sidebar_content %}
   <div id="searchButton"></div>
   {{ filter.form }}
 {% endblock %}

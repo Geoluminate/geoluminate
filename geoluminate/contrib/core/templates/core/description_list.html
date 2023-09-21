@@ -1,0 +1,6 @@
+{% extends "geoluminate/htmx/page.html" %}
+{% load geoluminate i18n %}
+
+{% block title %}{% trans "Description" %}{% endblock %}
+
+{% block content %}{% render_description_form object %}{% endblock %}

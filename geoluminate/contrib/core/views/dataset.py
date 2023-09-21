@@ -1,10 +1,10 @@
-from auto_datatables.views import AutoTableMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import modelform_factory
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-from django.views.generic import DetailView, TemplateView
+from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.edit import CreateView
+from formset.views import EditCollectionView, FormView
 
 from geoluminate.tables import ClientSideProcessing
 
@@ -12,30 +12,30 @@ from ..filters import DatasetFilter
 from ..forms import DatasetFormCollection
 from ..models import Dataset
 from ..tables import DatasetTable, SampleTable
-from .base import BaseListView, ProjectBaseView
+from .base import BaseListView, CoreListView, GenericCreateView, ProjectBaseView
 
-list_view = BaseListView.as_view(
-    model=Dataset,
-    table=DatasetTable,
-    filter=DatasetFilter,
-)
 
-# class DatasetList(TemplateView, AutoTableMixin):
-#     template_name = "project/list.html"
-#     table = DatasetTable
-#     extra_context = {"filter": DatasetFilter}
+class DatasetListView(CoreListView):
+    model = Dataset
+
+
+list_view = DatasetListView.as_view()
 
 
 class DatasetDetail(ProjectBaseView):
     model = Dataset
     template_name = "dataset/detail.html"
-    contributor_key = "datasets"
 
     panels = [
         {
             "title": _("About"),
             "template_name": "project/partials/about.html",
             "icon": "fas fa-circle-info",
+        },
+        {
+            "title": _("Descriptions"),
+            "template_name": "core/description_list.html",
+            "icon": "fas fa-users",
         },
         {
             "title": _("Contributors"),
@@ -52,16 +52,16 @@ class DatasetDetail(ProjectBaseView):
             template_name="geoluminate/components/map.html",
             icon="fas fa-map-location-dot",
         ),
-        dict(
-            title=_("Samples"),
-            template_name="partials/sample_list.html",
-            icon="fas fa-database",
-        ),
-        dict(
-            title=_("Measurements"),
-            template_name="partials/sample_list.html",
-            icon="fas fa-flask-vial",
-        ),
+        # dict(
+        #     title=_("Samples"),
+        #     template_name="partials/sample_list.html",
+        #     icon="fas fa-database",
+        # ),
+        # dict(
+        #     title=_("Measurements"),
+        #     template_name="partials/sample_list.html",
+        #     icon="fas fa-flask-vial",
+        # ),
         dict(
             title=_("Discussion"),
             template_name="geoluminate/components/comments.html",
@@ -86,17 +86,9 @@ class DatasetDetail(ProjectBaseView):
         return context
 
 
-class DatasetEdit(LoginRequiredMixin, DatasetDetail):
+class DatasetEdit(LoginRequiredMixin, DatasetDetail, FormView):
     collection_class = DatasetFormCollection
 
 
-class DatasetCreate(LoginRequiredMixin, CreateView):
-    model = Dataset
-    template_name = "dataset/create.html"
-
-    def get_success_url(self):
-        return reverse("dataset-edit", kwargs={"uuid": self.object.uuid})
-
-
-edit_view = DatasetEdit.as_view(extra_context={"edit": True})
-add_view = DatasetCreate.as_view(extra_context={"add": True})
+edit_view = DatasetDetail.as_view(extra_context={"edit": True})
+add_view = GenericCreateView.as_view(model=Dataset, fields=["title"])

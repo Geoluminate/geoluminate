@@ -1,5 +1,6 @@
 # from client_side_image_cropping import ClientsideCroppingWidget
 from django import forms
+from django.contrib.contenttypes.models import ContentType
 from django.forms import widgets
 from django.forms.fields import IntegerField
 from django.forms.models import ModelForm, construct_instance, model_to_dict
@@ -18,13 +19,42 @@ from formset.widgets import (  # DateTimeInput,
     UploadedFileInput,
 )
 
-from geoluminate.contrib.user.forms import ProfileFormNoImage
-from geoluminate.contrib.user.models import Contributor
+from geoluminate.contrib.contributor.forms import ProfileFormNoImage
+from geoluminate.contrib.contributor.models import Contribution, Contributor
 from geoluminate.utils.forms import DefaultFormRenderer
 
-from .models import Contribution, Dataset, Description, KeyDate, Project
+from .models import Dataset, Description, KeyDate, Project
 
 # ===================== FORMS =====================
+
+TYPE_CHOICES = {
+    "core.Dataset": [
+        ("Abstract", _("Abstract")),
+        ("Methods", _("Methods")),
+    ],
+}
+
+
+class GenericDescriptionForm(forms.ModelForm):
+    # will probably need a check in this form somewhere to make sure
+    # the user adding/editing the description is allowed to do so
+    content_type = forms.ModelChoiceField(
+        queryset=ContentType.objects.all(),
+        widget=forms.HiddenInput,
+    )
+    object_id = forms.IntegerField(widget=forms.HiddenInput)
+
+    class Meta:
+        model = Description
+        fields = "__all__"
+
+    def __init__(self, obj, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.initial["content_type"] = ContentType.objects.get_for_model(obj)
+        self.initial["object_id"] = obj.pk
+        lookup = f"{obj._meta.app_label}.{obj._meta.model_name.title()}"
+        self.fields["type"].choices = TYPE_CHOICES.get(lookup)
 
 
 class ProjectForm(FieldsetMixin, ModelForm):

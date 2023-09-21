@@ -3,10 +3,10 @@ from rest_framework_nested.relations import NestedHyperlinkedIdentityField
 from rest_framework_nested.serializers import NestedHyperlinkedModelSerializer
 from taggit.serializers import TaggitSerializer, TagListSerializerField
 
+from geoluminate.contrib.contributor.models import Contribution
 from geoluminate.contrib.user.api.serializers import ProfileSerializer
 
 from ..models import (
-    Contribution,
     Dataset,
     Description,
     KeyDate,

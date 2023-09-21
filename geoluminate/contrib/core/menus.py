@@ -6,7 +6,7 @@ from geoluminate.menus import MenuItem, Sidebar
 Sidebar.add_item(
     MenuItem(
         title=_("Projects"),
-        url=reverse("project_list"),
+        url=reverse("core:project-list"),
         weight=1,
         icon="fa-project-diagram",
     ),
@@ -15,7 +15,7 @@ Sidebar.add_item(
 Sidebar.add_item(
     MenuItem(
         title=_("Datasets"),
-        url=reverse("dataset_list"),
+        url=reverse("core:dataset_list"),
         weight=2,
         icon="fa-folder-open",
     ),
@@ -24,7 +24,7 @@ Sidebar.add_item(
 Sidebar.add_item(
     MenuItem(
         title=_("Samples"),
-        url=reverse("sample_list"),
+        url=reverse("core:sample_list"),
         weight=3,
         icon="fa-database",
     ),
@@ -33,7 +33,7 @@ Sidebar.add_item(
 Sidebar.add_item(
     MenuItem(
         title=_("Measurements"),
-        url=reverse("measurement_list"),
+        url=reverse("core:measurement_list"),
         weight=4,
         icon="fa-flask-vial",
     ),

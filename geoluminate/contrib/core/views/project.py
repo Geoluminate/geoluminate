@@ -1,46 +1,32 @@
-from auto_datatables.views import AutoTableMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import modelform_factory
 from django.http import JsonResponse
-from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-from django.views.generic import TemplateView
-from formset.views import (
-    EditCollectionView,
-    FileUploadMixin,
-    FormCollectionView,
-    FormCollectionViewMixin,
-    FormViewMixin,
-)
-
-from geoluminate.tables import ClientSideProcessing
+from django.views.generic import ListView
 
 from ..filters import ProjectFilter
 from ..forms import DatasetForm, ProjectForm, ProjectFormCollection
 from ..models import Dataset, Project
-from ..tables import DatasetTable, ProjectTable
-from .base import BaseListView, ProjectBaseView
+from .base import CoreListView, ProjectBaseView
 
-list_view = BaseListView.as_view(
-    model=Project,
-    # template_name="project/list.html",
-    table=ProjectTable,
-    filter=ProjectFilter,
-)
+
+class ProjectListView(CoreListView):
+    model = Project
+
+
+list_view = ProjectListView.as_view()
 
 
 class ProjectDetail(ProjectBaseView):
     model = Project
-    template_name = "project/detail.html"
-    contributor_key = "projects"
     collection_class = ProjectFormCollection
 
     panels = [
-        dict(
-            title=_("About"),
-            template_name="project/partials/about.html",
-            icon="fas fa-circle-info",
-        ),
+        {
+            "title": _("About"),
+            "template_name": "project/partials/about.html",
+            "icon": "fas fa-circle-info",
+        },
         dict(
             title=_("Contributors"),
             template_name="project/partials/contributors.html",
@@ -53,37 +39,29 @@ class ProjectDetail(ProjectBaseView):
         ),
         dict(
             title=_("Map"),
-            template_name="geoluminate/components/map.html",
+            template_name="core/map.html",
             icon="fas fa-map-location-dot",
         ),
-        # dict(
-        #     title="Datasets",
-        #     template_name="partials/dataset_list.html",
-        #     icon="fas fa-folder-open",
-        # ),
-        # dict(
-        #     title=_("Discussion"),
-        #     template_name="geoluminate/components/comments.html",
-        #     icon="fas fa-comments",
-        # ),
-        # dict(
-        #     title=_("Attachments"),
-        #     template_name="geoluminate/components/comments.html",
-        #     icon="fas fa-paperclip",
-        # ),
+        dict(
+            title="Datasets",
+            template_name="core/project/dataset_list.html",
+            icon="fas fa-folder-open",
+        ),
+        dict(
+            title=_("Discussion"),
+            template_name="geoluminate/components/comments.html",
+            icon="fas fa-comments",
+        ),
+        dict(
+            title=_("Attachments"),
+            template_name="core/partials/attachments.html",
+            icon="fas fa-paperclip",
+        ),
     ]
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # if self.get_object():
-        #     context["tables"] = {
-        #         "datasets": DatasetTable(
-        #             url=reverse("dataset-list", kwargs={"project_uuid": self.object.uuid}),
-        #             config_class=ClientSideProcessing(buttons=[], dom="pt"),
-        #             layout_overrides={},
-        #         ),
-        #     }
-        return context
+
+detail_view = ProjectDetail.as_view()
+detail_map_view = ProjectDetail.as_view(template_name="project/detail_map.html")
 
 
 class ProjectEdit(LoginRequiredMixin, ProjectDetail):

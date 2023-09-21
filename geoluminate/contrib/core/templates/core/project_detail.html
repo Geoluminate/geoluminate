@@ -3,14 +3,9 @@
 {% load static i18n formsetify geoluminate autotables %}
 
 
-{% block content_sidebar %}
+{% block sidebar_content %}
 {{ block.super }}
 {% include "partials/contributors.html" with title='Dataset Contributors' contributors=object.contributors.all %}
 {% include "partials/key_dates.html" %}
 {% endblock %}
-
-
-
-
-
 

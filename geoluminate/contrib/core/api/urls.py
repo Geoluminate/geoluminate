@@ -41,7 +41,7 @@ sample_router = routers.NestedSimpleRouter(router, r"samples", lookup="sample")
 #         measurement_type.name, SampleViewset, basename=measurement_type.name
 #     )
 
-
+# app_name = "api"
 urlpatterns = [
     path("", include(router.urls)),
     path("", include(project_router.urls)),

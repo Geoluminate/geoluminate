@@ -1,0 +1,14 @@
+{% extends "geoluminate/htmx/page.html" %}
+{% load i18n  %}
+
+{% block title %}{% trans "Attachments" %}{% endblock %}
+
+{% block content %}
+
+{% for file in attachments %}
+{{ file }}
+{% empty %}
+  {% trans "There are no attachments available." %}
+{% endfor %}
+
+{% endblock %}

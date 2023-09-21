@@ -1,16 +1,12 @@
-# user/admin.py
-# from allauth.socialaccount.models import Account
 from allauth.account.models import EmailAddress
 from allauth.socialaccount.models import SocialAccount
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from import_export.admin import ImportExportActionModelAdmin
 
 from geoluminate.contrib.user.models import User
 
 # from jazzmin import templatetags
 from .forms import UserAdminChangeForm, UserAdminCreationForm
-from .models import Contributor
 
 
 class SocialAccountInline(admin.StackedInline):
@@ -26,20 +22,8 @@ class AccountEmailInline(admin.StackedInline):
     extra = 0
 
 
-class ContributorInline(admin.StackedInline):
-    model = Contributor
-    fields = ["about"]
-    extra = 0
-
-
-@admin.register(Contributor)
-class ProfileAdmin(admin.ModelAdmin):
-    list_display = ["user", "about"]
-    search_fields = ["user__email", "user__first_name", "user__last_name"]
-
-
 @admin.register(User)
-class UserAdmin(BaseUserAdmin, ImportExportActionModelAdmin):
+class UserAdmin(BaseUserAdmin):
     # The forms to add and change user instances
     form = UserAdminChangeForm
     add_form = UserAdminCreationForm

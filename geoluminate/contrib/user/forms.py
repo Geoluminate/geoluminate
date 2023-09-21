@@ -5,56 +5,16 @@ from django.forms.models import ModelForm
 from django.utils.translation import gettext_lazy as _
 from django_select2.forms import Select2Widget
 from formset.collection import FormCollection
-from formset.richtext.widgets import RichTextarea
-from formset.widgets import (
-    DateInput,
-    DualSortableSelector,
-    Selectize,
-    UploadedFileInput,
-)
+from formset.widgets import Selectize
 from organizations.models import Organization
 
-from geoluminate.contrib.core.choices import iso_639_1_languages
-
-from .models import Contributor
+from geoluminate.contrib.contributor.forms import UserProfileForm
 
 
 class BaseUserForm(ModelForm):
     class Meta:
         model = get_user_model()
         fields = ["first_name", "last_name", "email"]
-
-
-class ProfileFormNoImage(ModelForm):
-    class Meta:
-        model = Contributor
-        fields = ["name", "about", "lang"]
-
-        widgets = {  # noqa: RUF012
-            "about": RichTextarea,
-        }
-
-
-class UserProfileForm(ModelForm):
-    lang = forms.ChoiceField(
-        choices=iso_639_1_languages,
-        initial="en",
-        widget=Selectize(),
-    )
-
-    class Meta:
-        model = Contributor
-        fields = [
-            "lang",
-            "name",
-            "image",
-            "about",
-        ]
-
-        widgets = {  # noqa: RUF012
-            "image": UploadedFileInput,
-            "about": RichTextarea,
-        }
 
 
 class UserForm(FormCollection):

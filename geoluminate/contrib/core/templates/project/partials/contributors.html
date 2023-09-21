@@ -10,11 +10,10 @@
           {% render_profile_image contributor.profile width="75px" %}
         </a>
       </div>
-      {% addtoblock "modals" %}
-      {% include "partials/contributor_modal.html" %}
-      {% endaddtoblock %}
+
     {% endfor %}
   </div>
 
 </section>
 </div>
+{% addtoblock "modals" %}{% include "contributor/modal.html" %}{% endaddtoblock %}

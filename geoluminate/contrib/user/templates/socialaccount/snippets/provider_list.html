@@ -3,7 +3,7 @@
 {% spaceless %}
 {% for provider in socialaccount_providers %}
 <div id="{{provider.id}}Login" class="card w-100 shadow-sm {{provider.id}}">
-  <form method="post" action="{% provider_login_url provider.id process="login" %}">{% csrf_token %}
+  <form method="post" action="{% provider_login_url provider.id process=process %}">{% csrf_token %}
  </form>
   <a href="#" type='button' onclick="$('#{{provider.id}}Login > form').submit();" class="stretched-link"></a>
 </div>

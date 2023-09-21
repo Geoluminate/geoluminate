@@ -1,36 +1,14 @@
 {% extends "account/base.html" %}
-{% load i18n crispy_forms_tags account socialaccount formsetify %}
+{% load i18n %}
 
 {% block title %}{% trans "Sign In" %}{% endblock %}
-{% block nav_title %}{% trans "Sign In" %}{% endblock nav_title %}
-{% block heading %}{% trans "Sign In" %}{% endblock heading %}
 
 {% block content %}
-<p>{% trans "Please sign in or register using your preferred third party provider." %}</p>
-<div class='socialaccount_providers d-flex justify-content-center'>
-  {% include 'socialaccount/snippets/provider_list.html' with process="login" %}
+<div class='alert alert-primary small'>
+  {% trans "Don't have an account yet?" %}
+  <a href="{{ signup_url }}">{% trans "Register here" %}</a>.
 </div>
-<div class='py-4'>
-  <div style="width: 100%; height: 15px; border-bottom: 1px solid lightgray; text-align: center">
-    <span class="text-muted" style="margin-top:-15% !important; font-size: 11px; background-color: white; padding: 0px 10px;">
-      {% trans "OR" %}
-    </span>
-  </div>
-</div>
-<p>{% blocktrans %}Sign in using your email and password. If you have not created an account with us yet, then please
-<a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}
-</p>
-
-<form id="loginForm" method='post'>
-  {% csrf_token %}
-  {{ form.as_p }}
-</form>
-
+<h5 class="mb-3">{% trans "Sign In" %}</h5>
+{% include "user/login.html" %}
 {% endblock %}
 
-{% block footer_class %}align-items-end justify-content-between{% endblock footer_class %}
-
-{% block footer %}
-  <button class="btn btn-lg btn-primary" form="loginForm" type="submit">{% trans "Submit" %}</button>
-  <a class="button secondaryAction ms-auto" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-{% endblock %}

@@ -1,7 +1,13 @@
-{% extends 'settings/base.html' %}
+{% extends 'geoluminate/htmx/page.html' %}
 {% load i18n formsetify %}
 
+{% block title %}{% trans "Contributor Profile" %}{% endblock %}
+
 {% block content %}
+<section>
+  Filling out a public profile is optional, but it helps the community to better understand your needs and interests. You can also use this space to share your contact information with other members of the community.
+
+</section>
 <div class='container mt-3'>
  <django-formset endpoint="{{ request.path }}" csrf-token="{{ csrf_token }}">
   {% render_form form "bootstrap" field_classes="mb-3" %}

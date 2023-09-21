@@ -29,12 +29,14 @@ from formset.views import (
 )
 from organizations.models import Organization
 
+from geoluminate.contrib.contributor.models import Contributor
 from geoluminate.contrib.core.tables import DatasetTable, ProjectTable
+from geoluminate.contrib.core.views.base import CoreListView
 from geoluminate.tables import ClientSideProcessing
 from geoluminate.views import GeoluminateTableView
 
 from ..forms import UserForm, UserProfileForm
-from ..models import Contributor, User
+from ..models import User
 from ..tables import Datasets, Projects
 
 
@@ -44,6 +46,11 @@ class CommunityView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
         return context
+
+
+class ContributorListView(CoreListView):
+    model = Contributor
+    object_template = "geoluminate/datatables/profile_item.html"
 
 
 class CommunityDirectoryView(LoginRequiredMixin, GeoluminateTableView):

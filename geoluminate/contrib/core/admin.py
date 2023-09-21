@@ -4,8 +4,9 @@ from django.contrib import admin
 from django.contrib.contenttypes.admin import GenericStackedInline, GenericTabularInline
 from django.contrib.gis import admin
 
+from geoluminate.contrib.contributor.admin import ContributionInline
+
 from .models import (
-    Contribution,
     Dataset,
     Description,
     KeyDate,
@@ -25,12 +26,6 @@ class DescriptionInline(GenericStackedInline):
     extra = 1
 
 
-class ContributionInline(GenericStackedInline):
-    model = Contribution
-    extra = 1
-    fields = ("profile", "roles")
-
-
 class DatasetsInline(admin.StackedInline):
     model = Dataset
     extra = 1
@@ -38,11 +33,6 @@ class DatasetsInline(admin.StackedInline):
 
 @admin.register(KeyDate)
 class KeyDateAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(Contribution)
-class ContributionTypeAdmin(admin.ModelAdmin):
     pass
 
 

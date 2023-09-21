@@ -1,20 +1,13 @@
 {% extends "account/base.html" %}
-{% load i18n crispy_forms_tags socialaccount geoluminate formsetify  %}
-
+{% load i18n %}
 
 {% block title %}{% trans "Sign Up" %}{% endblock %}
-{% block nav_title %}{% trans "Sign Up" %}{% endblock nav_title %}
-{% block heading %}{% trans "Sign Up" %}{% endblock heading %}
 
 {% block content %}
-<p>{% blocktrans %}Create a new account below. Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
-
-<form id="signup_form" method='post'>
-  {% csrf_token %}
-  {{ form.as_p }}
-</form>
-
-<div class='d-flex align-items-end'>
-  <button class="btn btn-lg btn-primary" type="submit" form="signup_form">{% trans "Submit" %}</button>
+<div class='alert alert-primary small'>
+  {% trans "Already have an account?" %}
+  <a href="{{ login_url }}">{% trans "Login here" %}</a>.
 </div>
+<h5 class="mb-3">{% trans "Sign Up" %}</h5>
+{% include "user/register.html" %}
 {% endblock  %}

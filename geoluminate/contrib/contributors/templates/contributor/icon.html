@@ -1,0 +1,11 @@
+{% load geoluminate %}
+
+<a href="#" type="button" class="{{ extra_classes }}" data-bs-toggle="modal" data-bs-target="#contributorModal"
+    data-bs-name="{{contributor.profile.name}}"
+    data-bs-bio="{{contributor.profile.about|safe|truncatewords_html:100}}"
+    data-bs-roles="{{ contributor.roles|join:" | " }}"
+    data-bs-image='{% render_profile_image contributor.profile width="100%" %}'
+    {% comment %} data-bs-url="{{contributor.profile.get_absolute_url}}" {% endcomment %}
+    >
+    {% render_profile_image contributor.profile width="100%" %}
+</a>

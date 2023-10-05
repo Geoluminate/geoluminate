@@ -2,7 +2,23 @@ import re
 
 from django.db.models import Manager, TextChoices
 from django.db.models.query import QuerySet
+from django.template.loader import render_to_string
 from django.utils.translation import gettext_lazy as _
+
+
+def strip_p_tags(text):
+    """Strip <p> tags from a string."""
+    return text.replace("<p>", "").replace("</p>", "")
+
+
+def generate_xml(dataset):
+    """Generate an XML document from a dataset."""
+    return render_to_string("publishing/gfz_schema.xml", {"dataset": dataset})
+
+
+def get_object_media_path(obj):
+    """Return the path to an object."""
+    return obj._meta.label
 
 
 def split_camel_case(input_string):

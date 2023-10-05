@@ -1,0 +1,39 @@
+{% extends 'geoluminate/htmx/page.html' %}
+{% load i18n geoluminate %}
+
+
+{% block title %}{{ object.title }}{% endblock title %}
+
+{% block toolbar_right %}
+{% if edit %}
+<a class='btn btn-sm btn-success'
+  href="descriptions/add/"
+  hx-get="descriptions/add/"
+  hx-target=".form-container"
+  hx-swap="innerHTML"
+  >
+  <i class='fas fa-plus'></i>
+  {% trans "New Description" %}
+</a>
+{% endif %}
+{% endblock %}
+
+
+{% block content %}
+<code>
+  <pre>
+  {% autoescape off %}
+  {{ object.generate_xml|force_escape }}
+  {% endautoescape %}
+  </pre>
+</code>
+  {% comment %} <section class='form-container'></section>
+  {% for description in object.descriptions.all %}
+  <section>
+    <h5>{{ description.get_type_display}}</h5>
+    <p>{{description.text|safe}}</p>
+  </section>
+  {% empty %}
+    {% trans "You do not have any descriptions yet." %}
+  {% endfor %} {% endcomment %}
+{% endblock %}

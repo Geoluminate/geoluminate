@@ -5,7 +5,7 @@
 
 {% block sidebar_content %}
 {{ block.super }}
-{% include "partials/contributors.html" with title='Dataset Contributors' contributors=object.contributors.all %}
-{% include "partials/key_dates.html" %}
+{% include "core/snippets/contributors.html" with title='Dataset Contributors' contributors=object.contributors.all %}
+{% include "core/snippets/key_dates.html" %}
 {% endblock %}
 

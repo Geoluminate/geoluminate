@@ -1,7 +1,0 @@
-{% load i18n sekizai_tags geoluminate %}
- <a href="#" type="button" data-bs-toggle="modal" data-bs-target="#coverImage-{{project.id}}">
-  <img src="{{ project.image.url }}" alt="" class='w-100'>
-</a>
-{% addtoblock "modals" %}
- {% include "partials/image_modal.html" %}
-{% endaddtoblock %} 

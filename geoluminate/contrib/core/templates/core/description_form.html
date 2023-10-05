@@ -1,6 +1,6 @@
-{% load render_form from formsetify %}
+{% load formsetify i18n static %}
 
 <django-formset endpoint="{{ request.path }}" csrf-token="{{ csrf_token }}">
   {% render_form form %}
-  <button type="button" df-click="submit -> proceed">Submit</button>
+  <button class='btn btn-success' type="button" df-click="submit -> proceed">{% trans "Submit" %}</button>
 </django-formset>

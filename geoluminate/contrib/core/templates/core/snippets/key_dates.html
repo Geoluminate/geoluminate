@@ -1,0 +1,11 @@
+{% extends 'core/snippets/base.html' %}
+{% load i18n %}
+
+{% block heading %}{% trans "Key dates" %}{% endblock %}
+{% block content %}
+<ul class="list-group list-group-flush border-0">
+  {% for date in object.key_dates.all %}
+  <li class="list-group-item border-0"><b>{{ date.get_type_display }}:</b> {{ date.date }}</li>
+  {% endfor %}
+</ul>
+{% endblock %}

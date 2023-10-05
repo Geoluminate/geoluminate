@@ -20,7 +20,7 @@
       <div class="card-body">
         <h5 class="card-title">{{ obj.title }}</h5>
         <p class='text-muted'>
-          {% include "partials/contributor/names_list.html" with contributors=obj.contributors.all %}
+          {% include "contributor/names_list.html" with contributors=obj.contributors.all %}
         </p>
         <p class="card-text">
           {{ obj.get_abstract.text|safe|truncatewords_html:30 }}

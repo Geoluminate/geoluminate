@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% load i18n formsetify geoluminate %}
+
+{% block main %}
+<django-formset endpoint="{{ request.path }}" csrf-token="{{ csrf_token }}">
+  {{ form_collection  }}
+  <button type="button" class="btn btn-success"  df-click="submit({create: true}) -> proceed">{% trans "Create" %} {{model_name}}</button>
+</django-formset>
+{% endblock main %}

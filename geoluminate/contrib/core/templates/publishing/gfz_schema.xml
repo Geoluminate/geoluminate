@@ -1,0 +1,98 @@
+{% autoescape on %}
+<?xml version="1.0" encoding="UTF-8"?>
+<envelope>
+  <resource xmlns="http://datacite.org/schema/kernel-4"
+  xsi:schemaLocation="http://datacite.org/schema/kernel-4 http://schema.datacite.org/meta/kernel-4/metadata.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <creators>
+    {% for creator in dataset.creators %}
+    <creator>
+      <creatorName>Jennings, Samuel</creatorName>
+      <givenName>Samuel</givenName>
+      <familyName>Jennings</familyName>
+      <nameIdentifier nameIdentifierScheme="ORCID">sebtesb</nameIdentifier>
+      <affiliation>GFZ</affiliation>
+    </creator>
+    {% endfor %}
+  </creators>
+  <titles>
+    <title xml:lang="eng">{{ dataset.title }}</title>
+  </titles>
+  <publisher>GFZ Data Services</publisher>
+  <publicationYear>{% now "Y" %}</publicationYear>
+  <subjects>
+    {% for subject in dataset.get_subjects %}
+    <subject subjectScheme="CGI Simple Lithology"
+    schemeURI="http://resource.geosciml.org/classifier/cgi/lithology"
+    xml:lang="en">
+    compound material &gt; anthropogenic material &gt; anthropogenic unconsolidated material
+  </subject>
+  {% comment %} <subject>Test</subject> {% endcomment %}
+  {% endfor %}
+</subjects>
+<contributors>
+  {% for contributor in dataset.contributors.all %}
+  {% for role in contributor.roles %}
+  <contributor contributorType="{{ role }}">
+    <contributorName>{{ contributor.profile.name }}</contributorName>
+    {% if contributor.profile.type == "Personal" %}
+    <givenName>{{ contributor.profile.given }}</givenName>
+    <familyName>{{ contributor.profile.family }}</familyName>
+    {% endif %}{% if contributor.identifiers %}
+    <nameIdentifier nameIdentifierScheme="ORCID">sebtesb</nameIdentifier>
+    {% endif %}{% if contributor.affiliation %}
+    <affiliation>GFZ</affiliation>
+    {% endif %}
+  </contributor>
+  {% endfor %}
+  {% endfor %}
+</contributors>
+<dates>
+  {% for date in dataset.key_dates.all %}
+  <date dateType="{{ date.type }}">{{ date.date|date:"Y-m-d" }}</date>
+  {% endfor %}
+  {% comment %} <date dateType="Valid">2012-12-13/2012-12-13</date>
+  <date dateType="Available">/2012-12-13</date>
+  <date dateType="Created">2012-12-13</date>
+  <date dateType="Collected">2012-12-13T05:34:10/2012-12-13T06:34:10</date> {% endcomment %}
+</dates>
+<language>en</language>
+<resourceType resourceTypeGeneral="Dataset">{{ dataset.resoure_type }}</resourceType>
+<relatedIdentifiers>
+  <relatedIdentifier relatedIdentifierType="URL" relationType="IsSupplementedBy">
+    acavawvawvawev</relatedIdentifier>
+  </relatedIdentifiers>
+  <version>{{ dataset.version|default:1 }}</version>
+  <rightsList>
+    <rights rightsURI="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</rights>
+  </rightsList>
+  <descriptions>{% for description in dataset.descriptions.all %}
+    <description descriptionType="{{ description.type }}">{{ description.text}}</description>{% endfor %}
+  </descriptions>
+  <geoLocations>
+    <geoLocation>
+      <geoLocationPoint>
+        <pointLongitude>{{ dataset.centroid.x }}</pointLongitude>
+        <pointLatitude>{{ dataset.centroid.y }}</pointLatitude>
+      </geoLocationPoint>
+      <geoLocationBox>
+        <westBoundLongitude>{{dataset.bbox.0}}</westBoundLongitude>
+        <eastBoundLongitude>{{dataset.bbox.2}}</eastBoundLongitude>
+        <southBoundLatitude>{{dataset.bbox.1}}</southBoundLatitude>
+        <northBoundLatitude>{{dataset.bbox.3}}</northBoundLatitude>
+      </geoLocationBox>
+      <geoLocationPlace>Description spatial coverage</geoLocationPlace>
+    </geoLocation>
+  </geoLocations>
+  <fundingReferences>
+    <fundingReference>
+      <funderName>Helmholtz-Zentrum Potsdam - Deutsches GeoForschungsZentrum GFZ</funderName>
+      <funderIdentifier funderIdentifierType="Crossref Funder ID">
+        http://dx.doi.org/10.13039/501100010956</funderIdentifier>
+        <awardNumber>ascascasc</awardNumber>
+        <awardTitle>ascascawrba</awardTitle>
+      </fundingReference>
+    </fundingReferences>
+  </resource>
+</envelope>
+{% endautoescape %}

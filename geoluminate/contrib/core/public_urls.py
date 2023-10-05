@@ -1,46 +1,21 @@
 from django.urls import include, path
 
-from . import views
-from .models import Dataset, Project, Sample
-from .views import dataset, project, sample
-from .views.base import list_view
+from geoluminate.contrib.datasets.models import Dataset
+from geoluminate.contrib.datasets.views import DatasetDetail
+from geoluminate.contrib.projects.models import Project
+from geoluminate.contrib.projects.views import ProjectDetail
+from geoluminate.contrib.samples.views import SampleDetail
+from geoluminate.contrib.samples.views import list_view as sample_list_view
+
+from .views import list_view
 
 app_name = "core"
 urlpatterns = [
-    path(
-        "projects/",
-        include(
-            [
-                path("", list_view(model=Project), name="project-list"),
-                path("<uuid:uuid>/", views.ProjectDetail.as_view(), name="project-detail"),
-                # path("<uuid:uuid>/map/", views.ProjectDetail.as_view(), name="project-detail-map"),
-            ]
-        ),
-    ),
-    path(
-        "datasets/",
-        include(
-            [
-                path("", list_view(model=Dataset), name="dataset_list"),
-                path("<uuid:uuid>/", views.DatasetDetail.as_view(), name="dataset-detail"),
-            ]
-        ),
-    ),
-    path(
-        "samples/",
-        include(
-            [
-                path("", sample.list_view, name="sample_list"),
-                path("<uuid:uuid>/", views.SampleDetail.as_view(), name="sample_detail"),
-            ]
-        ),
-    ),
-    path(
-        "measurements/",
-        include(
-            [
-                path("", sample.list_view, name="measurement_list"),
-            ]
-        ),
-    ),
+    path("projects/", list_view(model=Project), name="project-list"),
+    path("projects/<uuid:uuid>/", ProjectDetail.as_view(app_name="core")),
+    path("datasets/", list_view(model=Dataset), name="dataset_list"),
+    path("datasets/<uuid:uuid>/", DatasetDetail.as_view(app_name="core"), name="dataset-detail"),
+    path("samples/", sample_list_view, name="sample_list"),
+    path("samples/<uuid:uuid>/", SampleDetail.as_view(), name="sample_detail"),
+    path("measurements/", sample_list_view, name="measurement_list"),
 ]

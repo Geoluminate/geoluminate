@@ -5,7 +5,7 @@ from django.contrib.gis.geos import Point
 from faker import Faker
 
 from geoluminate.contrib.core.factories import GeoDjangoPointProvider
-from geoluminate.contrib.user.models import User
+from geoluminate.contrib.users.models import User
 
 
 class TestGeoDjangoPointProvider(unittest.TestCase):

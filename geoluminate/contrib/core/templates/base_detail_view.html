@@ -7,7 +7,36 @@
 {% block title_after %}{{ object|title }}{% endblock %}
 
 {% block page_nav %}
-  <ul class="nav nav-pills nav-pills-alternate d-print-none" role="tablist">
+<ul class="nav nav-pills nav-pills-alternate d-print-none" id="myTab" role="tablist">
+
+  {% for item in navigation %}
+  <li class="nav-item" role="presentation">
+      <button  href="{{ item.url }}" data-bs-toggle="pill" type="button" role="tab"
+          hx-get="{{ item.url }}"
+          class="nav-link {{ item.extra_classes }}{% if forloop.first %} active{% endif %}"
+          >
+        <i class="fas {{ item.icon }}"></i>
+        {{ item.title }}
+      </button>
+    </li>
+  {% endfor %}
+    {% comment %} <button class="nav-link {% if forloop.first %}active{% endif %}" data-bs-toggle="pill" data-bs-target="#{{panel.title}}" type="button" role="tab" aria-controls="{{panel.title}}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">
+      <i class="{{panel.icon}}"></i>
+      <span>{{panel.title}}</span>
+    </button> {% endcomment %}
+
+  {% comment %} {% for panel in panels %}
+    <li class="nav-item" role="presentation">
+      <button class="nav-link {% if forloop.first %}active{% endif %}" id="{{panel.title}}-tab" data-bs-toggle="pill" data-bs-target="#{{panel.title}}" type="button" role="tab" aria-controls="{{panel.title}}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">
+        <i class="{{panel.icon}}"></i>
+        <span>{{panel.title}}</span>
+      </button>
+    </li>
+  {% endfor %} {% endcomment %}
+</ul>
+
+
+  {% comment %} <ul class="nav nav-pills nav-pills-alternate d-print-none" role="tablist">
     {% for panel in navigation %}
       <li class="nav-item" role="presentation">
         <button class="nav-link {% if forloop.first %}active{% endif %}" id="{{panel.title}}-tab" data-bs-toggle="pill" data-bs-target="#{{panel.title}}" type="button" role="tab" aria-controls="{{panel.title}}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">
@@ -16,7 +45,7 @@
         </button>
       </li>
     {% endfor %}
-  </ul>
+  </ul> {% endcomment %}
 {% endblock %}
 
 
@@ -54,17 +83,26 @@
     {{object.title}}
     </div>
   </section>
-  {% include "partials/contributors.html" with title="Contact Person" contributors=object.get_contact_persons %}
+  {% include "core/snippets/contributors.html" with title="Contact Person" contributors=object.get_contact_persons %}
 {% endblock %}
 
 {% block main %}
-  <div class="tab-content flex-grow-1 d-flex">
+<code>
+  <pre>
+  {% autoescape off %}
+  {{ object.generate_xml|force_escape }}
+  {% endautoescape %}
+  </pre>
+</code>
+
+
+  {% comment %} <div class="tab-content flex-grow-1 d-flex">
     {% for panel in panels %}
       <div class="tab-pane fade w-100 {% if forloop.first %}show active{% endif %}" id="{{panel.title}}" role="tabpanel" aria-labelledby="{{panel.title}}-tab" tabindex="0">
         {% include panel.template_name with title=panel.title %}
       </div>
     {% endfor %}
-  </div>
+  </div> {% endcomment %}
 {% endblock %}
 
 

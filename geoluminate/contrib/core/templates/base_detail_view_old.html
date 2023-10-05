@@ -54,7 +54,7 @@
     {{object.title}}
     </div>
   </section>
-  {% include "partials/contributors.html" with title="Contact Person" contributors=object.get_contact_persons %}
+  {% include "core/snippets/contributors.html" with title="Contact Person" contributors=object.get_contact_persons %}
 {% endblock %}
 
 {% block main %}

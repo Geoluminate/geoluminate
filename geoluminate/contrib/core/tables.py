@@ -2,10 +2,14 @@ from django.conf import settings
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
+from geoluminate.api.serializers import (
+    DatasetSerializer,
+    ProjectSerializer,
+    SampleSerializer,
+)
 from geoluminate.tables import GeoluminateTable, ServerSideProcessing
 
-from .api.serializers import DatasetSerializer, ProjectSerializer, SampleSerializer
-from .models import Dataset, Measurement, Project, Sample
+# from .models import Dataset, Measurement, Project, Sample
 
 
 class ProjectTable(GeoluminateTable):
@@ -20,7 +24,6 @@ class ProjectTable(GeoluminateTable):
     # filter_fields = ["user"]
     row_template = "handlebars/project.html"
 
-    # row_template = "project/card.html"
     extra_attributes = {  # noqa: RUF012
         "web_url": {"title": ""},
         # "start_date": {"title": _("Start")},
@@ -38,27 +41,9 @@ class DatasetTable(GeoluminateTable):
 
     # visible_fields = ["absolute_url", "title"]
     search_fields = ["title"]
-    # row_template = "dataset/card.html"
 
     extra_attributes = {  # noqa: RUF012
         "web_url": {"title": ""},
-        # "start_date": {"title": _("Start")},
-        # "end_date": {"title": _("End")},
-    }
-
-
-class SampleTable(GeoluminateTable):
-    config_class = ServerSideProcessing
-    url = reverse_lazy("sample-list")
-    model = Sample
-    serializer_class = SampleSerializer
-
-    # visible_fields = ["absolute_url", "title"]
-    search_fields = ["title"]
-    # row_template = "dataset/card.html"
-
-    extra_attributes = {  # noqa: RUF012
-        # "get_absolute_url": {"title": ""},
         # "start_date": {"title": _("Start")},
         # "end_date": {"title": _("End")},
     }

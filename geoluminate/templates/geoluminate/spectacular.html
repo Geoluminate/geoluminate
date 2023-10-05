@@ -5,32 +5,20 @@
 
 {% block title %}{{ geoluminate.database.acronym }} API{% endblock title %}
 
-{% block content %}
-    <div id="swagger-ui"></div>
-  {% comment %} {% addtoblock "css" %}
-    <link rel="stylesheet"
-          href="{% static "drf_spectacular_sidecar/swagger-ui-dist/swagger-ui.css" %}"/>
-  {% endaddtoblock %} {% endcomment %}
+{% block main %}
+  <div id="swagger-ui" class='container'></div>
+
+  {% addtoblock "js" %}<script src="{% static "drf_spectacular_sidecar/swagger-ui-dist/swagger-ui-bundle.js" %}"></script>{% endaddtoblock %}
+  {% addtoblock "js" %}<script src="{% static "drf_spectacular_sidecar/swagger-ui-dist/swagger-ui-standalone-preset.js" %}"></script>{% endaddtoblock %}
+  {% if script_url %}
+    {% addtoblock "js" %}<script src="{{ script_url }}"></script>{% endaddtoblock %}
+  {% else %}
+    {% addtoblock "js" %}<script>{% include template_name_js %}</script>{% endaddtoblock %}
+  {% endif %}
+  {% endblock  %}
 
   {% block css %}
   {% compress css %}
     <link rel="stylesheet" type="text/x-scss" href="{% static "vendor/swagger/main.scss" %}"/>
   {% endcompress %}
-  {% endblock css %}
-
-
-
-
-  {% addtoblock "js" %}
-    <script src="{% static "drf_spectacular_sidecar/swagger-ui-dist/swagger-ui-bundle.js" %}"></script>{% endaddtoblock %}
-    {% addtoblock "js" %}
-      <script src="{% static "drf_spectacular_sidecar/swagger-ui-dist/swagger-ui-standalone-preset.js" %}"></script>{% endaddtoblock %}
-      {% if script_url %}
-        {% addtoblock "js" %}
-          <script src="{{ script_url }}"></script>{% endaddtoblock %}
-        {% else %}
-          {% addtoblock "js" %}
-            <script>{% include template_name_js %}</script>
-          {% endaddtoblock %}
-        {% endif %}
-      {% endblock content %}
+{% endblock css %}

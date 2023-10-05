@@ -125,7 +125,7 @@ MIDDLEWARE = [
     "cms.middleware.page.CurrentPageMiddleware",
     "cms.middleware.toolbar.ToolbarMiddleware",
     "cms.middleware.language.LanguageCookieMiddleware",
-    # "django_htmx.middleware.HtmxMiddleware",
+    "django_htmx.middleware.HtmxMiddleware",
     "lockdown.middleware.LockdownMiddleware",
 ]
 
@@ -178,3 +178,8 @@ if env("SHOW_DEBUG_TOOLBAR"):
 
 #
 FORM_RENDERER = "geoluminate.utils.forms.DefaultFormRenderer"
+
+
+LITERATURE_CITATION_JS_SOURCE = "node_modules/citation-js/build/citation.min.js"
+
+LITERATURE_ADMIN_NODE_SELECTOR = ".form-group"

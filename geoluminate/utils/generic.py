@@ -1,3 +1,6 @@
+from django.db import models
+
+
 def choices_from_qs(qs, field):
     """Return a list of choices from a queryset"""
     return [(k, k) for k in (qs.order_by(field).values_list(field, flat=True).distinct())]

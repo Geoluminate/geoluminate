@@ -1,7 +1,7 @@
 {% extends 'application.html' %}
 {% load static sekizai_tags i18n autotables geoluminate %}
 
-{% block body_class %}application{% endblock %}
+{% block wrapper_class %}application{% endblock %}
 
 {% block title %}{{ geoluminate.database.acronym }} {{ table.model|verbose_name_plural|title }}{% endblock %}
 
@@ -20,7 +20,7 @@
 <div id="searchButton"></div>
 {% endblock %}
 
-{% block app_menu_css %}{% if not table.row_template %}app-layout{% else %}page-layout{% endif %}{% endblock %}
+{% block page_header_css %}{% if not table.row_template %}app-layout{% else %}page-layout{% endif %}{% endblock %}
 
 {% block content %}
 {% if table.row_template %}

@@ -1,0 +1,26 @@
+{% load static i18n %}
+{% spaceless %}
+<div class="dropdown ms-auto">
+  <button type="button" class="btn btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+    <i class="fas fa-sun theme-icon-active"></i>
+  </button>
+  <ul id='bd-theme' class="dropdown-menu">
+    <h5 class='dropdown-header'>Select theme</h5>
+    <li>
+      <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+        <i class="fa-solid fa-sun me-2"></i>{% trans "Light" %}
+      </button>
+    </li>
+    <li>
+      <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+        <i class="fa-solid fa-moon me-2"></i>{% trans "Dark" %}
+      </button>
+    </li>
+    <li>
+      <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto" aria-pressed="false">
+        <i class="fa-solid fa-circle-half-stroke me-2"></i>{% trans "Auto" %}
+      </button>
+    </li>
+  </ul>
+</div>
+{% endspaceless %}

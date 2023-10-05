@@ -1,35 +1,118 @@
-from drf_spectacular.extensions import OpenApiSerializerFieldExtension
-from drf_spectacular.plumbing import get_view_model
-from quantityfield.settings import DJANGO_PINT_UNIT_REGISTER as ureg
 from rest_framework import serializers
+from rest_framework_nested.relations import NestedHyperlinkedIdentityField
+from rest_framework_nested.serializers import NestedHyperlinkedModelSerializer
+from taggit.serializers import TaggitSerializer, TagListSerializerField
+
+from geoluminate.contrib.contributors.models import Contribution
+from geoluminate.contrib.core.models import Description, KeyDate
+from geoluminate.contrib.datasets.models import Dataset
+from geoluminate.contrib.projects.models import Project
+from geoluminate.contrib.samples.models import Location, Measurement, Sample
+from geoluminate.contrib.users.api.serializers import ProfileSerializer
 
 
-class QuantityFieldFix(OpenApiSerializerFieldExtension):
-    target_class = "geoluminate.api.serializers.QuantityField"
+class ContributionSerializer(serializers.HyperlinkedModelSerializer):
+    # profile = serializers.HyperlinkedIdentityField(view_name="profile", lookup_field="pk")
 
-    def map_serializer_field(self, auto_schema, direction):
-        base = auto_schema._map_serializer_field(self.target, direction, bypass_extensions=True)
-        model = get_view_model(auto_schema.view, emit_warnings=False)
+    contributor = ProfileSerializer(source="profile")
 
-        if model is not None:
-            field = model._meta.get_field(self.target.source_attrs[0])
-        base["units"] = field.base_units
-        # base["accepted_units"] = field.unit_choices
-        return base
+    class Meta:
+        model = Contribution
+        fields = ["contributor", "roles"]
 
 
-class QuantityJSONField(serializers.FloatField):
-    def to_representation(self, value):
-        return {"magnitude": value.magnitude, "unit": f"{value.units}"}
-
-    def to_internal_value(self, data):
-        return ureg.Quantity(data["magnitude"], data["unit"])
+class DescriptionSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Description
+        fields = ["type", "text"]
 
 
-class QuantityField(serializers.FloatField):
-    def __init__(self, *args, **kwargs):
-        # print(args, kwargs)
-        return super().__init__(*args, **kwargs)
+class KeyDateSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = KeyDate
+        fields = ["type", "date"]
 
-    def to_representation(self, value):
-        return value.magnitude
+
+class ProjectSerializer(serializers.HyperlinkedModelSerializer):
+    web_url = serializers.HyperlinkedIdentityField(view_name="project_detail", lookup_field="uuid")
+
+    datasets = NestedHyperlinkedIdentityField(
+        view_name="dataset-list",
+        lookup_field="uuid",
+        lookup_url_kwarg="project_uuid",
+    )
+    contributors = ContributionSerializer(many=True, read_only=True)
+    descriptions = DescriptionSerializer(many=True, read_only=True)
+    key_dates = KeyDateSerializer(many=True, read_only=True)
+
+    tags = TagListSerializerField()
+
+    class Meta:
+        model = Project
+        # fields = ["url", "uuid"]
+        exclude = ["is_public"]
+        extra_kwargs = {"url": {"lookup_field": "uuid"}}
+
+
+class DatasetSerializer(NestedHyperlinkedModelSerializer):
+    parent_lookup_kwargs = {
+        "project_uuid": "project__uuid",
+    }
+
+    web_url = serializers.HyperlinkedIdentityField(view_name="dataset_detail", lookup_field="uuid")
+
+    # bbox = serializers.SerializerMethodField(
+    #     help_text="Bounding box of the dataset in WGS84 (EPSG:4326) coordinates. Format: [minx, miny, maxx, maxy]."
+    # )
+
+    locations = NestedHyperlinkedIdentityField(
+        view_name="location-list",
+        lookup_field="uuid",
+        lookup_url_kwarg="dataset_uuid",
+    )
+    samples = NestedHyperlinkedIdentityField(
+        view_name="sample-list",
+        lookup_field="uuid",
+        lookup_url_kwarg="dataset_uuid",
+    )
+    contributors = ContributionSerializer(many=True, read_only=True)
+    descriptions = DescriptionSerializer(many=True, read_only=True)
+    key_dates = KeyDateSerializer(many=True, read_only=True)
+    keywords = TagListSerializerField()
+
+    class Meta:
+        model = Dataset
+        fields = "__all__"
+        extra_kwargs = {"url": {"lookup_field": "uuid"}, "project": {"lookup_field": "uuid"}}
+
+    def get_bbox(self, obj):
+        return obj.bbox()
+
+
+class SampleSerializer(NestedHyperlinkedModelSerializer):
+    parent_lookup_kwargs = {
+        "dataset_uuid": "dataset__uuid",
+    }
+    web_url = serializers.HyperlinkedIdentityField(view_name="sample_detail", lookup_field="uuid")
+
+    class Meta:
+        model = Sample
+        fields = "__all__"
+        extra_kwargs = {"url": {"lookup_field": "uuid"}, "dataset": {"lookup_field": "uuid"}}
+
+
+class LocationSerializer(NestedHyperlinkedModelSerializer):
+    parent_lookup_kwargs = {
+        "dataset_uuid": "dataset__uuid",
+    }
+
+    class Meta:
+        model = Location
+        fields = "__all__"
+        extra_kwargs = {"url": {"lookup_field": "uuid"}}
+
+
+class MeasurementSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        fields = "__all__"
+        extra_kwargs = {"url": {"lookup_field": "uuid"}}

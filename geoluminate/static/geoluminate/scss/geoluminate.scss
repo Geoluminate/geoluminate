@@ -2,7 +2,7 @@
 @import "variables";
 
 // import the bootstrap 5 source files
-@import "vendor/bootstrap/scss/bootstrap";
+@import "node_modules/bootstrap/scss/bootstrap";
 
 
 // Layout.
@@ -11,12 +11,14 @@
 @import 'layout/menu';
 
 // Components
+@import 'components/alerts';
 @import 'components/dropdown';
 @import 'components/header';
 @import 'components/menu';
 @import 'components/sidebar';
 @import 'components/scrollbar';
 @import 'components/indicators';
+@import 'components/form';
 @import 'components/formset';
 @import 'components/card';
 @import 'components/comments';

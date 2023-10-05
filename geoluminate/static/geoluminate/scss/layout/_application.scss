@@ -12,6 +12,7 @@
   @extend .container-fluid;
   @extend .bg-light-subtle;
   @extend .bg-gradient;
+  @extend .small;
 }
 
 .page-wrapper {
@@ -31,7 +32,13 @@
   display: flex;
   flex-grow: 1 !important;
   flex-direction: column;
+  overflow: hidden;
   @extend .bg-gradient;
+
+  div:first-child {
+    overflow: auto;
+  }
+
 }
 
 .page-inner {
@@ -141,8 +148,10 @@
   @extend .container;
   @extend .justify-content-between;
   @extend .align-items-center;
-  @extend .bg-dark-subtle;
+  @extend .bg-primary-subtle;
   @extend .py-1;
+  @extend .border-top;
+  @extend .border-primary-subtle;
 
   width: 100%;
 
@@ -152,4 +161,10 @@
   }
 }
 
+// Color mode variables in _root.scss
+@include color-mode(dark) {
 
+  img {
+    filter: grayscale(50%);
+  }
+}

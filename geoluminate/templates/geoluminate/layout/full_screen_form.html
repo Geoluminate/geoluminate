@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load geoluminate %}
-{% block body_class %}bg-primary bg-gradient{% endblock body_class %}
+{% block wrapper_class %}bg-primary bg-gradient{% endblock wrapper_class %}
 
 {% block application %}
 <div class="modal d-block position-relative z-1 {% block modal_class %}{% endblock %}" tabindex="-1">
@@ -10,7 +10,7 @@
         <img class="mx-auto" src="{% logo %}" alt="" height="70px">
       </div>
       <div class="modal-body {% block content_class %}{% endblock %}">
-        <h5 class="modal-title text-center mb-3">{% block page_title %}{% endblock %}</h5>
+        <h5 class="modal-title text-left">{% block page_title %}{% endblock %}</h5>
         {% block content %}{% endblock %}
       </div>
       <div class="modal-footer border-0 {% block footer_class %}{% endblock %}">
@@ -19,4 +19,4 @@
     </div>
   </div>
 </div>
-{% endblock body %}
+{% endblock application %}

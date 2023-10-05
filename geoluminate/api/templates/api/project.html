@@ -1,0 +1,23 @@
+{% load i18n %}
+
+{% for object in data.results %}
+<div class="card mt-3">
+ <div class='d-flex'>
+   <img src="https://via.placeholder.com/300x225?text=This+is+a+placeholder!"
+        class="img-fluid w-25 rounded-start">
+   <div class='d-flex flex-column w-100'>
+     <div class="card-body">
+       <i class='me-auto'>{{ object.status }}</i>
+       <h4 class="card-title data-title">{{object.title}}</h4>
+       <p class="card-text abstract data-description">{{object.description}}</p>
+     </div>
+     <div class='card-footer d-flex justify-content-end'>
+      <a href="/" class="btn btn-primary btn-sm">
+        <i class='fas fa-edit'></i>
+        {% trans "Edit" %}
+       </a>
+     </div>
+  </div>
+ </div>
+</div>
+{% endfor %}

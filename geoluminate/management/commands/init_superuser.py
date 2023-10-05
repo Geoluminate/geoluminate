@@ -1,3 +1,4 @@
+from allauth.account.models import EmailAddress
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
@@ -14,12 +15,17 @@ class Command(BaseCommand):
                 f"Creating superuser account for {email} with password 'admin'. Be sure to change this as soon as"
                 " possible!"
             )
-            admin = User.objects.create_superuser(
+            superuser = User.objects.create_superuser(
                 email=email,
                 password=password,
                 first_name="Super",
                 last_name="User",
             )
-            admin.save()
+            superuser.save()
+
+            # verify the users email address without send a confirmation email
+            email = EmailAddress.objects.create(user=superuser, email=email, verified=True, primary=True)
+            email.save()
+
         else:
             print("This command only works when no users exists.")

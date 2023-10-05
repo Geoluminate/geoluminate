@@ -56,7 +56,7 @@ Sidebar.add_item(
 Sidebar.add_item(
     MenuItem(
         title=_("Community"),
-        url=reverse("community:members"),
+        url=reverse("contributor:list"),
         weight=6,
         icon="fa-user-group",
     ),

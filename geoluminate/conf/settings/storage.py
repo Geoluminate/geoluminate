@@ -1,10 +1,5 @@
 import os
 
-STATIC_URL = "/static/"
-""""""
-MEDIA_URL = "/media/"
-""""""
-
 # DJANGO_STORAGES SETTINGS
 AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
 """"""

@@ -3,8 +3,13 @@
     transform: translate(-50%, -50%) !important;
     left: 50% !important;
     top: 50% !important;
+    // position: relative !important;
     position: absolute !important;
     z-index: 1000;
-    display: none;
-    // opacity: 0;
+    // display: none;
+    opacity: 0;
+}
+
+.htmx-indicator.htmx-request {
+  opacity: 1;
 }

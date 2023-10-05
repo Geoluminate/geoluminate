@@ -26,11 +26,11 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
-AUTH_USER_MODEL = "user.User"
+AUTH_USER_MODEL = "users.User"
 """"""
 
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
-ACCOUNT_ADAPTER = "geoluminate.contrib.user.adapters.AccountAdapter"
+ACCOUNT_ADAPTER = "geoluminate.contrib.users.adapters.AccountAdapter"
 """"""
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
@@ -88,13 +88,13 @@ AUTHENTICATION_BACKENDS = [
 
 # https://django-allauth.readthedocs.io/en/latest/forms.html
 # ACCOUNT_FORMS = {
-#     "login": "geoluminate.contrib.user.forms.LoginForm",
-#     # "signup": "geoluminate.contrib.user.forms.SignUpForm",
-#     "add_email": "geoluminate.contrib.user.forms.AddEmailForm",
-#     "change_password": "geoluminate.contrib.user.forms.ChangePasswordForm",
-#     "set_password": "geoluminate.contrib.user.forms.SetPasswordForm",
-#     "reset_password": "geoluminate.contrib.user.forms.ResetPasswordForm",
-#     "reset_password_from_key": "geoluminate.contrib.user.forms.ResetPasswordKeyForm",
+#     "login": "geoluminate.contrib.users.forms.LoginForm",
+#     # "signup": "geoluminate.contrib.users.forms.SignUpForm",
+#     "add_email": "geoluminate.contrib.users.forms.AddEmailForm",
+#     "change_password": "geoluminate.contrib.users.forms.ChangePasswordForm",
+#     "set_password": "geoluminate.contrib.users.forms.SetPasswordForm",
+#     "reset_password": "geoluminate.contrib.users.forms.ResetPasswordForm",
+#     "reset_password_from_key": "geoluminate.contrib.users.forms.ResetPasswordKeyForm",
 #     "disconnect": "allauth.socialaccount.forms.DisconnectForm",
 # }
 # """"""
@@ -117,9 +117,9 @@ SOCIALACCOUNT_PROVIDERS = {
 """"""
 
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
-SOCIALACCOUNT_ADAPTER = "geoluminate.contrib.user.adapters.SocialAccountAdapter"
+SOCIALACCOUNT_ADAPTER = "geoluminate.contrib.users.adapters.SocialAccountAdapter"
 
 ACCOUNT_ALLOW_REGISTRATION = env.bool("DJANGO_ACCOUNT_ALLOW_REGISTRATION", True)
 """allow registration"""
 
-ACCOUNT_SIGNUP_FORM_CLASS = "geoluminate.contrib.user.forms.SignupExtraForm"
+ACCOUNT_SIGNUP_FORM_CLASS = "geoluminate.contrib.users.forms.SignupExtraForm"

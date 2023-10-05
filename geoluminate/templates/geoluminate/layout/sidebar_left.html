@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static i18n formsetify geoluminate sekizai_tags %}
+
+{% block page_left %}
+<div id="pageSidebar" class='offcanvas offcanvas-start sidebar' data-bs-backdrop="false">
+  <div class='offcanvas-header'>
+    {% block sidebar_header %}{% endblock sidebar_header %}
+  </div>
+  <div class='offcanvas-body content-sidebar-inner'>
+    {% block sidebar_content %}{% endblock %}
+  </div>
+</div>
+{% endblock page_left %}
+

@@ -3,9 +3,11 @@ from django import template
 # from django.conf import settings
 from django.template.loader import render_to_string
 from django.templatetags.static import static
+from django.urls import reverse_lazy
 from django.utils.safestring import mark_safe
 from quantityfield import settings
 
+from geoluminate.contrib.core.forms import GenericDescriptionForm
 from geoluminate.utils import get_filter_params
 
 register = template.Library()
@@ -109,7 +111,7 @@ def render_profile_image(profile, width=75, height=None, extra_classes=""):
 @register.simple_tag
 def render_contributor_icon(contributor, extra_classes=""):
     return render_to_string(
-        "partials/contributor/icon.html", context={"contributor": contributor, "extra_classes": extra_classes}
+        "contributor/icon.html", context={"contributor": contributor, "extra_classes": extra_classes}
     )
 
 
@@ -120,10 +122,13 @@ def filter_params(context):
     return get_filter_params(request)
 
 
-@register.inclusion_tag("partials/object_list.html")
-def render_object_list(object_list, object_template="partials/object.html"):
-    """Renders a list of projects for the given object."""
-    return {
-        "object_list": object_list.prefetch_related("contributors"),
-        "template": object_template,
-    }
+@register.inclusion_tag("core/description_form.html", takes_context=True)
+def render_description_form(context, obj):
+    context.update({"form": GenericDescriptionForm(obj=obj)})
+    return context
+
+
+@register.simple_tag
+def create_url(object_list):
+    model = object_list.model
+    return reverse_lazy(f"{model._meta.model_name}-add")

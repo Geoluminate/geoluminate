@@ -23,7 +23,12 @@ GEOLUMINATE_APPS = [
     # GEOLUMINATE CORE
     "geoluminate",
     "geoluminate.contrib.core",
-    "geoluminate.contrib.user",
+    "geoluminate.contrib.projects",
+    "geoluminate.contrib.datasets",
+    "geoluminate.contrib.samples",
+    "geoluminate.contrib.contributors",
+    "geoluminate.contrib.users",
+    "geoluminate.contrib.organizations",
     "auto_datatables",
     # AUTHENTICATION AND USERS
     "allauth",
@@ -31,7 +36,7 @@ GEOLUMINATE_APPS = [
     "allauth.socialaccount",
     "allauth.socialaccount.providers.orcid",
     "invitations",
-    "organizations",
+    # "organizations",
     # DJANGO CMS CORE
     "cms",
     "menus",
@@ -86,15 +91,12 @@ GEOLUMINATE_APPS = [
     "meta",  # for seo optimization
     "taggit",  # providing taggable keywords to any model
     "django_social_share",  # easy links to social sharing sites
-    # "import_export",  # for csv import and export via the admin site
     "django_bleach",  # for sanitizing html input
-    # 'import_export_celery',
     # not sure if these are explicitly needed or not
     # 'newsletter',
     # 'rest_framework_gis',
-    # 'django_json_widget',  # provides a json form field for json_field
-    # "rosetta",  # in app translations
-    # "menu",  # is this supposed to be here?
+    "django_htmx",
+    "el_pagination",
     "django_select2",  # select2 widget integration with models
     # "client_side_image_cropping",
     "dbbackup",

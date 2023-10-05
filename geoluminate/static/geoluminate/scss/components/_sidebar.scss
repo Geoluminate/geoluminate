@@ -1,6 +1,8 @@
 .sidebar {
   @extend .bg-primary-subtle;
   @extend .bg-gradient;
+  @extend .border-end;
+  @extend .border-primary-subtle;
   align-items: stretch;
 
   ::-webkit-scrollbar {

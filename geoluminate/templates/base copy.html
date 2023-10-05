@@ -15,38 +15,10 @@
   </head>
   <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
         hx-target="main"
-        hx-indicator="#mainIndicator"
-        hx-ext="debug"
-
-        >
+        hx-ext="debug">
     <div class="application-wrapper {% block wrapper_class %}{% endblock %}">
     {% block application %}
-      <nav class="navbar navbar-expand-md navbar-dark bg-primary bg-gradient">
-        <div class="container-fluid">
-          <button class="navbar-toggler d-block bg-primary-subtle"
-          type="button" data-bs-toggle="offcanvas" data-bs-target="#mainSidebar" aria-controls="mainSidebar"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-          >
-            <img src="{% icon %}" alt="Logo" class="d-inline-block align-text-top" style="height: 2rem;">
-          </button>
-          <button class="navbar-toggler"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#navbarSupportedContent"
-                  aria-controls="navbarSupportedContent"
-                  aria-expanded="false"
-                  aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse " id="navbarSupportedContent">
-            <ul class="navbar-nav w-100">
-              {% block navbar_menu %}{% show_menu 0 100 100 100 %}{% endblock navbar_menu %}
-              {% for widget in navbar_widgets %}{% include widget %}{% endfor %}
-            </ul>
-          </div>
-        </div>
-      </nav>
+      {% include 'geoluminate/components/navigation/navbar.html' %}
       <nav class='page-nav'>{% block page_nav %}{% endblock %}</nav>
       <div class='page-wrapper'>
         {% comment %} <div class='page-messages'>
@@ -54,7 +26,30 @@
         </div> {% endcomment %}
         {% block page_left %}{% endblock page_left %}
         <main class="page {% block page_css_class %}{% endblock %}">
-          {% block main %}{% endblock main %}
+          {% block page_header %}
+          <header class="page-header {% block page_header_css %}page-layout{% endblock %}">
+            {% block page_title %}{% endblock %}
+            <div class='toolbar'>
+              <div class="toolbar-left">{% block toolbar_left %}{% endblock %}</div>
+              <div class="toolbar-right">{% block toolbar_right %}{% endblock %}</div>
+            </div>
+          </header>
+          {% endblock page_header %}
+          <div class='page-messages'>{% include "geoluminate/components/messages.html" %}</div>
+          <div class='page-content'>
+            {% block content %}{% endblock %}
+            <img id='mainIndicator' class="htmx-indicator" src="{% static "geoluminate/img/spinners/spinning-circles.svg" %}"/>
+          </div>
+          <footer class='page-footer'>
+            {% block app_footer %}
+              <div class='footer-left'>
+                {% block footer_left %}{% endblock %}
+              </div>
+              <div class='footer-right'>
+                {% block footer_right %}{% endblock %}
+              </div>
+            {% endblock %}
+          </footer>
         </main>
         {% block after_page %}{% endblock after_page %}
       </div>

@@ -1279,6 +1279,21 @@ django = ">=2.2"
 pytz = "*"
 
 [[package]]
+name = "django-el-pagination"
+version = "4.0.0"
+description = "Django pagination tools supporting Ajax, multiple and lazy pagination, Twitter-style and Digg-style pagination."
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "django-el-pagination-4.0.0.tar.gz", hash = "sha256:eb9a5be4cd46d1b43c1a5f3732fc428a3eb168b72ce122b7506e3da615187384"},
+    {file = "django_el_pagination-4.0.0-py2.py3-none-any.whl", hash = "sha256:61d76242a29de5705f01f0ffa6df9af436b978839ea39fd411269a30a410dfc0"},
+]
+
+[package.dependencies]
+django = ">=3.2.0"
+
+[[package]]
 name = "django-entangled"
 version = "0.5.4"
 description = "Edit JSON field using Django Model Form"
@@ -1410,6 +1425,21 @@ files = [
 
 [package.dependencies]
 Django = ">=2.2"
+
+[[package]]
+name = "django-htmx"
+version = "1.16.0"
+description = "Extensions for using Django with htmx."
+category = "main"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "django_htmx-1.16.0-py3-none-any.whl", hash = "sha256:360d11266666e5d92bda57069f671f2c04642eb1fc071e4c4160cf9f504cbfa6"},
+    {file = "django_htmx-1.16.0.tar.gz", hash = "sha256:56a65045e079503877ba1354acb481030cf54da1e1f731d33c280e0a14b214cf"},
+]
+
+[package.dependencies]
+Django = ">=3.2"
 
 [[package]]
 name = "django-imagekit"
@@ -5314,4 +5344,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.8,<4.0"
-content-hash = "caaed6166501c44adc6a5b79ecbb07ac41a1b25c31cca76073989f14baf5bcb2"
+content-hash = "dfd0d403da3c338fc1de01621574a2f80a96f39022467eb22418b51c51d6dd29"

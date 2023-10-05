@@ -86,6 +86,8 @@ django-multiselectfield = "^0.1.12"
 django-contact-form = "^2.1"
 django-organizations = "^2.1.0"
 django-imagekit = "^4.1.0"
+django-htmx = "^1.16.0"
+django-el-pagination = "^4.0.0"
 
 [tool.poetry.group.dev.dependencies]
 coverage = "^7.2.1"

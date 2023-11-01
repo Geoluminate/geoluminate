@@ -1,8 +1,0 @@
-{% extends 'geoluminate/partials/page_layout.html' %}
-{% load i18n autotables geoluminate %}
-
-{% block header %}{{ tables.samples.model|verbose_name_plural|title }}{% endblock %}
-
-{% block content %}{% render_table_for_url tables.samples True %}{% endblock %}
-
-

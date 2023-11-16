@@ -47,7 +47,7 @@ html_last_updated_fmt = "%b %d, %Y"
 html_theme_options = {
     "repository_url": package_meta["homepage"],
     "use_repository_button": True,
-    "logo_only": True,
+    # "logo_only": True,
     "use_issues_button": True,
     "use_edit_page_button": True,
     # "announcement": (
@@ -107,6 +107,7 @@ extensions = [
     # "autodoc2",
     "sphinx_comments",
     "myst_parser",
+    "sphinx_tippy",
 ]
 
 
@@ -161,7 +162,20 @@ autodoc_default_options = {
 }
 
 myst_enable_extensions = [
+    "amsmath",
+    "attrs_inline",
+    "colon_fence",
     "deflist",
+    "dollarmath",
+    "fieldlist",
+    "html_admonition",
+    "html_image",
+    # "linkify",
+    "replacements",
+    "smartquotes",
+    "strikethrough",
+    "substitution",
+    "tasklist",
 ]
 
 autosectionlabel_prefix_document = True
@@ -169,7 +183,7 @@ autosectionlabel_prefix_document = True
 
 # -- Options for HTML output ---------------------------------------------------
 
-
+html_css_files = ["tippy.css"]
 # Add any paths that contain custom themes here, relative to this directory.
 # html_theme_path = []
 

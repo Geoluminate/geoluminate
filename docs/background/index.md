@@ -35,6 +35,7 @@ There are many different web frameworks that you could use to build a web portal
 ```{toctree}
 :maxdepth: 2
 
+about
 open_and_fair
 django
 

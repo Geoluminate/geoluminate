@@ -1,29 +1,9 @@
-# Features
+(functionality/dataset-management)=
+# Dataset Management
 
-This section of the documentation breaks down the core functionality of the Geoluminate platform. 
+## Introduction
 
-It is intended to be a reference for users of the platform, and to provide a high-level overview of the platform's capabilities. Funtionality revolves around the creation, exploration, submission, and publishing of data. The platform is designed to be used by a variety of users with different needs, and so functionality is designed to be flexible and extensible.
-
-## Table of Contents
-```{toctree}
-:maxdepth: 1
-
-database_management
-API
-
-```
-
-<!-- 
-## Exploration and Consumption
-
-Data is designed to be consumed by a variety of users with different needs. There are two main ways to consume data within a Geoluminate-powered application: via a user-oriented web application or via an API.
-
-### Via the Web Application
-
-
-### Via the API
-
-
+Community members can create and submit new datasets to the application, retaining full control over their content until it is formally published. Dataset creators can manage descriptions, key dates, and tags for enhanced discoverability. Metadata of public datasets are accessible to other community members, allowing them to view information related to the dataset. Once reviewed, datasets can be formally published, at which point their data becomes accessible for viewing and download within the application.
 
 ## Data Creation
 
@@ -39,7 +19,4 @@ While creation of new data within the framework is always encouraged, it is not 
 ## Data Publishing
 
 Using the templating engine provided by Django, Geoluminate provides the abiltiy to export datasets in XML format as supported by DataCite publishing services. This allows users to publish datasets to to their preferred publishing services. The export functionality is designed to customizable, so the publishing process always fits the needs of the research community using the application. -->
-
-
-
 

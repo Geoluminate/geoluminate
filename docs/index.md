@@ -28,9 +28,10 @@ ______________________________________________________________________
 :hidden:
 
 overview/foreword
-index
+<!-- index -->
 background/index
 features/index
+functionality/index
 usage/index
 
 
@@ -42,8 +43,10 @@ usage/index
 :maxdepth: 1
 :hidden:
 
-guides/developer_guide/index
 guides/user_guide/index
+guides/admin_guide/index
+guides/developer_guide/index
+guides/contributor_guide/index
 
 ```
 
@@ -54,10 +57,10 @@ guides/user_guide/index
 :hidden:
 
 apidocs/index
+more/glossary
 more/support
 more/roadmap
 more/current_projects
-more/contributing
 more/authors
 more/history
 more/configuration

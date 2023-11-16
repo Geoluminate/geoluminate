@@ -1,14 +1,16 @@
 # User Guide
 
-## What is Geoluminate?
+## Introduction
 
-If you ended up on this page, chances are you've signed up for or been invited to contribute to a Geoluminate-powered web portal. This document provides a brief overview of the Geoluminate framework and its main features. It also explains how to get started with managing projects, creating new or adding existing datasets and how to contribute to the community by reviewing and parsing data from historic literature.
+This guide is designed to help users of Geoluminate-powered portals to get the most out of their experience. It covers all aspects of using the portal, from account management to content creation and everything in between.
 
 ## Table of Contents
 
 ```{toctree}
 :maxdepth: 2
 
+account_management
+organisations
 contributors
 projects
 datasets

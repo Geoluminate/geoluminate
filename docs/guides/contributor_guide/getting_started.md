@@ -1,4 +1,4 @@
-# Contributing to Geoluminate
+# Getting Started
 
 This guide outlines the steps to contribute to Geoluminate. By following these instructions, you can fork the repository, set up a virtual environment, make changes, write tests, and submit a pull request to the main repository.
 
@@ -7,7 +7,7 @@ This guide outlines the steps to contribute to Geoluminate. By following these i
 Before you begin, ensure that you have the following installed on your local machine:
 
 - [Git](https://git-scm.com/downloads) 
-- [Docker](https://docs.docker.com/get-docker/
+- [Docker](https://docs.docker.com/get-docker/)
 - [Python Poetry](https://python-poetry.org/docs/) (version 1.1.0 or higher)
 
 ## Step 1: Fork the Repository and Clone it to Your Local Machine

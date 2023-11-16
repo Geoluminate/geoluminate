@@ -1,4 +1,4 @@
-## Publishing
+# Review and Publishing
 
 
 At Geoluminate, we place a strong emphasis on promoting the attribution of credit to researchers by adhering to established metadata schemas. We understand the value of recognizing and properly attributing the efforts and contributions of researchers who publish datasets.
@@ -16,3 +16,9 @@ Join us in embracing the power of proper credit attribution and discover the imp
 Geoluminate allows you to focus on cultivating a strong sense of belonging within your research community. Through interactive features and engaging functionalities, you can nurture meaningful connections and foster a spirit of collaboration that transcends geographical boundaries.
 
 Whether you're a seasoned researcher or a newcomer to the scientific world, Geoluminate welcomes you to an ecosystem where knowledge knows no limits. Join us in creating a brighter future, where research flourishes, and communities thrive through the power of collaboration. Together, let's illuminate the path towards groundbreaking discoveries and positive impact.
+
+## What is a submission?
+A submission is the act of uploading a file to the server and successfully having the contents parsed into the database.
+
+## What is a review?
+Datasets must be peer-reviewed by a “Community Reviewer” before it is possible to publish. A review consists of a check of the data and assessment of quality. This is followed by dialogue back and forth between reviewer and submitter. Once accepted by the reviewer, the dataset becomes visible in the application and the submitter is granted access to publish (and perhaps download a quality assurance certificate?). 

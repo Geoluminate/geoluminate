@@ -1,6 +1,6 @@
-## Introduction
+# Introduction
 
-Consistency in design among research data portals is crucial for adhering to the FAIR data principles and enhancing the discoverability, accessibility, interoperability, and reusability of scientific data. In addition to these advantages, the implementation of a simplified framework for constructing new research portals in a consistent manner offers several significant benefits.
+Consistency in design among research data portals is crucial for adhering to the FAIR data principles and enhancing the discoverability, accessibility, interoperability, and reusability of scientific data. Geoluminate aims to implement a simplified framework for constructing modern and intuitive research portals with a consistent look and feel that makes creating and reusing scientific data a breeze. A simplified framework provides several benefits over current approaches to research portal development.
 
 Firstly, a simplified framework reduces development time and costs by providing pre-defined design patterns, templates, and reusable components. This enables research institutions and organizations to create new data portals more efficiently, without the need to reinvent the wheel with each implementation. By streamlining the development process, valuable resources can be allocated to improving data quality, metadata standards, and other critical aspects of research data management.
 

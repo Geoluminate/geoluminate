@@ -3,8 +3,14 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.gis import admin
 from django.contrib.sitemaps.views import sitemap
+from django.shortcuts import redirect
 from django.urls import include, path
 from django.views.generic import TemplateView
+
+from geoluminate.measurements import measurements
+
+from .admin import admin_measurement_view
+from .views import DashboardRedirect
 
 # these URLS don't require translation capabilities
 NON_I18N_URLS = [
@@ -13,24 +19,33 @@ NON_I18N_URLS = [
     path("api/", include("geoluminate.api.urls")),
 ]
 
+
 I18N_URLS = [
-    path(
-        "public/",
-        include(
-            [
-                path("", include("geoluminate.contrib.core.public_urls")),
-                path("explorer/", TemplateView.as_view(template_name="geoluminate/pages/map.html"), name="viewer"),
-                path("glossary/", include("glossary.urls")),
-                path("literature/", include("literature.urls")),
-            ]
-        ),
-    ),
+    # path(
+    #     "public/",
+    #     include(
+    #         [
+    path("explorer/", TemplateView.as_view(template_name="geoluminate/components/map.html"), name="viewer"),
+    path("glossary/", include("glossary.urls")),
+    # path("literature/", include("literature.urls")),
+    #         ]
+    #     ),
+    # ),
+    path("", include("geoluminate.contrib.datasets.urls")),
+    path("", include("geoluminate.contrib.reviews.urls")),
+    path("", include("geoluminate.contrib.projects.urls")),
+    path("", include("geoluminate.contrib.samples.urls")),
+    path("", include("geoluminate.contrib.contributors.urls")),
+    path("", include("geoluminate.contrib.core.urls")),
+    path("measurements/", include(measurements.urls)),
+    path("", include("geoluminate.contrib.users.urls")),
+    # path("dashboard/", redirect("user:profile"), name="dashboard"),
+    # path('activity/', include('actstream.urls')),
     path("invitations/", include("invitations.urls", namespace="invitations")),
     path("contact/", include("django_contact_form.urls")),
-    path("contributors/", include("geoluminate.contrib.contributors.urls")),
-    path("", include("geoluminate.contrib.users.urls")),
-    path("", include("geoluminate.contrib.core.urls")),
+    path("select2/", include("django_select2.urls")),
     path("admin/docs/", include("django.contrib.admindocs.urls")),
+    path("admin/measurements/", admin_measurement_view, name="admin_measurements"),
     path("admin/", admin.site.urls),
 ]
 

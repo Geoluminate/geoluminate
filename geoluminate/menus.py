@@ -2,7 +2,8 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from simple_menu import Menu, MenuItem
 
-# from geoluminate.contrib.cores.models import
+from geoluminate.measurements import measurements
+from geoluminate.utils import icon
 
 
 class GeoluminateMenuBase:
@@ -37,6 +38,16 @@ class Sidebar(GeoluminateMenuBase):
 
 Sidebar.add_item(
     MenuItem(
+        title=_("Measurements"),
+        url=reverse("viewer"),
+        weight=5,
+        icon="fa-flask",
+        children=measurements.menu,
+    ),
+)
+
+Sidebar.add_item(
+    MenuItem(
         title=_("Explorer"),
         url=reverse("viewer"),
         weight=5,
@@ -47,15 +58,38 @@ Sidebar.add_item(
 Sidebar.add_item(
     MenuItem(
         title=_("Literature"),
-        url=reverse("literature:list"),
+        url="/literature/",
         weight=5,
         icon="fa-book",
+        children=[
+            MenuItem(
+                title=_("GHFDB Catalogue"),
+                url=reverse("datasets:literature_list"),
+                weight=5,
+                icon="fa-book",
+            ),
+            MenuItem(
+                title=_("Literature Review"),
+                url=reverse("reviews:list"),
+                weight=5,
+                icon=icon("review"),
+            ),
+        ],
     ),
 )
 
+# Sidebar.add_item(
+#     MenuItem(
+#         title=_("Reviews"),
+#         url=reverse("reviews:list"),
+#         weight=5,
+#         icon="fas fa-book-open",
+#     ),
+# )
+
 Sidebar.add_item(
     MenuItem(
-        title=_("Community"),
+        title=_("Contributors"),
         url=reverse("contributor:list"),
         weight=6,
         icon="fa-user-group",

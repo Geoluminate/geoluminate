@@ -5,6 +5,7 @@ from typing import Iterable, Optional
 
 from django.contrib.gis.db.models import __all__ as models_all
 from django.db import models
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django_bleach.models import BleachField as TextField
 from meta.models import ModelMeta
@@ -17,6 +18,8 @@ from quantityfield.fields import (
     PositiveIntegerQuantityField,
     QuantityField,
 )
+
+# from geoluminate import models
 
 
 class Model(ModelMeta, models.Model):
@@ -64,6 +67,22 @@ class Model(ModelMeta, models.Model):
 
     class Meta:
         abstract = True
+
+    def get_absolute_url(self):
+        return reverse(f"{self._meta.model_name}s:detail", kwargs={"uuid": self.uuid})
+
+    def get_edit_url(self):
+        return self.get_absolute_url()
+        # return reverse(f"{self._meta.model_name}s:edit", kwargs={"uuid": self.uuid})
+
+    def get_add_url(self):
+        return reverse(f"{self._meta.model_name}s:add")
+
+    def get_list_url(self):
+        return reverse(f"{self._meta.model_name}s:list")
+
+    def get_api_url(self):
+        return reverse(f"api:{self._meta.model_name}:detail", kwargs={"uuid": self.uuid})
 
     def primary_data_types(self):
         """Return a dictionary of the primary data fields and their values."""

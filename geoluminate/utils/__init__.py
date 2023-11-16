@@ -10,13 +10,15 @@ from django.conf import settings
 from django.db import transaction
 from django.db.models import Q
 from django.utils.module_loading import import_string
+from django_contact_form.forms import ContactForm
 
-# from geoluminate.contrib.core.tests.factories import (
-#     DatasetFactory,
-#     ProjectFactory,
-#     SampleFactory,
-# )
-from geoluminate.contrib.users.tests.factories import UserFactory
+
+def icon(icon):
+    """Returns the icon for the project."""
+    icon = settings.GEOLUMINATE_ICONS.get(icon, icon)
+    if not icon:
+        raise ValueError(f"Icon {icon} not found in settings.GEOLUMINATE_ICONS.")
+    return icon
 
 
 def context_processor(request):
@@ -30,6 +32,7 @@ def context_processor(request):
         "ACCOUNT_ALLOW_REGISTRATION": settings.ACCOUNT_ALLOW_REGISTRATION,
         "user_sidebar_widgets": settings.GEOLUMINATE_USER_SIDEBAR_WIDGETS,
         "navbar_widgets": settings.GEOLUMINATE_NAVBAR_WIDGETS,
+        "contact_form": ContactForm(request=request),
     }
     if not request.user.is_authenticated:
         # get the allauth user login form
@@ -62,26 +65,15 @@ def context_processor(request):
 #     save_model_instances(SampleFactory.create_batch(size=1000))
 
 
-def get_measurement_types():
+def get_measurement_models():
     """Returns a dictionary of all models in the project that subclass from :class:`geoluminate.contrib.core.models.Measurement`."""
-    measurement_types = {}
-    Measurement = import_string("geoluminate.contrib.core.models.Measurement")
+    measurement_types = []
+    Measurement = import_string("geoluminate.contrib.samples.models.Measurement")
 
     for model in apps.get_models():
         if issubclass(model, Measurement):
-            measurement_types[model._meta.verbose_name] = model
+            measurement_types.append(model)
     return measurement_types
-
-
-def get_database_models():
-    """Get a list of all models in the project that subclass from :class:`geoluminate.models.Base`."""
-    db_models = []
-    Measurement = import_string("geoluminate.contrib.core.models.Measurement")
-
-    for model in apps.get_models():
-        if issubclass(model, Measurement):
-            db_models.append(model)
-    return db_models
 
 
 def get_filter_params(request):
@@ -96,4 +88,4 @@ def get_filter_params(request):
 
 def geoluminate_content_types():
     """A Q filter for all content types that are part of the Geoluminate database."""
-    return Q(app_label__in=[model._meta.app_label for model in get_database_models()])
+    return Q(app_label__in=[model._meta.app_label for model in get_measurement_models()])

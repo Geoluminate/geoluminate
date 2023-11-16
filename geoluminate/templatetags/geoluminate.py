@@ -1,17 +1,18 @@
 from django import template
-
-# from django.conf import settings
+from django.conf import settings
+from django.db import models
 from django.template.loader import render_to_string
 from django.templatetags.static import static
 from django.urls import reverse_lazy
 from django.utils.safestring import mark_safe
-from quantityfield import settings
+from quantityfield import settings as qsettings
 
 from geoluminate.contrib.core.forms import GenericDescriptionForm
 from geoluminate.utils import get_filter_params
 
 register = template.Library()
-ureg = settings.DJANGO_PINT_UNIT_REGISTER
+ureg = qsettings.DJANGO_PINT_UNIT_REGISTER
+ureg.default_format = ".2f~P"
 
 
 @register.simple_tag(takes_context=True)
@@ -19,14 +20,6 @@ def is_active(context, url):
     if context["request"].path.startswith(url):
         return "active"
     return ""
-
-
-# @register.simple_tag
-# def menu(menu, template=None):
-#     """Renders a menu"""
-#     if not template:
-#         template = menu.template_name
-#     return render_to_string(template, {"menu": menu})
 
 
 @register.filter
@@ -37,15 +30,21 @@ def unit(unit):
 
 
 @register.simple_tag
-def logo():
-    """Returns the static url for the logo"""
-    return static("img/brand/logo.svg")
+def brand(icon_or_logo: str):
+    """Returns either the website logo or icon static url for use in img tags"""
+    if icon_or_logo == "icon":
+        return static("img/brand/icon.svg")
+    elif icon_or_logo == "logo":
+        return static("img/brand/logo.svg")
+    raise ValueError("icon_or_logo must be either 'icon' or 'logo'")
 
 
 @register.simple_tag
-def icon():
-    """Gets the correct URL for the icon."""
-    return static("img/brand/icon.svg")
+def icon(object_str: str):
+    """Retrieves the default icon for a given object."""
+    # deliberate nonsense as default because fontawesome already does a good job of alerting the dev to a non-existing icon
+    default = "fa-solid fa-"
+    return settings.GEOLUMINATE_ICONS.get(object_str, default)
 
 
 @register.filter
@@ -59,32 +58,19 @@ def verbose_name(instance, field_name=None):
 
 
 @register.filter
-def verbose_name_plural(model):
+def verbose_name_plural(model_or_queryset):
     """
     Returns verbose_name_plural for a given model.
     """
-    return model._meta.verbose_name_plural
+    if isinstance(model_or_queryset, models.QuerySet):
+        return model_or_queryset.model._meta.verbose_name_plural
+    return model_or_queryset._meta.verbose_name_plural
 
 
 @register.filter
 def addstr(arg1, arg2):
     """concatenate arg1 & arg2"""
     return str(arg1) + str(arg2)
-
-
-@register.filter
-def get_obj_attr(obj):
-    try:
-        value = obj.field.queryset.get(pk=obj.initial)
-    except AttributeError:
-        value = obj.initial
-
-    if getattr(obj.field, "choices", False):
-        for choice in obj.field.choices:
-            if value == choice[0]:
-                value = choice[1]
-
-    return '<tr><td class="w-50">{}:</td><td>{}</td></tr>'.format(obj.name.replace("_", " ").title(), value)
 
 
 @register.simple_tag
@@ -111,7 +97,7 @@ def render_profile_image(profile, width=75, height=None, extra_classes=""):
 @register.simple_tag
 def render_contributor_icon(contributor, extra_classes=""):
     return render_to_string(
-        "contributor/icon.html", context={"contributor": contributor, "extra_classes": extra_classes}
+        "contributors/icon.html", context={"contributor": contributor, "extra_classes": extra_classes}
     )
 
 
@@ -131,4 +117,11 @@ def render_description_form(context, obj):
 @register.simple_tag
 def create_url(object_list):
     model = object_list.model
-    return reverse_lazy(f"{model._meta.model_name}-add")
+    return reverse_lazy(f"{model._meta.model_name}s:add")
+
+
+@register.simple_tag(takes_context=True)
+def page_menu(context):
+    if context.get("page_menu") or context.get("actions_menu"):
+        return render_to_string("menu/page_menu.html", context=context.flatten())
+    return ""

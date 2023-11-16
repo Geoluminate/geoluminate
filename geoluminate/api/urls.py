@@ -8,7 +8,7 @@ from .views import TOSView
 urlpatterns = [
     path(
         "",
-        SpectacularSwaggerView.as_view(template_name="geoluminate/spectacular.html", url_name="schema"),
+        SpectacularSwaggerView.as_view(template_name="geoluminate/generic/spectacular.html", url_name="schema"),
         name="swagger-ui",
     ),
     path("v1/", include("geoluminate.api.v1.urls")),

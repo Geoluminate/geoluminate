@@ -1,58 +1,48 @@
 from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView
-from literature.api.views import LiteratureViewSet
+from literature.api.urls import router as lit_router
 from rest_framework_nested import routers
 
-# from geoluminate.contrib.literature.api.views import LiteratureViewSet
-from .. import viewsets
+from geoluminate.measurements import measurements
+
+from ..views import MeasurementMetadataView
+from . import viewsets
 
 # ============= BASE ROUTERS =============
 router = routers.SimpleRouter()
 router.register(r"projects", viewsets.ProjectViewset)
 router.register(r"datasets", viewsets.DatasetViewset)
 router.register(r"samples", viewsets.SampleViewset)
-router.register(r"locations", viewsets.SiteViewset)
-router.register(r"literature", LiteratureViewSet)
 
 # ============= NESTED PROJECT ROUTER =============
-project_router = routers.NestedSimpleRouter(router, r"projects", lookup="project")
-project_router.register(r"datasets", viewsets.DatasetViewset)
+nested_project = routers.NestedSimpleRouter(router, r"projects", lookup="project")
+nested_project.register(r"datasets", viewsets.NestedDatasets)
+nested_project.register(r"samples", viewsets.NestedSamples)
 
 # ============= NESTED DATASET ROUTER =============
-dataset_router = routers.NestedSimpleRouter(router, r"datasets", lookup="dataset")
-dataset_router.register(r"samples", viewsets.SampleViewset)
-dataset_router.register(r"locations", viewsets.SiteViewset)
-
-
-# ============= NESTED SITE ROUTER =============
-location_router = routers.NestedSimpleRouter(router, r"locations", lookup="location")
-# location_router.register(r"samples", api.SampleViewset)
+nested_dataset = routers.NestedSimpleRouter(router, r"datasets", lookup="dataset")
+nested_dataset.register(r"samples", viewsets.NestedSamples, basename="samples")
 
 # ============= NESTED SAMPLE ROUTER =============
-sample_router = routers.NestedSimpleRouter(router, r"samples", lookup="sample")
+nested_samples = routers.NestedSimpleRouter(router, r"samples", lookup="sample")
 
-
-# ============= MEASUREMENT ROUTER =============
-# router.register(r"measurements", SampleViewset, basename="measurement)
-
-
-# for measurement_type in get_measurement_types():
-#     viewset = viewset_factory(measurement_type.model)
-#     measurement_router.register(
-#         measurement_type.name, SampleViewset, basename=measurement_type.name
-#     )
-
-# from views import DomainViewSet, NameserverViewSet
-# from geoluminate.api import API
 
 urlpatterns = [
     path("", include(router.urls)),
-    path("", include(project_router.urls)),
-    path("", include(dataset_router.urls)),
-    path("", include(location_router.urls)),
-    path("", include(sample_router.urls)),
+    path("", include(nested_project.urls)),
+    path("", include(nested_dataset.urls)),
+    path("", include(nested_samples.urls)),
+    path("measurements/", MeasurementMetadataView.as_view(), name="measurement-metadata"),
+    path("measurements/", include(measurements.router.urls)),
+    path("literature/", include(lit_router.urls)),
     path("", include("geoluminate.contrib.users.api.urls")),
-    # path("measurements/", include(API.urls)),
     path("schema/", SpectacularAPIView.as_view(), name="schema"),
     # path("auth/", include("rest_framework.urls", namespace="rest_framework")),
 ]
+
+# print(measurements.registry)
+# for p in measurements.router.urls:
+#     print(p)
+
+
+# In django rest framework, I am using a hyperlinkedmodelserializer on a model that contains a uuid field. I have set my lookup_field on my viewset as "uuid" but the hyperlinkedmodelserializer does not use that lookup correctly. How can I tell the hyperlinkedmodelserializer to resolve urls using the uuid field?

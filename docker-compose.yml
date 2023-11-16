@@ -19,5 +19,5 @@ services:
     <<: *app
     working_dir: /app/docs
     ports:
-      - "9000:9000"
+      - "9001:9000"
     command: ../docker/docs

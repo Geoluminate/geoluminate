@@ -1,0 +1,69 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"name": "geoluminate",
+			"path": "../external_apps/geoluminate"
+		},
+		{
+			"name": "django-literature",
+			"path": "../external_apps/django-literature"
+		},
+		// {
+		// 	"name": "django-laboratory",
+		// 	"path": "../external_apps/django-laboratory"
+		// },
+		// {
+		// 	"name": "django-research-project",
+		// 	"path": "../external_apps/django-research-project"
+		// },
+		// {
+		// 	"name": "geoluminate-db-snapshot",
+		// 	"path": "../external_apps/geoluminate-db-snapshot"
+		// },
+		// {
+		// 	"name": "geoluminate-glossary",
+		// 	"path": "../external_apps/geoluminate-glossary"
+		// },
+		// {
+		// 	"name": "django-licensing",
+		// 	"path": "../external_apps/django-licensing"
+		// },
+
+		// {
+		// 	"name": "geoluminate-earth-science",
+		// 	"path": "../external_apps/geoluminate-earth-science"
+		// },
+		// {
+		// 	"name": "django-auto-datatables",
+		// 	"path": "../external_apps/django-auto-datatables"
+		// }
+	],
+	"settings": {
+		"cSpell.enabled": false
+	},
+	"tasks": {
+		"version": "2.0.0",
+		"tasks": [
+			{
+				"label": "echo",
+				"type": "shell",
+				"command": "echo Hello"
+			}
+		]
+	},
+	"extensions": {
+		"recommendations": [
+			"ms-python.python",
+			"ms-python.black-formatter",
+			"batisteo.vscode-django",
+			"ms-azuretools.vscode-docker",
+			"ms-python.isort",
+			"ms-python.vscode-pylance",
+			"charliermarsh.ruff",
+			"matangover.mypy"
+		]
+	}
+}

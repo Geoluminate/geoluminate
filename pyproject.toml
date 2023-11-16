@@ -88,6 +88,10 @@ django-organizations = "^2.1.0"
 django-imagekit = "^4.1.0"
 django-htmx = "^1.16.0"
 django-el-pagination = "^4.0.0"
+django-formset = "^1.2.1"
+drf-flex-fields = "^1.0.2"
+django-downloadview = "^2.3.0"
+django-activity-stream = "^2.0.0"
 
 [tool.poetry.group.dev.dependencies]
 coverage = "^7.2.1"
@@ -125,6 +129,7 @@ toml = "^0.10.2"
 sphinx-comments = "^0.0.3"
 django-extensions = "^3.2.3"
 sphinx-autodoc2 = "^0.4.2"
+sphinx-tippy = "^0.4.1"
 
 [build-system]
 requires = ["poetry-core"]

@@ -9,13 +9,14 @@ database:
 governance:
   name: "Geoluminate"
   short_name: "Geoluminate"
-  website: "https://www.geoluminate.com.au"
+  url: "https://www.geoluminate.com.au"
   custodians:
     - name: Test User
       email: test.user@example.com
 
 application:
   domain: "localhost:8000"
+  name: "Geoluminate"
   developers:
     - name: Test User
       email: test.user@example.com

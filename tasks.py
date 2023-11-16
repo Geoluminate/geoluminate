@@ -110,3 +110,16 @@ def makemigrations(c):
     Build the documentation and open it in a live browser
     """
     c.run("docker compose -f local.yml run django python manage.py makemigrations")
+
+
+@task
+def dumpdata(c):
+    c.run(
+        "docker compose -f local.yml run django python manage.py dumpdata users organizations contributors projects"
+        " datasets samples core --natural-foreign --natural-primary --output=geoluminate.json.gz"
+    )
+
+
+@task
+def loaddata(c):
+    c.run("docker compose -f local.yml run django python manage.py loaddata core --app geoluminate")

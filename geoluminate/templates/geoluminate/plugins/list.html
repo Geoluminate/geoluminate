@@ -1,0 +1,12 @@
+{% comment %} <div class='container'> {% endcomment %}
+  {% comment %} <div class='toolbar py-2 d-flex'>
+    {% block toolbar %}{% endblock toolbar %}
+  </div>
+  <hr class="mt-0 border border-primary"> {% endcomment %}
+  <div class='page-content d-block'>
+    {% block help_text %}{% endblock %}
+    {% block content %}{% endblock %}
+  </div>
+{% comment %} </div> {% endcomment %}
+
+{% block modals %}{% endblock %}

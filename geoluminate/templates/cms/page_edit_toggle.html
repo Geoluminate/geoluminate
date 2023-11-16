@@ -1,0 +1,7 @@
+{% load cms_tags menu_tags static authentication %}
+
+{% if request.user|has_group:"CMS" or request.user.is_superuser and current_page %}
+  <a class='m-3 btn rounded-circle btn-lg btn-primary position-absolute top-0 end-0' data-bs-toggle="collapse" href="#cmsToolbarWrapper" role="button" aria-expanded="false" aria-controls="cmsToolbarWrapper">
+    <i class='fa-solid fa-pen-to-square' title='Edit page'></i>
+  </a>
+{% endif %}

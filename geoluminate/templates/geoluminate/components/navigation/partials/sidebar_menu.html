@@ -1,33 +1,36 @@
 {% load geoluminate %}
-<div class="menu-group" id="accordionFlushExample">
+<div class="menu-group">
 {% for item in menus.sidebar %}{% if item.visible %}
  
-<div class="menu-item">   
-  {% if item.children %}
-  <button class="menu-item-accordion collapsed {% is_active item.url %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-    <i class="fas {{ item.icon }} pe-2"></i>
+<div class="menu-item">  
+
+  {% if item.children %}{% with item.title|slugify as target %}
+  <button class="menu-item-action collapsed children {% is_active item.url %}" type="button" data-bs-toggle="collapse" data-bs-target="#{{ target }}" aria-expanded="false" aria-controls="collapseOne">
+    <i class="fas {{ item.icon }}"></i>
     {{ item.title }}
   </button>
-  <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionFlushExample">
+  <div id="{{target}}" class="menu-item collapse" aria-labelledby="headingOne">
       <div class="menu-group">
-        <div class="menu-item">
+        <div class="menu-item m-1 border rounded">
           {% for link in item.children %}
-          <a href="{{ link.url }}" 
-              class="menu-item-action ps-4 bg-light {% is_active item.url %}">
-              <i class="fas {{ link.icon }} pe-2"></i>
+          <a href="{{ link.url }}" class="menu-item-action {% is_active item.url %}">
               {{ link.title }}
           </a>
           {% endfor %}
         </div>
       </div>
   </div>
+  {% endwith %}
   {% else %}
   <a href="{{ item.url }}" class="menu-item-action {% is_active item.url %}">
-    <i class="fas {{ item.icon }} pe-2"></i>{{ item.title }}
+    <i class="fas {{ item.icon }}"></i>
+    {{ item.title }}
   </a>
+
+  {% endif %}
+
 </div>
 
-{% endif %}
 
 {% endif %}
 {% endfor %}

@@ -1,9 +1,6 @@
 {% load geoluminate %}
 
-## {{ model|verbose_name }} List
+# Project List
 
-A list of publicly available {{ model.verbose_name_plural }} within the database. 
-
-- something
-- something else
+Produces a paginated list of public {{ model|verbose_name_plural }} available within the database. 
 

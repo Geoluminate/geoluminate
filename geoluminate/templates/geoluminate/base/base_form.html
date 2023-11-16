@@ -1,0 +1,15 @@
+{% extends "geoluminate/plugins/page.html" %}
+
+{% load i18n formsetify geoluminate %}
+
+{% block title %}{{view.title}}{% endblock title %}
+
+{% block content %}
+{% if view.help_text %}{{view.help_text}}{% endif %}
+<div class='my-3'>
+  <django-formset endpoint="{{ request.path }}" csrf-token="{{ csrf_token }}">
+    {% render_form form "bootstrap" field_classes="mb-2" %}
+    <button type="button" class="btn btn-success"  df-click="submit({create: true}) -> proceed">{% trans "Create" %} {{model_name}}</button>
+  </django-formset>
+</div>
+{% endblock %}

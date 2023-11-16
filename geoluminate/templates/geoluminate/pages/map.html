@@ -1,8 +1,0 @@
-{% extends "geoluminate/layout/full_screen.html" %}
-{% load i18n %}
-{% block title %}{{ geoluminate.database.acronym }} {% trans "Explorer" %}{% endblock title %}
-
-{% block content %}
-{% comment %} {% include 'geoluminate/components/map.html' %} {% endcomment %}
-{% include 'geoluminate/components/ghfdb_map.html' %}
-{% endblock content %}

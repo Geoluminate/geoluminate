@@ -1,37 +1,27 @@
+{% extends "base.html" %}
 {% load i18n static sekizai_tags %}
+{% comment %} {% block title %}{{ geoluminate.database.acronym }} {% trans "Explorer" %}{% endblock title %} {% endcomment %}
 
+{% block main %}
+<style>
+  main.page {
+    position: initial;
+  }
+  .sidebar {
+    background-color: unset !important;
+    background-image: none !important;
+    border: none !important;
+  }
+</style>
 
-<div id='map' class='w-100 h-100'
-     url="/api/v1/locations/?"
-     data-format='geojson'
-     {% if publication %} data-references='{{ publication.pk }}'{% endif %}
-     {% if site %} data-id='{{ site.pk }}'{% endif %}
-     class="flex-fill {{ css_class }}">
+<div id='app' class='w-100 h-100'>
   <div id='shadow'></div>
 </div>
-{% addtoblock "css" %}
-  <link rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
-        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-        crossorigin=""/>
-{% endaddtoblock %}
-{% addtoblock "css" %}
-  <link rel="stylesheet"
-        href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css"/>
-{% endaddtoblock %}
-{% addtoblock "css" %}
-  <link rel="stylesheet"
-        href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css"/>
-{% endaddtoblock %}
-{% addtoblock "js" %}<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
-          integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-          crossorigin=""></script>{% endaddtoblock %}
-{% addtoblock "js" %}<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.min.js"></script>{% endaddtoblock %}
-{% addtoblock "js" %}<script src='https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js'></script>{% endaddtoblock %}
-{% addtoblock "js" %}<script src="https://unpkg.com/esri-leaflet@2.5.0/dist/esri-leaflet.js"
-                integrity="sha512-ucw7Grpc+iEQZa711gcjgMBnmd9qju1CICsRaryvX7HJklK0pGl/prxKvtHwpgm5ZHdvAil7YPxI1oWPOWK3UQ=="
-                crossorigin=""></script>{% endaddtoblock %}
-{% addtoblock "js" %}<script src="{% static 'geoluminate/js/map.js' %}"></script>{% endaddtoblock %}
+
+{% addtoblock "css" %}<script defer src="{% static 'node_modules/whfd-mapping/dist/js/chunk-vendors.a34f2da6.js' %}"></script>{% endaddtoblock %}
+{% addtoblock "css" %}<script defer src="{% static 'node_modules/whfd-mapping/dist/js/app.c7039588.js' %}"></script>{% endaddtoblock %}
 
 
-
+{% addtoblock "css" %}<link href="{% static 'node_modules/whfd-mapping/dist/css/chunk-vendors.97a6882d.css' %}" rel="stylesheet">{% endaddtoblock %}
+{% addtoblock "css" %}<link href="{% static 'node_modules/whfd-mapping/dist/css/app.da545179.css' %}" rel="stylesheet">{% endaddtoblock %}
+{% endblock %}

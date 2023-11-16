@@ -1,0 +1,38 @@
+{% load geoluminate %}
+<ul class="nav nav-tabs nav-pills nav-pills-alternate d-print-none" id="pageMenu" role="tablist">
+  {% for item in page_menu %}
+  <li class="nav-item" role="presentation">
+    <a class="nav-link {{ item.extra_classes }} {% if forloop.first %} show active{% endif %}" id="{{item.title|slugify}}-tab" data-bs-toggle="pill" data-bs-target="#{{item.title|slugify}}-panel" type="button" role="tab" aria-controls="pills-home" aria-selected="true">
+      <i class="fas {{ item.icon }}"></i>
+      <span class='d-none d-md-inline-block'>{{ item.title }}</span>
+    </a>
+    {% comment %} <a href="{{ item.resolved }}" 
+      class="nav-link {{ item.extra_classes }} {% if forloop.first %}active{% endif %}" 
+      hx-get="{{ item.resolved }}"
+      {% for key, val in htmx.items %}
+      hx-{{ key }}="{{ val }}"
+      {% endfor %}
+      hx-replace-url="{{ item.resolved }}" 
+      data-bs-toggle="tab" 
+      role="tab">
+        <i class="fas {{ item.icon }}"></i>
+        <span class='d-none d-md-inline-block'>{{ item.title }}</span>
+    </a> {% endcomment %}
+  </li>
+  {% endfor %}
+  <div class='ms-auto d-inline-flex'>
+    <li class="nav-item">
+      <a id="map-panel-tab" href="#map-panel" class="btn list-item " role="button" data-bs-toggle="tab" aria-expanded="false">
+        <i class="{% icon "map" %}"></i>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a id='discussion-tag' href="#discussion-panel" class="btn list-item" role="button" data-bs-toggle="tab" aria-expanded="false">
+        <i class="{% icon "discussion" %}"></i>
+      </a>
+    </li>
+    {% if page_actions %}{% include "menu/page_actions.html" %}{% endif %}
+  </div>
+</ul>
+
+

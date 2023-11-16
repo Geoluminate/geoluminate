@@ -6,6 +6,7 @@
   <head {% meta_namespaces %}>
     <title>{% block title %}{{title}}{% endblock %} | {% block title_after %}{{ geoluminate.database.name }}{% endblock %}</title>
     {% include "geoluminate/utils/head.html" %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     {% block head %}{% endblock head %}
     {% block css %}{% endblock css %}
     {% render_block "css" %}
@@ -17,18 +18,17 @@
         hx-target="main"
         hx-indicator="#mainIndicator"
         hx-ext="debug"
-
         >
     <div class="application-wrapper {% block wrapper_class %}{% endblock %}">
     {% block application %}
       <nav class="navbar navbar-expand-md navbar-dark bg-primary bg-gradient">
         <div class="container-fluid">
-          <button class="navbar-toggler d-block bg-primary-subtle"
+          <button class="navbar-toggler d-block bg-white"
           type="button" data-bs-toggle="offcanvas" data-bs-target="#mainSidebar" aria-controls="mainSidebar"
           aria-expanded="false"
           aria-label="Toggle navigation"
           >
-            <img src="{% icon %}" alt="Logo" class="d-inline-block align-text-top" style="height: 2rem;">
+            <img src="{% brand "icon" %}" alt="Logo" class="d-inline-block align-text-top" style="height: 2rem;">
           </button>
           <button class="navbar-toggler"
                   type="button"
@@ -47,16 +47,20 @@
           </div>
         </div>
       </nav>
-      <nav class='page-nav'>{% block page_nav %}{% endblock %}</nav>
+      <nav class='page-nav'>{% block page_nav %}{% page_menu %}{% endblock %}</nav>
       <div class='page-wrapper'>
         {% comment %} <div class='page-messages'>
           {% include "geoluminate/components/messages.html" %}
         </div> {% endcomment %}
-        {% block page_left %}{% endblock page_left %}
-        <main class="page {% block page_css_class %}{% endblock %}">
-          {% block main %}{% endblock main %}
-        </main>
-        {% block after_page %}{% endblock after_page %}
+        {% block page_left %}{% endblock %}
+        <div class='content-wrapper'>
+          <main class="page {% block page_css_class %}{% endblock %}">
+            {% block main %}{% if template_name %}{% include template_name %}{% endif %}{% endblock %}
+            {% comment %} {% include "geoluminate/footer.html" %} {% endcomment %}
+          </main>
+          <img id='mainIndicator' class="htmx-indicator endless_loading" src="{% static "img/spinners/spinning-circles.svg" %}"/>
+        </div>
+        {% block after_page %}{% endblock %}
       </div>
       {% comment %} {% render_block "page_right" %} {% endcomment %}
     {% endblock application %}
@@ -64,20 +68,20 @@
 
     {% comment %} OFFCANVAS AND MODALS {% endcomment %}
     {% include 'geoluminate/components/navigation/sidebar.html' %}
-    {% include "user/toolbar.html" %}
+    {% include "menu/user_menu.html" %}
 
     {% block modals %}{% endblock modals %}
     {% render_block "modals" %}
 
     {% comment %} SCRIPTS {% endcomment %}
     <script src="{% static "node_modules/jquery/dist/jquery.min.js" %}"></script>
+    
 
-
-    {% block scripts %}{% endblock scripts %}
     {% render_block "js" %}
+    {% block scripts %}{% endblock scripts %}
 
     {% compress js %}
-      <script src="{% static "geoluminate/js/custom.js" %}"></script>
+      {% comment %} <script src="{% static "geoluminate/js/custom.js" %}"></script> {% endcomment %}
       <script src="{% static "geoluminate/js/color-theme-switch.js" %}"></script>
 
     {% comment %} <script src="{% static "geoluminate/js/multilevel-dropdown.js" %}"></script> {% endcomment %}

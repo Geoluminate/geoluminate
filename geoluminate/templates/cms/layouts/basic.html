@@ -1,20 +1,24 @@
-{% extends "geoluminate/layout/full_width.html" %}
+{% extends "base.html" %}
 {% load cms_tags menu_tags static authentication %}
 
-{% block page_header %}
+{% block page_nav %}
 {% if request.user|has_group:"CMS" or request.user.is_superuser and current_page %}
-{% include "geoluminate/components/navigation/partials/cms_menu.html" %}
+<div id='cmsToolbarWrapper' class="collapse">
+  {% include "geoluminate/components/navigation/partials/cms_menu.html" %}
+</div>
 {% endif %}
-  {% comment %} {% if request.user|has_group:"CMS" or request.user.is_superuser and current_page %}
-    {% include "geoluminate/components/navigation/partials/cms_menu.html" %}
-  {% endif %} {% endcomment %}
 {% endblock %}
 
 {% block title %}
   {{ request.current_page }}
 {% endblock title %}
 
-{% block content %}
+{% block main %}
+  <div class='pb-3' style="margin-bottom: 400px;">
+    {% placeholder "content" %}
+  </div>
+{% endblock %}
 
-  {% placeholder "content" %}
-{% endblock content %}
+{% block after_page %}
+{% include "cms/page_edit_toggle.html" %}
+{% endblock %}

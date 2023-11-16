@@ -1,26 +1,42 @@
 {% load menu_tags %}
 
+{% spaceless %}
 {% for child in children %}
-<li class="nav-item child{% if child.selected %} selected{% endif %}{% if child.ancestor %} ancestor{% endif %}{% if child.sibling %} sibling{% endif %}{% if child.descendant %} descendant{% endif %}">
-	{% if child.children %}
-		<div class='accordion-item'>
-			<a href='#' data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-				<div class='d-flex align-items-center'>
-					<span class='opener'>{{ child.get_menu_title }}</span>
-				</div>
-			</a>
-			<div id="collapseOne" class="collapse sub-menu" aria-labelledby="headingOne" data-bs-parent="#menu">
-				<ul class='alt nav'>
-					{% show_menu from_level to_level extra_inactive extra_active template "" "" child %}
-				</ul>
-			</div>
-		</div>
-	{% else %}
-		<a class='nav-link' href="{{ child.attr.redirect_url|default:child.get_absolute_url }}">
-			<div class='d-flex align-items-center'>
-				<span>{{ child.get_menu_title }}</span>
-			</div>
+<li class="nav-item child {% if child.selected %} 
+										selected{% endif %}{% if child.ancestor %} 
+										ancestor{% endif %}{% if child.sibling %} 
+										sibling{% endif %}{% if child.descendant %} 
+										descendant{% endif %}{% if child.children %} 
+										dropdown{% endif %}">
+
+		<a class="nav-link {% if child.ancestor or child.selected %} 
+							active{% endif %}{% if child.children %}
+							dropdown-toggle{% endif %}" 
+			{% if not child.children %}
+				href="{{ child.attr.redirect_url|default:child.get_absolute_url }}"
+			{% else %}
+				href="#"
+				data-bs-toggle="dropdown" 
+				data-bs-target="#{{ child.get_menu_title|slugify }}" 
+				aria-expanded="false" 
+				aria-controls="{{ child.get_menu_title|slugify }}"
+			{% endif %}
+			>
+			{{ child.get_menu_title }}
 		</a>
-	{% endif %}
+
+		{% if child.children %}
+			<ul id="{{ child.get_menu_title|slugify }}" class='dropdown-menu'>
+				{% comment %} <li>
+					<a class="dropdown-item {% if child.selected %} 
+					active{% endif %}" href="{{ child.attr.redirect_url|default:child.get_absolute_url }}">
+						{{ child.get_menu_title }}
+					</a>
+				</li> {% endcomment %}
+				{% show_menu from_level to_level extra_inactive extra_active "menu/nav_dropdown.html" "" "" child %}
+			</ul>
+		{% endif %}
+
 </li>
 {% endfor %}
+{% endspaceless %}

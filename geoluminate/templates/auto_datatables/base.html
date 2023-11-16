@@ -1,9 +1,31 @@
-{% extends 'application.html' %}
+{% extends 'base.html' %}
 {% load static sekizai_tags i18n autotables geoluminate %}
 
 {% block wrapper_class %}application{% endblock %}
 
 {% block title %}{{ geoluminate.database.acronym }} {{ table.model|verbose_name_plural|title }}{% endblock %}
+
+{% block page_nav %}
+<ul id="tableButtons" class="nav nav-pills nav-pills-alternate d-print-none">
+<span class="toolbar-left"></span>
+<span class="toolbar-right ms-auto my-auto"></span>
+
+</ul>
+
+  {% comment %} {% for item in navigation %}
+  <li class="nav-item" role="presentation">
+      <button  href="{{ item.url }}" data-bs-toggle="pill" type="button" role="tab"
+          hx-get="{{ item.url }}"
+          class="nav-link {{ item.extra_classes }}{% if forloop.first %} active{% endif %}"
+          >
+        <i class="fas {{ item.icon }}"></i>
+        {{ item.title }}
+      </button>
+    </li>
+  {% endfor %} {% endcomment %}
+
+{% endblock %}
+
 
 
 {% block toolbar_right %}
@@ -22,7 +44,7 @@
 
 {% block page_header_css %}{% if not table.row_template %}app-layout{% else %}page-layout{% endif %}{% endblock %}
 
-{% block content %}
+{% block main %}
 {% if table.row_template %}
 <div id="filterContainer" class="sidebar sidebar-start show" tabindex="-1" aria-labelledby="filterContainerLabel">
 {% else %}
@@ -32,16 +54,8 @@
 </div>
 
 
-<div class="auto-table-wrapper {% if table.row_template %}templated{% endif %}">
-  {% render_table_for_url table True %}
-  <div class='container mt-3'>
-    <div id="template-container"></div>
-  </div>
-</div>
+{% render_table_for_url table True %}
 
-{% if template %}
-<script id='template-card'>
-  {% include template %}
-</script>
-{% endif %}
-{% endblock content %}
+<div id='infoPane' class='px-1 position-absolute bottom-0 end-0'></div>
+
+{% endblock %}

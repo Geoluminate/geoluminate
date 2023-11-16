@@ -392,11 +392,6 @@
             {% autoescape off %}
               <strong>{% trans 'Copyright' %} &copy; {% now 'Y' %} {{ jazzmin_settings.copyright }}.</strong> {% trans 'All rights reserved.' %}
             {% endautoescape %}
-            <button type="button"
-                    id="feedback-btn"
-                    class="position-relative ml-auto btn btn-info btn-sm">
-              {% trans 'Give Feedback' %} <span class="fas fa-bullhorn" aria-hidden="true"></span>
-            </button>
           </footer>
           {% if jazzmin_settings.show_ui_builder %}
             {% include 'jazzmin/includes/ui_builder_panel.html' %}

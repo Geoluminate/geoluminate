@@ -1,14 +1,16 @@
 {% load static %}
-<div class='container'>
+<div class='container py-3'>
   <header class="page-header {% block page_header_css %}page-layout{% endblock %}">
-    {% block title %}{{title}}{% endblock %}
+    {% block title %}{% endblock %}
     <div class='toolbar'>
       <div class="toolbar-left">{% block toolbar_left %}{% endblock %}</div>
       <div class="toolbar-right">{% block toolbar_right %}{% endblock %}</div>
     </div>
   </header>
-  <div class='page-content d-block'>
+  <div>
+    {% block help_text %}{% endblock %}
     {% block content %}{% endblock %}
-    <img id='mainIndicator' class="htmx-indicator" src="{% static "geoluminate/img/spinners/spinning-circles.svg" %}"/>
   </div>
 </div>
+
+{% block modals %}{% endblock %}

@@ -1,5 +1,20 @@
 
 .card {
+
+    .card-title {
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    .contributor-name-link {
+        @extend .text-muted;
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
     &.project {
         img {
             @extend .border-5;
@@ -17,5 +32,21 @@
                 @extend .border-info;
             }
         }
+    }
+
+    ul.list-group.list-group-flush {
+        border: 0;
+        li {
+            @extend .list-group-item;
+            @extend .px-0;
+            @extend .py-1;
+            border: 0;
+
+            span {
+                @extend .fw-light;
+                float: right;
+            }
+        }
+
     }
 }

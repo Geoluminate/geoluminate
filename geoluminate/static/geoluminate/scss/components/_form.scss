@@ -5,3 +5,21 @@ form {
     }
   }
 }
+
+.sidebar-content {
+  select {
+    @extend .list-group;
+    @extend .list-group-flush;
+    width: 100%;
+    border: none;
+    padding: 0 !important;
+    cursor: pointer;
+    option {
+      @extend .list-group-item;
+      @extend .list-group-item-action;
+      @extend .list-group-item-light;
+    }
+  }
+}
+
+

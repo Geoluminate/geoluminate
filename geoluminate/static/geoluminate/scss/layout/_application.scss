@@ -9,14 +9,17 @@
 }
 
 .page-nav {
-  @extend .container-fluid;
+  // @extend .container-fluid;
+  width: 100%;
   @extend .bg-light-subtle;
   @extend .bg-gradient;
   @extend .small;
+  text-transform: capitalize;
 }
 
 .page-wrapper {
   display: flex;
+  align-items: stretch;
   position: relative;
   overflow-x: hidden;
   overflow-y: auto;
@@ -28,16 +31,32 @@
   position: absolute;
 }
 
+.content-wrapper {
+  display: flex;
+  flex-grow: 1 !important;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  // @extend .bg-gradient;
+
+  >div:first-child {
+    overflow: auto;
+  }
+
+}
+
+
 .page {
   display: flex;
   flex-grow: 1 !important;
   flex-direction: column;
-  overflow: hidden;
-  @extend .bg-gradient;
+  overflow: auto;
+  // background-color: var(--bs-body-bg);
+  // @extend .bg-gradient;
 
-  div:first-child {
-    overflow: auto;
-  }
+  // >div:first-child {
+  //   overflow: auto;
+  // }
 
 }
 
@@ -49,117 +68,12 @@
   overflow: hidden;
 }
 
-.page-header {
-  width: 100%;
-  display: flex;
-
-  .toolbar {
-      @extend .flex-grow-1;
-      display: flex;
-      @extend .align-items-center;
-
-      .toolbar-right {
-          display: flex;
-          @extend .flex-nowrap;
-
-      }
-
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-      font-size: 1.25rem;
-      margin: 0;
-      font-weight: 500;
-      line-height: 1.2;
-      color: var(--bs-heading-color, inherit);
-  }
-  .dt-buttons {
-    .btn {
-      @extend .btn-sm;
-    //     border-radius: 0;
-    //     border-right: 1px solid $primary-bg-subtle;
-    }
-  }
-
-
-  &.page-layout {
-      @extend .my-3;
-      @extend .align-items-center;
-      border-bottom: solid 4px var(--bs-primary-border-subtle);;
-      padding-bottom: 0.5rem;
-      margin-bottom: 0;
-      position: relative;
-      color: var(--bs-primary);
-
-      .toolbar {
-          @extend .justify-content-end;
-      }
-
-
-
-      // > * {
-      //     margin-bottom: 0;
-      // }
-
-      // .icons {
-      //     flex-shrink: 1;
-      //     text-align: right;
-      // }
-  }
-
-  &.app-layout {
-      @extend .container-fluid;
-      @extend .border-bottom;
-      @extend .bg-primary-subtle;
-      @extend .border-primary-subtle;
-      overflow: hidden;
-
-      .toolbar {
-          @extend .justify-content-between;
-      }
-
-      > button, .btn-group > button {
-          @extend .btn;
-          border-radius: 0;
-          border-right: 1px solid $primary-bg-subtle;
-      }
-  }
-
-
-
-}
 
 .page-content {
-  // @extend .container;
-  flex-grow: 1 !important;
-  flex-shrink: 1 !important;
-  flex-basis: auto !important;
-  display: flex;
-  flex-wrap: nowrap;
-  // max-height: 100vh;
-  overflow: auto;
   position: relative;
   scroll-behavior: smooth;
 }
 
-
-.page-footer {
-  display: flex;
-  @extend .container;
-  @extend .justify-content-between;
-  @extend .align-items-center;
-  @extend .bg-primary-subtle;
-  @extend .py-1;
-  @extend .border-top;
-  @extend .border-primary-subtle;
-
-  width: 100%;
-
-  ul.pagination {
-      @extend .pagination-sm;
-      margin: 0;
-  }
-}
 
 // Color mode variables in _root.scss
 @include color-mode(dark) {

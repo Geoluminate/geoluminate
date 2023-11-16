@@ -1,0 +1,82 @@
+// a combination of Bootstrap list group and accordion
+.datatable {
+  // max-width: 100% !important;
+  @extend .table;
+  @extend .table-striped;
+  @extend .table-responsive;
+  @extend .table-sm;
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.dataTables_filter {
+  display: none;
+}
+
+.dtsp-searchIcon {
+  display: none;
+}
+
+.auto-table-wrapper {
+  display: flex;
+  flex-grow: 1;
+  max-height: 100%;
+  opacity: 0;
+  &.loaded {
+      opacity: 1;
+  }
+}
+
+.dataTables_wrapper {
+  width: 100%;
+}
+
+.dataTables_scroll {
+  height: 100% !important;
+  display: flex;
+  flex-direction: column;
+}
+
+.dataTables_scrollHead {
+  overflow: initial !important;
+  cursor: grab;
+}
+
+
+.dataTables_scrollBody {
+  flex-grow: 1;
+}
+
+.dataTables_info {
+  background: var(--bs-body-bg);
+  @extend .p-1;
+  border-top-left-radius: var(--bs-border-radius)!important;
+}
+
+
+.dt-buttons {
+  @extend .nav-item;
+
+  button {
+    @extend .py-1;
+    @extend .nav-pills, .nav-link;
+    @extend .rounded;
+
+    &:hover {
+      background-color: inherit;
+    }
+    &:active {
+      @extend .bg-secondary-subtle;
+    }
+  }
+}
+
+
+
+// #tableButtons {
+//   input {
+//     &:active {
+//       width: 25%;
+//     }
+//   }
+// }

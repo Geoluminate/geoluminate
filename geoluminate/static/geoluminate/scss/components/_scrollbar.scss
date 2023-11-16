@@ -1,11 +1,16 @@
 ::-webkit-scrollbar {
 	width: 10px;
+	z-index: 1000;
 }
 
 ::-webkit-scrollbar-track {
+	// background-color: var(--body-bg);
+	// background: transparent;
+	// background-color: green;
 	// background-color: #ebebeb;
 	-webkit-border-radius: 10px;
 	border-radius: 10px;
+	z-index: 1000;
 }
 
 ::-webkit-scrollbar-thumb {

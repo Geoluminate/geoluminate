@@ -12,6 +12,7 @@
 
 // Components
 @import 'components/alerts';
+@import 'components/badges';
 @import 'components/dropdown';
 @import 'components/header';
 @import 'components/menu';
@@ -22,10 +23,10 @@
 @import 'components/formset';
 @import 'components/card';
 @import 'components/comments';
-// @import 'components/table';
+@import 'components/table';
 
 // Overrides
-@import "overrides/datatables";
+// @import "overrides/datatables";
 @import "overrides/spectacular";
 
 
@@ -42,6 +43,26 @@
 	#application-sidebar, #appMenu, nav {
 		display: none !important;
 	}
+}
+
+
+.endless_container {
+	text-align: center;
+
+	.endless_more {
+		@extend .btn;
+		@extend .btn-primary;
+		@extend .rounded-pill;
+		text-transform: capitalize;
+	}
+	// .endless_loading {
+	// 	content: url("/static/img/spinners/spinning-circles.svg");
+	// }
+}
+
+
+.bg-body-light {
+	background-color: var(--bs-body-bg);
 }
 
 .auto-table-wrapper.templated .datatable {

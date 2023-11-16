@@ -1,25 +1,8 @@
-.datatable {
-    // max-width: 100% !important;
-    @extend .table;
-    @extend .table-striped;
-    @extend .table-responsive;
-}
-
-.dataTables_filter {
-  display: none;
-}
-
 // .dtsp-titleRow {
 //     button {
 //         padding: $btn-padding-y-sm $btn-padding-x-sm !important;
 //     }
 // }
-
-.dtsp-searchIcon {
-    display: none;
-}
-
-
 
 
 .dtsp {

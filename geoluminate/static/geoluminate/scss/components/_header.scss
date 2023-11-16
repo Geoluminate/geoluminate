@@ -1,15 +1,15 @@
 	header, .header {
-    @extend .d-flex;
-		border-bottom: solid 4px var(--bs-primary-border-subtle);;
-		padding-bottom: 0.5rem;
-		margin-bottom: 1em;
-		position: relative;
-		overflow: hidden;
-		color: var(--bs-primary);
+    	@extend .d-flex;
+		@extend .mb-2;
+		@extend .text-primary;
 
-		> * {
-			margin-bottom: 0;
+		h1 {
+			@extend .display-6;
 		}
+
+		// > * {
+			// margin-bottom: 0;
+		// }
 
 		.icons {
 			flex-shrink: 1;

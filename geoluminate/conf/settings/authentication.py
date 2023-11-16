@@ -5,7 +5,6 @@
 All settings can be overridden in your project settings file.
  """
 
-
 # PASSWORDS
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#password-hashers
@@ -34,7 +33,7 @@ ACCOUNT_ADAPTER = "geoluminate.contrib.users.adapters.AccountAdapter"
 """"""
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
-LOGIN_REDIRECT_URL = "user:dashboard"
+LOGIN_REDIRECT_URL = "user:profile"
 """"""
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-url
@@ -65,8 +64,8 @@ ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 """Email verification is mandatory"""
 
 # After signing up
-ACCOUNT_SIGNUP_REDIRECT_URL = "/"
-""""""
+# ACCOUNT_SIGNUP_REDIRECT_URL = "/"
+# """"""
 
 # After clicking email confirmation link, user is logged in and redirected
 # to home? page

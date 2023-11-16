@@ -29,3 +29,12 @@ AWS_PUBLIC_MEDIA_LOCATION = "media/public"
 
 AWS_PRIVATE_MEDIA_LOCATION = "media/private"
 """"""
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+
+# STORAGES = {
+#     "staticfiles": {
+#         "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+#         # "LOCATION": "static",
+#     },
+# }

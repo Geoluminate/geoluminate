@@ -1,13 +1,11 @@
-import os
-
 GEOLUMINATE_APPS = [
     # Admin apps
     # "djangocms_admin_style",
+    "geoluminate.contrib.admin",
     "adminactions",
     "jazzmin",
-    "postgres_metrics.apps.PostgresMetrics",
     "polymorphic",
-    "modeltranslation",
+    # "modeltranslation",
     # DJANGO CORE
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -25,6 +23,7 @@ GEOLUMINATE_APPS = [
     "geoluminate.contrib.core",
     "geoluminate.contrib.projects",
     "geoluminate.contrib.datasets",
+    "geoluminate.contrib.reviews",
     "geoluminate.contrib.samples",
     "geoluminate.contrib.contributors",
     "geoluminate.contrib.users",
@@ -76,7 +75,9 @@ GEOLUMINATE_APPS = [
     "fluent_comments",
     "threadedcomments",
     "django_comments",
-    "solo",  # singleton model for storing dynamic global variables in the DB
+    # OTHERS
+    "actstream",
+    # "solo",  # singleton model for storing dynamic global variables in the DB
     "django_contact_form",  # for contact forms
     "storages",  # for setting up backend storages
     "simple_menu",  # for defining non-CMS menus in the application
@@ -101,7 +102,7 @@ GEOLUMINATE_APPS = [
     # "client_side_image_cropping",
     "dbbackup",
     # "tellme",  # adds user feedback functionality to the site
-    "django_spaghetti",  # entity-relationship diagrams
+    # "django_spaghetti",  # entity-relationship diagrams
     # "jazzmin_translate",  # rosetta compatibility with jazzmin
     # "django_better_admin_arrayfield",  # nice admin widget for postgres array fields
     # GEOLUMINATE DEFAULT PLUGINS
@@ -112,5 +113,5 @@ GEOLUMINATE_APPS = [
 ]
 
 
-if os.environ.get("SHOW_DEBUG_TOOLBAR", False):
+if env("SHOW_DEBUG_TOOLBAR"):
     GEOLUMINATE_APPS.append("debug_toolbar")

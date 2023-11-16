@@ -30,7 +30,7 @@ JAZZMIN_SETTINGS = {
     "copyright": GEOLUMINATE["governance"]["name"],
     # List of model admins to search from the search bar, search bar omitted if excluded
     # If you want to use a single search field you dont need to use a list, you can use a simple string
-    # "search_model": ["auth.User", "auth.Group"],
+    "search_model": ["users.User"],
     "user_avatar": "profile_image",
     ############
     # Top Menu #
@@ -39,11 +39,6 @@ JAZZMIN_SETTINGS = {
         # Url that gets reversed (Permissions can be added)
         {"name": "Admin Home", "url": "admin:index", "permissions": ["auth.view_user"]},
         {"name": "Visit Website", "url": "/", "new_window": True},
-        {
-            "name": "Invite Someone",
-            "url": "http://127.0.0.1:8000/admin/invitations/invitation/add/",
-            "permissions": ["user.is_staff"],
-        },
     ],
     #############
     # User Menu #
@@ -83,19 +78,20 @@ JAZZMIN_SETTINGS = {
         "laboratory",
         "fluent_comments",
         "organizations",
-        "contributors",
         "datasets",
         "projects",
         "samples",
     ],
     "hide_models": [
-        "core.KeyDate",
+        "core.FuzzyDate",
+        "contributors.Contribution",
         "cms.PageType",
         "cms.StaticPlaceHolder",
     ],
     # List of apps (and/or models) to order the side menu
     "order_with_respect_to": [
         "core",
+        "contributors",
         "literature",
         "users",
         "cms",
@@ -128,22 +124,44 @@ JAZZMIN_SETTINGS = {
                 "permissions": ["user.is_staff"],
             },
             {
-                "name": _("Contributors"),
-                "url": "admin:contributors_contributor_changelist",
-                "icon": "fas fa-handshake",
+                "name": _("Measurements"),
+                "url": "admin_measurements",
+                "icon": "fas fa-flask",
                 "permissions": ["user.is_staff"],
+            },
+        ],
+        "contributors": [
+            {
+                "name": _("Users"),
+                "url": "admin:users_user_changelist",
+                "icon": "fas fa-user",
             },
             {
                 "name": _("Organizations"),
                 "url": "admin:organizations_organization_changelist",
                 "icon": "fas fa-university",
-                "permissions": ["user.is_staff"],
+            },
+            {
+                "name": _("Email Addresses"),
+                "url": "admin:account_emailaddress_changelist",
+                "icon": "fas fa-envelope",
             },
             {
                 "name": _("Moderation"),
                 "url": "admin:fluent_comments_fluentcomment_changelist",
                 "icon": "fas fa-comments",
-                "permissions": ["user.is_staff"],
+            },
+            {
+                "name": _("Invite Someone"),
+                "url": "admin:invitations_invitation_add",
+                "icon": "fas fa-user-plus",
+                "permissions": ["user.can_invite"],
+            },
+            {
+                "name": _("Submissions"),
+                "url": "admin:datasets_review_changelist",
+                "icon": "fas fa-user-plus",
+                "permissions": ["user.can_invite"],
             },
         ],
         "cms": [
@@ -160,24 +178,6 @@ JAZZMIN_SETTINGS = {
                 "url": "admin:auth_group_changelist",
                 "icon": "fas fa-users",
                 "permissions": ["user.is_staff"],
-            },
-            # {
-            #     "name": _("Organizations"),
-            #     "url": "admin:organizations_organization_changelist",
-            #     "icon": "fas fa-university",
-            #     "permissions": ["user.is_staff"],
-            # },
-            # {
-            #     "name": _("Contributors"),
-            #     "url": "admin:contributors_contributor_changelist",
-            #     "icon": "fas fa-handshake",
-            #     "permissions": ["user.is_staff"],
-            # },
-            {
-                "name": _("Invite Someone"),
-                "url": "admin:invitations_invitation_add",
-                "icon": "fas fa-user-plus",
-                "permissions": ["user.can_invite"],
             },
         ],
     },
@@ -197,6 +197,7 @@ JAZZMIN_SETTINGS = {
         "laboratory.Manufacturer": "fas fa-industry",
         "contributors.Personal": "fas fa-user-graduate",
         "contributors.Organizational": "fas fa-university",
+        "contributors.Contributor": "fas fa-handshake",
     },
     # Icons that are used when one is not manually specified
     "default_icon_parents": "fas fa-chevron-circle-right",
@@ -205,7 +206,7 @@ JAZZMIN_SETTINGS = {
     # Related Modal #
     #################
     # Use modals instead of popups
-    "related_modal_active": True,
+    "related_modal_active": False,  # Setting to True will break CMS frontend editing
     #############
     # UI Tweaks #
     #############

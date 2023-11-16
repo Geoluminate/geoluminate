@@ -50,7 +50,8 @@ USE_TZ = True
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#site-id
 SITE_ID = 1
-
+SITE_NAME = GEOLUMINATE["application"]["name"]
+SITE_DOMAIN = GEOLUMINATE["application"]["domain"]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = ["*"]

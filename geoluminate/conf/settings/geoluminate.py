@@ -19,14 +19,69 @@ GEOLUMINATE_IDENTIFIER_SCHEMES = {
     # "researchgate_id": {"URI": "https://app.geosamples.org/sample/researchgate_id/{identifier}"},
 }
 
+IdentifierSchemes = {
+    "ARK": "https://n2t.net/ark:/",
+    "arXiv": "https://arxiv.org/",
+    "bibcode": "https://ui.adsabs.harvard.edu/",
+    "DOI": "https://doi.org/",
+    "EAN13": "https://www.ean-search.org/",
+    "EISSN": "https://www.issn.org/",
+    "Handle": "https://hdl.handle.net/",
+    "IGSN": "https://igsn.org/",
+    "ISBN": "https://www.isbn-international.org/",
+    "ISSN": "https://www.issn.org/",
+    "ISTC": "https://www.istc-international.org/",
+    "LISSN": "https://www.issn.org/",
+    "LSID": "https://www.lsid.info/",
+    "PMID": "https://www.ncbi.nlm.nih.gov/",
+    "PURL": "https://archive.org/services/purl/",
+    "UPC": "https://www.ean-search.org/",
+    "URL": "https://www.iana.org/",
+    "URN": "https://www.iana.org/",
+}
+
+
 GEOLUMINATE_ALLOWED_IDENTIFIERS = {
-    "contributors.Contributor": ["orcid", "researcher_id", "scopus_id", "researchgate_id"],
-    # "projects.Project": ["doi"],
-    "samples.Sample": ["IGSN"],
-    "datasets.Dataset": ["DOI"],
-    # organization IDs from https://ror.readme.io/docs/ror-data-structure#external_ids
-    "organization.Organization": ["ROR", "GRID", "Wikidata", "ISNI", "Crossref Funder ID"],
-    "literature.Literature": ["DOI"],
+    "samples.Sample": {
+        "IGSN": "https://igsn.org/",
+        # "DOI": "https://doi.org/",
+    },
+    "literature.Literature": {
+        "DOI": "https://doi.org/",
+        "ISBN": "https://www.isbn-international.org/",
+        "ISSN": "https://www.issn.org/",
+        "URL": "https://www.iana.org/",
+    },
+    "datasets.Dataset": {
+        "ARK": "https://n2t.net/ark:/",
+        "arXiv": "https://arxiv.org/",
+        "bibcode": "https://ui.adsabs.harvard.edu/",
+        "DOI": "https://doi.org/",
+        "EAN13": "https://www.ean-search.org/",
+        "EISSN": "https://www.issn.org/",
+        "Handle": "https://hdl.handle.net/",
+        "ISTC": "https://www.istc-international.org/",
+        "LISSN": "https://www.issn.org/",
+        "LSID": "https://www.lsid.info/",
+        "PMID": "https://www.ncbi.nlm.nih.gov/",
+        "PURL": "https://archive.org/services/purl/",
+        "UPC": "https://www.ean-search.org/",
+        "URL": "https://www.iana.org/",
+        "URN": "https://www.iana.org/",
+    },
+    "contributors.Personal": {
+        "ORCID": "https://orcid.org/",
+        # "researcher_id": "https://app.geosamples.org/sample/researcher_id/",
+        # "scopus_id": "https://app.geosamples.org/sample/scopus_id/",
+        # "researchgate_id": "https://app.geosamples.org/sample/researchgate_id/",
+    },
+    "contributors.Organization": {
+        "ROR": "https://ror.org/",
+        "GRID": "https://www.grid.ac/institutes/",
+        "Wikidata": "https://www.wikidata.org/wiki/",
+        "ISNI": "https://isni.org/isni/",
+        "Crossref Funder ID": "https://doi.org/",
+    },
 }
 
 GEOLUMINATE_SUBMISSION_APPROVAL = "manual"
@@ -44,33 +99,40 @@ GEOLUMINATE_NAVBAR_WIDGETS = [
 """A list of widget templates to render to the right side of the main navbar."""
 
 GEOLUMINATE_USER_SIDEBAR_WIDGETS = [
+    "geoluminate/widgets/admin_link.html",
     "geoluminate/widgets/theme_toggle.html",
 ]
 """A list of widget templates to render below the user display name in the user sidebar."""
 
 
-GEOLUMINATE_PROJECT_PAGES = [
-    ("fas fa-circle-info", _("About"), "core/pages/descriptions.html"),
-    ("fas fa-users", _("Contributors"), "core/pages/contributors.html"),
-    ("fas fa-timeline", _("Timeline"), "core/pages/timeline.html"),
-    ("fas fa-map-location-dot", _("Map"), "geoluminate/components/map.html"),
-    ("fas fa-comments", _("Discussion"), "core/pages/discussion.html"),
-    ("fas fa-paperclip", _("Attachments"), "core/pages/attachments.html"),
-    ("fas fa-folder-open", _("Datasets"), "core/pages/datasets.html"),
-]
-
-GEOLUMINATE_DATASET_PAGES = [
-    ("fas fa-circle-info", _("About"), "core/pages/descriptions.html"),
-    ("fas fa-users", _("Contributors"), "core/pages/contributors.html"),
-    ("fas fa-timeline", _("Timeline"), "core/pages/timeline.html"),
-    ("fas fa-map-location-dot", _("Map"), "geoluminate/components/map.html"),
-    ("fas fa-comments", _("Discussion"), "core/pages/discussion.html"),
-    ("fas fa-paperclip", _("Attachments"), "core/pages/attachments.html"),
-    ("fas fa-database", _("Samples"), "core/pages/samples.html"),
-]
-
 GEOLUMINATE_DESCRIPTION_TYPES = {
-    "core.Dataset": "geoluminate.contrib.core.choices.DataCiteDescriptionTypes",
-    "core.Project": "geoluminate.contrib.core.choices.DataCiteDescriptionTypes",
-    "core.Sample": "geoluminate.contrib.core.choices.DataCiteDescriptionTypes",
+    "core.Dataset": "geoluminate.contrib.datasets.choices.DataCiteDescriptionTypes",
+    "core.Project": "geoluminate.contrib.datasets.choices.DataCiteDescriptionTypes",
+    "core.Sample": "geoluminate.contrib.datasets.choices.DataCiteDescriptionTypes",
+}
+
+GEOLUMINATE_FILTERS = {
+    "datasets.Dataset": {
+        "title": ["contains"],
+        "keywords__name": ["exact"],
+        "tags": ["exact"],
+    }
+}
+
+
+GEOLUMINATE_ICONS = {
+    "project": "fa-solid fa-project-diagram",
+    "dataset": "fa-solid fa-folder-open",
+    "sample": "fa-solid fa-database",
+    "person": "fa-solid fa-user",
+    "organization": "fa-solid fa-institution",
+    "location": "fa-solid fa-map-marker-alt",
+    "measurement": "fa-solid fa-flask",
+    "map": "fa-solid fa-map-location-dot",
+    "timeline": "fa-solid fa-bars-staggered",
+    "contributors": "fa-solid fa-users",
+    "overview": "fa-solid fa-book-open",
+    "activity": "fa-solid fa-rss fa-rotate-270",
+    "review": "fa-solid fa-magnifying-glass-chart",
+    "discussion": "fa-solid fa-comments",
 }

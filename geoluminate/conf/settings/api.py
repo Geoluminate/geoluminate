@@ -7,6 +7,7 @@
 
 All settings can be overridden in your project settings file.
 """
+
 from django.template.loader import render_to_string
 
 # django-rest-framework - https://www.django-rest-framework.org/api-guide/settings/
@@ -30,10 +31,10 @@ REST_FRAMEWORK = {
         "geoluminate.api.access_policies.CoreAccessPolicy",
     ],
     "DEFAULT_RENDERER_CLASSES": [
+        "rest_framework.renderers.BrowsableAPIRenderer",
         "drf_orjson_renderer.renderers.ORJSONRenderer",
         "geoluminate.api.renderers.GeoJSONRenderer",
-        "rest_framework.renderers.TemplateHTMLRenderer",
-        # "rest_framework.renderers.BrowsableAPIRenderer",
+        # "rest_framework.renderers.TemplateHTMLRenderer",
         # "rest_framework_csv.renderers.PaginatedCSVRenderer",
         # "datatables.renderers.DatatablesORJSONRenderer",
         "auto_datatables.renderers.DatatablesRenderer",
@@ -49,7 +50,9 @@ REST_FRAMEWORK = {
         "drf_orjson_renderer.parsers.ORJSONParser",
     ],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    # "DEFAULT_SCHEMA_CLASS": "geoluminate.api.utils.CustomSchema",
     "DEFAULT_METADATA_CLASS": "drf_auto_endpoint.metadata.AutoMetadata",
+    "URL_FIELD_NAME": "details",
     # "DATETIME_FORMAT": "%Y-%m-%dT, %H:%M:%S",
 }
 
@@ -60,12 +63,12 @@ SPECTACULAR_SETTINGS = {
     "SCHEMA_PATH_PREFIX": r"/api/v[0-9]",
     "SCHEMA_COERCE_PATH_PK_SUFFIX": True,
     "TITLE": f"{SITE_NAME} API",
-    "DESCRIPTION": f"Documentation of API endpoints of {SITE_NAME}",
+    # "DESCRIPTION": render_to_string("api/docs/api_description.md", context={"geoluminate": GEOLUMINATE}),
     # "TOS": render_to_string("geoluminate/generic/api/tos.html"),
     "TOS": "/api/v1/tos/",
     "CONTACT": {
         "name": GEOLUMINATE["governance"]["name"],
-        "url": GEOLUMINATE["governance"]["website"],
+        "url": GEOLUMINATE["governance"]["url"],
         "email": "",
     },
     "LICENSE": {

@@ -31,15 +31,20 @@ COMPRESS_FILTERS = {
 
 # STATIC
 # ------------------------
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # https://django-compressor.readthedocs.io/en/latest/settings/#django.conf.settings.COMPRESS_URL
 COMPRESS_URL = STATIC_URL  # F405
 
-COMPRESS_OFFLINE = True
 
 COMPRESS_PRECOMPILERS = (("text/x-scss", "django_libsass.SassCompiler"),)
 
 # https://github.com/torchbox/django-libsass
 # better for in-browser debugging
 LIBSASS_SOURCEMAPS = True
+
+
+# WHITENOISE
+# ------------------------------------------------------------------------------
+
+WHITENOISE_MANIFEST_STRICT = False

@@ -7,8 +7,9 @@ from geoluminate.contrib.contributors.models import Contributor
 
 
 class ProfileSerializer(NestedHyperlinkedModelSerializer):
-    web_url = serializers.HyperlinkedIdentityField(view_name="contributor:detail")
+    # web_url = serializers.HyperlinkedIdentityField(view_name="contributor:detail")
 
     class Meta:
         model = Contributor
-        fields = ["url", "web_url", "name"]
+        fields = ["name"]
+        # fields = ["url", "name"]

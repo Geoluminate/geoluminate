@@ -1,0 +1,22 @@
+{% load i18n geoluminate contributor_tags %}
+{% spaceless %}
+
+<div class="card mb-3 w-100 border-0">
+  <div class="card-body">
+    <div class='row'>
+      <div class='col-12 col-sm-1 d-flex flex-column text-center'>
+        {% render_profile_image obj.profile width="100%" extra_classes='shadow-sm rounded-circle' %}
+      </div>
+      <div class='col d-flex flex-column flex-grow-1 mt-3 mt-md-0'>
+        <div class='card-title'>{{ obj.profile }}</div>
+        <div class='card-subtitle'>{{ obj.affiliations.all|default:"This is a test company name" }}</div>
+        <div>
+          {% for role in obj.get_roles_list %}
+            <span class='badge me-1 text-bg-primary'>{{role}}</span>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endspaceless %}

@@ -1,0 +1,11 @@
+{% comment %} {% extends 'geoluminate/base/base_detail.html' %} {% endcomment %}
+
+{% load static i18n formsetify geoluminate autotables %}
+
+
+
+{% comment %} {% block sidebar_content %}
+{% include "core/snippets/contributors.html" with title='Dataset Contributors' contributors=object.contributors.all %}
+{% include "core/snippets/key_dates.html" %}
+{% endblock %} {% endcomment %}
+

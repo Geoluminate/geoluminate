@@ -2,16 +2,7 @@ from django.urls import include, path
 from django.views.generic import TemplateView
 
 # from .views.account import AccountEmailView
-from .views.users import (
-    Account,
-    AffiliationView,
-    Dashboard,
-    ProfileView,
-    # Reviews,
-    user_datasets_view,
-    user_projects_view,
-    user_reviews_view,
-)
+from .views import Account, AffiliationView, ProfileRedirectView
 
 urlpatterns = [
     # path("account/email/", AccountEmailView.as_view(), name="account_email"),
@@ -21,22 +12,14 @@ urlpatterns = [
         include(
             (
                 [
-                    path("dashboard/", Dashboard.as_view(), name="dashboard"),
+                    path("profile/", ProfileRedirectView.as_view(), name="profile"),
                     path("settings/", Account.as_view(), name="account"),
-                    path("projects/", user_projects_view, name="projects"),
-                    path("datasets/", user_datasets_view, name="datasets"),
-                    path("reviews/", user_reviews_view, name="reviews"),
-                    # path("samples/", UserProjects.as_view(), name="projects"),
-                    path(
-                        "profile/",
-                        ProfileView.as_view(extra_context={"add": False}),
-                        name="profile_edit",
-                    ),
                     path("affiliations/", AffiliationView.as_view(), name="affiliations"),
                 ],
                 "user",
             ),
         ),
+        {"base_template": "user/base_list.html", "can_create": True},
     ),
     path(
         "code-of-conduct/",

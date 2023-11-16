@@ -1,10 +1,11 @@
+import random
+
 from django.conf import settings
 from django.contrib.gis.db.models import Collect
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 
 from geoluminate import models
-from geoluminate.contrib.core import utils
 from geoluminate.contrib.core.models import Abstract
 
 from . import choices
@@ -79,7 +80,7 @@ class Dataset(Abstract):
         """Returns the resource type as per the DataCite schema. Geoluminate datasets are always of type 'Dataset'."""
         return "Dataset"
 
-    @cached_property
+    @property
     def locations(self):
         return self.samples.prefetch_related("location").values("location__point")
 
@@ -98,56 +99,16 @@ class Dataset(Abstract):
         """Returns the bounding box of the dataset as a list of coordinates in the format [xmin, ymin, xmax, ymax]."""
         return self.GeometryCollection.extent
 
-    def generate_xml(self):
-        """Generates the XML representation of the dataset."""
-        return utils.generate_xml(self)
+    @cached_property
+    def status(self):
+        return random.choice(["In progress", "Completed", "Accepted", "Published"])
+
+    def get_status_display(self):
+        return self.status
 
     def get_collection_start(self):
         """Returns the key date specifying the start of the collection "CollectionStart" OR the earliest collection date for a related sample"""
         try:
-            return self.key_dates.get(type=KeyDate.DateTypes.CollectionStart)
-        except KeyDate.DoesNotExist:
+            return self.key_dates.get(type=FuzzyDate.DateTypes.CollectionStart)
+        except FuzzyDate.DoesNotExist:
             return None
-
-
-class Review(models.Model):
-    """Stores information about each review"""
-
-    dataset = models.OneToOneField(
-        to="Dataset",
-        help_text=_("Dataset being reviewed"),
-        on_delete=models.SET_NULL,
-        null=True,
-    )
-    reviewer = models.ForeignKey(
-        to=settings.AUTH_USER_MODEL,
-        help_text=_("User reviewing this publication"),
-        on_delete=models.SET_NULL,
-        null=True,
-    )
-    submitted = models.DateTimeField(
-        verbose_name=_("date submitted"),
-        help_text=_("Date the user submitted correction for final approval by site admins"),
-        null=True,
-        blank=True,
-    )
-    accepted = models.DateTimeField(
-        verbose_name=_("date accepted"),
-        help_text=_("Date the review was accepted by site admins and incorporated into the production database"),
-        null=True,
-        blank=True,
-    )
-
-    def __str__(self):
-        return f"Review of {self.dataset} by {self.reviewer}"
-
-    # def get_absolute_url(self):
-    # return reverse("review", kwargs={"pk": self.pk})
-
-    def status(self):
-        if self.accepted:
-            return "Accepted"
-        elif self.submitted:
-            return "Submitted"
-        else:
-            return "Draft"

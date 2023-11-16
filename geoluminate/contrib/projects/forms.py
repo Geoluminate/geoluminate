@@ -8,10 +8,7 @@ from formset.collection import FormCollection
 from formset.fieldset import FieldsetMixin
 from formset.widgets import SelectizeMultiple, UploadedFileInput
 
-from geoluminate.contrib.core.forms import (
-    DescriptionFormCollection,
-    KeyDateFormCollection,
-)
+from geoluminate.contrib.core.forms import FuzzyDateFormCollection
 
 from .models import Project
 
@@ -21,11 +18,16 @@ class ProjectForm(FieldsetMixin, ModelForm):
     # help_text = _("Add a new project.")
     # template_name = "forms/fieldset.html"
 
+    title = forms.CharField(help_text=_("Give your new project a meaningful name"))
+    status = forms.ChoiceField(
+        choices=Project.STATUS_CHOICES.choices, help_text=_("What is the current status of this project?")
+    )
+
     class Meta:
         model = Project
         fields = [
-            "title",
             "status",
+            "title",
             "tags",
         ]
         widgets = {  # noqa: RUF012
@@ -37,4 +39,4 @@ class ProjectForm(FieldsetMixin, ModelForm):
 
 class ProjectFormCollection(FormCollection):
     project = ProjectForm()
-    key_dates = KeyDateFormCollection()
+    key_dates = FuzzyDateFormCollection()

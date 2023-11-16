@@ -1,14 +1,16 @@
 import json
 
+from django.apps import apps
 from django.conf import settings
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models as django_models
-from django.db.models import CharField, F, Value
+from django.db.models import Case, CharField, Count, F, IntegerField, Value, When
 from django.db.models.functions import Concat
 from django.templatetags.static import static
 from django.urls import reverse
 from django.utils.encoding import force_str
+from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 from multiselectfield.utils import get_max_length
 from taggit.managers import TaggableManager
@@ -16,6 +18,7 @@ from taggit.managers import TaggableManager
 from geoluminate import models
 from geoluminate.contrib.datasets.models import Dataset
 from geoluminate.contrib.projects.models import Project
+from geoluminate.contrib.reviews.models import Review
 from geoluminate.contrib.samples.models import Sample
 
 from . import choices
@@ -28,12 +31,19 @@ class Contributor(models.Model):
     for proper attribution and formal publication of datasets. The fields are designed to align with the DataCite
     Contributor schema."""
 
-    type = models.PositiveSmallIntegerField(
+    type = models.CharField(
         verbose_name=_("type"),
         help_text=_("The type of contributor."),
-        choices=((0, "Personal"), (1, "Organizational")),
-        default=0,
-        editable=False,
+        choices=(("Personal", _("Personal")), ("Organizational", _("Organizational"))),
+        default="Personal",
+    )
+
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, related_name="profile", null=True, blank=True, on_delete=models.CASCADE
+    )
+
+    organization = models.OneToOneField(
+        "organizations.Organization", related_name="profile", null=True, blank=True, on_delete=models.CASCADE
     )
 
     image = models.ImageField(
@@ -55,7 +65,7 @@ class Contributor(models.Model):
     slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
 
     interests = TaggableManager(
-        _("interests"), help_text=_("A list of research interests for the contributor."), blank=True
+        _("research interests"), help_text=_("A list of research interests for the contributor."), blank=True
     )
 
     lang = models.CharField(
@@ -66,6 +76,21 @@ class Contributor(models.Model):
         null=True,
     )
 
+    identifiers = models.ManyToManyField(
+        "core.Identifier",
+        verbose_name=_("identifiers"),
+        help_text=_("A list of identifiers for the contributor."),
+        blank=True,
+    )
+
+    # preferred_lang = models.CharField(
+    #     max_length=255,
+    #     verbose_name=_("preferred language"),
+    #     help_text=_("Language of the contributor."),
+    #     blank=True,
+    #     null=True,
+    # )
+
     class Meta:
         ordering = ["name"]
         verbose_name = _("contributor")
@@ -75,7 +100,12 @@ class Contributor(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse("contributor:detail", kwargs={"pk": self.pk})
+        return reverse("contributor:detail", kwargs={"uuid": self.uuid})
+
+    def profile_image(self):
+        if self.image:
+            return self.image.url
+        return static("img/brand/icon.svg")
 
     @property
     def given(self):
@@ -89,19 +119,35 @@ class Contributor(models.Model):
             return self.user.last_name
         return ""
 
-    @property
-    def datasets(self):
-        return Contribution.objects.filter(
-            profile=self,
-            content_type=ContentType.objects.get_for_model(Dataset),
+    @classmethod
+    def get_contribution_by_type(cls, model):
+        if isinstance(model, str):
+            model = apps.get_model(model)
+        return Case(
+            When(contributions__content_type=ContentType.objects.get_for_model(model), then=1),
+            output_field=IntegerField(),
         )
 
     @property
-    def projects(self):
-        return Contribution.objects.filter(
-            profile=self,
-            content_type=ContentType.objects.get_for_model(Project),
+    def datasets(self):
+        return Dataset.objects.filter(
+            contributors__profile=self,
         )
+
+        # return Contribution.objects.filter(
+        #     profile=self,
+        #     content_type=ContentType.objects.get_for_model(Dataset),
+        # )
+
+    @property
+    def projects(self):
+        return Project.objects.filter(
+            contributors__profile=self,
+        )
+        # return Contribution.objects.filter(
+        #     profile=self,
+        #     content_type=ContentType.objects.get_for_model(Project),
+        # )
 
     @property
     def samples(self):
@@ -109,6 +155,13 @@ class Contributor(models.Model):
             profile=self,
             content_type=ContentType.objects.get_for_model(Sample),
         )
+
+    @property
+    def reviews(self):
+        if self.user:
+            return self.user.review_set.all()
+        # return an empty Review queryset
+        return Review.objects.none()
 
     def get_related_contributions(self):
         """Returns a queryset of all contributions related to datasets contributed to by the current contributor."""
@@ -171,14 +224,28 @@ class Contributor(models.Model):
 
         return json.dumps(vis_js)
 
+    @cached_property
+    def ownner(self):
+        if self.user:
+            return self.user
+        return self.organization
+
+    def is_member(self):
+        """Returns True if the contributor is associated with a User account"""
+        if self.user:
+            return True
+
+    # def is_active(self):
+    # """Returns True if the contributor is listed on a dataset that has been accepted in the past"""
+
 
 class Personal(Contributor):
     objects = PersonalManager()
 
     class Meta:
         proxy = True
-        verbose_name = _("Personal")
-        verbose_name_plural = _("Personal")
+        verbose_name = _("Personal Profile")
+        verbose_name_plural = _("Personal Profile")
 
     def save(self, *args, **kwargs):
         self.type = 0
@@ -224,12 +291,18 @@ class Contribution(django_models.Model):
         verbose_name=_("contributor"),
         help_text=_("The person or organisation that contributed to the project or dataset."),
         related_name="contributions",
-        on_delete=models.CASCADE,
+        null=True,
+        on_delete=models.SET_NULL,
+    )
+    contributor = models.JSONField(
+        _("contributor"),
+        help_text=_("A JSON representation of the contributor profile at the time of publication"),
+        default=dict,
     )
 
     class Meta:
-        verbose_name = _("contributor")
-        verbose_name_plural = _("contributors")
+        verbose_name = _("contribution")
+        verbose_name_plural = _("contributions")
         unique_together = ("profile", "content_type", "object_id")
         indexes = [
             models.Index(fields=["content_type", "object_id"]),

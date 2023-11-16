@@ -5,10 +5,9 @@ from django.utils.translation import gettext_lazy as _
 class ProjectStatus(models.IntegerChoices):
     CONCEPT = 0, _("Concept")
     PLANNING = 1, _("Planning")
-    # SEARCHING_FOR_FUNDING = 3, _("Searching for funding")
-    # SEARCHING_FOR_COLLABORATORS = 4, _("Searching for collaborators")
     IN_PROGRESS = 2, _("In progress")
     COMPLETE = 3, _("Complete")
+    SEARCHING_FOR_COLLABORATORS = 4, _("Unknown")
 
 
 class ProjectTags(models.TextChoices):

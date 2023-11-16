@@ -1,45 +1,39 @@
-from django.conf import settings
-from django.urls import reverse
-from formset.views import EditCollectionView
+from typing import Any
 
-from geoluminate.contrib.core.views import BaseDetailView, CoreListView
+from django.db import models
+from django.utils.translation import gettext_lazy as _
 
-from .forms import ProjectFormCollection
+from geoluminate.views import BaseCreateView, BaseDetailView, BaseListView
+
+from .filters import ProjectFilter
+from .forms import ProjectForm
 from .models import Project
 
 
-class ProjectListView(CoreListView):
+class ProjectListView(BaseListView):
     model = Project
+    queryset = Project.objects.all().order_by("-created")
+
+    filterset_class = ProjectFilter
 
 
-class ProjectDetail(BaseDetailView):
+class ProjectDetailView(BaseDetailView):
     model = Project
-    navigation = settings.GEOLUMINATE_PROJECT_PAGES
+    # queryset = Project.objects.all().order_by("-created")
+    form_class = ProjectForm
+    # template_name = "contributors/contributor_form.html"
+
+    def get_queryset(self):
+        return super().get_queryset().order_by("-created")
+
+    def has_edit_permission(self):
+        """TODO: Add permissions."""
+        # return self.request.user.is_superuser
+        return None
 
 
-class AddProjectView(EditCollectionView):
-    slug_field = "uuid"
-    slug_url_kwarg = "uuid"
+class AddProjectView(BaseCreateView):
     model = Project
-    collection_class = ProjectFormCollection
-    template_name = "core/base_form_collection.html"
-
-    def get_context_data(self, **kwargs):
-        context_data = super().get_context_data(**kwargs)
-        if self.object:
-            context_data["edit"] = True
-        else:
-            context_data["add"] = True
-        return context_data
-
-    def get_object(self, queryset=None):
-        if self.kwargs.get("uuid"):
-            return self.model.objects.get(uuid=self.kwargs["uuid"])
-        return self.model()
-
-    def get_success_url(self):
-        model_name = self.object._meta.model.__name__.lower()
-        return reverse(f"{model_name}-edit", kwargs={"uuid": self.object.uuid})
-
-
-list_view = ProjectListView.as_view()
+    title = _("Create a new project")
+    help_text = None
+    form_class = ProjectForm

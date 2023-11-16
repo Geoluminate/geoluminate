@@ -1,4 +1,4 @@
-{% extends 'geoluminate/htmx/page.html' %}
+{% extends 'geoluminate/plugins/page.html' %}
 {% load i18n geoluminate %}
 
 
@@ -20,14 +20,14 @@
 
 
 {% block content %}
-<code>
+{% comment %} <code>
   <pre>
   {% autoescape off %}
   {{ object.generate_xml|force_escape }}
   {% endautoescape %}
   </pre>
-</code>
-  {% comment %} <section class='form-container'></section>
+</code> {% endcomment %}
+  <section class='form-container'></section>
   {% for description in object.descriptions.all %}
   <section>
     <h5>{{ description.get_type_display}}</h5>
@@ -35,5 +35,5 @@
   </section>
   {% empty %}
     {% trans "You do not have any descriptions yet." %}
-  {% endfor %} {% endcomment %}
+  {% endfor %}
 {% endblock %}

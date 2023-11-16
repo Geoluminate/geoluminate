@@ -8,7 +8,7 @@ from django.utils.translation import gettext_lazy as _
 
 def strip_p_tags(text):
     """Strip <p> tags from a string."""
-    return text.replace("<p>", "").replace("</p>", "")
+    return text.replace("</p><p>", "\n").replace("</p>", "").replace("<p>", "")
 
 
 def generate_xml(dataset):

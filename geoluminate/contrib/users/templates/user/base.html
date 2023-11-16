@@ -1,9 +1,8 @@
-{% extends "geoluminate/layout/sidebar_left.html" %}
+{% extends "geoluminate/base/base_detail.html" %}
+{% load geoluminate %}
+{% block main %}{% include template_name %}{% endblock main %}
 
-{% load i18n static geoluminate %}
-
-
-{% block page_left %}
+{% comment %} {% block page_left %}
 <div id="pageSidebar" class='offcanvas offcanvas-start sidebar' data-bs-backdrop="false">
   <div class='offcanvas-header'>
     <div>
@@ -22,16 +21,10 @@
             <i class="fas {{ item.icon }}"></i>
             {{ item.title }}
           </a></li>
-          {% comment %} <li><a href="{{ item.url }}"
-            class="list-group-item list-group-item-action {{ item.extra_classes }}{% is_active item.url %}">
-            <i class="fas {{ item.icon }}"></i>
-            {{ item.title }}
-          </a></li> {% endcomment %}
         {% endif %}
       {% endfor %}
     </ul>
   </div>
 </div>
-{% endblock page_left %}
+{% endblock page_left %} {% endcomment %}
 
-{% block main %}{% include template_name %}{% endblock main %}

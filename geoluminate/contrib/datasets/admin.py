@@ -1,10 +1,9 @@
 from django.contrib import admin
 
-from geoluminate.contrib.contributors.admin import ContributionInline
-from geoluminate.contrib.core.admin import DescriptionInline, KeyDatesInline
+from geoluminate.contrib.contributors.admin import GenericContributionInline
+from geoluminate.contrib.core.admin import DescriptionInline, FuzzyDatesInline
 
-# from jazzmin import templatetags
-from .models import Dataset, Review
+from .models import Dataset
 
 
 class DatasetsInline(admin.StackedInline):
@@ -14,11 +13,6 @@ class DatasetsInline(admin.StackedInline):
 
 @admin.register(Dataset)
 class DatasetAdmin(admin.ModelAdmin):
-    # inlines = [DescriptionInline, KeyDatesInline, ContributionInline]
+    inlines = [DescriptionInline, FuzzyDatesInline, GenericContributionInline]
     search_fields = ("uuid", "title")
     list_display = ("title", "created", "modified")
-
-
-@admin.register(Review)
-class ReviewAdmin(admin.ModelAdmin):
-    pass

@@ -1,12 +1,7 @@
 from django.conf import settings
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.gis.db.models import Collect, Extent
-from django.contrib.gis.measure import Distance
-from django.core.validators import MaxValueValidator as MaxVal
-from django.core.validators import MinValueValidator as MinVal
 from django.db import models as django_models
-from django.forms.models import model_to_dict
 from django.templatetags.static import static
 from django.urls import reverse
 from django.utils.encoding import force_str
@@ -14,13 +9,12 @@ from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFit
-from multiselectfield.utils import get_max_length
 from taggit.managers import TaggableManager
 
 from geoluminate import models
 from geoluminate.contrib.core import utils
+from geoluminate.contrib.datasets.choices import DataCiteDescriptionTypes
 
-# from geoluminate.utils.gis.managers import LocationManager
 from . import choices
 
 
@@ -58,14 +52,14 @@ class Abstract(models.Model):
     )
     tags = models.MultiSelectField(
         choices=DISCOVERY_TAGS,
-        max_length=32,
+        max_length=32,  # NEEDS TO BE FIXED
         verbose_name=_("tags"),
         help_text=_("Tags to help others discover your project."),
         blank=True,
         null=True,
     )
     key_dates = GenericRelation(
-        "core.KeyDate",
+        "core.FuzzyDate",
         verbose_name=_("key dates"),
         related_name="%(app_label)ss",
         related_query_name="%(app_label)ss",
@@ -78,6 +72,7 @@ class Abstract(models.Model):
         related_query_name="%(app_label)ss",
         help_text=_("Add some descriptions."),
     )
+
     contributors = GenericRelation(
         "contributors.Contribution",
         verbose_name=_("contributors"),
@@ -88,7 +83,14 @@ class Abstract(models.Model):
 
     funding = models.JSONField(
         verbose_name=_("funding"),
-        help_text=_("Include details of any funding received for this project."),
+        help_text=_("Related funding information."),
+        null=True,
+        blank=True,
+    )
+
+    options = models.JSONField(
+        verbose_name=_("options"),
+        help_text=_("Item options."),
         null=True,
         blank=True,
     )
@@ -107,17 +109,13 @@ class Abstract(models.Model):
     def __str__(self):
         return force_str(self.title)
 
-    def get_absolute_url(self):
-        return reverse(f"core:{type(self).__name__.lower()}-detail", kwargs={"uuid": self.uuid})
+    def is_contributor(self, user):
+        """Returns true if the user is a contributor."""
+        return self.contributors.filter(profile__user=user).exists()
 
-    def get_edit_url(self):
-        return reverse(f"{type(self).__name__.lower()}-edit", kwargs={"uuid": self.uuid})
-
-    def get_create_url(self):
-        return reverse(f"{type(self).__name__.lower()}-add")
-
-    def get_list_url(self):
-        return reverse(f"{type(self).__name__.lower()}-list")
+    def has_role(self, user, role):
+        """Returns true if the user has the specified role."""
+        return self.contributors.by_role(role).filter(profile__user=user).exists()
 
     def get_api_url(self):
         return reverse(f"{type(self).__name__.lower()}-detail", kwargs={"uuid": self.uuid})
@@ -136,10 +134,13 @@ class Abstract(models.Model):
         else:
             return None
 
-    def get_meta_image(self):
+    def profile_image(self):
         if self.image:
             return self.image.url
         return static("img/brand/logo.svg")
+
+    def get_meta_image(self):
+        return self.profile_image()
 
     def get_datasets(self):
         return self.datasets.all()
@@ -150,12 +151,18 @@ class Abstract(models.Model):
     def get_projects(self):
         return self.projects.all()
 
-    def get_contact_persons(self):
-        """Returns all contributors with the ContactPerson role."""
-        return self.contributors.get_contact_persons()
+    @cached_property
+    def get_contributors(self):
+        return list(self.contributors.select_related("profile").all())
+
+    @cached_property
+    def get_descriptions(self):
+        descriptions = list(self.descriptions.all())
+        descriptions.sort(key=lambda x: DataCiteDescriptionTypes.values.index(x.type))
+        return descriptions
 
 
-class KeyDate(django_models.Model):
+class FuzzyDate(django_models.Model):
     class DateTypes(models.TextChoices):
         PROPOSED_START = "proposed_start", _("Proposed start")
         PROPOSED_END = "proposed_end", _("Proposed end")
@@ -176,6 +183,10 @@ class KeyDate(django_models.Model):
     )
     date = models.DateTimeField(_("date"), help_text=_("The date."))
 
+    year = models.PositiveIntegerField(_("year"), help_text=_("The year."), blank=True, null=True)
+    month = models.PositiveIntegerField(_("month"), help_text=_("The month."), blank=True, null=True)
+    day = models.PositiveIntegerField(_("day"), help_text=_("The day."), blank=True, null=True)
+
     class Meta:
         verbose_name = _("key date")
         verbose_name_plural = _("key dates")
@@ -185,13 +196,19 @@ class KeyDate(django_models.Model):
             models.Index(fields=["content_type", "object_id"]),
         ]
 
+    # def save(self):
+
 
 class Description(django_models.Model):
     # DESCRIPTION_TYPES = datacite.get_choices_for("descriptionType")
-    DESCRIPTION_TYPES = choices.DataCiteDescriptionTypes
+    DESCRIPTION_TYPES = DataCiteDescriptionTypes
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey("content_type", "object_id")
+
+    class Meta:
+        verbose_name = _("description")
+        verbose_name_plural = _("descriptions")
 
     type = models.CharField(
         _("type"),
@@ -218,20 +235,24 @@ class Description(django_models.Model):
 class Identifier(models.Model):
     """A model for storing identifiers for users and organisations."""
 
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey("content_type", "object_id")
+    URI_LOOKUP = choices.SchemeLookup
+    SCHEMES = choices.SchemeChoices
 
-    identifier = models.CharField(max_length=255, verbose_name=_("identifier"), unique=True)
-    scheme = models.CharField(max_length=255, verbose_name=_("scheme"))
+    identifier = models.CharField(max_length=255, verbose_name=_("identifier"), unique=True, db_index=True)
+    scheme = models.CharField(
+        _("scheme"),
+        max_length=255,
+        choices=SCHEMES,
+    )
 
     class Meta:
         verbose_name = _("identifier")
         verbose_name_plural = _("identifiers")
-        unique_together = ("content_type", "object_id")
-        indexes = [
-            models.Index(fields=["content_type", "object_id"]),
-        ]
 
     def __str__(self):
         return f"<{self.scheme}: {self.identifier}>"
+
+    @property
+    def scheme_uri(self):
+        return self.URI_LOOKUP[self.scheme]
+        return self.URI_LOOKUP[self.scheme]

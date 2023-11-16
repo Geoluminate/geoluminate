@@ -4,6 +4,10 @@ from .choices import ContributionRoles
 
 
 class ContributionManager(models.QuerySet):
+    def by_role(self, role):
+        """Returns all contributions with the given role"""
+        return self.filter(roles__contains=role)
+
     def get_contact_persons(self):
         return self.filter(roles__contains=ContributionRoles.CONTACT_PERSON)
 

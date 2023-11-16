@@ -19,9 +19,12 @@ class Organization(AbstractOrganization):
         help_text=_("JSON format respresentation of the organization after the ROR schema."),
         default=dict,
     )
-    profile = models.OneToOneField(
-        "contributors.Organizational", related_name="organization", on_delete=models.CASCADE, null=True, blank=True
-    )
+    # profile = models.OneToOneField(
+    #     "contributors.Organizational", related_name="organization", on_delete=models.CASCADE, null=True, blank=True
+    # )
+
+    class Meta:
+        default_related_name = "affiliations"
 
 
 class Membership(AbstractOrganizationUser):

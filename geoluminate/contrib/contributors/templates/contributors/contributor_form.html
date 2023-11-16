@@ -1,0 +1,79 @@
+{% extends 'geoluminate/plugins/page.html' %}
+{% load i18n formsetify %}
+
+
+{% block content %}
+<div class='container mt-3'>
+  <h5>About</h5>
+  <p>
+    {{object.about|safe}}
+  </p>
+  <h5>Contributions over time</h5>
+  <div>
+    <canvas id="myTimeSeriesChart"></canvas>
+  </div>
+</div>
+{% endblock %}
+
+{% block modals %}
+{{ block.super }}
+<script>
+// Sample data
+var data = {
+  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+  datasets: [
+      {
+          label: 'Line 1',
+          data: [15, 20, 18, 25, 30, 22, 28],
+          borderColor: 'blue',
+          fill: false
+      },
+      {
+          label: 'Line 2',
+          data: [10, 14, 12, 18, 20, 16, 24],
+          borderColor: 'green',
+          fill: false
+      },
+      {
+          label: 'Line 3',
+          data: [5, 8, 7, 10, 12, 9, 14],
+          borderColor: 'red',
+          fill: false
+      }
+  ]
+};
+
+var options = {
+  scales: {
+      x: {
+          display: true,
+          title: {
+              display: true,
+              text: 'Month'
+          }
+      },
+      y: {
+          beginAtZero: true,
+          display: true,
+          title: {
+              display: true,
+              text: 'Value'
+          }
+      }
+  }
+};
+
+var ctx = document.getElementById('myTimeSeriesChart').getContext('2d');
+var myTimeSeriesChart = new Chart(ctx, {
+  type: 'line',
+  data: data,
+  options: options
+});
+
+
+</script>
+
+{% endblock %}
+
+
+

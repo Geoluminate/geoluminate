@@ -5,4 +5,10 @@ from django.utils.translation import gettext_lazy as _
 class ContributorsConfig(AppConfig):
     name = "geoluminate.contrib.contributors"
     label = "contributors"
-    verbose_name = _("Contributors")
+    verbose_name = _("Community")
+
+    def ready(self):
+        from actstream import registry
+
+        registry.register(self.get_model("Contributor"))
+        return super().ready()

@@ -1,0 +1,47 @@
+{% extends "geoluminate/base/base_detail.html" %}
+{% load static i18n formsetify geoluminate sekizai_tags %}
+
+{% comment %} {% block image %}{% endblock image %} {% endcomment %}
+
+{% block actions %}
+<div class='d-flex'>
+  <a href="" class='btn btn-primary-outline'>
+    <i class='fa-solid fa-envelope'></i>
+  </a>
+  <a href="" class='btn btn-primary-outline'>
+    <i class='fa-regular fa-star'></i>
+  </a>
+</div>
+{% endblock %}
+
+{% block sections %}
+<h6>
+  <span>Projects</span>
+  <i class='float-end fa-solid fa-project-diagram me-2'></i>
+</h6>
+<hr class='mt-0'>
+<ul class="list-group list-group-flush mt-3">
+    <li class="list-group-item d-flex px-0 align-items-center">
+      {% trans "Active Projects" %}: 
+      <span class='ms-auto badge rounded-pill text-bg-success'>{{object.projects.count}}</span>
+    </li>
+    <li class="list-group-item d-flex px-0 align-items-center">
+      <i class='fa-solid fa-folder-open me-2'></i>
+      {% trans "Published Datasets" %}: 
+      <span class='ms-auto badge rounded-pill text-bg-success'>{{object.datasets.count}}</span>
+    </li>
+    <li class="list-group-item d-flex px-0 align-items-center">
+      <i class='fa-solid fa-check-to-slot me-2'></i>
+      {% trans "Completed Reviews" %}: 
+      <span class='ms-auto badge rounded-pill text-bg-success'>{{object.reviews.count}}</span>
+    </li>
+  </ul>
+{% endblock %}
+
+{% block scripts %}
+{{ block.super }}
+{% addtoblock 'js' %}<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>{% endaddtoblock %}
+{% endblock scripts %}
+
+
+

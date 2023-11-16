@@ -1,12 +1,19 @@
 from django.urls import include, path
-from django.views.generic import TemplateView
 
-# from .views.account import AccountEmailView
-from .views import AddDescription, DatasetEdit, EditDescription
+from geoluminate.plugins import dataset
 
-app_name = "dataset"
+from .views import (
+    AddLiteratureView,
+    DatasetCreateView,
+    DatasetListView,
+    LiteratureListView,
+)
+
+app_name = "datasets"
 urlpatterns = [
-    path("datasets/<uuid:uuid>/descriptions/", EditDescription.as_view(), name="dataset-description-edit"),
-    path("datasets/<uuid:uuid>/", DatasetEdit.as_view(name="dataset-edit", extra_context={"edit": True})),
-    path("datasets/<uuid:uuid>/descriptions/add/", AddDescription.as_view(), name="dataset-description-add"),
+    path("datasets/new/", DatasetCreateView.as_view(), name="add"),
+    path("datasets/", DatasetListView.as_view(), name="list"),
+    path("d/<uuid:uuid>/", include(dataset.urls)),
+    path("literature/new/", AddLiteratureView.as_view(), name="literature_create"),
+    path("literature/", LiteratureListView.as_view(), name="literature_list"),
 ]

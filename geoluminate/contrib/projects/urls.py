@@ -1,11 +1,12 @@
 from django.urls import include, path
-from django.views.generic import TemplateView
 
-# from .views.account import AccountEmailView
-from .views import AddProjectView, ProjectDetail
+from geoluminate.plugins import project
 
-app_name = "project"
+from .views import AddProjectView, ProjectListView
+
+app_name = "projects"
 urlpatterns = [
-    path("projects/<uuid:uuid>/", ProjectDetail.as_view(extra_context={"edit": True}, name="project-edit")),
-    path("new/project/", AddProjectView.as_view(), name="project-add"),
+    path("projects/new/", AddProjectView.as_view(), name="add"),
+    path("projects/", ProjectListView.as_view(), name="list"),
+    path("p/<uuid:uuid>/", include(project.urls)),
 ]

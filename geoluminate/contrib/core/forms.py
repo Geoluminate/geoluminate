@@ -5,31 +5,17 @@ from django import forms
 from django.contrib.contenttypes.models import ContentType
 from django.db import IntegrityError
 from django.forms.fields import IntegerField
-from django.forms.models import (
-    BaseModelForm,
-    ModelForm,
-    construct_instance,
-    model_to_dict,
-)
+from django.forms.models import BaseModelForm, ModelForm, construct_instance
 from django.forms.widgets import HiddenInput
 from django.utils.translation import gettext as _
 from formset.collection import FormCollection
 from formset.fieldset import FieldsetMixin
 from formset.richtext.widgets import RichTextarea
-from formset.widgets import (  # DateTimeInput,
-    DateInput,
-    DateTimeInput,
-    DualSortableSelector,
-    Selectize,
-    SelectizeMultiple,
-    UploadedFileInput,
-)
+from formset.widgets import DateTimeInput
 
-from geoluminate.contrib.contributors.forms import ProfileFormNoImage
-from geoluminate.contrib.contributors.models import Contribution, Contributor
 from geoluminate.utils.forms import DefaultFormRenderer
 
-from .models import Description, KeyDate
+from .models import Description, FuzzyDate
 
 # ===================== FORMS =====================
 
@@ -52,7 +38,6 @@ class GenericRelationForm(forms.ModelForm):
     object_id = forms.IntegerField(required=False, widget=forms.HiddenInput)
 
     def __init__(self, content_object=None, *args, **kwargs):
-        print(kwargs)
         super().__init__(*args, **kwargs)
         # if not kwargs.get("data") and content_object:
         # self.content_object = content_object
@@ -76,124 +61,26 @@ class GenericDescriptionForm(GenericRelationForm):
         return [choice for choice in self.content_object.DESCRIPTION_TYPES if choice[0] not in used_choices]
 
 
-# class ProjectForm(FieldsetMixin, ModelForm):
-#     # legend = _("Project")
-#     # help_text = _("Add a new project.")
-#     # template_name = "forms/fieldset.html"
-
-#     class Meta:
-#         model = Project
-#         fields = [
-#             "title",
-#             "status",
-#             "tags",
-#         ]
-#         widgets = {  # noqa: RUF012
-#             "tags": SelectizeMultiple(),
-#             "image": UploadedFileInput(),
-#             "status": widgets.RadioSelect(),
-#         }
-
-
 class GenericForm(FieldsetMixin, ModelForm):
     id = IntegerField(required=False, widget=HiddenInput)
 
-    # @property
-    # def legend(self):
-    #     return self.instance._meta.verbose_name.title()
 
-
-# class DatasetForm(FieldsetMixin, ModelForm):
-#     class Meta:
-#         model = Dataset
-#         fields = ["title"]
-
-
-class KeyDateForm(GenericRelationForm):
+class FuzzyDateForm(GenericRelationForm):
     class Meta:
-        model = KeyDate
+        model = FuzzyDate
         fields = ["type", "date"]
         widgets = {"date": DateTimeInput()}
-
-
-# class ContributionForm(GenericForm):
-#     profile = forms.ModelChoiceField(
-#         queryset=Contributor.objects.all(),
-#         widget=Selectize(
-#             search_lookup="name__icontains",
-#             placeholder="Select contributor",
-#         ),
-#     )
-
-#     class Meta:
-#         model = Contribution
-#         fields = [
-#             "id",
-#             "profile",
-#             "roles",
-#         ]
-#         widgets = {"roles": SelectizeMultiple(choices=Contribution.CONTRIBUTOR_ROLES.choices)}
 
 
 # ===================== FORM COLLECTIONS =====================
 
 
-class KeyDateFormCollection(FormCollection):
+class FuzzyDateFormCollection(FormCollection):
     min_siblings = 0
-    key_date = KeyDateForm(renderer=DefaultFormRenderer(field_css_classes={"*": "col", "type": "col-4"}))
+    key_date = FuzzyDateForm(renderer=DefaultFormRenderer(field_css_classes={"*": "col", "type": "col-4"}))
     legend = _("Key Dates")
     add_label = _("Add new")
     related_field = "dataset"
-
-
-# class DatasetFormCollection(FormCollection):
-#     min_siblings = 0
-#     extra_siblings = 0
-#     dataset = DatasetForm()
-#     # key_dates = KeyDateFormCollection()
-#     # key_dates.related_field = "dataset"
-
-#     legend = _("Datasets")
-#     add_label = _("Add new")
-#     related_field = "project"
-
-#     help_text = _("Add datasets to your project.")
-
-#     # def retrieve_instance(self, data):
-#     #     if data := data.get("dataset"):
-#     #         # instance, created = Dataset.objects.get_or_create(id=data.get("id"), defaults={**data, "project":self.instance})
-#     #         try:
-#     #             return self.instance.datasets.get(id=data.get("id") or 0)
-#     #         except (AttributeError, Dataset.DoesNotExist, ValueError):
-#     #             return Dataset(title=data.get("title"), project=self.instance)
-
-
-# class ContributionFormCollection(FormCollection):
-#     min_siblings = 0
-#     extra_siblings = 0
-#     contributors = ContributionForm()
-#     # descriptions = DescriptionFormCollection(min_siblings=1, extra_siblings=1)
-
-#     legend = _("Contributions")
-#     add_label = _("Add new")
-#     related_field = "contributors"
-
-#     help_text = _("Add contributors to your project.")
-
-#     def retrieve_instance(self, data):
-#         if data := data.get("contributors"):
-#             try:
-#                 return self.instance.contributors.get(id=data.get("id") or 0)
-#             except (AttributeError, Contribution.DoesNotExist, ValueError):
-#                 return Contribution(title=data.get("title"), project=self.instance)
-
-
-# class ProjectFormCollection(FormCollection):
-#     project = ProjectForm()
-#     key_dates = KeyDateFormCollection()
-#     # descriptions = DescriptionFormCollection()
-#     # contributors = ContributionFormCollection()
-#     # datasets = DatasetFormCollection()
 
 
 class DescriptionForm(GenericRelationForm):

@@ -1,0 +1,18 @@
+{% extends "datasets/dataset_card.html" %}
+{% load i18n geoluminate %}
+
+
+{% block card_left %}
+<ul class="list-group list-group-flush mt-3">
+  <li>{% trans "Status" %}: <span>{{obj.review.status}}</span></li>
+  {% with obj.review.reviewer.profile as profile %}
+    <li>{% trans "Reviewer" %}: <span><a href="{{ profile.get_absolute_url }}" class=''>{{ profile }}</a></span></li>
+  {% endwith %}
+  <li>{% trans "Submitted" %}: <span>{{obj.review.submitted|date|default:"-"}}</span></li>
+  <li>{% trans "Accepted" %}: <span>{{obj.review.approved|date|default:"-"}}</span></li>
+</ul>
+{% endblock %}
+
+{% block actions %}
+<a href="{{ obj.get_absolute_url }}" class="btn btn-success btn-sm">{% trans "Continue Review" %}</a>
+{% endblock actions %}

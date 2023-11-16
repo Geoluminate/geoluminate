@@ -13,59 +13,31 @@ class AccountSidebar(GeoluminateMenuBase):
 
 
 AccountSidebar.add_items(
-    # MenuItem(
-    #     _("Dashboard"),
-    #     url=reverse("user:dashboard"),
-    #     icon="fas fa-table-cells-large",
-    # ),
     MenuItem(
-        _("Your Contributions"),
-        url="",
-    ),
-    MenuItem(
-        _("Projects"),
-        url=reverse("user:projects"),
-        icon="fas fa-project-diagram",
-    ),
-    MenuItem(
-        _("Datasets"),
-        url=reverse("user:datasets"),
-        icon="fas fa-folder-open",
-    ),
-    MenuItem(
-        _("Reviews"),
-        url=reverse("user:reviews"),
-        icon="fas fa-book-open-reader",
-    ),
-    MenuItem(
-        _("Public Information"),
-        url="",
-    ),
-    MenuItem(
-        _("Contributor Profile"),
-        reverse("user:profile_edit"),
+        _("My Profile"),
+        reverse("user:profile"),
         icon="fas fa-user",
     ),
-    MenuItem(
-        _("Affiliations"),
-        reverse("user:affiliations"),
-        icon="fas fa-university",
-    ),
-    MenuItem(
-        _("Identifiers"),
-        reverse("user:affiliations"),
-        icon="fa-solid fa-id-badge",
-    ),
-    MenuItem(
-        _("Account Settings"),
-        url="",
-        icon="fas fa-cogs",
-    ),
-    MenuItem(
-        _("Authentication"),
-        reverse("user:account"),
-        icon="fas fa-shield",
-    ),
+    # MenuItem(
+    #     _("Affiliations"),
+    #     reverse("user:affiliations"),
+    #     icon="fas fa-university",
+    # ),
+    # MenuItem(
+    #     _("Identifiers"),
+    #     reverse("user:affiliations"),
+    #     icon="fa-solid fa-id-badge",
+    # ),
+    # MenuItem(
+    #     _("Account Settings"),
+    #     url="",
+    #     icon="fas fa-user-gear",
+    # ),
+    # MenuItem(
+    #     _("Authentication"),
+    #     reverse("user:account"),
+    #     icon="fas fa-shield",
+    # ),
     MenuItem(
         _("Emails"),
         reverse("account_email"),
@@ -80,10 +52,6 @@ AccountSidebar.add_items(
         title=_("Connected Accounts"),
         url=reverse("socialaccount_connections"),
         icon="fas fa-link",
-    ),
-    MenuItem(
-        _("Agreements"),
-        url="",
     ),
     MenuItem(
         title=_("Code of Conduct"),

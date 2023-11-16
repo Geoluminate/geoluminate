@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib import admin
 from django.contrib.gis.measure import Distance
 from django.core.validators import MaxValueValidator as MaxVal
 from django.core.validators import MinValueValidator as MinVal
@@ -8,8 +9,6 @@ from django.utils.translation import gettext_lazy as _
 
 from geoluminate import models
 from geoluminate.contrib.core.models import Abstract
-
-# from .managers import LocationManager
 
 
 class Location(models.Model):
@@ -39,6 +38,7 @@ class Location(models.Model):
         verbose_name_plural = _("locations")
 
     @property
+    @admin.display(description=_("latitude"))
     def latitude(self):
         """Convenience method for retrieving the site's latitude ordinate."""
         return self.point.y
@@ -48,6 +48,7 @@ class Location(models.Model):
         self.point.y = val
 
     @property
+    @admin.display(description=_("longitude"))
     def longitude(self):
         """Convenience method for retrieving the site's longitude ordinate."""
         return self.point.x
@@ -56,31 +57,13 @@ class Location(models.Model):
     def longitude(self, val):
         self.point.x = val
 
-    @property
-    def lon(self):
-        """Alias of self.longitude"""
-        return self.longitude
-
-    @lon.setter
-    def lon(self, val):
-        self.point.x = val
-
-    @property
-    def lat(self):
-        """Alias of self.latitude"""
-        return self.latitude
-
-    @lat.setter
-    def lat(self, val):
-        self.point.y = val
-
     def __str__(self):
         """Returns the string representation of this site"""
-        return f"{self.lat}, {self.lon}"
+        return f"{self.latitude:.5f}, {self.longitude:.5f}"
 
     def get_absolute_url(self):
         """Returns the absolute URL for this site"""
-        raise NotImplementedError
+        return reverse("location-detail", kwargs={"uuid": self.uuid})
 
     def get_sites_within(self, radius=25):
         """Gets nearby sites within {radius} km radius"""
@@ -98,12 +81,6 @@ class Sample(Abstract):
         verbose_name=_("sample type"),
         default=settings.GEOLUMINATE_DEFAULT_SAMPLE_TYPE,
         help_text=_("The type of sample as per the ODM2 controlled vocabulary."),
-        max_length=255,
-    )
-    name = models.CharField(
-        verbose_name=_("name"),
-        null=True,
-        help_text=_("The name of the sample."),
         max_length=255,
     )
     description = models.TextField(
@@ -126,11 +103,6 @@ class Sample(Abstract):
         _("comment"),
         help_text=_("General comments regarding the site and/or measurement"),
         blank=True,
-        null=True,
-    )
-    acquired = models.DateTimeField(
-        _("date acquired"),
-        help_text=_("Date and time of acquisition."),
         null=True,
     )
 
@@ -156,6 +128,11 @@ class Sample(Abstract):
         verbose_name_plural = _("samples")
         ordering = ["-modified"]
 
+    # def geojson(self):
+    #     from .serializers import SampleGeojsonSerializer
+
+    #     return SampleGeojsonSerializer(self).data
+
 
 class Measurement(models.Model):
     sample = models.ForeignKey(
@@ -178,4 +155,4 @@ class Measurement(models.Model):
         return self.sample.location
 
     def get_absolute_url(self):
-        return reverse("site", kwargs={"pk": self.pk})
+        return self.get_sample.get_absolute_url()

@@ -1,15 +1,17 @@
-# user/admin.py
-# from allauth.socialaccount.models import Account
-from typing import Any
-
 from django.contrib import admin
 from django.contrib.contenttypes.admin import GenericStackedInline
+from django.db.models import Count
 
-# from jazzmin import templatetags
-from .models import Contribution, Contributor, Organizational, Personal
+from .models import Contribution, Contributor
 
 
-class ContributionInline(GenericStackedInline):
+class GenericContributionInline(GenericStackedInline):
+    model = Contribution
+    extra = 1
+    fields = ("profile", "roles")
+
+
+class ContributionInline(admin.StackedInline):
     model = Contribution
     extra = 1
     fields = ("profile", "roles")
@@ -23,19 +25,30 @@ class ContributorInline(admin.StackedInline):
 
 @admin.register(Contributor)
 class ContributorAdmin(admin.ModelAdmin):
-    list_display = ["user", "about"]
-    search_fields = ["user__email", "user__first_name", "user__last_name"]
+    list_display = ["name", "about", "projects", "datasets", "samples"]
+    search_fields = ["name"]
     list_filter = ["type"]
+    inlines = [ContributionInline]
 
+    def get_queryset(self, request):
+        return (
+            super()
+            .get_queryset(request)
+            .annotate(
+                dataset_count=Count(Contributor.get_contribution_by_type("datasets.Dataset")),
+                project_count=Count(Contributor.get_contribution_by_type("projects.Project")),
+                sample_count=Count(Contributor.get_contribution_by_type("samples.Sample")),
+            )
+        )
 
-# @admin.register(Organizational)
-# class OrganizationalContributorAdmin(admin.ModelAdmin):
-#     list_display = ["type", "organization"]
+    def datasets(self, obj):
+        return obj.dataset_count
 
+    def projects(self, obj):
+        return obj.project_count
 
-# @admin.register(Personal)
-# class PersonalContributorAdmin(admin.ModelAdmin):
-#     list_display = ["type", "user"]
+    def samples(self, obj):
+        return obj.sample_count
 
 
 @admin.register(Contribution)

@@ -4,11 +4,11 @@ from django.contrib import admin
 from django.contrib.contenttypes.admin import GenericStackedInline
 from django.contrib.gis import admin
 
-from .models import Description, KeyDate
+from .models import Description, FuzzyDate
 
 
-class KeyDatesInline(GenericStackedInline):
-    model = KeyDate
+class FuzzyDatesInline(GenericStackedInline):
+    model = FuzzyDate
     extra = 1
 
 
@@ -17,6 +17,6 @@ class DescriptionInline(GenericStackedInline):
     extra = 1
 
 
-@admin.register(KeyDate)
-class KeyDateAdmin(admin.ModelAdmin):
+@admin.register(FuzzyDate)
+class FuzzyDateAdmin(admin.ModelAdmin):
     pass

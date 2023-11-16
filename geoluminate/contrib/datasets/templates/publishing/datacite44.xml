@@ -1,0 +1,128 @@
+{% load contributor_tags %}
+<resource {% block resource_attrs %} xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://datacite.org/schema/kernel-4" xsi:schemaLocation="http://datacite.org/schema/kernel-4 https://schema.datacite.org/meta/kernel-4.4/metadata.xsd" {% endblock %}>
+  <identifier identifierType="DOI"></identifier>
+  <resourceType resourceTypeGeneral="Dataset">{{ dataset.resoure_type }}</resourceType>
+  <language>{{ dataset.lang }}</language>
+  <version>{{ dataset.version|default:1 }}</version>
+  <sizes>
+    <size>{{ dataset.samples.count }} Samples</size>
+    <size>{{ dataset.samples.location.distinct.count }} Geographic Locations</size>
+    {% comment %} create some data in the view {% endcomment %}
+  </sizes>
+  <formats>
+    {% comment %} download formats {% endcomment %}
+    <format>application/xml</format>
+  </formats>{% block publisher %}
+  <publisher xml:lang="en"></publisher>{% endblock %}
+  <publicationYear>{% now "Y" %}</publicationYear> {% comment %} not sure about this {% endcomment %}
+  
+  {% comment %} DO WE SUPPORT MULTIPLE TITLES IN THE FUTURE? {% endcomment %}
+  <titles>
+    <title xml:lang="en">{{ dataset.title }}</title>
+  </titles>
+
+  {% comment %} CREATORS {% endcomment %}
+  <creators>{% for c in dataset.get_contributors|role:"Creator" %}{% with c.profile as profile %}
+    <creator>
+      <creatorName nameType="{{ profile.type }}">{{ profile.name }}</creatorName>{% if profile.type == "Personal" and profile.user %}
+      <givenName>{{ profile.given }}</givenName>
+      <familyName>{{ profile.family }}</familyName>{% endif %}{% for id in profile.identifiers.all %}
+      <nameIdentifier nameIdentifierScheme="{{ id.scheme }}" schemeURI="{{ id.scheme_uri }}">{{ id.identifier }}</nameIdentifier>{% endfor %}{% for affiliation in contributor.affiliations.all %}
+      <affiliation>{{ affiliation }}</affiliation>{% endfor %}
+    </creator>
+    {% endwith %}{% endfor %}
+  </creators>
+
+  {% comment %} CONTRIBUTORS {% endcomment %}
+  <contributors>
+    {% for c in dataset.get_contributors %}{% for role in c.roles %}
+    {% if role != "Creator" %}{% with c.profile as profile %}
+    <contributor contributorType="{{ role }}">
+      <contributorName>{{ profile.name }}</contributorName>{% if profile.type == "Personal" %}
+      <givenName>{{ profile.given }}</givenName>
+      <familyName>{{ profile.family }}</familyName>{% endif %}{% for identifier in profile.identifiers.all %}
+      <nameIdentifier nameIdentifierScheme="{{ id.scheme }}" schemeURI="{{ id.scheme_uri }}">{{ id.identifier }}</nameIdentifier>{% endfor %}{% for affiliation in profile.affiliations.all %}
+      <affiliation>{{ affiliation }}</affiliation>{% endfor %}
+    </contributor>
+    {% endwith %}{% endif %}
+    {% endfor %}{% endfor %}
+  </contributors>
+
+  {% comment %} SUBJECTS {% endcomment %}
+  <subjects>{% for subject in dataset.keywords.all %}
+    <subject subjectScheme="{{ subject.scheme }}" schemeURI="{{ subject.scheme_uri }}" xml:lang="{{ subject.lang }}"></subject>{% endfor %}
+  </subjects>
+
+  {% comment %} DATES {% endcomment %}
+  <dates>
+    <date dateType="Created">{{ dataset.created|date:"Y-m-d" }}</date>
+    <date dateType="Updated">{{ dataset.modified|date:"Y-m-d" }}</date>
+    {% comment %} <date dateType="Updated" dateInformation="Updated with 4.4 properties">{{ dataset.modified }}</date> {% endcomment %}
+    {% comment %} {% for date in dataset.key_dates.all %}
+    <date dateType="{{ date.type }}">{{ date.date|date:"Y-m-d" }}</date>
+    {% endfor %} {% endcomment %}
+  </dates>
+
+  {% comment %} IDENTIFIERS {% endcomment %}
+  <alternateIdentifiers>
+    <alternateIdentifier alternateIdentifierType="URL">{{ site.domain }}{{ dataset.get_absolute_url }}</alternateIdentifier>
+    {% block alternate_identifiers %}{% endblock %}
+  </alternateIdentifiers>
+  {% comment %} <relatedIdentifiers>
+    <relatedIdentifier relatedIdentifierType="URL" relationType="HasMetadata" relatedMetadataScheme="citeproc+json" schemeURI="https://github.com/citation-style-language/schema/raw/master/csl-data.json">https://data.datacite.org/application/citeproc+json/10.5072/example-full</relatedIdentifier>
+    <relatedIdentifier relatedIdentifierType="arXiv" relationType="IsReviewedBy" resourceTypeGeneral="Text">arXiv:0706.0001</relatedIdentifier>
+  </relatedIdentifiers> {% endcomment %}
+
+
+  {% comment %} RIGHTS {% endcomment %}
+  {% comment %} <rightsList>{% with dataset.license as license %}
+    <rights xml:lang="{{ license.lang }}" schemeURI="{{ license.scheme_uri}}" rightsIdentifierScheme="{{ license.scheme }}" rightsIdentifier="{{ license.name }}" rightsURI="{{ license.uri }}" />{% endwith %}
+  </rightsList> {% endcomment %}
+
+  {% comment %} DESCRIPTIONS {% endcomment %}
+  <descriptions>{% for description in dataset.descriptions.all %}
+    <description xml:lang="{{ description.lang|default:"en"}}" descriptionType="{{ description.type }}">{{ description.clean }}</description>{% endfor %}
+  </descriptions>
+
+  {% comment %} LOCATION {% endcomment %}
+  <geoLocations>
+    <geoLocation>
+      {% comment %} <geoLocationPlace>Not sure how to handle this</geoLocationPlace> {% endcomment %}
+      <geoLocationPoint>{% with dataset.centroid as point %}
+        <pointLongitude>{{ point.x }}</pointLongitude>
+        <pointLatitude>{{ point.y }}</pointLatitude>{% endwith %}
+      </geoLocationPoint>
+      <geoLocationBox>{% with dataset.bbox as bbox %}
+        <westBoundLongitude>{{bbox.0}}</westBoundLongitude>
+        <eastBoundLongitude>{{bbox.2}}</eastBoundLongitude>
+        <southBoundLatitude>{{bbox.1}}</southBoundLatitude>
+        <northBoundLatitude>{{bbox.3}}</northBoundLatitude>{% endwith %}
+      </geoLocationBox>
+    </geoLocation>
+  </geoLocations>
+
+  {% comment %} FUNDING {% endcomment %}
+  {% comment %} dataset.funding.all is a many to many to the organization model {% endcomment %}
+  <fundingReferences>{% for funder in dataset.funding.all %} 
+    <fundingReference>
+      <funderName>{{ funder.name }}</funderName>{% for identifier in funder.profile.identifiers %}
+      <funderIdentifier funderIdentifierType="{{ identifier.scheme }}">{{ identifier.identifier }}</funderIdentifier>{% endfor %}{% with funder.award as award %}
+      <awardNumber>{{ award.award_number }}</awardNumber>
+      <awardTitle>{{ award.title }}</awardTitle>{% endwith %}
+    </fundingReference>{% endfor %}
+  </fundingReferences>
+
+  {% comment %} <relatedItems>
+    <relatedItem relationType="IsPublishedIn" relatedItemType="Journal">
+      <relatedItemIdentifier relatedItemIdentifierType="ISSN">0370-2693</relatedItemIdentifier>
+      <titles>
+        <title>Physics letters B</title>
+      </titles>
+      <publicationYear>2018</publicationYear>
+      <volume>776</volume>
+      <firstPage>249</firstPage>
+      <lastPage>264</lastPage>
+    </relatedItem>
+  </relatedItems> {% endcomment %}
+
+</resource>

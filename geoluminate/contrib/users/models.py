@@ -20,9 +20,8 @@ class User(AbstractUser):
     # username = None  # type: ignore[assignment]
     email = models.EmailField(_("email address"), unique=True)
 
-    profile = models.OneToOneField(
-        "contributors.Personal", related_name="user", on_delete=models.CASCADE, null=True, blank=True
-    )
+    # settings = models.JSONField(default=dict, blank=True)
+
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name", "last_name"]
 
@@ -30,10 +29,10 @@ class User(AbstractUser):
         return self.get_full_name()
 
     def save(self, *args, **kwargs):
-        if self.pk is None:
-            Contributor = self._meta.get_field("profile").remote_field.model
-            self.profile = Contributor.objects.create(name=self.get_full_name())
-        super().save(*args, **kwargs)
+        # if self.pk is None:
+        # Contributor = self._meta.get_field("profile").remote_field.model
+        # self.profile = Contributor.objects.create(name=self.get_full_name())
+        return super().save(*args, **kwargs)
 
     @property
     def username(self):
@@ -48,7 +47,7 @@ class User(AbstractUser):
         return self.get_provider("orcid")
 
     def get_absolute_url(self):
-        return reverse("user:profile", kwargs={"pk": self.pk})
+        return reverse("contributor:detail", kwargs={"uuid": self.profile.uuid})
 
     @property
     def profile_image(self):

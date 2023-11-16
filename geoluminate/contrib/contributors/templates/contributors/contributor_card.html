@@ -1,0 +1,72 @@
+{% extends "geoluminate/base/card.html" %}
+{% load i18n geoluminate %}
+
+{% comment %} {% block title %}{% endblock title %} {% endcomment %}
+
+{% block image %}
+<div class="w-100 text-center mt-2">
+  {% comment %} <img src="{{ obj.image.url }}" class="object-fit-contain" alt="{{ obj.title }}" /> {% endcomment %}
+  {% render_profile_image obj width="60%" extra_classes='shadow-sm rounded-circle object-fit-contain' %}
+</div>
+
+{% endblock image %}
+
+
+{% block card_left %}
+<a href="{{ obj.get_absolute_url}}" class='text-center'>{{obj}}</a>
+{% comment %} <span class='text-center'>{{ obj }}</span> {% endcomment %}
+{{ block.super }}
+{% endblock card_left %}
+
+{{ block.super }}
+
+
+{% block list_group %}
+<li>{% trans "Status" %}: <span class='badge text-bg-success'>Master</span></li>
+
+{% if obj.user %}
+  <li>{% trans "Joined" %}: <span>{{obj.user.date_joined|date:"M Y"|default:"-"}}</span></li>
+  {% else %}
+  <li>{% trans "Joined" %}: <span>{{obj.created|date:"M Y"|default:"-"}}</span></li>
+{% endif %}
+<li>{% trans "Datasets" %}: <span>{{obj.contributions.datasets.count|default:"-"}}</span></li>
+<li>{% trans "Samples" %}: <span>{{obj.contributions.samples.count|default:"-"}}</span></li>
+{% comment %} <li>{% trans "Last Contribution" %}: <span>{{obj.contributions.first.timestamp|default:"-"}}</span></li> {% endcomment %}
+
+{% comment %} <li>{% trans "Dataset" %}: <a href="{{obj.dataset.get_absolute_url}}" class="float-end"><i class='fa-solid fa-folder-open text-primary'></i></a></li> {% endcomment %}
+{% comment %} <li>{% trans "Source" %}: <span>{{obj.CSL.source}}</span></li> {% endcomment %}
+{% endblock list_group %}
+
+
+{% block description %}
+{% with obj.about as description %}
+{% if description %}
+  {{ description|truncatewords_html:100 }}
+{% else %}
+  {% blocktrans %}
+  No abstract has been provided for this {{ obj_name }} yet.
+  {% endblocktrans %}
+{% endif %}
+{% endwith %}
+
+{% endblock description %}
+
+{% comment %} {% block card_right %}
+{% if obj.interests.exists %}
+<h6 class='card-title'>{% trans "Research Interests" %}</h6>
+<p>
+  {% for tag in obj.interests.all %}
+    <span class="badge rounded-pill text-bg-primary">{{ tag }}</span>
+  {% endfor %}
+</p>
+{% endif %}
+<h6 class='card-title'>{% trans "About" %}</h6>
+
+  {{ obj.about|truncatewords:50 }}
+  <a href="{{ obj.get_absolute_url }}" class="icon-link icon-link-hover">
+    {% trans "full profile" %}
+    <span class='fa-solid fa-arrow-right-long'></span>
+  </a>
+</p>
+
+{% endblock card_right %} {% endcomment %}

@@ -62,6 +62,11 @@ class OtherRoles(models.TextChoices):
 
     RIGHTS_HOLDER = "RightsHolder", _("Rights Holder")
     OTHER = "Other", _("Other")
+
+    # This is specific to the Geoluminate project so that we can distinguish between creators and
+    # contributors of a dataset. This is not part of the Datacite ContributionType vocabulary.
+    CREATOR = "Creator", _("Creator")
+
     # DISTRIBUTOR = "Distributor", _("Distributor")
 
 

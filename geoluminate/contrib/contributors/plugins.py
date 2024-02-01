@@ -2,6 +2,7 @@ from django.utils.translation import gettext as _
 from django.views.generic import DetailView, UpdateView
 from formset.views import FileUploadMixin, FormViewMixin
 
+from geoluminate.contrib.core.plugins import ActivityStream
 from geoluminate.contrib.datasets.views import DatasetListView
 from geoluminate.contrib.projects.views import ProjectListView
 from geoluminate.contrib.reviews.views import ReviewListView
@@ -15,10 +16,12 @@ from .views import ContributorDetailView
 
 
 @contributor.page("overview", icon="fa-solid fa-address-card")
-class ContributorEditView(ContributorDetailView, FileUploadMixin, FormViewMixin, UpdateView):
+class ContributorFormView(ContributorDetailView, FileUploadMixin, FormViewMixin, UpdateView):
     model = Contributor
     form_class = UserProfileForm
-    template_name = "contributors/contributor_form.html"
+    template_name = "contributors/contributor_detail.html"
+    # template_name = "contributors/contributor_form.html"
+    success_url = "."
 
     def form_valid(self, form):
         if extra_data := self.get_extra_data():
@@ -108,11 +111,15 @@ class ContributorSamplesView(ContributorDetailView, BaseTableView):
     template_name = "auto_datatables/base.html"
 
 
-@contributor.page("activity", icon=icon("activity"))
 @contributor.page("reviews", icon=icon("review"))
 class ContributorReviewsView(ContributorDetailView, ReviewListView):
+    header = _("Your Reviews")
     template_name = "datasets/review_list.html"
 
     def get_queryset(self):
-        qs = super().get_queryset()
-        return qs.select_related("review").filter(review__reviewer=self.get_object().user)
+        return super().get_queryset().select_related("review").filter(review__reviewer=self.get_object().user)
+
+
+@contributor.page("activity", icon=icon("activity"))
+class ContributorActivityView(ContributorDetailView, ReviewListView):
+    template_name = "geoluminate/plugins/activity_stream.html"

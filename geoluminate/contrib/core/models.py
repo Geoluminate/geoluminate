@@ -29,6 +29,7 @@ def default_image_path(instance, filename):
 class Abstract(models.Model):
     """An abstract model that contains common fields and methods for both the Project and Dataset models."""
 
+    DESCRIPTION_TYPES: list = []
     DISCOVERY_TAGS = choices.DiscoveryTags
 
     image = ProcessedImageField(
@@ -46,6 +47,13 @@ class Abstract(models.Model):
         _("name"),
         help_text="The title of the object.",
         max_length=255,
+    )
+    summary = models.CharField(
+        _("summary"),
+        help_text=_("A short (max 512 characters) plain-language summary."),
+        max_length=512,
+        blank=True,
+        null=True,
     )
     keywords = TaggableManager(
         verbose_name=_("keywords"), help_text=_("Add keywords to help others discover your work."), blank=True
@@ -95,6 +103,13 @@ class Abstract(models.Model):
         blank=True,
     )
 
+    visibility = models.IntegerField(
+        _("visibility"),
+        choices=choices.Visibility.choices,
+        default=choices.Visibility.PRIVATE,
+        help_text=_("Visibility within the application."),
+    )
+
     # license = License(
     #     help_text=_("Choose an open source license for your project."),
     #     blank=True,
@@ -123,7 +138,7 @@ class Abstract(models.Model):
     def get_abstract(self):
         """Returns the abstract description of the project."""
         try:
-            return self.descriptions.get(type=Description.DESCRIPTION_TYPES.ABSTRACT)
+            return self.descriptions.get(type=self.DESCRIPTION_TYPES.values[0])
         except Description.DoesNotExist:
             return None
 
@@ -158,7 +173,7 @@ class Abstract(models.Model):
     @cached_property
     def get_descriptions(self):
         descriptions = list(self.descriptions.all())
-        descriptions.sort(key=lambda x: DataCiteDescriptionTypes.values.index(x.type))
+        descriptions.sort(key=lambda x: self.DESCRIPTION_TYPES.values.index(x.type))
         return descriptions
 
 
@@ -196,28 +211,15 @@ class FuzzyDate(django_models.Model):
             models.Index(fields=["content_type", "object_id"]),
         ]
 
-    # def save(self):
-
 
 class Description(django_models.Model):
-    # DESCRIPTION_TYPES = datacite.get_choices_for("descriptionType")
-    DESCRIPTION_TYPES = DataCiteDescriptionTypes
+    # DESCRIPTION_TYPES = DataCiteDescriptionTypes
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey("content_type", "object_id")
 
-    class Meta:
-        verbose_name = _("description")
-        verbose_name_plural = _("descriptions")
-
-    type = models.CharField(
-        _("type"),
-        max_length=32,
-        choices=DESCRIPTION_TYPES.choices,
-        default=DESCRIPTION_TYPES.ABSTRACT,
-    )
+    type = models.CharField(_("type"), max_length=32)
     text = models.TextField(_("description"))
-    # content = models.TextField(_("content"))
 
     class Meta:
         verbose_name = _("description")
@@ -230,6 +232,14 @@ class Description(django_models.Model):
     def clean(self):
         """Returns description text with p tags stripped"""
         return utils.strip_p_tags(self.text)
+
+    def get_type_display(self):
+        choices = self.content_object.DESCRIPTION_TYPES
+
+        type_field = self._meta.get_field("type")
+        type_field.choices = choices.choices
+
+        return self._get_FIELD_display(type_field)
 
 
 class Identifier(models.Model):
@@ -254,5 +264,4 @@ class Identifier(models.Model):
 
     @property
     def scheme_uri(self):
-        return self.URI_LOOKUP[self.scheme]
         return self.URI_LOOKUP[self.scheme]

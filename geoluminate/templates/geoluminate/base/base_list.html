@@ -1,71 +1,75 @@
 {% extends "geoluminate/layout/sidebar_left.html" %}
 {% load i18n formsetify autotables geoluminate static %}
 
-
 {% block main %}
-<div class='container py-3'>
-  <header>
-    <h1>{% block heading %}{{ geoluminate.database.acronym }} {{ list_of|title }}{% endblock %}</h1>
-  </header>
-  <p class='page-description'>{% block description %}{% endblock %}</p>
-  <div class='toolbar py-2 d-flex'>
-    {% with filter.form as form %}
-     <form class="w-100 small" aria-label="Reviews" role="search" method="get">
-      <div class="d-flex flex-column flex-lg-row w-100">
-        <input class="form-control form-control-sm w-100 flex-grow-1" 
-          placeholder="Search {{list_of}}..." 
-          autocomplete="off" 
-          hx-trigger="keyup changed delay:500ms, search" 
-          hx-get 
-          hx-target=".page-content"
-          hx-push-url="true"
-          type="{{ widget.type }}"
-          name="{{ widget.name }}"
-          {% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %}
-          > 
-        <select class="form-select flex-shrink-1 mx-2 w-auto bg-primary-subtle" aria-label="Default select example">
-          <option selected>Status</option>
-          <option value="1">Concept</option>
-          <option value="2">Planning</option>
-          <option value="3">In progress</option>
-          <option value="4">Complete</option>
-        </select>
-        <select class="form-select flex-shrink-1 w-auto bg-primary-subtle" placeholder="Sort by" aria-label="Default select example">
-          {% comment %} <option selected>Sort</option> {% endcomment %}
-          <option value="1">Created</option>
-          <option value="2">Last modified</option>
-          <option value="3">Date published</option>
-        </select>
-      </div>
-    </form>
-    {% endwith %}
+<div class='page-content container d-block entry-list py-3'>{% if header %}
+  <header><h1 class="display-1">{{ header }}</h1></header>{% endif %}{% if description %}
+  <p class='page-description'>{% block description %}{{description}}{% endblock %}</p>{% endif %}{% if list_filter_top %}
+  <div class='toolbar py-2 d-flex w-100'>
+    <django-formset class='list-filter-top hidden-labels' endpoint="{{ request.path }}" csrf-token="{{ csrf_token }}">
+      {% for field in filter.form %}{% if field.name in list_filter_top %}
+        <div class="{% if forloop.first %} flex-grow-1 {% else %} flex-shrink-1{% endif %}">
+          {% include "formset/default/field_group.html" %}
+        </div>{% endif %}
+      {% endfor %}
+    </django-formset>{% endif %}
+    <button class='d-block d-xl-none btn btn-primary' data-bs-target="#pageSidebar" data-bs-toggle="modal">
+      <i class="fas fa-filter"></i>
+    </button>
+    {% if has_create_permission %}
+      <a class='btn btn-success text-nowrap ms-2'
+      {% comment %} hx-get={% url "datasets:contribution:add" uuid=object.uuid %}  {% endcomment %}
+      hx-target="#exampleModal .modal-content"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal">
+        <span>{% icon 'plus' title="Create new" %}
+        {% trans "New " %}</span>
+      </a>
+    {% endif %}
   </div>
   <hr class="mt-0 border border-primary">
+
   {% include template_name %}
 </div>
-
 {% endblock main %}
 
-
 {% block head %}
-{{ block.super }}
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-{{ filter.form.css }}
+  {{ block.super }}
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  {{ filter.form.css }}
 {% endblock %}
 
 
-
-{% block sidebar_header %}
-<h5 class='offcanvas-title'>{% trans "Filter by" %}</h5>
-<button type="button" class="btn-close d-lg-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-{% endblock sidebar_header %}
-
-{% block sidebar_content %}
-  <form method="get" hx-get hx-target="#templateWrapper" hx-trigger="change queue:none, keyup changed delay:500ms from:#id_title queue:none">
-    {{ filter.form.as_p }}
-    {% comment %} <button type="submit" class='btn btn-primary'>{% trans "Apply" %}</button> {% endcomment %}
-  </form>
+{% block sidebar_title %}
+  {% trans "Filter by" %}
 {% endblock %}
+
+{% block sidebar %}
+{% formsetify filter.form %}
+<django-formset endpoint="{{ request.path }}" csrf-token="{{ csrf_token }}">
+  <form id="{{ filter.form.form_id }}"></form>
+    {% include "formset/non_field_errors.html" %}
+    {% for field in filter.form %}{% if field.name not in list_filter_top %}
+      {% if field.is_hidden %}
+        {{ field }}
+      {% else %}
+        {% include "formset/default/field_group.html" %}
+      {% endif %}{% endif %}
+    {% endfor %}
+</django-formset>
+{% endblock %}
+
+{% block sidebar_footer %}
+<button class='btn btn-primary' type="submit" form="{{filter.form.form_id}}" 
+        hx-get="{{request.path}}"
+        hx-include="#{{filter.form.form_id}}"
+        hx-target="#templateWrapper" 
+        hx-push-url="true">
+  {% trans "Apply" %}
+</button>
+{% endblock %}
+
+
 
 
 {% block scripts %}

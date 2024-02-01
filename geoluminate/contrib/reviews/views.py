@@ -1,30 +1,104 @@
 from typing import Any
 
 from django.conf import settings
+from django.contrib import messages
 from django.db import models
+from django.http import HttpResponse, HttpResponseRedirect
 from django.utils.translation import gettext_lazy as _
+from django.views.generic import FormView
+from django.views.generic.detail import SingleObjectMixin
+from django.views.generic.edit import UpdateView
 from literature.formset import LiteratureFileCollection
 from literature.models import Literature
 from literature.views import LiteratureDetail, LiteratureEditView, LiteratureViewMixin
 
 from geoluminate.contrib.datasets.filters import ReviewFilter
 from geoluminate.db.models import Dataset
-from geoluminate.views import BaseCreateView, BaseDetailView, BaseListView, HTMXMixin
+from geoluminate.views import BaseDetailView, BaseFormView, BaseListView, HTMXMixin
 
-from .forms import LiteratureFormCollection, LiteratureUploadForm  # LiteratureForm,
+from . import utils
+from .choices import StatusChoices
+from .forms import (  # LiteratureForm,
+    AcceptReviewForm,
+    LiteratureFormCollection,
+    LiteratureUploadForm,
+    ReviewStatusForm,
+)
 from .models import Review
 
 
-class ReviewCreateView(BaseCreateView):
+class AcceptLiteratureReview(SingleObjectMixin, FormView):
+    """A simple view that asks the user to confirm that they want to accept the review. On accepting, a new Review object is created and the user is redirected to the detail view of the related dataset."""
+
+    model = Literature
+    template_name = "reviews/accept_review_form.html"
+    form_class = AcceptReviewForm
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().get(request, *args, **kwargs)
+
+    def form_valid(self, form):
+
+        # create a new dataset object which will store the reviewed data
+        self.object = self.get_object()
+
+        self.dataset = utils.dataset_from_literature(self.object)
+
+        # create a new review object
+        self.review = Review.objects.create(
+            literature=self.object,
+            reviewer=self.request.user,
+            dataset=self.dataset,
+        )
+
+        # message the user
+        messages.add_message(
+            self.request,
+            messages.INFO,
+            _("A new review has been added to your profile."),
+        )
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return self.review.get_absolute_url()
+
+
+class AcceptReview(UpdateView):
+    """A view that allows an administrator to accept a submitted review into the database.
+
+    The administrator is presented with a summary of the review and asked to confirm that they want to accept it.
+    """
+
+    model = Review
+    form_class = ReviewStatusForm
+    status = None
+    success_url = "."
+
+    def get_initial(self):
+        return {"status": self.status}
+
+    def form_valid(self, form):
+        print(form.cleaned_data)
+        return super().form_invalid(form)
+
+    # def get_success_url(self):
+    #     return self.dataset.get_absolute_url()
+
+
+accept_review = AcceptReview.as_view(status=Review.STATUS_CHOICES.ACCEPTED, template_name="reviews/review_accept.html")
+reject_review = AcceptReview.as_view(status=Review.STATUS_CHOICES.IN_PROGRESS)
+submit_review = AcceptReview.as_view(status=Review.STATUS_CHOICES.SUBMITTED)
+
+
+class ReviewCreateView(BaseFormView):
     model = Literature
     form_class = LiteratureUploadForm
-    title = _("Start a new review")
-    help_text = _(
-        f"You're about to start a new review for the {settings.GEOLUMINATE['database']['name']}. Reviews are a way for"
-        " community members to contribute existing data to the repository without claiming ownership of that data."
-        " Make sure you have the right to contribute the data you are about to add. If you are the owner of the data,"
-        " consider adding it as a dataset instead."
-    )
+    title = _("Start review")
+    template_name = "reviews/literature_form.html"
+    slug_field = "slug"
+    slug_url_kwarg = "slug"
 
     def form_valid(self, form):
         # THE ORDER HERE NEEDS TO BE WORKED OUT
@@ -53,12 +127,13 @@ class ReviewCreateView(BaseCreateView):
         return review
 
     def get_success_url(self):
-        return self.dataset.get_edit_url()
+        return self.dataset.get_absolute_url()
 
 
 class ReviewListView(BaseListView):
     """A view that lists a set of Review objects."""
 
+    # header = _("Literature Review")
     template_name = "reviews/review_list.html"
 
     filterset_class = ReviewFilter
@@ -68,6 +143,23 @@ class ReviewListView(BaseListView):
 class ReviewDetailView(BaseDetailView):
     model = Review
     # navigation = settings.GEOLUMINATE_PROJECT_PAGES
+
+
+class ReviewCheckoutView(BaseFormView):
+    """This view is used as a final request to submit supporting documents that were used during the review process. It will be accessible to the reviewer only after the review has been successfully completed and formally accepted into the database."""
+
+    model = Review
+    # form_class = SupportingDocumentsForm
+    title = _("Submit supporting documents")
+    template_name = "reviews/supporting_documents_form.html"
+
+    def get(self, request, *args, **kwargs):
+        """Make sure the object status is equal to 'accepted' or redirect to the detail view."""
+        self.object = self.get_object()
+        if self.object.status == "accepted":
+            return super().get(request, *args, **kwargs)
+        else:
+            return HttpResponseRedirect(self.object.get_absolute_url())
 
 
 class ReviewDataUploadView(ReviewDetailView):
@@ -108,7 +200,7 @@ class ReviewFilesEdit(ReviewLiteratureEdit):
 class LiteratureReviewListView(BaseListView):
     """A view that lists a set of Review objects."""
 
-    base_template = "review/base_list.html"
+    base_template = "reviews/base_list.html"
 
     title = _("Literature Review")
     help_text = _(

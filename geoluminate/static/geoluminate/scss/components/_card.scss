@@ -1,6 +1,17 @@
 
 .card {
 
+
+    .card {
+        border: none;
+
+        .card-footer {
+            // border: none;
+            background-color: unset !important;
+        }
+
+    }
+
     .card-title {
         &:hover {
             text-decoration: underline;

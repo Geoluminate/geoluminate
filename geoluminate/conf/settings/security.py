@@ -1,6 +1,5 @@
 """Contains security settings for the project."""
 
-
 # SECURITY
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#session-cookie-httponly
@@ -36,4 +35,5 @@ BLEACH_STRIP_TAGS = True
 # Strip comments, or leave them in.
 BLEACH_STRIP_COMMENTS = True
 
-BLEACH_DEFAULT_WIDGET = "formset.richtext.widgets.RichTextarea"
+# BLEACH_DEFAULT_WIDGET = "formset.richtext.widgets.RichTextarea"
+# BLEACH_DEFAULT_WIDGET = "djangocms_text_ckeditor.widgets.TextEditorWidget"

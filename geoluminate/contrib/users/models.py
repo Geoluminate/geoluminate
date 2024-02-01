@@ -35,7 +35,13 @@ class User(AbstractUser):
         return super().save(*args, **kwargs)
 
     @property
+    def image(self):
+        return self.profile.image
+
+    @property
     def username(self):
+        if self.profile:
+            return str(self.profile)
         return self.get_full_name()
 
     def get_provider(self, provider: str):
@@ -52,8 +58,8 @@ class User(AbstractUser):
     @property
     def profile_image(self):
         """Return the profile image of the user if it exists, otherwise return the default profile image."""
-        if self.profile.image:
-            return self.profile.image.url
+        if self.image:
+            return self.image.url
         return settings.DEFAULT_PROFILE_IMAGE
 
 

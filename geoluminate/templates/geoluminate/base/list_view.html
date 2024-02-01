@@ -1,21 +1,7 @@
 {% load i18n formsetify geoluminate static %}
 
-
-{% comment %} {% block toolbar %}
-<a type="button" class="ms-1 text-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  <i class='fa-solid fa-filter'></i>
-</a>
-{% if has_edit_permission %}
-  <a href={% create_url object_list %} class='ms-auto btn btn-sm btn-success'>
-    <i class='fa-solid fa-plus' title="{% trans "Create a new " %} {{ object_list.model|verbose_name }}"></i>
-    {% trans "New " %}
-  </a>
-{% endif %}
-{% endblock %} {% endcomment %}
-
 {% block main %}
-<div class='page-content d-block'>
-  {% if is_filtered %}
+<div id='templateWrapper'>{% if is_filtered %}
   <div class='filter-info container'>
     <span class='text-muted'>Filters matched {{ filtered_object_count }} out of {{ total_object_count }} total {{ list_of }}.</span>
     
@@ -24,31 +10,7 @@
       Clear filters
     </button>
   </div>
-  <hr>
-  {% endif %}
-  <div id='templateWrapper'>
-    {% include page_template %}
-  </div>
-</div>
-{% endblock %}
-
-{% block modals %}
-<div class="modal fade position-absolute" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">{% trans "Filter" %} {{ object_list.model|verbose_name_plural|title }}</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form id="quickSearch" method="get" hx-get>
-          {{ filter.form.as_p }}
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" for="quickSearch" class='btn btn-primary'>{% trans "Apply filters" %}</button>
-      </div>
-    </div>
-  </div>
+  <hr>{% endif %}
+  {% include page_template %}
 </div>
 {% endblock %}

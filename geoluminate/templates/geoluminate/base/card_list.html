@@ -3,15 +3,18 @@
 {% paginate page_size object_list %}
 
 {% with object_list|verbose_name_plural as obj_name_plural %}
-{% for obj in object_list %}
-{% with obj|verbose_name as obj_name %}
-  {% include object_template %}
-  {% endwith %}
-  <hr>
-{% empty %}
-  {% blocktranslate %}
-  <p>Looks like there are no {{ obj_name_plural }} here yet.</p>
-  {% endblocktranslate  %}
-{% endfor %}
+<div class='d-flex flex-row flex-wrap'>
+  {% for obj in object_list %}
+    <div class="col-{{col}} {% if col < 12 %}px-2{% endif %}">
+      {% with obj|verbose_name as obj_name %}
+        {% include object_template %}
+      {% endwith %}
+    </div>
+  {% empty %}
+    {% blocktranslate %}
+    <p>Looks like there are no {{ obj_name_plural }} here yet.</p>
+    {% endblocktranslate  %}
+  {% endfor %}
+</div>
 {% show_more %}
 {% endwith %}

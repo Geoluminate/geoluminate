@@ -30,7 +30,8 @@
 		</div>
 	</div>
 	<div class='card-footer'>
-		<span><i class="fas fa-map-marked-alt"></i>{{pub.sites.count|default:0 }}</span>
+		
+		<span>{% icon "location" %}</i>{{pub.sites.count|default:0 }}</span>
 		<span><i class="fas fa-stream"></i>{{pub.intervals.count|default:0 }}</span>
 		<span><i class="fas fa-table"></i></i>{{pub.intervals.count|default:0 }}</span>
 	</div>

@@ -16,7 +16,7 @@ class Dataset(Abstract):
     is the second level model in the Geoluminate schema heirarchy and all geographic sites,
     samples and sample measurements MUST relate back to a dataset."""
 
-    DESCRIPTION_TYPES = choices.DataCiteDescriptionTypes.choices
+    DESCRIPTION_TYPES = choices.DataCiteDescriptionTypes
 
     reference = models.OneToOneField(
         "literature.Literature",
@@ -53,16 +53,6 @@ class Dataset(Abstract):
         blank=True,
         related_name="approved_%(class)ss",
         on_delete=models.SET_NULL,
-    )
-
-    is_public = models.BooleanField(
-        _("visibility"),
-        help_text=_("Choose whether this project is publicly discoverable."),
-        choices=(
-            (True, _("Public")),
-            (False, _("Private")),
-        ),
-        default=False,
     )
 
     _metadata = {

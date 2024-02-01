@@ -13,13 +13,13 @@ from . import base
 class ProjectSerializer(base.ProjectSerializer, HyperlinkedModelSerializer):
     class Meta:
         model = Project
-        exclude = ["options", "is_public"]
+        exclude = ["options", "visibility"]
 
 
 class DatasetSerializer(base.DatasetSerializer, HyperlinkedModelSerializer):
     class Meta:
         model = Dataset
-        exclude = ["options", "is_public"]
+        exclude = ["options", "visibility"]
 
     def get_bbox(self, obj):
         return obj.bbox()

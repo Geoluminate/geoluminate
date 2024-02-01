@@ -4,6 +4,7 @@
 
 All settings can be overridden in your project settings file.
 """
+
 from django.utils.translation import gettext_lazy as _
 
 DB_NAME = GEOLUMINATE["database"]["acronym"]

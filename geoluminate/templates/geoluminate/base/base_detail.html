@@ -1,53 +1,22 @@
 {% extends 'geoluminate/layout/sidebar_left.html' %}
-{% load static i18n formsetify geoluminate sekizai_tags cms_tags %}
+{% load static i18n formsetify geoluminate sekizai_tags activity_tags %}
 
 {% comment %} {% block title %}{{ geoluminate.database.acronym}} {{ object|verbose_name|title }}{% endblock %} {% endcomment %}
 
 {% block title_after %}{{ object|title }}{% endblock %}
 
 {% block sidebar %}
-{% block image %}<img src="{{ object.profile_image }}" class='w-100 rounded-circle' alt="{{ object }}">{% endblock %}
-
-<div class='container py-3'>
-  <h1 class='fs-5 mb-0'>
-    {% block title %}{{object}}{% endblock %}
-  </h1>
-  <span class='fs-6 fw-light '>
-    {% block subtitle %}Deutsches GeoForschungsZentrum{% endblock %}</span> 
-    {% block actions %}{% endblock %}
-  {% comment %} <a href="" class='text-right'><i class='fa-solid fa-envelope'></i></a> {% endcomment %}
-  {% if has_edit_permission %}
-    <button class='btn bg-primary-subtle btn-outline-primary w-100 my-3'>
-      {% trans "Edit" %}
-    </button>
-  {% endif %}
-  {% block sections %}{% endblock %}
-  {% comment %} <ul class="list-group list-group-flush mt-3">
-    <li class="list-group-item d-flex px-0 align-items-center">
-      <i class='fa-solid fa-project-diagram me-2'></i>
-      {% trans "Active Projects" %}: 
-      <span class='ms-auto badge rounded-pill text-bg-success'>{{object.projects.count}}</span>
-    </li>
-    <li class="list-group-item d-flex px-0 align-items-center">
-      <i class='fa-solid fa-folder-open me-2'></i>
-      {% trans "Published Datasets" %}: 
-      <span class='ms-auto badge rounded-pill text-bg-success'>{{object.datasets.count}}</span>
-    </li>
-    <li class="list-group-item d-flex px-0 align-items-center">
-      <i class='fa-solid fa-check-to-slot me-2'></i>
-      {% trans "Completed Reviews" %}: 
-      <span class='ms-auto badge rounded-pill text-bg-success'>{{object.reviews.count}}</span>
-    </li>
-  </ul> {% endcomment %}
-</div>
-
+  {% comment %} {% include app_name|addstr:"s/sidebar.html" %} {% endcomment %}
+  {% comment %} {% include app_name|addstr:"s/contributor_form.html" %} {% endcomment %}
+  {% include "contributors/contributor_form.html" %}
+  {% comment %} {% include app_name|addstr:"/contributor_form.html" %} {% endcomment %}
 {% endblock %}
 
 
 {% block main %}
 
 <div class="tab-content w-100 h-100" >
-
+{% comment %} {% include "contributors/contributor_form.html" %} {% endcomment %}
 {% for item in page_menu %}
   <div id="{{item.title|slugify}}-panel" 
       class="tab-pane fade bg-body-light 
@@ -58,15 +27,18 @@
       tabindex="{{ forloop.counter }}"
       hx-get="{{ item.resolved }}"{% for key, val in htmx.items %}
       hx-{{ key }}="{{ val }}"{% endfor %}
-      hx-trigger="intersect once"
+      {% comment %} hx-trigger="intersect once" {% endcomment %}
+      hx-trigger="intersect"
       hx-target="this"></div>
 {% endfor %}
 <div class="tab-pane w-100 h-100" id="map-panel" role="tabpanel" aria-labelledby="map-panel-tab" tabindex="0">
   {% include "geoluminate/plugins/map.html" %}
 </div>
+{% if allow_discussion %}
 <div class="tab-pane" id="discussion-panel" role="tabpanel" aria-labelledby="discussion-panel-tab" tabindex="0">
   {% include "geoluminate/plugins/discussion.html" %}
 </div>
+{% endif %}
 </div>
 
 {% endblock %}
@@ -106,7 +78,7 @@
 {% addtoblock 'js' %}<script src="https://unpkg.com/maplibre-gl@2.0.0/dist/maplibre-gl.js"></script>{% endaddtoblock %}
 
 
-<script>
+{% comment %} <script>
 $(function () {
   console.log("creating map");
 
@@ -1177,21 +1149,12 @@ $(function () {
     map.resize();
   });
 
-
-  {% comment %} $('a[data-bs-toggle="pill"]').on('shown.bs.tab', function (e) {
-    console.log(e.target.href);
-  }) {% endcomment %}
-
-  {% comment %} $('a[data-bs-toggle="tab"]').on('click', function (e) {
-    console.log(e.target.href);
-  }) {% endcomment %}
 });
 
 
 
 
-</script>
+</script> {% endcomment %}
 
-{% comment %} <script src="{% static "geoluminate/js/parallax/parallax.min.js" %}"></script> {% endcomment %}
 {% endblock scripts %}
 

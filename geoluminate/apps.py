@@ -53,8 +53,8 @@ class GeoluminateConfig(AppConfig):
 
         # pprint.pprint(measurements.registry)
 
-        settings.SPECTACULAR_SETTINGS["DESCRIPTION"] = render_to_string(
-            "api/docs/api_description.md", context={"geoluminate": settings.GEOLUMINATE}
-        )
+        # settings.SPECTACULAR_SETTINGS["DESCRIPTION"] = render_to_string(
+        #     "api/docs/api_description.md", context={"geoluminate": settings.GEOLUMINATE}
+        # )
 
         return super().ready()

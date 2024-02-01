@@ -9,7 +9,7 @@
 
 <p>{% trans "Use the details you signed up with:" %}</p>
 
-<form id="loginForm" action="{% url 'account_login' %}" method='post' class="standard">
+<form id="loginForm" action="{% url 'account_login' %}?next={{request.path}}" method='post' class="standard">
   {% csrf_token %}
   {{ login_form.as_p }}
   <button type='submit' form="loginForm" class='btn btn-success'>

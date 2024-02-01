@@ -28,7 +28,7 @@ class DatasetFilter(df.FilterSet):
 
     class Meta:
         model = Dataset
-        fields = ["title", "is_public", "keywords", "tags"]
+        fields = ["title", "keywords", "tags"]
 
 
 class ReviewFilter(df.FilterSet):

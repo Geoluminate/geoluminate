@@ -13,7 +13,7 @@ urlpatterns = [
             (
                 [
                     path("profile/", ProfileRedirectView.as_view(), name="profile"),
-                    path("settings/", Account.as_view(), name="account"),
+                    path("account/", Account.as_view(), name="account"),
                     path("affiliations/", AffiliationView.as_view(), name="affiliations"),
                 ],
                 "user",

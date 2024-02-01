@@ -9,8 +9,7 @@ from literature import forms as lit_forms
 from literature.forms import CitationJSFormMixin, OnlineSearchForm
 from literature.models import Literature
 
-from geoluminate.contrib.core.forms import DescriptionFormCollection
-
+# from geoluminate.contrib.core.forms import DescriptionFormCollection
 from .models import Dataset
 
 
@@ -102,27 +101,14 @@ class LiteratureUploadForm(FieldsetMixin, CitationJSFormMixin, forms.ModelForm):
 
 
 class DatasetForm(FieldsetMixin, forms.ModelForm):
-    is_public = forms.ChoiceField(
-        label=_("Visibility"),
-        help_text=_("Choose whether this dataset is publicly discoverable."),
-        choices=(
-            (True, _("Public")),
-            (False, _("Private")),
-        ),
-        initial=False,
-    )
-
     class Meta:
         model = Dataset
-        fields = [
-            "is_public",
-            "title",
-        ]
-        # fields = ["project", "title"]
+        fields = ["visibility", "title"]
 
 
 class DatasetFormCollection(FormCollection):
-    descriptions = DescriptionFormCollection()
+    pass
+    # descriptions = DescriptionFormCollection()
 
 
 class LiteratureFormCollection(FormCollection):

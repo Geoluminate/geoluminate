@@ -28,7 +28,7 @@ class NestedProjectSerializer(base.ProjectSerializer, BaseNestedSerializer):
 
     class Meta:
         model = Project
-        exclude = ["options", "is_public"]
+        exclude = ["options", "visibility"]
         extra_kwargs = {"details": {"lookup_field": "uuid"}}
 
 
@@ -44,7 +44,7 @@ class NestedDatasetSerializer(BaseNestedSerializer):
 
     class Meta:
         model = Dataset
-        exclude = ["options", "is_public"]
+        exclude = ["options", "visibility"]
         extra_kwargs = {"details": {"lookup_field": "uuid"}, "project": {"lookup_field": "uuid"}}
 
 

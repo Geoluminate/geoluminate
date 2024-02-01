@@ -8,7 +8,7 @@ app_name = "samples"
 urlpatterns = [
     path("samples/", list_view, name="list"),
     path("s/<uuid:uuid>/", include(sample.urls)),
-    # path("l/<uuid:uuid>/", include(location.urls)),
+    path("l/<int:lon>/<int:lat>/", include(location.urls)),
 ]
 
 # print(location.urls)

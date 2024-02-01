@@ -2,26 +2,25 @@ import random
 
 from django.conf import settings
 from django.contrib.gis.db.models import Collect
+from django.urls import reverse
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 
 from geoluminate import models
 from geoluminate.contrib.core.models import Abstract
 
+from .choices import StatusChoices
+
 
 class Review(models.Model):
     """Stores information about each review"""
 
-    STATUS_CHOICES = [
-        (0, _("In progress")),
-        (1, _("Completed")),
-        (2, _("Accepted")),
-    ]
+    STATUS_CHOICES = StatusChoices
 
     status = models.PositiveSmallIntegerField(
         verbose_name=_("status"),
         help_text=_("Status of the review"),
-        choices=STATUS_CHOICES,
+        choices=STATUS_CHOICES.choices,
         default=0,
     )
     literature = models.OneToOneField(
@@ -42,12 +41,6 @@ class Review(models.Model):
         on_delete=models.SET_NULL,
         null=True,
     )
-    # submitter = models.ForeignKey(
-    #     to=settings.AUTH_USER_MODEL,
-    #     help_text=_("User submitting this review"),
-    #     on_delete=models.SET_NULL,
-    #     null=True,
-    # )
 
     submitted = models.DateTimeField(
         verbose_name=_("date submitted"),
@@ -65,8 +58,11 @@ class Review(models.Model):
     def __str__(self):
         return f"Review of {self.dataset} by {self.reviewer}"
 
-    # def get_absolute_url(self):
-    # return reverse("review", kwargs={"pk": self.pk})
+    def get_absolute_url(self):
+        return reverse("review:edit", kwargs={"pk": self.pk})
+
+    # def get_status(self):
+    # if not self.status:
 
     # def status(self):
     #     if self.accepted:

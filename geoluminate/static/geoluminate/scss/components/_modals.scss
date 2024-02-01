@@ -1,0 +1,34 @@
+
+.modal {
+
+    // .modal-header {
+        // @extend .bg-primary;
+        // @extend .bg-gradient;
+        // @extend .text-white;
+    // }
+
+    &#shareModal {
+        .modal-body > div {
+            width: 100%;
+            @extend .text-center;
+            @extend .card;
+            @extend .mb-1;
+            // @extend .shadow-sm;
+            @extend .p-2;
+            @extend .border-1;
+            @extend .rounded;
+
+            &:hover {
+                @extend .shadow-sm;
+            }
+
+            svg {
+                height: 2.5rem;
+            }
+
+            a {
+                @extend .stretched-link;
+            }
+        }
+    }
+}

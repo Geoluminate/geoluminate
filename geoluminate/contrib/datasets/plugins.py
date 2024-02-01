@@ -1,7 +1,6 @@
 from django.core.files.base import ContentFile
-from django.utils.text import slugify
 from django.utils.translation import gettext as _
-from django.views.generic import DetailView, TemplateView, UpdateView
+from django.views.generic import TemplateView, UpdateView
 from django_downloadview.views import VirtualDownloadView
 from formset.views import FileUploadMixin, FormViewMixin
 from lxml import etree
@@ -11,16 +10,10 @@ from geoluminate.contrib.core import utils
 from geoluminate.plugins import dataset
 from geoluminate.utils import icon
 
-from .filters import DatasetFilter
-from .forms import DatasetForm
 from .models import Dataset
 from .views import DatasetDetailView
 
 
-# @dataset.page("activity", icon=icon("activity"))
-@dataset.page("measurements", icon=icon("measurement"))
-@dataset.page("samples", icon=icon("sample"))
-# @dataset.page("visualize", icon="fas fa-chart-line")
 # @dataset.page("timeline", icon=icon("timeline"))
 @dataset.page("overview", icon="fas fa-book-open")
 class DatasetOverview(DatasetDetailView, FileUploadMixin, FormViewMixin, UpdateView):
@@ -30,10 +23,12 @@ class DatasetOverview(DatasetDetailView, FileUploadMixin, FormViewMixin, UpdateV
     def has_edit_permission(self):
         """TODO: Add permissions."""
         # return self.request.user.is_superuser
-        return self.get_object().has_role(self.request.user, "Creator")
         return super().has_edit_permission()
+        return self.get_object().has_role(self.request.user, "Creator")
 
 
+@dataset.page("measurements", icon=icon("measurement"))
+@dataset.page("samples", icon=icon("sample"))
 @dataset.page("contributors", icon=icon("contributors"))
 class DatasetContributorsView(DatasetDetailView, ContributionListView):
     def get_queryset(self, *args, **kwargs):
@@ -41,6 +36,11 @@ class DatasetContributorsView(DatasetDetailView, ContributionListView):
 
     # def get_queryset(self, *args, **kwargs):
     #     return self.get_object().contributors.select_related("profile")
+
+
+@dataset.page("activity", icon=icon("activity"))
+class DatasetActivityView(DatasetDetailView, TemplateView):
+    template_name = "geoluminate/plugins/activity_stream.html"
 
 
 @dataset.action("flag", icon="fas fa-flag")

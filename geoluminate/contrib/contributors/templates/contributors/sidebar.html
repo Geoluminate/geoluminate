@@ -1,0 +1,105 @@
+{% load i18n geoluminate %}
+  {% if has_edit_permission %}
+  <button hx-get="{{ edit_url }}" class='btn position-absolute top-0 end-0 m-2'>
+    <i class='fa-solid fa-pencil text-success'></i>
+  </button>
+  {% endif %}
+  {% comment %} {% avatar object width="150px" height="150px" class='rounded-circle' %} {% endcomment %}
+  {% avatar object width="100%" class='rounded' %}
+
+  <div class='card'>
+    <div class="card-body">
+      <h6 class='card-title' id='object-title'>
+        {% block title %}{{object}}{% endblock %}
+      </h6>
+      <h6 class="card-subtitle mb-2 text-muted">
+        {% block subtitle %}Deutsches GeoForschungsZentrum{% endblock %}
+      </h6>
+      <div class='actions d-flex mb-2'>
+        {% follow_button object %}
+        {% share_button object %}
+        <a href="" class='btn btn-sm btn-secondary'>
+          <i class='fa-solid fa-envelope'></i>
+        </a>
+        {% block actions %}{% endblock %}
+      </div> 
+      {% if object.summary %}
+      <div class='card-text small'>
+        {{ object.summary }}
+      </div>
+      {% endif %}
+    </div> 
+  </div>
+  <div class='card'>
+    <div class="card-body">
+      <h6 class='card-title'>{% trans "Keywords" %}
+      </h6>
+      {% for tag in object.get_tags_list %}
+        <span class='badge text-bg-primary rounded-pill'>
+          {{tag}}
+        </span>
+      {% empty %}
+      {% trans "No interests to show" %}
+      {% endfor %}
+    </div>
+  </div>
+  
+  <div class='card'>
+    <div class="card-body">
+      <h6 class='card-title'>{% trans "Interests" %}</h6>
+      {% for interest in object.interests.all %}
+        <span class='badge text-bg-primary rounded-pill'>
+          {{interest}}
+        </span>
+      {% empty %}
+      {% trans "No interests to show" %}
+      {% endfor %}
+    </div>
+  </div>
+  
+  <div class='card'>
+    <div class="card-body">
+      <h6 class='card-title'>{% trans "Status" %}
+      </h6>
+      {% for interest in object.interests.all %}
+        <span class='badge rounded-pill'></span>
+      {% empty %}
+        {% trans "No status available" %}
+      {% endfor %}
+    </div>
+  </div>
+  
+  <div class='card'>
+    <div class="card-body px-0">
+      <h6 class='card-title'>{% trans "Contributions" %}
+      </h6>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item d-flex px-0 align-items-center">
+          {% icon 'project' class="float-end me-2" %}
+          {% trans "Active Projects" %}: 
+          <span class='ms-auto badge rounded-pill text-bg-success'>{{object.projects.count}}</span>
+        </li>
+        <li class="list-group-item d-flex px-0 align-items-center">
+          {% icon 'dataset' class="me-2" %}
+          {% trans "Published Datasets" %}: 
+          <span class='ms-auto badge rounded-pill text-bg-success'>{{object.datasets.count}}</span>
+        </li>
+        <li class="list-group-item d-flex px-0 align-items-center">
+          {% icon 'sample' class="me-2" %}
+          {% trans "Samples Collected" %}: 
+          <span class='ms-auto badge rounded-pill text-bg-success'>{{object.reviews.count}}</span>
+        </li>
+        <li class="list-group-item d-flex px-0 align-items-center">
+          {% icon 'measurement' class="me-2" %}
+          {% trans "Measurements Made" %}: 
+          <span class='ms-auto badge rounded-pill text-bg-success'>{{object.reviews.count}}</span>
+        </li>
+        <li class="list-group-item d-flex px-0 align-items-center">
+          {% icon 'review' class="me-2" %}
+          {% trans "Completed Reviews" %}: 
+          <span class='ms-auto badge rounded-pill text-bg-success'>{{object.reviews.count}}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+

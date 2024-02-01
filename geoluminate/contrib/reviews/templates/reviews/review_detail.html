@@ -1,0 +1,26 @@
+{% extends "reviews/base.html" %}
+{% load static i18n formsetify sekizai_tags geoluminate autotables %}
+
+{% block content %}
+
+<div class='container'>
+  <h1 class='display-1'>{{object}}</h1>
+
+  <p>{{object.dataset}}</p>
+  <p>{{object.literature}}</p>
+  <p>{{object.get_status_display }}</p>
+
+
+  <div>
+    <form method='post'>
+      {% csrf_token %}
+      <button formaction="{% url "review:delete" pk=object.id %}" class='btn btn-warning'>{% trans "Delete" %}</button>
+      <button formaction="{% url "review:delete" pk=object.id %}" class='btn btn-secondary'>{% trans "Reject" %}</button>
+      <button formaction="{% url "review:submit" pk=object.id %}" class='btn btn-success'>{% trans "Submit completed review" %}</button>
+      <button formaction="{% url "review:accept" pk=object.id %}" class='btn btn-success'>{% trans "Approve" %}</button>
+    </form>
+  </div>
+
+</div>
+
+{% endblock %}

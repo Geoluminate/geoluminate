@@ -70,7 +70,7 @@ Sidebar.add_item(
             ),
             MenuItem(
                 title=_("Literature Review"),
-                url=reverse("reviews:list"),
+                url=reverse("review:list"),
                 weight=5,
                 icon=icon("review"),
             ),
@@ -81,7 +81,7 @@ Sidebar.add_item(
 # Sidebar.add_item(
 #     MenuItem(
 #         title=_("Reviews"),
-#         url=reverse("reviews:list"),
+#         url=reverse("review:list"),
 #         weight=5,
 #         icon="fas fa-book-open",
 #     ),

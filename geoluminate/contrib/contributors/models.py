@@ -1,4 +1,5 @@
 import json
+import random
 
 from django.apps import apps
 from django.conf import settings
@@ -49,7 +50,6 @@ class Contributor(models.Model):
     image = models.ImageField(
         upload_to="profile_images/",
         verbose_name=_("profile image"),
-        help_text=_("A profile image for the contributor."),
         blank=True,
         null=True,
     )
@@ -98,6 +98,20 @@ class Contributor(models.Model):
 
     def __str__(self):
         return self.name
+
+    def default_affiliation(self):
+        """Returns the default affiliation for the contributor. TODO: make this a foreign key to an organization model."""
+        if self.user:
+            # return self.user.organization
+            return random.choice(["GFZ", "University of Adelaide", "Technische Universität Dresden"])
+        return None
+
+    def location(self):
+        """Returns the location of the contributor. TODO: make this a foreign key to a location model."""
+        return random.choice(["Potsdam", "Adelaide", "Dresden"])
+        if self.user:
+            return self.user.organization.location
+        return None
 
     def get_absolute_url(self):
         return reverse("contributor:detail", kwargs={"uuid": self.uuid})
@@ -225,7 +239,7 @@ class Contributor(models.Model):
         return json.dumps(vis_js)
 
     @cached_property
-    def ownner(self):
+    def owner(self):
         if self.user:
             return self.user
         return self.organization
@@ -308,12 +322,42 @@ class Contribution(django_models.Model):
             models.Index(fields=["content_type", "object_id"]),
         ]
 
+    def save(self, *args, **kwargs):
+        """Either data or a profile should be passed to the constructor. If data is passed, search the obect for an ORCID and try to find an existing profile. If no profile is found, create a new one. If a profile is passed, use that profile to create a data object."""
+        # if not self.pk:
+        #     # if data is passed to constructor on creation, set the profile field to the data
+        #     if self.contributor and not self.profile:
+        #         self.profile = utils.csljson_to_contributor(self.contributor)
+        #     elif self.profile and not self.contributor:
+        #         self.contributor = utils.csljson_from_contributor(self.profile)
+
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return force_str(self.profile)
 
     def get_absolute_url(self):
         """Returns the absolute url of the contributor's profile."""
         return self.profile.get_absolute_url()
+
+    def profile_to_data(self):
+        """Converts the profile to a JSON object."""
+
+        data = {
+            "name": self.profile.name,
+            "given": self.profile.given,
+            "family": self.profile.family,
+        }
+
+        ORCID = self.profile.identifiers.filter(scheme="ORCID").first()
+        if ORCID:
+            data["ORCID"] = ORCID.identifier
+
+        affiliation = self.profile.default_affiliation()
+        if affiliation:
+            data["affiliation"] = affiliation
+
+        return data
 
     def roles_list(self):
         """Returns a string containg a '|' separated list of the contributor's roles."""

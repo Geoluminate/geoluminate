@@ -21,3 +21,7 @@ from geoluminate.views import BaseDetailView
 # @sample.page("discussion", icon=icon("discussion"), view_kwargs={"model": Sample})
 # class DiscussionView(BaseDetailView, TemplateView):
 #     template_name = "geoluminate/plugins/discussion.html"
+
+
+class ActivityStream:
+    template_name = "geoluminate/plugins/activity_stream.html"

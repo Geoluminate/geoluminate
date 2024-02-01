@@ -55,7 +55,7 @@ class ProjectSerializer(BaseSerializerMixin):
 
     class Meta:
         model = Project
-        exclude = ["options", "is_public"]
+        exclude = ["options", "visibility"]
         extra_kwargs = {"details": {"lookup_field": "uuid"}}
 
 
@@ -76,7 +76,7 @@ class DatasetSerializer(BaseSerializerMixin):
 
     class Meta:
         model = Dataset
-        exclude = ["options", "is_public"]
+        exclude = ["options", "visibility"]
         extra_kwargs = {"details": {"lookup_field": "uuid"}, "project": {"lookup_field": "uuid"}}
 
     def get_bbox(self, obj):

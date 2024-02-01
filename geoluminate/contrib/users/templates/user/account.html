@@ -1,14 +1,30 @@
-{% extends 'user/base.html' %}
+{% extends 'geoluminate/layout/sidebar_left.html' %}
 
 {% load i18n authentication crispy_forms_tags %}
 {% block title %}{% trans "Account Settings" %}{% endblock %}
 {% block page_title %}{% trans "Account Settings" %}{% endblock %}
 
 
-{% block content_main %}
-<section>
+{% block sidebar %}
+<div id="list-example" class="list-group">
   {% for label, template, form in forms %}
-    {% include template with card_class='mb-2' %}
+    <a class="list-group-item list-group-item-action" href="#{{label}}">{{label}}</a>
   {% endfor %}
-</section>
+</div>
+{% endblock %}
+
+
+{% block main %}
+<div class='container mt-3'>
+  <header>
+    <h1 class='display-1'>{% trans "Account Settings" %}</h1>
+  </header>
+  {% for label, template, form in forms %}
+  <section class='card w-100'>
+      {% include template %}
+  </section>{% if not forloop.last %}
+  <hr class='my-3'>{% endif %}
+  {% endfor %}
+</div>
+
 {% endblock %}

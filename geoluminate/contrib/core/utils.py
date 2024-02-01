@@ -38,7 +38,7 @@ def text_choices_factory(name, item_list):
 
 class PublicObjectsManager(Manager):
     def get_queryset(self):
-        return super().get_queryset().filter(is_public=True)
+        return super().get_queryset().filter(visibility=True)
         # return ProjectQuerySet(self.model, using=self._db)
 
     def active(self):
@@ -54,10 +54,10 @@ class ProjectQuerySet(QuerySet):
 
     # def objects(self):
     #     """Return all projects"""
-    #     return self.filter(is_public=True)
+    #     return self.filter(visibility=True)
 
     def get_queryset(self):
-        return super().get_queryset().filter(is_public=True)
+        return super().get_queryset().filter(visibility=True)
 
     def active(self):
         """Return active projects"""

@@ -3,7 +3,7 @@
 <li class="d-flex flex-column widget">
   <a href="#" class='nav-link' role="button" aria-expanded="false" data-bs-toggle="offcanvas" data-bs-target="#userToolbar">
     {% if user.is_authenticated %}
-      {% render_profile_image user.profile width="32px" height="32px" extra_classes='rounded-circle shadow' %}
+      {% avatar user.profile width="32px" class='rounded-circle shadow' %}
     {% else %}
       <i class="fa-solid fa-right-to-bracket fa-xl"></i>
     {% endif %}

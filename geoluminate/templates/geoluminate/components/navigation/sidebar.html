@@ -1,6 +1,6 @@
-{% load i18n geoluminate %}
-{% spaceless %}
-<nav id="mainSidebar" class="offcanvas offcanvas-start small" tabindex="-1">
+{% load i18n geoluminate cache %}
+{% cache 500 sidebar %}{% spaceless %}
+<nav id="mainSidebar" class="offcanvas offcanvas-start" tabindex="-1">
   <div class="offcanvas-header align-items-start">
     <img src="{% brand "logo" %}" alt="" width='100%'>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -10,4 +10,4 @@
   </div>
   <div class='footer'></div>
 </nav>
-{% endspaceless %}
+{% endspaceless %}{% endcache %}

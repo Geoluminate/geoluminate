@@ -2,17 +2,21 @@
 {% load static i18n formsetify geoluminate sekizai_tags %}
 
 {% block page_left %}
-<aside id="pageSidebar" class='sidebar col-3 d-none d-lg-block' data-bs-backdrop="false">
-  <div class='sidebar-content'>
-    {% block sidebar %}
-    <div class='py-3'>
-      {% block sidebar_header %}{% endblock sidebar_header %}
+<aside id="pageSidebar" class='sidebar modal' data-bs-backdrop="false">
+    <div class='modal-dialog modal-dialog-centered'>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{% block sidebar_title %}{% endblock %}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            {% block sidebar %}{% endblock sidebar %}
+            </div>
+            <div class="modal-footer">
+                {% block sidebar_footer %}{% endblock %}
+            </div>
+        </div>
     </div>
-    <div class='offcanvas-body content-sidebar-inner'>
-      {% block sidebar_content %}{% endblock %}
-    </div>
-    {% endblock sidebar %}
-  </div>
 </aside>
 {% endblock page_left %}
 

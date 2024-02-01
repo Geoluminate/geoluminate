@@ -27,7 +27,7 @@ ______________________________________________________________________
 :maxdepth: 1
 :hidden:
 
-overview/foreword
+<!-- overview/foreword -->
 <!-- index -->
 background/index
 features/index

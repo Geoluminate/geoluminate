@@ -1,0 +1,29 @@
+{% extends "geoluminate/base/form_view.html" %}
+
+{% load i18n formsetify geoluminate %}
+
+
+
+{% block lead %}{{ object }}{% endblock %}
+
+{% block help_text %}{% blocktrans %}
+  <p>You have elected to review this literature item in order to help grow our community-driven database. Once you accept, the literature will be parsed (where possible) into a Dataset entry where you will then be able to review metadata and upload any relevant data. Upon accepting, you will have 2 weeks to complete the review. If you do not complete the review within 2 weeks, the literature item will be released back into the pool of available literature review items.</p>{% endblocktrans %}
+{% endblock help_text %}
+
+{% block content %}
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}}
+  <button type='submit' class='btn btn-success'>{% trans "Let's get started" %}</button>  
+</form>
+{% endblock %}
+
+
+{% comment %} {% block content %}
+<div class='my-3'>
+  <django-formset endpoint="{{ request.path }}" csrf-token="{{ csrf_token }}">
+    {{ form_collection }}
+    <button type="button" class="btn btn-success"  df-click="submit() -> proceed">{% trans "Save" %}</button>
+  </django-formset>
+</div>
+{% endblock %} {% endcomment %}

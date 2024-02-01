@@ -1,16 +1,11 @@
 {% load i18n contributor_tags %}
-{% comment %} <div class="parallax-window" data-parallax="scroll" data-image-src="{{ object.profile_image }}" data-natural-height=598 data-natural-width=1200 style='min-height:250px; background: transparent;'></div> {% endcomment %}
 <div class='container py-3 animate__animated animate__fadeIn bg-body-light'>
-{% comment %} <div class='container py-3 animate__animated animate__fadeIn animate__slow'> {% endcomment %}
-  <h1 class='display-1 fs-4'>{{object.title}}</h1>
+  <h1 class='display-3'>{{object.title}}</h1>
   <p class='small text-decoration-none'>
     {% include "contributors/names_list.html" with contributors=object.get_contributors|role:"Creator" %}
   </p>
   {% for description in object.get_descriptions %}
-  <section>
-    <h5>{{ description.get_type_display}}</h5>
-    <p>{{description.text|safe}}</p>
-  </section>
+    {% include "core/description.html" %}
   {% empty %}
     {% trans "You do not have any descriptions yet." %}
   {% endfor %}

@@ -6,7 +6,7 @@
 
 {% with filter.form as form %}
 
-<form class="w-100 small" aria-label="Reviews" role="search" method="get">
+<form class="w-100" aria-label="Reviews" role="search" method="get">
   <div class="d-flex flex-column flex-lg-row w-100">
     <input type="search" class="form-control form-control-sm w-100" id="{{ form.title.id }}" placeholder="Find a review..." autocomplete="off" value=""> 
   </div>
@@ -20,7 +20,7 @@
   <i class='fa-solid fa-filter'></i>
 </a>
 {% if has_edit_permission %}
-  <a href="{% url 'reviews:add' %}" class='ms-1 btn btn-sm btn-success text-nowrap'>
+  <a href="{% url 'review:add' %}" class='ms-1 btn btn-sm btn-success text-nowrap'>
     <i class='fa-solid fa-plus' title="{% trans "Create a new dataset" %}"></i>
     {% trans "New " %}
   </a>

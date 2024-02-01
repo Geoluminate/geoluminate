@@ -1,0 +1,8 @@
+{% load geoluminate %}
+
+{% if profile.image %}
+<img src="{{profile.image.url}}" {{attrs}} />
+{% elif profile.type == "Personal" %}
+{% icon "user" %}
+{% endif %}
+

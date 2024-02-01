@@ -1,0 +1,49 @@
+{% load i18n geoluminate static %}
+<section class='mb-3 position-relative' 
+        hx-target="this" 
+        hx-swap="outerHTML" 
+        hx-indicator="#description-{{description.id}}">
+  <img id="description-{{description.id}}" class="htmx-indicator" src="{% static "img/spinners/spinning-circles.svg" %}"/>
+  
+  {% if not create %}
+    <div class='section-header d-flex align-items-center'>
+      <h5 class='mb-0'>{{ description.get_type_display }}</h5>
+      {% comment %} <div class="progress w-25 ms-2" style="height: .5rem;">
+        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" aria-label="Success striped example" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+      </div> {% endcomment %}
+      {% if not create and not update %}
+        <button class='btn btn-sm text-success text-nowrap align-baseline ms-auto'
+        hx-get="{% description_url object description.type %}">
+          <i class='fa-solid fa-pencil'></i>
+          {% trans "Edit" %}
+        </button>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {% if update or create %}
+    {{ form.media }}
+    <form method="post" class='hidden-labels' action="{{request.path}}" hx-post="{{request.path}}" hx-trigger="submit">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="btn btn-secondary">
+        <i class='fa-solid fa-ban'></i>
+        {% trans "Cancel" %}
+      </button>{% if dtype %}
+      <button class="btn btn-danger" type="submit">
+        <i class='fa-regular fa-circle-xmark'></i>
+        {% trans "Delete" %}
+      </button>{% endif %}
+      <button class="btn btn-success" type="submit">
+        <i class='fa-solid fa-floppy-disk'></i>
+        {% if update %}
+          {% trans "Update" %}
+        {% else %}
+          {% trans "Save" %}
+        {% endif %}
+      </button>
+    </form>
+  {% else %}
+    {{ description.text|linebreaks }}
+  {% endif %}
+</section>

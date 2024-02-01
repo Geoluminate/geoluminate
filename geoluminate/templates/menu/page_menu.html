@@ -23,14 +23,16 @@
   <div class='ms-auto d-inline-flex'>
     <li class="nav-item">
       <a id="map-panel-tab" href="#map-panel" class="btn list-item " role="button" data-bs-toggle="tab" aria-expanded="false">
-        <i class="{% icon "map" %}"></i>
+      {% icon 'map' %}
       </a>
     </li>
+    {% if allow_discussion %}
     <li class="nav-item">
       <a id='discussion-tag' href="#discussion-panel" class="btn list-item" role="button" data-bs-toggle="tab" aria-expanded="false">
-        <i class="{% icon "discussion" %}"></i>
+      {% icon 'discussion' %}
       </a>
     </li>
+    {% endif %}
     {% if page_actions %}{% include "menu/page_actions.html" %}{% endif %}
   </div>
 </ul>

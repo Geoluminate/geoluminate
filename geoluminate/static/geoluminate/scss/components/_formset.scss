@@ -86,3 +86,14 @@
 .dj-richtext-wrapper {
     min-height: 300px !important;
 }
+
+// overrides for django-formset UploadedFileInput
+.dj-control-panel.profile-image {
+    align-items: end;
+
+    figure {
+        all: inherit !important;
+        height: 12rem !important;
+    }
+
+}

@@ -9,6 +9,7 @@
 @import 'layout/application';
 @import 'layout/navbar';
 @import 'layout/menu';
+@import 'layout/list';
 
 // Components
 @import 'components/alerts';
@@ -24,6 +25,7 @@
 @import 'components/card';
 @import 'components/comments';
 @import 'components/table';
+@import 'components/modals';
 
 // Overrides
 // @import "overrides/datatables";

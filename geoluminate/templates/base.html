@@ -12,35 +12,39 @@
     {% render_block "css" %}
     {% compress css %}
       <link rel="stylesheet" type="text/x-scss" href="{% static "geoluminate/scss/geoluminate.scss" %}" crossorigin="anonymous">
+      {% comment %} <style>
+      :root {
+          --bs-primary: #3498db;
+        }
+    </style> {% endcomment %}
     {% endcompress %}
   </head>
   <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
         hx-target="main"
         hx-indicator="#mainIndicator"
-        hx-ext="debug"
-        >
+        hx-ext="debug">
     <div class="application-wrapper {% block wrapper_class %}{% endblock %}">
     {% block application %}
       <nav class="navbar navbar-expand-md navbar-dark bg-primary bg-gradient">
         <div class="container-fluid">
-          <button class="navbar-toggler d-block bg-white"
-          type="button" data-bs-toggle="offcanvas" data-bs-target="#mainSidebar" aria-controls="mainSidebar"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-          >
-            <img src="{% brand "icon" %}" alt="Logo" class="d-inline-block align-text-top" style="height: 2rem;">
-          </button>
+          <button class="navbar-toggler d-block" type="button" 
+                  data-bs-toggle="offcanvas" data-bs-target="#mainSidebar" 
+                  aria-controls="mainSidebar" aria-expanded="false" aria-label="{% trans "toggle database navigation" %}">
+              <span class="navbar-toggler-icon"></span></button>
+          <a class="navbar-brand p-0 ms-2 me-0 me-lg-2" href="#">
+            {{ geoluminate.database.name }}
+          </a>
           <button class="navbar-toggler"
                   type="button"
                   data-bs-toggle="collapse"
                   data-bs-target="#navbarSupportedContent"
                   aria-controls="navbarSupportedContent"
                   aria-expanded="false"
-                  aria-label="Toggle navigation">
+                  aria-label="{% trans "toggle site navigation" %}">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse " id="navbarSupportedContent">
-            <ul class="navbar-nav w-100">
+            <ul class="navbar-nav align-items-center w-100">
               {% block navbar_menu %}{% show_menu 0 100 100 100 %}{% endblock navbar_menu %}
               {% for widget in navbar_widgets %}{% include widget %}{% endfor %}
             </ul>
@@ -83,7 +87,10 @@
     {% compress js %}
       {% comment %} <script src="{% static "geoluminate/js/custom.js" %}"></script> {% endcomment %}
       <script src="{% static "geoluminate/js/color-theme-switch.js" %}"></script>
+      <script type="text/javascript" src="{% static 'vendor/select2/js/select2.min.js' %}"></script>
 
+      <script src="{% static "django_select2/django_select2.js" %}"></script>
+      
     {% comment %} <script src="{% static "geoluminate/js/multilevel-dropdown.js" %}"></script> {% endcomment %}
     {% endcompress %}
 

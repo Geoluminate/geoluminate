@@ -21,29 +21,21 @@ NON_I18N_URLS = [
 
 
 I18N_URLS = [
-    # path(
-    #     "public/",
-    #     include(
-    #         [
     path("explorer/", TemplateView.as_view(template_name="geoluminate/components/map.html"), name="viewer"),
     path("glossary/", include("glossary.urls")),
-    # path("literature/", include("literature.urls")),
-    #         ]
-    #     ),
-    # ),
     path("", include("geoluminate.contrib.datasets.urls")),
     path("", include("geoluminate.contrib.reviews.urls")),
     path("", include("geoluminate.contrib.projects.urls")),
     path("", include("geoluminate.contrib.samples.urls")),
     path("", include("geoluminate.contrib.contributors.urls")),
-    path("", include("geoluminate.contrib.core.urls")),
+    path("", include("geoluminate.contrib.core.urls")),  # must be before actstream.urls
     path("measurements/", include(measurements.urls)),
     path("", include("geoluminate.contrib.users.urls")),
     # path("dashboard/", redirect("user:profile"), name="dashboard"),
-    # path('activity/', include('actstream.urls')),
     path("invitations/", include("invitations.urls", namespace="invitations")),
     path("contact/", include("django_contact_form.urls")),
     path("select2/", include("django_select2.urls")),
+    path("activity/", include("actstream.urls")),
     path("admin/docs/", include("django.contrib.admindocs.urls")),
     path("admin/measurements/", admin_measurement_view, name="admin_measurements"),
     path("admin/", admin.site.urls),

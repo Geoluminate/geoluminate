@@ -1,0 +1,22 @@
+{% load i18n activity_tags %}
+
+{% if request.user|is_following:object %}
+  <a href="{% follow_all_url object %}" 
+    hx-get="{% follow_all_url object %}" 
+    hx-target='this'
+    hx-swap='outerHTML'
+    {% comment %} hx-spinner='true' {% endcomment %}
+    class='btn btn-success btn-sm'>
+    <i class='fa-solid fa-star'></i>
+    {% trans "Following" %}
+  </a>
+{% else %}
+  <a href="{% follow_all_url object %}" 
+  hx-get="{% follow_all_url object %}" 
+  hx-target='this'
+  hx-swap='outerHTML'
+  class='btn btn-primary btn-sm'>
+    <i class='fa-regular fa-star'></i>
+    {% trans "Follow" %}
+  </a>
+{% endif %}

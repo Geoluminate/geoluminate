@@ -7,7 +7,7 @@
     {% for contributor in contributors %}
       <div class='p-1'>
         <a href="#" type="button" data-bs-toggle="modal" data-bs-target="#contributor-{{contributor.id}}">
-          {% render_profile_image contributor.profile width="75px" %}
+          {% avatar contributor.profile width="75px" %}
         </a>
       </div>
 

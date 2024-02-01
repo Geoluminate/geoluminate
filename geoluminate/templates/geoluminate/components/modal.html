@@ -1,0 +1,18 @@
+{% load geoluminate %}
+{% spaceless %}
+
+<div class="modal-dialog modal-dialog-centered {% block dialog_class %}{% endblock %}">
+  <div class="modal-content">
+    <div class="modal-header">
+      {% comment %} <div class='bg-white border-1 rounded'>
+        <img src="{% brand "icon" %}" class='me-2' height=30 alt="{{ geoluminate.database.acronym }} Icon">
+      </div>  {% endcomment %}
+      <h5 class="modal-title">{% block header %}{% endblock %}</h5>
+      <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body {% block body_class %}{% endblock %}">
+      {% block body %}{% endblock %}
+    </div>
+  </div>
+</div>
+{% endspaceless %}

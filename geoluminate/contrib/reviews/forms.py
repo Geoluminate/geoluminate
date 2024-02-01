@@ -7,6 +7,8 @@ from literature import forms as lit_forms
 from literature.forms import CitationJSFormMixin
 from literature.models import Literature
 
+from .models import Review
+
 
 class ImportOptions(FieldsetMixin, forms.Form):
     legend = _("Options")
@@ -20,6 +22,20 @@ class ImportOptions(FieldsetMixin, forms.Form):
         ),
         initial=True,
     )
+
+
+class AcceptReviewForm(forms.Form):
+    """A simple form that asks the user to confirm that they want to accept the review."""
+
+    action_confirm = forms.BooleanField(widget=forms.HiddenInput(), initial=True)
+
+
+class ReviewStatusForm(forms.ModelForm):
+    """A form that allows the user to set the status of a review."""
+
+    class Meta:
+        model = Review
+        fields = ["status"]
 
 
 class LiteratureUploadForm(FieldsetMixin, CitationJSFormMixin, forms.ModelForm):

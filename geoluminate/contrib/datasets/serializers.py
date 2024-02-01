@@ -10,7 +10,7 @@ from .models import Dataset
 class DatasetSerializer(BaseSerializerMixin, HyperlinkedModelSerializer):
     class Meta:
         model = Dataset
-        exclude = ["options", "is_public"]
+        exclude = ["options", "visibility"]
         extra_kwargs = {
             "details": {"lookup_field": "uuid"},
             "project": {"lookup_field": "uuid"},

@@ -4,7 +4,7 @@
 
 {% block sidebar_header %}
 <div>
-  {% render_profile_image user.profile width="56px" height="56px" extra_classes='shadow me-2 rounded-circle' %}
+  {% avatar user.profile class='shadow me-2 rounded-circle' %}
   <span>{{ request.user.profile }}</span>
 </div>
 {% endblock %}

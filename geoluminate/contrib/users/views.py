@@ -1,7 +1,10 @@
+from allauth.account.forms import AddEmailForm, ChangePasswordForm
 from allauth.account.models import EmailAddress
 from allauth.socialaccount.forms import DisconnectForm
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
+from django.utils.decorators import method_decorator
 from django.utils.translation import gettext as _
 from django.views.generic import RedirectView, TemplateView
 from formset.views import FormView
@@ -37,6 +40,7 @@ class Account(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context["can_add_email"] = EmailAddress.objects.can_add_email(self.request.user)
         context["forms"] = [
-            (_("Password Reset"), "account/password_reset.html", DisconnectForm(request=self.request)),
+            (_("Password Change"), "account/password_change.html", ChangePasswordForm()),
+            (_("Email"), "account/email.html", AddEmailForm()),
         ]
         return context

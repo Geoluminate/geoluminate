@@ -31,7 +31,8 @@ FLUENT_COMMENTS_DEFAULT_MODERATOR = "default"
 FLUENT_COMMENTS_EXCLUDE_FIELDS = ("name", "email", "url", "title")
 """These are not required as we will only allow logged in users to comment."""
 
-FLUENT_COMMENTS_FORM_CLASS = "fluent_comments.forms.CompactLabelsCommentForm"
+# FLUENT_COMMENTS_FORM_CLASS = "fluent_comments.forms.CompactLabelsCommentForm"
+FLUENT_COMMENTS_FORM_CLASS = "geoluminate.utils.forms.CommentForm"
 """"""
 
 # FLUENT_COMMENTS_FORM_CSS_CLASS = 'comments-form form-horizontal'

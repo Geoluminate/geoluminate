@@ -135,4 +135,5 @@ GEOLUMINATE_ICONS = {
     "activity": "fa-solid fa-rss fa-rotate-270",
     "review": "fa-solid fa-magnifying-glass-chart",
     "discussion": "fa-solid fa-comments",
+    "plus": "fa-solid fa-plus",
 }

@@ -19,6 +19,7 @@ os.environ["DJANGO_SETTINGS_MODULE"] = "tests.settings"
 os.environ["DOCS"] = "1"
 
 os.environ["DJANGO_DEBUG"] = "1"
+os.environ["SHOW_DEBUG_TOOLBAR"] = "False"
 django.setup()
 
 

@@ -1,79 +1,44 @@
-{% extends 'geoluminate/plugins/page.html' %}
-{% load i18n formsetify %}
+{% load static i18n formsetify %}
+
+<div hx-target='this' hx-swap="outerHTML" hx-on::load="$('.form-select').djangoSelect2()">
+
+{% if editing %}
+<link rel="stylesheet" href="{% static "client_side_image_cropping/croppie.css" %}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="{% static "client_side_image_cropping/croppie.min.js" %}"></script>
+<script src="{% static "client_side_image_cropping/cropping_widget.js" %}"></script>
+
+{{ form.media.css }}
 
 
-{% block content %}
-<div class='container mt-3'>
-  <h5>About</h5>
-  <p>
-    {{object.about|safe}}
-  </p>
-  <h5>Contributions over time</h5>
-  <div>
-    <canvas id="myTimeSeriesChart"></canvas>
-  </div>
-</div>
-{% endblock %}
-
-{% block modals %}
-{{ block.super }}
+{% comment %} <form hx-post="{% url "contributor:edit" uuid=object.uuid %}" hx-trigger='submit'> {% endcomment %}
+<form hx-post="{{ request.path }}" hx-trigger='submit'>
+ {{ form.as_p }} 
+  <button class="btn btn-secondary" hx-get="{% url "contributor:edit" uuid=object.uuid %}">
+    <i class='fa-solid fa-ban'></i>
+    {% trans "Cancel" %}
+  </button>
+  <button class="btn btn-success" type="submit">
+    <i class='fa-solid fa-floppy-disk'></i>
+    {% trans "Save" %}
+  </button>
+</form>
+{{ form.media.js }}
 <script>
-// Sample data
-var data = {
-  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-  datasets: [
-      {
-          label: 'Line 1',
-          data: [15, 20, 18, 25, 30, 22, 28],
-          borderColor: 'blue',
-          fill: false
-      },
-      {
-          label: 'Line 2',
-          data: [10, 14, 12, 18, 20, 16, 24],
-          borderColor: 'green',
-          fill: false
-      },
-      {
-          label: 'Line 3',
-          data: [5, 8, 7, 10, 12, 9, 14],
-          borderColor: 'red',
-          fill: false
-      }
-  ]
-};
+  $( function(){
+    $('.form-select').djangoSelect2()
 
-var options = {
-  scales: {
-      x: {
-          display: true,
-          title: {
-              display: true,
-              text: 'Month'
-          }
-      },
-      y: {
-          beginAtZero: true,
-          display: true,
-          title: {
-              display: true,
-              text: 'Value'
-          }
-      }
-  }
-};
-
-var ctx = document.getElementById('myTimeSeriesChart').getContext('2d');
-var myTimeSeriesChart = new Chart(ctx, {
-  type: 'line',
-  data: data,
-  options: options
-});
-
-
+  })
 </script>
 
-{% endblock %}
+
+
+{% else %}
+
+
+  {% include 'contributors/sidebar.html' %}
 
 
 
+{% endif %}
+</div>

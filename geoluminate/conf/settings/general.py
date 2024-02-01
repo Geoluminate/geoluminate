@@ -164,7 +164,8 @@ STATIC_ROOT = str(BASE_DIR / "static")
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-root
 MEDIA_ROOT = str(BASE_DIR / "media")
 
-if env("SHOW_DEBUG_TOOLBAR"):
+if not env("SHOW_DEBUG_TOOLBAR"):
+    print("DEBUG TOOLBAR DISABLED")
     # GEOLUMINATE_APPS.append("debug_toolbar")
     MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
 
@@ -180,6 +181,7 @@ if env("SHOW_DEBUG_TOOLBAR"):
 #
 FORM_RENDERER = "geoluminate.utils.forms.DefaultFormRenderer"
 
+# print(FORM_RENDERER)
 
 LITERATURE_CITATION_JS_SOURCE = "node_modules/citation-js/build/citation.min.js"
 

@@ -15,6 +15,8 @@ class Project(Abstract):
     is the top level model in the Geoluminate schema hierarchy and all datasets, samples,
     and measurements should relate back to a project."""
 
+    DESCRIPTION_TYPES = choices.ProjectDescriptions
+
     STATUS_CHOICES = choices.ProjectStatus
 
     # objects = PublicObjectsManager()
@@ -30,15 +32,6 @@ class Project(Abstract):
     #     ),
     #     default=True,
     # )
-    is_public = models.BooleanField(
-        _("visibility"),
-        help_text=_("Choose whether this project is publicly discoverable."),
-        choices=(
-            (True, _("Public")),
-            (False, _("Private")),
-        ),
-        default=False,
-    )
 
     _metadata = {
         "title": "title",

@@ -1,14 +1,24 @@
 from auto_datatables.views import AutoTableMixin
 from django.apps import apps
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse
+from django.shortcuts import render
+from django.urls import resolve, reverse
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.edit import CreateView
+from django.views.generic.edit import FormView as GenericFormView
+from django.views.generic.edit import UpdateView
 from django_filters.views import FilterView
 from el_pagination.views import AjaxMultipleObjectTemplateResponseMixin
-from formset.views import FormView
+from formset.views import (
+    FileUploadMixin,
+    FormView,
+    FormViewMixin,
+    IncompleteSelectResponseMixin,
+)
 from meta.views import MetadataMixin
 
 
@@ -59,11 +69,8 @@ class HTMXMixin:
         return context
 
 
-class BaseListView(
-    AjaxMultipleObjectTemplateResponseMixin,
-    HTMXMixin,
-    FilterView,
-):
+@method_decorator(cache_page(60 * 5), name="dispatch")
+class BaseListView(AjaxMultipleObjectTemplateResponseMixin, HTMXMixin, FilterView):
     base_template_suffix = "_list.html"
     object_template = None
     object_template_suffix = "_card.html"
@@ -72,6 +79,9 @@ class BaseListView(
     page_size = 20
     list_of = ""
     list_of_plural = ""
+    header = ""
+    columns: int = 1
+    list_filter_top = ["title", "status", "o"]
 
     def get_filterset_class(self):
         """
@@ -105,7 +115,23 @@ class BaseListView(
         context["can_create"] = self.kwargs.get("can_create", False)
         context["page_size"] = self.page_size
         context["is_filtered"] = hasattr(context["filter"].form, "cleaned_data")
+        context["header"] = self.get_list_header()
+        context["col"] = 12 // self.columns
+        context["has_create_permission"] = self.has_create_permission()
+
+        context["list_filter_top"] = self.list_filter_top
+
         return context
+
+    def get_list_header(self):
+        if self.header:
+            return self.header
+        x = self.list_of or self.object_list.model._meta.verbose_name_plural
+        return f"GHFDB {x.title()}"
+
+    def has_create_permission(self):
+        """Returns True if the user has permission to add new objects."""
+        return False
 
 
 class BaseTableView(AutoTableMixin, TemplateView):
@@ -125,6 +151,7 @@ class BaseDetailView(MetadataMixin, HTMXMixin, SingleObjectMixin):
     htmx = {
         # "target": "#contribPage",
     }
+    allow_discussion = True
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -140,6 +167,9 @@ class BaseDetailView(MetadataMixin, HTMXMixin, SingleObjectMixin):
         context["page_actions"] = self.resolve_action_urls()
         context["htmx"] = self.htmx
         context["has_edit_permission"] = self.has_edit_permission()
+        context["allow_discussion"] = self.allow_discussion_section(obj=kwargs.get("object"))
+        context["app_name"] = resolve(self.request.path_info).app_name
+        context["edit_url"] = reverse(f"{context['app_name']}:edit", kwargs={"uuid": self.kwargs.get("uuid")})
         return context
 
     def has_edit_permission(self):
@@ -160,19 +190,24 @@ class BaseDetailView(MetadataMixin, HTMXMixin, SingleObjectMixin):
 
         return self.actions
 
+    def allow_discussion_section(self, obj=None):
+        """Override this method to determine whether the discussion section should be displayed based on the current object."""
+        return self.allow_discussion
 
-class BaseCreateView(LoginRequiredMixin, HTMXMixin, FormView, CreateView):
+
+# @method_decorator(cache_page(60 * 5), name="dispatch")
+class BaseFormView(LoginRequiredMixin, HTMXMixin, UpdateView):
+    slug_field = "uuid"
+    slug_url_kwarg = "uuid"
     base_template = "geoluminate/base/create_view.html"
     template_name = "geoluminate/base/form_view.html"
 
-    def form_valid(self, form):
-        """If the form is valid, save the associated model."""
-        response = super().form_valid(form)
-        # add the current user a contributor with the Project Leader and Contact Person roles
-        if hasattr(self.object, "contributors"):
-            self.object.contributors.create(profile=self.request.user.profile, roles="ProjectLeader,ContactPerson")
-        return response
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # if self.object:
+        # context["editing"] = True
 
-    def get_success_url(self):
-        model_name = self.object._meta.model.__name__.lower()
-        return reverse(f"{model_name}-edit", kwargs={"uuid": self.object.uuid})
+        return context
+
+    # def get_success_url(self):
+    #     return self.object.get_absolute_url()

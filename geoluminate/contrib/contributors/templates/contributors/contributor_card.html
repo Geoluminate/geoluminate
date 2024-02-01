@@ -5,8 +5,7 @@
 
 {% block image %}
 <div class="w-100 text-center mt-2">
-  {% comment %} <img src="{{ obj.image.url }}" class="object-fit-contain" alt="{{ obj.title }}" /> {% endcomment %}
-  {% render_profile_image obj width="60%" extra_classes='shadow-sm rounded-circle object-fit-contain' %}
+  {% avatar obj width="60%" class='shadow-sm rounded-circle object-fit-contain' %}
 </div>
 
 {% endblock image %}
@@ -31,10 +30,6 @@
 {% endif %}
 <li>{% trans "Datasets" %}: <span>{{obj.contributions.datasets.count|default:"-"}}</span></li>
 <li>{% trans "Samples" %}: <span>{{obj.contributions.samples.count|default:"-"}}</span></li>
-{% comment %} <li>{% trans "Last Contribution" %}: <span>{{obj.contributions.first.timestamp|default:"-"}}</span></li> {% endcomment %}
-
-{% comment %} <li>{% trans "Dataset" %}: <a href="{{obj.dataset.get_absolute_url}}" class="float-end"><i class='fa-solid fa-folder-open text-primary'></i></a></li> {% endcomment %}
-{% comment %} <li>{% trans "Source" %}: <span>{{obj.CSL.source}}</span></li> {% endcomment %}
 {% endblock list_group %}
 
 

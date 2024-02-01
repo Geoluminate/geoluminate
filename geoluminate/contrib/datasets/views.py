@@ -5,14 +5,14 @@ from django.utils.translation import gettext_lazy as _
 from literature.forms import LiteratureForm
 from literature.models import Literature
 
-from geoluminate.views import BaseCreateView, BaseDetailView, BaseListView
+from geoluminate.views import BaseDetailView, BaseFormView, BaseListView
 
 from .filters import DatasetFilter
 from .forms import DatasetForm
 from .models import Dataset
 
 
-class DatasetCreateView(BaseCreateView):
+class DatasetCreateView(BaseFormView):
     model = Dataset
     title = _("Create a new dataset")
     help_text = None
@@ -23,13 +23,18 @@ class DatasetListView(BaseListView):
     template_name = "datasets/dataset_list.html"
     model = Dataset
     queryset = Dataset.objects.prefetch_related("contributors").order_by("-created")
-
     filterset_class = DatasetFilter
 
 
 class DatasetDetailView(BaseDetailView):
     model = Dataset
     form_class = DatasetForm
+
+
+class DatasetFormView(BaseFormView):
+    model = Dataset
+    form_class = DatasetForm
+    template_name = "contributors/contributor_form.html"
 
 
 class LiteratureListView(BaseListView):
@@ -54,7 +59,7 @@ class LiteratureDetailView(BaseDetailView):
         return None
 
 
-class AddLiteratureView(BaseCreateView):
+class AddLiteratureView(BaseFormView):
     model = Literature
     title = _("Create a new project")
     help_text = None

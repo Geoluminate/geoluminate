@@ -18,3 +18,16 @@ class ProjectTags(models.TextChoices):
     HAS_FUNDING = "Has funding", _("Has funding")
     POSITIONS_OPEN = "Positions open", _("Positions open")
     EQUIPMENT_REQUIRED = "Equipment required", _("Looking for tools")
+
+
+class ProjectDescriptions(models.TextChoices):
+    """A class for storing choices for descriptions on the Project model."""
+
+    ABSTRACT = "Abstract", _("Abstract")
+    INTRODUCTION = "Introduction", _("Introduction")
+    BACKGROUND = "Background", _("Background")
+    OBJECTIVES = "Objectives", _("Objectives")
+    OUTPUT = "ExpectedOutput", _("Expected Output")
+    METHODS = "Methods", _("Methods")
+    CONCLUSIONS = "Conclusions", _("Conclusions")
+    OTHER = "Other", _("Other")

@@ -8,6 +8,5 @@ from formset.collection import FormCollection
 from formset.fieldset import FieldsetMixin
 from formset.widgets import SelectizeMultiple, UploadedFileInput
 
-from geoluminate.contrib.core.forms import FuzzyDateFormCollection
-
+# from geoluminate.contrib.core.forms import FuzzyDateFormCollection
 from .models import Sample

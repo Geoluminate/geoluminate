@@ -1,0 +1,47 @@
+{% load i18n %}{% spaceless %}
+
+<div class="dj-control-panel profile-image">
+	<input type="{{ widget.type }}" name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %}>
+	{% if widget.value is not None %}
+		{% with script_id='initial_'|add:widget.attrs.id %}
+		{{ widget.value|json_script:script_id }}
+		{% endwith %}
+	{% endif %}
+
+	<button type="button" class="dj-choose-file overflow-hidden btn p-0 rounded-circle">
+		<figure class="dj-dropbox"><div class="dj-empty-item"><p>{% trans "Drag file here" %}</p></div></figure>
+	</button>
+
+	<div>
+		<a class="dj-delete-file btn btn-warning btn-sm">{% trans "Delete" %}</a>
+		{% comment %} <a class="dj-download-file btn btn-light btn-sm" href="${download_url}" download="${name}">{% trans "Download" %}</a> {% endcomment %}
+	</div>	
+
+
+	{% block "controller" %}
+	{% comment %} <div>
+		{% block "choose-file" %}
+		<button type="button" class="dj-choose-file btn btn-outline-secondary d-none">{% trans "Choose file" %}</button>
+		{% endblock %}
+		{% block "progress-bar" %}
+		<progress max="1" value="0"></progress>
+		{% endblock %}
+	</div> {% endcomment %}
+	{% endblock %}
+</div>
+
+<template class="dj-dropbox-items">
+	<img src="${thumbnail_url}" style='max-width: unset;'>
+	{% comment %} <figcaption> {% endcomment %}
+		{% comment %} <dl>
+			<dt>{% trans 'Name' %}:</dt>
+			<dd>${name}</dd>
+		</dl>
+		<dl>
+			<dt>{% trans 'Content-Type (Size)' %}:</dt>
+			<dd>${content_type} (${size})</dd>
+		</dl> {% endcomment %}
+	{% comment %} </figcaption> {% endcomment %}
+</template>
+
+{% endspaceless %}

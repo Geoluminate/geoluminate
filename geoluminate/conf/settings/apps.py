@@ -99,7 +99,7 @@ GEOLUMINATE_APPS = [
     "django_htmx",
     "el_pagination",
     "django_select2",  # select2 widget integration with models
-    # "client_side_image_cropping",
+    "client_side_image_cropping",
     "dbbackup",
     # "tellme",  # adds user feedback functionality to the site
     # "django_spaghetti",  # entity-relationship diagrams
@@ -113,5 +113,5 @@ GEOLUMINATE_APPS = [
 ]
 
 
-if env("SHOW_DEBUG_TOOLBAR"):
+if not env("SHOW_DEBUG_TOOLBAR"):
     GEOLUMINATE_APPS.append("debug_toolbar")

@@ -1,3 +1,4 @@
+from fluent_comments.forms import CompactLabelsCommentForm
 from formset.renderers import bootstrap
 
 
@@ -16,3 +17,9 @@ class DefaultFormRenderer(bootstrap.FormRenderer):
     # fieldset_css_classes={"*": "col-12"},
     # control_css_classes="form-control",
     # collection_css_classes={"*": "col-12"}
+
+
+class CommentForm(CompactLabelsCommentForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["comment"].widget.attrs["rows"] = 5

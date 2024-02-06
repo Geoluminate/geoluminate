@@ -1,9 +1,4 @@
-from django.conf import settings
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import include, path, reverse
 from django.utils.translation import gettext_lazy as _
-from literature.forms import LiteratureForm
-from literature.models import Literature
 
 from geoluminate.views import BaseDetailView, BaseFormView, BaseListView
 
@@ -30,37 +25,12 @@ class DatasetDetailView(BaseDetailView):
     model = Dataset
     form_class = DatasetForm
 
+    def get_context_data(self, **kwargs):
+        print(self.request.htmx)
+        return super().get_context_data(**kwargs)
+
 
 class DatasetFormView(BaseFormView):
     model = Dataset
     form_class = DatasetForm
     template_name = "contributors/contributor_form.html"
-
-
-class LiteratureListView(BaseListView):
-    model = Literature
-    queryset = Literature.objects.all().order_by("-created")
-
-    filterset_class = DatasetFilter
-
-
-class LiteratureDetailView(BaseDetailView):
-    model = Literature
-    # queryset = Project.objects.all().order_by("-created")
-    form_class = LiteratureForm
-    # template_name = "contributors/contributor_form.html"
-
-    def get_queryset(self):
-        return super().get_queryset().order_by("-created")
-
-    def has_edit_permission(self):
-        """TODO: Add permissions."""
-        # return self.request.user.is_superuser
-        return None
-
-
-class AddLiteratureView(BaseFormView):
-    model = Literature
-    title = _("Create a new project")
-    help_text = None
-    form_class = LiteratureForm

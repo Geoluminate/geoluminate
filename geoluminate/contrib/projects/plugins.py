@@ -17,6 +17,16 @@ from .models import Project
 from .views import ProjectDetailView, ProjectListView
 
 
+# @project.page("timeline", icon=icon("timeline"))
+@project.page("datasets", icon=icon("dataset"))
+class ProjectDatasetsView(ProjectDetailView, DatasetListView):
+    template_name = "datasets/plugin_list.html"
+
+    def get_queryset(self, *args, **kwargs):
+        # MAKE SURE THIS DISTINGUISHES BETWEEN PUBLIC AND PRIVATE DATASETS
+        return self.get_object().datasets.all()
+
+
 @project.page("overview", icon=icon("overview"))
 class ProjectOverview(ProjectDetailView, FileUploadMixin, FormViewMixin, UpdateView):
     model = Project
@@ -37,19 +47,6 @@ class ProjectContributorsView(ProjectDetailView, ContributionListView):
 
     def get_queryset(self, *args, **kwargs):
         return self.get_object().contributors.select_related("profile")
-
-
-# @project.page("activity", icon=icon("activity"))
-# @project.page("timeline", icon=icon("timeline"))
-@project.page("measurements", icon=icon("measurement"))
-@project.page("samples", icon=icon("sample"))
-@project.page("datasets", icon=icon("dataset"))
-class ProjectDatasetsView(ProjectDetailView, DatasetListView):
-    header = "Related Datasets"
-
-    def get_queryset(self, *args, **kwargs):
-        # MAKE SURE THIS DISTINGUISHES BETWEEN PUBLIC AND PRIVATE DATASETS
-        return self.get_object().datasets.all()
 
 
 @project.action("flag", icon="fas fa-flag")

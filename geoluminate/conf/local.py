@@ -1,9 +1,12 @@
 from split_settings.tools import include
 
+SHOW_DEBUG_TOOLBAR = True
+
+
 # imports all settings defined in the geoluminate/conf/settings/ directory
 include("settings/general.py", "settings/*.py")
 
-INSTALLED_APPS = GEOLUMINATE_APPS + INSTALLED_APPS + ["compressor", "django_extensions"]
+INSTALLED_APPS = ["django_werkzeug"] + GEOLUMINATE_APPS + INSTALLED_APPS + ["compressor", "django_extensions"]
 
 DEBUG = True
 

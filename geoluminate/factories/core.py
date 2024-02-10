@@ -5,10 +5,12 @@ import faker
 from django.contrib.gis.geos import Point
 from django.db import models
 from django.utils import timezone
+from factory.fuzzy import FuzzyChoice
+from research_vocabs.models import TaggedConcept
 
 from geoluminate.contrib.core.models import Description, FuzzyDate
 
-from .choices import DiscoveryTags
+from ..contrib.core.choices import DiscoveryTags, Visibility
 
 
 def randint(min_value, max_value):
@@ -32,6 +34,13 @@ class GeoluminateProvider(faker.providers.BaseProvider):
         pg_list = [faker.Faker().format("paragraph", **kwargs) for _ in range(nb)]
         return "<p>" + "</p><p>".join(pg_list) + "</p>"
 
+    def multiline_text(self, nb=5, **kwargs):
+        """Generate a multi-line string of paragraphs."""
+        if callable(nb):
+            nb = nb()
+        pg_list = [faker.Faker().format("paragraph", **kwargs) for _ in range(nb)]
+        return "\n".join(pg_list)
+
 
 factory.Faker.add_provider(GeoluminateProvider)
 
@@ -43,7 +52,7 @@ class DescriptionFactory(factory.django.DjangoModelFactory):
         model = Description
 
     type = factory.Iterator(Description.DESCRIPTION_TYPES)
-    text = factory.Faker("html_paragraphs", nb=randint(3, 6), nb_sentences=12)
+    text = factory.Faker("multiline_text", nb=randint(3, 6), nb_sentences=12)
 
 
 class FuzzyDateFactory(factory.django.DjangoModelFactory):
@@ -56,13 +65,35 @@ class FuzzyDateFactory(factory.django.DjangoModelFactory):
     date = factory.Faker("date_time", tzinfo=timezone.get_current_timezone())
 
 
+class KeywordsFactory(factory.django.DjangoModelFactory):
+    """A factory for creating Keywords objects."""
+
+    class Meta:
+        model = TaggedConcept
+
+
 class AbstractFactory(factory.django.DjangoModelFactory):
     title = factory.Faker("sentence", nb_words=8, variable_nb_words=True)
     descriptions = factory.RelatedFactoryList(
-        DescriptionFactory, factory_related_name="content_object", size=randint(1, 4)
+        DescriptionFactory,
+        factory_related_name="content_object",
+        size=randint(1, 4),
     )
-    key_dates = factory.RelatedFactoryList(FuzzyDateFactory, factory_related_name="content_object", size=randint(1, 3))
+    key_dates = factory.RelatedFactoryList(
+        FuzzyDateFactory,
+        factory_related_name="content_object",
+        size=randint(1, 3),
+    )
     contributors = factory.RelatedFactoryList(
-        "geoluminate.factories.ContributionFactory", factory_related_name="content_object", size=randint(2, 5)
+        "geoluminate.factories.ContributionFactory",
+        factory_related_name="content_object",
+        size=randint(2, 5),
     )
-    # tags = factory.Faker("choice_list", choices=DiscoveryTags)
+    summary = factory.Faker("text", max_nb_chars=512)
+    visibility = FuzzyChoice(Visibility.values)
+    # keywords = factory.RelatedFactoryList(
+    #     KeywordsFactory,
+    #     factory_related_name="content_object",
+    #     size=randint(1, 3),
+
+    # )

@@ -3,11 +3,12 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 # parsing the allowed identifiers from settings
-SchemeChoices = set()
+SchemeChoices = []
 SchemeLookup = {}
 for choices in settings.GEOLUMINATE_ALLOWED_IDENTIFIERS.values():
     for scheme, uri in choices.items():
-        SchemeChoices.add((scheme, scheme))
+        if (scheme, scheme) not in SchemeChoices:
+            SchemeChoices.append((scheme, scheme))
         SchemeLookup[scheme] = uri
 
 class Visibility(models.IntegerChoices):

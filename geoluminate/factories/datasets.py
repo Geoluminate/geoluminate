@@ -1,12 +1,8 @@
-# import tzinfo from datetime
-
-from random import randint
-
 import factory
+from licensing.models import License
 
-from geoluminate.contrib.core.factories import AbstractFactory
-
-from .models import Dataset
+from ..contrib.datasets.models import Dataset
+from .core import AbstractFactory, randint
 
 
 class DatasetFactory(AbstractFactory):
@@ -14,10 +10,12 @@ class DatasetFactory(AbstractFactory):
 
     project = factory.SubFactory("geoluminate.factories.ProjectFactory", datasets=None)
 
+    license = factory.Iterator(License.objects.all())
+
     samples = factory.RelatedFactoryList(
         "geoluminate.factories.SampleFactory",
         factory_related_name="dataset",
-        size=lambda: randint(10, 20),
+        size=randint(10, 20),
     )
 
     class Meta:

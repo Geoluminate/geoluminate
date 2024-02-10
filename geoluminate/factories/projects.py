@@ -1,12 +1,7 @@
-# import tzinfo from datetime
-
-from random import randint
-
 import factory
 
-from geoluminate.contrib.core.factories import AbstractFactory
-
-from .models import Project
+from ..contrib.projects.models import Project
+from .core import AbstractFactory, randint
 
 
 class ProjectFactory(AbstractFactory):
@@ -19,5 +14,5 @@ class ProjectFactory(AbstractFactory):
     datasets = factory.RelatedFactoryList(
         "geoluminate.factories.DatasetFactory",
         factory_related_name="project",
-        size=lambda: randint(2, 8),
+        size=randint(2, 8),
     )

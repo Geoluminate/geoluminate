@@ -1,14 +1,9 @@
-# import tzinfo from datetime
-from random import randint
-
 import factory
 from django.conf import settings
 from factory.fuzzy import FuzzyChoice
 
-from geoluminate.contrib.core.factories import AbstractFactory
-
-# from geoluminate.contrib.datasets.tests.factories import DatasetFactory
-from .models import Location, Sample
+from ..contrib.samples.models import Location, Sample
+from .core import AbstractFactory, randint
 
 
 class LocationFactory(factory.django.DjangoModelFactory):
@@ -18,7 +13,7 @@ class LocationFactory(factory.django.DjangoModelFactory):
     samples = factory.RelatedFactoryList(
         "geoluminate.factories.SampleFactory",
         factory_related_name="location",
-        size=lambda: randint(2, 8),
+        size=randint(2, 8),
     )
 
     class Meta:
@@ -32,8 +27,8 @@ class SampleFactory(AbstractFactory):
     dataset = factory.SubFactory("geoluminate.factories.DatasetFactory", samples=None)
 
     location = factory.SubFactory(LocationFactory, samples=None)
-    type = FuzzyChoice(settings.GEOLUMINATE_SAMPLE_TYPES)
-    description = factory.Faker("html_paragraphs", nb=lambda: randint(3, 6), nb_sentences=12)
+    type = FuzzyChoice(getattr(settings, "GEOLUMINATE_SAMPLE_TYPES", ["MyCustomSampleType"]))
+    description = factory.Faker("multiline_text", nb=randint(3, 6), nb_sentences=12)
 
     comment = factory.Faker("text")
 

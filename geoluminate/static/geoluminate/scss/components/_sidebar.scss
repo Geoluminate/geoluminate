@@ -1,5 +1,23 @@
 .sidebar {
   @extend .border-end;
+  // @extend .bg-primary;
+  // @extend .bg-gradient;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .actions {
+    // target all links except the last
+    a:not(:last-child) {
+      @extend .me-1;
+    }
+  }
+
+  .modal-content {
+    background-color: unset;
+  }
+
 }
 
 
@@ -8,118 +26,55 @@
   .sidebar {
     display: block !important;
     position: relative;
-    min-width: 25%;
-    height: auto;
+    width: $sidebar-width;
+    min-height: 100%;
+    z-index: inherit;
+    
+
 
     .modal-header {
       border-radius: 0;
       background-color: unset;
-      > button {
-      display: none;
-    }
-  }
+      padding-top: 0.5rem !important;
+      padding-bottom: 0.5rem !important;
 
+      .modal-title {
+        font-size: 0.875em;
+      }
+
+      >button {
+        display: none;
+      }
+
+    }
+
+    .card {
+      margin-bottom: 0.8rem;
+
+
+      &:hover {
+        .card-edit-button {
+          display: block !important;
+        }
+      }
+
+    }
 
     .modal-dialog {
-    // max-width: 25%;
+      // max-width: 25%;
       margin: 0;
       height: 100%;
+      // align-items: start;
+
     }
 
     .modal-content {
       height: 100%;
       border: none;
       border-radius: 0;
-    }
-//     margin-left: 1rem;
-//     margin-right: 1rem;
-//     align-items: stretch;
 
-//     // @extend .d-flex;
-//     // @extend .col-3;
-//     // visibility: visible;
-//     // transform: none !important;
-//     // z-index: auto;
-//     // max-width: $offcanvas-horizontal-width !important;
-//     // min-width: $sidebar-width !important;
+    }
+
   }
 
-//   .content-sidebar-toggle {
-//     display: none;
-//   }
 }
-
-
-// .sidebar {
-//   @extend .border-end;
-//   overflow: auto;
-//   position: relative;
-//   align-items: stretch;
-//   padding: $modal-inner-padding;
-//   max-width: $offcanvas-horizontal-width !important;
-
-//   form {
-//     .dj-field-errors {
-//       display: none;
-//     }
-//   }
-
-//   .actions {
-
-//     // target all links except the last
-//     a:not(:last-child) {
-//       @extend .me-1;
-//     }
-
-//   }
-
-
-//   .sidebar-inner {
-//     // @extend .p-1;
-//     // max-height: 100%;
-//     overflow: auto;
-//     ::-webkit-scrollbar {
-//       width: 7px;
-//     }
-//   }
-
-//   .offcanvas-body {
-//     h1,h2,h3,h4,h5,h6 {
-//       @extend .mt-3;
-//       @extend .p-1;
-//       // font-size: 0.875rem;
-
-//     }
-//   }
-
-
-//   ul {
-//     // @extend .overflow-auto;
-//     @extend .list-group;
-//     @extend .list-group-flush;
-//     @extend .small;
-//     // height: 100%;
-
-//   }
-
-//   i {
-//     width: 16px;
-//     @extend .me-1;
-//   }
-// }
-
-// @include media-breakpoint-up(lg) {
-
-//   .sidebar {
-//     position: relative;
-//     // visibility: visible;
-//     // transform: none !important;
-//     // z-index: auto;
-//     max-width: $offcanvas-horizontal-width !important;
-//     // min-width: $sidebar-width !important;
-//   }
-
-//   .content-sidebar-toggle {
-//     display: none;
-//   }
-// }

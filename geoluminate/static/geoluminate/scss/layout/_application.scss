@@ -1,11 +1,10 @@
-.application-wrapper {
-  display: flex;
-  min-height: 100vh;
-  max-height: 100vh;
-  // height: 100vh;
-  width: 100%;
-  flex-direction: column;
-  overflow: hidden!important;
+aside {
+  height: 100%;
+}
+
+main {
+  height: 100%;
+  overflow: auto;
 }
 
 .page-nav {
@@ -17,34 +16,10 @@
   text-transform: capitalize;
 }
 
-.page-wrapper {
-  display: flex;
-  align-items: stretch;
-  position: relative;
-  overflow-x: hidden;
-  overflow-y: auto;
-  flex-grow: 1 !important;
-}
-
 .page-messages {
   @extend .container;
   position: absolute;
 }
-
-.content-wrapper {
-  display: flex;
-  flex-grow: 1 !important;
-  flex-direction: column;
-  position: relative;
-  overflow: hidden;
-  // @extend .bg-gradient;
-
-  >div:first-child {
-    overflow: auto;
-  }
-
-}
-
 
 .page {
   display: flex;
@@ -59,15 +34,6 @@
   // }
 
 }
-
-.page-inner {
-  // @extend .container;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1 !important;
-  overflow: hidden;
-}
-
 
 .page-content {
   position: relative;

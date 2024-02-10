@@ -2,7 +2,7 @@
     img {
         height: 100%;
         padding: 0;
-        opacity: 0!important;
+        // opacity: 0!important;
     }
 }
 
@@ -51,10 +51,10 @@ body {
         padding: 0.5em;
 
         img {
-            display: none;
+            // display: none;
             height: 100%;
-            padding: 0;
-            opacity: 0!important;
+            // padding: 0;
+            // opacity: 0!important;
         }
     }
 
@@ -67,9 +67,9 @@ body {
 
         // }
 
-        #jazzy-logo {
-            background-image: url('/static/geoluminate/img/brand/icon.svg');
-        }
+        // #jazzy-logo {
+        //     background-image: url('/static/geoluminate/img/brand/icon.svg');
+        // }
     }
 }
 
@@ -82,3 +82,35 @@ body {
 .content.popup-content {
     padding: 0
 }
+
+// trying to put the form buttons at the bottom instead of on the side
+#content {
+    .form-group {
+        .row {
+            >div, >label {
+                flex: 0 0 100%;
+                max-width: 100%; 
+            }
+        }
+    }
+    form {
+        >.row>div {
+            flex: 0 0 100%;
+            max-width: 100%; 
+        }
+    }
+
+
+}
+#jazzy-actions {
+    >div:first-child {
+        display: inline-flex;
+        width: 100%;
+        .form-group {
+            flex: 1;
+            padding: 0 0.2rem;
+        }
+    }
+
+}
+

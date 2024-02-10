@@ -40,6 +40,7 @@ JAZZMIN_SETTINGS = {
         # Url that gets reversed (Permissions can be added)
         {"name": "Admin Home", "url": "admin:index", "permissions": ["auth.view_user"]},
         {"name": "Visit Website", "url": "/", "new_window": True},
+        {"name": "Repository", "url": "{{}}", "new_window": True},
     ],
     #############
     # User Menu #
@@ -78,10 +79,10 @@ JAZZMIN_SETTINGS = {
         "licensing",
         "laboratory",
         "fluent_comments",
-        "organizations",
-        "datasets",
-        "projects",
-        "samples",
+        # "organizations",
+        # "datasets",
+        # "projects",
+        # "samples",
     ],
     "hide_models": [
         "core.FuzzyDate",
@@ -91,7 +92,7 @@ JAZZMIN_SETTINGS = {
     ],
     # List of apps (and/or models) to order the side menu
     "order_with_respect_to": [
-        "core",
+        "geoluminate",
         "contributors",
         "literature",
         "users",
@@ -99,31 +100,7 @@ JAZZMIN_SETTINGS = {
     ],
     # Custom links to append to app groups, keyed on app name
     "custom_links": {
-        "core": [
-            {
-                "name": _("Projects"),
-                "url": "admin:projects_project_changelist",
-                "icon": "fas fa-project-diagram",
-                "permissions": ["user.is_staff"],
-            },
-            {
-                "name": _("Datasets"),
-                "url": "admin:datasets_dataset_changelist",
-                "icon": "fas fa-folder-open",
-                "permissions": ["user.is_staff"],
-            },
-            {
-                "name": _("Samples"),
-                "url": "admin:samples_sample_changelist",
-                "icon": "fas fa-database",
-                "permissions": ["user.is_staff"],
-            },
-            {
-                "name": _("Locations"),
-                "url": "admin:samples_location_changelist",
-                "icon": "fas fa-map-marker-alt",
-                "permissions": ["user.is_staff"],
-            },
+        "geoluminate": [
             {
                 "name": _("Measurements"),
                 "url": "admin_measurements",
@@ -199,6 +176,11 @@ JAZZMIN_SETTINGS = {
         "contributors.Personal": "fas fa-user-graduate",
         "contributors.Organizational": "fas fa-university",
         "contributors.Contributor": "fas fa-handshake",
+        "geoluminate.Location": "fas fa-map-marker-alt",
+        "geoluminate.Sample": "fas fa-database",
+        "geoluminate.Dataset": "fas fa-folder-open",
+        "geoluminate.Project": "fas fa-project-diagram",
+        # "geoluminate.Measurement": "fas fa-flask",
     },
     # Icons that are used when one is not manually specified
     "default_icon_parents": "fas fa-chevron-circle-right",
@@ -227,7 +209,7 @@ JAZZMIN_SETTINGS = {
     # - vertical_tabs
     # - collapsible
     # - carousel
-    "changeform_format": "horizontal_tabs",
+    "changeform_format": "vertical_tabs",
     # override change forms on a per modeladmin basis
     "changeform_format_overrides": {
         "auth.user": "collapsible",

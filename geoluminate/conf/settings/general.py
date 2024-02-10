@@ -19,7 +19,7 @@ env = environ.Env(
     # set casting, default value
     DEBUG=(bool, False),
     DJANGO_SECRET_KEY=(str, "HoVcnlU2IqQN1YqvsY7dQ1xtdhLavAeXn1mUEAI0Wu8vkDbodEqRKkJbHyMEQS5F"),
-    SHOW_DEBUG_TOOLBAR=(bool, False),
+    # SHOW_DEBUG_TOOLBAR=(bool, False),
     CACHE=(bool, False),
 )
 
@@ -164,8 +164,8 @@ STATIC_ROOT = str(BASE_DIR / "static")
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-root
 MEDIA_ROOT = str(BASE_DIR / "media")
 
-if not env("SHOW_DEBUG_TOOLBAR"):
-    print("DEBUG TOOLBAR DISABLED")
+if SHOW_DEBUG_TOOLBAR:
+    print("DEBUG TOOLBAR ENABLED")
     # GEOLUMINATE_APPS.append("debug_toolbar")
     MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
 

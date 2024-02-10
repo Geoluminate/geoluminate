@@ -2,6 +2,10 @@ from django.utils.translation import gettext_lazy as _
 
 GEOLUMINATE_SAMPLE_TYPES = ["location", "soil", "water", "plant", "other"]
 
+# a list of dotted paths to vocabularies that can be tagged on a model
+GEOLUMINATE_KEYWORD_CHOICES = []
+
+
 # must exist in GEOLUMINATE_SAMPLE_TYPES
 GEOLUMINATE_DEFAULT_SAMPLE_TYPE = "location"
 
@@ -42,7 +46,7 @@ IdentifierSchemes = {
 
 
 GEOLUMINATE_ALLOWED_IDENTIFIERS = {
-    "samples.Sample": {
+    "geoluminate.Sample": {
         "IGSN": "https://igsn.org/",
         # "DOI": "https://doi.org/",
     },
@@ -52,7 +56,7 @@ GEOLUMINATE_ALLOWED_IDENTIFIERS = {
         "ISSN": "https://www.issn.org/",
         "URL": "https://www.iana.org/",
     },
-    "datasets.Dataset": {
+    "geoluminate.Dataset": {
         "ARK": "https://n2t.net/ark:/",
         "arXiv": "https://arxiv.org/",
         "bibcode": "https://ui.adsabs.harvard.edu/",
@@ -112,7 +116,7 @@ GEOLUMINATE_DESCRIPTION_TYPES = {
 }
 
 GEOLUMINATE_FILTERS = {
-    "datasets.Dataset": {
+    "geoluminate.Dataset": {
         "title": ["contains"],
         "keywords__name": ["exact"],
         "tags": ["exact"],

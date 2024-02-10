@@ -108,10 +108,11 @@ GEOLUMINATE_APPS = [
     # GEOLUMINATE DEFAULT PLUGINS
     "literature",
     "formset",
-    # "licensing",
+    "licensing",
     "laboratory",  # cataloguing of scientific instruments
+    "research_vocabs",
 ]
 
 
-if not env("SHOW_DEBUG_TOOLBAR"):
+if SHOW_DEBUG_TOOLBAR:
     GEOLUMINATE_APPS.append("debug_toolbar")

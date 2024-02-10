@@ -21,7 +21,7 @@ nested_project.register(r"samples", viewsets.NestedSamples)
 
 # ============= NESTED DATASET ROUTER =============
 nested_dataset = routers.NestedSimpleRouter(router, r"datasets", lookup="dataset")
-nested_dataset.register(r"samples", viewsets.NestedSamples, basename="samples")
+nested_dataset.register(r"samples", viewsets.NestedSamples)
 
 # ============= NESTED SAMPLE ROUTER =============
 nested_samples = routers.NestedSimpleRouter(router, r"samples", lookup="sample")
@@ -39,10 +39,3 @@ urlpatterns = [
     path("schema/", SpectacularAPIView.as_view(), name="schema"),
     # path("auth/", include("rest_framework.urls", namespace="rest_framework")),
 ]
-
-# print(measurements.registry)
-# for p in measurements.router.urls:
-#     print(p)
-
-
-# In django rest framework, I am using a hyperlinkedmodelserializer on a model that contains a uuid field. I have set my lookup_field on my viewset as "uuid" but the hyperlinkedmodelserializer does not use that lookup correctly. How can I tell the hyperlinkedmodelserializer to resolve urls using the uuid field?

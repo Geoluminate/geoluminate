@@ -13,21 +13,19 @@ logger = getLogger(__name__)
 class DistanceToPointOrderingFilter(filters.DistanceToPointOrderingFilter):
     def get_schema_operation_parameters(self, view):
         params = super().get_schema_operation_parameters(view)
-        params.append(
-            {
-                "name": self.order_param,
-                "required": False,
-                "in": "query",
-                "description": "",
-                "schema": {
-                    "type": "enum",
-                    "items": {"type": "string", "enum": ["asc", "desc"]},
-                    "example": "desc",
-                },
-                "style": "form",
-                "explode": False,
-            }
-        )
+        params.append({
+            "name": self.order_param,
+            "required": False,
+            "in": "query",
+            "description": "",
+            "schema": {
+                "type": "enum",
+                "items": {"type": "string", "enum": ["asc", "desc"]},
+                "example": "desc",
+            },
+            "style": "form",
+            "explode": False,
+        })
         return params
 
 
@@ -58,30 +56,41 @@ def public_api(endpoints):
 
 
 def api_doc(model, path):
+    """
+    Returns a rendered string of the API documentation for a given model and path.
+
+    This function attempts to render a template with the name in the format of
+    "api/docs/{model_name}_{path}.md", where {model_name} is the lowercased name
+    of the model's class and {path} is the provided path argument. The template
+    is rendered with a context that includes the model instance and the geoluminate
+    settings.
+
+    If the template does not exist, a warning is logged and an empty string is returned.
+
+    Args:
+        model (django.db.models.Model): The model instance for which to render the API documentation.
+        path (str): The path to append to the template name.
+
+    Returns:
+        str: The rendered template as a string, or an empty string if the template does not exist.
+
+    Example:
+        Let's say we have a model named 'Book' and we want to get the API documentation for it.
+        We can do it like this:
+
+        >>> from myapp.models import Book
+        >>> book = Book.objects.first()
+        >>> api_doc(book, 'detail')
+        This will attempt to render the template "api/docs/book_detail.md".
+        If the template exists, it will return the rendered template as a string.
+        If the template does not exist, it will log a warning and return an empty string.
+    """
     try:
         template = f"api/docs/{model._meta.model_name.lower()}_{path}.md"
         return render_to_string(template, context={"model": model, "geoluminate": settings.GEOLUMINATE})
     except TemplateDoesNotExist:
         logger.warning(f"Template {template} does not exist.")
     return ""
-
-
-# class CustomSchema(AutoSchema):
-#     def get_operation(self, path, path_regex, path_prefix, method, registry):
-#         operation = super().get_operation(path, path_regex, path_prefix, method, registry)
-#         print(operation.__dict__)
-#         qs = getattr(self.view, "queryset", None)
-#         if qs is not None:
-#             desc = api_doc(qs.model, method.lower())
-#             # print(desc)
-#             if desc:
-#                 operation["description"] = desc
-#         return operation
-
-#     # def get_description(self):
-#     #     if hasattr(self.view, "queryset") and (desc := api_doc(self.view.queryset.model, "list")):
-#     #         return desc
-#     #     return super().get_description()
 
 
 class NestedViewset(NestedViewSetMixin):
@@ -93,8 +102,8 @@ class NestedViewset(NestedViewSetMixin):
         return super().initialize_request(request, *args, **kwargs)
 
     def get_serializer_class(self):
-        if renderer := getattr(self.request, "accepted_renderer", None):
-            if renderer.format == "geojson":
+        if hasattr(self, "request"):  # noqa: SIM102
+            if (renderer := getattr(self.request, "accepted_renderer", None)) and renderer.format == "geojson":
                 return self.geojson_serializer
         return super().get_serializer_class()
 

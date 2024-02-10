@@ -64,7 +64,7 @@ Sidebar.add_item(
         children=[
             MenuItem(
                 title=_("GHFDB Catalogue"),
-                url=reverse("datasets:literature_list"),
+                url=reverse("review:literature_list"),
                 weight=5,
                 icon="fa-book",
             ),

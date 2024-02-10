@@ -6,8 +6,19 @@ from django.utils.translation import gettext as _
 
 from .utils import get_measurement_models
 
-# auto-register mesaurement models with Django admin
+
+"""
+This loop iterates over each model returned by the `get_measurement_models` function.
+
+For each model, it creates a dictionary `opts` with a key `list_filter` that maps to an empty list.
+It then iterates over each field in the model's meta information. If a field has a `choices` attribute and this attribute is not empty,
+the field's name is appended to the `list_filter` list in the `opts` dictionary.
+
+Finally, the model is registered in the Django admin site with the `opts` dictionary as options.
+This means that in the Django admin site, a filter will be added for each field that has choices.
+"""
 for model in get_measurement_models():
+    
     opts = {"list_filter": []}
 
     # define list filters by field that have a choices attr
@@ -20,6 +31,27 @@ for model in get_measurement_models():
 
 
 def admin_measurement_view(request):
+    """
+    A Django admin view that collects and displays all models admin classes that register a model that subclasses
+    `geoluminate.Measurement`.
+
+    This function retrieves a list of measurement models using the `get_measurement_models` function.
+    It then gets the app labels for these models and retrieves the corresponding app lists from the admin site.
+    The app lists are combined into a single list, which is included in the context data for rendering the view.
+
+    The context data also includes the title, which is set to the acronym of the geoluminate database followed by "Measurements",
+    and the app label, which is set to "geoluminate".
+
+    The view is rendered using the `TemplateResponse` class, with the template being either "admin/{app_label}/app_index.html" or "admin/app_index.html",
+    depending on whether the former exists.
+
+    Args:
+        request (django.http.HttpRequest): The HTTP request.
+
+    Returns:
+        django.template.response.TemplateResponse: The HTTP response.
+    """
+
     measurements = get_measurement_models()
 
     app_labels = {model._meta.app_label for model in measurements}

@@ -2,7 +2,8 @@ import factory
 from django.conf import settings
 from factory.fuzzy import FuzzyChoice
 
-from ..contrib.samples.models import Location, Sample
+from geoluminate.db.models import Location, Sample
+
 from .core import AbstractFactory, randint
 
 
@@ -13,7 +14,7 @@ class LocationFactory(factory.django.DjangoModelFactory):
     samples = factory.RelatedFactoryList(
         "geoluminate.factories.SampleFactory",
         factory_related_name="location",
-        size=randint(2, 8),
+        size=randint(2, 8),  # type: ignore
     )
 
     class Meta:

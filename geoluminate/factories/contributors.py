@@ -24,6 +24,7 @@ class UnclaimedContributorFactory(factory.django.DjangoModelFactory):
 class OrganizationalContributorFactory(UnclaimedContributorFactory):
     """Creates a Contributor object associated with an Organization."""
 
+    type = "Organizational"
     name = factory.SelfAttribute("organization.name")
     about = factory.Faker("multiline_text", nb=randint(3, 5), nb_sentences=12)
     organization = factory.SubFactory("geoluminate.factories.OrganizationFactory", profile=None)
@@ -35,6 +36,7 @@ class OrganizationalContributorFactory(UnclaimedContributorFactory):
 class PersonalContributorFactory(UnclaimedContributorFactory):
     """Creates a Contributor object associated with a User."""
 
+    type = "Personal"
     name = factory.LazyAttribute(lambda o: f"{o.user.first_name} {o.user.last_name}")
     about = factory.Faker("multiline_text", nb=randint(3, 5), nb_sentences=12)
     user = factory.SubFactory("geoluminate.factories.UserFactory", profile=None)
@@ -50,7 +52,6 @@ class ContributionFactory(factory.django.DjangoModelFactory):
         model = Contribution
 
     roles = factory.Faker("choice_list", choices=Contribution.CONTRIBUTOR_ROLES)
-    # profile = factory.SubFactory(PersonalContributorFactory)
 
     profile = factory.Iterator(Contributor.objects.all())
 

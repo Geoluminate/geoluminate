@@ -1,6 +1,7 @@
 import factory
 
-from ..contrib.datasets.models import Dataset
+from geoluminate.db.models import Dataset
+
 from .core import AbstractFactory, randint
 
 
@@ -12,7 +13,7 @@ class DatasetFactory(AbstractFactory):
     samples = factory.RelatedFactoryList(
         "geoluminate.factories.SampleFactory",
         factory_related_name="dataset",
-        size=randint(10, 20),
+        size=randint(10, 20),  # type: ignore
     )
 
     class Meta:

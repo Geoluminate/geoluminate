@@ -2,7 +2,6 @@ from collections.abc import Sequence
 from typing import Any
 
 import factory
-from allauth.account.signals import user_signed_up
 from django.contrib.auth import get_user_model
 from factory import Faker, post_generation
 from factory.django import DjangoModelFactory
@@ -24,7 +23,7 @@ class UserFactory(DjangoModelFactory):
     organization = factory.RelatedFactoryList(
         "geoluminate.factories.OrganizationMembershipFactory",
         factory_related_name="user",
-        size=randint(1, 4),
+        size=randint(1, 4),  # type: ignore
     )
 
     @post_generation

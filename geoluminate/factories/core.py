@@ -14,7 +14,7 @@ from ..contrib.core.choices import DiscoveryTags, Visibility
 
 
 def randint(min_value, max_value):
-    return lambda: random.randint(min_value, max_value)
+    return lambda: random.randint(min_value, max_value)  # noqa: S311
 
 
 class GeoluminateProvider(faker.providers.BaseProvider):

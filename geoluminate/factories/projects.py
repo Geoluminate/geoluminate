@@ -1,6 +1,7 @@
 import factory
 
-from ..contrib.projects.models import Project
+from geoluminate.db.models import Project
+
 from .core import AbstractFactory, randint
 
 
@@ -14,5 +15,5 @@ class ProjectFactory(AbstractFactory):
     datasets = factory.RelatedFactoryList(
         "geoluminate.factories.DatasetFactory",
         factory_related_name="project",
-        size=randint(2, 8),
+        size=randint(2, 8),  # type: ignore
     )

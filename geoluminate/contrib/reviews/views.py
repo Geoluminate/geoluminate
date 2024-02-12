@@ -1,23 +1,20 @@
-from typing import Any
-
-from django.conf import settings
 from django.contrib import messages
-from django.db import models
-from django.http import HttpResponse, HttpResponseRedirect
+from django.forms.models import model_to_dict
+from django.http import Http404, HttpResponseRedirect
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import FormView
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.edit import UpdateView
+from literature.forms import LiteratureForm
 from literature.formset import LiteratureFileCollection
 from literature.models import Literature
 from literature.views import LiteratureDetail, LiteratureEditView, LiteratureViewMixin
 
-from geoluminate.contrib.datasets.filters import ReviewFilter
 from geoluminate.db.models import Dataset
 from geoluminate.views import BaseDetailView, BaseFormView, BaseListView, HTMXMixin
 
 from . import utils
-from .choices import StatusChoices
+from .filters import LiteratureFilter, ReviewFilter
 from .forms import (  # LiteratureForm,
     AcceptReviewForm,
     LiteratureFormCollection,
@@ -27,7 +24,7 @@ from .forms import (  # LiteratureForm,
 from .models import Review
 
 
-class AcceptLiteratureReview(SingleObjectMixin, FormView):
+class AcceptLiteratureReview(HTMXMixin, SingleObjectMixin, FormView):
     """A simple view that asks the user to confirm that they want to accept the review. On accepting, a new Review object is created and the user is redirected to the detail view of the related dataset."""
 
     model = Literature
@@ -35,7 +32,18 @@ class AcceptLiteratureReview(SingleObjectMixin, FormView):
     form_class = AcceptReviewForm
 
     def get(self, request, *args, **kwargs):
+        """If the review has already been accepted, raise a 404 error. If the review has not been accepted, proceed with the form."""
+
         self.object = self.get_object()
+        import pprint
+
+        # pprint.pprint(model_to_dict(self.object))
+        # if review := self.object.review:
+        #     if review.status == Review.STATUS_CHOICES.ACCEPTED:
+        #         raise Http404(_("This literature item has already been reviewed"))
+        #     elif review.status == Review.STATUS_CHOICES.IN_PROGRESS or review.status == Review.STATUS_CHOICES.SUBMITTED:
+        #         raise Http404(_("This literature item is currently being reviewed"))
+
         return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):
@@ -133,9 +141,7 @@ class ReviewCreateView(BaseFormView):
 class ReviewListView(BaseListView):
     """A view that lists a set of Review objects."""
 
-    # header = _("Literature Review")
     template_name = "reviews/review_list.html"
-
     filterset_class = ReviewFilter
     queryset = Dataset.objects.filter().order_by("-created")
 
@@ -201,16 +207,29 @@ class LiteratureReviewListView(BaseListView):
     """A view that lists a set of Review objects."""
 
     base_template = "reviews/base_list.html"
-
     title = _("Literature Review")
-    help_text = _(
+    description = _(
         "The following literature items may contain data that are relevant to this portal but have not yet been added."
         " You can contribute to our community by selecting an item to review, assessing any relevant data, then"
         " submitting a request to add the data to the portal. All contributions will be appropriately acknowledged in"
         " the next major database release. You can find out more about the release cycle of the Global Heat Flow"
         " Database and how your contributions make a difference. "
     )
-    template_name = "reviews/literature_list.html"
+    # object_template = "reviews/review_card.html"
 
     filterset_class = ReviewFilter
     queryset = Literature.objects.filter(review__isnull=True).order_by("-created")
+
+
+class LiteratureListView(BaseListView):
+    model = Literature
+    queryset = Literature.objects.all().order_by("-created")
+    filterset_class = LiteratureFilter
+    list_filter_top =["title","o"]
+
+
+class AddLiteratureView(BaseFormView):
+    model = Literature
+    title = _("Create a new project")
+    help_text = None
+    form_class = LiteratureForm

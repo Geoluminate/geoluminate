@@ -11,6 +11,7 @@ from .models import Contribution, Contributor
 class ContributorListView(BaseListView):
     model = Contributor
     filterset_class = ContributorFilter
+    list_filter_top = ["name", "o"]
 
 
 class ContributorDetailView(BaseDetailView):

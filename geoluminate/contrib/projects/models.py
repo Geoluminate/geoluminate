@@ -7,6 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from geoluminate import models
 from geoluminate.contrib.core.models import Abstract
 
+# from geoluminate.utils import icon
 from . import choices
 
 
@@ -23,16 +24,6 @@ class Project(Abstract):
 
     status = models.IntegerField(_("status"), choices=STATUS_CHOICES.choices, default=STATUS_CHOICES.CONCEPT)
 
-    # flags
-    # add_dataset_contributors = models.BooleanField(
-    #     _("add dataset contributors"),
-    #     help_text=_(
-    #         "All contributors to datasets associated with this project should be automatically added as a project"
-    #         " member."
-    #     ),
-    #     default=True,
-    # )
-
     _metadata = {
         "title": "title",
         "description": "get_meta_description",
@@ -43,6 +34,7 @@ class Project(Abstract):
     class Meta:
         verbose_name = _("project")
         verbose_name_plural = _("projects")
+        app_label = "geoluminate"
 
     @property
     def locations(self):
@@ -59,6 +51,32 @@ class Project(Abstract):
     def bbox(self):
         """Returns the bounding box of the dataset as a list of coordinates in the format [xmin, ymin, xmax, ymax]."""
         return self.GeometryCollection.extent
+
+    def get_summary(self):
+        """Used to fill out the summary panel in the project detail view sidebar."""
+        summary = [
+            {
+                "label": _("Total datasets"),
+                "value": self.datasets.count(),
+                "icon": "dataset",
+            },
+            {
+                "label": _("Unique locations"),
+                "value": self.datasets.filter(samples__location__isnull=False).count(),
+                "icon": "location",
+            },
+            {
+                "label": _("Samples collected"),
+                "value": self.datasets.filter(samples__isnull=False).count(),
+                "icon": "sample",
+            },
+            # {
+            #     "label": _("Measurements made"),
+            #     "value": self.datasets.filter(samples__measurements=False).count(),
+            #     "icon": "measurement",
+            # },
+        ]
+        return summary
 
     def add_contributors(self, *profiles, roles=None):
         """Adds the given profiles as contributors to the object."""

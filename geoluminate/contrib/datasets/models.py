@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib.gis.db.models import Collect
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
+from licensing.fields import LicenseField
 
 from geoluminate import models
 from geoluminate.contrib.core.models import Abstract
@@ -18,6 +19,16 @@ class Dataset(Abstract):
 
     DESCRIPTION_TYPES = choices.DataCiteDescriptionTypes
 
+    project = models.ForeignKey(
+        "geoluminate.Project",
+        verbose_name=_("project"),
+        help_text=_("The project that this dataset belongs to."),
+        related_name="datasets",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+
     reference = models.OneToOneField(
         "literature.Literature",
         help_text=_(
@@ -26,7 +37,7 @@ class Dataset(Abstract):
         ),
         null=True,
         blank=True,
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
     )
     related_literature = models.ManyToManyField(
         "literature.Literature",
@@ -34,15 +45,6 @@ class Dataset(Abstract):
         related_name="related_datasets",
         related_query_name="related_dataset",
         blank=True,
-    )
-    project = models.ForeignKey(
-        "projects.Project",
-        verbose_name=_("project"),
-        help_text=_("The project that this dataset belongs to."),
-        related_name="datasets",
-        on_delete=models.CASCADE,
-        blank=True,
-        null=True,
     )
 
     # to be set when a reviewer marks this as complete
@@ -55,6 +57,8 @@ class Dataset(Abstract):
         on_delete=models.SET_NULL,
     )
 
+    license = LicenseField()
+
     _metadata = {
         "title": "title",
         "description": "get_meta_description",
@@ -64,6 +68,7 @@ class Dataset(Abstract):
     class Meta:
         verbose_name = _("dataset")
         verbose_name_plural = _("datasets")
+        app_label = "geoluminate"
 
     @property
     def resource_type(self):

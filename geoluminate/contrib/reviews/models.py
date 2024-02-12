@@ -1,13 +1,8 @@
-import random
-
 from django.conf import settings
-from django.contrib.gis.db.models import Collect
 from django.urls import reverse
-from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 
 from geoluminate import models
-from geoluminate.contrib.core.models import Abstract
 
 from .choices import StatusChoices
 
@@ -30,7 +25,7 @@ class Review(models.Model):
         null=True,
     )
     dataset = models.OneToOneField(
-        to="datasets.Dataset",
+        to="geoluminate.Dataset",
         help_text=_("Dataset being reviewed"),
         on_delete=models.SET_NULL,
         null=True,

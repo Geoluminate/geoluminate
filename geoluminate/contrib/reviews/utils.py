@@ -108,7 +108,7 @@ def dataset_from_literature(literature):
     """Create a new dataset from a literature object.
 
     Args:
-        literature (geoluminate.contrib.literature.models.Literature): The literature object to create a dataset from.
+        literature (geoluminate.contrib.reviews.models.Literature): The literature object to create a dataset from.
 
     Returns:
         geoluminate.contrib.datasets.models.Dataset: The new dataset object.

@@ -1,7 +1,7 @@
 import django_filters as df
 from django import forms
-from django.forms import widgets
-from django_select2.forms import Select2MultipleWidget
+from django.utils.translation import gettext_lazy as _
+from formset.widgets import SelectizeMultiple
 from taggit.models import Tag
 
 from geoluminate.contrib.core.choices import HAS_TAGS, NEEDS_TAGS
@@ -9,31 +9,49 @@ from geoluminate.contrib.core.choices import HAS_TAGS, NEEDS_TAGS
 from .models import Dataset
 
 
-class DatasetFilter(df.FilterSet):
+class ListFilterTop(df.FilterSet):
     title = df.CharFilter(
         lookup_expr="icontains",
         widget=forms.TextInput(attrs={"placeholder": "Find a dataset..."}),
     )
-    # tags = df.MultipleChoiceFilter(choices=Dataset.DISCOVERY_TAGS, widget=widgets.CheckboxSelectMultiple)
 
-    # tags = df.MultipleChoiceFilter(required=False, choices=Dataset.DISCOVERY_TAGS, widget=widgets.Select)
+    # status = df.ChoiceFilter(
+    #     field_name="status",
+    #     lookup_expr="exact",
+    #     choices=Dataset.STATUS_CHOICES.choices,
+    #     widget=forms.Select,
+    #     empty_label=_("Project status"),
+    # )
+
+    o = df.OrderingFilter(
+        fields=(
+            ("created", "created"),
+            ("modified", "modified"),
+        ),
+        field_labels={
+            "created": _("Created"),
+            "modified": _("Modified"),
+        },
+        label=_("Sort by"),
+        widget=forms.Select,
+        empty_label=_("Order by"),
+    )
+
+
+class DatasetFilter(ListFilterTop):
+
     tags = df.MultipleChoiceFilter(
         label="Dataset Has",
         field_name="tags",
         lookup_expr="icontains",
         choices=HAS_TAGS,
-        widget=forms.SelectMultiple(attrs={"size": len(HAS_TAGS)}),
+        widget=SelectizeMultiple(),
     )
-    keywords = df.ModelMultipleChoiceFilter(queryset=Tag.objects.all(), widget=Select2MultipleWidget)
+    keywords = df.ModelMultipleChoiceFilter(
+        queryset=Tag.objects.all(),
+        widget=SelectizeMultiple(),
+    )
 
     class Meta:
         model = Dataset
-        fields = ["title", "keywords", "tags"]
-
-
-class ReviewFilter(df.FilterSet):
-    class Meta:
-        model = Dataset
-        fields = ["title"]
-        # model = Review
-        # fields = ["submitted", "accepted"]
+        fields = ["title", "o", "license", "keywords", "tags"]

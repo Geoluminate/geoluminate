@@ -9,6 +9,7 @@ from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFit
+from research_vocabs.fields import TaggableConcepts
 from taggit.managers import TaggableManager
 
 from geoluminate import models
@@ -31,7 +32,7 @@ class Abstract(models.Model):
 
     DESCRIPTION_TYPES: list = []
     DISCOVERY_TAGS = choices.DiscoveryTags
-
+    VISIBILITY = choices.Visibility
     image = ProcessedImageField(
         verbose_name=_("image"),
         help_text=_("Upload an image that represents your project."),
@@ -55,9 +56,10 @@ class Abstract(models.Model):
         blank=True,
         null=True,
     )
-    keywords = TaggableManager(
-        verbose_name=_("keywords"), help_text=_("Add keywords to help others discover your work."), blank=True
+    keywords = TaggableConcepts(
+        verbose_name=_("keywords"), help_text=_("Controlled keywords for enhanced discoverability"), blank=True
     )
+    # I think we should get rid of this in favour of th keywords field
     tags = models.MultiSelectField(
         choices=DISCOVERY_TAGS,
         max_length=32,  # NEEDS TO BE FIXED
@@ -105,17 +107,10 @@ class Abstract(models.Model):
 
     visibility = models.IntegerField(
         _("visibility"),
-        choices=choices.Visibility.choices,
-        default=choices.Visibility.PRIVATE,
+        choices=VISIBILITY.choices,
+        default=VISIBILITY.PRIVATE,
         help_text=_("Visibility within the application."),
     )
-
-    # license = License(
-    #     help_text=_("Choose an open source license for your project."),
-    #     blank=True,
-    #     null=True,
-    #     on_delete=models.SET_NULL,
-    # )
 
     class Meta:
         abstract = True
@@ -126,6 +121,7 @@ class Abstract(models.Model):
 
     def is_contributor(self, user):
         """Returns true if the user is a contributor."""
+
         return self.contributors.filter(profile__user=user).exists()
 
     def has_role(self, user, role):
@@ -173,7 +169,7 @@ class Abstract(models.Model):
     @cached_property
     def get_descriptions(self):
         descriptions = list(self.descriptions.all())
-        descriptions.sort(key=lambda x: self.DESCRIPTION_TYPES.values.index(x.type))
+        # descriptions.sort(key=lambda x: self.DESCRIPTION_TYPES.values.index(x.type))
         return descriptions
 
 
@@ -213,7 +209,7 @@ class FuzzyDate(django_models.Model):
 
 
 class Description(django_models.Model):
-    # DESCRIPTION_TYPES = DataCiteDescriptionTypes
+    DESCRIPTION_TYPES = DataCiteDescriptionTypes
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey("content_type", "object_id")

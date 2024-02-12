@@ -6,18 +6,9 @@ from geoluminate.tables import GeoluminateTable, ScrollerTable, ServerSideProces
 
 from .models import Sample
 
-# class MeasurementDataTable(GeoluminateTable):
-#     table_config_class = ServerSideProcessing
-#     model = Sample
-#     fields = ["id", "get_absolute_url_button", "title"]
-#     # extra_attributes = {
-#     #     "get_absolute_url_button": {"title": "", "orderable": "false"},
-#     # }
-
 
 class SampleTable(GeoluminateTable):
     config_class = ScrollerTable
-    url = reverse_lazy("sample-list")
     model = Sample
     serializer_class = SampleSerializer
     details_template = '<a href="${data}"><i class="fa-solid fa-file-lines"></i></a>'
@@ -34,7 +25,7 @@ class SampleTable(GeoluminateTable):
         "parent",
     ]
     search_fields = ["title"]
-    # hidden_fields = ["image", "uuid", "funding"]
+
     extra_field_attributes = {
         "location": {
             "title": '<i class="fa-solid fa-map-location-dot"></i>',

@@ -1,11 +1,12 @@
-from django.urls import path
+from django.urls import include, path
 from django.views.generic import DetailView
 
 from .models import Review
 from .views import (
     AcceptLiteratureReview,
+    AddLiteratureView,
+    LiteratureListView,
     LiteratureReviewListView,
-    ReviewLiteratureEdit,
     accept_review,
     reject_review,
     submit_review,
@@ -13,11 +14,23 @@ from .views import (
 
 app_name = "review"
 urlpatterns = [
-    path("literature/<pk>/accept/", AcceptLiteratureReview.as_view(), name="accept-literature"),
-    path("reviews/<pk>/", DetailView.as_view(model=Review), name="edit"),
-    path("reviews/<pk>/accept/", accept_review, name="accept"),
-    path("reviews/<pk>/submit/", submit_review, name="submit"),
-    path("reviews/<pk>/reject/", reject_review, name="reject"),
-    path("reviews/<pk>/delete/", reject_review, name="delete"),
-    path("reviews/", LiteratureReviewListView.as_view(), name="list"),
+    path(
+        "literature/",
+        include([
+            path("new/", AddLiteratureView.as_view(), name="literature_create"),
+            path("", LiteratureListView.as_view(), name="literature_list"),
+            path("<pk>/accept/", AcceptLiteratureReview.as_view(), name="accept-literature"),
+        ]),
+    ),
+    path(
+        "review/",
+        include([
+            path("", LiteratureReviewListView.as_view(), name="list"),
+            path("<pk>/", DetailView.as_view(model=Review), name="edit"),
+            path("<pk>/accept/", accept_review, name="accept"),
+            path("<pk>/submit/", submit_review, name="submit"),
+            path("<pk>/reject/", reject_review, name="reject"),
+            path("<pk>/delete/", reject_review, name="delete"),
+        ]),
+    ),
 ]

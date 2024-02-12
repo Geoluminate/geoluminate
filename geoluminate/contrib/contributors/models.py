@@ -102,8 +102,7 @@ class Contributor(models.Model):
     def default_affiliation(self):
         """Returns the default affiliation for the contributor. TODO: make this a foreign key to an organization model."""
         if self.user:
-            # return self.user.organization
-            return random.choice(["GFZ", "University of Adelaide", "Technische Universität Dresden"])
+            return self.user.organizations_organization.first()
         return None
 
     def location(self):

@@ -1,4 +1,5 @@
 from django.contrib.gis.db.models.functions import Centroid
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView, UpdateView
 from formset.views import FileUploadMixin, FormViewMixin
 
@@ -17,16 +18,6 @@ from .models import Project
 from .views import ProjectDetailView, ProjectListView
 
 
-# @project.page("timeline", icon=icon("timeline"))
-@project.page("datasets", icon=icon("dataset"))
-class ProjectDatasetsView(ProjectDetailView, DatasetListView):
-    template_name = "datasets/plugin_list.html"
-
-    def get_queryset(self, *args, **kwargs):
-        # MAKE SURE THIS DISTINGUISHES BETWEEN PUBLIC AND PRIVATE DATASETS
-        return self.get_object().datasets.all()
-
-
 @project.page("overview", icon=icon("overview"))
 class ProjectOverview(ProjectDetailView, FileUploadMixin, FormViewMixin, UpdateView):
     model = Project
@@ -35,10 +26,6 @@ class ProjectOverview(ProjectDetailView, FileUploadMixin, FormViewMixin, UpdateV
 
 @project.page("contributors", icon=icon("contributors"))
 class ProjectContributorsView(ProjectDetailView, ContributionListView):
-    header = "Project Contributors"
-    # def get_queryset(self, *args, **kwargs):
-    #     # get all Contributor objects that are associated with this project
-    #     return self.get_object().contributors.select_related("profile")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -47,6 +34,18 @@ class ProjectContributorsView(ProjectDetailView, ContributionListView):
 
     def get_queryset(self, *args, **kwargs):
         return self.get_object().contributors.select_related("profile")
+
+
+@project.page("datasets", icon=icon("dataset"))
+class ProjectDatasetsView(ProjectDetailView, DatasetListView):
+    template_name = "datasets/plugin_list.html"
+
+    # template_name = "geoluminate/list/plugin.html"
+    description = _("All datasets associated with this project.")
+
+    def get_queryset(self, *args, **kwargs):
+        # MAKE SURE THIS DISTINGUISHES BETWEEN PUBLIC AND PRIVATE DATASETS
+        return self.get_object().datasets.all()
 
 
 @project.action("flag", icon="fas fa-flag")

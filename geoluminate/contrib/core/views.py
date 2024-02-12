@@ -86,9 +86,9 @@ def manage_description(request, object_type, uuid, dtype=None):
     """
 
     type_map = {
-        "p": "projects.Project",
-        "d": "datasets.Dataset",
-        "s": "samples.Sample",
+        "p": "geoluminate.Project",
+        "d": "geoluminate.Dataset",
+        "s": "geoluminate.Sample",
     }
 
     ctype = ContentType.objects.get_for_model(apps.get_model(type_map[object_type]))
@@ -137,9 +137,9 @@ class HasRoleMixin:
 
 
 type_map = {
-    "p": "projects.Project",
-    "d": "datasets.Dataset",
-    "s": "samples.Sample",
+    "p": "geoluminate.Project",
+    "d": "geoluminate.Dataset",
+    "s": "geoluminate.Sample",
 }
 
 
@@ -177,13 +177,11 @@ class DescriptionBase(LoginRequiredMixin):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context.update(
-            {
-                "object": self.content_object,
-                "dtype": self.kwargs.get("dtype"),
-                "has_edit_permission": True,
-            }
-        )
+        context.update({
+            "object": self.content_object,
+            "dtype": self.kwargs.get("dtype"),
+            "has_edit_permission": True,
+        })
         return context
 
     def get_success_url(self):

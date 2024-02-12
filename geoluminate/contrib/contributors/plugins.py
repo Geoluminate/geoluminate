@@ -98,7 +98,8 @@ class ContributorProjectsView(ContributorDetailView, ProjectListView):
 
 @contributor.page("datasets", icon=icon("dataset"))
 class ContributorDatasetsView(ContributorDetailView, DatasetListView):
-    template_name = "datasets/dataset_list.html"
+    # template_name = "datasets/dataset_list.html"
+    template_name = "datasets/plugin_list.html"
 
     def get_queryset(self, *args, **kwargs):
         # MAKE SURE THIS DISTINGUISHES BETWEEN PUBLIC AND PRIVATE DATASETS

@@ -36,6 +36,7 @@ class Location(models.Model):
     class Meta:
         verbose_name = _("location")
         verbose_name_plural = _("locations")
+        app_label = "geoluminate"
 
     @property
     @admin.display(description=_("latitude"))
@@ -110,7 +111,7 @@ class Sample(Abstract):
         "self", verbose_name=_("parent"), help_text=_("Parent sample"), blank=True, null=True, on_delete=models.CASCADE
     )
     dataset = models.ForeignKey(
-        "datasets.Dataset",
+        "geoluminate.Dataset",
         verbose_name=_("dataset"),
         help_text=_("The dataset to which this sample belongs."),
         related_name="samples",
@@ -127,6 +128,7 @@ class Sample(Abstract):
         verbose_name = _("sample")
         verbose_name_plural = _("samples")
         ordering = ["-modified"]
+        app_label = "geoluminate"
 
     # def geojson(self):
     #     from .serializers import SampleGeojsonSerializer
@@ -136,7 +138,7 @@ class Sample(Abstract):
 
 class Measurement(models.Model):
     sample = models.ForeignKey(
-        Sample,
+        "geoluminate.Sample",
         verbose_name=_("sample"),
         help_text=_("The sample on which the measurement was made."),
         on_delete=models.PROTECT,

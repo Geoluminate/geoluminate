@@ -4,7 +4,7 @@ from formset.collection import FormCollection
 from formset.fieldset import FieldsetMixin
 from formset.widgets import UploadedFileInput
 from literature import forms as lit_forms
-from literature.forms import CitationJSFormMixin
+from literature.forms import CitationJSFormMixin, LiteratureForm
 from literature.models import Literature
 
 from .models import Review

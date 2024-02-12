@@ -10,6 +10,11 @@ from geoluminate.contrib.contributors.models import Contributor
 
 from .managers import UserManager
 
+USER_OPTIONS = {
+    "allow_messages": True,
+    "contact": True,
+}
+
 
 class User(AbstractUser):
     """A custom user model with email as the primary identifier. The fields align with the W3C Organization and Person
@@ -27,12 +32,6 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.get_full_name()
-
-    def save(self, *args, **kwargs):
-        # if self.pk is None:
-        # Contributor = self._meta.get_field("profile").remote_field.model
-        # self.profile = Contributor.objects.create(name=self.get_full_name())
-        return super().save(*args, **kwargs)
 
     @property
     def image(self):

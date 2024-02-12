@@ -35,9 +35,9 @@ class ContributorAdmin(admin.ModelAdmin):
             super()
             .get_queryset(request)
             .annotate(
-                dataset_count=Count(Contributor.get_contribution_by_type("datasets.Dataset")),
-                project_count=Count(Contributor.get_contribution_by_type("projects.Project")),
-                sample_count=Count(Contributor.get_contribution_by_type("samples.Sample")),
+                dataset_count=Count(Contributor.get_contribution_by_type("geoluminate.Dataset")),
+                project_count=Count(Contributor.get_contribution_by_type("geoluminate.Project")),
+                sample_count=Count(Contributor.get_contribution_by_type("geoluminate.Sample")),
             )
         )
 

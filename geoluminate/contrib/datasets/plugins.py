@@ -7,8 +7,10 @@ from lxml import etree
 
 from geoluminate.contrib.contributors.views import ContributionListView
 from geoluminate.contrib.core import utils
+from geoluminate.contrib.samples.tables import SampleTable
 from geoluminate.plugins import dataset
 from geoluminate.utils import icon
+from geoluminate.views import BaseTableView
 
 from .models import Dataset
 from .views import DatasetDetailView
@@ -28,7 +30,6 @@ class DatasetOverview(DatasetDetailView, FileUploadMixin, FormViewMixin, UpdateV
 
 
 @dataset.page("measurements", icon=icon("measurement"))
-@dataset.page("samples", icon=icon("sample"))
 @dataset.page("contributors", icon=icon("contributors"))
 class DatasetContributorsView(DatasetDetailView, ContributionListView):
     def get_queryset(self, *args, **kwargs):
@@ -36,6 +37,13 @@ class DatasetContributorsView(DatasetDetailView, ContributionListView):
 
     # def get_queryset(self, *args, **kwargs):
     #     return self.get_object().contributors.select_related("profile")
+
+
+@dataset.page("samples", icon=icon("sample"))
+class DatasetSamplesView(DatasetDetailView, BaseTableView):
+    table = SampleTable
+    template_name = "auto_datatables/base.html"
+    # template_name = "empty.html"
 
 
 @dataset.page("activity", icon=icon("activity"))

@@ -4,8 +4,11 @@ from django.core.exceptions import FieldDoesNotExist
 
 
 class TableConfigMixin:
-    # dom = "PfBpit"
-    dom = "fBit"
+    dom = """   
+    <'page-nav'
+        <'nav nav-pills nav-pills-alternate'<B><'ms-auto my-auto'f>>
+    >t<'px-1 position-absolute bottom-0 end-0'i>
+                """  # noqa: W291
     language = {
         "search": "",
         "searchPlaceholder": "Search",
@@ -43,11 +46,11 @@ class TableConfigMixin:
             # "collectionTitle": "Column visibility control",
             # "columns": ":not(.noVis)",
         },
-        # {
-        #     "extend": "searchBuilder",
-        #     "text": "<i class='fa-solid fa-filter'></i> Search",
-        #     # "config": {"depthLimit": 2},
-        # },
+        {
+            "extend": "searchBuilder",
+            "text": "<i class='fa-solid fa-filter'></i> Complex Search",
+            # "config": {"depthLimit": 2},
+        },
         {
             "extend": "createState",
             "text": "<i class='fa-solid fa-floppy-disk'></i>",
@@ -64,6 +67,11 @@ class TableConfigMixin:
             "paging": True,
         },
     }
+    # searchBuilder = {
+    #     "layout": "columns-1",
+    #     "cascadePanes": False,
+    #     "orderable": False,
+    # }
 
     def __init__(self, **kwargs):
         for key, value in kwargs.items():
@@ -94,13 +102,13 @@ class GeoluminateTable(DataTable):
     foreignkey_widget_template = '<a href="${data}" class="btn btn-sm btn-primary">View</a>'
     debug = settings.DEBUG
 
-    layout_overrides = {  # noqa: RUF012
-        "B": "#tableButtons>.toolbar-left",
-        "i": "#infoPane",
-        # "P": "#filterContainer .sidebar-body",
-        ".dataTables_filter input": "#tableButtons>.toolbar-right.ms-auto",
-        # "p": ".footer-right",
-    }
+    # layout_overrides = {  # noqa: RUF012
+    #     "B": "#tableButtons>.toolbar-left",
+    #     "i": "#infoPane",
+    #     # "P": "#filterContainer .sidebar-body",
+    #     ".dataTables_filter input": "#tableButtons>.toolbar-right.ms-auto",
+    #     # "p": ".footer-right",
+    # }
 
     def build_column(self, field):
         column = super().build_column(field)

@@ -1,0 +1,13 @@
+{% extends "geoluminate/components/sidebar/card.html" %}
+{% load i18n geoluminate %}
+
+{% block title %}{% trans "Keywords" %}{% endblock %}
+
+{% block content %}
+  {% for tag in object.get_tags_list %}
+  <span class='badge text-bg-primary rounded-pill'>{{tag}}</span>
+  {% empty %}
+  {% trans "No interests to show" %}
+  {% endfor %}
+{% endblock %}
+

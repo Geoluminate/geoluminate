@@ -1,0 +1,17 @@
+{% extends "geoluminate/components/sidebar/card.html" %}
+{% load i18n geoluminate %}
+
+{% block title %}{{object}}{% endblock %}
+
+{% block content %}
+<h6 class="card-subtitle mb-2 text-muted">
+  {% block subtitle %}Deutsches GeoForschungsZentrum{% endblock %}
+</h6>
+
+{% if object.summary %}
+<div class='card-text small'>
+  {{ object.summary }}
+</div>
+{% endif %}
+{% endblock %}
+

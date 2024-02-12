@@ -1,23 +1,14 @@
 {% extends "geoluminate/base/card.html" %}
 {% load i18n geoluminate %}
 
-{% comment %} {% block title %}{% endblock title %} {% endcomment %}
 
-{% block image %}
-<div class="w-100 text-center mt-2">
-  {% avatar obj width="60%" class='shadow-sm rounded-circle object-fit-contain' %}
-</div>
+{% block image %}{% endblock image %}
 
-{% endblock image %}
+{% block title %}
+  {% avatar obj width="1rem" class='card-img-top shadow-sm rounded-circle object-fit-contain align-items-middle' %}
+  <span class='ms-2'>{{ obj }}</span>
+{% endblock %}
 
-
-{% block card_left %}
-<a href="{{ obj.get_absolute_url}}" class='text-center'>{{obj}}</a>
-{% comment %} <span class='text-center'>{{ obj }}</span> {% endcomment %}
-{{ block.super }}
-{% endblock card_left %}
-
-{{ block.super }}
 
 
 {% block list_group %}
@@ -45,23 +36,3 @@
 {% endwith %}
 
 {% endblock description %}
-
-{% comment %} {% block card_right %}
-{% if obj.interests.exists %}
-<h6 class='card-title'>{% trans "Research Interests" %}</h6>
-<p>
-  {% for tag in obj.interests.all %}
-    <span class="badge rounded-pill text-bg-primary">{{ tag }}</span>
-  {% endfor %}
-</p>
-{% endif %}
-<h6 class='card-title'>{% trans "About" %}</h6>
-
-  {{ obj.about|truncatewords:50 }}
-  <a href="{{ obj.get_absolute_url }}" class="icon-link icon-link-hover">
-    {% trans "full profile" %}
-    <span class='fa-solid fa-arrow-right-long'></span>
-  </a>
-</p>
-
-{% endblock card_right %} {% endcomment %}

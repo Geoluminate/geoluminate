@@ -6,7 +6,7 @@
   <version>{{ dataset.version|default:1 }}</version>
   <sizes>
     <size>{{ dataset.samples.count }} Samples</size>
-    <size>{{ dataset.samples.location.distinct.count }} Geographic Locations</size>
+    <size>{{ dataset.geoluminate.Location.distinct.count }} Geographic Locations</size>
     {% comment %} create some data in the view {% endcomment %}
   </sizes>
   <formats>
@@ -75,9 +75,9 @@
 
 
   {% comment %} RIGHTS {% endcomment %}
-  {% comment %} <rightsList>{% with dataset.license as license %}
-    <rights xml:lang="{{ license.lang }}" schemeURI="{{ license.scheme_uri}}" rightsIdentifierScheme="{{ license.scheme }}" rightsIdentifier="{{ license.name }}" rightsURI="{{ license.uri }}" />{% endwith %}
-  </rightsList> {% endcomment %}
+  <rightsList>{% with dataset.license as license %}
+    <rights xml:lang="en" schemeURI="{{ license.URL}}" rightsIdentifierScheme="{{ license.scheme }}" rightsIdentifier="{{ license.name }}" rightsURI="{{ license.URL }}" />{% endwith %}
+  </rightsList>
 
   {% comment %} DESCRIPTIONS {% endcomment %}
   <descriptions>{% for description in dataset.descriptions.all %}

@@ -35,12 +35,14 @@ def test(c, tox=False):
     """
     Run the test suite
     """
-    if tox:
-        print("🚀 Testing code: Running pytest with all tests")
-        c.run("tox")
-    else:
-        print("🚀 Testing code: Running pytest")
-        c.run("poetry run pytest --cov --cov-config=pyproject.toml --cov-report=html")
+    print("🚀 Testing code: Running pytest")
+    c.run("poetry run pytest --cov --cov-config=pyproject.toml --cov-report=html")
+    # if tox:
+    #     print("🚀 Testing code: Running pytest with all tests")
+    #     c.run("tox")
+    # else:
+    #     print("🚀 Testing code: Running pytest")
+    #     c.run("poetry run pytest --cov --cov-config=pyproject.toml --cov-report=html")
 
 
 @task

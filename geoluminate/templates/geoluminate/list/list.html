@@ -1,0 +1,30 @@
+{% load i18n geoluminate %}
+
+<div class='page-content container d-block entry-list py-3'>
+  <header><h1 class="display-1">{% block heading %}{{ meta.title }}{% endblock heading %}</h1></header>
+  {% block description %}{{description}}{% endblock %}{% if list_filter_top %}
+  <div class='toolbar py-2 d-flex w-100'>
+    <django-formset class='list-filter-top hidden-labels' endpoint="{{ request.path }}" csrf-token="{{ csrf_token }}">
+      {% for field in filter.form %}{% if field.name in list_filter_top %}
+        <div class="{% if forloop.first %} flex-grow-1 {% else %} flex-shrink-1{% endif %}">
+          {% include "formset/default/field_group.html" %}
+        </div>{% endif %}
+      {% endfor %}
+    </django-formset>{% endif %}
+    <button class='d-block d-xl-none btn btn-primary' data-bs-target="#pageSidebar" data-bs-toggle="modal">
+      <i class="fas fa-filter"></i>
+    </button>
+    {% if has_create_permission %}
+      <a class='btn btn-success text-nowrap ms-2'
+      {% comment %} hx-get={% url "datasets:contribution:add" uuid=object.uuid %}  {% endcomment %}
+      hx-target="#exampleModal .modal-content"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal">
+        <span>{% icon 'plus' title="Create new" %}
+        {% trans "New " %}</span>
+      </a>
+    {% endif %}
+  </div>
+  <hr class="mt-0 border border-primary">
+  {% block template_name %}{% include template_name %}{% endblock template_name %}
+</div>

@@ -6,9 +6,7 @@
       <span class='text-muted'>Filters matched {{ filtered_object_count }} out of {{ total_object_count }} total {{ meta.title }}.</span>
     </div>
     <hr>{% endif %}
-    <div class='entry-list'>
-      {% include page_template %}
-    </div>
+    <div class='entry-list'>{% include page_template %}</div>
   </div>
 {% endblock %}
 

@@ -1,5 +1,5 @@
 {% extends "geoluminate/base/card.html" %}
-{% load i18n contributor_tags literature_tags %}
+{% load i18n contributor_tags literature %}
 
 {% block pretitle %}
   <h6 class="mb-1">{{ obj|CSL:"container-title" }}</h6>
@@ -7,8 +7,8 @@
 
 
 {% block title_link %}
-{% if obj.CSL.URL %}<a href="{{ obj.CSL.URL }}" class='text-decoration-none'>{% endif %}
-  <h5 class="card-title"><span>{{ obj.title }}</span></h5>
+  {% if obj.CSL.URL %}<a href="{{ obj.CSL.URL }}" class='text-decoration-none'>{% endif %}
+    <h5 class="card-title"><span>{{ obj.title }}</span></h5>
   {% if obj.CSL.URL %}</a>{% endif %}
 {% endblock %}
 
@@ -25,27 +25,26 @@
 
 
 {% block list_group %}
-{% if not obj.review %}
-  <li>{% trans "Status" %}: <span>{% trans "Awaiting review" %}</span></li>
-{% else %}
-  <li>{% trans "Status" %}: <span>{{obj.get_status_display}}</span></li>
-{% endif %}
-<li>{% trans "Type" %}: <span>{{obj.get_type_display|default:"-"}}</span></li>
-<li>{% trans "Published" %}: <span>{{obj.published|date:"Y"|default:"-"}}</span></li>
-<li>{% trans "Volume" %}: <span>{{obj.CSL.volume|default:"-"}}</span></li>
-<li>{% trans "Page" %}: <span>{{obj.CSL.page|default:"-"}}</span></li>
+  {% if not obj.review %}
+    <li>{% trans "Status" %}: <span>{% trans "Awaiting review" %}</span></li>
+  {% else %}
+    <li>{% trans "Status" %}: <span>{{obj.get_status_display}}</span></li>
+  {% endif %}
+  <li>{% trans "Type" %}: <span>{{obj.get_type_display|default:"-"}}</span></li>
+  <li>{% trans "Published" %}: <span>{{obj.published|date:"Y"|default:"-"}}</span></li>
+  <li>{% trans "Volume" %}: <span>{{obj.CSL.volume|default:"-"}}</span></li>
+  <li>{% trans "Page" %}: <span>{{obj.CSL.page|default:"-"}}</span></li>
 
-<li>{% trans "Dataset" %}: <a href="{{ obj.review.get_absolute_url }}" class="float-end"><i class='fa-solid fa-folder-open text-primary'></i></a></li>
-{% comment %} <li>{% trans "Source" %}: <span>{{obj.CSL.source}}</span></li> {% endcomment %}
+  <li>{% trans "Dataset" %}: <a href="{{ obj.review.get_absolute_url }}" class="float-end"><i class='fa-solid fa-folder-open text-primary'></i></a></li>
+  {% comment %} <li>{% trans "Source" %}: <span>{{obj.CSL.source}}</span></li> {% endcomment %}
 {% endblock list_group %}
 
 
-{% block footer %}
-{% if not obj.review %}
-<a href="{% url "review:accept-literature" pk=obj.pk %}" class='btn btn-success'>{% trans "Review now" %}</a>
-{% endif %}
-
-{% endblock footer %}
+{% block actions %}
+  {% if not obj.review %}
+  <a href="{% url "review:accept-literature" pk=obj.pk %}" class='btn btn-success'>{% trans "Review now" %}</a>
+  {% endif %}
+{% endblock actions %}
 
 {% block info %}
 {% trans "Date Added" %}: <span>{{obj.created|date:"dS M, Y"}}</span>

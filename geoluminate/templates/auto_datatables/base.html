@@ -1,61 +1,8 @@
-{% extends 'base.html' %}
+{% extends request.htmx|yesno:"empty.html,base.html" %}
 {% load static sekizai_tags i18n autotables geoluminate %}
-
-{% block wrapper_class %}application{% endblock %}
 
 {% block title %}{{ geoluminate.database.acronym }} {{ table.model|verbose_name_plural|title }}{% endblock %}
 
-{% block page_nav %}
-<ul id="tableButtons" class="nav nav-pills nav-pills-alternate d-print-none">
-<span class="toolbar-left"></span>
-<span class="toolbar-right ms-auto my-auto"></span>
-
-</ul>
-
-  {% comment %} {% for item in navigation %}
-  <li class="nav-item" role="presentation">
-      <button  href="{{ item.url }}" data-bs-toggle="pill" type="button" role="tab"
-          hx-get="{{ item.url }}"
-          class="nav-link {{ item.extra_classes }}{% if forloop.first %} active{% endif %}"
-          >
-        <i class="fas {{ item.icon }}"></i>
-        {{ item.title }}
-      </button>
-    </li>
-  {% endfor %} {% endcomment %}
-
-{% endblock %}
-
-
-
-{% block toolbar_right %}
-{% if table.row_template %}
-<a class="btn text-primary" href="#" role="button" onclick="$('#filterContainer').toggleClass('show')" aria-expanded="true">
-  <i class="fas fa-filter"></i>
-</a>
-{% else %}
-<a class="btn text-primary" href="#" role="button" data-bs-toggle="offcanvas" data-bs-target="#filterContainer" aria-controls="filterContainer" aria-expanded="false">
-  <i class="fas fa-filter"></i>
-</a>
-{% endif %}
-
-<div id="searchButton"></div>
-{% endblock %}
-
-{% block page_header_css %}{% if not table.row_template %}app-layout{% else %}page-layout{% endif %}{% endblock %}
-
 {% block main %}
-{% if table.row_template %}
-<div id="filterContainer" class="sidebar sidebar-start show" tabindex="-1" aria-labelledby="filterContainerLabel">
-{% else %}
-<div id="filterContainer" class="offcanvas offcanvas-end" tabindex="-1" aria-labelledby="filterContainerLabel">
-{% endif %}
-  <div class="sidebar-body"></div>
-</div>
-
-
-{% render_table_for_url table True %}
-
-<div id='infoPane' class='px-1 position-absolute bottom-0 end-0'></div>
-
+  {% render_table_for_url table True %}
 {% endblock %}

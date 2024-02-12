@@ -56,7 +56,7 @@ class HTMXMixin:
 
         requesting_app_name = self.request.resolver_match.app_name
         names = [
-            # f"{requesting_app_name}/base{self.base_template_suffix}",
+            f"{requesting_app_name}/base{self.base_template_suffix}",
             # f"{opts.app_label}/{opts.model_name}{self.base_template_suffix}",
             f"{opts.app_label}/base{self.base_template_suffix}",
             # f"{opts.app_label}/{opts.model_name}_base.html",
@@ -144,8 +144,12 @@ class BaseListView(MetadataMixin, AjaxMultipleObjectTemplateResponseMixin, HTMXM
     def get_object_template(self, **kwargs):
         """Return the template name used for each object in the object_list for loop."""
         opts = self.object_list.model._meta
-        # return f"{opts.app_label}/{opts.model_name}{self.object_template_suffix}"
-        return f"{opts.model_name}s/{opts.model_name}{self.object_template_suffix}"
+        requesting_app_name = self.request.resolver_match.app_name
+
+        return [
+            f"{requesting_app_name}/{opts.model_name}{self.object_template_suffix}",
+            f"{opts.app_label}/{opts.model_name}{self.object_template_suffix}",
+        ]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

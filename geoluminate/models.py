@@ -5,6 +5,9 @@ from typing import Iterable, Optional
 
 from django.contrib.gis.db.models import __all__ as models_all
 from django.db import models
+
+# from geoluminate import models
+from django.db.models.base import ModelBase
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django_bleach.models import BleachField as TextField
@@ -19,10 +22,17 @@ from quantityfield.fields import (
     QuantityField,
 )
 
-# from geoluminate import models
+
+# doesn't do anything but I think it will be useful in the future for extra model-based configuration
+class GeoluminateMetaClass(ModelBase):
+
+    def __new__(cls, name, bases, attrs):
+        klas = super().__new__(cls, name, bases, attrs)
+
+        return klas
 
 
-class Model(ModelMeta, models.Model):
+class Model(ModelMeta, models.Model, metaclass=GeoluminateMetaClass):
     """Helpful base model that can be used to kickstart your Geoluminate database models with common fields and methods.
     Use like this:
 

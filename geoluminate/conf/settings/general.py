@@ -34,23 +34,17 @@ if READ_DOT_ENV_FILE:
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 
-# Local time zone. Choices are
-# http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
-# though not all of them may be available with every OS.
-# In Windows, this must be set to your system time zone.
+
 TIME_ZONE = "UTC"
 """"""
 
-SITE_NAME = GEOLUMINATE["database"]["name"]
-
-META_SITE_NAME = SITE_NAME
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#use-tz
 USE_TZ = True
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#site-id
 SITE_ID = 1
-SITE_NAME = GEOLUMINATE["application"]["name"]
+SITE_NAME = META_SITE_NAME = GEOLUMINATE["application"]["name"]
 SITE_DOMAIN = GEOLUMINATE["application"]["domain"]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
@@ -76,9 +70,6 @@ MESSAGE_TAGS = {
     messages.ERROR: "error alert-danger",
 }
 
-# http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
-CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
-CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 TAGGIT_CASE_INSENSITIVE = True
 
@@ -145,24 +136,10 @@ INTERNAL_IPS = [".".join(ip.split(".")[:-1] + ["1"]) for ip in ips]
 # https://docs.djangoproject.com/en/dev/ref/settings/#fixture-dirs
 FIXTURE_DIRS = (str(BASE_DIR / "project" / "fixtures"),)
 
-# https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
-
-STATICFILES_DIRS = [
-    str(BASE_DIR / "project" / "static"),
-    ("node_modules", BASE_DIR / "node_modules"),
-]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#locale-paths
 LOCALE_PATHS = [str(BASE_DIR / "project" / "locale")]
 
-# Collect static and save media to the application base directory
-# --------------------------------------------------------------------------
-
-# https://docs.djangoproject.com/en/dev/ref/settings/#static-root
-STATIC_ROOT = str(BASE_DIR / "static")
-
-# https://docs.djangoproject.com/en/dev/ref/settings/#media-root
-MEDIA_ROOT = str(BASE_DIR / "media")
 
 if SHOW_DEBUG_TOOLBAR:
     print("DEBUG TOOLBAR ENABLED")
@@ -181,8 +158,11 @@ if SHOW_DEBUG_TOOLBAR:
 #
 FORM_RENDERER = "geoluminate.utils.forms.DefaultFormRenderer"
 
-# print(FORM_RENDERER)
 
 LITERATURE_CITATION_JS_SOURCE = "node_modules/citation-js/build/citation.min.js"
 
 LITERATURE_ADMIN_NODE_SELECTOR = ".form-group"
+
+# http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"

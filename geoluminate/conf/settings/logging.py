@@ -74,16 +74,16 @@ LOGGING = {
         # "mail_admins": {"level": "ERROR", "class": "django.utils.log.AdminEmailHandler", "formatter": "simple"},
     },
     "loggers": {
-        "django": {
-            # "handlers": ["console", "file"],
-            "handlers": ["console"],
-            "level": "INFO",  # Adjust the level as needed
-            "propagate": True,
-        },
+        # "django": {
+        #     # "handlers": ["console", "file"],
+        #     "handlers": ["console"],
+        #     "level": "INFO",  # Adjust the level as needed
+        #     "propagate": True,
+        # },
         "geoluminate": {  # Replace with the name of your Django app
             "handlers": ["console"],
             "level": "DEBUG",  # Adjust the level as needed
-            "propagate": True,
+            "propagate": False,
         },
         # "django.request": {
         #     "handlers": ["mail_admins"],

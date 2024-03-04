@@ -173,8 +173,6 @@ JAZZMIN_SETTINGS = {
         "filer.Folder": "fas fa-file",
         "laboratory.Laboratory": "fas fa-microscope",
         "laboratory.Manufacturer": "fas fa-industry",
-        "contributors.Personal": "fas fa-user-graduate",
-        "contributors.Organizational": "fas fa-university",
         "contributors.Contributor": "fas fa-handshake",
         "geoluminate.Location": "fas fa-map-marker-alt",
         "geoluminate.Sample": "fas fa-database",

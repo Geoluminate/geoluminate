@@ -1,9 +1,9 @@
 GEOLUMINATE_APPS = [
     # Admin apps
-    # "djangocms_admin_style",
+    "djangocms_admin_style",
     "geoluminate.contrib.admin",
     "adminactions",
-    "jazzmin",
+    # "jazzmin",
     "polymorphic",
     # "modeltranslation",
     # DJANGO CORE
@@ -54,6 +54,7 @@ GEOLUMINATE_APPS = [
     "djangocms_frontend.contrib.collapse",
     "djangocms_frontend.contrib.content",
     "djangocms_frontend.contrib.grid",
+    # 'djangocms_frontend.contrib.icon',
     "djangocms_frontend.contrib.image",
     "djangocms_frontend.contrib.jumbotron",
     "djangocms_frontend.contrib.link",
@@ -101,6 +102,7 @@ GEOLUMINATE_APPS = [
     "django_select2",  # select2 widget integration with models
     "client_side_image_cropping",
     "dbbackup",
+    "webpack_loader",
     # "tellme",  # adds user feedback functionality to the site
     # "django_spaghetti",  # entity-relationship diagrams
     # "jazzmin_translate",  # rosetta compatibility with jazzmin

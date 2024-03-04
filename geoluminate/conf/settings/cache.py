@@ -2,7 +2,6 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-cache = env.bool("CACHE", default=False)
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#caches
 if cache:

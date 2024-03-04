@@ -1,26 +1,15 @@
-from django.utils.translation import gettext_lazy as _
-
-GEOLUMINATE_SAMPLE_TYPES = ["location", "soil", "water", "plant", "other"]
-
 # a list of dotted paths to vocabularies that can be tagged on a model
-GEOLUMINATE_KEYWORD_CHOICES = []
+GEOLUMINATE_TAGGABLE_CONCEPTS = []
 
 
 # must exist in GEOLUMINATE_SAMPLE_TYPES
-GEOLUMINATE_DEFAULT_SAMPLE_TYPE = "location"
+GEOLUMINATE_DEFAULT_FEATURE_TYPE = "site"
 
-GEOLUMINATE_IDENTIFIER_SCHEMES = {
-    # "ROR": {"URI": "https://ror.org/{identifier}"},
-    # "ORCID": {"URI": "https://orcid.org/{identifier}"},
-    # "GRID": {"URI": "https://www.grid.ac/institutes/{identifier}"},
-    # "Wikidata": {"URI": "https://www.wikidata.org/wiki/{identifier}"},
-    # "ISNI": {"URI": "https://isni.org/isni/{identifier}"},
-    # "Crossref Funder ID": {"URI": "https://doi.org/{identifier}"},
-    # "DOI": {"URI": "https://doi.org/{identifier}"},
-    # "IGSN": {"URI": "https://app.geosamples.org/sample/igsn/{identifier}"},
-    # "researcher_id": {"URI": "https://app.geosamples.org/sample/researcher_id/{identifier}"},
-    # "scopus_id": {"URI": "https://app.geosamples.org/sample/scopus_id/{identifier}"},
-    # "researchgate_id": {"URI": "https://app.geosamples.org/sample/researchgate_id/{identifier}"},
+
+GEOLUMINATE_LABELS = {
+    "project": {"verbose_name": "Project", "verbose_name_plural": "Projects"},
+    "dataset": {"verbose_name": "Dataset", "verbose_name_plural": "Datasets"},
+    "sample": {"verbose_name": "Sample", "verbose_name_plural": "Samples"},
 }
 
 IdentifierSchemes = {
@@ -73,12 +62,12 @@ GEOLUMINATE_ALLOWED_IDENTIFIERS = {
         "URL": "https://www.iana.org/",
         "URN": "https://www.iana.org/",
     },
-    "contributors.Personal": {
-        "ORCID": "https://orcid.org/",
-        # "researcher_id": "https://app.geosamples.org/sample/researcher_id/",
-        # "scopus_id": "https://app.geosamples.org/sample/scopus_id/",
-        # "researchgate_id": "https://app.geosamples.org/sample/researchgate_id/",
-    },
+    # "contributors.Personal": {
+    #     "ORCID": "https://orcid.org/",
+    #     # "researcher_id": "https://app.geosamples.org/sample/researcher_id/",
+    #     # "scopus_id": "https://app.geosamples.org/sample/scopus_id/",
+    #     # "researchgate_id": "https://app.geosamples.org/sample/researchgate_id/",
+    # },
     "contributors.Organization": {
         "ROR": "https://ror.org/",
         "GRID": "https://www.grid.ac/institutes/",
@@ -98,13 +87,16 @@ GEOLUMINATE_SUBMISSION_APPROVAL is 'automatic' or 'both'"""
 # maybe this requires a method on each measurement Model that returns a boolean?
 
 GEOLUMINATE_NAVBAR_WIDGETS = [
-    "geoluminate/widgets/user_navbar_widget.html",
+    "geoluminate/navigation/widgets/page_edit_toggle.html",
+    "geoluminate/navigation/widgets/admin_link.html",
+    "geoluminate/navigation/widgets/theme_toggle.html",
+    "geoluminate/navigation/widgets/user_navigation.html",
 ]
 """A list of widget templates to render to the right side of the main navbar."""
 
 GEOLUMINATE_USER_SIDEBAR_WIDGETS = [
-    "geoluminate/widgets/admin_link.html",
-    "geoluminate/widgets/theme_toggle.html",
+    # "geoluminate/widgets/admin_link.html",
+    # "geoluminate/widgets/theme_toggle.html",
 ]
 """A list of widget templates to render below the user display name in the user sidebar."""
 
@@ -140,4 +132,5 @@ GEOLUMINATE_ICONS = {
     "review": "fa-solid fa-magnifying-glass-chart",
     "discussion": "fa-solid fa-comments",
     "plus": "fa-solid fa-plus",
+    "spinner": "fa-solid fa-spinner fa-spin",
 }

@@ -3,7 +3,7 @@
     - [django-allauth](https://django-allauth.readthedocs.io/en/latest/configuration.html)
 
 All settings can be overridden in your project settings file.
- """
+"""
 
 # PASSWORDS
 # ------------------------------------------------------------------------------
@@ -121,4 +121,4 @@ SOCIALACCOUNT_ADAPTER = "geoluminate.contrib.users.adapters.SocialAccountAdapter
 ACCOUNT_ALLOW_REGISTRATION = env.bool("DJANGO_ACCOUNT_ALLOW_REGISTRATION", True)
 """allow registration"""
 
-ACCOUNT_SIGNUP_FORM_CLASS = "geoluminate.contrib.users.forms.SignupExtraForm"
+# ACCOUNT_SIGNUP_FORM_CLASS = "geoluminate.contrib.users.forms.SignupExtraForm"

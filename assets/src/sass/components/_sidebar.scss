@@ -1,0 +1,80 @@
+.sidebar {
+  @extend .border-end;
+  // @extend .bg-primary;
+  // @extend .bg-gradient;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .actions {
+    // target all links except the last
+    a:not(:last-child) {
+      @extend .me-1;
+    }
+  }
+
+  .modal-content {
+    background-color: unset;
+  }
+
+}
+
+
+@include media-breakpoint-up(xl) {
+
+  .sidebar {
+    display: block !important;
+    position: relative;
+    width: $sidebar-width;
+    min-height: 100%;
+    z-index: inherit;
+
+
+
+    .modal-header {
+      border-radius: 0;
+      background-color: unset;
+      padding-top: 0.5rem !important;
+      padding-bottom: 0.5rem !important;
+
+      .modal-title {
+        font-size: 0.875em;
+      }
+
+      >button {
+        display: none;
+      }
+
+    }
+
+    .card {
+      margin-bottom: 0.8rem;
+
+
+      &:hover {
+        .card-edit-button {
+          display: block !important;
+        }
+      }
+
+    }
+
+    .modal-dialog {
+      // max-width: 25%;
+      margin: 0;
+      height: 100%;
+      // align-items: start;
+
+    }
+
+    .modal-content {
+      height: 100%;
+      border: none;
+      border-radius: 0;
+
+    }
+
+  }
+
+}

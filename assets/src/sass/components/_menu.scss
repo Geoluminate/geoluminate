@@ -1,0 +1,32 @@
+// a combination of Bootstrap list group and accordion
+.menu-group {
+    @extend .list-group;
+    @extend .list-group-flush;
+
+    .menu-item {
+      svg {
+        width: 1.6rem;
+      }
+      &:last-child {
+        .menu-item-action {
+          border-bottom: none;
+        }
+
+      }
+    }
+
+    .menu-item-action {
+      @extend .list-group-item;
+      @extend .list-group-item-action;
+      // border-width: 0;
+      border: none;
+      border-bottom: 1px solid #e9ecef;
+
+      &:hover {
+        background-color: $accordion-button-active-bg;
+      }
+
+
+
+    }
+  }

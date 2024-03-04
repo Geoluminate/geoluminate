@@ -1,0 +1,57 @@
+
+.card {
+
+
+    .card {
+        border: none;
+
+        .card-footer {
+            // border: none;
+            background-color: unset !important;
+        }
+
+    }
+
+    .contributor-name-link {
+        @extend .text-muted;
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    &.project {
+        img {
+            @extend .border-5;
+            @extend .border-start;
+            &.status-1 {
+                @extend .border-success;
+            }
+            &.status-2 {
+                @extend .border-danger;
+            }
+            &.status-3 {
+                @extend .border-warning;
+            }
+            &.status-4 {
+                @extend .border-info;
+            }
+        }
+    }
+
+    ul.list-group.list-group-flush {
+        border: 0;
+        li {
+            @extend .list-group-item;
+            @extend .px-0;
+            @extend .py-1;
+            border: 0;
+
+            span {
+                @extend .fw-light;
+                float: right;
+            }
+        }
+
+    }
+}

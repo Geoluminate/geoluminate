@@ -9,10 +9,6 @@ packages = [{include = "geoluminate"}]
 include = [
     "README.md",
     "LICENSE",
-    "AUTHORS.md",
-    "CHANGELOG.md",
-    "CONTRIBUTING.md",
-
 ]
 homepage = "https://github.com/Geoluminate/geoluminate"
 keywords = ["research", "database", "research data management", "open data", "geoluminate", "FAIR"]
@@ -22,21 +18,17 @@ classifiers = [
     "Intended Audience :: Developers",
     "License :: OSI Approved :: BSD License",
     "Natural Language :: English",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
 ]
 
 [tool.poetry.dependencies]
 python = ">=3.10,<4.0"
 psycopg2-binary = "^2.9.5"
-django-cms = "^3.11.1"
+django-cms = ">4"
 djangocms-frontend = "^1.1.0"
 django-allauth = "^0.53.1"
 django-invitations = "^2.0.0"
 django-fluent-comments = {extras = ["threadedcomments"], version = "^3.0"}
-django-storages = "^1.13.2"
 django-crispy-forms = "^2.0"
 crispy-bootstrap5 = "^0.7"
 django-filter = "^22.1"
@@ -92,6 +84,13 @@ drf-flex-fields = "^1.0.2"
 django-downloadview = "^2.3.0"
 django-activity-stream = "^2.0.0"
 django-client-side-image-cropping = "^0.1.10"
+django-research-vocabs = {git = "https://github.com/Geoluminate/django-research-vocabs.git", rev = "master"}
+django-content-license = {git = "https://github.com/Geoluminate/django-content-license.git", rev = "main"}
+watchfiles = "^0.21.0"
+werkzeug = {extras = ["watchdog"], version = "^3.0.1"}
+django-storages = "^1.14.2"
+boto3 = "^1.34.44"
+django-webpack-loader = "^3.0.1"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -103,7 +102,6 @@ django-coverage-plugin = "^3.0.0"
 pytest-django = "^4.5.2"
 django-stubs = "^1.15.0"
 pylint-django = "^2.5.3"
-model-bakery = "^1.10.1"
 invoke = "^2.0.0"
 tox = "^4.4.6"
 deptry = "^0.8.0"
@@ -113,10 +111,12 @@ pytest-cov = "^4.0.0"
 types-requests = "^2.28.11.17"
 types-python-dateutil = "^2.8.19.12"
 pytest-sugar = "^0.9.7"
-types-polib = "^1.2.0.0"
 django-extensions = "^3.2.1"
 djlint = "^1.25.0"
-geoluminate-docs = {git = "https://github.com/Geoluminate/geoluminate-docs.git", rev = "21f7a7da5a1e1f6903707430eeddd7bd354c7247"}
+geoluminate-docs = {git = "https://github.com/Geoluminate/geoluminate-docs.git", rev = "master"}
+django-debug-toolbar-template-profiler = "^2.1.0"
+pylint-celery = "^0.3"
+ipython = "^8.21.0"
 
 [build-system]
 requires = ["poetry-core"]
@@ -125,7 +125,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.black]
 line-length = 120
-target-version = ['py38']
+target-version = ['py311']
 preview = true
 
 [tool.isort]
@@ -177,7 +177,35 @@ django_settings_module = "tests.settings"
 target-version = "py37"
 line-length = 120
 fix = true
-exclude = ['docs/', 'migrations/', 'tests/*.py','geoluminate/conf/*',]
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv",
+    "*/migrations/*.py",
+    "staticfiles/*",
+    'geoluminate/conf/*',
+    # 'tests/*.py'
+]
+# exclude = ['docs/', 'migrations/', 'tests/*.py','geoluminate/conf/*',]
 select = [
     # flake8-2020
     "YTT",
@@ -221,6 +249,8 @@ ignore = [
     "F403",
     "F405",
     "C901",
+
+    "RUF012",
 ]
 
 [tool.ruff.per-file-ignores]
@@ -307,3 +337,21 @@ commands =
     mypy
 """
 
+[tool.djlint]
+blank_line_after_tag="load,endblock"
+close_void_tags=true
+custom_html="django-formset"
+format_js=true
+format_css=true
+indent=2
+max_attribute_length=100
+max_blank_lines=0
+max_line_length=119
+ignore="H016,H030,H031,H021"
+
+[tool.djlint.css]
+indent_size=2
+
+
+[tool.djlint.js]
+indent_size=5

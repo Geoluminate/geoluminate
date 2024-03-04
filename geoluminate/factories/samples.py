@@ -1,5 +1,4 @@
 import factory
-from django.conf import settings
 from factory.fuzzy import FuzzyChoice
 
 from geoluminate.db.models import Location, Sample
@@ -14,7 +13,7 @@ class LocationFactory(factory.django.DjangoModelFactory):
     samples = factory.RelatedFactoryList(
         "geoluminate.factories.SampleFactory",
         factory_related_name="location",
-        size=randint(2, 8),  # type: ignore
+        size=randint(2, 8),
     )
 
     class Meta:
@@ -28,7 +27,11 @@ class SampleFactory(AbstractFactory):
     dataset = factory.SubFactory("geoluminate.factories.DatasetFactory", samples=None)
 
     location = factory.SubFactory(LocationFactory, samples=None)
-    type = FuzzyChoice(getattr(settings, "GEOLUMINATE_SAMPLE_TYPES", ["MyCustomSampleType"]))
+    status = FuzzyChoice(Sample.STATUS.values)
+    feature_type = FuzzyChoice(Sample.FEATURE_TYPES.values)
+    medium = FuzzyChoice(Sample.SAMPLING_MEDIA.values)
+    specimen_type = FuzzyChoice(Sample.SPECIMEN_TYPE.values)
+
     description = factory.Faker("multiline_text", nb=randint(3, 6), nb_sentences=12)
 
     comment = factory.Faker("text")

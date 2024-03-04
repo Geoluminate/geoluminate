@@ -10,7 +10,7 @@ from research_vocabs.models import TaggedConcept
 
 from geoluminate.contrib.core.models import Description, FuzzyDate
 
-from ..contrib.core.choices import DiscoveryTags, Visibility
+from ..contrib.core.choices import Visibility
 
 
 def randint(min_value, max_value):
@@ -26,7 +26,7 @@ class GeoluminateProvider(faker.providers.BaseProvider):
         choices = kwargs.get("choices")
         if issubclass(choices, models.Choices):
             choices = choices.values
-        return random.sample(choices, k=random.randint(1, len(choices)))
+        return random.sample(choices, k=random.randint(1, len(choices)))  # noqa: S311
 
     def html_paragraphs(self, nb=5, **kwargs):
         if callable(nb):
@@ -39,7 +39,7 @@ class GeoluminateProvider(faker.providers.BaseProvider):
         if callable(nb):
             nb = nb()
         pg_list = [faker.Faker().format("paragraph", **kwargs) for _ in range(nb)]
-        return "\n".join(pg_list)
+        return "\n\n".join(pg_list)
 
 
 factory.Faker.add_provider(GeoluminateProvider)

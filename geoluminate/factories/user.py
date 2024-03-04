@@ -23,7 +23,7 @@ class UserFactory(DjangoModelFactory):
     organization = factory.RelatedFactoryList(
         "geoluminate.factories.OrganizationMembershipFactory",
         factory_related_name="user",
-        size=randint(1, 4),  # type: ignore
+        size=randint(1, 4),
     )
 
     @post_generation

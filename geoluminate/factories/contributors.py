@@ -1,13 +1,6 @@
-import random
-
 import factory
 
-from ..contrib.contributors.models import (
-    Contribution,
-    Contributor,
-    Organizational,
-    Personal,
-)
+from ..contrib.contributors.models import Contribution, Contributor
 from .core import randint
 
 
@@ -24,25 +17,23 @@ class UnclaimedContributorFactory(factory.django.DjangoModelFactory):
 class OrganizationalContributorFactory(UnclaimedContributorFactory):
     """Creates a Contributor object associated with an Organization."""
 
-    type = "Organizational"
     name = factory.SelfAttribute("organization.name")
     about = factory.Faker("multiline_text", nb=randint(3, 5), nb_sentences=12)
     organization = factory.SubFactory("geoluminate.factories.OrganizationFactory", profile=None)
 
     class Meta:
-        model = Organizational
+        model = Contributor
 
 
 class PersonalContributorFactory(UnclaimedContributorFactory):
     """Creates a Contributor object associated with a User."""
 
-    type = "Personal"
     name = factory.LazyAttribute(lambda o: f"{o.user.first_name} {o.user.last_name}")
     about = factory.Faker("multiline_text", nb=randint(3, 5), nb_sentences=12)
     user = factory.SubFactory("geoluminate.factories.UserFactory", profile=None)
 
     class Meta:
-        model = Personal
+        model = Contributor
 
 
 class ContributionFactory(factory.django.DjangoModelFactory):

@@ -13,7 +13,7 @@ class DatasetFactory(AbstractFactory):
     samples = factory.RelatedFactoryList(
         "geoluminate.factories.SampleFactory",
         factory_related_name="dataset",
-        size=randint(10, 20),  # type: ignore
+        size=randint(10, 20),
     )
 
     class Meta:

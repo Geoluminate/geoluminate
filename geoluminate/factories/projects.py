@@ -15,5 +15,5 @@ class ProjectFactory(AbstractFactory):
     datasets = factory.RelatedFactoryList(
         "geoluminate.factories.DatasetFactory",
         factory_related_name="project",
-        size=randint(2, 8),  # type: ignore
+        size=randint(2, 8),
     )

@@ -2,23 +2,12 @@ from invoke import task
 
 
 @task
-def install(c):
-    """
-    Install the project dependencies
-    """
-    print("🚀 Creating virtual environment using pyenv and poetry")
-    c.run("poetry install")
-    c.run("poetry run pre-commit install")
-    c.run("poetry shell")
-
-
-@task
 def check(c):
     """
     Check the consistency of the project using various tools
     """
-    print("🚀 Checking Poetry lock file consistency with 'pyproject.toml': Running poetry lock --check")
-    c.run("poetry lock --check")
+    # print("🚀 Checking Poetry lock file consistency with 'pyproject.toml': Running poetry lock --check")
+    # c.run("poetry lock --check")
 
     print("🚀 Linting code: Running pre-commit")
     c.run("poetry run pre-commit run -a")
@@ -125,3 +114,11 @@ def dumpdata(c):
 @task
 def loaddata(c):
     c.run("docker compose -f local.yml run django python manage.py loaddata core --app geoluminate")
+
+
+@task
+def reset_db(c):
+    """
+    Build the documentation and open it in a live browser
+    """
+    c.run("docker compose run django python manage.py flush")

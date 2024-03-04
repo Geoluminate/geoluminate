@@ -56,7 +56,9 @@ guides/contributor_guide/index
 :maxdepth: 1
 :hidden:
 
-apidocs/index
+apidocs/geoluminate/geoluminate
+more/authors
+more/changelog
 more/glossary
 more/support
 more/roadmap

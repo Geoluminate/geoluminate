@@ -1,3 +1,7 @@
+```{warning}
+Geoluminate is currently in the early stages of development and is not yet ready for production use. We are actively seeking contributors to help us build and test the framework. If you are interested in contributing, please see our [Contributing](../contributing.md) page. If you want to keep up to date with the latest developments, please star our [GitHub repository]().
+```
+
 # Introduction
 
 Consistency in design among research data portals is crucial for adhering to the FAIR data principles and enhancing the discoverability, accessibility, interoperability, and reusability of scientific data. Geoluminate aims to implement a simplified framework for constructing modern and intuitive research portals with a consistent look and feel that makes creating and reusing scientific data a breeze. A simplified framework provides several benefits over current approaches to research portal development.

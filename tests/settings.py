@@ -1,39 +1,35 @@
-"""
-Django settings for example project.
-"""
-
 import os
-import sys
 from pathlib import Path
 
 import geoluminate
 
-BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
-os.environ.setdefault("DATABASE_URL", "")
-os.environ.setdefault("CACHE", "False")
+INSTALLED_APPS = [
+    "example",
+]
 
-# Application definition
-INSTALLED_APPS = ["example"]
+BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
+os.environ.setdefault("CACHE", "False")
+cache = False
 geoluminate.setup(development=True)
+
+SITE_ID = 1
+SITE_NAME = "Geoluminate"
+SITE_DOMAIN = "localhost:8000"
 
 SPAGHETTI_SAUCE = {
     "apps": ["filer", "user", "account", "socialaccount"],
     "show_fields": False,
 }
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.contrib.gis.db.backends.spatialite",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
-    }
-}
-
-STATICFILES_DIRS = [
-    ("node_modules", BASE_DIR / "node_modules"),
-]
-
-ROOT_URLCONF = "tests.urls"
 
 WSGI_APPLICATION = "tests.wsgi.application"
 
-MODELTRANSLATION_DEFAULT_LANGUAGE = "en"
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+
+AWS_USE_SSL = False
+
+# overwrite staticfiles storage for development
+STORAGES["staticfiles"] = {
+    "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+}

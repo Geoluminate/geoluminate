@@ -84,8 +84,6 @@ drf-flex-fields = "^1.0.2"
 django-downloadview = "^2.3.0"
 django-activity-stream = "^2.0.0"
 django-client-side-image-cropping = "^0.1.10"
-django-research-vocabs = {git = "https://github.com/Geoluminate/django-research-vocabs.git", rev = "master"}
-django-content-license = {git = "https://github.com/Geoluminate/django-content-license.git", rev = "main"}
 watchfiles = "^0.21.0"
 werkzeug = {extras = ["watchdog"], version = "^3.0.1"}
 django-storages = "^1.14.2"
@@ -118,6 +116,8 @@ geoluminate-docs = {git = "https://github.com/Geoluminate/geoluminate-docs.git",
 django-debug-toolbar-template-profiler = "^2.1.0"
 pylint-celery = "^0.3"
 ipython = "^8.21.0"
+django-content-license = {git = "https://github.com/Geoluminate/django-content-license", rev = "main"}
+django-research-vocabs = {git = "https://github.com/Geoluminate/django-research-vocabs", rev = "master"}
 
 [build-system]
 requires = ["poetry-core"]

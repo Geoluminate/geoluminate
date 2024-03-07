@@ -1253,7 +1253,7 @@ django = ">=3.2"
 
 [package.source]
 type = "git"
-url = "https://github.com/Geoluminate/django-content-license.git"
+url = "https://github.com/Geoluminate/django-content-license"
 reference = "main"
 resolved_reference = "329b5631751ecb4b19ac5b150f154ebfb0be8752"
 
@@ -1802,7 +1802,7 @@ rdflib = "^7.0.0"
 
 [package.source]
 type = "git"
-url = "https://github.com/Geoluminate/django-research-vocabs.git"
+url = "https://github.com/Geoluminate/django-research-vocabs"
 reference = "master"
 resolved_reference = "4fdd05b27403a693c2eefc5deedeb77024c11ac7"
 
@@ -5690,4 +5690,4 @@ docs = ["Sphinx", "elementpath (>=4.1.5,<5.0.0)", "jinja2", "sphinx-rtd-theme"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<4.0"
-content-hash = "8bc1e7be4585c6495d099f91f027af6530f91f995d4fe6b03af0abdd5223af5b"
+content-hash = "6fd5c080f3f9dd06404a6e7be1711fea8734082ea6cbd231ec66cb616d49d472"

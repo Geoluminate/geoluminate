@@ -1,5 +1,12 @@
-compose-dev.yaml
+minio/
 **/migrations/*
+geoluminate/static/webpack_bundles/
+webpack-stats.json
+Global/
+docs/_build
+docs/apidocs
+
+
 # Temporary and binary files
 *~
 *.ruff_cache
@@ -86,3 +93,4 @@ venv.bak/
 
 dist
 geoluminate/static/geoluminate/temp/*
+*.ipython

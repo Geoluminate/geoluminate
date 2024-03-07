@@ -1,0 +1,80 @@
+{
+  "name": "geoluminate",
+  "version": "0.1.0",
+  "devDependencies": {
+    "@babel/core": "^7.16.5",
+    "@babel/preset-env": "^7.16.5",
+    "@citation-js/plugin-csl": "^0.7.6",
+    "@fortawesome/fontawesome-svg-core": "^6.5.1",
+    "@fortawesome/free-brands-svg-icons": "^6.5.1",
+    "@fortawesome/free-regular-svg-icons": "^6.5.1",
+    "@fortawesome/free-solid-svg-icons": "^6.5.1",
+    "@popperjs/core": "^2.10.2",
+    "@types/bootstrap": "^5.2.10",
+    "@types/isotope-layout": "^3.0.12",
+    "@types/jquery": "^3.5.29",
+    "@types/raphael": "^2.3.9",
+    "autoprefixer": "^10.4.0",
+    "babel-loader": "^9.1.2",
+    "bootstrap": "^5.2.3",
+    "citation-js": "^0.7.8",
+    "css-loader": "^6.5.1",
+    "datatables.net-autofill-bs5": "^2.7.0",
+    "datatables.net-bs5": "^2.0.0",
+    "datatables.net-buttons-bs5": "^3.0.0",
+    "datatables.net-colreorder-bs5": "^2.0.0",
+    "datatables.net-fixedcolumns-bs5": "^5.0.0",
+    "datatables.net-fixedheader-bs5": "^4.0.0",
+    "datatables.net-keytable-bs5": "^2.12.0",
+    "datatables.net-responsive-bs5": "^3.0.0",
+    "datatables.net-rowgroup-bs5": "^1.5.0",
+    "datatables.net-rowreorder-bs5": "^1.5.0",
+    "datatables.net-scroller-bs5": "^2.4.0",
+    "datatables.net-searchbuilder-bs5": "^1.7.0",
+    "datatables.net-searchpanes-bs5": "^2.3.0",
+    "datatables.net-staterestore-bs5": "^1.4.0",
+    "html-webpack-plugin": "^5.6.0",
+    "htmx.org": "^1.9.10",
+    "isotope-layout": "^3.0.6",
+    "jquery": "^3.7.1",
+    "justgage": "^1.6.1",
+    "luxon": "^3.4.4",
+    "maplibre-gl": "^4.0.2",
+    "mini-css-extract-plugin": "^2.4.5",
+    "moment": "^2.30.1",
+    "node-sass-tilde-importer": "^1.0.2",
+    "pixrem": "^5.0.0",
+    "postcss": "^8.3.11",
+    "postcss-loader": "^8.0.0",
+    "postcss-preset-env": "^9.0.0",
+    "sass": "^1.43.4",
+    "sass-loader": "^14.0.0",
+    "slick-carousel": "^1.8.1",
+    "swagger-client": "^3.25.3",
+    "swagger-ui": "^5.11.7",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.3.3",
+    "webpack": "^5.65.0",
+    "webpack-bundle-tracker": "^3.0.1",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.6.0",
+    "webpack-merge": "^5.8.0",
+    "whfd-mapping": "^0.3.1"
+  },
+  "engines": {
+    "node": "20"
+  },
+  "browserslist": [
+    "last 2 versions"
+  ],
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  },
+  "scripts": {
+    "dev": "webpack serve --config assets/webpack/dev.config.js",
+    "build": "webpack --config assets/webpack/prod.config.js"
+  },
+  "dependencies": {}
+}

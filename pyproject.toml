@@ -91,6 +91,7 @@ werkzeug = {extras = ["watchdog"], version = "^3.0.1"}
 django-storages = "^1.14.2"
 boto3 = "^1.34.44"
 django-webpack-loader = "^3.0.1"
+django-classy-tags = "^4.1.0"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -159,7 +160,7 @@ disable_error_code = [
 ]
 
 [[tool.mypy.overrides]]
-module = "geoluminate.utils.gis.base"
+module = "geoluminate.db.gis.base"
 disable_error_code = [
     "var-annotated",
 ]

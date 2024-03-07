@@ -8,10 +8,8 @@ ENV POETRY_VERSION=1.3.1
 # Install apt packages
 RUN apt-get update && apt-get install --no-install-recommends -y \
   # the python wheels for pycairo will not build without these and therefore package installation will fail. Pycairo is required through the following dependency tree django-cms > django-filer > easy-thumbnails[svg] > reportlab > pycairo
-  #DONT THINK THIS IS NEEDED IN THE BUILD STAGE
   libcairo2 libcairo2-dev \
   # psycopg2 dependencies
-  #DONT THINK THIS IS NEEDED IN THE BUILD STAGE
   libpq-dev \
   # dependencies for building Python packages
   build-essential && \
@@ -55,7 +53,7 @@ COPY --from=build-stage /usr/src/app/wheels /wheels/
 RUN pip install --no-cache-dir --no-index --find-links=/wheels/ /wheels/* \
 	&& rm -rf /wheels/
 
-
+WORKDIR /app
 # COPY ./bin/entrypoint /entrypoint
 # RUN sed -i 's/\r$//g' /entrypoint
 # RUN chmod +x /entrypoint

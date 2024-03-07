@@ -1,23 +1,117 @@
 version: '3'
-     
+name: geoluminate
+
+volumes:
+  geoluminate_postgres_data: {}
+  geoluminate_postgres_data_backups: {}
+  geoluminate_storage: {}
+
 services:
-  app: &app
+
+  django: &django
     build:
       context: .
-      dockerfile: ./docker/Dockerfile.local
-    working_dir: /app
-    env_file:
-      - ./.env
+      dockerfile: ./compose/geoluminate/local
+    image: geoluminate_local
+    depends_on:
+      - postgres
+      - redis
+      - minio
+    # working_dir: /app
     volumes:
       - ../:/external_apps
       - ./:/app:z
+    env_file:
+      - ./.envs/.local/.django
+      - ./.envs/.local/.postgres
     ports:
-      - "8000:8000"
-    command: ./docker/django
+      - 8000:8000
+      - 5678:5678
+    command: /app/bin/local/django
+    entrypoint: /app/bin/entrypoint
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "5"
 
-  docs:
-    <<: *app
-    working_dir: /app/docs
+  postgres:
+    build:
+      context: .
+      dockerfile: ./compose/postgres/Dockerfile
+    image: geoluminate_production_postgres
+    volumes:
+      - geoluminate_postgres_data:/var/lib/postgresql/data
+      - geoluminate_postgres_data_backups:/backups
+    env_file:
+      - ./.envs/.local/.postgres
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "5"
+  redis:
+    image: redis:6
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "5"
+  # celeryworker:
+  #   <<: *django
+  #   ports: []
+  #   command: /app/bin/local/celery_worker
+  #   logging:
+  #     options:
+  #       max-size: "10m"
+  #       max-file: "5"
+  # celerybeat:
+  #   <<: *django
+  #   ports: []
+  #   command: /app/bin/local/celery_beat
+  #   logging:
+  #     options:
+  #       max-size: "10m"
+  #       max-file: "5"
+  # flower:
+  #   <<: *django
+  #   ports:
+  #     - "5555:5555"
+  #   command: /app/bin/local/celery_flower
+  #   logging:
+  #     options:
+  #       max-size: "10m"
+  #       max-file: "5"
+
+  minio:
+    image: quay.io/minio/minio:latest
+    volumes:
+      # - ./minio:/minio
+      - geoluminate_storage:/minio
+    env_file:
+      - ./.envs/.local/.minio
     ports:
-      - "9001:9000"
-    command: ../docker/docs
+      - "9000:9000"
+      - "9001:9001"
+    command: server /minio
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "5"
+  # docs:
+  #   <<: *django
+  #   working_dir: /app/docs
+  #   ports:
+  #     - "5000:5000"
+  #   command: /app/bin/local/docs
+
+  node:
+    build:
+      context: .
+      dockerfile: ./compose/node/Dockerfile
+    image: geoluminate_local_node
+    depends_on:
+      - django
+    volumes:
+      - ./:/app:z
+      - /app/node_modules
+    command: npm run dev
+    ports:
+      - '3000:3000'

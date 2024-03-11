@@ -1,14 +1,10 @@
 import django_filters as df
 from django import forms
-from django.forms import widgets
 from django.utils.translation import gettext_lazy as _
-from django_select2.forms import Select2MultipleWidget
-from formset.widgets import Selectize, SelectizeMultiple
+from formset.widgets import Selectize
 from literature.models import Literature
-from taggit.models import Tag
 
-from geoluminate.contrib.core.choices import HAS_TAGS, NEEDS_TAGS
-from geoluminate.contrib.users.models import Contributor
+from geoluminate.contrib.contributors.models import Contributor
 
 from .models import Review
 
@@ -43,7 +39,6 @@ class ListFilterTop(df.FilterSet):
 
 
 class ReviewFilter(ListFilterTop):
-
     reviewer = df.ChoiceFilter(
         label=_("Reviewer"),
         lookup_expr="exact",

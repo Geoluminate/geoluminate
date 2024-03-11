@@ -4,10 +4,24 @@ from formset.collection import FormCollection
 from formset.fieldset import FieldsetMixin
 from formset.widgets import UploadedFileInput
 from literature import forms as lit_forms
-from literature.forms import CitationJSFormMixin, LiteratureForm
+from literature.forms import CitationJSFormMixin
 from literature.models import Literature
 
 from .models import Review
+
+
+class ReviewForm(FieldsetMixin, forms.ModelForm):
+    """A form that allows the user to create or edit a review."""
+
+    legend = _("Review")
+    help_text = _("Create a new review for this dataset.")
+
+    class Meta:
+        model = Review
+        fields = [
+            "status",
+            "reviewer",
+        ]
 
 
 class ImportOptions(FieldsetMixin, forms.Form):

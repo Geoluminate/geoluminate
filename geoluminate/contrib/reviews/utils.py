@@ -1,11 +1,7 @@
 from django.db import transaction
+from licensing.models import License
 
-from geoluminate.contrib.contributors.choices import (
-    OrganizationalRoles,
-    OtherRoles,
-    PersonalRoles,
-)
-from geoluminate.contrib.contributors.models import Contribution, Contributor
+from geoluminate.contrib.contributors.models import Contributor
 from geoluminate.contrib.datasets.models import Dataset
 
 
@@ -84,7 +80,6 @@ def parse_author_str(author_str):
 
     # iterate over the authors
     for author in authors:
-
         # split the author into a list of names
         names = author.split(" ")
 
@@ -93,7 +88,6 @@ def parse_author_str(author_str):
 
         # iterate over the names
         for name in names:
-
             # add the name to the contributor object
             contributor.name = name
 
@@ -114,14 +108,13 @@ def dataset_from_literature(literature):
         geoluminate.contrib.datasets.models.Dataset: The new dataset object.
     """
 
-    csl_obj = literature.CSL
-
     with transaction.atomic():
-
+        license = License.objects.get(name="CC BY 4.0")
         # initialise a new dataset object
         dataset = Dataset.objects.create(
             title=literature.title,
             reference=literature,
+            license=license,
         )
 
         # # loop over the authors in csl_obj and create a new Contribution object for each

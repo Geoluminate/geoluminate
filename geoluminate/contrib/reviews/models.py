@@ -2,7 +2,7 @@ from django.conf import settings
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-from geoluminate import models
+from geoluminate.db import models
 
 from .choices import StatusChoices
 
@@ -16,7 +16,7 @@ class Review(models.Model):
         verbose_name=_("status"),
         help_text=_("Status of the review"),
         choices=STATUS_CHOICES.choices,
-        default=0,
+        default=StatusChoices.IN_PROGRESS,
     )
     literature = models.OneToOneField(
         to="literature.Literature",

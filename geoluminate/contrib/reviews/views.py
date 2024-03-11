@@ -1,6 +1,6 @@
 from django.contrib import messages
-from django.forms.models import model_to_dict
-from django.http import Http404, HttpResponseRedirect
+from django.db.models import Count
+from django.http import HttpResponseRedirect
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import FormView
 from django.views.generic.detail import SingleObjectMixin
@@ -8,9 +8,10 @@ from django.views.generic.edit import UpdateView
 from literature.forms import LiteratureForm
 from literature.formset import LiteratureFileCollection
 from literature.models import Literature
-from literature.views import LiteratureDetail, LiteratureEditView, LiteratureViewMixin
+from literature.views import LiteratureEditView
+from meta.views import MetadataMixin
 
-from geoluminate.db.models import Dataset
+from geoluminate.models import Dataset
 from geoluminate.views import BaseDetailView, BaseFormView, BaseListView, HTMXMixin
 
 from . import utils
@@ -24,18 +25,18 @@ from .forms import (  # LiteratureForm,
 from .models import Review
 
 
-class AcceptLiteratureReview(HTMXMixin, SingleObjectMixin, FormView):
+class AcceptLiteratureReview(HTMXMixin, MetadataMixin, SingleObjectMixin, FormView):
     """A simple view that asks the user to confirm that they want to accept the review. On accepting, a new Review object is created and the user is redirected to the detail view of the related dataset."""
 
     model = Literature
     template_name = "reviews/accept_review_form.html"
     form_class = AcceptReviewForm
+    title = _("Start literature review")
 
     def get(self, request, *args, **kwargs):
         """If the review has already been accepted, raise a 404 error. If the review has not been accepted, proceed with the form."""
 
         self.object = self.get_object()
-        import pprint
 
         # pprint.pprint(model_to_dict(self.object))
         # if review := self.object.review:
@@ -47,7 +48,6 @@ class AcceptLiteratureReview(HTMXMixin, SingleObjectMixin, FormView):
         return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):
-
         # create a new dataset object which will store the reviewed data
         self.object = self.get_object()
 
@@ -146,9 +146,24 @@ class ReviewListView(BaseListView):
     queryset = Dataset.objects.filter().order_by("-created")
 
 
+class ReviewPlugin(ReviewListView):
+    template_name = "geoluminate/plugins/base_list.html"
+    title = _("Reviews")
+    description = _("The following reviews are associated with the this contributor.")
+
+    def get_queryset(self, *args, **kwargs):
+        return self.get_object().reviews.all()
+
+
 class ReviewDetailView(BaseDetailView):
+    base_template = "reviews/review_detail.html"
     model = Review
-    # navigation = settings.GEOLUMINATE_PROJECT_PAGES
+    sidebar_components = [
+        "core/sidebar/basic_info.html",
+        # "core/sidebar/keywords.html",
+        # "core/sidebar/status.html",
+        # "core/sidebar/summary.html",
+    ]
 
 
 class ReviewCheckoutView(BaseFormView):
@@ -206,7 +221,7 @@ class ReviewFilesEdit(ReviewLiteratureEdit):
 class LiteratureReviewListView(BaseListView):
     """A view that lists a set of Review objects."""
 
-    base_template = "reviews/base_list.html"
+    base_template = "reviews/review_list.html"
     title = _("Literature Review")
     description = _(
         "The following literature items may contain data that are relevant to this portal but have not yet been added."
@@ -215,17 +230,31 @@ class LiteratureReviewListView(BaseListView):
         " the next major database release. You can find out more about the release cycle of the Global Heat Flow"
         " Database and how your contributions make a difference. "
     )
-    # object_template = "reviews/review_card.html"
+    object_template = "reviews/review_card.html"
 
     filterset_class = ReviewFilter
     queryset = Literature.objects.filter(review__isnull=True).order_by("-created")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["total"] = Literature.objects.count()
+        summary = {}
+        for item in Review.objects.values("status").annotate(total=Count("status")):
+            label = Review.STATUS_CHOICES(item["status"]).label
+            summary[label] = {
+                "count": item["total"],
+                "percent": item["total"] / context["total"] * 100,
+            }
+
+        context["summary"] = summary
+        return context
 
 
 class LiteratureListView(BaseListView):
     model = Literature
     queryset = Literature.objects.all().order_by("-created")
     filterset_class = LiteratureFilter
-    list_filter_top =["title","o"]
+    list_filter_top = ["title", "o"]
 
 
 class AddLiteratureView(BaseFormView):

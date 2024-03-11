@@ -1,3 +1,9 @@
+from classytags.arguments import (
+    Argument,
+)
+from classytags.core import Options
+from classytags.helpers import InclusionTag
+from classytags.utils import flatten_context
 from django import template
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
@@ -9,11 +15,59 @@ from django.utils.safestring import mark_safe
 from quantityfield import settings as qsettings
 
 from geoluminate.contrib.core.forms import GenericDescriptionForm
-from geoluminate.utils import get_filter_params
 
 register = template.Library()
 ureg = qsettings.DJANGO_PINT_UNIT_REGISTER
 ureg.default_format = ".2f~P"
+
+
+class EditableObjectBlock(InclusionTag):
+    """
+    Templatetag that links a content extracted from a generic django model
+    to the model admin changeform.
+
+    The rendered content is to be specified in the enclosed block.
+    """
+
+    template = "geoluminate/components/sidebar/card.html"
+    name = "render_editable"
+    options = Options(
+        Argument("instance"),
+        Argument("edit_fields", default=None, required=False),
+        Argument("view_name", default="{app_label}:{model_name}_edit", required=False),
+        blocks=[("endrender_editable", "nodelist")],
+    )
+
+    def render_tag(self, context, **kwargs):
+        """
+        Renders the block and then inject the resulting HTML in the template
+        context
+        """
+        context.push()
+        template = self.get_template(context, **kwargs)
+        data = self.get_context(context, **kwargs)
+        data["content"] = kwargs["nodelist"].render(data)
+        data["rendered_content"] = data["content"]
+        output = render_to_string(template, flatten_context(data))
+        context.pop()
+        if kwargs.get("varname"):
+            context[kwargs["varname"]] = output
+            return ""
+        else:
+            return output
+
+    def get_context(self, context, **kwargs):
+        """
+        Uses _get_empty_context and adds the `instance` object to the local
+        context. Context here is to be intended as the context of the nodelist
+        in the block.
+        """
+        kwargs.pop("varname")
+        kwargs.pop("nodelist")
+        extra_context = self._get_empty_context(context, **kwargs)
+        extra_context["instance"] = kwargs.get("instance")
+        extra_context["render_model_block"] = True
+        return extra_context
 
 
 @register.simple_tag(takes_context=True)
@@ -43,10 +97,19 @@ def brand(icon_or_logo: str):
 @register.simple_tag
 def icon(icon: str, **kwargs):
     """Retrieves the default icon for a given object."""
+
+    context = kwargs.pop("context", None)
+    context_title = kwargs.pop("context_title", None)
+    context_type = kwargs.pop("context_type", "bs-tooltip")
+
     icon = settings.GEOLUMINATE_ICONS.get(icon)
     extra_classes = kwargs.pop("class", "")
     attrs = " ".join([f'{k}="{v}"' for k, v in kwargs.items()])
-    return mark_safe(f'<i class="{icon} {extra_classes}" {attrs}></i>')
+
+    icon = f'<i class="{icon} {extra_classes}" {attrs}></i>'
+    if context:
+        icon = f'<span data-bs-toggle="{context_type}" data-bs-title="{context_title}" data-bs-content="{context}">{icon}</span>'
+    return mark_safe(icon)  # noqa: S308
 
 
 @register.filter
@@ -112,20 +175,13 @@ def avatar(profile=None, width="48px", **kwargs):
             ' 16H272c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16z"/></svg>'
         )
 
-    return mark_safe(avatar)
+    return mark_safe(avatar)  # noqa: S308
 
 
 @register.inclusion_tag("contributors/avatar.html")
 def render_contributor_icon(profile, width="48px", **kwargs):
-    attrs = " ".join([f'{k}="{v}"' for k, v in kwargs.items()])
+    " ".join([f'{k}="{v}"' for k, v in kwargs.items()])
     return {"profile": profile, "attrs": 'width="{width}" {attrs}'}
-
-
-@register.simple_tag(takes_context=True)
-def filter_params(context):
-    """Returns curent filter params as a string"""
-    request = context["request"]
-    return get_filter_params(request)
 
 
 @register.inclusion_tag("core/description.html", takes_context=True)

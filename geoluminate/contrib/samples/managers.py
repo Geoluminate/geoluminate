@@ -3,7 +3,7 @@ from django.contrib.gis.db import models
 # from django.contrib.gis.utils import LayerMapping
 from django.contrib.postgres.aggregates import JSONBAgg
 
-from geoluminate.utils.gis.db_functions import AsGeoFeature
+from geoluminate.db.gis.functions import AsGeoFeature
 
 # DATA_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "data"))
 

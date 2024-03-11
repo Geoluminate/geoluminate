@@ -1,6 +1,6 @@
-from django.db.models.query import QuerySet
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from drf_spectacular.utils import extend_schema, extend_schema_view
-from rest_framework.serializers import BaseSerializer
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from geoluminate.api.utils import NestedViewset, api_doc
@@ -22,6 +22,15 @@ class SampleViewset(ReadOnlyModelViewSet):
         .select_related("dataset", "dataset__project")
         .all()
     )
+
+    @method_decorator(cache_page(60 * 15))  # Cache for 15 minutes
+    def list(self, request, *args, **kwargs):
+        import time
+
+        now = time.time()
+        x = super().list(request, *args, **kwargs)
+        print(time.time() - now)
+        return x
 
 
 class NestedSamples(NestedViewset, SampleViewset):

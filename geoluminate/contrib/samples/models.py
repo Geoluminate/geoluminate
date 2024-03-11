@@ -6,13 +6,20 @@ from django.core.validators import MinValueValidator as MinVal
 from django.urls import reverse
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
+from research_vocabs.fields import ConceptField
 
-from geoluminate import models
 from geoluminate.contrib.core.models import Abstract
+from geoluminate.db import models
+
+from . import choices
+from .choices import FeatureType, SampleStatus, SamplingMedium, SpecimenType
+
+LABELS = settings.GEOLUMINATE_LABELS
 
 
 class Location(models.Model):
     # objects = LocationManager.as_manager()
+    # DESCRIPTION_TYPES = choices.DataCiteDescriptionTypes
 
     name = models.CharField(
         verbose_name=_("name"),
@@ -72,17 +79,35 @@ class Location(models.Model):
 
 
 class Sample(Abstract):
-    """This model attempts to roughly replicate the schema of the International
-    Generic Sample Number (IGSN) registry. Each sample in this table MUST belong to
+    """This model attempts to roughly replicate the schema of the International Generic Sample Number (IGSN) registry. Each sample in this table MUST belong to
     a `geoluminate.contrib.datasets.models.Dataset`."""
 
-    # can get more info from www.vocabulary.odsm2
-    type = models.CharField(
-        choices=[(x, x) for x in settings.GEOLUMINATE_SAMPLE_TYPES],
-        verbose_name=_("sample type"),
-        default=settings.GEOLUMINATE_DEFAULT_SAMPLE_TYPE,
-        help_text=_("The type of sample as per the ODM2 controlled vocabulary."),
-        max_length=255,
+    DESCRIPTION_TYPES = choices.DescriptionTypes
+    FEATURE_TYPES = FeatureType
+    SAMPLING_MEDIA = SamplingMedium
+    STATUS = SampleStatus
+    SPECIMEN_TYPE = SpecimenType
+
+    status = ConceptField(
+        verbose_name=_("collection status"),
+        scheme=STATUS,
+        default="unknown",
+    )
+    feature_type = ConceptField(
+        verbose_name=_("feature type"),
+        scheme=FEATURE_TYPES,
+        default=settings.GEOLUMINATE_DEFAULT_FEATURE_TYPE,
+    )
+    medium = ConceptField(
+        verbose_name=_("sampling medium"),
+        scheme=SAMPLING_MEDIA,
+        default="solid",
+    )
+
+    specimen_type = ConceptField(
+        verbose_name=_("specimen type"),
+        scheme=SpecimenType,
+        default="theSpecimenTypeIsUnknown",
     )
     description = models.TextField(
         _("description"),
@@ -99,6 +124,15 @@ class Sample(Abstract):
         null=True,
         blank=True,
     )
+
+    # images = models.ForeignKey(
+    #     to="core.Image",
+    #     verbose_name=_("images"),
+    #     help_text=_("Images of the sample."),
+    #     related_name="sample",
+    #     on_delete=models.SET_NULL,
+    #     blank=True,
+    # )
 
     comment = models.TextField(
         _("comment"),
@@ -125,9 +159,9 @@ class Sample(Abstract):
     }
 
     class Meta:
-        verbose_name = _("sample")
-        verbose_name_plural = _("samples")
-        ordering = ["-modified"]
+        verbose_name = _(LABELS["sample"]["verbose_name"])
+        verbose_name_plural = _(LABELS["sample"]["verbose_name_plural"])
+        ordering = ["created"]
         app_label = "geoluminate"
 
     # def geojson(self):
@@ -158,3 +192,6 @@ class Measurement(models.Model):
 
     def get_absolute_url(self):
         return self.get_sample.get_absolute_url()
+
+
+# print(len(max(FeatureType, key=len)))

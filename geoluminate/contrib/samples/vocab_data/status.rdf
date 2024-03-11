@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+>
+  <rdf:Description rdf:about="http://vocabulary.odm2.org/status/unknown">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="http://vocabulary.odm2.org/status"/>
+    <skos:prefLabel>Unknown</skos:prefLabel>
+    <skos:definition>The status of data collection is unknown.</skos:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://vocabulary.odm2.org/status">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+    <dc:title>ODM2 Status Controlled Vocabulary</dc:title>
+    <dc:creator>ODM2 Working Group</dc:creator>
+    <dc:description>A vocabulary for describing the data collection status of a Result. In ODM2 the StatusCV can be used to specify whether data collection is planned, ongoing, or complete.</dc:description>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://vocabulary.odm2.org/status/ongoing">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="http://vocabulary.odm2.org/status"/>
+    <skos:prefLabel>Ongoing</skos:prefLabel>
+    <skos:definition>Data collection is ongoing.  New data values will be added periodically.</skos:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://vocabulary.odm2.org/status/planned">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="http://vocabulary.odm2.org/status"/>
+    <skos:prefLabel>Planned</skos:prefLabel>
+    <skos:definition>Data collection is planned. Resulting data values do not yet exist, but will eventually.</skos:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://vocabulary.odm2.org/status/complete">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="http://vocabulary.odm2.org/status"/>
+    <skos:prefLabel>Complete</skos:prefLabel>
+    <skos:definition>Data collection is complete. No new data values will be added.</skos:definition>
+  </rdf:Description>
+</rdf:RDF>

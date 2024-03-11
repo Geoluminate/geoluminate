@@ -1,8 +1,5 @@
-from django.urls import reverse_lazy
-from django.utils.translation import gettext_lazy as _
-
 from geoluminate.api.v1.serializers import SampleSerializer
-from geoluminate.tables import GeoluminateTable, ScrollerTable, ServerSideProcessing
+from geoluminate.tables import GeoluminateTable, ScrollerTable
 
 from .models import Sample
 

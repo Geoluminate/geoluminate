@@ -1,9 +1,5 @@
 from django.contrib.gis import admin
-from django.contrib.gis.db import models
 
-from geoluminate.contrib.core.admin import DescriptionInline, FuzzyDatesInline
-
-# from jazzmin import templatetags
 from .models import Location, Sample
 
 
@@ -12,7 +8,7 @@ class SampleAdmin(admin.ModelAdmin):
     # inlines = [FuzzyDatesInline]
     list_display = (
         "id",
-        "type",
+        "feature_type",
         "title",
         "created",
     )

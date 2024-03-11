@@ -2,9 +2,9 @@ version: '3'
 name: geoluminate
 
 volumes:
-  geoluminate_postgres_data: {}
-  geoluminate_postgres_data_backups: {}
-  geoluminate_storage: {}
+  postgres_data: {}
+  postgres_data_backups: {}
+  media: {}
 
 services:
 
@@ -12,7 +12,7 @@ services:
     build:
       context: .
       dockerfile: ./compose/geoluminate/local
-    image: geoluminate_local
+    image: local_django
     depends_on:
       - postgres
       - redis
@@ -38,10 +38,10 @@ services:
     build:
       context: .
       dockerfile: ./compose/postgres/Dockerfile
-    image: geoluminate_production_postgres
+    image: production_postgres
     volumes:
-      - geoluminate_postgres_data:/var/lib/postgresql/data
-      - geoluminate_postgres_data_backups:/backups
+      - postgres_data:/var/lib/postgresql/data
+      - postgres_data_backups:/backups
     env_file:
       - ./.envs/.local/.postgres
     logging:
@@ -84,7 +84,7 @@ services:
     image: quay.io/minio/minio:latest
     volumes:
       # - ./minio:/minio
-      - geoluminate_storage:/minio
+      - media:/minio
     env_file:
       - ./.envs/.local/.minio
     ports:
@@ -106,7 +106,7 @@ services:
     build:
       context: .
       dockerfile: ./compose/node/Dockerfile
-    image: geoluminate_local_node
+    image: local_node
     depends_on:
       - django
     volumes:

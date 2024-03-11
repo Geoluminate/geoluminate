@@ -1,6 +1,5 @@
-from django.urls import include, path, reverse_lazy
+from django.urls import path, reverse_lazy
 from django.utils.text import slugify
-from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 from rest_framework_nested import routers
 from simple_menu import MenuItem
@@ -60,6 +59,10 @@ class MeasurementRegistry:
         if not hasattr(self, "_urls"):
             self._urls = self.get_urls()
         return self._urls
+
+    @property
+    def models(self):
+        return [item["model"] for item in self.registry]
 
 
 measurements = MeasurementRegistry()

@@ -3,14 +3,13 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.gis import admin
 from django.contrib.sitemaps.views import sitemap
-from django.shortcuts import redirect
 from django.urls import include, path
+from django.views.decorators.cache import cache_page
 from django.views.generic import TemplateView
 
 from geoluminate.measurements import measurements
 
-from .admin import admin_measurement_view
-from .views import DashboardRedirect
+# from .admin import admin_measurement_view
 
 # these URLS don't require translation capabilities
 NON_I18N_URLS = [
@@ -21,7 +20,11 @@ NON_I18N_URLS = [
 
 
 I18N_URLS = [
-    path("explorer/", TemplateView.as_view(template_name="geoluminate/components/map.html"), name="viewer"),
+    path(
+        "explorer/",
+        cache_page(60 * 5)(TemplateView.as_view(template_name="geoluminate/components/map.html")),
+        name="viewer",
+    ),
     path("glossary/", include("glossary.urls")),
     path("", include("geoluminate.contrib.datasets.urls")),
     path("", include("geoluminate.contrib.reviews.urls")),
@@ -37,7 +40,7 @@ I18N_URLS = [
     path("select2/", include("django_select2.urls")),
     path("activity/", include("actstream.urls")),
     path("admin/docs/", include("django.contrib.admindocs.urls")),
-    path("admin/measurements/", admin_measurement_view, name="admin_measurements"),
+    # path("admin/measurements/", admin_measurement_view, name="admin_measurements"),
     path("admin/", admin.site.urls),
 ]
 

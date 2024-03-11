@@ -4,11 +4,11 @@ from django.core.exceptions import FieldDoesNotExist
 
 
 class TableConfigMixin:
-    dom = """   
+    dom = """
     <'page-nav'
         <'nav nav-pills nav-pills-alternate'<B><'ms-auto my-auto'f>>
-    >t<'px-1 position-absolute bottom-0 end-0'i>
-                """  # noqa: W291
+    >rt<'px-1 position-absolute bottom-0 end-0'i>
+                """
     language = {
         "search": "",
         "searchPlaceholder": "Search",
@@ -19,7 +19,7 @@ class TableConfigMixin:
     rowReorder = False
     colReorder = True
     stateSave = True
-    buttons = [  # noqa: RUF012
+    buttons = [
         # {
         #     "extend": "print",
         #     "text": "<i class='fa-solid fa-print'></i> Print",
@@ -56,7 +56,7 @@ class TableConfigMixin:
             "text": "<i class='fa-solid fa-floppy-disk'></i>",
         },
     ]
-    searchPanes = {  # noqa: RUF012
+    searchPanes = {
         "threshold": 0.5,
         "layout": "columns-1",
         "cascadePanes": False,
@@ -89,10 +89,9 @@ class ServerSideProcessing(TableConfigMixin):
 
 
 class ScrollerTable(TableConfigMixin):
+    processing = True
     serverSide = True
-    scroller = True
-    # scrollY = "100vh"
-    scrollY = "800px"
+    scroller = {"loadingIndicator": True, "serverWait": 500}
     scrollX = True
 
 
@@ -101,14 +100,6 @@ class GeoluminateTable(DataTable):
     details_template = '<a href="${data}" class="btn btn-sm btn-primary">View</a>'
     foreignkey_widget_template = '<a href="${data}" class="btn btn-sm btn-primary">View</a>'
     debug = settings.DEBUG
-
-    # layout_overrides = {  # noqa: RUF012
-    #     "B": "#tableButtons>.toolbar-left",
-    #     "i": "#infoPane",
-    #     # "P": "#filterContainer .sidebar-body",
-    #     ".dataTables_filter input": "#tableButtons>.toolbar-right.ms-auto",
-    #     # "p": ".footer-right",
-    # }
 
     def build_column(self, field):
         column = super().build_column(field)

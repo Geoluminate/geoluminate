@@ -6,7 +6,15 @@
 // place geoluminate default variables here
 // remember to end each with !default to allow customization
 
-//  $primary: darkblue !default;
+
+
+// these are modifiable by the template via standard css variables
+//  $primary: var(--primary, rgb(15, 15, 201)) !default;
+
+
+
+
+
 
 $sidebar-width: 335px !default;
 

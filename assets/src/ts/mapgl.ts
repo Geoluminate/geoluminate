@@ -14,5 +14,3 @@ document.addEventListener("htmx:afterSettle", function (event) {
     })
   }
 })
-
-

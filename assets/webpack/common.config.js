@@ -1,9 +1,10 @@
 const path = require('path');
 const BundleTracker = require('webpack-bundle-tracker');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const BASE_DIR = path.resolve(__dirname, '../../');
-
+const StaticPath = path.resolve(BASE_DIR, './geoluminate/static/');
 
 const BundleOutputPath = path.resolve(BASE_DIR, './geoluminate/static/bundles/');
 const ContextPath = path.resolve(__dirname, '../');
@@ -42,6 +43,15 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({
       filename: 'css/[name].[contenthash].css'
+    }),
+    new CopyWebpackPlugin({
+      patterns: [{
+          from: path.resolve(BASE_DIR, 'node_modules/bootstrap/scss/_variables.scss'),
+          to: path.resolve(BASE_DIR, 'geoluminate/static/bootstrap/_variables.scss'),
+        },
+
+
+      ],
     }),
   ],
   module: {

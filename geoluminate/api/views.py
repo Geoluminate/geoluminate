@@ -3,7 +3,6 @@ from django.views.generic import TemplateView
 # import GenericAPIView from rest_framework.generics
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from geoluminate.measurements import measurements
 

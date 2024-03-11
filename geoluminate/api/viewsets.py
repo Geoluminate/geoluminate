@@ -8,10 +8,10 @@ from rest_framework_gis.filters import DistanceToPointFilter
 from rest_framework_nested.viewsets import NestedViewSetMixin
 
 from geoluminate.api.access_policies import CoreAccessPolicy
-from geoluminate.utils.drf import DjangoFilterBackend
 
 # from .serializers import GeoFeatureSerializer
-from geoluminate.utils.gis.serializers import GeoFeatureSerializer
+from geoluminate.db.gis.serializers import GeoFeatureSerializer
+from geoluminate.utils.drf import DjangoFilterBackend
 
 
 class BaseViewSet(AccessViewSetMixin, viewsets.ModelViewSet):
@@ -61,11 +61,10 @@ class ViewsetMixin(NestedViewSetMixin, viewsets.ReadOnlyModelViewSet):
         return self.queryset
 
     def get_serializer_class(self):
-        if renderer := getattr(self.request, "accepted_renderer", None):
-            if renderer.format == "geojson":
-                if self.is_nested():
-                    self.pagination_class = None
-                return self.geojson_serializer
+        if (renderer := getattr(self.request, "accepted_renderer", None)) and renderer.format == "geojson":
+            if self.is_nested():
+                self.pagination_class = None
+            return self.geojson_serializer
         return super().get_serializer_class()
 
     def initialize_request(self, request, *args, **kwargs):

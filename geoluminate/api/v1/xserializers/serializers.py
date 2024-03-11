@@ -5,7 +5,7 @@ from rest_framework_gis.serializers import (
     GeometrySerializerMethodField,
 )
 
-from geoluminate.db.models import Dataset, Location, Project, Sample
+from geoluminate.models import Dataset, Location, Project, Sample
 
 from . import base
 

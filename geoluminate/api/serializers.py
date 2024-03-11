@@ -5,7 +5,6 @@ from rest_flex_fields.serializers import FlexFieldsSerializerMixin
 from rest_framework import serializers
 
 # from .serializers import GeoFeatureSerializer
-from geoluminate.utils.gis.serializers import GeoFeatureSerializer
 
 
 class BaseSerializerMixin(FlexFieldsSerializerMixin):

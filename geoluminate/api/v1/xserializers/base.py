@@ -1,18 +1,16 @@
 from rest_framework import serializers
 from rest_framework.fields import Field as Field
-from rest_framework.utils.model_meta import FieldInfo
 from rest_framework_gis.serializers import (
     GeoFeatureModelSerializer,
     GeometrySerializerMethodField,
 )
 from rest_framework_nested.relations import NestedHyperlinkedIdentityField
-from rest_framework_nested.serializers import NestedHyperlinkedModelSerializer
-from taggit.serializers import TaggitSerializer, TagListSerializerField
+from taggit.serializers import TagListSerializerField
 
 from geoluminate.api.serializers import BaseSerializerMixin
 from geoluminate.contrib.contributors.models import Contribution
 from geoluminate.contrib.core.models import Description, FuzzyDate
-from geoluminate.db.models import Contributor, Dataset, Location, Project, Sample
+from geoluminate.models import Contributor, Dataset, Location, Project, Sample
 
 
 class ContributorSerializer(BaseSerializerMixin):

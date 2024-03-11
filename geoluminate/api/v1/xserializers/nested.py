@@ -7,7 +7,7 @@ from rest_framework_nested.relations import NestedHyperlinkedIdentityField
 from rest_framework_nested.serializers import NestedHyperlinkedModelSerializer
 from taggit.serializers import TagListSerializerField
 
-from geoluminate.db.models import Dataset, Location, Project, Sample
+from geoluminate.models import Dataset, Location, Project, Sample
 
 from ...serializers import BaseSerializerMixin
 from . import base

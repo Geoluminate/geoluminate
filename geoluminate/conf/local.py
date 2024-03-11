@@ -1,5 +1,6 @@
 from split_settings.tools import include
-import os
+import geoluminate
+from pathlib import Path
 
 SHOW_DEBUG_TOOLBAR = False
 
@@ -23,9 +24,6 @@ COMPRESS_OFFLINE = False
 # STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
-# https://docs.celeryq.dev/en/stable/userguide/configuration.html#task-eager-propagates
-CELERY_TASK_EAGER_PROPAGATES = True
-
 # INSTALLED_APPS += ["django_extensions"]  # F405
 
 LOCKDOWN_ENABLED = False
@@ -43,21 +41,15 @@ LOCKDOWN_ENABLED = False
 # }
 
 
-import geoluminate
-from pathlib import Path
-
 # get the path to the webpack-stats.json file
 
 WEBPACK_STATS_FILE = Path(geoluminate.conf.__file__).parent / "webpack-stats.json"
-
-print(WEBPACK_STATS_FILE)
 
 
 WEBPACK_LOADER = {
     "DEFAULT": {
         "CACHE": not DEBUG,
         "STATS_FILE": Path(geoluminate.conf.__file__).parent / "webpack-stats.json",
-        # "STATS_FILE": BASE_DIR / "assets" / "webpack-stats.json",
         "POLL_INTERVAL": 0.1,
         "IGNORE": [r".+\.hot-update.js", r".+\.map"],
     },

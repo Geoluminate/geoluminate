@@ -25,7 +25,6 @@ GEOLUMINATE_APPS = [
     "geoluminate.contrib.datasets",
     "geoluminate.contrib.reviews",
     "geoluminate.contrib.samples",
-    "geoluminate.contrib.contributors",
     "geoluminate.contrib.users",
     "geoluminate.contrib.organizations",
     "auto_datatables",
@@ -62,6 +61,7 @@ GEOLUMINATE_APPS = [
     "djangocms_frontend.contrib.media",
     "djangocms_frontend.contrib.tabs",
     "djangocms_frontend.contrib.utilities",
+    "geoluminate.contrib.contributors",
     # DJANGO REST FRAMEWORK
     "rest_framework",
     "rest_framework.authtoken",

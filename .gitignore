@@ -1,7 +1,7 @@
 minio/
-**/migrations/*
+# **/migrations/*
 geoluminate/static/webpack_bundles/
-webpack-stats.json
+# webpack-stats.json
 Global/
 docs/_build
 docs/apidocs

@@ -25,7 +25,6 @@ I18N_URLS = [
         cache_page(60 * 5)(TemplateView.as_view(template_name="geoluminate/components/map.html")),
         name="viewer",
     ),
-    path("glossary/", include("glossary.urls")),
     path("", include("geoluminate.contrib.datasets.urls")),
     path("", include("geoluminate.contrib.reviews.urls")),
     path("", include("geoluminate.contrib.projects.urls")),

@@ -1,11 +1,7 @@
 import django_filters as df
 from django import forms
-from django.forms import widgets
 from django.utils.translation import gettext_lazy as _
-from django_select2.forms import Select2MultipleWidget
-from formset.renderers.default import FormRenderer
-from formset.widgets import Selectize, SelectizeMultiple
-from taggit.models import Tag
+from formset.widgets import SelectizeMultiple
 
 from geoluminate.contrib.core.choices import HAS_TAGS, NEEDS_TAGS
 

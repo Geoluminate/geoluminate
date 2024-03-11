@@ -1,10 +1,8 @@
-from django.conf import settings
-
 # from django.contrib.gis.db.models import Collect
+from django.db import models
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 
-from geoluminate import models
 from geoluminate.contrib.core.models import Abstract
 
 # from geoluminate.utils import icon

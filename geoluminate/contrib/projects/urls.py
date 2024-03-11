@@ -1,7 +1,6 @@
 from django.urls import include, path
 
-from geoluminate.plugins import project
-
+from .plugins import project
 from .views import AddProjectView, ProjectFormView, ProjectListView
 
 app_name = "projects"

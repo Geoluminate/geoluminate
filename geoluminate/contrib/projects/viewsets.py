@@ -1,6 +1,5 @@
 from drf_spectacular.utils import extend_schema, extend_schema_view
 from rest_framework.viewsets import ReadOnlyModelViewSet
-from rest_framework_nested.viewsets import NestedViewSetMixin
 
 from geoluminate.api.utils import NestedViewset, api_doc
 

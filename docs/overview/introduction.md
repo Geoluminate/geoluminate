@@ -1,5 +1,5 @@
 ```{warning}
-Geoluminate is currently in the early stages of development and is not yet ready for production use. We are actively seeking contributors to help us build and test the framework. If you are interested in contributing, please see our [Contributing](../contributing.md) page. If you want to keep up to date with the latest developments, please star our [GitHub repository]().
+Geoluminate is currently in the early stages of development and is not yet ready for production use. We are actively seeking contributors to help us build and test the framework. If you are interested in contributing, please see our [Contributing](getting-started) page. If you want to keep up to date with the latest developments, please star our [GitHub repository](github.com/Geoluminate/geoluminate).
 ```
 
 # Introduction

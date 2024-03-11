@@ -1,4 +1,17 @@
-# Review and Publishing
+# Quality Control
+
+
+## What is Quality Control?
+
+
+
+## Programmatic Quality Control
+
+
+
+## Community Reviews
+
+
 
 
 At Geoluminate, we place a strong emphasis on promoting the attribution of credit to researchers by adhering to established metadata schemas. We understand the value of recognizing and properly attributing the efforts and contributions of researchers who publish datasets.

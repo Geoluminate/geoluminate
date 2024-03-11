@@ -21,7 +21,7 @@ html_theme_options.update(
     }
 )
 
-exclude_patterns = ["apidocs/index.rst"]
+# exclude_patterns = ["apidocs/index.rst"]
 
 # # despite the fact that extensions is declared in docs/conf.py, and is definitely available here (see print(extensions)),
 # # the build will not work without declaring the extensions variable here as well.
@@ -36,8 +36,8 @@ extensions = [
     "sphinx.ext.autosectionlabel",
     "sphinx_copybutton",
     "sphinxext.opengraph",
-    "autodoc2",
-    "sphinx_comments",
+    # "autodoc2",
+    # "sphinx_comments",
     "myst_parser",
-    "sphinx_tippy",
+    # "sphinx_tippy",
 ]

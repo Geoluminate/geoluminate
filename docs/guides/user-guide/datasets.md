@@ -9,7 +9,7 @@ If you have an exciting idea but lack the expertise, equipment or funding to get
 If you don't want to share your project with the world just yet, you can make it private and invite only those you trust to collaborate with you. 
 ```
 
-## Creating a project
+## Creating a new dataset
 
 First, click on your user icon in the navigation bar at the top of the page. If you're on desktop, you'll find it in the top right corner. If you're on mobile, you'll find it in the top left corner. This will open a menu with a list of options. Click on the `Projects` option to view a list of your current projects. 
 
@@ -18,14 +18,15 @@ First, click on your user icon in the navigation bar at the top of the page. If 
 Next, click on the `Create a new project` button to open the project creation form.
 
 
+## Describing a dataset
 
 
-## Adding an existing project 
-
-
-## Sharing your project
 
 
 
 ## Adding contributors
 
+
+
+
+## Adding data

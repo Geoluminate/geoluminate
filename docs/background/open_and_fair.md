@@ -1,4 +1,4 @@
-# Open Science, Fair Data & Geoluminate
+# Open Science & Fair Data
 
 ## Open Science
 
@@ -39,7 +39,15 @@ Here's what each component of the FAIR acronym stands for:
 
 The FAIR data principles are important for advancing scientific research, as they facilitate data sharing, collaboration, and the verification of research findings. They are particularly relevant in fields where data plays a central role, such as genomics, climate science, and various areas of biomedical research. Adhering to FAIR data principles not only benefits researchers but also contributes to the overall transparency and reliability of scientific research. Many funding agencies, institutions, and research communities are adopting FAIR data practices to support data-driven research.
 
+## Current state of research data
+
+
+
+## Room for improvement
+
+
+
 ## Geoluminate
 
-At it's core, Geoluminate embraces both Open Science and FAIR Data principles. Metadata related to research projects, datasets, contributors, samples, measurements and observations are stored in a structured format that is both machine- and human-readable. This metadata is then used to generate a web portal that is both Findable and Accessible. The web portal is designed to be Interoperable with other web portals that adhere to the same schema. Finally, the web portal is designed to be Reusable by other research communities.
+Geoluminate embraces both Open Science and FAIR Data principles. Metadata related to research projects, datasets, contributors, samples, measurements and observations are stored in a structured format that is both machine- and human-readable. This metadata is then used to generate a web portal that is both Findable and Accessible. The web portal is designed to be Interoperable with other web portals that adhere to the same schema. Finally, the web portal is designed to be Reusable by other research communities.
 

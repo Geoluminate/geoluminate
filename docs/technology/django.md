@@ -1,10 +1,4 @@
-# Web Frameworks
-
-If you are looking to build an online web portal for your research community, you will need to choose a web framework. There are many different web frameworks available, each with their own strengths and weaknesses.
-
-## What is Geoluminate?
-
-Geoluminate is a boilerplate web framework built on top of the Django Web Framework. The intent is to provide default settings, templates and common functionalities in order to simplify the development process and provide a consistent look and feel across all Geoluminate applications. Geoluminate is specifically targetted towards researchers with minimal experience in web-development that wish to build an online research portal as simply and quickly as possible.
+# Django
 
 ## What is Django?
 
@@ -44,3 +38,17 @@ Django includes a range of features and tools that are specifically designed to 
 
 - **Learning Curve**: Django has a steep learning curve, especially for researchers who are new to web development. It requires a solid understanding of Python, HTML, CSS, and JavaScript, as well as familiarity with the MVC (Model-View-Controller) pattern.
 - **Deployment**: Django does not provide a built-in deployment solution. This can make it challenging for researchers to deploy their web portal to a production environment.
+
+
+## Django Alternatives?
+
+There are many different web frameworks that you could use to build a web portal for your research community. Here are some of the most popular options:
+
+- **Flask**: Flask is a lightweight web framework that is written in Python. It offers a minimalistic approach to web development and is ideal for building simple web applications. Flask is a great choice if you want to get started quickly and don't need the full range of features offered by Django.
+- **Ruby on Rails**: Ruby on Rails is a popular web framework that is written in Ruby. It follows the "convention over configuration" principle and emphasizes simplicity and productivity. Ruby on Rails is a great choice if you are already familiar with Ruby and want to leverage its expressive syntax and rich ecosystem.
+- **Node.js**: Node.js is a JavaScript runtime environment that allows you to build web applications using JavaScript. It offers a non-blocking, event-driven architecture that is well-suited for building scalable, real-time applications. Node.js is a great choice if you are already familiar with JavaScript and want to leverage its asynchronous programming model.
+- **ASP.NET**: ASP.NET is a web framework that is written in C# and runs on the .NET platform. It offers a rich set of features and tools for building web applications. ASP.NET is a great choice if you are already familiar with C# and want to leverage its object-oriented programming model.
+- **PHP**: PHP is a popular scripting language that is used to build dynamic web applications. It offers a simple, yet powerful syntax and is well-suited for rapid prototyping. PHP is a great choice if you are already familiar with the language and want to leverage its rich ecosystem of libraries and frameworks.
+- **Java**: Java is a general-purpose programming language that is used to build enterprise applications. It offers a robust set of features and tools for building web applications. Java is a great choice if you are already familiar with the language and want to leverage its object-oriented programming model.
+- **Python**: Python is a general-purpose programming language that is used to build a wide range of applications. It offers a simple, yet powerful syntax and is well-suited for rapid prototyping. Python is a great choice if you are already familiar with the language and want to leverage its rich ecosystem of libraries and frameworks.
+- **Vue.js**: Vue.js is a JavaScript framework that is used to build user interfaces. It offers a simple, yet powerful syntax and is well-suited for building interactive web applications. Vue.js is a great choice if you are already familiar with JavaScript and want to leverage its component-based architecture.

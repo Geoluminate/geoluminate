@@ -1,4 +1,4 @@
-## Database
+# Postgres
 
 Although you can use it without such capabilities, at its heart Geoluminate is designed as a geospatial application. [GeoDjango](https://docs.djangoproject.com/en/4.2/ref/contrib/gis/), the geographic extension of Django, provides support for multiple geospatial databases. However, the two most commonly used and well-supported are  [PostgreSQL](https://www.postgresql.org) (with [PostGIS](http://postgis.net)) and [SQLite](https://www.sqlite.org/index.html) (with [Spatialite](https://www.gaia-gis.it/fossil/libspatialite/index)).
 

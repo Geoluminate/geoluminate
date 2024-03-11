@@ -1,6 +1,6 @@
 ```{figure} _static/logo.svg
 :align: center
-:target: https://www.geoluminate.com.au
+:target: geoluminate.net
 :width: 100%
 ```
 ______________________________________________________________________
@@ -10,15 +10,6 @@ ______________________________________________________________________
 [![Code coverage](https://codecov.io/gh/SSJenny90/geoluminate/branch/master/graph/badge.svg)](https://codecov.io/gh/SSJenny90/geoluminate) 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
-<!-- [![Build Status](https://img.shields.io/github/actions/workflow/status/cookiecutter/cookiecutter-django/ci.yml?branch=master)](https://github.com/cookiecutter/cookiecutter-django/actions/workflows/ci.yml?query=branch%3Amaster) -->
-<!-- [![Documentation Status](https://readthedocs.org/projects/cookiecutter-django/badge/?version=latest)](https://cookiecutter-django.readthedocs.io/en/latest/?badge=latest) -->
-<!-- [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/cookiecutter/cookiecutter-django/master.svg)](https://results.pre-commit.ci/latest/github/cookiecutter/cookiecutter-django/master) -->
-
-
-<!-- [![Updates](https://pyup.io/repos/github/cookiecutter/cookiecutter-django/shield.svg)](https://pyup.io/repos/github/cookiecutter/cookiecutter-django/)
-[![Join our Discord](https://img.shields.io/badge/Discord-cookiecutter-5865F2?style=flat&logo=discord&logoColor=white)](https://discord.gg/uFXweDQc5a)
-[![Code Helpers Badge](https://www.codetriage.com/cookiecutter/cookiecutter-django/badges/users.svg)](https://www.codetriage.com/cookiecutter/cookiecutter-django) -->
-
 ```{include} overview/introduction.md
 ```
 
@@ -27,12 +18,9 @@ ______________________________________________________________________
 :maxdepth: 1
 :hidden:
 
-<!-- overview/foreword -->
-<!-- index -->
 background/index
+technology/index
 features/index
-functionality/index
-usage/index
 
 
 
@@ -43,10 +31,10 @@ usage/index
 :maxdepth: 1
 :hidden:
 
-guides/user_guide/index
+guides/user-guide/index
 guides/admin_guide/index
 guides/developer_guide/index
-guides/contributor_guide/index
+guides/contributor-guide/index
 
 ```
 
@@ -56,7 +44,7 @@ guides/contributor_guide/index
 :maxdepth: 1
 :hidden:
 
-apidocs/geoluminate/geoluminate
+<!-- apidocs/geoluminate/geoluminate -->
 more/authors
 more/changelog
 more/glossary

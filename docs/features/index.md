@@ -1,45 +1,21 @@
 # Features
 
-This section of the documentation breaks down the core functionality of the Geoluminate platform. 
-
-It is intended to be a reference for users of the platform, and to provide a high-level overview of the platform's capabilities. Funtionality revolves around the creation, exploration, submission, and publishing of data. The platform is designed to be used by a variety of users with different needs, and so functionality is designed to be flexible and extensible.
-
 ## Table of Contents
 ```{toctree}
 :maxdepth: 1
 
-database_management
-API
+administration
+cms
+integration
+community
+interoperable
+quality_assurance
+exploration_and_consumption
+project_management
+dataset_management
+api
+ownership
+deployment
+
 
 ```
-
-<!-- 
-## Exploration and Consumption
-
-Data is designed to be consumed by a variety of users with different needs. There are two main ways to consume data within a Geoluminate-powered application: via a user-oriented web application or via an API.
-
-### Via the Web Application
-
-
-### Via the API
-
-
-
-## Data Creation
-
-Geoluminate-powered web application support the creation of new projects, datasets, samples and measurements directly within the application itself. Creation of data within the confines of the application means that users are implicitly guided through the process of collecting high quality data and metadata. In other words, the application makes it super easy to do the right thing, ensuring that new datasets are easy to publish and share while maintaing a high level of quality and integrity.
-
-
-## Data Submission
-
-While creation of new data within the framework is always encouraged, it is not required. Data can be submitted to the platform in a variety of ways, including via a web form, via a REST API, or via a bulk upload process. The platform is designed to be flexible and extensible, and so the submission process can be customized to meet the needs of the application.
-
-
-
-## Data Publishing
-
-Using the templating engine provided by Django, Geoluminate provides the abiltiy to export datasets in XML format as supported by DataCite publishing services. This allows users to publish datasets to to their preferred publishing services. The export functionality is designed to customizable, so the publishing process always fits the needs of the research community using the application. -->
-
-
-
-

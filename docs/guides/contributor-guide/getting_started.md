@@ -50,7 +50,14 @@ Before you begin, ensure that you have the following installed on your local mac
 
    Replace `<branch_name>` with a descriptive name that reflects the nature of your changes.
 
-## Step 4: Make Your Changes
+## Step 4a: Open the VS Code workspace
+
+1. Open the project in VS Code by running the following command
+2. Select the `geoluminate.code-workspace` file from the file explorer to open the project workspace.
+3. Install the recommended extensions when prompted by VS Code. These extensions are recommended for the project and will enhance your development experience.
+
+
+## Step 4b: Make Your Changes
 
 1. Use your favorite code editor to make the desired changes to the project's code.
 2. Follow the coding style and best practices of the project to maintain consistency.

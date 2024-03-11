@@ -1,5 +1,5 @@
 (frontend)=
-# Consistent Look and Feel
+# Modern Frontend
 
 ## Introduction
 

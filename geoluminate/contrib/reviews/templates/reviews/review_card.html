@@ -1,18 +1,39 @@
-{% extends "datasets/dataset_card.html" %}
+{% extends "geoluminate/base/card.html" %}
+
 {% load i18n geoluminate %}
 
-
-{% block card_left %}
-<ul class="list-group list-group-flush mt-3">
-  <li>{% trans "Status" %}: <span>{{obj.review.status}}</span></li>
+{% block pretitle %}
   {% with obj.review.reviewer.profile as profile %}
-    <li>{% trans "Reviewer" %}: <span><a href="{{ profile.get_absolute_url }}" class=''>{{ profile }}</a></span></li>
+    <h6 class='my-0 text-muted fw-light'>
+      <span class='me-2' data-bs-toggle="popover" data-bs-placement="bottom" data-bs-title="{% trans "Reviewer" %}" data-bs-content="{% trans "The following community member/s revised this literature item for inclusion in the database." %}">{% icon "person" %}</span>
+      <span><a href="{{ profile.get_absolute_url }}" class=''></a></span>
+    </h6>
   {% endwith %}
-  <li>{% trans "Submitted" %}: <span>{{obj.review.submitted|date|default:"-"}}</span></li>
-  <li>{% trans "Accepted" %}: <span>{{obj.review.approved|date|default:"-"}}</span></li>
-</ul>
+{% endblock pretitle %}
+{% block card_head_status %}
+  <span class="badge text-bg-primary {{ obj.review.status|slugify }}">{{ obj.review.get_status_display|default:"Open" }}</span>
+{% endblock card_head_status %}
+{% block subtitle %}
+  <span class='text-muted'>{{ obj.authors }}</span>
+{% endblock subtitle %}
+{% block card_left %}
+  <h6>{% trans "Submitted" %}:</h6>
+  <span>{{ obj.review.submitted|date|default:"-" }}</span>
+  <h6>{% trans "Accepted" %}:</h6>
+  <span>{{ obj.review.approved|date|default:"-" }}</span>
+  <h6>{% trans "Database Release" %}:</h6>
+  <span class='ms-2'>{{ geoluminate.database.name }} v{% now "Y" %}.1</span>
 {% endblock %}
-
+{% comment %} {% block footer_info %}
+  {% trans "Release" %}: <span class='ms-2'>{{ geoluminate.database.name }} v{% now "Y" %}.1</span>
+{% endblock footer_info %} {% endcomment %}
 {% block actions %}
-<a href="{{ obj.get_absolute_url }}" class="btn btn-success btn-sm">{% trans "Continue Review" %}</a>
+  {% if not obj.review %}
+    <a href="{% url 'review:accept-literature' pk=obj.id %}" class="btn btn-success btn-sm">{% trans "Begin Review" %}</a>
+  {% endif %}
+  {% if request.user == obj.review.reviewer %}
+    <a href="{{ obj.get_absolute_url }}" class="btn btn-success btn-sm">{% trans "Continue" %}</a>
+  {% elif obj.review.status == 2 %}
+    <a href="{{ obj.review.dataset.get_absolute_url }}" class="btn btn-primary btn-sm">{% trans "View Dataset" %}</a>
+  {% endif %}
 {% endblock actions %}

@@ -1,9 +1,18 @@
-{% extends "geoluminate/components/sidebar/card.html" %}
-{% load i18n geoluminate %}
-
-{% block title %}{% trans "Status" %}{% endblock %}
+{% comment %} {% extends "geoluminate/components/sidebar/card.html" %}
+{% load i18n geoluminate %} {% endcomment %}
+{% comment %}
 
 {% block content %}
 {{ object.get_status_display }}
-{% endblock %}
+{% endblock %} {% endcomment %}
+{% load i18n geoluminate %}
+{% load cms_tags %}
 
+{% render_model_block object "status" %}
+<div class="card">
+  <div class="card-body">
+    <h6 class="card-title">{% trans "Status" %}</h6>
+    <div class="card-text small">{{ object.get_status_display }}</div>
+  </div>
+</div>
+{% endrender_model_block %}

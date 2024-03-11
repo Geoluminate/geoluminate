@@ -1,26 +1,17 @@
-{% extends "reviews/base.html" %}
-{% load static i18n formsetify sekizai_tags geoluminate autotables %}
+{% extends "geoluminate/base/base_detail.html" %}
+{% load static i18n formsetify sekizai_tags geoluminate %}
 
-{% block content %}
-
-<div class='container'>
-  <h1 class='display-1'>{{object}}</h1>
-
-  <p>{{object.dataset}}</p>
-  <p>{{object.literature}}</p>
-  <p>{{object.get_status_display }}</p>
-
-
+{% block sidebar_top %}
   <div>
     <form method='post'>
       {% csrf_token %}
-      <button formaction="{% url "review:delete" pk=object.id %}" class='btn btn-warning'>{% trans "Delete" %}</button>
-      <button formaction="{% url "review:delete" pk=object.id %}" class='btn btn-secondary'>{% trans "Reject" %}</button>
-      <button formaction="{% url "review:submit" pk=object.id %}" class='btn btn-success'>{% trans "Submit completed review" %}</button>
-      <button formaction="{% url "review:accept" pk=object.id %}" class='btn btn-success'>{% trans "Approve" %}</button>
+      {% comment %} <button formaction="{% url "review:delete" pk=object.id %}" class='btn btn-warning'>{% trans "Delete" %}</button> {% endcomment %}
+      {% comment %} <button formaction="{% url "review:delete" pk=object.id %}" class='btn btn-secondary'>{% trans "Reject" %}</button> {% endcomment %}
+      <button formaction="{% url "review:submit" pk=object.id %}" class='btn btn-success'>
+        {% trans "Submit completed review" %}
+      </button>
+      {% comment %} <button formaction="{% url "review:accept" pk=object.id %}" class='btn btn-success'>{% trans "Approve" %}</button> {% endcomment %}
     </form>
   </div>
-
-</div>
-
-{% endblock %}
+  <p>{{ object.literature }}</p>
+{% endblock sidebar_top %}

@@ -1,44 +1,28 @@
-{% load static i18n formsetify %}
+{% load i18n formsetify %}
 
-<div hx-target='this' hx-swap="outerHTML" hx-on::load="$('.form-select').djangoSelect2()">
-
-{% if editing %}
-<link rel="stylesheet" href="{% static "client_side_image_cropping/croppie.css" %}">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="{% static "client_side_image_cropping/croppie.min.js" %}"></script>
-<script src="{% static "client_side_image_cropping/cropping_widget.js" %}"></script>
-
-{{ form.media.css }}
-
-
-{% comment %} <form hx-post="{% url "contributor:edit" uuid=object.uuid %}" hx-trigger='submit'> {% endcomment %}
-<form hx-post="{{ request.path }}" hx-trigger='submit'>
- {{ form.as_p }} 
-  <button class="btn btn-secondary" hx-get="{% url "contributor:edit" uuid=object.uuid %}">
-    <i class='fa-solid fa-ban'></i>
-    {% trans "Cancel" %}
-  </button>
-  <button class="btn btn-success" type="submit">
-    <i class='fa-solid fa-floppy-disk'></i>
-    {% trans "Save" %}
-  </button>
-</form>
-{{ form.media.js }}
-<script>
-  $( function(){
-    $('.form-select').djangoSelect2()
-
-  })
-</script>
-
-
-
-{% else %}
-
-
-  {% include 'contributors/sidebar.html' %}
-
-
-
-{% endif %}
+<div id="{{ request.htmx.target }}"
+     class="card"
+     hx-target='this'
+     hx-swap="outerHTML"
+     hx-select="#{{ request.htmx.target }}">
+  {{ form.media.css }}
+  <div class='card-body'>
+    {% comment %} <django-formset>
+      {% render_form form %}
+    </django-formset> {% endcomment %}
+    <form id='targetForm' hx-post="{{ request.get_full_path }}" hx-trigger='submit'>
+      {{ form.as_p }}
+    </form>
+    {{ form.media.js }}
+  </div>
+  <div class='card-footer'>
+    <button class="btn btn-secondary" hx-get="{% url "contributor:edit" uuid=object.uuid %}">
+      <i class='fa-solid fa-ban'></i>
+      {% trans "Cancel" %}
+    </button>
+    <button class="btn btn-success" type="submit" form="targetForm">
+      <i class='fa-solid fa-floppy-disk'></i>
+      {% trans "Save" %}
+    </button>
+  </div>
 </div>

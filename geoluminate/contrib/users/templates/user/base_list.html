@@ -2,37 +2,29 @@
 {% load i18n static geoluminate %}
 
 {% block modals %}
-<div class="modal fade" id="createEntityModal" tabindex="-1" aria-labelledby="createEntityModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <django-formset endpoint="{{ request.path }}" csrf-token="{{ csrf_token }}">
-        <div class="modal-header">
-          <h5 class="modal-title" id="createEntityModalLabel">
-            {% trans "Create new project" %}
-          </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">{{ form }}</div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-success" df-click="submit({add: true}) -> proceed">{% trans "Create" %}</button>
-        </div>
-      </django-formset>
+  <div class="modal fade"
+       id="createEntityModal"
+       tabindex="-1"
+       aria-labelledby="createEntityModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <django-formset endpoint="{{ request.path }}" csrf-token="{{ csrf_token }}">
+          <div class="modal-header">
+            <h5 class="modal-title" id="createEntityModalLabel">{% trans "Create new project" %}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">{{ form }}</div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" df-click="submit({add: true}) -> proceed">{% trans "Create" %}</button>
+          </div>
+        </django-formset>
+      </div>
     </div>
   </div>
-</div>
-{% endblock %}
+{% endblock modals %}
 
-{% block scripts %}
-<script src="{% static "el-pagination/js/el-pagination.js" %}"></script>
-<script>
-  $.endlessPaginate({
-  {% comment %} paginateOnScroll: true, {% endcomment %}
-  {% comment %} paginateOnScrollMargin: 1200, {% endcomment %}
-  onCompleted: function(context, fragment) {
-    console.log('Label:', $(this).text());
-    console.log('URL:', context.url);
-    console.log('Querystring key:', context.key);
-    {% comment %} console.log('Fragment:', fragment); {% endcomment %}
-}
-});</script>
-{% endblock scripts %}
+{% block javascript %}
+  <script src="{% static "el-pagination/js/el-pagination.js" %}" defer></script>
+  {{ block.super }}
+{% endblock javascript %}

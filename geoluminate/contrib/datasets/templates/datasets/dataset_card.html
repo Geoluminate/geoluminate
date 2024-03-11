@@ -2,9 +2,15 @@
 {% load i18n contributor_tags %}
 
 {% block subtitle %}
-{% with obj.get_contributors|role:"ProjectLeader" as contributors %}
-{% if contributors %}
-  {% include "contributors/names_list.html" %} + {{ obj.get_contributors|length }} Others 
-{% endif %}
+  {% with obj.get_contributors|role:"ProjectLeader" as contributors %}
+    {% if contributors %}
+      {% include "contributors/names_list.html" %}
+      <span data-bs-toggle="popover"
+            data-bs-placement="bottom"
+            data-bs-title="{% trans "All Contributors" %}"
+            {% comment %}
+            data-bs-content="{% for c in %}{% endfor %}">+ {{ obj.get_contributors|length }} Others</span> {% endcomment %}
+    data-bs-content="">+ {{ obj.get_contributors|length }} Others</span>
+  {% endif %}
 {% endwith %}
 {% endblock %}

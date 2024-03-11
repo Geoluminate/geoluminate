@@ -1,0 +1,24 @@
+{% extends "geoluminate/base/base_list.html" %}
+{% load i18n %}
+
+{% block description %}
+  <p>
+    {% blocktrans %}
+    The following literature may contain data that are relevant to the {{ geoluminate.database.name }} but have not yet been added. You can contribute to our community by selecting an item to review, assessing any relevant data, then submitting a request to add the data to the portal. All contributions will be appropriately acknowledged in the next major database release. Find out more about the release cycle of the {{ geoluminate.database.name }} and how your contributions make a difference.
+    {% endblocktrans %}
+  </p>
+  <h5>{% trans "Progress" %}</h5>
+  <div class="progress-stacked mb-3">
+    {% for label, info in summary.items %}
+      <div class="progress"
+           role="progressbar"
+           aria-label="{{ label }}"
+           aria-valuenow="{{ info.count }}"
+           aria-valuemin="0"
+           aria-valuemax="{{ total }}"
+           style="width: {{ info.percent }}%">
+        <div class="progress-bar {{ label|slugify }}"></div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

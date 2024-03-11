@@ -2,7 +2,7 @@
 {% spaceless %}{% with obj.profile as contributor %}
 <div class="entry-list-item col-{{col}} {% if col < 12 %} px-2{% endif %} {% for role in obj.roles %} {{role}}{% endfor %}">
 
-<div class="card border-bottom h-100">
+<div class="card border-bottom h-100 mb-2">
   <div class="card-body">
     <div class='row mx-auto'>
       <div class='col-auto px-0'>{% avatar contributor class='rounded-circle' %}</div>

@@ -15,7 +15,7 @@
   </formats>{% block publisher %}
   <publisher xml:lang="en"></publisher>{% endblock %}
   <publicationYear>{% now "Y" %}</publicationYear> {% comment %} not sure about this {% endcomment %}
-  
+
   {% comment %} DO WE SUPPORT MULTIPLE TITLES IN THE FUTURE? {% endcomment %}
   <titles>
     <title xml:lang="en">{{ dataset.title }}</title>
@@ -103,7 +103,7 @@
 
   {% comment %} FUNDING {% endcomment %}
   {% comment %} dataset.funding.all is a many to many to the organization model {% endcomment %}
-  <fundingReferences>{% for funder in dataset.funding.all %} 
+  <fundingReferences>{% for funder in dataset.funding.all %}
     <fundingReference>
       <funderName>{{ funder.name }}</funderName>{% for identifier in funder.profile.identifiers %}
       <funderIdentifier funderIdentifierType="{{ identifier.scheme }}">{{ identifier.identifier }}</funderIdentifier>{% endfor %}{% with funder.award as award %}

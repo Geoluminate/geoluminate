@@ -1,75 +1,34 @@
-{% extends 'geoluminate/plugins/page.html' %}
-{% load i18n formsetify %}
+{% extends "geoluminate/base/base_detail.html" %}
+{% load i18n sekizai_tags %}
+{% load static i18n formsetify cms_tags geoluminate sekizai_tags activity_tags %}
 
+{% block css %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static "client_side_image_cropping/croppie.css" %}" />
+{% endblock css %}
 
-{% block content %}
-<div class='container'>
-  <h5>{% trans "Contribution History" %}</h5>
-  <div>
-    <canvas id="myTimeSeriesChart"></canvas>
+{% block sidebar_top %}
+  <div class="text-center">
+    {% render_model_block object "image" %}
+    <img src="{{ object.profile_image }}" class="w-50 rounded-circle mb-2" alt="{{ object }}" />
+    {% comment %} <div class="card text-white">{% avatar object width="100%" class="card-img" %}</div> {% endcomment %}
+  {% endrender_model_block %}
+  <div class="actions d-flex mb-2 justify-content-center">
+    {% follow_button object %}
+    {% share_button object %}
+    <a href="" class="btn btn-sm btn-secondary">
+      <i class="fa-solid fa-envelope"></i>
+      {% trans "Contact" %}
+    </a>
+    {% block actions %}
+    {% endblock actions %}
+
   </div>
 </div>
 {% endblock %}
 
-{% block modals %}
-{{ block.super }}
-<script>
-// Sample data
-var data = {
-  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-  datasets: [
-      {
-          label: 'Line 1',
-          data: [15, 20, 18, 25, 30, 22, 28],
-          borderColor: 'blue',
-          fill: false
-      },
-      {
-          label: 'Line 2',
-          data: [10, 14, 12, 18, 20, 16, 24],
-          borderColor: 'green',
-          fill: false
-      },
-      {
-          label: 'Line 3',
-          data: [5, 8, 7, 10, 12, 9, 14],
-          borderColor: 'red',
-          fill: false
-      }
-  ]
-};
-
-var options = {
-  scales: {
-      x: {
-          display: true,
-          title: {
-              display: true,
-              text: 'Month'
-          }
-      },
-      y: {
-          beginAtZero: true,
-          display: true,
-          title: {
-              display: true,
-              text: 'Value'
-          }
-      }
-  }
-};
-
-var ctx = document.getElementById('myTimeSeriesChart').getContext('2d');
-var myTimeSeriesChart = new Chart(ctx, {
-  type: 'line',
-  data: data,
-  options: options
-});
-
-
-</script>
-
-{% endblock %}
-
-
-
+{% block javascript %}
+  {{ block.super }}
+  <script src="{% static "client_side_image_cropping/croppie.min.js" %}"></script>
+  <script src="{% static "client_side_image_cropping/cropping_widget.js" %}"></script>
+{% endblock javascript %}

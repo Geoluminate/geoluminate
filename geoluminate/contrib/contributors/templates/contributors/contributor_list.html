@@ -1,7 +1,4 @@
 {% extends "geoluminate/base/base_list.html" %}
-
-{% block heading %}GHFDB Contributors{% endblock %}
-
 {% block description %}
-The projects listed here have been created by community members looking to share their past, present and future projects with the community. Creating and sharing projects is a great way to showcase your previous work, update the community on your current research and potentially establish new collaborative partnerships. If you have a project you would like to share, or would just like an easy way to group your related datasets, head to your <a href="{{user.get_absolute_url}}">contributor profile</a> and get started now.
-{% endblock %}
+  The people and organisations listed here have contributed in some way to a dataset that has passed our internal review process and been included in the {{ geoluminate.database.name }}. The contributor profiles presented here aim to promote a sense of community and foster collaboration between active and future members of the portal. All information has either been found through publicly available sources or has been provided by the active community member themselves. If you take issue with any personal information presented here, please <a href="{% url "django_contact_form" %}">contact us</a> directly and we will work with you to resolve the issue.
+{% endblock description %}

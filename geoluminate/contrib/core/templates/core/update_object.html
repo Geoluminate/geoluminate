@@ -3,7 +3,7 @@
 {% if form %}
 
 <form
-  hx-post="{{request.path}}?{{ request.GET.urlencode }}" 
+  hx-post="{{request.path}}?{{ request.GET.urlencode }}"
   hx-target="this"
   hx-swap="outerHTML"
   >

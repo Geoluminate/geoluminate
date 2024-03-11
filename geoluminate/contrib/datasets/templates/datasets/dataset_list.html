@@ -1,1 +1,5 @@
-{% extends "geoluminate/base/list_view.html" %}
+{% extends "geoluminate/base/base_list.html" %}
+
+{% block description %}
+All data accepted into the {{geoluminate.database.name}} belong to a dataset which you can find listed here. By default, only datasets that include <b>quality-assured data</b> that have passed our internal review process are listed. For non-reviewed datasets, you can modify your search in the filter panel but be aware that downloads are typically restricted. If you would like to contribute your own data and be sure they adhere to the quality standards set forth by the {{ geoluminate.governance.name }}, head to your <a href="{{user.get_absolute_url}}">contributor profile</a> and select the "Datasets" tab to get started.
+{% endblock %}

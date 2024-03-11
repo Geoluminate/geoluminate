@@ -1,7 +1,7 @@
-{% comment %} {% extends "geoluminate/components/sidebar/card.html" %} {% endcomment %}
-{% load i18n geoluminate cms_tags %}
+{% extends "geoluminate/components/sidebar/card.html" %}
+{% load i18n geoluminate %}
 
-{% render_model_block object "tags" %}
+{% render_model_block object "keywords" %}
 <div class="card">
   <div class="card-body">
     <h6 class="card-title">{% trans "Keywords" %}</h6>

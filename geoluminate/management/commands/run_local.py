@@ -10,3 +10,4 @@ class Command(BaseCommand):
         call_command("migrate")
         call_command("init_superuser")
         call_command("runserver", "0.0.0.0:8000")
+        # call_command("runserver_plus", "0.0.0.0:8000")

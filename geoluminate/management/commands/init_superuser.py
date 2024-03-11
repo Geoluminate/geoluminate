@@ -7,13 +7,14 @@ from django.core.management.base import BaseCommand
 class Command(BaseCommand):
     def handle(self, *args, **options):
         User = get_user_model()
+        print("Checking for existing users...")
         if not User.objects.exists():
             user = settings.ADMINS[0]
             email = user[1]
             password = "admin"  # noqa: S105
             print(
-                f"Creating superuser account for {email} with password 'admin'. Be sure to change this as soon as"
-                " possible!"
+                f"No users found. Creating superuser account for {email} with password 'admin'. Be sure to change this"
+                " as soon as possible!"
             )
             superuser = User.objects.create_superuser(
                 email=email,
@@ -22,6 +23,8 @@ class Command(BaseCommand):
                 last_name="User",
             )
             superuser.save()
+
+            # create user profile
 
             # verify the users email address without send a confirmation email
             email = EmailAddress.objects.create(user=superuser, email=email, verified=True, primary=True)

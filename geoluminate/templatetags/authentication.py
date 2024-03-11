@@ -1,9 +1,5 @@
 from allauth.account.models import EmailAddress
-from allauth.utils import get_form_class
-from crispy_forms.utils import render_crispy_form
 from django import template
-from django.conf import settings
-from django.template.context_processors import csrf
 
 register = template.Library()
 

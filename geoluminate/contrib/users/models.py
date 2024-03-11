@@ -5,9 +5,6 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from invitations.base_invitation import AbstractBaseInvitation
 
-from geoluminate.contrib.contributors.managers import PersonalManager
-from geoluminate.contrib.contributors.models import Contributor
-
 from .managers import UserManager
 
 USER_OPTIONS = {

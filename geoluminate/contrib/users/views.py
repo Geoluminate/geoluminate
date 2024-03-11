@@ -1,10 +1,7 @@
 from allauth.account.forms import AddEmailForm, ChangePasswordForm
 from allauth.account.models import EmailAddress
-from allauth.socialaccount.forms import DisconnectForm
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
-from django.utils.decorators import method_decorator
 from django.utils.translation import gettext as _
 from django.views.generic import RedirectView, TemplateView
 from formset.views import FormView

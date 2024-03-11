@@ -2,8 +2,6 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from django.forms.models import ModelForm
-from django.utils.translation import gettext_lazy as _
-from entangled.forms import EntangledModelFormMixin
 from formset.collection import FormCollection
 
 from geoluminate.contrib.contributors.forms import UserProfileForm
@@ -23,10 +21,7 @@ class UserForm(FormCollection):
 class UserAdminCreationForm(UserCreationForm):
     class Meta(UserCreationForm):
         model = get_user_model()
-        fields = [
-            "email",
-            "password",
-        ]
+        fields = ["email", "password"]
 
 
 class UserAdminChangeForm(UserChangeForm):

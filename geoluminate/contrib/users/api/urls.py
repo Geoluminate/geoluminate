@@ -1,10 +1,7 @@
 from django.urls import include, path
-from drf_spectacular.views import SpectacularAPIView
 from rest_framework_nested import routers
 
 from .viewsets import (
-    ContributorDatasetViewset,
-    ContributorProjectViewset,
     ProfileViewset,
 )
 

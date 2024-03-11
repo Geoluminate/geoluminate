@@ -8,4 +8,4 @@ class UsersConfig(AppConfig):
     verbose_name = _("Users")
 
     def ready(self):
-        from . import receivers  # noqa
+        from . import receivers  # noqa: F401

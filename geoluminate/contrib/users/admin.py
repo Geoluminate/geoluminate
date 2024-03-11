@@ -5,8 +5,6 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 from geoluminate.contrib.users.models import User
 
-from ..contributors.models import Personal
-
 # from jazzmin import templatetags
 from .forms import UserAdminChangeForm, UserAdminCreationForm
 
@@ -24,8 +22,8 @@ class AccountEmailInline(admin.StackedInline):
     extra = 0
 
 
-class ProfileInline(admin.StackedInline):
-    model = Personal
+# class ProfileInline(admin.StackedInline):
+# model = Personal
 
 
 @admin.register(User)
@@ -33,7 +31,7 @@ class UserAdmin(BaseUserAdmin):
     # The forms to add and change user instances
     form = UserAdminChangeForm
     add_form = UserAdminCreationForm
-    inlines = [ProfileInline, AccountEmailInline, SocialAccountInline]
+    inlines = [AccountEmailInline, SocialAccountInline]
     list_display = [
         "first_name",
         "last_name",

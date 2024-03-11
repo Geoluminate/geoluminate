@@ -1,7 +1,11 @@
 from django.contrib import admin
 
 from geoluminate.contrib.contributors.admin import GenericContributionInline
-from geoluminate.contrib.core.admin import BaseAdmin, DescriptionInline, FuzzyDatesInline
+from geoluminate.contrib.core.admin import (
+    BaseAdmin,
+    DescriptionInline,
+    FuzzyDatesInline,
+)
 
 from .models import Dataset
 

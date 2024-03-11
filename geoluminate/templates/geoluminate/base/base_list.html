@@ -4,12 +4,12 @@
 
 {% block css %}
   {{ block.super }}
-  {% render_bundle 'detail' 'css' %}
+  {% render_bundle 'detail' 'css' 'GEOLUMINATE' %}
 {% endblock css %}
 
 {% block javascript %}
   {{ block.super }}
-  {% render_bundle 'list' 'js' attrs="defer" %}
+  {% render_bundle 'list' 'js' 'GEOLUMINATE' attrs="defer" %}
   <script src="{% static "el-pagination/js/el-pagination.js" %}" defer></script>
 {% endblock javascript %}
 

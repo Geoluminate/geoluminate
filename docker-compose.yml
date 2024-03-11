@@ -2,8 +2,8 @@ version: '3'
 name: geoluminate
 
 volumes:
-  postgres_data: {}
-  postgres_data_backups: {}
+  postgres: {}
+  postgres_backups: {}
   media: {}
 
 services:
@@ -40,8 +40,8 @@ services:
       dockerfile: ./compose/postgres/Dockerfile
     image: production_postgres
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - postgres_data_backups:/backups
+      - postgres:/var/lib/postgresql/data
+      - postgres_backups:/backups
     env_file:
       - ./.envs/.local/.postgres
     logging:

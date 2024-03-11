@@ -57,7 +57,9 @@ class Abstract(models.Model):
         null=True,
     )
     keywords = TaggableConcepts(
-        verbose_name=_("keywords"), help_text=_("Controlled keywords for enhanced discoverability"), blank=True
+        verbose_name=_("keywords"),
+        help_text=_("Controlled keywords for enhanced discoverability"),
+        blank=True,
     )
     # I think we should get rid of this in favour of th keywords field
     tags = models.MultiSelectField(
@@ -163,11 +165,11 @@ class Abstract(models.Model):
         return self.projects.all()
 
     def get_metadata_quality(self):
-        return random.randint(0, 100)
+        return random.randint(0, 100)  # noqa: S311
         # return self.metadata_quality
 
     def get_data_quality(self):
-        return random.randint(0, 100)
+        return random.randint(0, 100)  # noqa: S311
         # return self.data_quality
 
     @cached_property

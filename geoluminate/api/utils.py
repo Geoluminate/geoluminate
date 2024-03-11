@@ -104,7 +104,7 @@ def api_doc(model, path):
 
         >>> from myapp.models import Book
         >>> book = Book.objects.first()
-        >>> api_doc(book, 'detail')
+        >>> api_doc(book, "detail")
         This will attempt to render the template "api/docs/book_detail.md".
         If the template exists, it will return the rendered template as a string.
         If the template does not exist, it will log a warning and return an empty string.

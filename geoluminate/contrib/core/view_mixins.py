@@ -121,7 +121,6 @@ class ListPluginMixin(ListMixin):
 
 
 class GeoluminatePermissionMixin:
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["user_has_permission"] = {

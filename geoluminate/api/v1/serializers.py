@@ -33,7 +33,10 @@ class MeasurementSerializer(BaseSerializerMixin, serializers.ModelSerializer):
 
     class Meta(MetaMixin):
         fields = "__all__"
-        extra_kwargs = {"details": {"lookup_field": "uuid"}, "sample": {"lookup_field": "uuid"}}
+        extra_kwargs = {
+            "details": {"lookup_field": "uuid"},
+            "sample": {"lookup_field": "uuid"},
+        }
 
 
 __all__ = [

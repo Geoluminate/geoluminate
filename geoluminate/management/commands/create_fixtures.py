@@ -5,7 +5,6 @@ from geoluminate.factories import (
     OrganizationalContributorFactory,
     PersonalContributorFactory,
     ProjectFactory,
-    UnclaimedContributorFactory,
 )
 
 
@@ -41,7 +40,7 @@ class Command(BaseCommand):
                 print(f"Creating {orgs} organizational contributors...")
                 orgs = OrganizationalContributorFactory.create_batch(orgs)
 
-                unclaimed = UnclaimedContributorFactory.create_batch(10)
+                # unclaimed = UnclaimedContributorFactory.create_batch(10)
 
                 # create projects. 15 projects (default) creates ~1000 related samples
                 print(f"Creating {projects} projects...")

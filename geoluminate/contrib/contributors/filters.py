@@ -28,7 +28,11 @@ class ListFilterTop(df.FilterSet):
 
 class ContributorFilter(ListFilterTop):
     type = df.ChoiceFilter(
-        choices=[("active", "Active"), ("persons", "Persons"), ("organizations", "Organizations")],
+        choices=[
+            ("active", "Active"),
+            ("persons", "Persons"),
+            ("organizations", "Organizations"),
+        ],
         label=_("Type"),
         method="filter_type",
         widget=forms.Select,

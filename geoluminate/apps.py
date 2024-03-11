@@ -4,7 +4,6 @@ from django.utils.module_loading import autodiscover_modules
 
 
 def render_static_assets():
-
     from webpack_loader.utils import get_loader
 
     loader = get_loader("DEFAULT")

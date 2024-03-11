@@ -45,7 +45,10 @@ class NestedDatasetSerializer(BaseNestedSerializer):
     class Meta:
         model = Dataset
         exclude = ["options", "visibility"]
-        extra_kwargs = {"details": {"lookup_field": "uuid"}, "project": {"lookup_field": "uuid"}}
+        extra_kwargs = {
+            "details": {"lookup_field": "uuid"},
+            "project": {"lookup_field": "uuid"},
+        }
 
 
 class NestedLocationSerializer(BaseNestedSerializer):
@@ -59,7 +62,10 @@ class NestedLocationSerializer(BaseNestedSerializer):
 
         # extra_kwargs = {"url": {"lookup_field": "uuid"}}
         # extra_kwargs = {"details": {"lookup_field": "uuid"}, "samples": {"lookup_field": "uuid"}}
-        extra_kwargs = {"details": {"lookup_field": "uuid"}, "dataset": {"lookup_field": "uuid"}}
+        extra_kwargs = {
+            "details": {"lookup_field": "uuid"},
+            "dataset": {"lookup_field": "uuid"},
+        }
 
 
 class NestedSampleSerializer(BaseNestedSerializer):
@@ -72,7 +78,10 @@ class NestedSampleSerializer(BaseNestedSerializer):
         model = Sample
         # fields = "__all__"
         exclude = ["created"]
-        extra_kwargs = {"details": {"lookup_field": "uuid"}, "dataset": {"lookup_field": "uuid"}}
+        extra_kwargs = {
+            "details": {"lookup_field": "uuid"},
+            "dataset": {"lookup_field": "uuid"},
+        }
 
 
 class NestedMeasurementSerializer(BaseNestedSerializer):
@@ -89,7 +98,10 @@ class NestedMeasurementSerializer(BaseNestedSerializer):
 
     class Meta:
         fields = "__all__"
-        extra_kwargs = {"details": {"lookup_field": "uuid"}, "sample": {"lookup_field": "uuid"}}
+        extra_kwargs = {
+            "details": {"lookup_field": "uuid"},
+            "sample": {"lookup_field": "uuid"},
+        }
 
 
 class NestedSampleGeojsonSerializer(GeoFeatureModelSerializer):
@@ -106,7 +118,10 @@ class NestedSampleGeojsonSerializer(GeoFeatureModelSerializer):
         geo_field = "geom"
         id_field = "uuid"
         fields = ["uuid", "type", "title", "geom"]
-        extra_kwargs = {"details": {"lookup_field": "uuid"}, "dataset": {"lookup_field": "uuid"}}
+        extra_kwargs = {
+            "details": {"lookup_field": "uuid"},
+            "dataset": {"lookup_field": "uuid"},
+        }
 
 
 class NestedLocationGeojsonSerializer(NestedLocationSerializer, GeoFeatureModelSerializer):

@@ -107,7 +107,11 @@ class GeoluminateTable(DataTable):
         try:
             model_field = self.model._meta.get_field(field)
             help_text = getattr(model_field, "help_text", None)
-            is_numeric = model_field.get_internal_type() in ["IntegerField", "FloatField", "DecimalField"]
+            is_numeric = model_field.get_internal_type() in [
+                "IntegerField",
+                "FloatField",
+                "DecimalField",
+            ]
         except FieldDoesNotExist:
             help_text = None
 

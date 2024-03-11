@@ -23,7 +23,6 @@ class SpecimenType(LocalConceptScheme):
 
 
 class DescriptionTypes(ConceptSchemeBuilder):
-
     Preparation = {
         "SKOS.prefLabel": _("Preparation"),
         "SKOS.definition": _("The process of preparing a sample for analysis."),

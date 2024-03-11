@@ -7,7 +7,11 @@ from geoluminate.utils import get_measurement_models
 from . import views
 
 urlpatterns = [
-    re_path(r"^update/(?P<content_type_id>[^/]+)/(?P<object_id>[^/]+)/", views.update_object, name="update_object"),
+    re_path(
+        r"^update/(?P<content_type_id>[^/]+)/(?P<object_id>[^/]+)/",
+        views.update_object,
+        name="update_object",
+    ),
     path(
         "activity/",
         include(
@@ -48,13 +52,21 @@ urlpatterns = [
                     views.DescriptionCreateView.as_view(),
                     name="description-add",
                 ),
-                path("description/<dtype>/", views.DescriptionDetailView.as_view(), name="description-detail"),
+                path(
+                    "description/<dtype>/",
+                    views.DescriptionDetailView.as_view(),
+                    name="description-detail",
+                ),
                 path(
                     "description/<dtype>/update/",
                     views.DescriptionUpdateView.as_view(),
                     name="description-edit",
                 ),
-                path("description/<dtype>/delete/", views.DescriptionDeleteView.as_view(), name="description-edit"),
+                path(
+                    "description/<dtype>/delete/",
+                    views.DescriptionDeleteView.as_view(),
+                    name="description-edit",
+                ),
             ]
         ),
     ),

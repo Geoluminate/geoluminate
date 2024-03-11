@@ -37,7 +37,11 @@ class Account(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context["can_add_email"] = EmailAddress.objects.can_add_email(self.request.user)
         context["forms"] = [
-            (_("Password Change"), "account/password_change.html", ChangePasswordForm()),
+            (
+                _("Password Change"),
+                "account/password_change.html",
+                ChangePasswordForm(),
+            ),
             (_("Email"), "account/email.html", AddEmailForm()),
         ]
         return context

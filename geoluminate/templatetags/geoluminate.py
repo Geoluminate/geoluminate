@@ -213,7 +213,10 @@ def content_type(obj):
 @register.simple_tag
 def update_object(instance, fields):
     content_type = ContentType.objects.get_for_model(instance).pk
-    url = reverse("update_object", kwargs={"content_type_id": content_type, "object_id": instance.pk})
+    url = reverse(
+        "update_object",
+        kwargs={"content_type_id": content_type, "object_id": instance.pk},
+    )
     return f"{url}?fields={fields}"
 
 
@@ -244,5 +247,8 @@ def description_url(instance, dtype=None):
     model_name = instance._meta.model_name
     object_type = type_map.get(model_name)
     if dtype:
-        return reverse("description-edit", kwargs={"uuid": instance.uuid, "object_type": object_type, "dtype": dtype})
+        return reverse(
+            "description-edit",
+            kwargs={"uuid": instance.uuid, "object_type": object_type, "dtype": dtype},
+        )
     return reverse("description-add", kwargs={"uuid": instance.uuid, "object_type": object_type})

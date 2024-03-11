@@ -109,7 +109,7 @@ def dataset_from_literature(literature):
     """
 
     with transaction.atomic():
-        license = License.objects.get(name="CC BY 4.0")
+        license = License.objects.get(name="CC BY 4.0")  # noqa: A001
         # initialise a new dataset object
         dataset = Dataset.objects.create(
             title=literature.title,

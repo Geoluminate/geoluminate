@@ -43,11 +43,16 @@ LOCKDOWN_ENABLED = False
 
 # get the path to the webpack-stats.json file
 
-WEBPACK_STATS_FILE = Path(geoluminate.conf.__file__).parent / "webpack-stats.json"
 
 
 WEBPACK_LOADER = {
-    "DEFAULT": {
+    # "DEFAULT": {
+    #     "CACHE": not DEBUG,
+    #     "STATS_FILE": Path(geoluminate.conf.__file__).parent / "webpack-stats.json",
+    #     "POLL_INTERVAL": 0.1,
+    #     "IGNORE": [r".+\.hot-update.js", r".+\.map"],
+    # },
+    "GEOLUMINATE": {
         "CACHE": not DEBUG,
         "STATS_FILE": Path(geoluminate.conf.__file__).parent / "webpack-stats.json",
         "POLL_INTERVAL": 0.1,

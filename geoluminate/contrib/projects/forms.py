@@ -44,7 +44,8 @@ class ProjectForm(ModelForm):
 
     title = forms.CharField(help_text=_("Give your new project a meaningful name"))
     status = forms.ChoiceField(
-        choices=Project.STATUS_CHOICES.choices, help_text=_("What is the current status of this project?")
+        choices=Project.STATUS_CHOICES.choices,
+        help_text=_("What is the current status of this project?"),
     )
 
     class Meta:

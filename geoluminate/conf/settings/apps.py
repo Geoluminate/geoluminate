@@ -87,7 +87,7 @@ GEOLUMINATE_APPS = [
     "crispy_forms",
     "crispy_bootstrap5",
     # some other useful apps that are required by the default installation
-    "sortedm2m",  # sortable m2m relationships
+    # "sortedm2m",  # sortable m2m relationships
     # "django_htmx",  # context processor for dealing with htmx requests
     "django_celery_beat",  # celery based task manager
     "meta",  # for seo optimization

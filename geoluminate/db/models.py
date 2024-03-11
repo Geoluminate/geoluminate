@@ -66,10 +66,14 @@ class Model(ModelMeta, models.Model, metaclass=GeoluminateMetaClass):
     )
     # id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, verbose_name="PID", primary_key=True)
     created = models.DateTimeField(
-        auto_now_add=True, verbose_name="Created", help_text="When this record was created."
+        auto_now_add=True,
+        verbose_name="Created",
+        help_text="When this record was created.",
     )
     modified = models.DateTimeField(
-        auto_now=True, verbose_name="Modified", help_text="When this record was last modified."
+        auto_now=True,
+        verbose_name="Modified",
+        help_text="When this record was last modified.",
     )
 
     tracker = FieldTracker()

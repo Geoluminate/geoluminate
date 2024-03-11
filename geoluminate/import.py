@@ -23,7 +23,6 @@ SAMPLE_FIELDS = {
 
 
 class GeoluminateImporter:
-
     def __init__(self, file_obj):
         self.obj = file_obj
         self.df = pd.DataFrame(file_obj)
@@ -36,6 +35,7 @@ class GeoluminateImporter:
         dataset = self.save_dataset_data()
         sample = self.save_sample_data()
         measurement = self.save_measurement_data()
+        print(project, dataset, sample, measurement)
 
     def save_project_data(self, row):
         # go through PROJECT_FIELDS and extract mapped data from the dataframe row

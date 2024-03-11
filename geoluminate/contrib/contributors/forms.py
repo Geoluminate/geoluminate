@@ -14,7 +14,13 @@ from .models import Contribution, Contributor
 class MultiTagForm(forms.Form):
     interests = ControlledMultipleTagField(
         choices=[
-            (i, _(i)) for i in ["GIS", "Remote Sensing", "Geospatial Data Science", "Geospatial Data Engineering"]
+            (i, _(i))
+            for i in [
+                "GIS",
+                "Remote Sensing",
+                "Geospatial Data Science",
+                "Geospatial Data Engineering",
+            ]
         ],
         widget=SelectizeMultiple(),
     )
@@ -66,7 +72,13 @@ class UserProfileForm(ModelForm):
     )
     interests = ControlledMultipleTagField(
         choices=[
-            (i, _(i)) for i in ["GIS", "Remote Sensing", "Geospatial Data Science", "Geospatial Data Engineering"]
+            (i, _(i))
+            for i in [
+                "GIS",
+                "Remote Sensing",
+                "Geospatial Data Science",
+                "Geospatial Data Engineering",
+            ]
         ],
         widget=Select2MultipleWidget,
     )

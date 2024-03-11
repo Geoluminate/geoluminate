@@ -18,5 +18,9 @@ urlpatterns = [
 
 contribution_patterns = [
     path("contributor/<uuid:contributor>/", ContributionEditView.as_view(), name="edit"),
-    path("contributor/add/", ContributionEditView.as_view(extra_context={"add": True}), name="add"),
+    path(
+        "contributor/add/",
+        ContributionEditView.as_view(extra_context={"add": True}),
+        name="add",
+    ),
 ]

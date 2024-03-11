@@ -88,7 +88,12 @@ SPECTACULAR_SETTINGS = {
         "drf_orjson_renderer.renderers.ORJSONRenderer",
     ],
     # Tools that generate code samples can use SERVERS to point to the correct domain
-    "SERVERS": [{"url": GEOLUMINATE["application"]["domain"], "description": "Production server"}],
+    "SERVERS": [
+        {
+            "url": GEOLUMINATE["application"]["domain"],
+            "description": "Production server",
+        }
+    ],
     # 'ENUM_NAME_OVERRIDES': {
     #     "TCorrTop/TCorrBot": "database.choices.TempCorrectionMethod",
     #     "TMethodTop/TMethodBot": "database.choices.TempMethod",

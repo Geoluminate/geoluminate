@@ -56,7 +56,10 @@ class SampleGeojsonSerializer(GeoFeatureModelSerializer):
         geo_field = "geom"
         id_field = "uuid"
         fields = ["uuid", "type", "title", "geom"]
-        extra_kwargs = {"details": {"lookup_field": "uuid"}, "dataset": {"lookup_field": "uuid"}}
+        extra_kwargs = {
+            "details": {"lookup_field": "uuid"},
+            "dataset": {"lookup_field": "uuid"},
+        }
 
 
 class LocationGeojsonSerializer(LocationSerializer, GeoFeatureModelSerializer):

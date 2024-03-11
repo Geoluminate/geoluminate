@@ -82,7 +82,8 @@ def csljson_to_contributor(csljson_author):
     if csljson_author.get("ORCID"):
         # try to get the contributor by their ORCID
         contributor = Contributor.objects.filter(
-            identifiers__scheme="ORCID", identifiers__identifier=csljson_author.get("ORCID")
+            identifiers__scheme="ORCID",
+            identifiers__identifier=csljson_author.get("ORCID"),
         ).first()
 
         if contributor:

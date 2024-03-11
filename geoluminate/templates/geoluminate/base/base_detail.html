@@ -11,16 +11,16 @@
 
 {% block css %}
   {{ block.super }}
-  {% comment %} {% render_bundle 'datatables' 'css' %} {% endcomment %}
-  {% render_bundle 'detail' 'css' %}
+  {% comment %} {% render_bundle 'datatables' 'css' 'GEOLUMINATE' %} {% endcomment %}
+  {% render_bundle 'detail' 'css' 'GEOLUMINATE' %}
   <link rel="stylesheet" type="text/css" href="{% static 'fluent_comments/css/ajaxcomments.css' %}" />
   {% comment %} <link rel="stylesheet" href="{% static "auto_datatables/css/auto-datatable.css" %}" /> {% endcomment %}
 {% endblock css %}
 
 {% block javascript %}
   {{ block.super }}
-  {% comment %} {% render_bundle 'datatables' 'js' %} {% endcomment %}
-  {% render_bundle 'detail' 'js' attrs="defer" %}
+  {% comment %} {% render_bundle 'datatables' 'js' 'GEOLUMINATE' %} {% endcomment %}
+  {% render_bundle 'detail' 'js' 'GEOLUMINATE' attrs="defer" %}
   <script type="text/javascript" src="{% static 'fluent_comments/js/ajaxcomments.js' %}" defer></script>
   <script src="{% static "el-pagination/js/el-pagination.js" %}" defer></script>
   {% comment %} <script defer>

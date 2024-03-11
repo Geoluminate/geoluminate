@@ -10,7 +10,12 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView
 from django_filters.views import FilterView
 
-from geoluminate.contrib.core.view_mixins import BaseMixin, GeoluminatePermissionMixin, HTMXMixin, ListFilterMixin
+from geoluminate.contrib.core.view_mixins import (
+    BaseMixin,
+    GeoluminatePermissionMixin,
+    HTMXMixin,
+    ListFilterMixin,
+)
 
 GEOLUMINATE = settings.GEOLUMINATE
 
@@ -42,7 +47,10 @@ class BaseTableView(BaseMixin, AutoTableMixin, TemplateView):
     def get_table_url(self):
         if self.table_view_name and self.kwargs.get("uuid"):
             model_name = self.model._meta.model_name
-            return reverse(self.table_view_name, kwargs={f"{model_name}_uuid": self.kwargs.get("uuid")})
+            return reverse(
+                self.table_view_name,
+                kwargs={f"{model_name}_uuid": self.kwargs.get("uuid")},
+            )
         return super().get_table_url()
 
 

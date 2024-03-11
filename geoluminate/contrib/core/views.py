@@ -160,7 +160,9 @@ class DescriptionBase(LoginRequiredMixin):
 
     def get_object(self, queryset=None):
         return Description.objects.filter(
-            content_type=self.ctype, object_id=self.content_object.id, type=self.kwargs.get("dtype")
+            content_type=self.ctype,
+            object_id=self.content_object.id,
+            type=self.kwargs.get("dtype"),
         ).first()
 
     def get_form_kwargs(self):

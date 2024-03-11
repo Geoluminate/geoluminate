@@ -21,7 +21,10 @@ class OrganisationForm(forms.ModelForm):
     """Form for creating and updating organisations."""
 
     name = forms.ModelChoiceField(
-        queryset=Organization.objects.all(), label=_("Organisation name"), required=False, widget=Selectize()
+        queryset=Organization.objects.all(),
+        label=_("Organisation name"),
+        required=False,
+        widget=Selectize(),
     )
     org_not_found = forms.BooleanField(label=_("I can't find my organisation!"), required=False)
     # ror_search = forms.Textarea(widget=ror.SearchWidget)

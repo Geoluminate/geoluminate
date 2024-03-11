@@ -108,7 +108,11 @@ class DescriptionForm(GenericRelationForm):
         object_id = instance.generic.id
 
         # Create a copy of self.cleaned_data with the updates
-        self.cleaned_data = {**self.cleaned_data, "content_type": ctype, "object_id": object_id}
+        self.cleaned_data = {
+            **self.cleaned_data,
+            "content_type": ctype,
+            "object_id": object_id,
+        }
 
         # pprint.pprint(self.cleaned_data)
         # obj = construct_instance(self, instance)
@@ -223,8 +227,8 @@ class MultiTagFormMixin(metaclass=MultiTagFormMetaclass):
 
     def __init__(self, *args, **kwargs):
         opts = self._meta
-        if "instance" in kwargs and kwargs["instance"]:
-            initial = kwargs["initial"] if "initial" in kwargs else {}
+        if kwargs.get("instance"):
+            initial = kwargs.get("initial", {})
             for field_name in opts.tag_fields:
                 # get form field instance from name
                 field = self.base_fields[field_name]

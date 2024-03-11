@@ -21,7 +21,11 @@ urlpatterns = [
             [
                 path("new/", AddLiteratureView.as_view(), name="literature_create"),
                 path("", LiteratureListView.as_view(), name="literature_list"),
-                path("<pk>/accept/", AcceptLiteratureReview.as_view(), name="accept-literature"),
+                path(
+                    "<pk>/accept/",
+                    AcceptLiteratureReview.as_view(),
+                    name="accept-literature",
+                ),
             ]
         ),
     ),

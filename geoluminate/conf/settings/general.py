@@ -9,7 +9,9 @@ from django.contrib.messages import constants as messages
 # load the geoluminate.yml configuration file
 config = os.getenv("GEOLUMINATE_CONFIG_PATH", os.path.join(BASE_DIR, "geoluminate.yml"))
 
-sys.path.append(os.path.join(BASE_DIR, "project", "schemas"))  # at the bottom of the file
+sys.path.append(
+    os.path.join(BASE_DIR, "project", "schemas")
+)  # at the bottom of the file
 
 
 with open(config) as f:
@@ -18,7 +20,10 @@ with open(config) as f:
 env = environ.Env(
     # set casting, default value
     DEBUG=(bool, False),
-    DJANGO_SECRET_KEY=(str, "HoVcnlU2IqQN1YqvsY7dQ1xtdhLavAeXn1mUEAI0Wu8vkDbodEqRKkJbHyMEQS5F"),
+    DJANGO_SECRET_KEY=(
+        str,
+        "HoVcnlU2IqQN1YqvsY7dQ1xtdhLavAeXn1mUEAI0Wu8vkDbodEqRKkJbHyMEQS5F",
+    ),
     # SHOW_DEBUG_TOOLBAR=(bool, False),
     CACHE=(bool, False),
 )
@@ -51,7 +56,10 @@ SITE_DOMAIN = GEOLUMINATE["application"]["domain"]
 ALLOWED_HOSTS = ["*"]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#admins
-ADMINS = [(admin["name"], admin["email"]) for admin in GEOLUMINATE["application"]["developers"]]
+ADMINS = [
+    (admin["name"], admin["email"])
+    for admin in GEOLUMINATE["application"]["developers"]
+]
 MANAGERS = ADMINS
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#root-urlconf

@@ -142,7 +142,12 @@ class Sample(Abstract):
     )
 
     parent = models.ForeignKey(
-        "self", verbose_name=_("parent"), help_text=_("Parent sample"), blank=True, null=True, on_delete=models.CASCADE
+        "self",
+        verbose_name=_("parent"),
+        help_text=_("Parent sample"),
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE,
     )
     dataset = models.ForeignKey(
         "geoluminate.Dataset",

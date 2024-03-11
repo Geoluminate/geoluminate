@@ -36,11 +36,19 @@ class Contributor(models.Model):
     objects = ContributorManager().as_manager()
 
     user = models.OneToOneField(
-        settings.AUTH_USER_MODEL, related_name="profile", null=True, blank=True, on_delete=models.CASCADE
+        settings.AUTH_USER_MODEL,
+        related_name="profile",
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
     )
 
     organization = models.OneToOneField(
-        "organizations.Organization", related_name="profile", null=True, blank=True, on_delete=models.CASCADE
+        "organizations.Organization",
+        related_name="profile",
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
     )
 
     image = models.ImageField(
@@ -61,7 +69,9 @@ class Contributor(models.Model):
     slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
 
     interests = TaggableManager(
-        _("research interests"), help_text=_("A list of research interests for the contributor."), blank=True
+        _("research interests"),
+        help_text=_("A list of research interests for the contributor."),
+        blank=True,
     )
 
     lang = models.CharField(
@@ -139,7 +149,10 @@ class Contributor(models.Model):
         if isinstance(model, str):
             model = apps.get_model(model)
         return Case(
-            When(contributions__content_type=ContentType.objects.get_for_model(model), then=1),
+            When(
+                contributions__content_type=ContentType.objects.get_for_model(model),
+                then=1,
+            ),
             output_field=IntegerField(),
         )
 
@@ -190,11 +203,20 @@ class Contributor(models.Model):
         data = (
             self.get_related_contributions()
             .values("profile", "object_id")
-            .annotate(id=models.F("profile__id"), label=models.F("profile__name"), image=models.F("profile__image"))
+            .annotate(
+                id=models.F("profile__id"),
+                label=models.F("profile__name"),
+                image=models.F("profile__image"),
+            )
             .values("id", "label", "object_id", "image")
         )
 
-        Concat(F("model__user_first_name"), Value(" "), F("model__user_last_name"), output_field=CharField())
+        Concat(
+            F("model__user_first_name"),
+            Value(" "),
+            F("model__user_last_name"),
+            output_field=CharField(),
+        )
 
         # get unique contributors and count the number of times they appear in the queryset
         nodes_qs = data.values("id", "label", "image").annotate(value=models.Count("id")).distinct()

@@ -75,7 +75,10 @@ class DatasetSerializer(BaseSerializerMixin):
     class Meta:
         model = Dataset
         exclude = ["options", "visibility"]
-        extra_kwargs = {"details": {"lookup_field": "uuid"}, "project": {"lookup_field": "uuid"}}
+        extra_kwargs = {
+            "details": {"lookup_field": "uuid"},
+            "project": {"lookup_field": "uuid"},
+        }
 
     def get_bbox(self, obj):
         return obj.bbox()
@@ -92,7 +95,10 @@ class LocationSerializer(BaseSerializerMixin):
 
         # extra_kwargs = {"url": {"lookup_field": "uuid"}}
         # extra_kwargs = {"details": {"lookup_field": "uuid"}, "samples": {"lookup_field": "uuid"}}
-        extra_kwargs = {"details": {"lookup_field": "uuid"}, "dataset": {"lookup_field": "uuid"}}
+        extra_kwargs = {
+            "details": {"lookup_field": "uuid"},
+            "dataset": {"lookup_field": "uuid"},
+        }
 
 
 class SampleSerializer(BaseSerializerMixin):
@@ -105,7 +111,10 @@ class SampleSerializer(BaseSerializerMixin):
         model = Sample
         # fields = "__all__"
         exclude = ["created"]
-        extra_kwargs = {"details": {"lookup_field": "uuid"}, "dataset": {"lookup_field": "uuid"}}
+        extra_kwargs = {
+            "details": {"lookup_field": "uuid"},
+            "dataset": {"lookup_field": "uuid"},
+        }
 
 
 class MeasurementSerializer(BaseSerializerMixin):
@@ -123,7 +132,10 @@ class MeasurementSerializer(BaseSerializerMixin):
 
     class Meta:
         fields = "__all__"
-        extra_kwargs = {"details": {"lookup_field": "uuid"}, "sample": {"lookup_field": "uuid"}}
+        extra_kwargs = {
+            "details": {"lookup_field": "uuid"},
+            "sample": {"lookup_field": "uuid"},
+        }
 
 
 class SampleGeojsonSerializer(GeoFeatureModelSerializer):
@@ -140,7 +152,10 @@ class SampleGeojsonSerializer(GeoFeatureModelSerializer):
         geo_field = "geom"
         id_field = "uuid"
         fields = ["uuid", "type", "title", "geom"]
-        extra_kwargs = {"details": {"lookup_field": "uuid"}, "dataset": {"lookup_field": "uuid"}}
+        extra_kwargs = {
+            "details": {"lookup_field": "uuid"},
+            "dataset": {"lookup_field": "uuid"},
+        }
 
 
 class LocationGeojsonSerializer(LocationSerializer, GeoFeatureModelSerializer):

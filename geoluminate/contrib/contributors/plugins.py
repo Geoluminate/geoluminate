@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.views.generic import DetailView, UpdateView
 from formset.views import FileUploadMixin, FormViewMixin
@@ -39,7 +40,11 @@ class ContributorNetworkView(ContributorDetailView, DetailView):
                 object_id__in=obj_ids,
             )
             .values("profile", "object_id")
-            .annotate(id=models.F("profile__id"), label=models.F("profile__name"), image=models.F("profile__image"))
+            .annotate(
+                id=models.F("profile__id"),
+                label=models.F("profile__name"),
+                image=models.F("profile__image"),
+            )
             .values("id", "label", "object_id", "image")
         )
 
@@ -49,7 +54,11 @@ class ContributorNetworkView(ContributorDetailView, DetailView):
         related_contributions = self.object.get_related_contributions()
         data = (
             related_contributions.values("profile", "object_id")
-            .annotate(id=models.F("profile__id"), label=models.F("profile__name"), image=models.F("profile__image"))
+            .annotate(
+                id=models.F("profile__id"),
+                label=models.F("profile__name"),
+                image=models.F("profile__image"),
+            )
             .values("id", "label", "object_id", "image")
         )
         dataset_ids = self.object.contributions.values("object_id").distinct()

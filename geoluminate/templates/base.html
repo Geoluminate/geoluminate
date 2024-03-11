@@ -11,7 +11,7 @@
     {% endblock head %}
 
     {% block css %}
-      {% render_bundle 'project' 'css' %}
+      {% render_bundle 'project' 'css' 'GEOLUMINATE' %}
       {% comment %} <style>
    :root {
      --bs-primary-rgb: 255, 0, 0;
@@ -19,13 +19,14 @@
  </style> {% endcomment %}
     {% endblock css %}
 
+
     {% render_block "css" %}
     {% block javascript %}
       <script src={% static "vendors/jquery-3.7.1.min.js" %} defer></script>
-      {% render_bundle 'bootstrap' 'js' attrs="defer" %}
-      {% render_bundle 'htmx' 'js' attrs="defer" %}
-      {% render_bundle 'justGage' 'js' attrs="defer" %}
-      {% render_bundle 'project' 'js' attrs="defer" %}
+      {% render_bundle 'bootstrap' 'js' 'GEOLUMINATE' attrs="defer"  %}
+      {% render_bundle 'htmx' 'js' 'GEOLUMINATE' attrs="defer" %}
+      {% render_bundle 'justGage' 'js' 'GEOLUMINATE' attrs="defer" %}
+      {% render_bundle 'project' 'js' 'GEOLUMINATE' attrs="defer" %}
     {% endblock javascript %}
 
     <script src="{% static "vendor/citation-js/citation.js" %}" defer></script>

@@ -1,1 +1,1 @@
-"""Version 1 of the geoluminate API structure. """
+"""Version 1 of the geoluminate API structure."""

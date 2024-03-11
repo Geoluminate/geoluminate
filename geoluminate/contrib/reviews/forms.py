@@ -85,7 +85,12 @@ class LiteratureUploadForm(FieldsetMixin, CitationJSFormMixin, forms.ModelForm):
     file = forms.FileField(
         label=_("Bibliography File"),
         help_text=_("Upload a bibliography file."),
-        widget=UploadedFileInput(attrs={"onchange": "readFileContents(event);", "df-show": ".source == 'upload'"}),
+        widget=UploadedFileInput(
+            attrs={
+                "onchange": "readFileContents(event);",
+                "df-show": ".source == 'upload'",
+            }
+        ),
         required=False,
     )
 

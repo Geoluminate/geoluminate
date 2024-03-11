@@ -3,29 +3,53 @@ from logging import getLogger
 from django.conf import settings
 from django.template import TemplateDoesNotExist
 from django.template.loader import render_to_string
-from drf_spectacular.openapi import AutoSchema
+from django_filters import rest_framework
+from rest_framework import viewsets
+from rest_framework.renderers import BrowsableAPIRenderer
+from rest_framework_datatables_editor.viewsets import EditorModelMixin
 from rest_framework_gis import filters
 from rest_framework_nested.viewsets import NestedViewSetMixin
 
 logger = getLogger(__name__)
 
 
+class DjangoFilterBackend(rest_framework.DjangoFilterBackend):
+    def to_html(self, request, queryset, view):
+        return ""
+
+
+class BrowsableAPIRendererWithoutForms(BrowsableAPIRenderer):
+    """Renders the browsable api, but excludes the forms."""
+
+    def get_rendered_html_form(self, data, view, method, request):
+        return None
+
+    def get_filter_form(self, data, view, request):
+        return None
+
+
+class DatatablesReadOnlyModelViewSet(EditorModelMixin, viewsets.ReadOnlyModelViewSet):
+    pass
+
+
 class DistanceToPointOrderingFilter(filters.DistanceToPointOrderingFilter):
     def get_schema_operation_parameters(self, view):
         params = super().get_schema_operation_parameters(view)
-        params.append({
-            "name": self.order_param,
-            "required": False,
-            "in": "query",
-            "description": "",
-            "schema": {
-                "type": "enum",
-                "items": {"type": "string", "enum": ["asc", "desc"]},
-                "example": "desc",
-            },
-            "style": "form",
-            "explode": False,
-        })
+        params.append(
+            {
+                "name": self.order_param,
+                "required": False,
+                "in": "query",
+                "description": "",
+                "schema": {
+                    "type": "enum",
+                    "items": {"type": "string", "enum": ["asc", "desc"]},
+                    "example": "desc",
+                },
+                "style": "form",
+                "explode": False,
+            }
+        )
         return params
 
 
@@ -108,7 +132,6 @@ class NestedViewset(NestedViewSetMixin):
         return super().get_serializer_class()
 
     def paginate_queryset(self, queryset, view=None):
-        if renderer := getattr(self.request, "accepted_renderer", None):
-            if renderer.format == "geojson":
-                return None
+        if (renderer := getattr(self.request, "accepted_renderer", None)) and renderer.format == "geojson":
+            return None
         return self.paginator.paginate_queryset(queryset, self.request, view=self)

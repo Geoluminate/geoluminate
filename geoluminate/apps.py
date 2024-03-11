@@ -3,6 +3,20 @@ from django.conf import settings
 from django.utils.module_loading import autodiscover_modules
 
 
+def render_static_assets():
+
+    from webpack_loader.utils import get_loader
+
+    loader = get_loader("DEFAULT")
+
+    # print(f"Webpack stats file: {loader.get_assets()}")
+    import pprint
+
+    pprint.pprint(loader.get_assets())
+    # for file in files:
+    #     print(file)
+
+
 class GeoluminateConfig(AppConfig):
     name = "geoluminate"
     verbose_name = settings.GEOLUMINATE["database"]["name"]
@@ -16,13 +30,15 @@ class GeoluminateConfig(AppConfig):
 
         self.discover_plugins()
 
-        self.register_measurements()
+        self.register_measurement_models()
 
         from django_filters import compat
 
         compat.is_crispy = lambda: False
 
         self.update_drf_field_mapping()
+
+        # render_static_assets()
 
         return super().ready()
 
@@ -35,7 +51,7 @@ class GeoluminateConfig(AppConfig):
         for model in ["Project", "Dataset", "Sample", "Location"]:
             registry.register(self.get_model(model))
 
-    def register_measurements(self):
+    def register_measurement_models(self):
         from geoluminate.measurements import measurements
         from geoluminate.utils import get_measurement_models
 
@@ -55,16 +71,18 @@ class GeoluminateConfig(AppConfig):
         from rest_framework.serializers import ModelSerializer
         from rest_framework_gis.fields import GeometryField
 
-        from geoluminate import models
         from geoluminate.api.fields import QuantityField
+        from geoluminate.db import models
 
         # at the moment we are using the QuantifyField serializer for all QuantityField types
         # however, we will need to update this if we want to support non-readonly models
-        ModelSerializer.serializer_field_mapping.update({
-            models.QuantityField: QuantityField,
-            models.DecimalQuantityField: QuantityField,
-            models.IntegerQuantityField: QuantityField,
-            models.BigIntegerQuantityField: QuantityField,
-            models.PositiveIntegerQuantityField: QuantityField,
-            models.PointField: GeometryField,
-        })
+        ModelSerializer.serializer_field_mapping.update(
+            {
+                models.QuantityField: QuantityField,
+                models.DecimalQuantityField: QuantityField,
+                models.IntegerQuantityField: QuantityField,
+                models.BigIntegerQuantityField: QuantityField,
+                models.PositiveIntegerQuantityField: QuantityField,
+                models.PointField: GeometryField,
+            }
+        )

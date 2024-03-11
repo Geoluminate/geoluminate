@@ -1,10 +1,14 @@
+from cms.admin.placeholderadmin import FrontendEditableAdminMixin
 from django.contrib import admin
 
 # import GenericTabularInline
 from django.contrib.contenttypes.admin import GenericStackedInline
-from django.contrib.gis import admin
 
 from .models import Description, FuzzyDate
+
+
+class BaseAdmin(FrontendEditableAdminMixin, admin.ModelAdmin):
+    pass
 
 
 class FuzzyDatesInline(GenericStackedInline):

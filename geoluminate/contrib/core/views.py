@@ -1,26 +1,22 @@
-from typing import Any
-
-from actstream import actions, models
+from actstream import actions
 from django.apps import apps
-from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.contenttypes.models import ContentType
 from django.forms import modelform_factory
-from django.http import Http404, HttpRequest, HttpResponse, HttpResponseRedirect
-from django.http.response import HttpResponse
+from django.http import Http404
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
-from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django_contact_form.views import ContactFormView
+
+from geoluminate.contrib.contributors.utils import contributor_by_role
 
 from .forms import GenericDescriptionForm
 from .models import Description
 
 
-@login_required
-@csrf_exempt
 def follow_unfollow(request, content_type_id, object_id, flag=None, do_follow=True, actor_only=True):
     """This is a rewrite of the follow_unfollow view from django-activity-stream. The view now returns a html snippet for async HTMX updates of the follow button."""
 
@@ -129,18 +125,22 @@ def manage_description(request, object_type, uuid, dtype=None):
     return render(request, "core/description.html", context)
 
 
-class HasRoleMixin:
-    """Mixin for checking if a user has a role."""
-
-    def has_role(self, user, role):
-        return user.groups.filter(name=role).exists()
-
-
 type_map = {
     "p": "geoluminate.Project",
     "d": "geoluminate.Dataset",
     "s": "geoluminate.Sample",
 }
+
+
+class GenericBaseView:
+    """A base class for generic views that can be applied to any Geoluminate object type that has a uuid(Project, Dataset, Sample). The url for such a view should include the object type and the uuid in the form "<obj_type>/<uuid>/". (e.g. /p/uuid/ or /d/uuid/ or /s/uuid/)"""
+
+    slug_field = "uuid"
+    slug_url_kwarg = "uuid"
+
+    def get_object(self, queryset=None):
+        model_class = apps.get_model(type_map[self.kwargs["object_type"]])
+        return model_class.objects.get(uuid=self.kwargs["uuid"])
 
 
 class DescriptionBase(LoginRequiredMixin):
@@ -177,11 +177,13 @@ class DescriptionBase(LoginRequiredMixin):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context.update({
-            "object": self.content_object,
-            "dtype": self.kwargs.get("dtype"),
-            "has_edit_permission": True,
-        })
+        context.update(
+            {
+                "object": self.content_object,
+                "dtype": self.kwargs.get("dtype"),
+                "has_edit_permission": True,
+            }
+        )
         return context
 
     def get_success_url(self):
@@ -204,3 +206,28 @@ class DescriptionCreateView(DescriptionBase, CreateView):
 
 class DescriptionDeleteView(DescriptionBase, DeleteView):
     pass
+
+
+class GenericContactForm(LoginRequiredMixin, ContactFormView):
+    """A view class that will send an email to all contributors with the ContactPerson role. The url for such a view should include the object type and the uuid in the form "<obj_type>/<uuid>/". (e.g. /p/uuid/ or /d/uuid/ or /s/uuid/)"""
+
+    def get_object(self, queryset=None):
+        model_class = apps.get_model(type_map[self.kwargs["object_type"]])
+        return model_class.objects.get(uuid=self.kwargs["uuid"])
+
+    @property
+    def recipient_list(self):
+        self.object = self.get_object()
+
+        # get contributors with the ContactPerson role
+        contact_persons = contributor_by_role(list(self.object.contributors.all()), "ContactPerson")
+
+        print(contact_persons)
+
+        # get the email addresses of the contributors
+        emails = []
+        for c in contact_persons:
+            if c.profile.user:
+                emails.append(c.profile.user.email)
+        print(emails)
+        return emails

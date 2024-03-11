@@ -11,9 +11,11 @@ for choices in settings.GEOLUMINATE_ALLOWED_IDENTIFIERS.values():
             SchemeChoices.append((scheme, scheme))
         SchemeLookup[scheme] = uri
 
+
 class Visibility(models.IntegerChoices):
     PRIVATE = 0, _("Private")
     PUBLIC = 1, _("Public")
+
 
 class DateTimeChoices(models.TextChoices):
     """A class for storing choices for DateTimeField models. To use with fuzzy dates."""

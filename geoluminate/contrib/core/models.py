@@ -1,4 +1,5 @@
-from django.conf import settings
+import random
+
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
 from django.db import models as django_models
@@ -10,11 +11,10 @@ from django.utils.translation import gettext_lazy as _
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFit
 from research_vocabs.fields import TaggableConcepts
-from taggit.managers import TaggableManager
 
-from geoluminate import models
 from geoluminate.contrib.core import utils
 from geoluminate.contrib.datasets.choices import DataCiteDescriptionTypes
+from geoluminate.db import models
 
 from . import choices
 
@@ -162,6 +162,14 @@ class Abstract(models.Model):
     def get_projects(self):
         return self.projects.all()
 
+    def get_metadata_quality(self):
+        return random.randint(0, 100)
+        # return self.metadata_quality
+
+    def get_data_quality(self):
+        return random.randint(0, 100)
+        # return self.data_quality
+
     @cached_property
     def get_contributors(self):
         return list(self.contributors.select_related("profile").all())
@@ -261,3 +269,44 @@ class Identifier(models.Model):
     @property
     def scheme_uri(self):
         return self.URI_LOOKUP[self.scheme]
+
+
+# class Image(models.Model):
+#     """A model for storing images related to various objects in the database (typically samples)."""
+
+#     original = models.ImageField(
+#         verbose_name=_("original"),
+#         upload_to=default_image_path,
+#         help_text=_("The original image file."),
+#         validators=[FileExtensionValidator(["jpg", "jpeg", "png", "webp"])],
+#     )
+#     large = ImageSpecField(
+#         source="original",
+#         processors=[ResizeToFit(1200, 1200)],
+#         format="WEBP",
+#         options={"quality": 90},
+#     )
+#     small = ImageSpecField(
+#         source="original",
+#         processors=[ResizeToFit(300, 300)],
+#         format="WEBP",
+#         options={"quality": 80},
+#     )
+
+#     thumb = ImageSpecField(
+#         source="original",
+#         processors=[ResizeToFit(150, 150)],
+#         format="WEBP",
+#         options={"quality": 70},
+#     )
+
+#     caption = models.CharField(max_length=512, blank=True)
+#     width = models.PositiveIntegerField(blank=True, null=True)
+#     height = models.PositiveIntegerField(blank=True, null=True)
+
+#     class Meta:
+#         verbose_name = _("image")
+#         verbose_name_plural = _("images")
+
+#     def __str__(self):
+#         return f"{self.image.url}"

@@ -1,7 +1,6 @@
 import re
 
 from django.db.models import Manager, TextChoices
-from django.db.models.query import QuerySet
 from django.template.loader import render_to_string
 from django.utils.translation import gettext_lazy as _
 
@@ -46,23 +45,3 @@ class PublicObjectsManager(Manager):
 
     def inactive(self):
         return self.get_queryset().inactive()
-
-
-class ProjectQuerySet(QuerySet):
-    """Custom queryset for the Project model that adds useful methods for filtering
-    projects by status."""
-
-    # def objects(self):
-    #     """Return all projects"""
-    #     return self.filter(visibility=True)
-
-    def get_queryset(self):
-        return super().get_queryset().filter(visibility=True)
-
-    def active(self):
-        """Return active projects"""
-        return self.filter(status=Project.ACTIVE)
-
-    def inactive(self):
-        """Return inactive projects"""
-        return self.filter(status=Project.INACTIVE)

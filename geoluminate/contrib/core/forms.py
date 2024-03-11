@@ -4,11 +4,13 @@ from django.forms.fields import IntegerField
 from django.forms.models import ModelForm, ModelFormMetaclass
 from django.forms.widgets import HiddenInput
 from django.utils.translation import gettext as _
-from django_select2.forms import Select2MultipleWidget, Select2Widget
+from django_select2.forms import Select2MultipleWidget
 from formset.fieldset import FieldsetMixin
 from formset.richtext.widgets import RichTextarea
 from formset.widgets import DateTimeInput
 from taggit.forms import TagField
+
+from geoluminate.contrib.datasets.models import Dataset
 
 from .models import Description, FuzzyDate
 
@@ -46,7 +48,8 @@ class GenericDescriptionForm(GenericRelationForm):
         fields = "__all__"
 
     def __init__(self, obj=None, *args, **kwargs):
-        super().__init__(obj=obj, *args, **kwargs)
+        kwargs.update({"obj": obj})
+        super().__init__(*args, **kwargs)
         if not kwargs.get("data") and self.fields.get("type"):
             self.fields["type"] = forms.ChoiceField(choices=self.get_type_choices(), required=False)
 
@@ -250,7 +253,7 @@ class MultiTagFormMixin(metaclass=MultiTagFormMetaclass):
         for field_name in opts.tag_fields:
             if field_name not in self.cleaned_data:
                 continue
-            if isinstance(self.base_fields[field_name], ModelMultipleChoiceField):
+            if isinstance(self.base_fields[field_name], forms.ModelMultipleChoiceField):
                 cleaned_data[field_name] = self.cleaned_data[field_name]
             else:
                 cleaned_data[field_name] = self.cleaned_data[field_name].values()

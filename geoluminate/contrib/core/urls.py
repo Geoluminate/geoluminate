@@ -42,6 +42,7 @@ urlpatterns = [
         "<object_type>/<uuid:uuid>/",
         include(
             [
+                path("contact/", views.GenericContactForm.as_view(), name="contact"),
                 path(
                     "description/add/",
                     views.DescriptionCreateView.as_view(),

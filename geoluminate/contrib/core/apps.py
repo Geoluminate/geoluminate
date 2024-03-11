@@ -1,6 +1,4 @@
 from django.apps import AppConfig
-from django.conf import settings
-from django.utils.translation import gettext_lazy as _
 
 
 class CoreConfig(AppConfig):
@@ -10,4 +8,4 @@ class CoreConfig(AppConfig):
 
     def ready(self):
         # This installs the comment_will_be_posted signal
-        from . import receivers  # noqa
+        from . import receivers  # noqa: F401

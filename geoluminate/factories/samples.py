@@ -1,7 +1,7 @@
 import factory
 from factory.fuzzy import FuzzyChoice
 
-from geoluminate.db.models import Location, Sample
+from geoluminate.models import Location, Sample
 
 from .core import AbstractFactory, randint
 

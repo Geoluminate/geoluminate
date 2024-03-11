@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load geoluminate %}
+
+{% block page_left %}
+  <aside id="pageSidebar" class='sidebar px-0 modal' data-bs-backdrop="false">
+    <div class='modal-dialog modal-dialog-centered'>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            {% block sidebar_title %}{% endblock %}
+
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body sticky-top">
+          {% block sidebar %}{% endblock %}
+
+        </div>
+        <div class="modal-footer sticky-bottom">
+          {% block sidebar_footer %}{% endblock %}
+
+        </div>
+      </div>
+    </div>
+  </aside>
+{% endblock page_left %}

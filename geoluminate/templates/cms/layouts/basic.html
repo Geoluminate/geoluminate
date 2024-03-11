@@ -1,24 +1,19 @@
 {% extends "base.html" %}
 {% load cms_tags menu_tags static authentication %}
 
-{% block page_nav %}
-{% if request.user|has_group:"CMS" or request.user.is_superuser and current_page %}
-<div id='cmsToolbarWrapper' class="collapse">
-  {% include "geoluminate/components/navigation/partials/cms_menu.html" %}
-</div>
-{% endif %}
-{% endblock %}
+{% block application %}
+  {% if request.user|has_group:"CMS" or request.user.is_superuser and current_page %}
+    {% comment %} <div id='cmsToolbarWrapper' class="collapse"> {% endcomment %}
+    {% include "cms/cms_menu.html" %}
+    {% comment %} </div> {% endcomment %}
+  {% endif %}
+  {{ block.super }}
+{% endblock application %}
 
 {% block title %}
   {{ request.current_page }}
 {% endblock title %}
 
 {% block main %}
-  <div class='pb-3' style="margin-bottom: 400px;">
-    {% placeholder "content" %}
-  </div>
-{% endblock %}
-
-{% block after_page %}
-{% include "cms/page_edit_toggle.html" %}
-{% endblock %}
+  <div class="pb-3" style="margin-bottom: 400px;">{% placeholder "content" %}</div>
+{% endblock main %}

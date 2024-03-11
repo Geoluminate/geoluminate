@@ -1,89 +1,70 @@
 {% extends 'geoluminate/sidebar_left.html' %}
-{% load static i18n formsetify geoluminate sekizai_tags activity_tags %}
+{% load static i18n formsetify cms_tags geoluminate sekizai_tags activity_tags %}
+{% load render_bundle from webpack_loader %}
 
-{% comment %} {% block title %}{{ geoluminate.database.acronym}} {{ object|verbose_name|title }}{% endblock %} {% endcomment %}
+{% block application %}
+  {% comment %} {% if user_has_permission.edit %} {% endcomment %}
+  {% include "cms/cms_menu.html" %}
+  {% comment %} {% endif %} {% endcomment %}
+  {{ block.super }}
+{% endblock application %}
 
-{% block sidebar_title %}{{object.uuid}}{% endblock %}
+{% block css %}
+  {{ block.super }}
+  {% comment %} {% render_bundle 'datatables' 'css' %} {% endcomment %}
+  {% render_bundle 'detail' 'css' %}
+  <link rel="stylesheet" type="text/css" href="{% static 'fluent_comments/css/ajaxcomments.css' %}" />
+  {% comment %} <link rel="stylesheet" href="{% static "auto_datatables/css/auto-datatable.css" %}" /> {% endcomment %}
+{% endblock css %}
 
+{% block javascript %}
+  {{ block.super }}
+  {% comment %} {% render_bundle 'datatables' 'js' %} {% endcomment %}
+  {% render_bundle 'detail' 'js' attrs="defer" %}
+  <script type="text/javascript" src="{% static 'fluent_comments/js/ajaxcomments.js' %}" defer></script>
+  <script src="{% static "el-pagination/js/el-pagination.js" %}" defer></script>
+  {% comment %} <script defer>
+      $.endlessPaginate();
+ </script> {% endcomment %}
+  {% comment %} <script src="{% static "auto_datatables/js/auto-datatables.js" %}" defer></script> {% endcomment %}
+{% endblock %}
 
-{% block title_after %}{{ object|title }}{% endblock %}
+{% block page_nav %}
+  <nav class="page-nav">
+    {% page_menu %}
+  </nav>
+{% endblock %}
 
-{% block page_nav %}<nav class='page-nav'>{% page_menu %}</nav>{% endblock %}
+{% block sidebar_title %}{{ object.uuid }}{% endblock %}
 
 {% block sidebar %}
-  {% block sidebar_image %}
-    <div class="card text-white">
-      {% avatar object width="100%" class='card-img' %}
-    </div>
-  {% endblock %}
+  {% block sidebar_top %}
+    {% block sidebar_image %}
+      <div class="card text-white">{% avatar object width="100%" class='card-img' %}</div>
+    {% endblock %}
 
-  <div class='actions d-flex mb-2'>
-    {% follow_button object %}
-    {% share_button object %}
-    <a href="" class='btn btn-sm btn-secondary'>
-      <i class='fa-solid fa-envelope'></i>
-      {% trans "Contact" %}
-    </a>
-    {% block actions %}{% endblock %}
-  </div> 
+    <div class='actions d-flex mb-2 justify-content-center'>
+      {% follow_button object %}
+      {% share_button object %}
+      <a href="" class='btn btn-sm btn-secondary'>
+        <i class='fa-solid fa-envelope'></i>
+        {% trans "Contact" %}
+      </a>
+      {% block actions %}{% endblock %}
+
+    </div>
+  {% endblock sidebar_top %}
 
   {% for card in sidebar_components %}
     {% include card %}
   {% endfor %}
-
-
 {% endblock sidebar %}
 
 {% block main %}
-  <div class="tab-content d-flex flex-wrap w-100 h-100" >
+  {% comment %} <div class="tab-content d-flex flex-wrap w-100 h-100">
     {% for item in page_menu %}
-      <div id="{{item.title|slugify}}-panel" 
-          class="tab-pane fade bg-body-light w-100
-          {% if forloop.first %} show active{% endif %}
-          "      
-          role="tabpanel" 
-          aria-labelledby="{{item.title|slugify}}-tab" 
-          tabindex="{{ forloop.counter }}"
-          hx-get="{{ item.resolved }}"{% for key, val in htmx.items %}
-          hx-{{ key }}="{{ val }}"{% endfor %}
-          {% comment %} hx-trigger="intersect once" {% endcomment %}
-          hx-trigger="intersect"
-          hx-target="this"></div>
+      <div id="{{ item.title|slugify }}-panel" class="tab-pane fade bg-body-light w-100 {% if forloop.first %}show active{% endif %} " role="tabpanel" aria-labelledby="{{ item.title|slugify }}-tab" tabindex="{{ forloop.counter }}" hx-get="{{ item.resolved }}"{% for key, val in htmx.items %} {{ key }}="{{ val }}"{% endfor %} hx-trigger="intersect once" hx-trigger="intersect" hx-target="this">
+      </div>
     {% endfor %}
-    <div class="tab-pane w-100 h-100" id="map-panel" role="tabpanel" aria-labelledby="map-panel-tab" tabindex="0">
-      {% include "geoluminate/plugins/map.html" %}
-    </div>
-    {% if allow_discussion %}
-    <div class="tab-pane" id="discussion-panel" role="tabpanel" aria-labelledby="discussion-panel-tab" tabindex="0">
-      {% include "geoluminate/plugins/discussion.html" %}
-    </div>
-    {% endif %}
-  </div>
+  </div> {% endcomment %}
 {% endblock %}
-
-{% block scripts %}
-
-{% addtoblock 'styles' %}<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@2.0.0/dist/maplibre-gl.css" />{% endaddtoblock %}
-{% addtoblock "styles" %}<link href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/af-2.6.0/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/cr-1.7.0/date-1.5.1/fc-4.3.0/fh-3.4.0/kt-2.10.0/r-2.5.0/rg-1.4.1/rr-1.4.1/sc-2.2.0/sb-1.6.0/sp-2.2.0/sl-1.7.0/sr-1.3.0/datatables.min.css" rel="stylesheet">{% endaddtoblock %}
-{% addtoblock "styles" %}<link rel="stylesheet" href="{% static "auto_datatables/css/auto-datatable.css" %}">{% endaddtoblock %}
-
-
-{% addtoblock 'js' %}<script src="https://unpkg.com/maplibre-gl@2.0.0/dist/maplibre-gl.js"></script>{% endaddtoblock %}
-{% addtoblock 'js' %}<script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>{% endaddtoblock %}
-{% addtoblock "js" %}<script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/af-2.6.0/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/cr-1.7.0/date-1.5.1/fc-4.3.0/fh-3.4.0/kt-2.10.0/r-2.5.0/rg-1.4.1/rr-1.4.1/sc-2.2.0/sb-1.6.0/sp-2.2.0/sl-1.7.0/sr-1.3.0/datatables.min.js"></script>{% endaddtoblock %}
-{% addtoblock "js" %}<script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/2.3.1/luxon.min.js" crossorigin="anonymous"></script>{% endaddtoblock %}
-{% addtoblock "js" %}<script src="{% static "auto_datatables/js/auto-datatables.js" %}"></script>{% endaddtoblock %}
-
-
-<script>
-  var map = new maplibregl.Map({
-    container: 'map', // container id
-    style: 'https://demotiles.maplibre.org/style.json', // style URL
-    center: [0, 0], // starting position [lng, lat]
-    zoom: 1 // starting zoom
-});
-</script>
-  
-
-{% endblock scripts %}
-

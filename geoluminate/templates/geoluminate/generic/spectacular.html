@@ -16,9 +16,3 @@
     {% addtoblock "js" %}<script>{% include template_name_js %}</script>{% endaddtoblock %}
   {% endif %}
   {% endblock  %}
-
-  {% block css %}
-  {% compress css %}
-    <link rel="stylesheet" type="text/x-scss" href="{% static "vendor/swagger/main.scss" %}"/>
-  {% endcompress %}
-{% endblock css %}

@@ -2,14 +2,14 @@
 <ul class="nav nav-pills nav-pills-alternate d-print-none" id="pageMenu" role="tablist">
   {% for item in page_menu %}
   <li class="nav-item" role="presentation">
-    <a href="{{ item.resolved }}" 
-      class="nav-link {{ item.extra_classes }} {% if forloop.first %}active{% endif %}" 
+    <a href="{{ item.resolved }}"
+      class="nav-link {{ item.extra_classes }} {% if forloop.first %}active{% endif %}"
       hx-get="{{ item.resolved }}"
       {% for key, val in htmx.items %}
       hx-{{ key }}="{{ val }}"
       {% endfor %}
-      hx-replace-url="{{ item.resolved }}" 
-      data-bs-toggle="tab" 
+      hx-replace-url="{{ item.resolved }}"
+      data-bs-toggle="tab"
       role="tab">
         <i class="fas {{ item.icon }}"></i>
         <span class='d-none d-md-inline-block'>{{ item.title }}</span>

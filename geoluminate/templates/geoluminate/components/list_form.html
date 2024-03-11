@@ -7,21 +7,21 @@
   </django-formset>
 </div>
 
-{% comment %} 
+{% comment %}
 
 <form class="w-100" aria-label="Reviews" role="search" method="get">
  <div class="d-flex flex-column flex-lg-row w-100">
-   <input class="form-control form-control-sm me-2 w-100 flex-grow-1" 
-     placeholder="Search {{list_of}}..." 
-     autocomplete="off" 
-     hx-trigger="keyup changed delay:500ms, search" 
-     hx-get 
+   <input class="form-control form-control-sm me-2 w-100 flex-grow-1"
+     placeholder="Search {{list_of}}..."
+     autocomplete="off"
+     hx-trigger="keyup changed delay:500ms, search"
+     hx-get
      hx-target=".page-content"
      hx-push-url="true"
      type="{{ widget.type }}"
      name="{{ widget.name }}"
      {% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %}
-     > 
+     >
    <select class="form-select flex-shrink-1 me-2 w-auto bg-primary-subtle" aria-label="Default select example">
      <option selected>Status</option>
      <option value="1">Concept</option>

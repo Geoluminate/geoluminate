@@ -1,0 +1,66 @@
+{% extends "geoluminate/plugins/page.html" %}
+{% load i18n formsetify autotables geoluminate static %}
+
+{% block content %}
+  <div class='page-content container d-block py-3'>
+    {% if list_filter_top %}
+      <div class='toolbar py-2 d-flex w-100'>
+        <django-formset class='list-filter-top hidden-labels' endpoint="{{ request.path }}" csrf-token="{{ csrf_token }}">
+          {% for field in filter.form %}
+            {% if field.name in list_filter_top %}
+              <div class="{% if forloop.first %} flex-grow-1 {% else %} flex-shrink-1{% endif %}">
+                {% include "formset/default/field_group.html" %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </django-formset>
+      {% endif %}
+      {% comment %} <button class='d-block d-xl-none btn btn-primary' data-bs-target="#pageSidebar" data-bs-toggle="modal">
+        <i class="fas fa-filter"></i>
+      </button> {% endcomment %}
+      {% if permissions.create %}
+        <a class='btn btn-success text-nowrap ms-2'
+           {% comment %}
+           hx-get="{% url "datasets:contribution:add" uuid=object.uuid %}"
+           {% endcomment %}
+           hx-target="#exampleModal .modal-content"
+           data-bs-toggle="modal"
+           data-bs-target="#exampleModal">
+          <span>{% icon 'plus' title="Create new" %}
+          {% trans "New " %}</span>
+        </a>
+      {% endif %}
+    </div>
+    <hr class="mt-0 border border-primary" />
+    {% include "geoluminate/base/list_view.html" %}
+  </div>
+{% endblock content %}
+
+{% comment %} <script defer>
+      console.log('entry-list.js')
+      $(function() {
+           $('.entry-list').isotope({
+                itemSelector: '.entry-list-item',
+                layoutMode: 'fitRows'
+           })
+           // filter items on button click
+           $('.filter-button-group').on('click', 'button', function() {
+                const filterValue = $(this).attr('data-filter')
+                $('.entry-list').isotope({
+                     filter: filterValue
+                })
+           })
+      })
+ </script> {% endcomment %}
+<!-- djlint:off -->
+    {% comment %} const $grid = $('.entry-list').isotope({
+        itemSelector: '.entry-list-item',
+        layoutMode: 'fitRows'
+    })
+    // filter items on button click
+    $('.filter-button-group').on('click', 'button', function() {
+        const filterValue = $(this).attr('data-filter')
+        $grid.isotope({
+              filter: filterValue
+        })
+}) {% endcomment %}

@@ -1,19 +1,31 @@
 {% load static %}
+
 <div class='container py-3'>
   {% block header %}
-  <header class="page-header {% block page_header_css %}page-layout{% endblock %}">
-    <h1 class='display-1'>{% block title %}{% endblock %}</h1>
-    <div class='toolbar'>
-      <div class="toolbar-left">{% block toolbar_left %}{% endblock %}</div>
-      <div class="toolbar-right">{% block toolbar_right %}{% endblock %}</div>
-    </div>
-  </header> 
+    <header class="page-header {% block page_header_css %}page-layout{% endblock %}
+      ">
+      <h1 class='display-1'>
+        {% block title %}{{ meta.title }}{% endblock %}
+
+      </h1>
+      <div class='toolbar'>
+        <div class="toolbar-left">
+          {% block toolbar_left %}{% endblock %}
+
+        </div>
+        <div class="toolbar-right">
+          {% block toolbar_right %}{% endblock %}
+
+        </div>
+      </div>
+    </header>
   {% endblock header %}
-  <p class="lead">{% block lead %}{% endblock %}</p>
+
   <div>
-    {% block help_text %}{% endblock %}
+    {% block help_text %}{{ meta.description }}{% endblock %}
+
     {% block content %}{% endblock %}
+
   </div>
 </div>
-
 {% block modals %}{% endblock %}

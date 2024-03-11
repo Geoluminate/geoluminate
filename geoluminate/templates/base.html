@@ -1,116 +1,113 @@
-{% load static meta cms_tags menu_tags sekizai_tags authentication thumbnail geoluminate simple_menu i18n compress %}<!doctype html>
+{% load static meta  sekizai_tags authentication thumbnail geoluminate simple_menu i18n compress %}
+{% load render_bundle from webpack_loader %}
+
+<!DOCTYPE html>
 {% generate_menu %}
 {% get_current_language as LANGUAGE_CODE %}
-
 <html lang="{{ LANGUAGE_CODE }}" data-bs-theme="auto">
   <head {% meta_namespaces %}>
-    {% comment %} <title>{% block title %}{{title}}{% endblock %} | {% block title_after %}{{ geoluminate.database.name }}{% endblock %}</title> {% endcomment %}
     {% include "geoluminate/utils/head.html" %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    {% block head %}{% endblock head %}
-    {% block css %}{% endblock css %}
-    {% render_block "css" %}
-    {% compress css %}
-      <link rel="stylesheet" type="text/x-scss" href="{% static "geoluminate/scss/geoluminate.scss" %}" crossorigin="anonymous">
+    {% block head %}
+    {% endblock head %}
+
+    {% block css %}
+      {% render_bundle 'project' 'css' %}
       {% comment %} <style>
-      :root {
-          --bs-primary: #3498db;
-        }
-    </style> {% endcomment %}
-    {% endcompress %}
-    <script src="{% static "node_modules/jquery/dist/jquery.min.js" %}"></script>
+   :root {
+     --bs-primary-rgb: 255, 0, 0;
+   }
+ </style> {% endcomment %}
+    {% endblock css %}
+
+    {% render_block "css" %}
+    {% block javascript %}
+      <script src={% static "vendors/jquery-3.7.1.min.js" %} defer></script>
+      {% render_bundle 'bootstrap' 'js' attrs="defer" %}
+      {% render_bundle 'htmx' 'js' attrs="defer" %}
+      {% render_bundle 'justGage' 'js' attrs="defer" %}
+      {% render_bundle 'project' 'js' attrs="defer" %}
+    {% endblock javascript %}
+
+    <script src="{% static "vendor/citation-js/citation.js" %}" defer></script>
   </head>
   <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
         hx-target="main"
         hx-indicator="#mainIndicator"
-        hx-ext="debug" class='d-flex flex-column vh-100'>
+        hx-ext="debug"
+        {% comment %}
+        class="d-flex flex-column vh-100"
+        {% endcomment %}>
     {% block application %}
       {% block site_nav %}
-        <nav class="navbar navbar-expand-md navbar-dark bg-primary bg-gradient">
-          <div class="container-fluid">
-            <button class="navbar-toggler d-block" type="button" 
-                    data-bs-toggle="offcanvas" data-bs-target="#mainSidebar" 
-                    aria-controls="mainSidebar" aria-expanded="false" aria-label="{% trans "toggle database navigation" %}">
-                <span class="navbar-toggler-icon"></span></button>
-            <a class="navbar-brand p-0 ms-2 me-0 me-lg-2" href="#">
-              {{ geoluminate.database.name }}
-            </a>
-            <button class="navbar-toggler"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent"
-                    aria-expanded="false"
-                    aria-label="{% trans "toggle site navigation" %}">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse " id="navbarSupportedContent">
-              <ul class="navbar-nav align-items-center w-100">
-                {% block navbar_menu %}{% show_menu 0 100 100 100 %}{% endblock navbar_menu %}
-                {% for widget in navbar_widgets %}{% include widget %}{% endfor %}
-              </ul>
-            </div>
-          </div>
-        </nav>
+        {% include "geoluminate/navigation/navbar.html" %}
       {% endblock site_nav %}
-      {% block page_nav %}{% endblock %}
-      <div class='container-fluid flex-grow-1 overflow-hidden'>
-        <div class="row h-100 {% block row_css %}overflow-hidden{% endblock %}">
-          {% block page_left %}{% endblock %}
-          <main class="col px-0 overflow-auto position-relative {% block page_css_class %}{% endblock %}">
-            {% block main %}{% if template_name %}{% include template_name %}{% endif %}{% endblock %}
-            <img id='mainIndicator' class="htmx-indicator endless_loading" src="{% static "img/spinners/spinning-circles.svg" %}"/>
+
+      {% block page_nav %}
+      {% endblock page_nav %}
+
+      <div class="container-fluid flex-grow-1 overflow-hidden">
+        <div class="row h-100 {% block row_css %}overflow-hidden{% endblock %}
+           ">
+          {% block page_left %}
+          {% endblock page_left %}
+
+          <main class="col px-0 overflow-auto position-relative {% block page_css_class %}{% endblock %}
+             ">
+            {% block main %}
+              {% if template_name %}
+                {% include template_name %}
+              {% endif %}
+            {% endblock main %}
+
+            {% comment %} <div id="mainIndicator" class="spinner-border dataTables_processing htmx-indicator endless_loading" style="width: 3rem; height: 3rem" role="status"> {% endcomment %}
+            <div id="mainIndicator"
+                 class="dataTables_processing htmx-indicator endless_loading fs-1"
+                 style="width: 3rem;
+                        height: 3rem"
+                 role="status">
+              {% icon "spinner" %}
+              <span class="visually-hidden">{% trans "Loading..." %}</span>
+            </div>
           </main>
-          {% block after_page %}{% endblock %}
+          {% block after_page %}
+          {% endblock after_page %}
+
         </div>
       </div>
     {% endblock application %}
 
     {% comment %} MESSAGES {% endcomment %}
-    <div id="messageContainer" class='position-absolute bottom-0 end-0'>
-        <div class='d-flex container justify-content-center'>
-          {% for message in messages %}
-          <div aria-live="polite" aria-atomic="true" class='w-100 d-flex px-1'>
-            <div class="card alert border mb-3 bg-white p-0" data-delay="5000" role="alert"  style="width: 18rem;">
-              <div class="card-header">{% trans "Message" %}
+    <div id="messageContainer" class="position-absolute bottom-0 end-0">
+      <div class="d-flex container justify-content-center">
+        {% for message in messages %}
+          <div aria-live="polite" aria-atomic="true" class="w-100 d-flex px-1">
+            <div class="card alert border mb-3 bg-white p-0 shadow-sm"
+                 data-delay="5000"
+                 role="alert"
+                 style="width: 18rem">
+              <div class="card-header">
+                {% trans "Message" %}
                 <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
               <div class="card-body">
-                <p class="card-text">{{message}}</p>
+                <p class="card-text">{{ message }}</p>
               </div>
             </div>
           </div>
-          {% endfor %}
-        </div>
+        {% endfor %}
+      </div>
     </div>
-
     {% comment %} OFFCANVAS AND MODALS {% endcomment %}
-    {% include 'geoluminate/components/navigation/sidebar.html' %}
-    {% include "menu/user_menu.html" %}
+    {% comment %} {% include "geoluminate/components/navigation/sidebar.html" %} {% endcomment %}
+    {% block modals %}
+    {% endblock modals %}
 
-    {% block modals %}{% endblock modals %}
     {% render_block "modals" %}
-
+    {% render_block "offcanvas" %}
     {% comment %} SCRIPTS {% endcomment %}
     {% render_block "js" %}
-    {% block scripts %}{% endblock scripts %}
-  
-    {% comment %} <script>
+    {% block scripts %}
+    {% endblock scripts %}
 
-      myFunction();
-
-    </script> {% endcomment %}
-
-    <script>$(function(){$('.alert').toast('show')})</script>
-
-    {% compress js %}
-
-      {% comment %} <script src="{% static "geoluminate/js/custom.js" %}"></script> {% endcomment %}
-      <script src="{% static "geoluminate/js/color-theme-switch.js" %}"></script>
-      <script type="text/javascript" src="{% static 'vendor/select2/js/select2.min.js' %}"></script>
-
-      
-    {% comment %} <script src="{% static "geoluminate/js/multilevel-dropdown.js" %}"></script> {% endcomment %}
-    {% endcompress %}
   </body>
 </html>

@@ -1,5 +1,5 @@
 {% comment %} <div class='flex-item'> {% endcomment %}
-  <ul class="pagination nav justify-content-end">           
+  <ul class="pagination nav justify-content-end">
   {% if page_obj.has_previous %}
     <li class="page-item px-0">
       <a class="page-link" href="?page=1">
@@ -18,7 +18,7 @@
       <a class="page-link" href="\" tabindex="-1" aria-disabled="true">
   {% endif %}
         <i class="fas fa-angle-left fa-md"></i>
-      </a> 
+      </a>
     </li>
     {% for i in range %}
       {% if i == page_obj.number %}
@@ -32,14 +32,14 @@
         {% else %}
           <li class="page-item px-0"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
         {% endif %}
-      {% endif %}     
+      {% endif %}
     {% endfor %}
 
     {% if page_obj.number != paginator.num_pages %}
       <li class="page-item px-0">
         <a class="page-link" href="?page={{ page_obj.next_page_number }}" tabindex="1" aria-disabled="true">
           <i class="fas fa-angle-right fa-md"></i>
-        </a> 
+        </a>
       </li>
       <li class="page-item px-0">
         <a class="page-link" href="?page={{ paginator.num_pages }}">
@@ -50,7 +50,7 @@
       <li class="page-item px-0 disabled">
         <a class="page-link" href="\" tabindex="-1" aria-disabled="true">
           <i class="fas fa-angle-right fa-md"></i>
-        </a> 
+        </a>
       </li>
       <li class="page-item px-0 disabled">
         <a class="page-link" href="?page={{ paginator.num_pages }}">

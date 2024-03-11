@@ -1,6 +1,6 @@
 import factory
 
-from geoluminate.db.models import Project
+from geoluminate.models import Project
 
 from .core import AbstractFactory, randint
 

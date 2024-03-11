@@ -1,18 +1,6 @@
 {% comment %} {% extends 'base_detail_view.html' %} {% endcomment %}
 {% load static i18n formsetify sekizai_tags geoluminate autotables %}
 
-{% comment %} {% block sidebar_content %}
-{{ block.super }}
-<section>
-  <h5>{% trans "Reference" %}</h5>
-  <div class='sidebar-section-content'>
-    <p>{{ object.reference|default_if_none:"This dataset has not been formally published." }}</p>
-  </div>
-</section>
-{% include "core/snippets/contributors.html" with title='Dataset Contributors' contributors=object.contributors.all %}
-{% include "core/snippets/key_dates.html" %}
-{% endblock %} {% endcomment %}
-
 
 {% block main %}
 Test

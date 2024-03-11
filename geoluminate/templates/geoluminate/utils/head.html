@@ -1,20 +1,11 @@
 {% load static geoluminate django_htmx %}
+
 <meta charset="utf-8" />
-<meta http-equiv="x-ua-compatible" content="ie=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<meta name="author" content="Sam Jennings">
+<meta http-equiv="x-ua-compatible" content="ie=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 {% include 'meta/meta.html' %}
-<link rel="icon" type="image/svg+xml" href="{% brand "icon" %}">
-<link href="{% static 'formset/css/bootstrap5-extra.css' %}" rel="stylesheet">
-<link href="{% static 'formset/css/collections.css' %}" rel="stylesheet">
-<link rel="stylesheet" type="text/x-scss" href="{% static "geoluminate/scss/geoluminate.scss" %}">
-
-
-
+<link rel="icon" type="image/svg+xml" href="{% brand "icon" %}" />
+<link href="{% static 'formset/css/bootstrap5-extra.css' %}" rel="stylesheet" />
+<link href="{% static 'formset/css/collections.css' %}" rel="stylesheet" />
 <script type="module" src="{% static 'formset/js/django-formset.js' %}" crossorigin="anonymous"></script>
-<script defer src="{% static "node_modules/@fortawesome/fontawesome-free/js/all.min.js" %}"></script>
-<script defer src="{% static "node_modules/@fortawesome/fontawesome-free/js/fontawesome.min.js" %}"></script>
-<script defer src="{% static "node_modules/htmx.org/dist/htmx.min.js" %}"></script>
-<script defer src="{% static "node_modules/htmx.org/dist/ext/debug.js" %}"></script>
-<script defer src="{% static "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js" %}"></script>
-{% django_htmx_script %} 
+{% django_htmx_script %}

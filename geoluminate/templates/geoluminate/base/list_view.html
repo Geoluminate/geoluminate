@@ -1,34 +1,15 @@
 {% load i18n formsetify geoluminate static %}
 
-{% block main %}
-  <div id='templateWrapper' class='entry-list-container'>{% if is_filtered %}
-    <div class='filter-info container'>
-      <span class='text-muted'>Filters matched {{ filtered_object_count }} out of {{ total_object_count }} total {{ meta.title }}.</span>
+<div id="templateWrapper" class="entry-list-container">
+  {% if is_filtered %}
+    <div class="filter-info container d-flex justify-content-between">
+      <span class="text-muted">Filters matched {{ filtered_object_count }} out of {{ total_object_count }} total {{ meta.title }}.</span>
+      <button class="btn btn-sm btn-warning list-filter-clear"
+              hx-get="{{ request.path }}"
+              hx-target="#templateWrapper"
+              hx-push-url="true">{% trans "Clear Filters" %}</button>
     </div>
-    <hr>{% endif %}
-    <div class='entry-list'>
-      {% include page_template %}
-    </div>
-  </div>
-{% endblock %}
-
-
-<script>
-
-  $(document).ready(function() {
-    var $grid = $('.entry-list').isotope({
-      // options
-      itemSelector: '.entry-list-item',
-      layoutMode: 'fitRows'
-    });
-
-    // filter items on button click
-    $('.filter-button-group').on( 'click', 'button', function() {
-      var filterValue = $(this).attr('data-filter');
-      console.log(filterValue);
-      $grid.isotope({ filter: filterValue });
-    });
-
-  });
-
-</script>
+    <hr />
+  {% endif %}
+  <div class="entry-list">{% include page_template %}</div>
+</div>

@@ -1,7 +1,7 @@
 import factory
 from licensing.models import License
 
-from geoluminate.db.models import Dataset
+from geoluminate.models import Dataset
 
 from .core import AbstractFactory, randint
 

@@ -6,7 +6,7 @@ from django.conf import settings
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models as django_models
-from django.db.models import Case, CharField, Count, F, IntegerField, Value, When
+from django.db.models import Case, CharField, F, IntegerField, Value, When
 from django.db.models.functions import Concat
 from django.templatetags.static import static
 from django.urls import reverse
@@ -16,14 +16,15 @@ from django.utils.translation import gettext_lazy as _
 from multiselectfield.utils import get_max_length
 from taggit.managers import TaggableManager
 
-from geoluminate import models
 from geoluminate.contrib.datasets.models import Dataset
 from geoluminate.contrib.projects.models import Project
 from geoluminate.contrib.reviews.models import Review
 from geoluminate.contrib.samples.models import Sample
+from geoluminate.db import models
 
+# from geoluminate.models import Dataset, Project, Review, Sample
 from . import choices
-from .managers import ContributionManager, OrganizationalManager, PersonalManager
+from .managers import ContributionManager, ContributorManager
 
 
 class Contributor(models.Model):
@@ -32,12 +33,7 @@ class Contributor(models.Model):
     for proper attribution and formal publication of datasets. The fields are designed to align with the DataCite
     Contributor schema."""
 
-    type = models.CharField(
-        verbose_name=_("type"),
-        help_text=_("The type of contributor."),
-        choices=(("Personal", _("Personal")), ("Organizational", _("Organizational"))),
-        default="Personal",
-    )
+    objects = ContributorManager().as_manager()
 
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL, related_name="profile", null=True, blank=True, on_delete=models.CASCADE
@@ -107,7 +103,7 @@ class Contributor(models.Model):
 
     def location(self):
         """Returns the location of the contributor. TODO: make this a foreign key to a location model."""
-        return random.choice(["Potsdam", "Adelaide", "Dresden"])
+        return random.choice(["Potsdam", "Adelaide", "Dresden"])  # noqa: S311
         if self.user:
             return self.user.organization.location
         return None
@@ -119,6 +115,12 @@ class Contributor(models.Model):
         if self.image:
             return self.image.url
         return static("img/brand/icon.svg")
+
+    @property
+    def type(self):
+        if self.user:
+            return _("Personal")
+        return _("Organizational")
 
     @property
     def given(self):
@@ -146,11 +148,6 @@ class Contributor(models.Model):
         return Dataset.objects.filter(
             contributors__profile=self,
         )
-
-        # return Contribution.objects.filter(
-        #     profile=self,
-        #     content_type=ContentType.objects.get_for_model(Dataset),
-        # )
 
     @property
     def projects(self):
@@ -197,9 +194,7 @@ class Contributor(models.Model):
             .values("id", "label", "object_id", "image")
         )
 
-        full_name = Concat(
-            F("model__user_first_name"), Value(" "), F("model__user_last_name"), output_field=CharField()
-        )
+        Concat(F("model__user_first_name"), Value(" "), F("model__user_last_name"), output_field=CharField())
 
         # get unique contributors and count the number of times they appear in the queryset
         nodes_qs = data.values("id", "label", "image").annotate(value=models.Count("id")).distinct()
@@ -212,11 +207,11 @@ class Contributor(models.Model):
 
         print("Nodes: ", nodes)
 
-        object_ids = set([d["object_id"] for d in data])
+        object_ids = {d["object_id"] for d in data}
 
         edges = []
         for obj in object_ids:
-            ids = list(set([i["id"] for i in data if i["object_id"] == obj]))
+            ids = list({i["id"] for i in data if i["object_id"] == obj})
 
             ids.sort()
 
@@ -248,34 +243,14 @@ class Contributor(models.Model):
         if self.user:
             return True
 
+    @property
+    def preferred_email(self):
+        if self.user:
+            return self.user.email
+        return self.organization.owner.user.email
+
     # def is_active(self):
     # """Returns True if the contributor is listed on a dataset that has been accepted in the past"""
-
-
-class Personal(Contributor):
-    objects = PersonalManager()
-
-    class Meta:
-        proxy = True
-        verbose_name = _("Personal Profile")
-        verbose_name_plural = _("Personal Profile")
-
-    def save(self, *args, **kwargs):
-        self.type = 0
-        super().save(*args, **kwargs)
-
-
-class Organizational(Contributor):
-    objects = OrganizationalManager()
-
-    class Meta:
-        proxy = True
-        verbose_name = _("Organizational")
-        verbose_name_plural = _("Organizational")
-
-    def save(self, *args, **kwargs):
-        self.type = 1  # default to "Organizational"
-        super().save(*args, **kwargs)
 
 
 class Contribution(django_models.Model):

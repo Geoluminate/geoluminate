@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.contrib.contenttypes.admin import GenericStackedInline
 from django.db.models import Count
 
+from geoluminate.contrib.core.admin import BaseAdmin
+
 from .models import Contribution, Contributor
 
 
@@ -24,10 +26,11 @@ class ContributorInline(admin.StackedInline):
 
 
 @admin.register(Contributor)
-class ContributorAdmin(admin.ModelAdmin):
+class ContributorAdmin(BaseAdmin):
     list_display = ["name", "about", "projects", "datasets", "samples"]
     search_fields = ["name"]
-    list_filter = ["type"]
+    frontend_editable_fields = ["image", "name", "about", "status"]
+    # list_filter = ["type"]
     inlines = [ContributionInline]
 
     def get_queryset(self, request):
@@ -51,6 +54,10 @@ class ContributorAdmin(admin.ModelAdmin):
         return obj.sample_count
 
 
+# c = ContributorAdmin(Contributor, admin.site)
+# print(c.get_urls())
+
+
 @admin.register(Contribution)
-class ContributionAdmin(admin.ModelAdmin):
+class ContributionAdmin(BaseAdmin):
     pass

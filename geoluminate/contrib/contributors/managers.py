@@ -3,6 +3,20 @@ from django.db import models
 from .choices import ContributionRoles
 
 
+class ContributorManager(models.QuerySet):
+    def active(self):
+        """Returns all contributors where either user.is_active is True or organization manager is not Null"""
+        return self.filter(models.Q(user__is_active=True) | models.Q(organization__owner__isnull=False))
+
+    def persons(self):
+        """Returns all personal contributors"""
+        return self.filter(user__isnull=False)
+
+    def organizations(self):
+        """Returns all organizations"""
+        return self.filter(organization__isnull=False)
+
+
 class ContributionManager(models.QuerySet):
     def by_role(self, role):
         """Returns all contributions with the given role"""
@@ -30,13 +44,3 @@ class ContributionManager(models.QuerySet):
     def samples(self):
         """Returns all samples"""
         return self.filter(content_type__model="sample")
-
-
-class PersonalManager(models.Manager):
-    def get_queryset(self):
-        return super().get_queryset().filter(type=0)
-
-
-class OrganizationalManager(models.Manager):
-    def get_queryset(self):
-        return super().get_queryset().filter(type=1)

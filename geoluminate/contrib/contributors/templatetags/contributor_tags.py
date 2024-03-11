@@ -1,5 +1,6 @@
 from django import template
-from django.db.models import QuerySet
+
+from ..utils import contributor_by_role
 
 register = template.Library()
 
@@ -13,14 +14,4 @@ def role(contributions, roles):
         contributions (list): A list of Contribution objects (e.g. list(Contribution.objects.all())).
         roles (str): A comma separated list of roles to filter by.
     """
-    roles = roles.split(",")
-    if isinstance(contributions, QuerySet):
-        return contributions.filter(role__in=roles)
-    elif isinstance(contributions, list):
-        matched = []
-        # contributions is a list of Contributions
-        for c in contributions:
-            if any(role in c.roles for role in roles):
-                matched.append(c)
-        return matched
-    return []
+    return contributor_by_role(contributions, roles)

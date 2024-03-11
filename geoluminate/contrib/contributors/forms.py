@@ -3,7 +3,6 @@ from django import forms
 from django.forms.models import ModelForm
 from django.utils.translation import gettext_lazy as _
 from django_select2.forms import Select2MultipleWidget
-from entangled.forms import EntangledModelForm
 from formset.widgets import Selectize, SelectizeMultiple, UploadedFileInput
 
 from geoluminate.contrib.core.choices import iso_639_1_languages
@@ -103,7 +102,7 @@ class AddContributorForm(ModelForm):
             "about",
         ]
 
-        widgets = {  # noqa: RUF012
+        widgets = {
             "image": UploadedFileInput,
             # "about": RichTextarea,
         }
@@ -124,7 +123,7 @@ class ContributionForm(ModelForm):
             "roles",
         ]
 
-        widgets = {  # noqa: RUF012
+        widgets = {
             "profile": Selectize(),
             "roles": SelectizeMultiple(),
         }

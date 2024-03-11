@@ -1,9 +1,45 @@
+from django.db.models import QuerySet
+
 from .models import Contributor
 
-# def add_current_user_as_contributor(sender, instance, created, **kwargs):
-#     """Add the current user as a contributor to the new dataset."""
 #     if created:
 #         instance.contributors.add(instance.user)
+
+
+def has_role(contributor, role):
+    """Returns True if the contributor has the specified role.
+
+    Args:
+        contributor (Contributor): A Contributor object.
+        role (str, list): The role/s to check for.
+
+    Returns:
+        bool: True if the contributor has the specified roles.
+    """
+    if isinstance(role, str):
+        role = [role]
+    return any(r in contributor.roles for r in role)
+
+
+def contributor_by_role(contributors, roles):
+    """Returns all contributors with the specified roles.
+
+    Args:
+
+        contributions (list): A list of Contribution objects (e.g. list(Contribution.objects.all())).
+        roles (str): A comma separated list of roles to filter by.
+    """
+    roles = roles.split(",")
+    if isinstance(contributors, QuerySet):
+        return contributors.filter(roles__in=roles)
+    elif isinstance(contributors, list):
+        matched = []
+        # contributions is a list of Contributions
+        for c in contributors:
+            if any(role in c.roles for role in roles):
+                matched.append(c)
+        return matched
+    return []
 
 
 def contributor_to_csljson(contributor):

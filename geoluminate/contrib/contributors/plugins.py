@@ -1,33 +1,31 @@
-from django.utils.translation import gettext as _
+from django.db import models
 from django.views.generic import DetailView, UpdateView
 from formset.views import FileUploadMixin, FormViewMixin
 
-from geoluminate.contrib.core.plugins import ActivityStream
-from geoluminate.contrib.datasets.views import DatasetListView
-from geoluminate.contrib.projects.views import ProjectListView
-from geoluminate.contrib.reviews.views import ReviewListView
+from geoluminate.contrib.datasets.views import DatasetPlugin
+from geoluminate.contrib.projects.views import ProjectPlugin
+from geoluminate.contrib.reviews.views import ReviewListView, ReviewPlugin
 from geoluminate.contrib.samples.views import BaseTableView, SampleTable
-from geoluminate.plugins import contributor
+from geoluminate.plugins import PluginRegistry
 from geoluminate.utils import icon
 
 from .forms import UserProfileForm
 from .models import Contributor
 from .views import ContributorDetailView
 
+contributor = PluginRegistry("contributor", base=ContributorDetailView)
 
-@contributor.page("overview", icon="fa-solid fa-address-card")
-class ContributorFormView(ContributorDetailView, FileUploadMixin, FormViewMixin, UpdateView):
+
+@contributor.page("overview", icon=icon("overview"))
+class ContributorOverview(ContributorDetailView, FileUploadMixin, FormViewMixin, UpdateView):
     model = Contributor
     form_class = UserProfileForm
+    # template_name = "contributors/contributor_overview.html"
     template_name = "contributors/contributor_detail.html"
-    # template_name = "contributors/contributor_form.html"
-    success_url = "."
 
-    def form_valid(self, form):
-        if extra_data := self.get_extra_data():
-            if extra_data.get("add") is True:
-                form.instance.save()
-        return super().form_valid(form)
+    def has_edit_permission(self):
+        """TODO: Add permissions."""
+        return self.get_object() == self.request.user.profile
 
 
 class ContributorNetworkView(ContributorDetailView, DetailView):
@@ -74,8 +72,9 @@ class ContributorNetworkView(ContributorDetailView, DetailView):
 
     def get_edges(self, qs, dataset_ids):
         edges = []
+        data = []  # not sure what this is for
         for obj in dataset_ids:
-            ids = list(set([i["id"] for i in data if i["object_id"] == obj]))
+            ids = list({i["id"] for i in data if i["object_id"] == obj})
             ids.sort()
 
             # get list of unique id pairs
@@ -91,19 +90,13 @@ class ContributorNetworkView(ContributorDetailView, DetailView):
 
 
 @contributor.page("projects", icon=icon("project"))
-class ContributorProjectsView(ContributorDetailView, ProjectListView):
-    def get_queryset(self, *args, **kwargs):
-        return self.get_object().projects.all()
+class ContributorProjectsView(ContributorDetailView, ProjectPlugin):
+    pass
 
 
 @contributor.page("datasets", icon=icon("dataset"))
-class ContributorDatasetsView(ContributorDetailView, DatasetListView):
-    # template_name = "datasets/dataset_list.html"
-    template_name = "datasets/plugin_list.html"
-
-    def get_queryset(self, *args, **kwargs):
-        # MAKE SURE THIS DISTINGUISHES BETWEEN PUBLIC AND PRIVATE DATASETS
-        return self.get_object().datasets.all()
+class ContributorDatasetsView(ContributorDetailView, DatasetPlugin):
+    pass
 
 
 @contributor.page("samples", icon=icon("sample"))
@@ -113,12 +106,8 @@ class ContributorSamplesView(ContributorDetailView, BaseTableView):
 
 
 @contributor.page("reviews", icon=icon("review"))
-class ContributorReviewsView(ContributorDetailView, ReviewListView):
-    header = _("Your Reviews")
-    template_name = "datasets/review_list.html"
-
-    def get_queryset(self):
-        return super().get_queryset().select_related("review").filter(review__reviewer=self.get_object().user)
+class ContributorReviewsView(ContributorDetailView, ReviewPlugin):
+    pass
 
 
 @contributor.page("activity", icon=icon("activity"))

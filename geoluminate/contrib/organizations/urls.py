@@ -1,5 +1,3 @@
-from django.urls import include, path
-
 # from .views.account import AccountEmailView
 
 # app_name = "organizations"

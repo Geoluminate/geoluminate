@@ -1,3 +1,4 @@
+from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 # from .managers import LocationManager
@@ -7,8 +8,6 @@ from organizations.abstract import (
     AbstractOrganizationOwner,
     AbstractOrganizationUser,
 )
-
-from geoluminate import models
 
 
 class Organization(AbstractOrganization):

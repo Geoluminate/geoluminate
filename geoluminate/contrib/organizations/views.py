@@ -1,6 +1,6 @@
 # import get_user_model
-from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.utils.translation import gettext as _
 from django.views.generic import ListView
 
 from geoluminate.contrib.organizations.models import Organization

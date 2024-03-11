@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
+from geoluminate.contrib.core.admin import BaseAdmin
+
 from .models import Invitation, Manager, Membership, Organization
 
 
@@ -16,7 +18,7 @@ class AdminInline(admin.StackedInline):
 
 
 @admin.register(Organization)
-class OrganizationAdmin(admin.ModelAdmin):
+class OrganizationAdmin(BaseAdmin):
     # inlines = [ManagerInline, AdminInline]
     pass
 

@@ -34,6 +34,7 @@ module.exports = {
     path: BundleOutputPath,
     publicPath: '/static/bundles/',
     filename: 'js/[name]-[fullhash].js',
+    filename: 'js/[name].js',
     chunkFilename: 'js/[name]-[hash].js',
   },
   plugins: [
@@ -42,7 +43,8 @@ module.exports = {
       filename: 'webpack-stats.json',
     }),
     new MiniCssExtractPlugin({
-      filename: 'css/[name].[contenthash].css'
+      // filename: 'css/[name].[contenthash].css'
+      filename: 'css/[name].css'
     }),
     new CopyWebpackPlugin({
       patterns: [{

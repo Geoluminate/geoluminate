@@ -1,6 +1,12 @@
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext as _
 
-from geoluminate.views import BaseDetailView, BaseFormView, BaseListView
+from geoluminate.contrib.core.view_mixins import ListPluginMixin
+from geoluminate.utils import icon
+from geoluminate.views import (
+    BaseDetailView,
+    BaseFormView,
+    BaseListView,
+)
 
 from .filters import DatasetFilter
 from .forms import DatasetForm
@@ -14,7 +20,6 @@ class DatasetCreateView(BaseFormView):
     This view inherits from `BaseFormView` and sets several attributes:
     - model: The model class that this view will create instances of. In this case, it's `Dataset`.
     - description: The title that will be displayed on the page. In this case, it's "Create a new dataset".
-    - help_text: Additional text that will be displayed on the page to help the user. In this case, it's `None`, so no help text will be displayed.
     - form_class: The form class that will be used for creating the new `Dataset` instance. In this case, it's `DatasetForm`.
 
     When a GET request is made to this view, it will render a form for creating a new `Dataset` instance.
@@ -40,16 +45,36 @@ class DatasetListView(BaseListView):
     When a GET request is made to this view, it will render a list of `Dataset` instances, filtered according to the `DatasetFilter` class and ordered by the `created` field in descending order.
     """
 
-    template_name = "datasets/dataset_list.html"
+    title = _("Datasets")
+    base_template = "datasets/dataset_list.html"
     object_template = "datasets/dataset_card.html"
     model = Dataset
     queryset = Dataset.objects.prefetch_related("contributors").order_by("-created")
     filterset_class = DatasetFilter
 
 
+class DatasetPlugin(ListPluginMixin):
+    template_name = "geoluminate/plugins/base_list.html"
+    object_template = "datasets/dataset_card.html"
+    title = name = _("Datasets")
+    icon = icon("dataset")
+    description = _("The following datasets are associated with the this project.")
+
+    def get_queryset(self, *args, **kwargs):
+        return self.get_object().datasets.all()
+
+
 class DatasetDetailView(BaseDetailView):
+    base_template = "datasets/dataset_detail.html"
     model = Dataset
     form_class = DatasetForm
+    sidebar_components = [
+        "core/sidebar/basic_info.html",
+        "datasets/sidebar/project.html",
+        "core/sidebar/keywords.html",
+        "core/sidebar/status.html",
+        "core/sidebar/summary.html",
+    ]
 
 
 class DatasetFormView(BaseFormView):

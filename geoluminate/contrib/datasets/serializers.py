@@ -1,6 +1,5 @@
 from rest_framework.fields import Field as Field
 from rest_framework.serializers import HyperlinkedModelSerializer
-from rest_framework_nested.serializers import NestedHyperlinkedModelSerializer
 
 from geoluminate.api.serializers import BaseSerializerMixin
 

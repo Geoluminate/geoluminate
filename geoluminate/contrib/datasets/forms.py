@@ -4,7 +4,6 @@ from django import forms
 from django.utils.translation import gettext as _
 from formset.collection import FormCollection
 from formset.fieldset import FieldsetMixin
-from literature import forms as lit_forms
 
 # from geoluminate.contrib.core.forms import DescriptionFormCollection
 from .models import Dataset

@@ -6,8 +6,8 @@ from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 from licensing.fields import LicenseField
 
-from geoluminate import models
-from geoluminate.contrib.core.models import Abstract
+from geoluminate.contrib.core.models import Abstract, FuzzyDate
+from geoluminate.db import models
 
 from . import choices
 
@@ -57,7 +57,7 @@ class Dataset(Abstract):
         on_delete=models.SET_NULL,
     )
 
-    license = LicenseField()
+    license = LicenseField(null=True, blank=True)
 
     _metadata = {
         "title": "title",
@@ -96,7 +96,7 @@ class Dataset(Abstract):
 
     @cached_property
     def status(self):
-        return random.choice(["In progress", "Completed", "Accepted", "Published"])
+        return random.choice(["In progress", "Completed", "Accepted", "Published"])  # noqa: S311
 
     def get_status_display(self):
         return self.status

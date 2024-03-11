@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from formset.widgets import SelectizeMultiple
 from taggit.models import Tag
 
-from geoluminate.contrib.core.choices import HAS_TAGS, NEEDS_TAGS
+from geoluminate.contrib.core.choices import HAS_TAGS
 
 from .models import Dataset
 
@@ -39,7 +39,6 @@ class ListFilterTop(df.FilterSet):
 
 
 class DatasetFilter(ListFilterTop):
-
     tags = df.MultipleChoiceFilter(
         label="Dataset Has",
         field_name="tags",

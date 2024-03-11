@@ -1,54 +1,43 @@
 from django.core.files.base import ContentFile
-from django.utils.translation import gettext as _
-from django.views.generic import TemplateView, UpdateView
+from django.views.generic import UpdateView
 from django_downloadview.views import VirtualDownloadView
 from formset.views import FileUploadMixin, FormViewMixin
 from lxml import etree
 
-from geoluminate.contrib.contributors.views import ContributionListView
+from geoluminate.contrib.contributors.views import ContributorsPlugin
 from geoluminate.contrib.core import utils
+from geoluminate.contrib.core.plugins import ActivityStream, Discussion, Map
 from geoluminate.contrib.samples.tables import SampleTable
-from geoluminate.plugins import dataset
+from geoluminate.plugins import PluginRegistry
 from geoluminate.utils import icon
 from geoluminate.views import BaseTableView
 
-from .models import Dataset
 from .views import DatasetDetailView
 
+dataset = PluginRegistry("datasets", base=DatasetDetailView)
 
-# @dataset.page("timeline", icon=icon("timeline"))
-@dataset.page("overview", icon="fas fa-book-open")
+
+@dataset.page("overview", icon=icon("overview"))
 class DatasetOverview(DatasetDetailView, FileUploadMixin, FormViewMixin, UpdateView):
-    model = Dataset
     template_name = "geoluminate/plugins/overview.html"
 
     def has_edit_permission(self):
         """TODO: Add permissions."""
-        # return self.request.user.is_superuser
-        return super().has_edit_permission()
-        return self.get_object().has_role(self.request.user, "Creator")
+        return self.object.has_role(self.request.user, "Creator")
 
 
-@dataset.page("measurements", icon=icon("measurement"))
-@dataset.page("contributors", icon=icon("contributors"))
-class DatasetContributorsView(DatasetDetailView, ContributionListView):
-    def get_queryset(self, *args, **kwargs):
-        return self.get_object().contributors.select_related("profile")
-
-    # def get_queryset(self, *args, **kwargs):
-    #     return self.get_object().contributors.select_related("profile")
+dataset.register_page(ContributorsPlugin)
 
 
 @dataset.page("samples", icon=icon("sample"))
 class DatasetSamplesView(DatasetDetailView, BaseTableView):
     table = SampleTable
     template_name = "auto_datatables/base.html"
-    # template_name = "empty.html"
 
 
-@dataset.page("activity", icon=icon("activity"))
-class DatasetActivityView(DatasetDetailView, TemplateView):
-    template_name = "geoluminate/plugins/activity_stream.html"
+dataset.register_page(Map)
+dataset.register_page(Discussion)
+dataset.register_page(ActivityStream)
 
 
 @dataset.action("flag", icon="fas fa-flag")
@@ -60,9 +49,9 @@ class XMLDownload(DatasetDetailView, VirtualDownloadView):
 
         # defining an XML parser that removes blank text so we can pretty print the output
         parser = etree.XMLParser(remove_blank_text=True)
-        root = etree.fromstring(utils.generate_xml(obj), parser)
+        root = etree.fromstring(utils.generate_xml(obj), parser)  # noqa: S320
 
         # Prettify the XML
         prettified_xml = etree.tostring(root, pretty_print=True, encoding="utf-8").decode("utf-8")
 
-        return ContentFile(prettified_xml, name=f"metadata.xml")
+        return ContentFile(prettified_xml, name="metadata.xml")

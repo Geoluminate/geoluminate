@@ -1,8 +1,8 @@
 from django.urls import include, path
 
 from geoluminate.contrib.contributors.urls import contribution_patterns
-from geoluminate.plugins import dataset
 
+from .plugins import dataset
 from .views import DatasetCreateView, DatasetFormView, DatasetListView
 
 app_name = "datasets"

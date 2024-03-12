@@ -12,7 +12,7 @@ services:
     build:
       context: .
       dockerfile: ./compose/geoluminate/local
-    image: local_django
+    image: geoluminate_django
     depends_on:
       - postgres
       - redis
@@ -38,16 +38,16 @@ services:
     build:
       context: .
       dockerfile: ./compose/postgres/Dockerfile
-    image: production_postgres
+    image: geoluminate/postgis:latest
     volumes:
       - postgres:/var/lib/postgresql/data
       - postgres_backups:/backups
     env_file:
       - ./.envs/.local/.postgres
-    logging:
-      options:
-        max-size: "10m"
-        max-file: "5"
+    # logging:
+    #   options:
+    #     max-size: "10m"
+    #     max-file: "5"
   redis:
     image: redis:6
     logging:
@@ -106,7 +106,7 @@ services:
     build:
       context: .
       dockerfile: ./compose/node/Dockerfile
-    image: local_node
+    image: geoluminate_node
     depends_on:
       - django
     volumes:

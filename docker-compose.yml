@@ -26,9 +26,7 @@ services:
     ports:
       - 8000:8000
       - 5678:5678
-    command:
-      - "python manage.py makemigrations"
-      - /app/bin/local/django
+    command: /app/bin/local/django
     entrypoint: /app/bin/entrypoint
 
   postgres:

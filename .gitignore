@@ -1,6 +1,6 @@
 minio/
 # **/migrations/*
-geoluminate/static/webpack_bundles/
+geoluminate/static/bundles/
 # webpack-stats.json
 Global/
 docs/_build
@@ -94,3 +94,22 @@ venv.bak/
 dist
 geoluminate/static/geoluminate/temp/*
 *.ipython
+assets/webpack-stats.json
+staticfiles/CACHE/css/stylesheet.0c7e1b93de6e.css
+staticfiles/CACHE/css/stylesheet.0c7e1b93de6e.css.gz
+staticfiles/CACHE/css/stylesheet.0e0f1ff11ed7.css
+staticfiles/CACHE/css/stylesheet.0e0f1ff11ed7.css.gz
+staticfiles/CACHE/css/stylesheet.45d42dcf4aa0.css
+staticfiles/CACHE/css/stylesheet.45d42dcf4aa0.css.gz
+staticfiles/CACHE/css/stylesheet.92ebeb430e8a.css
+staticfiles/CACHE/css/stylesheet.92ebeb430e8a.css.gz
+staticfiles/CACHE/css/stylesheet.b8c95c06aa8f.css
+staticfiles/CACHE/css/stylesheet.b8c95c06aa8f.css.gz
+staticfiles/CACHE/css/stylesheet.c37e32a646fc.css
+staticfiles/CACHE/css/stylesheet.c37e32a646fc.css.gz
+staticfiles/CACHE/css/stylesheet.d1548e1dc322.css
+staticfiles/CACHE/css/stylesheet.d1548e1dc322.css.gz
+staticfiles/CACHE/css/stylesheet.f2805c3261b1.css
+staticfiles/CACHE/css/stylesheet.f2805c3261b1.css.gz
+staticfiles/CACHE/css/variables.bcc0a380dfbf.css
+staticfiles/CACHE/css/variables.bcc0a380dfbf.css.gz

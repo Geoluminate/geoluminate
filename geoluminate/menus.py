@@ -7,7 +7,6 @@ from geoluminate.measurements import measurements
 from geoluminate.utils import icon
 
 LABELS = settings.GEOLUMINATE_LABELS
-ICONS = settings.GEOLUMINATE_ICONS
 
 
 class GeoluminateMenuBase:
@@ -45,7 +44,7 @@ Sidebar.add_item(
         title=LABELS["project"]["verbose_name_plural"],
         url=reverse("projects:list"),
         weight=1,
-        icon=ICONS["project"],
+        icon=icon("project"),
         description=_(
             "Discover conceptual, active, and archived research projects shared by our community members. Filter through diverse research interests, engage with active contributors, establish new connections and embark on collaborative journeys of discovery."
         ),
@@ -57,7 +56,7 @@ Sidebar.add_item(
         title=LABELS["dataset"]["verbose_name_plural"],
         url=reverse("datasets:list"),
         weight=2,
-        icon=ICONS["dataset"],
+        icon=icon("dataset"),
         description=_(
             "Delve into our extensive collection of quality-controlled datasets, spanning historical archives to recently published and upcoming releases. Filter through a diverse array of domain specific concepts and discover valuable resources for your future research endeavors."
         ),
@@ -69,7 +68,7 @@ Sidebar.add_item(
         title=LABELS["sample"]["verbose_name_plural"],
         url=reverse("samples:list"),
         weight=3,
-        icon=ICONS["sample"],
+        icon=icon("sample"),
         description=_(
             "Find exactly what you need to advance your data analytics workflow by exploring our extensive collection of samples. Filter through diverse sample types, measured properties, locations and more to find the perfect supplement for your current and future research."
         ),
@@ -81,7 +80,7 @@ Sidebar.add_item(
         title=_("Measurements"),
         url=reverse("viewer"),
         weight=4,
-        icon=ICONS["measurement"],
+        icon=icon("measurement"),
         children=measurements.menu,
     ),
 )
@@ -92,7 +91,7 @@ Sidebar.add_item(
         url=reverse("viewer"),
         weight=5,
         # icon="fa-map-marked-alt",
-        icon=ICONS["map"],
+        icon=icon("map"),
         description=_(
             "Explore our extensive collection of projects, datasets, samples and measurements using our interactive map and data viewer. Create complex filters, visualize data, and gain valuable insight into our database."
         ),
@@ -104,13 +103,13 @@ Sidebar.add_item(
         title=_("Literature"),
         url="/literature/",
         weight=6,
-        icon="fa-book",
+        icon=icon("literature"),
         children=[
             MenuItem(
                 title=_("GHFDB Catalogue"),
                 url=reverse("review:literature_list"),
                 weight=5,
-                icon="fa-book",
+                icon=icon("literature"),
                 description=_(
                     "Explore published and unpublished literature that are directly related to datasets hosted on this platform."
                 ),
@@ -145,7 +144,7 @@ Sidebar.add_item(
         title=_("API"),
         url=reverse("swagger-ui"),
         weight=8,
-        icon="fa-gears",
+        icon="fa-solid fa-gears",
         description=_(
             "Explore our API documentation to learn how to interact programatically with our database and access our extensive collection of datasets, samples, projects and more. Integrate our online resources into your custom applications, notebooks and workflows."
         ),

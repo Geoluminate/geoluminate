@@ -1,8 +1,11 @@
 minio/
 # **/migrations/*
-geoluminate/static/bundles/
+
+# would be nice to ignore these and build bundle in CI workflow
+# geoluminate/static/bundles/
+
+
 # webpack-stats.json
-Global/
 docs/_build
 docs/apidocs
 

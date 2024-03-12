@@ -1,7 +1,7 @@
 {% extends 'user/base.html' %}
 {% load i18n static geoluminate %}
 
-{% block modals %}
+{% block body_end %}
   <div class="modal fade"
        id="createEntityModal"
        tabindex="-1"
@@ -22,7 +22,7 @@
       </div>
     </div>
   </div>
-{% endblock modals %}
+{% endblock body_end %}
 
 {% block javascript %}
   <script src="{% static "el-pagination/js/el-pagination.js" %}" defer></script>

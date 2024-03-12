@@ -7,14 +7,14 @@
 
 
 
-{% addtoblock 'js' %}<script type="text/javascript" src="{% static "node_modules/vis-network/standalone/umd/vis-network.min.js" %}"></script>{% endaddtoblock %}
+{% addtoblock 'body_end' %}<script type="text/javascript" src="{% static "node_modules/vis-network/standalone/umd/vis-network.min.js" %}"></script>{% endaddtoblock %}
 
 <style type="text/css">
 #mynetwork {
   height: 600px;
 }
 </style>
-{% addtoblock 'js' %}
+{% addtoblock 'body_end' %}
 
 <script>
 

@@ -12,7 +12,7 @@
     <span class="d-none fs-6 pe-1">{% trans "Database Menu" %}</span>
   </button>
 </div>
-{% addtoblock "offcanvas" %}
+{% addtoblock "body_end" %}
 {% cache 500 sidebar %}
 {% spaceless %}
   <nav id="mainSidebar" class="offcanvas offcanvas-start" tabindex="-1">

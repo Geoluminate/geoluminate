@@ -1,4 +1,5 @@
-{% load static geoluminate django_htmx %}
+{% load static geoluminate django_htmx compress %}
+{% load render_bundle from webpack_loader %}
 
 <meta charset="utf-8" />
 <meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -9,3 +10,16 @@
 <link href="{% static 'formset/css/collections.css' %}" rel="stylesheet" />
 <script type="module" src="{% static 'formset/js/django-formset.js' %}" crossorigin="anonymous"></script>
 {% django_htmx_script %}
+{% compress css %}
+<link rel="stylesheet" type="text/x-scss" href="{% static "scss/stylesheet.scss" %}" />
+{% endcompress %}
+{% render_bundle 'project' 'css' 'GEOLUMINATE' %}
+
+
+{% comment %} JAVASCRIPT {% endcomment %}
+<script src={% static "vendors/jquery-3.7.1.min.js" %} defer></script>
+{% render_bundle 'bootstrap' 'js' 'GEOLUMINATE' attrs="defer" %}
+{% render_bundle 'htmx' 'js' 'GEOLUMINATE' attrs="defer" %}
+{% render_bundle 'justGage' 'js' 'GEOLUMINATE' attrs="defer" %}
+{% render_bundle 'project' 'js' 'GEOLUMINATE' attrs="defer" %}
+<script src="{% static "vendor/citation-js/citation.js" %}" defer></script>

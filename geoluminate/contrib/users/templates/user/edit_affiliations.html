@@ -1,20 +1,20 @@
 {% extends 'geoluminate/plugins/page.html' %}
-
 {% load i18n formsetify %}
 
-{% block title %}{% trans "Your Affiliations" %}{% endblock %}
+{% block title %}
+  {% trans "Your Affiliations" %}
+{% endblock title %}
 
 {% block content %}
-<div class='w-100'>
-  <django-formset endpoint="{{ request.path }}" csrf-token="{{ csrf_token }}">
-    {{ form }}
-    <button type="button" class="btn btn-primary"  df-click="submit({update: true}) -> proceed">{% trans "Update" %}</button>
-  </django-formset>
-</div>
-{{ form.media.js }}
+  <div class='w-100'>
+    <django-formset endpoint="{{ request.path }}" csrf-token="{{ csrf_token }}">
+      {{ form }}
+      <button type="button" class="btn btn-primary"  df-click="submit({update: true}) -> proceed">
+        {% trans "Update" %}
+      </button>
+    </django-formset>
+  </div>
+  {{ form.media.js }}
+{% endblock content %}
 
-{% endblock %}
-
-{% block scripts %}
-{{ form.media.js }}
-{% endblock %}
+{% block body_end %}{{ form.media.js }}{% endblock body_end %}

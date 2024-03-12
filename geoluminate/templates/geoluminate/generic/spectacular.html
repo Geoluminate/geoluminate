@@ -8,11 +8,11 @@
 {% block main %}
   <div id="swagger-ui" class='container'></div>
 
-  {% addtoblock "js" %}<script src="{% static "drf_spectacular_sidecar/swagger-ui-dist/swagger-ui-bundle.js" %}"></script>{% endaddtoblock %}
-  {% addtoblock "js" %}<script src="{% static "drf_spectacular_sidecar/swagger-ui-dist/swagger-ui-standalone-preset.js" %}"></script>{% endaddtoblock %}
+  {% addtoblock "body_end" %}<script src="{% static "drf_spectacular_sidecar/swagger-ui-dist/swagger-ui-bundle.js" %}"></script>{% endaddtoblock %}
+  {% addtoblock "body_end" %}<script src="{% static "drf_spectacular_sidecar/swagger-ui-dist/swagger-ui-standalone-preset.js" %}"></script>{% endaddtoblock %}
   {% if script_url %}
-    {% addtoblock "js" %}<script src="{{ script_url }}"></script>{% endaddtoblock %}
+    {% addtoblock "body_end" %}<script src="{{ script_url }}"></script>{% endaddtoblock %}
   {% else %}
-    {% addtoblock "js" %}<script>{% include template_name_js %}</script>{% endaddtoblock %}
+    {% addtoblock "body_end" %}<script>{% include template_name_js %}</script>{% endaddtoblock %}
   {% endif %}
   {% endblock  %}

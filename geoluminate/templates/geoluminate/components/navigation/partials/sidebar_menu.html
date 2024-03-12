@@ -1,38 +1,51 @@
-{% load geoluminate %}{% spaceless %}
-<div class="menu-group">
-  {% for item in menus.sidebar %}
-    {% if item.visible %}
-      <div class="menu-item" {% if item.description %}
-          data-bs-toggle="popover" data-bs-placement="right"
-          data-bs-title="{{ item.title }}"
-          data-bs-content="{{ item.description }}"{% endif %}
-          >
+{% load geoluminate %}
+
+{% spaceless %}
+  <div class="list-group list-group-flush accordion accordion-flush">
+    {% for item in menus.sidebar %}
+      {% if item.visible %}
         {% if item.children %}
           {% with item.title|slugify as target %}
-            <button class="menu-item-action collapsed children {% is_active item.url %}" type="button" data-bs-toggle="collapse" data-bs-target="#{{ target }}" aria-expanded="false" aria-controls="collapseOne">
-              <i class="fas {{ item.icon }}"></i>
-              {{ item.title }}
-            </button>
-            <div id="{{ target }}" class="menu-item collapse" aria-labelledby="headingOne">
-              <div class="menu-group">
-                <div class="menu-item m-1 border rounded">
-                  {% for link in item.children %}
-                    <a href="{{ link.url }}" class="menu-item-action {% is_active item.url %}"{% if link.description %}
-                    data-bs-toggle="popover" data-bs-placement="right"
-                    data-bs-title="{{ link.title }}"
-                    data-bs-content="{{ link.description }}"{% endif %}>{{ link.title }}</a>
-                  {% endfor %}
-                </div>
+            <div class="list-group-item list-group-item-flush p-0">
+              <div class="accordion-header">
+                <button class="accordion-button px-3 py-2 collapsed children {% is_active item.url %}"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#{{ target }}"
+                        aria-expanded="false"
+                        aria-controls="{{ target }}">
+                  <div style="width:28px">
+                    <i class="{{ item.icon }}"></i>
+                  </div>
+                  <span id="{{ target }}Heading"></span>
+                  {{ item.title }}
+                </button>
+              </div>
+              <div id="{{ target }}" class="list-group m-2 collapse" aria-labelledby="{{ target }}Heading">
+                {% for link in item.children %}
+                  <a href="{{ link.url }}"
+                     class="list-group-item list-group-item-action d-flex {% is_active item.url %}"
+                     {% if link.description %} data-bs-toggle="popover" data-bs-placement="right" data-bs-title="{{ link.title }}" data-bs-content="{{ link.description }}"{% endif %}>
+                    <div style="width:22px">
+                      <i class="{{ link.icon }}"></i>
+                    </div>
+                    {{ link.title }}
+                  </a>
+                {% endfor %}
               </div>
             </div>
           {% endwith %}
         {% else %}
-          <a href="{{ item.url }}" class="menu-item-action {% is_active item.url %}">
-            <i class="fas {{ item.icon }}"></i>
+          <a href="{{ item.url }}"
+             class="list-group-item list-group-item-action d-flex {% is_active item.url %}"
+             {% if item.description %} data-bs-toggle="popover" data-bs-placement="right" data-bs-title="{{ item.title }}" data-bs-content="{{ item.description }}"{% endif %}>
+            <div style="width:28px">
+              <i class="{{ item.icon }}"></i>
+            </div>
             {{ item.title }}
           </a>
         {% endif %}
-      </div>
-    {% endif %}
-  {% endfor %}
-</div>{% endspaceless %}
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endspaceless %}

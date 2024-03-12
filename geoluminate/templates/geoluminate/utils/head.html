@@ -11,11 +11,9 @@
 <script type="module" src="{% static 'formset/js/django-formset.js' %}" crossorigin="anonymous"></script>
 {% django_htmx_script %}
 {% compress css %}
-<link rel="stylesheet" type="text/x-scss" href="{% static "scss/stylesheet.scss" %}" />
+  <link rel="stylesheet" type="text/x-scss" href="{% static "scss/stylesheet.scss" %}" />
 {% endcompress %}
 {% render_bundle 'project' 'css' 'GEOLUMINATE' %}
-
-
 {% comment %} JAVASCRIPT {% endcomment %}
 <script src={% static "vendors/jquery-3.7.1.min.js" %} defer></script>
 {% render_bundle 'bootstrap' 'js' 'GEOLUMINATE' attrs="defer" %}

@@ -2,21 +2,21 @@
 {% load crispy_forms_tags i18n %}
 
 {% block content %}
-<section id='main' class='container'>
-  <section>
-    <div class='row'>
-      <div class='col-12 col-md-2'>
-        {% comment %} <ul>
+  <section id='main' class='container'>
+    <section>
+      <div class='row'>
+        <div class='col-12 col-md-2'>
+          {% comment %} <ul>
           <li><a href="{% url 'account' %}">{% trans "Settings" %}</a></li>
-        </ul> {% endcomment %}
-      </div>
-      <div class='col-12 col-md-10'>
-        <div class='container border-left'>
-          {% block profile_content %}{% endblock %}
+          </ul> {% endcomment %}
+        </div>
+        <div class='col-12 col-md-10'>
+          <div class='container border-left'>
+            {% block profile_content %}{% endblock %}
+
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   </section>
-</section>
-
 {% endblock content %}

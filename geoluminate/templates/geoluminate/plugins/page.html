@@ -3,7 +3,7 @@
 <div class='container py-3'>
   {% block header %}
     <header class="page-header {% block page_header_css %}page-layout{% endblock %}
-      ">
+       ">
       <h1 class='display-1'>
         {% block title %}{{ meta.title }}{% endblock %}
 
@@ -28,4 +28,5 @@
 
   </div>
 </div>
-{% block body_end %}{% endblock body_end %}
+{% block body_end %}
+{% endblock body_end %}

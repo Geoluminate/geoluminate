@@ -1,33 +1,29 @@
 {% load geoluminate %}
+
 <ul class="nav nav-pills nav-pills-alternate d-print-none" id="pageMenu" role="tablist">
   {% for item in page_menu %}
-  <li class="nav-item" role="presentation">
-    <a href="{{ item.resolved }}"
-      class="nav-link {{ item.extra_classes }} {% if forloop.first %}active{% endif %}"
-      hx-get="{{ item.resolved }}"
-      {% for key, val in htmx.items %}
-      hx-{{ key }}="{{ val }}"
-      {% endfor %}
-      hx-replace-url="{{ item.resolved }}"
-      data-bs-toggle="tab"
-      role="tab">
+    <li class="nav-item" role="presentation">
+      <a href="{{ item.resolved }}" class="nav-link {{ item.extra_classes }} {% if forloop.first %}active{% endif %}" hx-get="{{ item.resolved }}" {% for key, val in htmx.items %}hx-{{ key }}="{{ val }}"{% endfor %} hx-replace-url="{{ item.resolved }}" data-bs-toggle="tab" role="tab">
         <i class="fas {{ item.icon }}"></i>
         <span class='d-none d-md-inline-block'>{{ item.title }}</span>
-    </a>
-  </li>
+      </a>
+    </li>
   {% endfor %}
-
-<div class='ms-auto d-inline-flex'>
-  <li class="nav-item">
-    <a href="#map-panel" class="btn list-item" role="button" data-bs-toggle="tab" aria-expanded="false">
-      {% icon 'map' class="me-2" %}
-    </a>
-  </li>
-  <li class="nav-item">
-    <a href="#discussion-panel" class="btn list-item" role="button" data-bs-toggle="offcanvas" aria-expanded="false">
-      {% icon 'discussion' class="me-2" %}
-    </a>
-  </li>
-  {% if page_actions %}{% include "menu/page_actions.html" %}{% endif %}
-</ul>
+  <div class='ms-auto d-inline-flex'>
+    <li class="nav-item">
+      <a href="#map-panel" class="btn list-item" role="button" data-bs-toggle="tab" aria-expanded="false">
+        {% icon 'map' class="me-2" %}
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="#discussion-panel"
+         class="btn list-item"
+         role="button"
+         data-bs-toggle="offcanvas"
+         aria-expanded="false">{% icon 'discussion' class="me-2" %}</a>
+    </li>
+    {% if page_actions %}
+      {% include "menu/page_actions.html" %}
+    {% endif %}
+  </ul>
 </div>

@@ -1,14 +1,19 @@
 <li class="nav-item" role="presentation">
-  <a href="{{ item.resolved }}"  class="btn list-item {{ item.extra_classes }}"
-    role="button" data-bs-toggle="dropdown" aria-expanded="false">
-      <i class="fas fa-ellipsis-vertical"></i>
+  <a href="{{ item.resolved }}"
+     class="btn list-item {{ item.extra_classes }}"
+     role="button"
+     data-bs-toggle="dropdown"
+     aria-expanded="false">
+    <i class="fas fa-ellipsis-vertical"></i>
   </a>
   <ul class="dropdown-menu">
     {% for item in page_actions %}
-    <li><a href="{{ item.resolved }}" class="dropdown-item">
-      <i class="fas {{ item.icon }}"></i>
-      {{ item.title }}
-    </a></li>
+      <li>
+        <a href="{{ item.resolved }}" class="dropdown-item">
+          <i class="fas {{ item.icon }}"></i>
+          {{ item.title }}
+        </a>
+      </li>
     {% endfor %}
   </ul>
 </li>

@@ -1,6 +1,7 @@
 {% extends "reviews/review_form.html" %}
-
 {% block content %}
-{{ block.super }}
-<p>The following literature item has been reviewed and the <a href="{{ object.dataset.get_absolute_url }}">newly created dataset</a> has been submitted for approval by {{ object.reviewer }}. Please take the time to carefully look over the new dataset before either approving or rejecting this submission.</p>
+  {{ block.super }}
+  <p>
+    The following literature item has been reviewed and the <a href="{{ object.dataset.get_absolute_url }}">newly created dataset</a> has been submitted for approval by {{ object.reviewer }}. Please take the time to carefully look over the new dataset before either approving or rejecting this submission.
+  </p>
 {% endblock %}

@@ -1,27 +1,44 @@
 {% load i18n geoluminate %}
 
-
-<div class="dcsic_wrapper{% if current_img_url %} has_image{% endif %}" data-res-width="{{ widget.res_width }}" data-res-height="{{ widget.res_height }}" data-res-format="{{ widget.res_format }}" data-res-quality="{{ widget.res_quality }}">
-  <div class='image-wrapper position-relative' style="width: {{ widget.preview_width }}px; height: {{ widget.preview_height }}px">
-      <input type="hidden" name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %}{% if original_uploaded_data %} value="{{ original_uploaded_data }}"{% endif %}>
-      <img src="{{ current_img_url }}" class="dcsic_current_img" style="width: {{ widget.preview_width }}px; height: {{ widget.preview_height }}px " />
-      {% avatar width=widget.preview_width|addstr:"px" class="missing_image" %}
-      <div class="dropdown position-absolute end-0 bottom-0 mb-2">
-          <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class='fa-solid fa-pencil'></i>
-              {% trans "Edit" %}
-          </button>
-          <ul class="dropdown-menu">
-            <label class='w-100'>
-                <li class="dcsic_choose_img"><span class="dropdown-item">{% trans "Choose image" %}</span></li>
-                <li class="dcsic_choose_other_img"><span class=" dropdown-item">{% trans "Choose other image" %}</span></li>
-                {% if input_clearable %}
-                <li class="dcsic_delete_image"><span class=" dropdown-item">{% trans "Delete image" %}</span></li>
-                {% endif %}
-                <input type="file" class="dcsic_file_input" accept="image/*"/>
-            </label>
-          </ul>
-      </div>
+<div class="dcsic_wrapper{% if current_img_url %} has_image{% endif %}"
+     data-res-width="{{ widget.res_width }}"
+     data-res-height="{{ widget.res_height }}"
+     data-res-format="{{ widget.res_format }}"
+     data-res-quality="{{ widget.res_quality }}">
+  <div class='image-wrapper position-relative'
+       style="width: {{ widget.preview_width }}px;
+              height: {{ widget.preview_height }}px">
+    <input type="hidden"
+           name="{{ widget.name }}"
+           {% include "django/forms/widgets/attrs.html" %}
+           {% if original_uploaded_data %}value="{{ original_uploaded_data }}"{% endif %} />
+    <img src="{{ current_img_url }}"
+         class="dcsic_current_img"
+         style="width: {{ widget.preview_width }}px;
+                height: {{ widget.preview_height }}px" />
+    {% avatar width=widget.preview_width|addstr:"px" class="missing_image" %}
+    <div class="dropdown position-absolute end-0 bottom-0 mb-2">
+      <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class='fa-solid fa-pencil'></i>
+        {% trans "Edit" %}
+      </button>
+      <ul class="dropdown-menu">
+        <label class='w-100'>
+          <li class="dcsic_choose_img">
+            <span class="dropdown-item">{% trans "Choose image" %}</span>
+          </li>
+          <li class="dcsic_choose_other_img">
+            <span class=" dropdown-item">{% trans "Choose other image" %}</span>
+          </li>
+          {% if input_clearable %}
+            <li class="dcsic_delete_image">
+              <span class=" dropdown-item">{% trans "Delete image" %}</span>
+            </li>
+          {% endif %}
+          <input type="file" class="dcsic_file_input" accept="image/*" />
+        </label>
+      </ul>
+    </div>
   </div>
 </div>
 <div class="dcsic_overlay modal">

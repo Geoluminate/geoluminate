@@ -1,7 +1,6 @@
 {% extends "geoluminate/base/base_list.html" %}
-
 {% block description %}
-<p class='page-description'>
-The projects listed here have been created by community members looking to share their past, present and future projects with the community. Creating and sharing projects is a great way to showcase your previous work, update the community on your current research and potentially establish new collaborative partnerships. If you have a project you would like to share, head to your <a href="{{user.get_absolute_url}}">contributor profile</a> and find the "Projects" tab to get started now.
-</p>
+  <p class='page-description'>
+    The projects listed here have been created by community members looking to share their past, present and future projects with the community. Creating and sharing projects is a great way to showcase your previous work, update the community on your current research and potentially establish new collaborative partnerships. If you have a project you would like to share, head to your <a href="{{ user.get_absolute_url }}">contributor profile</a> and find the "Projects" tab to get started now.
+  </p>
 {% endblock %}

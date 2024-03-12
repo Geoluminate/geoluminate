@@ -1,19 +1,28 @@
 {% extends "base.html" %}
-
 {% block main %}
+  <div class='container py-3'>
+    <header class="page-header {% block page_header_css %}page-layout{% endblock %}
+       ">
+      <h1>
+        {% block title %}{% endblock %}
 
-<div class='container py-3'>
-  <header class="page-header {% block page_header_css %}page-layout{% endblock %}">
-    <h1>{% block title %}{% endblock %}</h1>
-    <div class='toolbar'>
-      <div class="toolbar-left">{% block toolbar_left %}{% endblock %}</div>
-      <div class="toolbar-right">{% block toolbar_right %}{% endblock %}</div>
+      </h1>
+      <div class='toolbar'>
+        <div class="toolbar-left">
+          {% block toolbar_left %}{% endblock %}
+
+        </div>
+        <div class="toolbar-right">
+          {% block toolbar_right %}{% endblock %}
+
+        </div>
+      </div>
+    </header>
+    <div>
+      {% block help_text %}{% endblock %}
+
+      {% block content %}{% endblock %}
+
     </div>
-  </header>
-  <div>
-    {% block help_text %}{% endblock %}
-    {% block content %}{% endblock %}
   </div>
-</div>
-
 {% endblock %}

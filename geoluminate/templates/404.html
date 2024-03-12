@@ -1,8 +1,16 @@
-{% extends "geoluminate/layout/full_screen_form.html" %}{% load i18n %}
+{% extends "geoluminate/layout/full_screen_form.html" %}
+{% load i18n %}
 
-{% block title %}{% trans "Page Not Found!" %}{% endblock %}
-{% block page_title %}{% trans "Page Not Found!" %}{% endblock %}
+{% block title %}
+  {% trans "Page Not Found!" %}
+{% endblock %}
+
+{% block page_title %}
+  {% trans "Page Not Found!" %}
+{% endblock %}
 
 {% block content %}
-<p>{% trans "We're sorry, but the page or resource you're looking for couldn't be found. It might have been moved, deleted, or never existed in the first place. Double-check the URL or try navigating back to our homepage. If you're still having trouble, feel free to contact us for more information." %}</p>
+  <p>
+    {% trans "We're sorry, but the page or resource you're looking for couldn't be found. It might have been moved, deleted, or never existed in the first place. Double-check the URL or try navigating back to our homepage. If you're still having trouble, feel free to contact us for more information." %}
+  </p>
 {% endblock %}

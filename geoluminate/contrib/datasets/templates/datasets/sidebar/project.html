@@ -1,9 +1,8 @@
 {% extends "geoluminate/components/sidebar/card.html" %}
 {% load i18n geoluminate %}
 
-{% block title %}{% trans "Project" %}{% endblock %}
-
-{% block content %}
-<a href="{{ object.project.get_absolute_url}}">
-  {{ object.project }}</a>
+{% block title %}
+  {% trans "Project" %}
 {% endblock %}
+
+{% block content %}<a href="{{ object.project.get_absolute_url }}">{{ object.project }}</a>{% endblock %}

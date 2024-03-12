@@ -3,16 +3,27 @@
 
 {% block page_header %}{% endblock %}
 
-{% block title %}{{ geoluminate.database.acronym }} API{% endblock title %}
+{% block title %}
+  {{ geoluminate.database.acronym }} API
+{% endblock title %}
 
 {% block main %}
   <div id="swagger-ui" class='container'></div>
-
-  {% addtoblock "body_end" %}<script src="{% static "drf_spectacular_sidecar/swagger-ui-dist/swagger-ui-bundle.js" %}"></script>{% endaddtoblock %}
-  {% addtoblock "body_end" %}<script src="{% static "drf_spectacular_sidecar/swagger-ui-dist/swagger-ui-standalone-preset.js" %}"></script>{% endaddtoblock %}
+  {% addtoblock "body_end" %}
+  <script src="{% static "drf_spectacular_sidecar/swagger-ui-dist/swagger-ui-bundle.js" %}"></script>{% endaddtoblock %}
+  {% addtoblock "body_end" %}
+  <script src="{% static "drf_spectacular_sidecar/swagger-ui-dist/swagger-ui-standalone-preset.js" %}"></script>{% endaddtoblock %}
   {% if script_url %}
-    {% addtoblock "body_end" %}<script src="{{ script_url }}"></script>{% endaddtoblock %}
+    {% addtoblock "body_end" %}
+    <script src="{{ script_url }}"></script>{% endaddtoblock %}
   {% else %}
-    {% addtoblock "body_end" %}<script>{% include template_name_js %}</script>{% endaddtoblock %}
-  {% endif %}
-  {% endblock  %}
+    {% addtoblock "body_end" %}
+    <script>
+         {
+              %
+              include template_name_js %
+         }
+    </script>
+  {% endaddtoblock %}
+{% endif %}
+{% endblock %}

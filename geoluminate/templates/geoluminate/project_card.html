@@ -2,5 +2,5 @@
 {% load i18n contributor_tags %}
 
 {% block subtitle %}
-{% include "contributors/names_list.html" with contributors=obj.get_contributors|role:"ProjectLeader" %}
+  {% include "contributors/names_list.html" with contributors=obj.get_contributors|role:"ProjectLeader" %}
 {% endblock %}

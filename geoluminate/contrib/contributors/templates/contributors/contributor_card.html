@@ -1,38 +1,43 @@
 {% extends "geoluminate/base/card.html" %}
 {% load i18n geoluminate %}
 
-
-{% block image %}{% endblock image %}
+{% block image %}
+{% endblock image %}
 
 {% block title %}
   {% avatar obj width="1rem" class='card-img-top shadow-sm rounded-circle object-fit-contain align-items-middle' %}
   <span class='ms-2'>{{ obj }}</span>
 {% endblock %}
 
-
-
 {% block list_group %}
-<li>{% trans "Status" %}: <span class='badge text-bg-success'>Master</span></li>
-
-{% if obj.user %}
-  <li>{% trans "Joined" %}: <span>{{obj.user.date_joined|date:"M Y"|default:"-"}}</span></li>
+  <li>
+    {% trans "Status" %}: <span class='badge text-bg-success'>Master</span>
+  </li>
+  {% if obj.user %}
+    <li>
+      {% trans "Joined" %}: <span>{{ obj.user.date_joined|date:"M Y"|default:"-" }}</span>
+    </li>
   {% else %}
-  <li>{% trans "Joined" %}: <span>{{obj.created|date:"M Y"|default:"-"}}</span></li>
-{% endif %}
-<li>{% trans "Datasets" %}: <span>{{obj.contributions.datasets.count|default:"-"}}</span></li>
-<li>{% trans "Samples" %}: <span>{{obj.contributions.samples.count|default:"-"}}</span></li>
+    <li>
+      {% trans "Joined" %}: <span>{{ obj.created|date:"M Y"|default:"-" }}</span>
+    </li>
+  {% endif %}
+  <li>
+    {% trans "Datasets" %}: <span>{{ obj.contributions.datasets.count|default:"-" }}</span>
+  </li>
+  <li>
+    {% trans "Samples" %}: <span>{{ obj.contributions.samples.count|default:"-" }}</span>
+  </li>
 {% endblock list_group %}
 
-
 {% block description %}
-{% with obj.about as description %}
-{% if description %}
-  {{ description|truncatewords_html:100 }}
-{% else %}
-  {% blocktrans %}
+  {% with obj.about as description %}
+    {% if description %}
+      {{ description|truncatewords_html:100 }}
+    {% else %}
+      {% blocktrans %}
   No abstract has been provided for this {{ obj_name }} yet.
   {% endblocktrans %}
-{% endif %}
-{% endwith %}
-
+    {% endif %}
+  {% endwith %}
 {% endblock description %}

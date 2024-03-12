@@ -1,5 +1,4 @@
 {% extends "geoluminate/base/card.html" %}
-
 {% load i18n geoluminate %}
 
 {% block pretitle %}
@@ -10,12 +9,15 @@
     </h6>
   {% endwith %}
 {% endblock pretitle %}
+
 {% block card_head_status %}
   <span class="badge text-bg-primary {{ obj.review.status|slugify }}">{{ obj.review.get_status_display|default:"Open" }}</span>
 {% endblock card_head_status %}
+
 {% block subtitle %}
   <span class='text-muted'>{{ obj.authors }}</span>
 {% endblock subtitle %}
+
 {% block card_left %}
   <h6>{% trans "Submitted" %}:</h6>
   <span>{{ obj.review.submitted|date|default:"-" }}</span>
@@ -24,6 +26,7 @@
   <h6>{% trans "Database Release" %}:</h6>
   <span class='ms-2'>{{ geoluminate.database.name }} v{% now "Y" %}.1</span>
 {% endblock %}
+
 {% comment %} {% block footer_info %}
   {% trans "Release" %}: <span class='ms-2'>{{ geoluminate.database.name }} v{% now "Y" %}.1</span>
 {% endblock footer_info %} {% endcomment %}

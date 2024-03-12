@@ -1,7 +1,8 @@
 {% extends "geoluminate/base/card.html" %}
-{% load i18n static contributor_tags literature  %}
+{% load i18n static contributor_tags literature %}
 
 {% block pretitle %}<h6 class="mb-1">{{ obj|CSL:"container-title" }}</h6>{% endblock %}
+
 {% block title_link %}
   {% if obj.CSL.URL %}<a href="{{ obj.CSL.URL }}" class='text-decoration-none'>{% endif %}
     <h5 class="card-title">
@@ -9,6 +10,7 @@
     </h5>
     {% if obj.CSL.URL %}</a>{% endif %}
 {% endblock %}
+
 {% block subtitle %}
   {% for author in obj.CSL.author %}
     {% if author.ORCID %}
@@ -20,6 +22,7 @@
     {% if not forloop.last %}|{% endif %}
   {% endfor %}
 {% endblock %}
+
 {% block list_group %}
   {% if not obj.review %}
     <li>
@@ -46,14 +49,17 @@
     {% trans "Dataset" %}: <a href="{{ obj.review.get_absolute_url }}" class="float-end"><i class='fa-solid fa-folder-open text-primary'></i></a>
   </li>
 {% endblock list_group %}
+
 {% block actions %}
   {% if not obj.review %}
     <a href="{% url "review:accept-literature" pk=obj.pk %}" class='btn btn-success'>{% trans "Review now" %}</a>
   {% endif %}
 {% endblock actions %}
+
 {% block info %}
   {% trans "Date Added" %}: <span>{{ obj.created|date:"dS M, Y" }}</span>
 {% endblock info %}
+
 {% block description %}
   {% with obj.CSL.abstract as description %}
     {% if description %}

@@ -1,13 +1,15 @@
 {% extends "account/base.html" %}
 {% load i18n %}
 
-{% block title %}{% trans "Sign In" %}{% endblock %}
+{% block title %}
+  {% trans "Sign In" %}
+{% endblock %}
 
 {% block content %}
-<div class='alert alert-primary'>
-  {% trans "Don't have an account yet?" %}
-  <a href="{{ signup_url }}">{% trans "Register here" %}</a>.
-</div>
-<h5 class="mb-3">{% trans "Sign In" %}</h5>
-{% include "user/login.html" %}
+  <div class='alert alert-primary'>
+    {% trans "Don't have an account yet?" %}
+    <a href="{{ signup_url }}">{% trans "Register here" %}</a>.
+  </div>
+  <h5 class="mb-3">{% trans "Sign In" %}</h5>
+  {% include "user/login.html" %}
 {% endblock %}

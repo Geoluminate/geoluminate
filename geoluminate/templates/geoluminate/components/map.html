@@ -1,27 +1,31 @@
 {% extends "base.html" %}
 {% load i18n static sekizai_tags %}
+
 {% comment %} {% block title %}{{ geoluminate.database.acronym }} {% trans "Explorer" %}{% endblock title %} {% endcomment %}
-
 {% block main %}
-<style>
-  main.page {
-    position: initial;
-  }
-  .sidebar {
-    background-color: unset !important;
-    background-image: none !important;
-    border: none !important;
-  }
-</style>
+  <style>
+    main.page {
+      position: initial;
+    }
 
-<div id='app' class='w-100 h-100 whfd-mapping'>
-  <div id='shadow'></div>
-</div>
-
-{% addtoblock "css" %}<script defer src="{% static 'node_modules/whfd-mapping/dist/js/chunk-vendors.4647a0a9.js' %}"></script>{% endaddtoblock %}
-{% addtoblock "css" %}<script defer src="{% static 'node_modules/whfd-mapping/dist/js/app.05299df0.js' %}"></script>{% endaddtoblock %}
-
-
-{% addtoblock "css" %}<link href="{% static 'node_modules/whfd-mapping/dist/css/chunk-vendors.5b557d9a.css' %}" rel="stylesheet">{% endaddtoblock %}
-{% addtoblock "css" %}<link href="{% static 'node_modules/whfd-mapping/dist/css/app.d8608ffa.css' %}" rel="stylesheet">{% endaddtoblock %}
+    .sidebar {
+      background-color: unset !important;
+      background-image: none !important;
+      border: none !important;
+    }
+  </style>
+  <div id='app' class='w-100 h-100 whfd-mapping'>
+    <div id='shadow'></div>
+  </div>
+  {% addtoblock "css" %}
+  <script defer src="{% static 'node_modules/whfd-mapping/dist/js/chunk-vendors.4647a0a9.js' %}"></script>{% endaddtoblock %}
+  {% addtoblock "css" %}
+  <script defer src="{% static 'node_modules/whfd-mapping/dist/js/app.05299df0.js' %}"></script>{% endaddtoblock %}
+  {% addtoblock "css" %}
+  <link href="{% static 'node_modules/whfd-mapping/dist/css/chunk-vendors.5b557d9a.css' %}"
+        rel="stylesheet" />
+{% endaddtoblock %}
+{% addtoblock "css" %}
+<link href="{% static 'node_modules/whfd-mapping/dist/css/app.d8608ffa.css' %}" rel="stylesheet" />
+{% endaddtoblock %}
 {% endblock %}

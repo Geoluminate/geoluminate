@@ -1,6 +1,11 @@
 {% load static sekizai_tags i18n authentication %}
 
-<div id="createAccountModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
+<div id="createAccountModal"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="loginModal"
+     aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       {% include 'geoluminate/modals/header.html' with header='Register' %}
@@ -8,29 +13,28 @@
         <p class='mb-3'>Register for an account!</p>
         {% authentication_form "signup" %}
         <div class="modal-footer">
-          <input form='signupForm' type="submit" name="submit" value="{% trans "Confirm" %}" class="btn btn-primary">
+          <input form='signupForm' type="submit" name="submit" value="{% trans "Confirm" %}" class="btn btn-primary" />
         </div>
       </div>
     </div>
   </div>
 </div>
+{% addtoblock "body_end" %}
+<script>
+     $("#signupForm").on('submit', function(e) {
+          e.preventDefault();
 
-{% addtoblock "body_end" %}<script>
-  $("#signupForm").on('submit', function(e) {
-    e.preventDefault();
-
-    var form = $(this);
-    $.post({
-        url: form.attr('action'),
-        data: form.serialize(),
-        success: function(data)
-        {
-          $("#createAccountModal .modal-body").replaceWith(data.html)
-        },
-        error: function(data)
-        {
-          form.replaceWith(data.responseJSON.form)
-        },
-    });
-  });
-    </script>{% endaddtoblock %}
+          var form = $(this);
+          $.post({
+               url: form.attr('action'),
+               data: form.serialize(),
+               success: function(data) {
+                    $("#createAccountModal .modal-body").replaceWith(data.html)
+               },
+               error: function(data) {
+                    form.replaceWith(data.responseJSON.form)
+               },
+          });
+     });
+</script>
+{% endaddtoblock %}

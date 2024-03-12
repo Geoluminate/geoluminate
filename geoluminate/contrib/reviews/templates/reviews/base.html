@@ -1,16 +1,13 @@
 {% extends "base.html" %}
-
-
-
 {% block main %}
+  <div class='container'>
+    <header>
+      <h1 class='display-1'>{{ object }}</h1>
+    </header>
+    {% if view.help_text %}{{ view.help_text }}{% endif %}
+    {% block content %}{% endblock %}
 
+    {% block form %}{% endblock %}
 
-<div class='container'>
-  <header>
-    <h1 class='display-1'>{{object}}</h1>
-  </header>
-  {% if view.help_text %}{{view.help_text}}{% endif %}
-  {% block content %}{% endblock %}
-  {% block form %}{% endblock %}
-</div>
+  </div>
 {% endblock %}

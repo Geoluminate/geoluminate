@@ -2,13 +2,16 @@
 {% load i18n %}
 
 {% block content %}
-<div class='container'>
- <h1 class='title'>{% block label %}{% endblock %}</h1>
- <div>
-  <p>
-   {% block message %}{% endblock %}
- </p>
- </div>
+  <div class='container'>
+    <h1 class='title'>
+      {% block label %}{% endblock %}
 
-</div>
+    </h1>
+    <div>
+      <p>
+        {% block message %}{% endblock %}
+
+      </p>
+    </div>
+  </div>
 {% endblock content %}

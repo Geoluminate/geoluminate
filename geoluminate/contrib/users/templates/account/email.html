@@ -2,12 +2,9 @@
 {% load i18n crispy_forms_tags %}
 {% load formsetify %}
 
-
 {% comment %} {% block title %}{% trans "E-mail Addresses" %}{% endblock %} {% endcomment %}
 {% comment %} {% block page_title %}{% trans "E-mail Addresses" %}{% endblock %} {% endcomment %}
 <h5 class='card-title'>{% trans "E-mail Addresses" %}</h5>
-
-
 <p class='card-text'>{% trans 'The following e-mail addresses are associated with your account:' %}</p>
 <table class='table'>
   <thead>
@@ -18,83 +15,74 @@
   </thead>
   <tbody>
     {% for emailaddress in user.emailaddress_set.all %}
-    <form action="{% url 'account_email' %}" class="email_list" method="post">
-      <input id="email_{{ emailaddress.email }}" type="hidden" name="email" value="{{ emailaddress.email }}" />
-      {% csrf_token %}
-      <tr>
-        <td>
-          <label for="email_{{ emailaddress.email }}">{{ emailaddress.email }}</label>
-        </td>
-        <td class='text-center'>
-          {% if emailaddress.primary %}
-          <span class="fa fa-check-circle text-success"></span>
-          {% else %}
-
-          <button class="btn btn-primary btn-sm" type="submit" {% if not emailaddress.verified %}disabled{% endif %} name="action_primary">{% trans 'Make Primary' %}</button>
-
-          {% endif %}
-        </td>
-        <td class='text-center'>
-          {% if emailaddress.verified %}
-            <span class="fa fa-check-circle text-success"></span>
-          {% else %}
-            <button class="btn btn-sm btn-warning secondaryAction"
+      <form action="{% url 'account_email' %}" class="email_list" method="post">
+        <input id="email_{{ emailaddress.email }}" type="hidden" name="email" value="{{ emailaddress.email }}" />
+        {% csrf_token %}
+        <tr>
+          <td>
+            <label for="email_{{ emailaddress.email }}">{{ emailaddress.email }}</label>
+          </td>
+          <td class='text-center'>
+            {% if emailaddress.primary %}
+              <span class="fa fa-check-circle text-success"></span>
+            {% else %}
+              <button class="btn btn-primary btn-sm"
+                      type="submit"
+                      {% if not emailaddress.verified %}disabled{% endif %}
+                      name="action_primary">{% trans 'Make Primary' %}</button>
+            {% endif %}
+          </td>
+          <td class='text-center'>
+            {% if emailaddress.verified %}
+              <span class="fa fa-check-circle text-success"></span>
+            {% else %}
+              <button class="btn btn-sm btn-warning secondaryAction" type="submit" name="action_send">
+                {% trans 'Re-send Verification' %}
+              </button>
+            {% endif %}
+          </td>
+          <td class='text-center'>
+            <button class="btn btn-sm btn-danger"
                     type="submit"
-                    name="action_send">
-              {% trans 'Re-send Verification' %}
+                    name="action_remove"
+                    {% if emailaddress.primary %}disabled{% endif %}>
+              <i class='fas fa-trash-can'></i>
             </button>
-          {% endif %}
-        </td>
-
-        <td class='text-center'>
-          <button class="btn btn-sm btn-danger"
-                  type="submit"
-                  name="action_remove"
-                  {% if emailaddress.primary %}disabled{% endif %}
-                  >
-          <i class='fas fa-trash-can'></i>
-        </button>
-        </td>
-      </tr>
-    </form>
+          </td>
+        </tr>
+      </form>
     {% endfor %}
   </tbody>
-
   {% if can_add_email %}
-  <tfoot >
-    <form id='newEmailForm'
-      method="post"
-      action="{% url 'account_email' %}"
-      class="add_email">
-      {% csrf_token %}
-      <tr>
-        <td>{{ form.email }}</td>
-        <td >
-          <button class='btn btn-sm btn-success' name="action_add" type="submit" for='newEmailForm'>{% trans "Add E-mail" %}</button>
-        </td>
-        <td colspan=2></td>
-      </tr>
-    </form>
+    <tfoot>
+      <form id='newEmailForm' method="post" action="{% url 'account_email' %}" class="add_email">
+        {% csrf_token %}
+        <tr>
+          <td>{{ form.email }}</td>
+          <td>
+            <button class='btn btn-sm btn-success' name="action_add" type="submit" for='newEmailForm'>
+              {% trans "Add E-mail" %}
+            </button>
+          </td>
+          <td colspan=2></td>
+        </tr>
+      </form>
     </tr>
   </tfoot>
-  {% endif %}
+{% endif %}
 </table>
-
-
-
-
 {% comment %} {% block js %} {% endcomment %}
-  <script type="text/javascript">
-(function() {
-  var message = "{% trans 'Do you really want to remove the selected e-mail address?' %}";
-  var actions = document.getElementsByName('action_remove');
-  if (actions.length) {
-    actions[0].addEventListener("click", function(e) {
-      if (! confirm(message)) {
-        e.preventDefault();
-      }
-    });
-  }
-})();
-  </script>
+<script type="text/javascript">
+     (function() {
+          var message = "{% trans 'Do you really want to remove the selected e-mail address?' %}";
+          var actions = document.getElementsByName('action_remove');
+          if (actions.length) {
+               actions[0].addEventListener("click", function(e) {
+                    if (!confirm(message)) {
+                         e.preventDefault();
+                    }
+               });
+          }
+     })();
+</script>
 {% comment %} {% endblock %} {% endcomment %}

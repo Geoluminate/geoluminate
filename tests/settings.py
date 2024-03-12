@@ -29,6 +29,17 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 AWS_USE_SSL = False
 
+
+WEBPACK_LOADER = {
+    "GEOLUMINATE": {
+        "CACHE": False,
+        "STATS_FILE": BASE_DIR / "assets" / "webpack-stats.json",
+        "POLL_INTERVAL": 0.1,
+        "IGNORE": [r".+\.hot-update.js", r".+\.map"],
+    },
+}
+
+
 # overwrite staticfiles storage for development
 STORAGES["staticfiles"] = {
     "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",

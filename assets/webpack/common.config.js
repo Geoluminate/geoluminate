@@ -1,23 +1,17 @@
 const path = require('path');
 const BundleTracker = require('webpack-bundle-tracker');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-const BASE_DIR = path.resolve(__dirname, '../../');
-const StaticPath = path.resolve(BASE_DIR, './geoluminate/static/');
-
-const BundleOutputPath = path.resolve(BASE_DIR, './geoluminate/static/bundles/');
-const ContextPath = path.resolve(__dirname, '../');
-const ExcludePath = path.resolve(__dirname, '../src/ts/old/');
-
+const BaseDir = path.resolve(__dirname, '../../');
+const BundleDir = path.resolve(BaseDir, './geoluminate/static/bundles/');
+const AssetsDir = path.resolve(__dirname, '../');
 const VendorDir = path.resolve(__dirname, '../src/vendors/');
 
 console.log('Webpack common config:');
-console.log('Output Path:', BundleOutputPath);
-console.log('Context Path:', ContextPath);
+console.log('Output Path:', BundleDir);
+console.log('Context Path:', AssetsDir);
 
 module.exports = {
-
   target: 'web',
   context: path.join(__dirname, '../'),
   entry: {
@@ -31,30 +25,21 @@ module.exports = {
     project: path.resolve(__dirname, '../src/project'),
   },
   output: {
-    path: BundleOutputPath,
+    path: BundleDir,
     publicPath: '/static/bundles/',
     filename: 'js/[name]-[fullhash].js',
-    filename: 'js/[name].js',
     chunkFilename: 'js/[name]-[hash].js',
   },
   plugins: [
     new BundleTracker({
-      path: path.resolve(BASE_DIR, './geoluminate/conf/'),
+      relativePath: true,
+      path: AssetsDir,
       filename: 'webpack-stats.json',
     }),
     new MiniCssExtractPlugin({
-      // filename: 'css/[name].[contenthash].css'
-      filename: 'css/[name].css'
+      filename: 'css/[name].[contenthash].css'
     }),
-    new CopyWebpackPlugin({
-      patterns: [{
-          from: path.resolve(BASE_DIR, 'node_modules/bootstrap/scss/_variables.scss'),
-          to: path.resolve(BASE_DIR, 'geoluminate/static/bootstrap/_variables.scss'),
-        },
 
-
-      ],
-    }),
   ],
   module: {
     rules: [

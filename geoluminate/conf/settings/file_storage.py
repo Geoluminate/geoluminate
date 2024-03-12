@@ -1,5 +1,5 @@
 import os
-
+from pathlib import Path
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-root
 STATIC_ROOT = COMPRESS_ROOT = str(BASE_DIR / "staticfiles")
 
@@ -180,3 +180,12 @@ FILER_STORAGES = {
 FILER_FILE_STORAGE_BACKEND = STORAGES["default"]
 
 THUMBNAIL_DEFAULT_STORAGE = STORAGES["default"]
+
+
+
+WEBPACK_LOADER = {
+    "GEOLUMINATE": {
+        "CACHE": True,
+        "STATS_FILE": Path(__file__).parent / "webpack-stats.prod.json",
+    },
+}

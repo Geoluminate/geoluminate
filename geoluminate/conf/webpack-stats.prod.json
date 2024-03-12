@@ -1,0 +1,545 @@
+{
+  "status": "done",
+  "assets": {
+    "../bootstrap/scss/_accordion.scss": {
+      "name": "../bootstrap/scss/_accordion.scss",
+      "path": "..\\bootstrap\\scss\\_accordion.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_accordion.scss"
+    },
+    "../bootstrap/scss/_alert.scss": {
+      "name": "../bootstrap/scss/_alert.scss",
+      "path": "..\\bootstrap\\scss\\_alert.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_alert.scss"
+    },
+    "../bootstrap/scss/_badge.scss": {
+      "name": "../bootstrap/scss/_badge.scss",
+      "path": "..\\bootstrap\\scss\\_badge.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_badge.scss"
+    },
+    "../bootstrap/scss/_breadcrumb.scss": {
+      "name": "../bootstrap/scss/_breadcrumb.scss",
+      "path": "..\\bootstrap\\scss\\_breadcrumb.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_breadcrumb.scss"
+    },
+    "../bootstrap/scss/_button-group.scss": {
+      "name": "../bootstrap/scss/_button-group.scss",
+      "path": "..\\bootstrap\\scss\\_button-group.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_button-group.scss"
+    },
+    "../bootstrap/scss/_buttons.scss": {
+      "name": "../bootstrap/scss/_buttons.scss",
+      "path": "..\\bootstrap\\scss\\_buttons.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_buttons.scss"
+    },
+    "../bootstrap/scss/_card.scss": {
+      "name": "../bootstrap/scss/_card.scss",
+      "path": "..\\bootstrap\\scss\\_card.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_card.scss"
+    },
+    "../bootstrap/scss/_carousel.scss": {
+      "name": "../bootstrap/scss/_carousel.scss",
+      "path": "..\\bootstrap\\scss\\_carousel.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_carousel.scss"
+    },
+    "../bootstrap/scss/_close.scss": {
+      "name": "../bootstrap/scss/_close.scss",
+      "path": "..\\bootstrap\\scss\\_close.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_close.scss"
+    },
+    "../bootstrap/scss/_containers.scss": {
+      "name": "../bootstrap/scss/_containers.scss",
+      "path": "..\\bootstrap\\scss\\_containers.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_containers.scss"
+    },
+    "../bootstrap/scss/_dropdown.scss": {
+      "name": "../bootstrap/scss/_dropdown.scss",
+      "path": "..\\bootstrap\\scss\\_dropdown.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_dropdown.scss"
+    },
+    "../bootstrap/scss/_forms.scss": {
+      "name": "../bootstrap/scss/_forms.scss",
+      "path": "..\\bootstrap\\scss\\_forms.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_forms.scss"
+    },
+    "../bootstrap/scss/_functions.scss": {
+      "name": "../bootstrap/scss/_functions.scss",
+      "path": "..\\bootstrap\\scss\\_functions.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_functions.scss"
+    },
+    "../bootstrap/scss/_grid.scss": {
+      "name": "../bootstrap/scss/_grid.scss",
+      "path": "..\\bootstrap\\scss\\_grid.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_grid.scss"
+    },
+    "../bootstrap/scss/_helpers.scss": {
+      "name": "../bootstrap/scss/_helpers.scss",
+      "path": "..\\bootstrap\\scss\\_helpers.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_helpers.scss"
+    },
+    "../bootstrap/scss/_images.scss": {
+      "name": "../bootstrap/scss/_images.scss",
+      "path": "..\\bootstrap\\scss\\_images.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_images.scss"
+    },
+    "../bootstrap/scss/_list-group.scss": {
+      "name": "../bootstrap/scss/_list-group.scss",
+      "path": "..\\bootstrap\\scss\\_list-group.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_list-group.scss"
+    },
+    "../bootstrap/scss/_maps.scss": {
+      "name": "../bootstrap/scss/_maps.scss",
+      "path": "..\\bootstrap\\scss\\_maps.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_maps.scss"
+    },
+    "../bootstrap/scss/_mixins.scss": {
+      "name": "../bootstrap/scss/_mixins.scss",
+      "path": "..\\bootstrap\\scss\\_mixins.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_mixins.scss"
+    },
+    "../bootstrap/scss/_modal.scss": {
+      "name": "../bootstrap/scss/_modal.scss",
+      "path": "..\\bootstrap\\scss\\_modal.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_modal.scss"
+    },
+    "../bootstrap/scss/_nav.scss": {
+      "name": "../bootstrap/scss/_nav.scss",
+      "path": "..\\bootstrap\\scss\\_nav.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_nav.scss"
+    },
+    "../bootstrap/scss/_navbar.scss": {
+      "name": "../bootstrap/scss/_navbar.scss",
+      "path": "..\\bootstrap\\scss\\_navbar.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_navbar.scss"
+    },
+    "../bootstrap/scss/_offcanvas.scss": {
+      "name": "../bootstrap/scss/_offcanvas.scss",
+      "path": "..\\bootstrap\\scss\\_offcanvas.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_offcanvas.scss"
+    },
+    "../bootstrap/scss/_pagination.scss": {
+      "name": "../bootstrap/scss/_pagination.scss",
+      "path": "..\\bootstrap\\scss\\_pagination.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_pagination.scss"
+    },
+    "../bootstrap/scss/_placeholders.scss": {
+      "name": "../bootstrap/scss/_placeholders.scss",
+      "path": "..\\bootstrap\\scss\\_placeholders.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_placeholders.scss"
+    },
+    "../bootstrap/scss/_popover.scss": {
+      "name": "../bootstrap/scss/_popover.scss",
+      "path": "..\\bootstrap\\scss\\_popover.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_popover.scss"
+    },
+    "../bootstrap/scss/_progress.scss": {
+      "name": "../bootstrap/scss/_progress.scss",
+      "path": "..\\bootstrap\\scss\\_progress.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_progress.scss"
+    },
+    "../bootstrap/scss/_reboot.scss": {
+      "name": "../bootstrap/scss/_reboot.scss",
+      "path": "..\\bootstrap\\scss\\_reboot.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_reboot.scss"
+    },
+    "../bootstrap/scss/_root.scss": {
+      "name": "../bootstrap/scss/_root.scss",
+      "path": "..\\bootstrap\\scss\\_root.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_root.scss"
+    },
+    "../bootstrap/scss/_spinners.scss": {
+      "name": "../bootstrap/scss/_spinners.scss",
+      "path": "..\\bootstrap\\scss\\_spinners.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_spinners.scss"
+    },
+    "../bootstrap/scss/_tables.scss": {
+      "name": "../bootstrap/scss/_tables.scss",
+      "path": "..\\bootstrap\\scss\\_tables.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_tables.scss"
+    },
+    "../bootstrap/scss/_toasts.scss": {
+      "name": "../bootstrap/scss/_toasts.scss",
+      "path": "..\\bootstrap\\scss\\_toasts.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_toasts.scss"
+    },
+    "../bootstrap/scss/_tooltip.scss": {
+      "name": "../bootstrap/scss/_tooltip.scss",
+      "path": "..\\bootstrap\\scss\\_tooltip.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_tooltip.scss"
+    },
+    "../bootstrap/scss/_transitions.scss": {
+      "name": "../bootstrap/scss/_transitions.scss",
+      "path": "..\\bootstrap\\scss\\_transitions.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_transitions.scss"
+    },
+    "../bootstrap/scss/_type.scss": {
+      "name": "../bootstrap/scss/_type.scss",
+      "path": "..\\bootstrap\\scss\\_type.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_type.scss"
+    },
+    "../bootstrap/scss/_utilities.scss": {
+      "name": "../bootstrap/scss/_utilities.scss",
+      "path": "..\\bootstrap\\scss\\_utilities.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_utilities.scss"
+    },
+    "../bootstrap/scss/_variables-dark.scss": {
+      "name": "../bootstrap/scss/_variables-dark.scss",
+      "path": "..\\bootstrap\\scss\\_variables-dark.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_variables-dark.scss"
+    },
+    "../bootstrap/scss/_variables.scss": {
+      "name": "../bootstrap/scss/_variables.scss",
+      "path": "..\\bootstrap\\scss\\_variables.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/_variables.scss"
+    },
+    "../bootstrap/scss/bootstrap-grid.scss": {
+      "name": "../bootstrap/scss/bootstrap-grid.scss",
+      "path": "..\\bootstrap\\scss\\bootstrap-grid.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/bootstrap-grid.scss"
+    },
+    "../bootstrap/scss/bootstrap-reboot.scss": {
+      "name": "../bootstrap/scss/bootstrap-reboot.scss",
+      "path": "..\\bootstrap\\scss\\bootstrap-reboot.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/bootstrap-reboot.scss"
+    },
+    "../bootstrap/scss/bootstrap-utilities.scss": {
+      "name": "../bootstrap/scss/bootstrap-utilities.scss",
+      "path": "..\\bootstrap\\scss\\bootstrap-utilities.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/bootstrap-utilities.scss"
+    },
+    "../bootstrap/scss/bootstrap.scss": {
+      "name": "../bootstrap/scss/bootstrap.scss",
+      "path": "..\\bootstrap\\scss\\bootstrap.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/bootstrap.scss"
+    },
+    "../bootstrap/scss/forms/_floating-labels.scss": {
+      "name": "../bootstrap/scss/forms/_floating-labels.scss",
+      "path": "..\\bootstrap\\scss\\forms\\_floating-labels.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/forms/_floating-labels.scss"
+    },
+    "../bootstrap/scss/forms/_form-check.scss": {
+      "name": "../bootstrap/scss/forms/_form-check.scss",
+      "path": "..\\bootstrap\\scss\\forms\\_form-check.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/forms/_form-check.scss"
+    },
+    "../bootstrap/scss/forms/_form-control.scss": {
+      "name": "../bootstrap/scss/forms/_form-control.scss",
+      "path": "..\\bootstrap\\scss\\forms\\_form-control.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/forms/_form-control.scss"
+    },
+    "../bootstrap/scss/forms/_form-range.scss": {
+      "name": "../bootstrap/scss/forms/_form-range.scss",
+      "path": "..\\bootstrap\\scss\\forms\\_form-range.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/forms/_form-range.scss"
+    },
+    "../bootstrap/scss/forms/_form-select.scss": {
+      "name": "../bootstrap/scss/forms/_form-select.scss",
+      "path": "..\\bootstrap\\scss\\forms\\_form-select.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/forms/_form-select.scss"
+    },
+    "../bootstrap/scss/forms/_form-text.scss": {
+      "name": "../bootstrap/scss/forms/_form-text.scss",
+      "path": "..\\bootstrap\\scss\\forms\\_form-text.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/forms/_form-text.scss"
+    },
+    "../bootstrap/scss/forms/_input-group.scss": {
+      "name": "../bootstrap/scss/forms/_input-group.scss",
+      "path": "..\\bootstrap\\scss\\forms\\_input-group.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/forms/_input-group.scss"
+    },
+    "../bootstrap/scss/forms/_labels.scss": {
+      "name": "../bootstrap/scss/forms/_labels.scss",
+      "path": "..\\bootstrap\\scss\\forms\\_labels.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/forms/_labels.scss"
+    },
+    "../bootstrap/scss/forms/_validation.scss": {
+      "name": "../bootstrap/scss/forms/_validation.scss",
+      "path": "..\\bootstrap\\scss\\forms\\_validation.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/forms/_validation.scss"
+    },
+    "../bootstrap/scss/helpers/_clearfix.scss": {
+      "name": "../bootstrap/scss/helpers/_clearfix.scss",
+      "path": "..\\bootstrap\\scss\\helpers\\_clearfix.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/helpers/_clearfix.scss"
+    },
+    "../bootstrap/scss/helpers/_color-bg.scss": {
+      "name": "../bootstrap/scss/helpers/_color-bg.scss",
+      "path": "..\\bootstrap\\scss\\helpers\\_color-bg.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/helpers/_color-bg.scss"
+    },
+    "../bootstrap/scss/helpers/_colored-links.scss": {
+      "name": "../bootstrap/scss/helpers/_colored-links.scss",
+      "path": "..\\bootstrap\\scss\\helpers\\_colored-links.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/helpers/_colored-links.scss"
+    },
+    "../bootstrap/scss/helpers/_focus-ring.scss": {
+      "name": "../bootstrap/scss/helpers/_focus-ring.scss",
+      "path": "..\\bootstrap\\scss\\helpers\\_focus-ring.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/helpers/_focus-ring.scss"
+    },
+    "../bootstrap/scss/helpers/_icon-link.scss": {
+      "name": "../bootstrap/scss/helpers/_icon-link.scss",
+      "path": "..\\bootstrap\\scss\\helpers\\_icon-link.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/helpers/_icon-link.scss"
+    },
+    "../bootstrap/scss/helpers/_position.scss": {
+      "name": "../bootstrap/scss/helpers/_position.scss",
+      "path": "..\\bootstrap\\scss\\helpers\\_position.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/helpers/_position.scss"
+    },
+    "../bootstrap/scss/helpers/_ratio.scss": {
+      "name": "../bootstrap/scss/helpers/_ratio.scss",
+      "path": "..\\bootstrap\\scss\\helpers\\_ratio.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/helpers/_ratio.scss"
+    },
+    "../bootstrap/scss/helpers/_stacks.scss": {
+      "name": "../bootstrap/scss/helpers/_stacks.scss",
+      "path": "..\\bootstrap\\scss\\helpers\\_stacks.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/helpers/_stacks.scss"
+    },
+    "../bootstrap/scss/helpers/_stretched-link.scss": {
+      "name": "../bootstrap/scss/helpers/_stretched-link.scss",
+      "path": "..\\bootstrap\\scss\\helpers\\_stretched-link.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/helpers/_stretched-link.scss"
+    },
+    "../bootstrap/scss/helpers/_text-truncation.scss": {
+      "name": "../bootstrap/scss/helpers/_text-truncation.scss",
+      "path": "..\\bootstrap\\scss\\helpers\\_text-truncation.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/helpers/_text-truncation.scss"
+    },
+    "../bootstrap/scss/helpers/_visually-hidden.scss": {
+      "name": "../bootstrap/scss/helpers/_visually-hidden.scss",
+      "path": "..\\bootstrap\\scss\\helpers\\_visually-hidden.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/helpers/_visually-hidden.scss"
+    },
+    "../bootstrap/scss/helpers/_vr.scss": {
+      "name": "../bootstrap/scss/helpers/_vr.scss",
+      "path": "..\\bootstrap\\scss\\helpers\\_vr.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/helpers/_vr.scss"
+    },
+    "../bootstrap/scss/mixins/_alert.scss": {
+      "name": "../bootstrap/scss/mixins/_alert.scss",
+      "path": "..\\bootstrap\\scss\\mixins\\_alert.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/mixins/_alert.scss"
+    },
+    "../bootstrap/scss/mixins/_backdrop.scss": {
+      "name": "../bootstrap/scss/mixins/_backdrop.scss",
+      "path": "..\\bootstrap\\scss\\mixins\\_backdrop.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/mixins/_backdrop.scss"
+    },
+    "../bootstrap/scss/mixins/_banner.scss": {
+      "name": "../bootstrap/scss/mixins/_banner.scss",
+      "path": "..\\bootstrap\\scss\\mixins\\_banner.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/mixins/_banner.scss"
+    },
+    "../bootstrap/scss/mixins/_border-radius.scss": {
+      "name": "../bootstrap/scss/mixins/_border-radius.scss",
+      "path": "..\\bootstrap\\scss\\mixins\\_border-radius.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/mixins/_border-radius.scss"
+    },
+    "../bootstrap/scss/mixins/_box-shadow.scss": {
+      "name": "../bootstrap/scss/mixins/_box-shadow.scss",
+      "path": "..\\bootstrap\\scss\\mixins\\_box-shadow.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/mixins/_box-shadow.scss"
+    },
+    "../bootstrap/scss/mixins/_breakpoints.scss": {
+      "name": "../bootstrap/scss/mixins/_breakpoints.scss",
+      "path": "..\\bootstrap\\scss\\mixins\\_breakpoints.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/mixins/_breakpoints.scss"
+    },
+    "../bootstrap/scss/mixins/_buttons.scss": {
+      "name": "../bootstrap/scss/mixins/_buttons.scss",
+      "path": "..\\bootstrap\\scss\\mixins\\_buttons.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/mixins/_buttons.scss"
+    },
+    "../bootstrap/scss/mixins/_caret.scss": {
+      "name": "../bootstrap/scss/mixins/_caret.scss",
+      "path": "..\\bootstrap\\scss\\mixins\\_caret.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/mixins/_caret.scss"
+    },
+    "../bootstrap/scss/mixins/_clearfix.scss": {
+      "name": "../bootstrap/scss/mixins/_clearfix.scss",
+      "path": "..\\bootstrap\\scss\\mixins\\_clearfix.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/mixins/_clearfix.scss"
+    },
+    "../bootstrap/scss/mixins/_color-mode.scss": {
+      "name": "../bootstrap/scss/mixins/_color-mode.scss",
+      "path": "..\\bootstrap\\scss\\mixins\\_color-mode.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/mixins/_color-mode.scss"
+    },
+    "../bootstrap/scss/mixins/_color-scheme.scss": {
+      "name": "../bootstrap/scss/mixins/_color-scheme.scss",
+      "path": "..\\bootstrap\\scss\\mixins\\_color-scheme.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/mixins/_color-scheme.scss"
+    },
+    "../bootstrap/scss/mixins/_container.scss": {
+      "name": "../bootstrap/scss/mixins/_container.scss",
+      "path": "..\\bootstrap\\scss\\mixins\\_container.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/mixins/_container.scss"
+    },
+    "../bootstrap/scss/mixins/_deprecate.scss": {
+      "name": "../bootstrap/scss/mixins/_deprecate.scss",
+      "path": "..\\bootstrap\\scss\\mixins\\_deprecate.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/mixins/_deprecate.scss"
+    },
+    "../bootstrap/scss/mixins/_forms.scss": {
+      "name": "../bootstrap/scss/mixins/_forms.scss",
+      "path": "..\\bootstrap\\scss\\mixins\\_forms.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/mixins/_forms.scss"
+    },
+    "../bootstrap/scss/mixins/_gradients.scss": {
+      "name": "../bootstrap/scss/mixins/_gradients.scss",
+      "path": "..\\bootstrap\\scss\\mixins\\_gradients.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/mixins/_gradients.scss"
+    },
+    "../bootstrap/scss/mixins/_grid.scss": {
+      "name": "../bootstrap/scss/mixins/_grid.scss",
+      "path": "..\\bootstrap\\scss\\mixins\\_grid.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/mixins/_grid.scss"
+    },
+    "../bootstrap/scss/mixins/_image.scss": {
+      "name": "../bootstrap/scss/mixins/_image.scss",
+      "path": "..\\bootstrap\\scss\\mixins\\_image.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/mixins/_image.scss"
+    },
+    "../bootstrap/scss/mixins/_list-group.scss": {
+      "name": "../bootstrap/scss/mixins/_list-group.scss",
+      "path": "..\\bootstrap\\scss\\mixins\\_list-group.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/mixins/_list-group.scss"
+    },
+    "../bootstrap/scss/mixins/_lists.scss": {
+      "name": "../bootstrap/scss/mixins/_lists.scss",
+      "path": "..\\bootstrap\\scss\\mixins\\_lists.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/mixins/_lists.scss"
+    },
+    "../bootstrap/scss/mixins/_pagination.scss": {
+      "name": "../bootstrap/scss/mixins/_pagination.scss",
+      "path": "..\\bootstrap\\scss\\mixins\\_pagination.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/mixins/_pagination.scss"
+    },
+    "../bootstrap/scss/mixins/_reset-text.scss": {
+      "name": "../bootstrap/scss/mixins/_reset-text.scss",
+      "path": "..\\bootstrap\\scss\\mixins\\_reset-text.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/mixins/_reset-text.scss"
+    },
+    "../bootstrap/scss/mixins/_resize.scss": {
+      "name": "../bootstrap/scss/mixins/_resize.scss",
+      "path": "..\\bootstrap\\scss\\mixins\\_resize.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/mixins/_resize.scss"
+    },
+    "../bootstrap/scss/mixins/_table-variants.scss": {
+      "name": "../bootstrap/scss/mixins/_table-variants.scss",
+      "path": "..\\bootstrap\\scss\\mixins\\_table-variants.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/mixins/_table-variants.scss"
+    },
+    "../bootstrap/scss/mixins/_text-truncate.scss": {
+      "name": "../bootstrap/scss/mixins/_text-truncate.scss",
+      "path": "..\\bootstrap\\scss\\mixins\\_text-truncate.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/mixins/_text-truncate.scss"
+    },
+    "../bootstrap/scss/mixins/_transition.scss": {
+      "name": "../bootstrap/scss/mixins/_transition.scss",
+      "path": "..\\bootstrap\\scss\\mixins\\_transition.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/mixins/_transition.scss"
+    },
+    "../bootstrap/scss/mixins/_utilities.scss": {
+      "name": "../bootstrap/scss/mixins/_utilities.scss",
+      "path": "..\\bootstrap\\scss\\mixins\\_utilities.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/mixins/_utilities.scss"
+    },
+    "../bootstrap/scss/mixins/_visually-hidden.scss": {
+      "name": "../bootstrap/scss/mixins/_visually-hidden.scss",
+      "path": "..\\bootstrap\\scss\\mixins\\_visually-hidden.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/mixins/_visually-hidden.scss"
+    },
+    "../bootstrap/scss/utilities/_api.scss": {
+      "name": "../bootstrap/scss/utilities/_api.scss",
+      "path": "..\\bootstrap\\scss\\utilities\\_api.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/utilities/_api.scss"
+    },
+    "../bootstrap/scss/vendor/_rfs.scss": {
+      "name": "../bootstrap/scss/vendor/_rfs.scss",
+      "path": "..\\bootstrap\\scss\\vendor\\_rfs.scss",
+      "publicPath": "/static/bundles/../bootstrap/scss/vendor/_rfs.scss"
+    },
+    "css/project.68f23c54eea4911592ff.css": {
+      "name": "css/project.68f23c54eea4911592ff.css",
+      "path": "css\\project.68f23c54eea4911592ff.css",
+      "publicPath": "/static/bundles/css/project.68f23c54eea4911592ff.css"
+    },
+    "js/bootstrap-42b9ff4e10a7711ca3ba.js": {
+      "name": "js/bootstrap-42b9ff4e10a7711ca3ba.js",
+      "path": "js\\bootstrap-42b9ff4e10a7711ca3ba.js",
+      "publicPath": "/static/bundles/js/bootstrap-42b9ff4e10a7711ca3ba.js"
+    },
+    "js/bootstrap-42b9ff4e10a7711ca3ba.js.LICENSE.txt": {
+      "name": "js/bootstrap-42b9ff4e10a7711ca3ba.js.LICENSE.txt",
+      "path": "js\\bootstrap-42b9ff4e10a7711ca3ba.js.LICENSE.txt",
+      "publicPath": "/static/bundles/js/bootstrap-42b9ff4e10a7711ca3ba.js.LICENSE.txt"
+    },
+    "js/detail-42b9ff4e10a7711ca3ba.js": {
+      "name": "js/detail-42b9ff4e10a7711ca3ba.js",
+      "path": "js\\detail-42b9ff4e10a7711ca3ba.js",
+      "publicPath": "/static/bundles/js/detail-42b9ff4e10a7711ca3ba.js"
+    },
+    "js/detail-42b9ff4e10a7711ca3ba.js.LICENSE.txt": {
+      "name": "js/detail-42b9ff4e10a7711ca3ba.js.LICENSE.txt",
+      "path": "js\\detail-42b9ff4e10a7711ca3ba.js.LICENSE.txt",
+      "publicPath": "/static/bundles/js/detail-42b9ff4e10a7711ca3ba.js.LICENSE.txt"
+    },
+    "js/htmx-42b9ff4e10a7711ca3ba.js": {
+      "name": "js/htmx-42b9ff4e10a7711ca3ba.js",
+      "path": "js\\htmx-42b9ff4e10a7711ca3ba.js",
+      "publicPath": "/static/bundles/js/htmx-42b9ff4e10a7711ca3ba.js"
+    },
+    "js/jquery-42b9ff4e10a7711ca3ba.js": {
+      "name": "js/jquery-42b9ff4e10a7711ca3ba.js",
+      "path": "js\\jquery-42b9ff4e10a7711ca3ba.js",
+      "publicPath": "/static/bundles/js/jquery-42b9ff4e10a7711ca3ba.js"
+    },
+    "js/justGage-42b9ff4e10a7711ca3ba.js": {
+      "name": "js/justGage-42b9ff4e10a7711ca3ba.js",
+      "path": "js\\justGage-42b9ff4e10a7711ca3ba.js",
+      "publicPath": "/static/bundles/js/justGage-42b9ff4e10a7711ca3ba.js"
+    },
+    "js/list-42b9ff4e10a7711ca3ba.js": {
+      "name": "js/list-42b9ff4e10a7711ca3ba.js",
+      "path": "js\\list-42b9ff4e10a7711ca3ba.js",
+      "publicPath": "/static/bundles/js/list-42b9ff4e10a7711ca3ba.js"
+    },
+    "js/project-42b9ff4e10a7711ca3ba.js": {
+      "name": "js/project-42b9ff4e10a7711ca3ba.js",
+      "path": "js\\project-42b9ff4e10a7711ca3ba.js",
+      "publicPath": "/static/bundles/js/project-42b9ff4e10a7711ca3ba.js"
+    },
+    "js/project-42b9ff4e10a7711ca3ba.js.LICENSE.txt": {
+      "name": "js/project-42b9ff4e10a7711ca3ba.js.LICENSE.txt",
+      "path": "js\\project-42b9ff4e10a7711ca3ba.js.LICENSE.txt",
+      "publicPath": "/static/bundles/js/project-42b9ff4e10a7711ca3ba.js.LICENSE.txt"
+    }
+  },
+  "chunks": {
+    "bootstrap": [
+      "js/bootstrap-42b9ff4e10a7711ca3ba.js"
+    ],
+    "detail": [
+      "js/detail-42b9ff4e10a7711ca3ba.js"
+    ],
+    "htmx": [
+      "js/htmx-42b9ff4e10a7711ca3ba.js"
+    ],
+    "jquery": [
+      "js/jquery-42b9ff4e10a7711ca3ba.js"
+    ],
+    "justGage": [
+      "js/justGage-42b9ff4e10a7711ca3ba.js"
+    ],
+    "list": [
+      "js/list-42b9ff4e10a7711ca3ba.js"
+    ],
+    "project": [
+      "js/project-42b9ff4e10a7711ca3ba.js",
+      "css/project.68f23c54eea4911592ff.css"
+    ]
+  },
+  "publicPath": "/static/bundles/"
+}

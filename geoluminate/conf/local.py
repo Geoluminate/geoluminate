@@ -28,34 +28,5 @@ COMPRESS_OFFLINE = False
 
 LOCKDOWN_ENABLED = False
 
-# WEBPACK_LOADER = {
-#     "DEFAULT": {
-#         "CACHE": not DEBUG,
-#         "BUNDLE_DIR_NAME": "dist/",  # must end with slash
-#         "STATS_FILE": os.path.join(BASE_DIR, "webpack-stats.json"),
-#         "POLL_INTERVAL": 0.1,
-#         "TIMEOUT": None,
-#         "IGNORE": [r".+\.hot-update.js", r".+\.map"],
-#         "LOADER_CLASS": "webpack_loader.loader.WebpackLoader",
-#     }
-# }
 
 
-# get the path to the webpack-stats.json file
-
-
-
-WEBPACK_LOADER = {
-    # "DEFAULT": {
-    #     "CACHE": not DEBUG,
-    #     "STATS_FILE": Path(geoluminate.conf.__file__).parent / "webpack-stats.json",
-    #     "POLL_INTERVAL": 0.1,
-    #     "IGNORE": [r".+\.hot-update.js", r".+\.map"],
-    # },
-    "GEOLUMINATE": {
-        "CACHE": not DEBUG,
-        "STATS_FILE": Path(geoluminate.conf.__file__).parent / "webpack-stats.json",
-        "POLL_INTERVAL": 0.1,
-        "IGNORE": [r".+\.hot-update.js", r".+\.map"],
-    },
-}

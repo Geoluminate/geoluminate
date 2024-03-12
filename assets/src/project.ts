@@ -1,4 +1,4 @@
-import './sass/geoluminate.scss'
+import 'swagger-ui/dist/swagger-ui.css'
 import './ts/ajax'
 import { fetchAPISchema } from "./ts/api"
 import './ts/color-theme-switch'

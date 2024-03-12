@@ -133,4 +133,5 @@ GEOLUMINATE_ICONS = {
     "discussion": "fa-solid fa-comments",
     "plus": "fa-solid fa-plus",
     "spinner": "fa-solid fa-spinner fa-spin",
+    "literature": "fa-solid fa-book",
 }

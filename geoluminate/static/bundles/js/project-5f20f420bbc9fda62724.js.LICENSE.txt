@@ -1,0 +1,33 @@
+/*!
+ * Color mode toggler for Bootstrap's docs (https://getbootstrap.com/)
+ * Copyright 2011-2023 The Bootstrap Authors
+ * Licensed under the Creative Commons Attribution 3.0 Unported License.
+ */
+
+/*!
+ * cookie
+ * Copyright(c) 2012-2014 Roman Shtylman
+ * Copyright(c) 2015 Douglas Christopher Wilson
+ * MIT Licensed
+ */
+
+/*!
+ * https://github.com/Starcounter-Jack/JSON-Patch
+ * (c) 2017-2021 Joachim Wester
+ * MIT license
+ */
+
+/*!
+ * https://github.com/Starcounter-Jack/JSON-Patch
+ * (c) 2017-2022 Joachim Wester
+ * MIT licensed
+ */
+
+/*!
+ * is-plain-object <https://github.com/jonschlinkert/is-plain-object>
+ *
+ * Copyright (c) 2014-2017, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+/*! js-yaml 4.1.0 https://github.com/nodeca/js-yaml @license MIT */

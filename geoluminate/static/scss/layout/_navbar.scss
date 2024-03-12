@@ -1,0 +1,50 @@
+.navbar {
+    background-color:$gray-300;
+    .widget {
+        margin-left: auto;
+        ~ .widget {
+            margin: inherit;
+        }
+    }
+
+}
+
+
+.nav-pills-alternate {
+    @extend .border-bottom;
+
+    li  {
+      @extend .m-1;
+
+      a, button {
+        @extend .py-1;
+        @extend .px-2;
+
+        &.active {
+          @extend .bg-secondary-subtle;
+          @extend .text-primary;
+          // color: black !important;
+        }
+
+      }
+
+    }
+
+}
+
+// #appMenu {
+//     display: flex;
+//     padding-top: 0.5rem;
+//     padding-bottom: 0.5rem;
+//     > button, a {
+//         background-color: $secondary;
+//         margin-left: 0.25rem;
+//         margin-right: 0.25rem;
+//         font-size: small;
+//         text-decoration: none;
+//         border-bottom: none;
+//         position: relative;
+//         transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
+//         color: #679bd0;
+//     }
+// }

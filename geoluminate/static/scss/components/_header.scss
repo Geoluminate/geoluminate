@@ -1,0 +1,15 @@
+	header, .header {
+    	@extend .d-flex;
+		@extend .mb-2;
+		@extend .text-primary;
+
+		// > * {
+			// margin-bottom: 0;
+		// }
+
+		.icons {
+			flex-shrink: 1;
+			text-align: right;
+		}
+
+	}

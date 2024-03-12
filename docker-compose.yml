@@ -22,8 +22,8 @@ services:
       - ../:/external_apps
       - ./:/app:z
     env_file:
-      - ./.envs/.local/.django
-      - ./.envs/.local/.postgres
+      - ./.envs/.django
+      - ./.envs/.postgres
     ports:
       - 8000:8000
       - 5678:5678
@@ -43,7 +43,7 @@ services:
       - postgres:/var/lib/postgresql/data
       - postgres_backups:/backups
     env_file:
-      - ./.envs/.local/.postgres
+      - ./.envs/.postgres
     # logging:
     #   options:
     #     max-size: "10m"
@@ -83,10 +83,9 @@ services:
   minio:
     image: quay.io/minio/minio:latest
     volumes:
-      # - ./minio:/minio
       - media:/minio
     env_file:
-      - ./.envs/.local/.minio
+      - ./.envs/.minio
     ports:
       - "9000:9000"
       - "9001:9001"

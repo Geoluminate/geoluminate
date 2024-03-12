@@ -54,8 +54,8 @@ RUN pip install --no-cache-dir --no-index --find-links=/wheels/ /wheels/* \
 	&& rm -rf /wheels/
 
 WORKDIR /app
-# COPY ./bin/entrypoint /entrypoint
-# RUN sed -i 's/\r$//g' /entrypoint
-# RUN chmod +x /entrypoint
+COPY ./bin/entrypoint /entrypoint
+RUN sed -i 's/\r$//g' /entrypoint
+RUN chmod +x /entrypoint
 
-# ENTRYPOINT ["/entrypoint"]
+ENTRYPOINT ["/entrypoint"]

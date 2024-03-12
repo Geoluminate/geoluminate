@@ -17,7 +17,6 @@ services:
       - postgres
       - redis
       - minio
-    # working_dir: /app
     volumes:
       - ../:/external_apps
       - ./:/app:z
@@ -27,12 +26,10 @@ services:
     ports:
       - 8000:8000
       - 5678:5678
-    command: /app/bin/local/django
+    command:
+      - "python manage.py makemigrations"
+      - /app/bin/local/django
     entrypoint: /app/bin/entrypoint
-    logging:
-      options:
-        max-size: "10m"
-        max-file: "5"
 
   postgres:
     build:
@@ -44,41 +41,23 @@ services:
       - postgres_backups:/backups
     env_file:
       - ./.envs/.postgres
-    # logging:
-    #   options:
-    #     max-size: "10m"
-    #     max-file: "5"
   redis:
     image: redis:6
-    logging:
-      options:
-        max-size: "10m"
-        max-file: "5"
+
   # celeryworker:
   #   <<: *django
   #   ports: []
   #   command: /app/bin/local/celery_worker
-  #   logging:
-  #     options:
-  #       max-size: "10m"
-  #       max-file: "5"
   # celerybeat:
   #   <<: *django
   #   ports: []
   #   command: /app/bin/local/celery_beat
-  #   logging:
-  #     options:
-  #       max-size: "10m"
-  #       max-file: "5"
+
   # flower:
   #   <<: *django
   #   ports:
   #     - "5555:5555"
   #   command: /app/bin/local/celery_flower
-  #   logging:
-  #     options:
-  #       max-size: "10m"
-  #       max-file: "5"
 
   minio:
     image: quay.io/minio/minio:latest
@@ -90,10 +69,7 @@ services:
       - "9000:9000"
       - "9001:9001"
     command: server /minio
-    logging:
-      options:
-        max-size: "10m"
-        max-file: "5"
+
   # docs:
   #   <<: *django
   #   working_dir: /app/docs

@@ -30,7 +30,6 @@ django-allauth = "^0.53.1"
 django-invitations = "^2.0.0"
 django-fluent-comments = {extras = ["threadedcomments"], version = "^3.0"}
 django-crispy-forms = "^2.0"
-crispy-bootstrap5 = "^0.7"
 django-filter = "^22.1"
 djangorestframework = "^3.14.0"
 drf-spectacular = {extras = ["sidecar"], version = "^0.26.1"}
@@ -51,8 +50,6 @@ django-model-utils = "^4.3.1"
 django-dbbackup = "^4.0.2"
 django-celery-beat = "^2.5.0"
 django-adminactions = "^2.0.0"
-django-jazzmin = "^2.6.0"
-djangorestframework-datatables-editor = "^0.3.3"
 django-environ = "^0.10.0"
 django-compressor = "^4.3.1"
 django-libsass = "^0.9"
@@ -65,13 +62,9 @@ pyyaml = "^6.0"
 celery = "^5.2.7"
 django-select2 = "^8.1.1"
 django-literature = "^0.1.2"
-django-filer = "^2.2.4"
 django-laboratory = "^0.0.1"
 flower = "^1.2.0"
-django-treebeard = "<4.5"
 django-redis = "^5.2.0"
-djangorestframework-datatables = "^0.7.0"
-xmlschema = "^2.3.1"
 django-bleach = "^3.0.1"
 django-multiselectfield = "^0.1.12"
 django-contact-form = "^2.1"
@@ -84,16 +77,14 @@ drf-flex-fields = "^1.0.2"
 django-downloadview = "^2.3.0"
 django-activity-stream = "^2.0.0"
 django-client-side-image-cropping = "^0.1.10"
-watchfiles = "^0.21.0"
-werkzeug = {extras = ["watchdog"], version = "^3.0.1"}
-django-storages = "^1.14.2"
-boto3 = "^1.34.44"
 django-webpack-loader = "^3.0.1"
 django-classy-tags = "^4.1.0"
 lxml = "^5.1.0"
 factory-boy = "^3.2.1"
 faker = "^24.1.0"
 django-entangled = "^0.5.4"
+django-storages = {extras = ["boto3"], version = "^1.14.2"}
+crispy-bootstrap5 = "^2024.2"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -121,6 +112,7 @@ pylint-celery = "^0.3"
 ipython = "^8.21.0"
 django-content-license = {git = "https://github.com/Geoluminate/django-content-license", rev = "main"}
 django-research-vocabs = {git = "https://github.com/Geoluminate/django-research-vocabs", rev = "master"}
+django-auto-datatables = {git = "https://github.com/SSJenny90/django-auto-datatables", rev = "main"}
 
 [build-system]
 requires = ["poetry-core"]

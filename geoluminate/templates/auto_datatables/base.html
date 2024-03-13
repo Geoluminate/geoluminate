@@ -1,8 +1,10 @@
 {% extends request.htmx|yesno:"empty.html,base.html" %}
 {% load static sekizai_tags i18n autotables geoluminate %}
 
-{% block title %}{{ geoluminate.database.acronym }} {{ table.model|verbose_name_plural|title }}{% endblock %}
+{% block title %}
+  {{ geoluminate.database.short_name }} {{ table.model|verbose_name_plural|title }}
+{% endblock title %}
 
 {% block main %}
   {% render_table_for_url table True %}
-{% endblock %}
+{% endblock main %}

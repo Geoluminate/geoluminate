@@ -121,3 +121,5 @@ CORS_URLS_REGEX = r"^/api/.*$"
 
 
 SPECTACULAR_SETTINGS["SERVERS"] = []  # F405
+
+

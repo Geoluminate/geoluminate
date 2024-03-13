@@ -124,3 +124,6 @@ ACCOUNT_ALLOW_REGISTRATION = env.bool("DJANGO_ACCOUNT_ALLOW_REGISTRATION", True)
 """allow registration"""
 
 # ACCOUNT_SIGNUP_FORM_CLASS = "geoluminate.contrib.users.forms.SignupExtraForm"
+
+
+

@@ -135,3 +135,4 @@ GEOLUMINATE_ICONS = {
     "spinner": "fa-solid fa-spinner fa-spin",
     "literature": "fa-solid fa-book",
 }
+

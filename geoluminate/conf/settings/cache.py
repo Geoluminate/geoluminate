@@ -1,10 +1,16 @@
 import logging
-
+import environ
 logger = logging.getLogger(__name__)
+
+env = environ.Env(
+    CACHE=(bool, False),
+
+)
+
 
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#caches
-if cache:
+if env("CACHE"):
     logger.info("Using Redis cache")
     CACHES = {
         "default": {
@@ -29,3 +35,4 @@ else:
 
 # Tell select2 which cache configuration to use:
 SELECT2_CACHE_BACKEND = "default"
+

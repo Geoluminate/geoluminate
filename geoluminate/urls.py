@@ -33,16 +33,14 @@ I18N_URLS = [
     path("", include("geoluminate.contrib.core.urls")),  # must be before actstream.urls
     path("measurements/", include(measurements.urls)),
     path("", include("geoluminate.contrib.users.urls")),
-    # path("dashboard/", redirect("user:profile"), name="dashboard"),
     path("invitations/", include("invitations.urls", namespace="invitations")),
     path("contact/", include("django_contact_form.urls")),
     path("select2/", include("django_select2.urls")),
     path("activity/", include("actstream.urls")),
-    path("admin/docs/", include("django.contrib.admindocs.urls")),
+    path(f"{settings.ADMIN_URL}docs/", include("django.contrib.admindocs.urls")),
     # path("admin/measurements/", admin_measurement_view, name="admin_measurements"),
-    path("admin/", admin.site.urls),
+    path(settings.ADMIN_URL, admin.site.urls),
 ]
-
 urlpatterns = NON_I18N_URLS + I18N_URLS
 
 

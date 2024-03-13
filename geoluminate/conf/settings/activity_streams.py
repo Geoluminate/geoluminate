@@ -3,3 +3,4 @@ ACTSTREAM_SETTINGS = {
     # 'FETCH_RELATIONS': True,
     "USE_JSONFIELD": True,
 }
+

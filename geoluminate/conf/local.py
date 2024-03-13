@@ -1,11 +1,15 @@
 from split_settings.tools import include
-import geoluminate
-from pathlib import Path
 
 SHOW_DEBUG_TOOLBAR = False
 
 # imports all settings defined in the geoluminate/conf/settings/ directory
 include("settings/general.py", "settings/*.py")
+
+GEOLUMINATE_APPS = globals().get("GEOLUMINATE_APPS", [])
+
+INSTALLED_APPS = globals().get("INSTALLED_APPS", [])
+
+STORAGES = globals().get("STORAGES", {})
 
 INSTALLED_APPS = GEOLUMINATE_APPS + INSTALLED_APPS + ["compressor", "django_extensions"]
 
@@ -20,13 +24,11 @@ DEBUG = True
 # https://django-compressor.readthedocs.io/en/latest/settings/#django.conf.settings.COMPRESS_ENABLED
 COMPRESS_ENABLED = False  # don't compress during development
 COMPRESS_OFFLINE = False
-# STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
-# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-# INSTALLED_APPS += ["django_extensions"]  # F405
-
-LOCKDOWN_ENABLED = False
-
+STORAGES["staticfiles"] = {
+    "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+}
 
 

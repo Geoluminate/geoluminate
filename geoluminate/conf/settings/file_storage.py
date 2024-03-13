@@ -14,10 +14,7 @@ MEDIA_ROOT = str(BASE_DIR / "media")
 # https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 
 STATICFILES_DIRS = [
-    # str(BASE_DIR / "project" / "static"),
-    # str(BASE_DIR / "assets"),
-    # str(BASE_DIR / "static"),
-    # ("node_modules", BASE_DIR / "node_modules"),
+    str(BASE_DIR / "assets"),
 ]
 
 # https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
@@ -95,14 +92,6 @@ AWS_S3_REGION_NAME = os.environ.get("REGION_NAME")
 
 AWS_DEFAULT_ACL = None
 """"""
-
-
-# print("AWS_S3_CUSTOM_DOMAIN", AWS_S3_CUSTOM_DOMAIN)
-# print("AWS_STORAGE_BUCKET_NAME", AWS_STORAGE_BUCKET_NAME)
-# print("AWS_S3_ENDPOINT_URL", AWS_S3_ENDPOINT_URL)
-# print("AWS_S3_REGION_NAME", AWS_S3_REGION_NAME)
-# print("AWS_ACCESS_KEY_ID", AWS_ACCESS_KEY_ID)
-# print("AWS_SECRET_ACCESS_KEY", AWS_SECRET_ACCESS_KEY)
 
 STORAGES = {
     "default": {
@@ -189,3 +178,4 @@ WEBPACK_LOADER = {
         "STATS_FILE": Path(__file__).parent / "webpack-stats.prod.json",
     },
 }
+

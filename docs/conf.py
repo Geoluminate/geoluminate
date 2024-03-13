@@ -5,7 +5,6 @@ from pathlib import Path
 BASE_DIR = Path(__file__).parent.parent.resolve()
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tests.settings")
 
-os.environ["GEOLUMINATE_CONFIG_PATH"] = str(BASE_DIR / "geoluminate.yml")
 sys.path.append(str(BASE_DIR / "tests"))
 
 

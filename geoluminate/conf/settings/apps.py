@@ -118,3 +118,5 @@ GEOLUMINATE_APPS = [
 
 if SHOW_DEBUG_TOOLBAR:
     GEOLUMINATE_APPS.append("debug_toolbar")
+
+

@@ -1,15 +1,18 @@
-LOCKDOWN_ENABLED = False
+import environ
+
+env = environ.Env(
+    # set casting, default value
+    LOCKDOWN_ENABLED=(bool, False),
+    LOCKDOWN_STAFF_ONLY=(bool, True),
+)
+
+LOCKDOWN_ENABLED = env("LOCKDOWN_ENABLED")
 """"""
 
 LOCKDOWN_FORM = "lockdown.forms.AuthForm"
 """"""
 
-LOCKDOWN_AUTHFORM_STAFF_ONLY = True
+LOCKDOWN_AUTHFORM_STAFF_ONLY = env("LOCKDOWN_STAFF_ONLY")
 """"""
 
-# LOCKDOWN_REMOTE_ADDR_EXCEPTIONS = ["127.0.0.1"]
-""""""
 
-LOCKDOWN_URL_EXCEPTIONS = [
-    r"^/admin/",  # unlock admin urls
-]

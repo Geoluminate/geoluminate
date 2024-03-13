@@ -3,19 +3,14 @@ import socket
 import sys
 
 import environ
-import yaml
 from django.contrib.messages import constants as messages
-
-# load the geoluminate.yml configuration file
-config = os.getenv("GEOLUMINATE_CONFIG_PATH", os.path.join(BASE_DIR, "geoluminate.yml"))
 
 sys.path.append(
     os.path.join(BASE_DIR, "project", "schemas")
-)  # at the bottom of the file
+)
 
+GEOLUMINATE = globals().get("GEOLUMINATE", {})
 
-with open(config) as f:
-    GEOLUMINATE = yaml.safe_load(f)
 
 env = environ.Env(
     # set casting, default value
@@ -26,15 +21,14 @@ env = environ.Env(
     ),
     # SHOW_DEBUG_TOOLBAR=(bool, False),
     CACHE=(bool, False),
+    DJANGO_ADMIN_URL=(str, "admin/"),
 )
-
 
 READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=False)
 if READ_DOT_ENV_FILE:
     # OS environment variables take precedence over variables from .env
     env.read_env(str(BASE_DIR / ".env"))
 
-# SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 SECRET_KEY = env("DJANGO_SECRET_KEY")
@@ -49,7 +43,7 @@ USE_TZ = True
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#site-id
 SITE_ID = 1
-SITE_NAME = META_SITE_NAME = GEOLUMINATE["application"]["name"]
+SITE_NAME = META_SITE_NAME = GEOLUMINATE["database"]["name"]
 SITE_DOMAIN = GEOLUMINATE["application"]["domain"]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
@@ -65,9 +59,10 @@ MANAGERS = ADMINS
 # https://docs.djangoproject.com/en/dev/ref/settings/#root-urlconf
 ROOT_URLCONF = "geoluminate.urls"
 
-# https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
-WSGI_APPLICATION = "config.wsgi.application"
+ADMIN_URL = env("DJANGO_ADMIN_URL")
 
+# https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
+WSGI_APPLICATION = None
 
 # Coloured Messages
 MESSAGE_TAGS = {
@@ -77,7 +72,6 @@ MESSAGE_TAGS = {
     messages.WARNING: "warning alert-warning",
     messages.ERROR: "error alert-danger",
 }
-
 
 TAGGIT_CASE_INSENSITIVE = True
 
@@ -107,7 +101,6 @@ TEMPLATES = [
         },
     },
 ]
-
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -150,7 +143,6 @@ LOCALE_PATHS = [str(BASE_DIR / "project" / "locale")]
 
 
 if SHOW_DEBUG_TOOLBAR:
-    print("DEBUG TOOLBAR ENABLED")
     # GEOLUMINATE_APPS.append("debug_toolbar")
     MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
 
@@ -163,14 +155,11 @@ if SHOW_DEBUG_TOOLBAR:
     #     "template_profiler_panel.panels.template.TemplateProfilerPanel",
     # ]
 
-#
 FORM_RENDERER = "geoluminate.utils.forms.DefaultFormRenderer"
-
-
-LITERATURE_CITATION_JS_SOURCE = "node_modules/citation-js/build/citation.min.js"
-
-LITERATURE_ADMIN_NODE_SELECTOR = ".form-group"
 
 # http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+
+

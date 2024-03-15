@@ -44,3 +44,5 @@ WEBPACK_LOADER = {
         "IGNORE": [r".+\.hot-update.js", r".+\.map"],
     },
 }
+
+print("settings.py")

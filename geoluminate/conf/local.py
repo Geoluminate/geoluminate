@@ -11,7 +11,16 @@ INSTALLED_APPS = globals().get("INSTALLED_APPS", [])
 
 STORAGES = globals().get("STORAGES", {})
 
-INSTALLED_APPS = GEOLUMINATE_APPS + INSTALLED_APPS + ["compressor", "django_extensions"]
+INSTALLED_APPS = (
+    [
+        "whitenoise.runserver_nostatic",
+    ]
+    + GEOLUMINATE_APPS
+    + INSTALLED_APPS
+    + [
+        "django_extensions",
+    ]
+)
 
 DEBUG = True
 
@@ -26,9 +35,3 @@ COMPRESS_ENABLED = False  # don't compress during development
 COMPRESS_OFFLINE = False
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-
-STORAGES["staticfiles"] = {
-    "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
-}
-
-

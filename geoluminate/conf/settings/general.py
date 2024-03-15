@@ -5,9 +5,7 @@ import sys
 import environ
 from django.contrib.messages import constants as messages
 
-sys.path.append(
-    os.path.join(BASE_DIR, "project", "schemas")
-)
+sys.path.append(os.path.join(BASE_DIR, "project", "schemas"))
 
 GEOLUMINATE = globals().get("GEOLUMINATE", {})
 
@@ -50,10 +48,7 @@ SITE_DOMAIN = GEOLUMINATE["application"]["domain"]
 ALLOWED_HOSTS = ["*"]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#admins
-ADMINS = [
-    (admin["name"], admin["email"])
-    for admin in GEOLUMINATE["application"]["developers"]
-]
+ADMINS = [(admin["name"], admin["email"]) for admin in GEOLUMINATE["application"]["developers"]]
 MANAGERS = ADMINS
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#root-urlconf
@@ -160,6 +155,3 @@ FORM_RENDERER = "geoluminate.utils.forms.DefaultFormRenderer"
 # http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
-
-
-

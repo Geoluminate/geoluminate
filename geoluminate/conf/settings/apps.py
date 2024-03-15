@@ -53,7 +53,7 @@ GEOLUMINATE_APPS = [
     "djangocms_frontend.contrib.collapse",
     "djangocms_frontend.contrib.content",
     "djangocms_frontend.contrib.grid",
-    # 'djangocms_frontend.contrib.icon',
+    "djangocms_frontend.contrib.icon",
     "djangocms_frontend.contrib.image",
     "djangocms_frontend.contrib.jumbotron",
     "djangocms_frontend.contrib.link",
@@ -87,14 +87,13 @@ GEOLUMINATE_APPS = [
     "crispy_forms",
     "crispy_bootstrap5",
     # some other useful apps that are required by the default installation
-    # "sortedm2m",  # sortable m2m relationships
-    # "django_htmx",  # context processor for dealing with htmx requests
     "django_celery_beat",  # celery based task manager
     "meta",  # for seo optimization
     "taggit",  # providing taggable keywords to any model
     "django_social_share",  # easy links to social sharing sites
     "django_bleach",  # for sanitizing html input
     # not sure if these are explicitly needed or not
+    "compressor",
     # 'newsletter',
     # 'rest_framework_gis',
     "django_htmx",
@@ -103,9 +102,6 @@ GEOLUMINATE_APPS = [
     "client_side_image_cropping",
     "dbbackup",
     "webpack_loader",
-    # "tellme",  # adds user feedback functionality to the site
-    # "django_spaghetti",  # entity-relationship diagrams
-    # "jazzmin_translate",  # rosetta compatibility with jazzmin
     # "django_better_admin_arrayfield",  # nice admin widget for postgres array fields
     # GEOLUMINATE DEFAULT PLUGINS
     "literature",
@@ -118,5 +114,3 @@ GEOLUMINATE_APPS = [
 
 if SHOW_DEBUG_TOOLBAR:
     GEOLUMINATE_APPS.append("debug_toolbar")
-
-

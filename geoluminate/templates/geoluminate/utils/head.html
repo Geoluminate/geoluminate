@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta http-equiv="x-ua-compatible" content="ie=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-{% include 'meta/meta.html' %}
+{% include "meta/meta.html" %}
 <link rel="icon" type="image/svg+xml" href="{% brand "icon" %}" />
 <link href="{% static 'formset/css/bootstrap5-extra.css' %}" rel="stylesheet" />
 <link href="{% static 'formset/css/collections.css' %}" rel="stylesheet" />
@@ -12,8 +12,9 @@
 {% django_htmx_script %}
 {% compress css %}
   <link rel="stylesheet" type="text/x-scss" href="{% static "scss/stylesheet.scss" %}" />
+  {% comment %} <link rel="stylesheet" type="text/x-scss" href="/scss/stylesheet.scss" /> {% endcomment %}
 {% endcompress %}
-{% render_bundle 'project' 'css' 'GEOLUMINATE' %}
+{% render_bundle "project" "css" "GEOLUMINATE" %}
 {% comment %} JAVASCRIPT {% endcomment %}
 <script src={% static "vendors/jquery-3.7.1.min.js" %} defer></script>
 {% render_bundle 'bootstrap' 'js' 'GEOLUMINATE' attrs="defer" %}

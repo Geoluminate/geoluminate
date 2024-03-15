@@ -3,4 +3,4 @@
 set -o errexit
 set -o nounset
 
-exec watchfiles celery.__main__.main --args '-A geoluminate.conf.celeryworker -l INFO'
+exec watchfiles celery.__main__.main --args '-A geoluminate.conf.celery worker -l INFO'

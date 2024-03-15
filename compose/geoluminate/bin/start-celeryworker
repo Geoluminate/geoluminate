@@ -5,4 +5,4 @@ set -o pipefail
 set -o nounset
 
 
-exec celery -A geoluminate.conf.celeryworker -l INFO
+exec celery -A geoluminate.conf.celery worker -l INFO

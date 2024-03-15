@@ -5,4 +5,4 @@ set -o nounset
 
 
 rm -f './celerybeat.pid'
-exec watchfiles celery.__main__.main --args '-A geoluminate.conf.celerybeat -l INFO'
+exec watchfiles celery.__main__.main --args '-A geoluminate.conf.celery beat -l INFO'

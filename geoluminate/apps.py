@@ -3,19 +3,6 @@ from django.conf import settings
 from django.utils.module_loading import autodiscover_modules
 
 
-def render_static_assets():
-    from webpack_loader.utils import get_loader
-
-    loader = get_loader("DEFAULT")
-
-    # print(f"Webpack stats file: {loader.get_assets()}")
-    import pprint
-
-    pprint.pprint(loader.get_assets())
-    # for file in files:
-    #     print(file)
-
-
 class GeoluminateConfig(AppConfig):
     name = "geoluminate"
     verbose_name = settings.GEOLUMINATE["database"]["name"]
@@ -36,8 +23,6 @@ class GeoluminateConfig(AppConfig):
         compat.is_crispy = lambda: False
 
         self.update_drf_field_mapping()
-
-        # render_static_assets()
 
         return super().ready()
 

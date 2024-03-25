@@ -1,4 +1,4 @@
-GET_SOLO_TEMPLATE_TAG_NAME = "get_config"
+GET_SOLO_TEMPLATE_TAG_NAME = "site_config"
 """"""
 
 SOLO_CACHE = "default"

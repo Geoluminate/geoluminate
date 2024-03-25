@@ -1,6 +1,6 @@
 from split_settings.tools import include
 
-SHOW_DEBUG_TOOLBAR = False
+SHOW_DEBUG_TOOLBAR = True
 
 # imports all settings defined in the geoluminate/conf/settings/ directory
 include("settings/general.py", "settings/*.py")

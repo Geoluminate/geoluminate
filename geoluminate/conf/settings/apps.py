@@ -2,7 +2,7 @@ GEOLUMINATE_APPS = [
     # Admin apps
     "djangocms_admin_style",
     "geoluminate.contrib.admin",
-    "adminactions",
+    # "adminactions",
     # "jazzmin",
     "polymorphic",
     # "modeltranslation",
@@ -21,6 +21,7 @@ GEOLUMINATE_APPS = [
     # GEOLUMINATE CORE
     "geoluminate",
     "geoluminate.contrib.core",
+    "geoluminate.contrib.configuration",
     "geoluminate.contrib.projects",
     "geoluminate.contrib.datasets",
     "geoluminate.contrib.reviews",
@@ -78,7 +79,7 @@ GEOLUMINATE_APPS = [
     "django_comments",
     # OTHERS
     "actstream",
-    # "solo",  # singleton model for storing dynamic global variables in the DB
+    "solo",  # singleton model for storing dynamic global variables in the DB
     "django_contact_form",  # for contact forms
     "storages",  # for setting up backend storages
     "simple_menu",  # for defining non-CMS menus in the application

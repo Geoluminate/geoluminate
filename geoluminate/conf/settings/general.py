@@ -11,19 +11,18 @@ GEOLUMINATE = globals().get("GEOLUMINATE", {})
 
 
 env = environ.Env(
-    # set casting, default value
     DEBUG=(bool, False),
-    DJANGO_SECRET_KEY=(
-        str,
-        "HoVcnlU2IqQN1YqvsY7dQ1xtdhLavAeXn1mUEAI0Wu8vkDbodEqRKkJbHyMEQS5F",
-    ),
+    DJANGO_SECRET_KEY=(str, "HoVcnlU2IqQN1YqvsY7dQ1xtdhLavAeXn1mUEAI0Wu8vkDbodEqRKkJbHyMEQS5F"),
     # SHOW_DEBUG_TOOLBAR=(bool, False),
-    CACHE=(bool, False),
     DJANGO_ADMIN_URL=(str, "admin/"),
+    DJANGO_ALLOWED_HOSTS=(list, []),
+    DJANGO_READ_DOT_ENV_FILE=(bool, False),
+    DJANGO_TIME_ZONE=(str, "UTC"),
+    DJANGO_SITE_ID=(int, 1),
+    DJANGO_SITE_DOMAIN=(str, "localhost:8000"),
 )
 
-READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=False)
-if READ_DOT_ENV_FILE:
+if env("DJANGO_READ_DOT_ENV_FILE"):
     # OS environment variables take precedence over variables from .env
     env.read_env(str(BASE_DIR / ".env"))
 
@@ -31,21 +30,19 @@ if READ_DOT_ENV_FILE:
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 
-
-TIME_ZONE = "UTC"
+TIME_ZONE = env("DJANGO_TIME_ZONE", default="UTC")
 """"""
-
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#use-tz
 USE_TZ = True
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#site-id
-SITE_ID = 1
+SITE_ID = env("DJANGO_SITE_ID")
+SITE_DOMAIN = env("DJANGO_SITE_DOMAIN", default="localhost:8000")
 SITE_NAME = META_SITE_NAME = GEOLUMINATE["database"]["name"]
-SITE_DOMAIN = GEOLUMINATE["application"]["domain"]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = env("DJANGO_ALLOWED_HOSTS")
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = [(admin["name"], admin["email"]) for admin in GEOLUMINATE["application"]["developers"]]

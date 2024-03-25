@@ -1,5 +1,11 @@
 import os
 from pathlib import Path
+import environ
+
+env = environ.Env(
+    DJANGO_CACHE=(bool, False),
+)
+
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-root
 STATIC_ROOT = COMPRESS_ROOT = str(BASE_DIR / "staticfiles")
@@ -111,7 +117,8 @@ STORAGES = {
         },
     },
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        # using whitenosie.storage.CompressedManifestStaticFilesStorage is more problematic than it's worth
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
     },
 }
 
@@ -163,7 +170,7 @@ THUMBNAIL_DEFAULT_STORAGE = STORAGES["default"]
 
 WEBPACK_LOADER = {
     "GEOLUMINATE": {
-        "CACHE": True,
+        "CACHE": env("DJANGO_CACHE"),
         "STATS_FILE": Path(__file__).parent / "webpack-stats.prod.json",
     },
 }

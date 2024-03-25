@@ -3,10 +3,8 @@ from split_settings.tools import include
 # imports all settings defined in the geoluminate/conf/settings/ directory
 include("settings/general.py", "settings/*.py")
 
-INSTALLED_APPS = GEOLUMINATE_APPS + INSTALLED_APPS
+# INSTALLED_APPS = GEOLUMINATE_APPS + INSTALLED_APPS
 
-# https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=[""])
 
 # SECURITY
 # ------------------------------------------------------------------------------

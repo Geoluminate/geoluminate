@@ -1,5 +1,13 @@
+import environ
+
+env = environ.Env(
+    DJANGO_TIME_ZONE=(str, "UTC"),
+    REDIS_URL=(str, "redis://redis:6379/0"),
+)
+
+
 # https://docs.celeryq.dev/en/stable/userguide/configuration.html#std:setting-timezone
-CELERY_TIMEZONE = TIME_ZONE
+CELERY_TIMEZONE = env("DJANGO_TIME_ZONE")
 
 # https://docs.celeryq.dev/en/stable/userguide/configuration.html#result-extended
 CELERY_RESULT_EXTENDED = True
@@ -41,10 +49,9 @@ CELERY_TASK_SEND_SENT_EVENT = True
 CELERY_TASK_EAGER_PROPAGATES = True
 
 # https://docs.celeryq.dev/en/stable/userguide/configuration.html#std:setting-broker_url
-CELERY_BROKER_URL = env("REDIS_URL", default="redis://redis:6379/0")
+CELERY_BROKER_URL = env("REDIS_URL")
 
 # https://docs.celeryq.dev/en/stable/userguide/configuration.html#std:setting-result_backend
 CELERY_RESULT_BACKEND = CELERY_BROKER_URL
 
 CELERY_TASK_ALWAYS_EAGER = False
-

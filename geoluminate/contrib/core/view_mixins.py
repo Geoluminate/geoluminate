@@ -105,7 +105,9 @@ class ListFilterMixin(ListMixin):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["filtered_object_count"] = context["object_list"].count()
+
+        if context["object_list"] is not None:
+            context["filtered_object_count"] = context["object_list"].count()
         context["is_filtered"] = hasattr(context["filter"].form, "cleaned_data")
         context["list_filter_top"] = self.list_filter_top
         return context

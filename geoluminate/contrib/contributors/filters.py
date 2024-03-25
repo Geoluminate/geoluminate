@@ -2,7 +2,7 @@ import django_filters as df
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from .models import Contribution, Contributor
+from .models import Contributor
 
 
 class ListFilterTop(df.FilterSet):
@@ -53,9 +53,9 @@ class ContributorFilter(ListFilterTop):
         return queryset
 
 
-class ContributionFilter(df.FilterSet):
-    class Meta:
-        model = Contribution
-        fields = {
-            "roles": ["icontains"],
-        }
+# class ContributionFilter(df.FilterSet):
+#     class Meta:
+#         model = Contribution
+#         fields = {
+#             "roles": ["icontains"],
+#         }

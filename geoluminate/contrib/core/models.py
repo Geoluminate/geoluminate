@@ -126,10 +126,6 @@ class Abstract(models.Model):
 
         return self.contributors.filter(profile__user=user).exists()
 
-    def has_role(self, user, role):
-        """Returns true if the user has the specified role."""
-        return self.contributors.by_role(role).filter(profile__user=user).exists()
-
     def get_api_url(self):
         return reverse(f"{type(self).__name__.lower()}-detail", kwargs={"uuid": self.uuid})
 
@@ -171,10 +167,6 @@ class Abstract(models.Model):
     def get_data_quality(self):
         return random.randint(0, 100)  # noqa: S311
         # return self.data_quality
-
-    @cached_property
-    def get_contributors(self):
-        return list(self.contributors.select_related("profile").all())
 
     @cached_property
     def get_descriptions(self):

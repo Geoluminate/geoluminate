@@ -1,6 +1,7 @@
 from django.views.generic import UpdateView
 from formset.views import FileUploadMixin, FormViewMixin
 
+from geoluminate.contrib.contributors.utils import current_user_has_role
 from geoluminate.plugins import PluginRegistry
 from geoluminate.utils import icon
 
@@ -19,5 +20,4 @@ class ReviewOverview(ReviewDetailView, FileUploadMixin, FormViewMixin, UpdateVie
 
     def has_edit_permission(self):
         """TODO: Add permissions."""
-        return self.object.has_role(self.request.user, "Creator")
-        # return has_role(self.request.user.profile, "Creator")
+        return current_user_has_role(self.request, self.object, "Creator")

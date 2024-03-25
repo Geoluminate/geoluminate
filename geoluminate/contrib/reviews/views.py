@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.db.models import Count
 from django.http import HttpResponseRedirect
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext as _
 from django.views.generic import FormView
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.edit import UpdateView
@@ -11,7 +11,9 @@ from literature.models import Literature
 from literature.views import LiteratureEditView
 from meta.views import MetadataMixin
 
+from geoluminate.contrib.core.view_mixins import ListPluginMixin
 from geoluminate.models import Dataset
+from geoluminate.utils import icon
 from geoluminate.views import BaseDetailView, BaseFormView, BaseListView, HTMXMixin
 
 from . import utils
@@ -146,9 +148,11 @@ class ReviewListView(BaseListView):
     queryset = Dataset.objects.filter().order_by("-created")
 
 
-class ReviewPlugin(ReviewListView):
+class ReviewPlugin(ListPluginMixin):
     template_name = "geoluminate/plugins/base_list.html"
-    title = _("Reviews")
+    object_template = "reviews/review_card.html"
+    title = name = _("Reviews")
+    icon = icon("review")
     description = _("The following reviews are associated with the this contributor.")
 
     def get_queryset(self, *args, **kwargs):
@@ -252,6 +256,9 @@ class LiteratureReviewListView(BaseListView):
 
 class LiteratureListView(BaseListView):
     model = Literature
+    title = _("Literature")
+    base_template = "literature/literature_list.html"
+    object_template = "literature/literature_card.html"
     queryset = Literature.objects.all().order_by("-created")
     filterset_class = LiteratureFilter
     list_filter_top = ["title", "o"]

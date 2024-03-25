@@ -10,13 +10,15 @@ from geoluminate.contrib.core.view_mixins import ListPluginMixin
 from geoluminate.utils import icon
 from geoluminate.views import BaseDetailView, BaseFormView, BaseListView
 
-from .filters import ContributionFilter, ContributorFilter
+from .filters import ContributorFilter
 from .forms import ContributionForm, UserProfileForm
 from .models import Contribution, Contributor
 
 
 class ContributorListView(BaseListView):
+    title = _("Contributors")
     base_template = "contributors/contributor_list.html"
+    object_template = "contributors/contributor_card.html"
     model = Contributor
     filterset_class = ContributorFilter
     list_filter_top = ["name", "o"]
@@ -25,8 +27,7 @@ class ContributorListView(BaseListView):
 class ContributorDetailView(BaseDetailView):
     base_template = "contributors/contributor_detail.html"
     model = Contributor
-    list_object = None
-    allow_discussion = False
+    form_class = UserProfileForm
     sidebar_components = [
         ("contributors/sidebar/basic_info.html", "name,about"),
         ("core/sidebar/summary.html", None),
@@ -34,11 +35,8 @@ class ContributorDetailView(BaseDetailView):
 
     def has_edit_permission(self):
         """Returns True if the user has permission to edit the profile. This is determined by whether the profile belongs to the current user."""
-
-        # check if current user is logged in
         if self.request.user.is_anonymous:
             return False
-
         return self.request.user.profile == self.get_object()
 
 
@@ -78,27 +76,6 @@ class ContributorFormView(BaseFormView):
         return super().form_valid(form)
 
 
-# CONTRIBUTION VIEWS
-class ContributionListView(BaseListView):
-    base_template = "contributors/contribution_list.html"
-    object_template = "contributors/contributor_card.html"
-
-    model = Contribution
-    filterset_class = ContributionFilter
-    columns = 3
-
-
-class ContributionEditView(BaseFormView):
-    model = Contribution
-    form_class = ContributionForm
-    title = _("Add contributor")
-
-    def get_object(self, queryset):
-        obj = super().get_object(queryset)
-        contributor = obj.contributions.get(uuid=self.kwargs.get("contribution"))
-        return contributor
-
-
 class ContributorContactView(
     LoginRequiredMixin,
     SingleObjectMixin,
@@ -122,14 +99,26 @@ class ContributorContactView(
         return email
 
 
+# CONTRIBUTION VIEWS
+class ContributionEditView(BaseFormView):
+    model = Contribution
+    form_class = ContributionForm
+    title = _("Add contributor")
+
+    def get_object(self, queryset):
+        obj = super().get_object(queryset)
+        contributor = obj.contributions.get(uuid=self.kwargs.get("contribution"))
+        return contributor
+
+
 class ContributorsPlugin(ListPluginMixin):
     template_name = "geoluminate/plugins/base_list.html"
     object_template = "contributors/contribution_card.html"
     columns = 3
-
     icon = icon("contributors")
     title = name = _("Contributors")
     description = _("The following personal and organizational contributors are associated with the current project.")
+    # filterset_class = ContributionFilter
 
     def get_queryset(self, *args, **kwargs):
         return self.get_object().contributors.select_related("profile")

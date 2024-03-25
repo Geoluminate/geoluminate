@@ -3,7 +3,6 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from simple_menu import Menu, MenuItem
 
-from geoluminate.measurements import measurements
 from geoluminate.utils import icon
 
 LABELS = settings.GEOLUMINATE_LABELS
@@ -63,34 +62,33 @@ Sidebar.add_item(
     ),
 )
 
-Sidebar.add_item(
-    MenuItem(
-        title=LABELS["sample"]["verbose_name_plural"],
-        url=reverse("samples:list"),
-        weight=3,
-        icon=icon("sample"),
-        description=_(
-            "Find exactly what you need to advance your data analytics workflow by exploring our extensive collection of samples. Filter through diverse sample types, measured properties, locations and more to find the perfect supplement for your current and future research."
-        ),
-    ),
-)
+# Sidebar.add_item(
+#     MenuItem(
+#         title=LABELS["sample"]["verbose_name_plural"],
+#         url=reverse("samples:list"),
+#         weight=3,
+#         icon=icon("sample"),
+#         description=_(
+#             "Find exactly what you need to advance your data analytics workflow by exploring our extensive collection of samples. Filter through diverse sample types, measured properties, locations and more to find the perfect supplement for your current and future research."
+#         ),
+#     ),
+# )
 
-Sidebar.add_item(
-    MenuItem(
-        title=_("Measurements"),
-        url=reverse("viewer"),
-        weight=4,
-        icon=icon("measurement"),
-        children=measurements.menu,
-    ),
-)
+# Sidebar.add_item(
+#     MenuItem(
+#         title=_("Measurements"),
+#         url=reverse("viewer"),
+#         weight=4,
+#         icon=icon("measurement"),
+#         children=measurements.menu,
+#     ),
+# )
 
 Sidebar.add_item(
     MenuItem(
         title=_("Explorer"),
         url=reverse("viewer"),
         weight=5,
-        # icon="fa-map-marked-alt",
         icon=icon("map"),
         description=_(
             "Explore our extensive collection of projects, datasets, samples and measurements using our interactive map and data viewer. Create complex filters, visualize data, and gain valuable insight into our database."

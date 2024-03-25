@@ -1,45 +1,25 @@
-from django.db.models import QuerySet
-
 from .models import Contributor
 
-#     if created:
-#         instance.contributors.add(instance.user)
 
-
-def has_role(contributor, role):
-    """Returns True if the contributor has the specified role.
+def current_user_has_role(request, obj, role):
+    """Returns True if the current user has the specified role for the given object.
 
     Args:
-        contributor (Contributor): A Contributor object.
+        request (Request): The request object.
+        obj (Project, Dataset, Sample): A database object containing a list of contributors.
         role (str, list): The role/s to check for.
 
     Returns:
         bool: True if the contributor has the specified roles.
     """
-    if isinstance(role, str):
+    current_user = request.user
+    if not current_user.is_authenticated:
+        return False
+
+    if not isinstance(role, list):
         role = [role]
-    return any(r in contributor.roles for r in role)
 
-
-def contributor_by_role(contributors, roles):
-    """Returns all contributors with the specified roles.
-
-    Args:
-
-        contributions (list): A list of Contribution objects (e.g. list(Contribution.objects.all())).
-        roles (str): A comma separated list of roles to filter by.
-    """
-    roles = roles.split(",")
-    if isinstance(contributors, QuerySet):
-        return contributors.filter(roles__in=roles)
-    elif isinstance(contributors, list):
-        matched = []
-        # contributions is a list of Contributions
-        for c in contributors:
-            if any(role in c.roles for role in roles):
-                matched.append(c)
-        return matched
-    return []
+    return obj.contributors.filter(profile__user=current_user, roles__contains=role).exists()
 
 
 def contributor_to_csljson(contributor):

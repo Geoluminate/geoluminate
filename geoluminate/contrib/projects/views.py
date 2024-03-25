@@ -1,5 +1,7 @@
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext as _
 
+from geoluminate.contrib.core.view_mixins import ListPluginMixin
+from geoluminate.utils import icon
 from geoluminate.views import BaseDetailView, BaseFormView, BaseListView
 
 from .filters import ProjectFilter
@@ -26,9 +28,11 @@ class ProjectDetailView(BaseDetailView):
         # return super().has_edit_permission()
 
 
-class ProjectPlugin(ProjectListView):
+class ProjectPlugin(ListPluginMixin):
     template_name = "geoluminate/plugins/base_list.html"
-    title = _("Projects")
+    object_template = "projects/project_card.html"
+    title = name = _("Projects")
+    icon = icon("project")
     description = _("The following projects are associated with the this contributor.")
 
     def get_queryset(self, *args, **kwargs):

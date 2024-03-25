@@ -22,7 +22,7 @@
   </titles>
 
   {% comment %} CREATORS {% endcomment %}
-  <creators>{% for c in dataset.get_contributors|role:"Creator" %}{% with c.profile as profile %}
+  <creators>{% for c in dataset.contributors|role:"Creator" %}{% with c.profile as profile %}
     <creator>
       <creatorName nameType="{{ profile.type }}">{{ profile.name }}</creatorName>{% if profile.type == "Personal" and profile.user %}
       <givenName>{{ profile.given }}</givenName>
@@ -35,7 +35,7 @@
 
   {% comment %} CONTRIBUTORS {% endcomment %}
   <contributors>
-    {% for c in dataset.get_contributors %}{% for role in c.roles %}
+    {% for c in dataset.contributors.all %}{% for role in c.roles %}
     {% if role != "Creator" %}{% with c.profile as profile %}
     <contributor contributorType="{{ role }}">
       <contributorName>{{ profile.name }}</contributorName>{% if profile.type == "Personal" %}

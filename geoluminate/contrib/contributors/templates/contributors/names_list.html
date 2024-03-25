@@ -1,4 +1,5 @@
 {% for c in contributors %}
-  <a class='contributor-name-link text-muted text-decoration-none' href="{{ c.get_absolute_url }}">{{ c }}</a>
-  {% if not forloop.last %}{{ separator|default:"," }}{% endif %}
+  {% comment %} djlint:off {% endcomment %}
+  <a class='contributor-name-link text-muted text-decoration-none' href="{{ c.get_absolute_url }}">{{ c }}</a>{% if not forloop.last %}{{ separator|default:"," }}{% endif %}
+{% comment %} djlint:on {% endcomment %}
 {% endfor %}

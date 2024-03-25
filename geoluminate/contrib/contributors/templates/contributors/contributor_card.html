@@ -1,43 +1,46 @@
-{% extends "geoluminate/base/card.html" %}
-{% load i18n geoluminate %}
+{% extends "geoluminate/cards/base.html" %}
+{% load i18n geoluminate contributor_tags %}
 
-{% block image %}
-{% endblock image %}
+{% block card_header %}
+{% endblock card_header %}
 
-{% block title %}
-  {% avatar obj width="1rem" class='card-img-top shadow-sm rounded-circle object-fit-contain align-items-middle' %}
-  <span class='ms-2'>{{ obj }}</span>
-{% endblock %}
+{% block card_head_status %}
+  <span class="badge text-bg-primary project-status-{{ obj.status|slugify }}">{{ obj.get_status_display }}</span>
+{% endblock card_head_status %}
 
-{% block list_group %}
-  <li>
-    {% trans "Status" %}: <span class='badge text-bg-success'>Master</span>
-  </li>
-  {% if obj.user %}
-    <li>
-      {% trans "Joined" %}: <span>{{ obj.user.date_joined|date:"M Y"|default:"-" }}</span>
-    </li>
-  {% else %}
-    <li>
-      {% trans "Joined" %}: <span>{{ obj.created|date:"M Y"|default:"-" }}</span>
-    </li>
-  {% endif %}
-  <li>
-    {% trans "Datasets" %}: <span>{{ obj.contributions.datasets.count|default:"-" }}</span>
-  </li>
-  <li>
-    {% trans "Samples" %}: <span>{{ obj.contributions.samples.count|default:"-" }}</span>
-  </li>
-{% endblock list_group %}
+{% block card_body %}
+  <div class="col col-lg-3 col-md-4">
+    <div class="card h-100 mt-1">
+      <div class="d-flex justify-content-center mb-3">
+        {% avatar obj width="75px" class='card-img-top shadow-sm rounded-circle object-fit-contain align-items-middle' %}
+      </div>
+      <h6 class="text-center mb-3">{{ obj }}</h6>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card h-100">
+      <div class="card-body pt-0">
+        <p class="card-text">
+          {% if obj.about %}
+            {{ obj.about|truncatewords_html:100 }}
+          {% else %}
+            {% blocktrans %}
+              No abstract has been provided for this {{ obj_name }} yet.
+            {% endblocktrans %}
+          {% endif %}
+        </p>
+      </div>
+    </div>
+  </div>
+{% endblock card_body %}
 
-{% block description %}
-  {% with obj.about as description %}
-    {% if description %}
-      {{ description|truncatewords_html:100 }}
-    {% else %}
-      {% blocktrans %}
-  No abstract has been provided for this {{ obj_name }} yet.
-  {% endblocktrans %}
-    {% endif %}
-  {% endwith %}
-{% endblock description %}
+{% comment %} {% block card_footer_content %}
+<span>Active: {{ obj.user.last_login|timesince }} ago</span>
+{{ block.super }} {% endblock card_footer_content %} {% endcomment %}
+{% block card_actions %}
+  {% follow_button obj %}
+  <a href="{{ obj.get_absolute_url }}" class="btn btn-sm btn-success">
+    <i class="fa-solid fa-right-to-bracket me-1"></i>
+    {% trans "View detail" %}
+  </a>
+{% endblock card_actions %}

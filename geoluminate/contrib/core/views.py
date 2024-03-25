@@ -11,8 +11,6 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django_contact_form.views import ContactFormView
 
-from geoluminate.contrib.contributors.utils import contributor_by_role
-
 from .forms import GenericDescriptionForm
 from .models import Description
 
@@ -221,14 +219,11 @@ class GenericContactForm(LoginRequiredMixin, ContactFormView):
     def recipient_list(self):
         self.object = self.get_object()
 
-        # get contributors with the ContactPerson role
-        contact_persons = contributor_by_role(list(self.object.contributors.all()), "ContactPerson")
-
-        print(contact_persons)
+        contacts = self.object.contributors.filter(roles__contains=["ContactPerson"])
 
         # get the email addresses of the contributors
         emails = []
-        for c in contact_persons:
+        for c in contacts:
             if c.profile.user:
                 emails.append(c.profile.user.email)
         print(emails)

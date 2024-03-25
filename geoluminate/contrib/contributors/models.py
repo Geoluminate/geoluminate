@@ -5,6 +5,7 @@ from django.apps import apps
 from django.conf import settings
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.postgres.fields import ArrayField
 from django.db import models as django_models
 from django.db.models import Case, CharField, F, IntegerField, Value, When
 from django.db.models.functions import Concat
@@ -13,7 +14,6 @@ from django.urls import reverse
 from django.utils.encoding import force_str
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
-from multiselectfield.utils import get_max_length
 from taggit.managers import TaggableManager
 
 from geoluminate.contrib.datasets.models import Dataset
@@ -290,11 +290,16 @@ class Contribution(django_models.Model):
     ORGANIZATIONAL_ROLES = choices.OrganizationalRoles
     OTHER_ROLES = choices.OtherRoles
 
-    roles = models.MultiSelectField(
-        choices=CONTRIBUTOR_ROLES.choices,
-        max_length=get_max_length(CONTRIBUTOR_ROLES.choices, None),
+    roles = ArrayField(
+        models.CharField(
+            max_length=len(max(CONTRIBUTOR_ROLES.values, key=len)),
+            choices=CONTRIBUTOR_ROLES.choices,
+            # verbose_name=_("roles"),
+            # help_text=_("Contribution roles as per the Datacite ContributionType vocabulary."),
+        ),
         verbose_name=_("roles"),
-        help_text=_("Contribution roles as per the Datacite ContributionType vocabulary."),
+        help_text=_("Assigned roles for this contributor."),
+        size=len(CONTRIBUTOR_ROLES.choices),
     )
     profile = models.ForeignKey(
         "contributors.Contributor",
@@ -354,7 +359,3 @@ class Contribution(django_models.Model):
             data["affiliation"] = affiliation
 
         return data
-
-    def roles_list(self):
-        """Returns a string containg a '|' separated list of the contributor's roles."""
-        return "|".join(self.roles)

@@ -53,17 +53,6 @@ class DatasetListView(BaseListView):
     filterset_class = DatasetFilter
 
 
-class DatasetPlugin(ListPluginMixin):
-    template_name = "geoluminate/plugins/base_list.html"
-    object_template = "datasets/dataset_card.html"
-    title = name = _("Datasets")
-    icon = icon("dataset")
-    description = _("The following datasets are associated with the this project.")
-
-    def get_queryset(self, *args, **kwargs):
-        return self.get_object().datasets.all()
-
-
 class DatasetDetailView(BaseDetailView):
     base_template = "datasets/dataset_detail.html"
     model = Dataset
@@ -81,3 +70,14 @@ class DatasetFormView(BaseFormView):
     model = Dataset
     form_class = DatasetForm
     template_name = "contributors/contributor_form.html"
+
+
+class DatasetPlugin(ListPluginMixin):
+    template_name = "geoluminate/plugins/base_list.html"
+    object_template = "datasets/dataset_card.html"
+    title = name = _("Datasets")
+    icon = icon("dataset")
+    description = _("The following datasets are associated with the this project.")
+
+    def get_queryset(self, *args, **kwargs):
+        return self.get_object().datasets.all()

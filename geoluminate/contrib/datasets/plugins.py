@@ -4,6 +4,7 @@ from django_downloadview.views import VirtualDownloadView
 from formset.views import FileUploadMixin, FormViewMixin
 from lxml import etree
 
+from geoluminate.contrib.contributors.utils import current_user_has_role
 from geoluminate.contrib.contributors.views import ContributorsPlugin
 from geoluminate.contrib.core import utils
 from geoluminate.contrib.core.plugins import ActivityStream, Discussion, Map
@@ -18,12 +19,11 @@ dataset = PluginRegistry("datasets", base=DatasetDetailView)
 
 
 @dataset.page("overview", icon=icon("overview"))
-class DatasetOverview(DatasetDetailView, FileUploadMixin, FormViewMixin, UpdateView):
+class DatasetOverview(FileUploadMixin, FormViewMixin, UpdateView):
     template_name = "geoluminate/plugins/overview.html"
 
     def has_edit_permission(self):
-        """TODO: Add permissions."""
-        return self.object.has_role(self.request.user, "Creator")
+        return current_user_has_role(self.request, self.object, "Creator")
 
 
 dataset.register_page(ContributorsPlugin)

@@ -3,10 +3,10 @@ from django.db import models
 from django.views.generic import DetailView, UpdateView
 from formset.views import FileUploadMixin, FormViewMixin
 
+from geoluminate.contrib.core.plugins import ActivityStream, Map
 from geoluminate.contrib.datasets.views import DatasetPlugin
 from geoluminate.contrib.projects.views import ProjectPlugin
-from geoluminate.contrib.reviews.views import ReviewListView, ReviewPlugin
-from geoluminate.contrib.samples.views import BaseTableView, SampleTable
+from geoluminate.contrib.reviews.views import ReviewPlugin
 from geoluminate.plugins import PluginRegistry
 from geoluminate.utils import icon
 
@@ -21,12 +21,14 @@ contributor = PluginRegistry("contributor", base=ContributorDetailView)
 class ContributorOverview(ContributorDetailView, FileUploadMixin, FormViewMixin, UpdateView):
     model = Contributor
     form_class = UserProfileForm
-    # template_name = "contributors/contributor_overview.html"
-    template_name = "contributors/contributor_detail.html"
+    template_name = "contributors/contributor_overview.html"
 
-    def has_edit_permission(self):
-        """TODO: Add permissions."""
-        return self.get_object() == self.request.user.profile
+
+contributor.register_page(ProjectPlugin)
+contributor.register_page(DatasetPlugin)
+contributor.register_page(ReviewPlugin)
+contributor.register_page(Map)
+contributor.register_page(ActivityStream)
 
 
 class ContributorNetworkView(ContributorDetailView, DetailView):
@@ -50,7 +52,6 @@ class ContributorNetworkView(ContributorDetailView, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # context["contributors"] = self.get_contributors()
         related_contributions = self.object.get_related_contributions()
         data = (
             related_contributions.values("profile", "object_id")
@@ -98,27 +99,7 @@ class ContributorNetworkView(ContributorDetailView, DetailView):
         return [{"from": f, "to": t, "value": edges.count((f, t))} for f, t in set(edges)]
 
 
-@contributor.page("projects", icon=icon("project"))
-class ContributorProjectsView(ContributorDetailView, ProjectPlugin):
-    pass
-
-
-@contributor.page("datasets", icon=icon("dataset"))
-class ContributorDatasetsView(ContributorDetailView, DatasetPlugin):
-    pass
-
-
-@contributor.page("samples", icon=icon("sample"))
-class ContributorSamplesView(ContributorDetailView, BaseTableView):
-    table = SampleTable
-    template_name = "auto_datatables/base.html"
-
-
-@contributor.page("reviews", icon=icon("review"))
-class ContributorReviewsView(ContributorDetailView, ReviewPlugin):
-    pass
-
-
-@contributor.page("activity", icon=icon("activity"))
-class ContributorActivityView(ContributorDetailView, ReviewListView):
-    template_name = "geoluminate/plugins/activity_stream.html"
+# @contributor.page("samples", icon=icon("sample"))
+# class ContributorSamplesView(ContributorDetailView, BaseTableView):
+#     table = SampleTable
+#     template_name = "auto_datatables/base.html"

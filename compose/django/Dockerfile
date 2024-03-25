@@ -1,4 +1,4 @@
-FROM geoluminate/geoluminate:latest as base
+FROM geoluminate/geoluminate as base
 
 # ====================== BUILD STAGE ============================
 FROM base as build-stage

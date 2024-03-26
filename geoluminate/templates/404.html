@@ -1,16 +1,16 @@
-{% extends "geoluminate/layout/full_screen_form.html" %}
+{% extends "base_error.html" %}
 {% load i18n %}
 
 {% block title %}
-  {% trans "Page Not Found!" %}
-{% endblock %}
+  <title>{% trans "404 Page Not Found" %}</title>
+{% endblock title %}
 
-{% block page_title %}
-  {% trans "Page Not Found!" %}
-{% endblock %}
+{% block error %}
+  {% trans "404 Page Not Found" %}
+{% endblock error %}
 
 {% block content %}
   <p>
-    {% trans "We're sorry, but the page or resource you're looking for couldn't be found. It might have been moved, deleted, or never existed in the first place. Double-check the URL or try navigating back to our homepage. If you're still having trouble, feel free to contact us for more information." %}
+    {% trans "Oops! The page you are looking for could not be found. If you found a broken link, please get in contact with us so we can fix it." %}
   </p>
-{% endblock %}
+{% endblock content %}

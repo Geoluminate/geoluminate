@@ -1,17 +1,16 @@
-{% extends "geoluminate/layout/full_screen_form.html" %}
-{% load i18n %}
+{% extends "base_error.html" %}
+{% load i18n geoluminate %}
 
 {% block title %}
-  {% trans "Oops! Server Error..." %}
-{% endblock %}
+  <title>{% trans "400 Bad Request" %}</title>
+{% endblock title %}
 
-{% block page_title %}
-  {% trans "Oops! Server Error..." %}
-{% endblock %}
+{% block error %}
+  {% trans "500 Internal Server Error" %}
+{% endblock error %}
 
 {% block content %}
-  <h5 class="modal-title text-center mb-3">{% trans "Oops! Server Error..." %}</h5>
-  <p class=''>
-    {% trans "Whoops! Something went wrong on our end. Our technical team is already working to fix this issue. We apologize for any inconvenience. In the meantime, you might want to try again later or contact our support team to report the problem. Thank you for your patience!" %}
+  <p>
+    {% trans "Oops! Something went wrong on our side. Our internal logging system has already notified us about this issue. If the problem persists beyond a week, feel free to get in contact with us." %}
   </p>
-{% endblock %}
+{% endblock content %}

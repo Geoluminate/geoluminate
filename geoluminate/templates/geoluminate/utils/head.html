@@ -1,6 +1,7 @@
-{% load static geoluminate django_htmx compress %}
+{% load static solo_tags geoluminate django_htmx compress %}
 {% load render_bundle from webpack_loader %}
 
+{% site_config 'configuration.Configuration' as site_config %}
 <meta charset="utf-8" />
 <meta http-equiv="x-ua-compatible" content="ie=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -11,8 +12,15 @@
 <script type="module" src="{% static 'formset/js/django-formset.js' %}" crossorigin="anonymous"></script>
 {% django_htmx_script %}
 {% compress css %}
-  <link rel="stylesheet" type="text/x-scss" href="{% static "scss/stylesheet.scss" %}" />
-  {% comment %} <link rel="stylesheet" type="text/x-scss" href="/scss/stylesheet.scss" /> {% endcomment %}
+  {# djlint:off #}
+  <style type="text/x-scss">
+    {% for label, color in site_config.theme.items %}
+      ${{label}}: {{ color }};
+    {% endfor %}
+    @import "scss/geoluminate";
+</style>
+  {# djlint:on #}
+  {% comment %} <link rel="stylesheet" type="text/x-scss" href="{% static "scss/stylesheet.scss" %}" /> {% endcomment %}
 {% endcompress %}
 {% render_bundle "project" "css" "GEOLUMINATE" %}
 {% comment %} JAVASCRIPT {% endcomment %}

@@ -1,6 +1,0 @@
-{% for child in children %}
-  <li>
-    <a class="dropdown-item {% if child.ancestor or child.selected %}active{% endif %}"
-       href="{{ child.attr.redirect_url|default:child.get_absolute_url }}">{{ child.get_menu_title }}</a>
-  </li>
-{% endfor %}

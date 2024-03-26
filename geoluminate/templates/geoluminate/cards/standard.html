@@ -1,0 +1,110 @@
+{% extends "geoluminate/cards/base.html" %}
+{% load i18n geoluminate contributor_tags %}
+
+{% block card_header %}
+{% endblock card_header %}
+{% block card_body %}
+  <div class="col col-lg-3 col-md-4">
+    <div class="card h-100 mt-1">
+      {% block card_left %}
+        {% block image %}
+          {% if obj.image %}
+            <img src="{{ obj.image.url }}"
+                 class="card-img-top rounded"
+                 alt="{{ obj.title }}"
+                 height="100px"
+                 width="auto" />
+          {% endif %}
+        {% endblock image %}
+        <div class="pt-2 d-flex flex-wrap justify-content-center">
+          <div class="w-50">
+            <h6>{% trans "Metadata" %}</h6>
+            <div id="metadataQuality-{{ obj.id }}"
+                 class="gauge w-75"
+                 data-bs-toggle="popover"
+                 data-bs-placement="right"
+                 data-bs-content="Find out more."
+                 data-value="{{ obj.get_metadata_quality }}"></div>
+          </div>
+          <div class="w-50">
+            <h6>{% trans "Data Quality" %}</h6>
+            <div id="dataQuality-{{ obj.id }}" class="gauge w-75" data-value="{{ obj.get_data_quality }}"></div>
+          </div>
+          {% comment %} <ul class="list-group list-group-flush mt-3 mt-md-2">
+          {% block list_group %}
+
+
+          <li>{% trans "Status" %}: <span class="badge project-status-{{obj.status}}">{{obj.get_status_display}}</span></li>
+          <li>{% trans "Start" %}: <span>{{obj.created|date:"M Y"}}</span></li>
+          <li>{% trans "Finish" %}: <span>{{obj.created|date:"M Y"}}</span></li>
+          {% for date in obj.key_dates.all %}
+            <li>{{ date.get_type_display }}: <span>{{ date.date|date|default:"-"}}</span></li>
+          {% endfor %}
+
+          {% endblock list_group %}
+          </ul> {% endcomment %}
+        </div>
+      {% endblock card_left %}
+    </div>
+  </div>
+  <div class="col">
+    <div class="card h-100 ">
+      <div class="card-body pt-0">
+        <h5 class="card-title text-decoration-none">
+          {% block title %}<span>{{ obj.title }}</span>{% endblock %}
+        </h5>
+        <h6>
+          {% block subtitle %}
+            <span class="me-2"
+                  data-bs-toggle="popover"
+                  data-bs-placement="bottom"
+                  data-bs-title="{% trans "Creators" %}"
+                  data-bs-content="{% trans "The following people are listed as creators of this database item." %}">{% icon "contributors" %}</span>
+          {% endblock subtitle %}
+        </h6>
+        {% block card_right %}
+          <p class="card-text">
+            {% block description %}
+              {% with obj.get_abstract as description %}
+                {% if description %}
+                  {{ description.clean|truncatechars_html:512 }}
+                {% else %}
+                  {% blocktrans %}
+              No abstract has been provided for this {{ obj_name }} yet.
+              {% endblocktrans %}
+                {% endif %}
+              {% endwith %}
+            {% endblock description %}
+          </p>
+        {% endblock %}
+      </div>
+      {% if obj.get_tags_list %}
+        <div class="card-footer">
+          {% block footer %}
+            <div class="text-muted">
+              <div>
+                {% block badges %}
+                  {% for tag in obj.get_tags_list %}<span class="badge rounded-pill text-bg-secondary">{{ tag }}</span>{% endfor %}
+                {% endblock %}
+              </div>
+              {% block info %}
+              {% endblock info %}
+            </div>
+          {% endblock footer %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endblock card_body %}
+{% block card_footer_content %}
+  {% with obj.modified|timesince as last_updated %}
+    <span>{% blocktrans %}Last Updated: {{ last_updated }} ago{% endblocktrans %}</span>
+  {% endwith %}
+  {{ block.super }}
+{% endblock card_footer_content %}
+{% block card_actions %}
+  <a href="{{ obj.get_absolute_url }}" class="btn btn-sm btn-success">
+    <i class="fa-solid fa-right-to-bracket me-1"></i>
+    {% trans "View detail" %}
+  </a>
+{% endblock card_actions %}

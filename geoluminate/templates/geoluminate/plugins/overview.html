@@ -1,9 +1,10 @@
 {% load i18n contributor_tags %}
 
-<div class='container py-3 animate__animated animate__fadeIn bg-body-light'>
-  <h1 class='display-3'>{{ object.title }}</h1>
-  <p class='small text-decoration-none'>
-    {% include "contributors/names_list.html" with contributors=object.get_contributors|role:"Creator" %}
+<div class="container py-3 animate__animated animate__fadeIn bg-body-light">
+  <h1 class="display-3">{{ object.title }}</h1>
+  <p class="small text-decoration-none">
+    {% include "contributors/names_list.html" with
+    contributors=object.contributors|role:"Creator" %}
   </p>
   {% for description in object.get_descriptions %}
     {% include "core/description.html" %}

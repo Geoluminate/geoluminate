@@ -1,56 +1,59 @@
-{% extends 'geoluminate/sidebar_left.html' %}
+{% extends "geoluminate/sidebar_left.html" %}
 {% load static i18n formsetify cms_tags geoluminate sekizai_tags activity_tags %}
 {% load render_bundle from webpack_loader %}
 
 {% block application %}
-  {% comment %} {% if user_has_permission.edit %} {% endcomment %}
-  {% include "cms/cms_menu.html" %}
-  {% comment %} {% endif %} {% endcomment %}
+  {% if user_has_permission.edit %}
+    {% include "cms/cms_menu.html" %}
+  {% endif %}
   {{ block.super }}
 {% endblock application %}
 
 {% block css %}
   {{ block.super }}
-  {% comment %} {% render_bundle 'datatables' 'css' 'GEOLUMINATE' %} {% endcomment %}
-  {% render_bundle 'detail' 'css' 'GEOLUMINATE' %}
-  <link rel="stylesheet" type="text/css" href="{% static 'fluent_comments/css/ajaxcomments.css' %}" />
+  {% comment %} {% render_bundle "datatables" "css" "GEOLUMINATE" %} {% endcomment %}
+  {% render_bundle "detail" "css" "GEOLUMINATE" %}
+  <link rel="stylesheet" type="text/css" href="{% static "fluent_comments/css/ajaxcomments.css" %}" />
   {% comment %} <link rel="stylesheet" href="{% static "auto_datatables/css/auto-datatable.css" %}" /> {% endcomment %}
 {% endblock css %}
 
 {% block javascript %}
   {{ block.super }}
-  {% comment %} {% render_bundle 'datatables' 'js' 'GEOLUMINATE' %} {% endcomment %}
-  {% render_bundle 'detail' 'js' 'GEOLUMINATE' attrs="defer" %}
-  <script type="text/javascript" src="{% static 'fluent_comments/js/ajaxcomments.js' %}" defer></script>
+  {% comment %} {% render_bundle "datatables" "js" "GEOLUMINATE" %} {% endcomment %}
+  {% render_bundle "detail" "js" "GEOLUMINATE" attrs="defer" %}
+  <script type="text/javascript" src="{% static "fluent_comments/js/ajaxcomments.js" %}" defer></script>
   <script src="{% static "el-pagination/js/el-pagination.js" %}" defer></script>
   {% comment %} <script defer>
       $.endlessPaginate();
  </script> {% endcomment %}
   {% comment %} <script src="{% static "auto_datatables/js/auto-datatables.js" %}" defer></script> {% endcomment %}
-{% endblock %}
+{% endblock javascript %}
 
 {% block page_nav %}
   <nav class="page-nav">
     {% page_menu %}
   </nav>
-{% endblock %}
+{% endblock page_nav %}
 
-{% block sidebar_title %}{{ object.uuid }}{% endblock %}
+{% block sidebar_title %}
+  {{ object.uuid }}
+{% endblock sidebar_title %}
 
 {% block sidebar %}
   {% block sidebar_top %}
     {% block sidebar_image %}
-      <div class="card text-white">{% avatar object width="100%" class='card-img' %}</div>
-    {% endblock %}
+      <div class="card text-white">{% avatar object width="100%" class="card-img" %}</div>
+    {% endblock sidebar_image %}
 
-    <div class='actions d-flex mb-2 justify-content-center'>
+    <div class="actions d-flex mb-2 justify-content-center">
       {% follow_button object %}
       {% share_button object %}
-      <a href="" class='btn btn-sm btn-secondary'>
-        <i class='fa-solid fa-envelope'></i>
+      <a href="#" class="btn btn-sm btn-secondary">
+        <i class="fa-solid fa-envelope"></i>
         {% trans "Contact" %}
       </a>
-      {% block actions %}{% endblock %}
+      {% block actions %}
+      {% endblock actions %}
 
     </div>
   {% endblock sidebar_top %}
@@ -61,10 +64,10 @@
 {% endblock sidebar %}
 
 {% block main %}
-  {% comment %} <div class="tab-content d-flex flex-wrap w-100 h-100">
+  <div class="tab-content d-flex flex-wrap w-100 h-100">
     {% for item in page_menu %}
-      <div id="{{ item.title|slugify }}-panel" class="tab-pane fade bg-body-light w-100 {% if forloop.first %}show active{% endif %} " role="tabpanel" aria-labelledby="{{ item.title|slugify }}-tab" tabindex="{{ forloop.counter }}" hx-get="{{ item.resolved }}"{% for key, val in htmx.items %} {{ key }}="{{ val }}"{% endfor %} hx-trigger="intersect once" hx-trigger="intersect" hx-target="this">
+      <div id="{{ item.title|slugify }}-panel" class="tab-pane fade bg-body-light w-100 {% if forloop.first %}show active{% endif %} " role="tabpanel" aria-labelledby="{{ item.title|slugify }}-tab" tabindex="{{ forloop.counter }}" hx-get="{{ item.resolved }}"{% for key, val in htmx.items %} {{ key }}="{{ val }}"{% endfor %} hx-trigger="intersect" hx-target="this">
       </div>
     {% endfor %}
-  </div> {% endcomment %}
-{% endblock %}
+  </div>
+{% endblock main %}

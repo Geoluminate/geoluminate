@@ -1,16 +1,14 @@
-{% extends "geoluminate/layout/full_screen_form.html" %}
+{% extends "base_error.html" %}
 {% load i18n %}
 
 {% block title %}
-  {% trans "Forbidden" %}
-{% endblock %}
+  <title>{% trans "403 Forbidden" %}</title>
+{% endblock title %}
 
-{% block page_title %}
-  {% trans "Forbidden" %}
-{% endblock %}
+{% block error %}
+  {% trans "403 Forbidden" %}
+{% endblock error %}
 
 {% block content %}
-  <p class=''>
-    {% trans "Oops! It seems like you don't have permission to access this resource. If you believe this is a mistake, please reach out to our support team for assistance. We're here to help you get the access you need!" %}
-  </p>
-{% endblock %}
+  <p>{% trans "You do not have permission to access this page." %}</p>
+{% endblock content %}

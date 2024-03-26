@@ -122,3 +122,11 @@ def reset_db(c):
     Build the documentation and open it in a live browser
     """
     c.run("docker compose run django python manage.py flush")
+
+
+@task
+def build(c):
+    """
+    Build the core geoluminate docker images
+    """
+    c.run("poetry build")

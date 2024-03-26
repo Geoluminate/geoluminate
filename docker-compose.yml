@@ -7,13 +7,23 @@ volumes:
   media: {}
 
 services:
-
+  geoluminate:
+    build:
+      context: .
+      dockerfile: ./compose/geoluminate/Dockerfile
+    image: geoluminate/geoluminate:latest
+  geoluminate-postgis:
+    build:
+      context: .
+      dockerfile: ./compose/postgres/Dockerfile
+    image: geoluminate/postgis
   django: &django
     build:
       context: .
-      dockerfile: ./compose/geoluminate/local
-    image: geoluminate_django
+      dockerfile: ./compose/django/Dockerfile
+    image: geoluminate_demo
     depends_on:
+      - geoluminate
       - postgres
       - redis
       - minio
@@ -26,14 +36,11 @@ services:
     ports:
       - 8000:8000
       - 5678:5678
-    command: /app/bin/local/django
-    entrypoint: /app/bin/entrypoint
-
+    command: start-django-local
   postgres:
-    build:
-      context: .
-      dockerfile: ./compose/postgres/Dockerfile
-    image: geoluminate/postgis:latest
+    image: geoluminate/postgis
+    depends_on:
+      - geoluminate-postgis
     volumes:
       - postgres:/var/lib/postgresql/data
       - postgres_backups:/backups
@@ -45,17 +52,17 @@ services:
   # celeryworker:
   #   <<: *django
   #   ports: []
-  #   command: /app/bin/local/celery_worker
+  #   command: start-celeryworker-local
   # celerybeat:
   #   <<: *django
   #   ports: []
-  #   command: /app/bin/local/celery_beat
+  #   command: start-celerybeat-local
 
   # flower:
   #   <<: *django
   #   ports:
   #     - "5555:5555"
-  #   command: /app/bin/local/celery_flower
+  #   command: start-flower-local
 
   minio:
     image: quay.io/minio/minio:latest
@@ -73,7 +80,7 @@ services:
   #   working_dir: /app/docs
   #   ports:
   #     - "5000:5000"
-  #   command: /app/bin/local/docs
+  #   command: start-docs
 
   node:
     build:

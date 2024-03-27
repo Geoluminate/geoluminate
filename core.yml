@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  geoluminate:
+    build:
+      context: .
+      dockerfile: ./compose/geoluminate/Dockerfile
+    image: geoluminate/geoluminate:latest
+  postgres:
+    build:
+      context: .
+      dockerfile: ./compose/postgres/Dockerfile
+    image: geoluminate/postgis:latest

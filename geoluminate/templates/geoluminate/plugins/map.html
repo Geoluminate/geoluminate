@@ -21,10 +21,8 @@
     pointer-events: none;
   }
 </style>
+{% comment %} djlint:off {% endcomment %}
 <script>
-  var map = basicMap("map", {
-    {
-      map_source_list | safe
-    }
-  });
+  var map = basicMap("map", {{ map_source_list | safe }});
 </script>
+{% comment %} djlint:on {% endcomment %}

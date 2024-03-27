@@ -11,16 +11,19 @@
 {% block css %}
   {{ block.super }}
   {% render_bundle "detail" "css" "GEOLUMINATE" %}
+  {% render_bundle "datatables" "css" "GEOLUMINATE" %}
   <link rel="stylesheet" type="text/css" href="{% static "fluent_comments/css/ajaxcomments.css" %}" />
+  <style>
+    th {
+      white-space: nowrap;
+    }
+  </style>
 {% endblock css %}
 {% block javascript %}
   {{ block.super }}
-  {% comment %} {% render_bundle "datatables" "js" "GEOLUMINATE" %} {% endcomment %}
   {% render_bundle "detail" "js" "GEOLUMINATE" attrs="defer" %}
+  {% render_bundle "datatables" "js" "GEOLUMINATE" attrs="defer" %}
   <script src="{% static "el-pagination/js/el-pagination.js" %}" defer></script>
-  {% comment %} <script defer>
-   $.endlessPaginate();
- </script> {% endcomment %}
 {% endblock javascript %}
 {% block compressable_js %}
 {% endblock compressable_js %}

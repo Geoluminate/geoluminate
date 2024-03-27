@@ -4,11 +4,6 @@ from django.core.exceptions import FieldDoesNotExist
 
 
 class TableConfigMixin:
-    dom = """
-    <'page-nav'
-        <'nav nav-pills nav-pills-alternate'<B><'ms-auto my-auto'f>>
-    >rt<'px-1 position-absolute bottom-0 end-0'i>
-                """
     language = {
         "search": "",
         "searchPlaceholder": "Search",
@@ -16,48 +11,37 @@ class TableConfigMixin:
             "button": "Complex Search",
         },
     }
-    rowReorder = False
     colReorder = True
     stateSave = True
+    fixedColumns = {"start": 3}
     buttons = [
-        # {
-        #     "extend": "print",
-        #     "text": "<i class='fa-solid fa-print'></i> Print",
-        #     "titleAttr": "Print",
-        #     "autoPrint": False,
-        #     "footer": True,
-        #     "exportOptions": {"columns": ":not(.noPrint) :visible"},
-        #     # "messageBottom": "This is a custom message added to the print view",
-        # },
+        {
+            "extend": "print",
+            "titleAttr": "Print",
+            "footer": True,
+            "exportOptions": {"columns": ":not(.noPrint) :visible"},
+            # "messageBottom": "This is a custom message added to the print view",
+        },
         # {
         #     "extend": "collection",
-        #     "text": "<i class='fa-solid fa-file-export'></i> Export",
+        #     "text": "Export",
         #     "buttons": [
         #         {"extend": "csv", "exportOptions": {"columns": ":not(.noPrint) :visible"}},
         #         {"extend": "excel", "exportOptions": {"columns": ":not(.noPrint) :visible"}},
-        #         # {"extend": "pdf", "exportOptions": {"columns": ":not(.noPrint) :visible"}},
+        #         {"extend": "pdf", "exportOptions": {"columns": ":not(.noPrint) :visible"}},
         #     ],
         # },
-        {
-            "extend": "colvis",
-            "text": "<i class='fa-solid fa-table-columns'></i> Columns",
-            # "collectionLayout": "fixed columns",
-            # "collectionLayout": "modal",
-            # "collectionTitle": "Column visibility control",
-            # "columns": ":not(.noVis)",
-        },
-        {
-            "extend": "searchBuilder",
-            "text": "<i class='fa-solid fa-filter'></i> Complex Search",
-            # "config": {"depthLimit": 2},
-        },
-        {
-            "extend": "createState",
-            "text": "<i class='fa-solid fa-floppy-disk'></i>",
-        },
+        "colvis",
+        "searchPanes",
+        "searchBuilder",
+        # "createState",
+        # {
+        #     "extend": "createState",
+        #     "text": "<i class='fa-solid fa-floppy-disk'></i>",
+        # },
     ]
     searchPanes = {
-        "threshold": 0.5,
+        # "threshold": 0.5,
         "layout": "columns-1",
         "cascadePanes": False,
         "orderable": False,
@@ -67,11 +51,6 @@ class TableConfigMixin:
             "paging": True,
         },
     }
-    # searchBuilder = {
-    #     "layout": "columns-1",
-    #     "cascadePanes": False,
-    #     "orderable": False,
-    # }
 
     def __init__(self, **kwargs):
         for key, value in kwargs.items():
@@ -90,9 +69,12 @@ class ServerSideProcessing(TableConfigMixin):
 
 class ScrollerTable(TableConfigMixin):
     processing = True
-    serverSide = True
-    scroller = {"loadingIndicator": True, "serverWait": 500}
-    scrollX = True
+    # serverSide = True
+    fixedHeader = True
+    scrollCollapse = False
+    scroller = True
+    # scroller = {"loadingIndicator": True, "serverWait": 500}
+    scrollX = False
 
 
 class GeoluminateTable(DataTable):

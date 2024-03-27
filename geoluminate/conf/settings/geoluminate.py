@@ -111,7 +111,6 @@ GEOLUMINATE_FILTERS = {
     "geoluminate.Dataset": {
         "title": ["contains"],
         "keywords__name": ["exact"],
-        "tags": ["exact"],
     }
 }
 
@@ -135,4 +134,3 @@ GEOLUMINATE_ICONS = {
     "spinner": "fa-solid fa-spinner fa-spin",
     "literature": "fa-solid fa-book",
 }
-

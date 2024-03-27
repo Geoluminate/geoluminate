@@ -1,9 +1,6 @@
 import django_filters as df
 from django import forms
 from django.utils.translation import gettext_lazy as _
-from formset.widgets import SelectizeMultiple
-
-from geoluminate.contrib.core.choices import HAS_TAGS, NEEDS_TAGS
 
 from .models import Project
 
@@ -39,24 +36,24 @@ class ListFilterTop(df.FilterSet):
 
 
 class ProjectFilter(ListFilterTop):
-    has_tags = df.MultipleChoiceFilter(
-        label="Project Has",
-        field_name="tags",
-        lookup_expr="icontains",
-        choices=HAS_TAGS,
-        widget=SelectizeMultiple(),
-        # widget=forms.SelectMultiple(attrs={"size": len(HAS_TAGS)}),
-    )
-    needs_tags = df.MultipleChoiceFilter(
-        label="Project Needs",
-        field_name="tags",
-        lookup_expr="icontains",
-        required=False,
-        choices=NEEDS_TAGS,
-        widget=SelectizeMultiple(),
-        # widget=forms.SelectMultiple(attrs={"size": len(NEEDS_TAGS)}),
-    )
+    # has_tags = df.MultipleChoiceFilter(
+    #     label="Project Has",
+    #     field_name="tags",
+    #     lookup_expr="icontains",
+    #     choices=HAS_TAGS,
+    #     widget=SelectizeMultiple(),
+    #     # widget=forms.SelectMultiple(attrs={"size": len(HAS_TAGS)}),
+    # )
+    # needs_tags = df.MultipleChoiceFilter(
+    #     label="Project Needs",
+    #     field_name="tags",
+    #     lookup_expr="icontains",
+    #     required=False,
+    #     choices=NEEDS_TAGS,
+    #     widget=SelectizeMultiple(),
+    #     # widget=forms.SelectMultiple(attrs={"size": len(NEEDS_TAGS)}),
+    # )
 
     class Meta:
         model = Project
-        fields = ["title", "status", "o", "visibility", "has_tags", "needs_tags", "o"]
+        fields = ["title", "status", "o", "visibility", "o"]

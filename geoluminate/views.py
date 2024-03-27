@@ -42,6 +42,7 @@ class BaseTableView(BaseMixin, AutoTableMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["filter"] = self.filter
+        context["endpoint"] = self.get_table().url
         return context
 
     def get_table_url(self):

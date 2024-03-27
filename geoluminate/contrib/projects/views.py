@@ -20,12 +20,16 @@ class ProjectListView(BaseListView):
 
 class ProjectDetailView(BaseDetailView):
     base_template = "projects/project_detail.html"
+    title = _("Project")
     model = Project
     form_class = ProjectForm
 
     def has_edit_permission(self):
         return True
         # return super().has_edit_permission()
+
+    def has_create_permission(self):
+        return True
 
 
 class ProjectPlugin(ListPluginMixin):

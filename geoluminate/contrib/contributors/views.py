@@ -112,13 +112,18 @@ class ContributionEditView(BaseFormView):
 
 
 class ContributorsPlugin(ListPluginMixin):
-    template_name = "geoluminate/plugins/base_list.html"
+    template_name = "contributors/contributions_list.html"
     object_template = "contributors/contribution_card.html"
     columns = 3
     icon = icon("contributors")
     title = name = _("Contributors")
     description = _("The following personal and organizational contributors are associated with the current project.")
     # filterset_class = ContributionFilter
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["all_contributor_roles"] = Contribution.CONTRIBUTOR_ROLES
+        return context
 
     def get_queryset(self, *args, **kwargs):
         return self.get_object().contributors.select_related("profile")

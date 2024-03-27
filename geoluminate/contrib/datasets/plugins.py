@@ -8,10 +8,9 @@ from geoluminate.contrib.contributors.utils import current_user_has_role
 from geoluminate.contrib.contributors.views import ContributorsPlugin
 from geoluminate.contrib.core import utils
 from geoluminate.contrib.core.plugins import ActivityStream, Discussion, Map
-from geoluminate.contrib.samples.tables import SampleTable
+from geoluminate.contrib.samples.views import SampleTablePlugin
 from geoluminate.plugins import PluginRegistry
 from geoluminate.utils import icon
-from geoluminate.views import BaseTableView
 
 from .views import DatasetDetailView
 
@@ -20,6 +19,7 @@ dataset = PluginRegistry("datasets", base=DatasetDetailView)
 
 @dataset.page("overview", icon=icon("overview"))
 class DatasetOverview(FileUploadMixin, FormViewMixin, UpdateView):
+    # title = _("Dataset")
     template_name = "geoluminate/plugins/overview.html"
 
     def has_edit_permission(self):
@@ -29,13 +29,19 @@ class DatasetOverview(FileUploadMixin, FormViewMixin, UpdateView):
 dataset.register_page(ContributorsPlugin)
 
 
-@dataset.page("samples", icon=icon("sample"))
-class DatasetSamplesView(DatasetDetailView, BaseTableView):
-    table = SampleTable
-    template_name = "auto_datatables/base.html"
+dataset.register_page(SampleTablePlugin)
 
 
-dataset.register_page(Map)
+@dataset.page()
+class DatasetMap(Map):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["map_source_list"].update(self.serialize_dataset_samples(self.get_object()))
+
+        return context
+
+
+# dataset.register_page(Map)
 dataset.register_page(Discussion)
 dataset.register_page(ActivityStream)
 

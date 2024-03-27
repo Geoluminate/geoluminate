@@ -8,7 +8,6 @@ from geoluminate.contrib.core.admin import (
 )
 from geoluminate.contrib.datasets.admin import DatasetsInline
 
-# from jazzmin import templatetags
 from .models import Project
 
 
@@ -21,7 +20,11 @@ class ProjectAdmin(BaseAdmin):
         DatasetsInline,
     ]
     search_fields = ("uuid", "title")
-    frontend_editable_fields = ("title", "summary", "status", "tags")
+    frontend_editable_fields = (
+        "title",
+        "summary",
+        "status",
+    )
     list_display = (
         "title",
         "status",

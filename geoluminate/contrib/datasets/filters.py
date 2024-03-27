@@ -4,8 +4,6 @@ from django.utils.translation import gettext_lazy as _
 from formset.widgets import SelectizeMultiple
 from taggit.models import Tag
 
-from geoluminate.contrib.core.choices import HAS_TAGS
-
 from .models import Dataset
 
 
@@ -39,13 +37,13 @@ class ListFilterTop(df.FilterSet):
 
 
 class DatasetFilter(ListFilterTop):
-    tags = df.MultipleChoiceFilter(
-        label="Dataset Has",
-        field_name="tags",
-        lookup_expr="icontains",
-        choices=HAS_TAGS,
-        widget=SelectizeMultiple(),
-    )
+    # tags = df.MultipleChoiceFilter(
+    #     label="Dataset Has",
+    #     field_name="tags",
+    #     lookup_expr="icontains",
+    #     choices=HAS_TAGS,
+    #     widget=SelectizeMultiple(),
+    # )
     keywords = df.ModelMultipleChoiceFilter(
         queryset=Tag.objects.all(),
         widget=SelectizeMultiple(),
@@ -53,4 +51,4 @@ class DatasetFilter(ListFilterTop):
 
     class Meta:
         model = Dataset
-        fields = ["title", "o", "license", "keywords", "tags"]
+        fields = ["title", "o", "license", "keywords"]

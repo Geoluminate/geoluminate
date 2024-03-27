@@ -197,6 +197,3 @@ class Measurement(models.Model):
 
     def get_absolute_url(self):
         return self.get_sample.get_absolute_url()
-
-
-# print(len(max(FeatureType, key=len)))

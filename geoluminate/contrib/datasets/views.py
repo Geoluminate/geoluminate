@@ -56,6 +56,7 @@ class DatasetListView(BaseListView):
 class DatasetDetailView(BaseDetailView):
     base_template = "datasets/dataset_detail.html"
     model = Dataset
+    title = _("Dataset")
     form_class = DatasetForm
     sidebar_components = [
         "core/sidebar/basic_info.html",

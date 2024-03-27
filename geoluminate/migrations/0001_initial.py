@@ -9,7 +9,6 @@ import geoluminate.contrib.core.models
 import geoluminate.contrib.samples.choices
 import imagekit.models.fields
 import meta.models
-import multiselectfield.db.fields
 import quantityfield.fields
 import research_vocabs.fields
 import uuid
@@ -33,7 +32,6 @@ class Migration(migrations.Migration):
                 ('image', imagekit.models.fields.ProcessedImageField(blank=True, default='world_map.webp', help_text='Upload an image that represents your project.', null=True, upload_to=geoluminate.contrib.core.models.default_image_path, verbose_name='image')),
                 ('title', models.CharField(help_text='The title of the object.', max_length=255, verbose_name='name')),
                 ('summary', models.CharField(blank=True, help_text='A short (max 512 characters) plain-language summary.', max_length=512, null=True, verbose_name='summary')),
-                ('tags', multiselectfield.db.fields.MultiSelectField(blank=True, choices=[('has_funding', 'Has Funding'), ('has_equipment', 'Has Instruments'), ('needs_collaborators', 'Collaborators'), ('funding_wanted', 'Needs Funding'), ('equipment_wanted', 'Needs Instruments')], help_text='Tags to help others discover your project.', max_length=32, null=True, verbose_name='tags')),
                 ('funding', models.JSONField(blank=True, help_text='Related funding information.', null=True, verbose_name='funding')),
                 ('options', models.JSONField(blank=True, help_text='Item options.', null=True, verbose_name='options')),
                 ('visibility', models.IntegerField(choices=[(0, 'Private'), (1, 'Public')], default=0, help_text='Visibility within the application.', verbose_name='visibility')),
@@ -72,7 +70,6 @@ class Migration(migrations.Migration):
                 ('image', imagekit.models.fields.ProcessedImageField(blank=True, default='world_map.webp', help_text='Upload an image that represents your project.', null=True, upload_to=geoluminate.contrib.core.models.default_image_path, verbose_name='image')),
                 ('title', models.CharField(help_text='The title of the object.', max_length=255, verbose_name='name')),
                 ('summary', models.CharField(blank=True, help_text='A short (max 512 characters) plain-language summary.', max_length=512, null=True, verbose_name='summary')),
-                ('tags', multiselectfield.db.fields.MultiSelectField(blank=True, choices=[('has_funding', 'Has Funding'), ('has_equipment', 'Has Instruments'), ('needs_collaborators', 'Collaborators'), ('funding_wanted', 'Needs Funding'), ('equipment_wanted', 'Needs Instruments')], help_text='Tags to help others discover your project.', max_length=32, null=True, verbose_name='tags')),
                 ('funding', models.JSONField(blank=True, help_text='Related funding information.', null=True, verbose_name='funding')),
                 ('options', models.JSONField(blank=True, help_text='Item options.', null=True, verbose_name='options')),
                 ('visibility', models.IntegerField(choices=[(0, 'Private'), (1, 'Public')], default=0, help_text='Visibility within the application.', verbose_name='visibility')),
@@ -94,7 +91,6 @@ class Migration(migrations.Migration):
                 ('image', imagekit.models.fields.ProcessedImageField(blank=True, default='world_map.webp', help_text='Upload an image that represents your project.', null=True, upload_to=geoluminate.contrib.core.models.default_image_path, verbose_name='image')),
                 ('title', models.CharField(help_text='The title of the object.', max_length=255, verbose_name='name')),
                 ('summary', models.CharField(blank=True, help_text='A short (max 512 characters) plain-language summary.', max_length=512, null=True, verbose_name='summary')),
-                ('tags', multiselectfield.db.fields.MultiSelectField(blank=True, choices=[('has_funding', 'Has Funding'), ('has_equipment', 'Has Instruments'), ('needs_collaborators', 'Collaborators'), ('funding_wanted', 'Needs Funding'), ('equipment_wanted', 'Needs Instruments')], help_text='Tags to help others discover your project.', max_length=32, null=True, verbose_name='tags')),
                 ('funding', models.JSONField(blank=True, help_text='Related funding information.', null=True, verbose_name='funding')),
                 ('options', models.JSONField(blank=True, help_text='Item options.', null=True, verbose_name='options')),
                 ('visibility', models.IntegerField(choices=[(0, 'Private'), (1, 'Public')], default=0, help_text='Visibility within the application.', verbose_name='visibility')),

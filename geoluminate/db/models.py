@@ -11,7 +11,6 @@ from django.utils.translation import gettext_lazy as _
 from django_bleach.models import BleachField as TextField
 from meta.models import ModelMeta
 from model_utils import FieldTracker
-from multiselectfield import MultiSelectField
 from quantityfield.fields import (
     BigIntegerQuantityField,
     DecimalQuantityField,
@@ -112,5 +111,4 @@ __all__ = [
     "PositiveIntegerQuantityField",
     "DecimalQuantityField",
     "TextField",
-    "MultiSelectField",
 ]

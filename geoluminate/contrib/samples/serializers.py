@@ -19,6 +19,7 @@ class LocationSerializer(BaseSerializerMixin, serializers.ModelSerializer):
 
 class SampleSerializer(BaseSerializerMixin, NestedHyperlinkedModelSerializer):
     location = LocationSerializer()
+    absolute_url = serializers.SerializerMethodField()
 
     class Meta:
         model = Sample
@@ -32,6 +33,9 @@ class SampleSerializer(BaseSerializerMixin, NestedHyperlinkedModelSerializer):
             "location": {"lookup_field": "uuid"},
         }
 
+    def get_absolute_url(self, obj):
+        return obj.get_absolute_url()
+
 
 class SampleGeojsonSerializer(BaseSerializerMixin, GeoFeatureModelSerializer):
     geom = GeometrySerializerMethodField()
@@ -43,7 +47,7 @@ class SampleGeojsonSerializer(BaseSerializerMixin, GeoFeatureModelSerializer):
         model = Sample
         geo_field = "geom"
         id_field = "uuid"
-        fields = ["uuid", "type", "title", "geom"]
+        fields = ["uuid", "feature_type", "title", "geom"]
         extra_kwargs = {
             "details": {"lookup_field": "uuid"},
             "project": {"lookup_field": "uuid"},

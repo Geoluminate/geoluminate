@@ -61,15 +61,7 @@ class Abstract(models.Model):
         help_text=_("Controlled keywords for enhanced discoverability"),
         blank=True,
     )
-    # I think we should get rid of this in favour of th keywords field
-    tags = models.MultiSelectField(
-        choices=DISCOVERY_TAGS,
-        max_length=32,  # NEEDS TO BE FIXED
-        verbose_name=_("tags"),
-        help_text=_("Tags to help others discover your project."),
-        blank=True,
-        null=True,
-    )
+
     key_dates = GenericRelation(
         "core.FuzzyDate",
         verbose_name=_("key dates"),
@@ -226,6 +218,7 @@ class Description(django_models.Model):
         indexes = [
             models.Index(fields=["content_type", "object_id"]),
         ]
+        # order_with_respect_to = [""]
 
     def clean(self):
         """Returns description text with p tags stripped"""

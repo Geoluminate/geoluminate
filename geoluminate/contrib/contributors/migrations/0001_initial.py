@@ -3,7 +3,6 @@
 from django.db import migrations, models
 import django_bleach.models
 import meta.models
-import multiselectfield.db.fields
 import uuid
 
 
@@ -20,7 +19,6 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('object_id', models.PositiveIntegerField()),
-                ('roles', multiselectfield.db.fields.MultiSelectField(choices=[('ContactPerson', 'Contact Person'), ('DataCollector', 'Data Collector'), ('DataCurator', 'Data Curator'), ('DataManager', 'Data Manager'), ('Editor', 'Editor'), ('Producer', 'Producer'), ('RelatedPerson', 'Related Person'), ('Researcher', 'Researcher'), ('ProjectLeader', 'Project Leader'), ('ProjectManager', 'Project Manager'), ('ProjectMember', 'Project Member'), ('Supervisor', 'Supervisor'), ('WorkPackageLeader', 'Work Package Leader'), ('HostingInstitution', 'Hosting Institution'), ('ResearchGroup', 'Research Group'), ('Sponsor', 'Sponsor'), ('RightsHolder', 'Rights Holder'), ('Other', 'Other'), ('Creator', 'Creator')], help_text='Contribution roles as per the Datacite ContributionType vocabulary.', max_length=232, verbose_name='roles')),
                 ('contributor', models.JSONField(default=dict, help_text='A JSON representation of the contributor profile at the time of publication', verbose_name='contributor')),
             ],
             options={

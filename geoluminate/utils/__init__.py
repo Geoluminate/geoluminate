@@ -16,6 +16,14 @@ def icon(icon):
     return icon
 
 
+def label(label):
+    """Returns the given label specified in settings.GEOLUMINATE_LABELS."""
+    label = settings.GEOLUMINATE_LABELS.get(label)
+    if not label:
+        raise ValueError(f"settings.GEOLUMINATE_LABELS does not contain a key for '{label}'.")
+    return label
+
+
 def context_processor(request):
     """A context processor that adds the following variables to the context:
 

@@ -54,10 +54,8 @@ class ProjectForm(ModelForm):
             "title",
             "summary",
             "status",
-            "tags",
         ]
         # widgets = {
-        #     "tags": SelectizeMultiple(),
         #     "status": widgets.RadioSelect(),
         # }
 

@@ -1,5 +1,6 @@
 from django.views.generic import FormView
 
+from geoluminate.utils import icon, label
 from geoluminate.views import BaseDetailView, BaseTableView
 
 from .models import Location, Sample
@@ -30,3 +31,10 @@ class SampleCreate(BaseDetailView, FormView):
 class LocationView(BaseDetailView):
     base_template = "samples/location_detail.html"
     model = Location
+
+
+class SampleTablePlugin(BaseTableView):
+    table = SampleTable
+    template_name = "geoluminate/base/table.html"
+    title = name = label("sample")["verbose_name_plural"]
+    icon = icon("sample")

@@ -8,10 +8,8 @@ from rest_framework_gis.filters import DistanceToPointFilter
 from rest_framework_nested.viewsets import NestedViewSetMixin
 
 from geoluminate.api.access_policies import CoreAccessPolicy
-
-# from .serializers import GeoFeatureSerializer
+from geoluminate.api.utils import DjangoFilterBackend
 from geoluminate.db.gis.serializers import GeoFeatureSerializer
-from geoluminate.utils.drf import DjangoFilterBackend
 
 
 class BaseViewSet(AccessViewSetMixin, viewsets.ModelViewSet):

@@ -27,7 +27,17 @@ class ContributorOverview(ContributorDetailView, FileUploadMixin, FormViewMixin,
 contributor.register_page(ProjectPlugin)
 contributor.register_page(DatasetPlugin)
 contributor.register_page(ReviewPlugin)
-contributor.register_page(Map)
+
+
+@contributor.page()
+class ProjectMap(Map):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        for dataset in self.get_object().datasets.all():
+            context["map_source_list"].update(self.serialize_dataset_samples(dataset))
+        return context
+
+
 contributor.register_page(ActivityStream)
 
 

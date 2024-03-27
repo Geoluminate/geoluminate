@@ -5,7 +5,8 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.sites.models import Site
 from django.core.management import call_command
-from django.core.management.base import BaseCommand
+from django.core.management.base import BaseCommand, CommandError
+from django.db.utils import ProgrammingError
 
 User = get_user_model()
 
@@ -43,24 +44,30 @@ def update_site():
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        if User.objects.exists():
-            print("Skipping new project initialization")
-            return
-
-        print("Setting up new project...")
-
-        # 0. Run create and run migrations
-        call_command("makemigrations")
-        call_command("migrate")
-
-        # 1. Create superuser
-        create_superuser()
+        try:
+            has_users = User.objects.exists()
+        except ProgrammingError:
+            print("Setting up new project...")
+            call_command("makemigrations", "--no-input")
+            call_command("migrate", "--no-input")
+        else:
+            if not has_users:
+                call_command("createsuperuser", "--no-input")
+            else:
+                print("Skipping new project initialization")
+                return
 
         # 2. Load creative commons license fixtures
-        call_command("loaddata", "creativecommons")
+        try:
+            call_command("loaddata", "creativecommons")
+        except CommandError:
+            print("Failed to load creative commons licenses")
 
         # 3. Load initial data
-        call_command("loaddata", "initial_data")
+        try:
+            call_command("loaddata", "demo")
+        except CommandError:
+            print("Failed to load initial data")
 
         # 4. Load test data
         if os.environ.get("DJANGO_ENV") == "staging":

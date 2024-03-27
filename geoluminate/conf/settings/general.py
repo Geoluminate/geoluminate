@@ -20,6 +20,7 @@ env = environ.Env(
     DJANGO_TIME_ZONE=(str, "UTC"),
     DJANGO_SITE_ID=(int, 1),
     DJANGO_SITE_DOMAIN=(str, "localhost:8000"),
+    DJANGO_SITE_NAME=(str, "Geoluminate Research Portal"),
 )
 
 if env("DJANGO_READ_DOT_ENV_FILE"):
@@ -38,8 +39,8 @@ USE_TZ = True
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#site-id
 SITE_ID = env("DJANGO_SITE_ID")
-SITE_DOMAIN = env("DJANGO_SITE_DOMAIN", default="localhost:8000")
-SITE_NAME = META_SITE_NAME = GEOLUMINATE["database"]["name"]
+SITE_DOMAIN = env("DJANGO_SITE_DOMAIN")
+SITE_NAME = META_SITE_NAME = env("DJANGO_SITE_NAME")
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = env("DJANGO_ALLOWED_HOSTS")

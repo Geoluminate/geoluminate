@@ -129,3 +129,22 @@ def build_assets(c):
     shutil.rmtree(asset_dir + "js/", ignore_errors=False, onerror=None)
 
     c.run("npm run build")
+
+
+@task
+def savedemo(c):
+    """Save the initial data for the core geoluminate app"""
+    c.run(
+        " ".join(
+            [
+                "docker compose run",
+                "django python -Xutf8 manage.py dumpdata",
+                "--natural-foreign",
+                "--natural-primary",
+                # "-e users.User",
+                "-e contenttypes",
+                "-e auth.Permission",
+                "-o geoluminate/fixtures/demo.json.bz2",
+            ]
+        )
+    )

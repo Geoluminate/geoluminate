@@ -4,15 +4,11 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-# echo "Waiting for applying THESE SETTINGS..."
 
-# python /app/manage.py makemigrations --noinput
+python /app/manage.py setup
 
 echo "Migrating database changes..."
 python /app/manage.py migrate --noinput
-
-echo "Initializing superuser..."
-python /app/manage.py init_superuser
 
 echo "Collecting static files..."
 python /app/manage.py collectstatic --noinput

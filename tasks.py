@@ -37,21 +37,12 @@ def test(c, tox=False):
 
 
 @task
-def docs(c):
-    """
-    Build the documentation and open it in the browser
-    """
-    # c.run("sphinx-apidoc -M -T -o docs/ geoluminate **/migrations/* -e --force -d 2")
-    c.run("sphinx-build -E -b html docs docs/_build")
-
-
-@task
-def release(c, rule="patch"):
+def bump(c, rule="patch"):
     """
     Create a new git tag and push it to the remote repository.
 
     .. note::
-        This will create a new tag and push it to the remote repository, which will trigger a new build and deployment of the package to PyPI.
+        Specifying either "minor" or "release" as the rule will create a new tag and push it to the remote repository, triggering a new release to PyPI.
 
     RULE	    BEFORE	AFTER
     major	    1.3.0	2.0.0
@@ -63,22 +54,19 @@ def release(c, rule="patch"):
     prerelease	1.0.2	1.0.3a0
     prerelease	1.0.3a0	1.0.3a1
     prerelease	1.0.3b0	1.0.3b1
+
     """
-    if rule:
-        # bump the current version using the specified rule
-        c.run(f"poetry version {rule}")
+    # 1. Bump and commit the version
+    vnum = c.run(f"poetry version {rule} -s", hide=True).stdout.strip()
+    c.run(f'git commit pyproject.toml -m "bump version v{vnum}"')
 
-    # 1. Get the current version number as a variable
-    version_short = c.run("poetry version -s", hide=True).stdout.strip()
-    version = c.run("poetry version", hide=True).stdout.strip()
+    # 2. Get the current version number as a variable
+    # version = c.run("poetry version", hide=True).stdout.strip()
 
-    # 2. commit the changes to pyproject.toml
-    c.run(f'git commit pyproject.toml -m "bump to v{version_short}"')
-
-    # 3. create a tag and push it to the remote repository
-    c.run(f'git tag -a v{version_short} -m "{version}"')
-    c.run("git push --tags")
-    c.run("git push origin main")
+    if rule in ["major", "minor"]:
+        # 3. create a tag and push it to the remote repository
+        c.run(f'git tag -a v{vnum} -m "{vnum}"')
+        c.run("git push --tags")
 
 
 @task

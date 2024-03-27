@@ -1,7 +1,7 @@
 import $ from 'jquery'
 import * as utils from './utils'
-import jszip from 'jszip';
-import pdfmake from 'pdfmake';
+// import jszip from 'jszip';
+// import pdfmake from 'pdfmake';
 import DataTable from 'datatables.net-bs5';
 import "datatables.net-bs5/css/dataTables.bootstrap5.min.css";
 import 'datatables.net-buttons-bs5';
@@ -25,7 +25,7 @@ import 'datatables.net-searchpanes-bs5';
 import 'datatables.net-select-bs5';
 import 'datatables.net-staterestore-bs5';
 import '../../styles/datatables.scss';
-import { main } from '@popperjs/core'
+// import { main } from '@popperjs/core'
 
 DataTable.Buttons.defaults.dom.button.className = 'nav-link m-1';
 

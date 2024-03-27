@@ -1,3 +1,5 @@
+import shutil
+
 from invoke import task
 
 
@@ -125,8 +127,17 @@ def reset_db(c):
 
 
 @task
-def build(c):
-    """
-    Build the core geoluminate docker images
-    """
+def build_docker(c):
+    """Build the core geoluminate docker images"""
     c.run("poetry build")
+
+
+@task
+def build_assets(c):
+    """Remove old asset files and rebuild"""
+    asset_dir = "./geoluminate/static/bundles/"
+
+    shutil.rmtree(asset_dir + "css/", ignore_errors=False, onerror=None)
+    shutil.rmtree(asset_dir + "js/", ignore_errors=False, onerror=None)
+
+    c.run("npm run build")

@@ -86,7 +86,7 @@ module.exports = {
       bootstrap: 'bootstrap'
     },
     detail: {
-      bootstrap: 'bootstrap'
+      bootstrap: 'bootstrap',
     },
     "jquery": "jQuery",
   },

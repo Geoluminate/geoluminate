@@ -26,7 +26,6 @@
 @import 'components/modals';
 
 // Overrides
-// @import "overrides/datatables";
 @import "overrides/spectacular";
 
 
@@ -34,9 +33,6 @@
 @import "djangocms";
 
 
-// this is imported from the user's project directory
-// it provides a way for users to customize styles without modifying templates
-// @import "scss/stylesheet";
 
 
 @media print {

@@ -461,83 +461,89 @@
       "path": "..\\bootstrap\\scss\\vendor\\_rfs.scss",
       "publicPath": "/static/bundles/../bootstrap/scss/vendor/_rfs.scss"
     },
+    "css/detail.54e71dd2cce23580102f.css": {
+      "name": "css/detail.54e71dd2cce23580102f.css",
+      "path": "css\\detail.54e71dd2cce23580102f.css",
+      "publicPath": "/static/bundles/css/detail.54e71dd2cce23580102f.css"
+    },
     "css/project.68f23c54eea4911592ff.css": {
       "name": "css/project.68f23c54eea4911592ff.css",
       "path": "css\\project.68f23c54eea4911592ff.css",
       "publicPath": "/static/bundles/css/project.68f23c54eea4911592ff.css"
     },
-    "js/bootstrap-42b9ff4e10a7711ca3ba.js": {
-      "name": "js/bootstrap-42b9ff4e10a7711ca3ba.js",
-      "path": "js\\bootstrap-42b9ff4e10a7711ca3ba.js",
-      "publicPath": "/static/bundles/js/bootstrap-42b9ff4e10a7711ca3ba.js"
+    "js/bootstrap-b2c9d71dde229a91cb5b.js": {
+      "name": "js/bootstrap-b2c9d71dde229a91cb5b.js",
+      "path": "js\\bootstrap-b2c9d71dde229a91cb5b.js",
+      "publicPath": "/static/bundles/js/bootstrap-b2c9d71dde229a91cb5b.js"
     },
-    "js/bootstrap-42b9ff4e10a7711ca3ba.js.LICENSE.txt": {
-      "name": "js/bootstrap-42b9ff4e10a7711ca3ba.js.LICENSE.txt",
-      "path": "js\\bootstrap-42b9ff4e10a7711ca3ba.js.LICENSE.txt",
-      "publicPath": "/static/bundles/js/bootstrap-42b9ff4e10a7711ca3ba.js.LICENSE.txt"
+    "js/bootstrap-b2c9d71dde229a91cb5b.js.LICENSE.txt": {
+      "name": "js/bootstrap-b2c9d71dde229a91cb5b.js.LICENSE.txt",
+      "path": "js\\bootstrap-b2c9d71dde229a91cb5b.js.LICENSE.txt",
+      "publicPath": "/static/bundles/js/bootstrap-b2c9d71dde229a91cb5b.js.LICENSE.txt"
     },
-    "js/detail-42b9ff4e10a7711ca3ba.js": {
-      "name": "js/detail-42b9ff4e10a7711ca3ba.js",
-      "path": "js\\detail-42b9ff4e10a7711ca3ba.js",
-      "publicPath": "/static/bundles/js/detail-42b9ff4e10a7711ca3ba.js"
+    "js/detail-b2c9d71dde229a91cb5b.js": {
+      "name": "js/detail-b2c9d71dde229a91cb5b.js",
+      "path": "js\\detail-b2c9d71dde229a91cb5b.js",
+      "publicPath": "/static/bundles/js/detail-b2c9d71dde229a91cb5b.js"
     },
-    "js/detail-42b9ff4e10a7711ca3ba.js.LICENSE.txt": {
-      "name": "js/detail-42b9ff4e10a7711ca3ba.js.LICENSE.txt",
-      "path": "js\\detail-42b9ff4e10a7711ca3ba.js.LICENSE.txt",
-      "publicPath": "/static/bundles/js/detail-42b9ff4e10a7711ca3ba.js.LICENSE.txt"
+    "js/detail-b2c9d71dde229a91cb5b.js.LICENSE.txt": {
+      "name": "js/detail-b2c9d71dde229a91cb5b.js.LICENSE.txt",
+      "path": "js\\detail-b2c9d71dde229a91cb5b.js.LICENSE.txt",
+      "publicPath": "/static/bundles/js/detail-b2c9d71dde229a91cb5b.js.LICENSE.txt"
     },
-    "js/htmx-42b9ff4e10a7711ca3ba.js": {
-      "name": "js/htmx-42b9ff4e10a7711ca3ba.js",
-      "path": "js\\htmx-42b9ff4e10a7711ca3ba.js",
-      "publicPath": "/static/bundles/js/htmx-42b9ff4e10a7711ca3ba.js"
+    "js/htmx-b2c9d71dde229a91cb5b.js": {
+      "name": "js/htmx-b2c9d71dde229a91cb5b.js",
+      "path": "js\\htmx-b2c9d71dde229a91cb5b.js",
+      "publicPath": "/static/bundles/js/htmx-b2c9d71dde229a91cb5b.js"
     },
-    "js/jquery-42b9ff4e10a7711ca3ba.js": {
-      "name": "js/jquery-42b9ff4e10a7711ca3ba.js",
-      "path": "js\\jquery-42b9ff4e10a7711ca3ba.js",
-      "publicPath": "/static/bundles/js/jquery-42b9ff4e10a7711ca3ba.js"
+    "js/jquery-b2c9d71dde229a91cb5b.js": {
+      "name": "js/jquery-b2c9d71dde229a91cb5b.js",
+      "path": "js\\jquery-b2c9d71dde229a91cb5b.js",
+      "publicPath": "/static/bundles/js/jquery-b2c9d71dde229a91cb5b.js"
     },
-    "js/justGage-42b9ff4e10a7711ca3ba.js": {
-      "name": "js/justGage-42b9ff4e10a7711ca3ba.js",
-      "path": "js\\justGage-42b9ff4e10a7711ca3ba.js",
-      "publicPath": "/static/bundles/js/justGage-42b9ff4e10a7711ca3ba.js"
+    "js/justGage-b2c9d71dde229a91cb5b.js": {
+      "name": "js/justGage-b2c9d71dde229a91cb5b.js",
+      "path": "js\\justGage-b2c9d71dde229a91cb5b.js",
+      "publicPath": "/static/bundles/js/justGage-b2c9d71dde229a91cb5b.js"
     },
-    "js/list-42b9ff4e10a7711ca3ba.js": {
-      "name": "js/list-42b9ff4e10a7711ca3ba.js",
-      "path": "js\\list-42b9ff4e10a7711ca3ba.js",
-      "publicPath": "/static/bundles/js/list-42b9ff4e10a7711ca3ba.js"
+    "js/list-b2c9d71dde229a91cb5b.js": {
+      "name": "js/list-b2c9d71dde229a91cb5b.js",
+      "path": "js\\list-b2c9d71dde229a91cb5b.js",
+      "publicPath": "/static/bundles/js/list-b2c9d71dde229a91cb5b.js"
     },
-    "js/project-42b9ff4e10a7711ca3ba.js": {
-      "name": "js/project-42b9ff4e10a7711ca3ba.js",
-      "path": "js\\project-42b9ff4e10a7711ca3ba.js",
-      "publicPath": "/static/bundles/js/project-42b9ff4e10a7711ca3ba.js"
+    "js/project-b2c9d71dde229a91cb5b.js": {
+      "name": "js/project-b2c9d71dde229a91cb5b.js",
+      "path": "js\\project-b2c9d71dde229a91cb5b.js",
+      "publicPath": "/static/bundles/js/project-b2c9d71dde229a91cb5b.js"
     },
-    "js/project-42b9ff4e10a7711ca3ba.js.LICENSE.txt": {
-      "name": "js/project-42b9ff4e10a7711ca3ba.js.LICENSE.txt",
-      "path": "js\\project-42b9ff4e10a7711ca3ba.js.LICENSE.txt",
-      "publicPath": "/static/bundles/js/project-42b9ff4e10a7711ca3ba.js.LICENSE.txt"
+    "js/project-b2c9d71dde229a91cb5b.js.LICENSE.txt": {
+      "name": "js/project-b2c9d71dde229a91cb5b.js.LICENSE.txt",
+      "path": "js\\project-b2c9d71dde229a91cb5b.js.LICENSE.txt",
+      "publicPath": "/static/bundles/js/project-b2c9d71dde229a91cb5b.js.LICENSE.txt"
     }
   },
   "chunks": {
     "bootstrap": [
-      "js/bootstrap-42b9ff4e10a7711ca3ba.js"
+      "js/bootstrap-b2c9d71dde229a91cb5b.js"
     ],
     "detail": [
-      "js/detail-42b9ff4e10a7711ca3ba.js"
+      "js/detail-b2c9d71dde229a91cb5b.js",
+      "css/detail.54e71dd2cce23580102f.css"
     ],
     "htmx": [
-      "js/htmx-42b9ff4e10a7711ca3ba.js"
+      "js/htmx-b2c9d71dde229a91cb5b.js"
     ],
     "jquery": [
-      "js/jquery-42b9ff4e10a7711ca3ba.js"
+      "js/jquery-b2c9d71dde229a91cb5b.js"
     ],
     "justGage": [
-      "js/justGage-42b9ff4e10a7711ca3ba.js"
+      "js/justGage-b2c9d71dde229a91cb5b.js"
     ],
     "list": [
-      "js/list-42b9ff4e10a7711ca3ba.js"
+      "js/list-b2c9d71dde229a91cb5b.js"
     ],
     "project": [
-      "js/project-42b9ff4e10a7711ca3ba.js",
+      "js/project-b2c9d71dde229a91cb5b.js",
       "css/project.68f23c54eea4911592ff.css"
     ]
   },

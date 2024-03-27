@@ -46,4 +46,4 @@ WEBPACK_LOADER = {
 }
 
 
-GEOLUMINATE_LABELS["sample"] = {"verbose_name": "Heat Flow Site", "verbose_name_plural": "Heat Flow Site"}
+# GEOLUMINATE_LABELS["sample"] = {"verbose_name": "Heat Flow Site", "verbose_name_plural": "Heat Flow Site"}

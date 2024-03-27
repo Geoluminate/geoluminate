@@ -1,5 +1,7 @@
 minio/
-# **/migrations/*
+**/migrations/*
+!**/migrations/__init__.py
+!**/users/migrations/*
 
 # would be nice to ignore these and build bundle in CI workflow
 # geoluminate/static/bundles/

@@ -24,7 +24,6 @@ classifiers = [
 [tool.poetry.dependencies]
 python = ">=3.10,<4.0"
 celery = "^5.2.7"
-collectfasta = "^3.1.3"
 crispy-bootstrap5 = "^2024.2"
 dj-rest-auth = "^3.0.0"
 django = {extras = ["argon2"], version = ">=3.2"}

@@ -8,36 +8,33 @@
     {% block head %}
       {% include "geoluminate/utils/head.html" %}
     {% endblock head %}
-
     {% render_block "css" %}
+    {% block css %}
+    {% endblock css %}
     {% block javascript %}
     {% endblock javascript %}
-
   </head>
-  <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-target="main" hx-indicator="#mainIndicator" hx-ext="debug" class="{% block body_class %}{% endblock body_class %}
-     ">
+  <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+        hx-target="main"
+        hx-indicator="#mainIndicator"
+        hx-ext="debug"
+        class="{% block body_class %}{% endblock body_class %} ">
     {% block application %}
       {% block site_nav %}
         {% include "geoluminate/navigation/navbar.html" %}
       {% endblock site_nav %}
-
       {% block page_nav %}
       {% endblock page_nav %}
-
       <div class="container-fluid flex-grow-1 overflow-hidden">
-        <div class="row h-100 {% block row_css %}overflow-hidden{% endblock row_css %}
-           ">
+        <div class="row h-100 {% block row_css %}overflow-hidden{% endblock row_css %} ">
           {% block page_left %}
           {% endblock page_left %}
-
-          <main class="col px-0 overflow-auto position-relative {% block page_css_class %}{% endblock page_css_class %}
-             ">
+          <main class="col px-0 overflow-auto position-relative {% block page_css_class %}{% endblock page_css_class %} ">
             {% block main %}
               {% if template_name %}
                 {% include template_name %}
               {% endif %}
             {% endblock main %}
-
             <div id="mainIndicator"
                  class="dataTables_processing htmx-indicator endless_loading fs-1"
                  style="width: 3rem;
@@ -49,11 +46,9 @@
           </main>
           {% block after_page %}
           {% endblock after_page %}
-
         </div>
       </div>
     {% endblock application %}
-
     {% comment %} MESSAGES {% endcomment %}
     <div id="messageContainer" class="position-absolute bottom-0 end-0">
       <div class="d-flex container justify-content-center">
@@ -78,6 +73,5 @@
     {% render_block "body_end" %}
     {% block body_end %}
     {% endblock body_end %}
-
   </body>
 </html>

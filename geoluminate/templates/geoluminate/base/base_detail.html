@@ -8,43 +8,35 @@
   {% endif %}
   {{ block.super }}
 {% endblock application %}
-
 {% block css %}
   {{ block.super }}
-  {% comment %} {% render_bundle "datatables" "css" "GEOLUMINATE" %} {% endcomment %}
   {% render_bundle "detail" "css" "GEOLUMINATE" %}
   <link rel="stylesheet" type="text/css" href="{% static "fluent_comments/css/ajaxcomments.css" %}" />
-  {% comment %} <link rel="stylesheet" href="{% static "auto_datatables/css/auto-datatable.css" %}" /> {% endcomment %}
 {% endblock css %}
-
 {% block javascript %}
   {{ block.super }}
   {% comment %} {% render_bundle "datatables" "js" "GEOLUMINATE" %} {% endcomment %}
   {% render_bundle "detail" "js" "GEOLUMINATE" attrs="defer" %}
-  <script type="text/javascript" src="{% static "fluent_comments/js/ajaxcomments.js" %}" defer></script>
   <script src="{% static "el-pagination/js/el-pagination.js" %}" defer></script>
   {% comment %} <script defer>
-      $.endlessPaginate();
+   $.endlessPaginate();
  </script> {% endcomment %}
-  {% comment %} <script src="{% static "auto_datatables/js/auto-datatables.js" %}" defer></script> {% endcomment %}
 {% endblock javascript %}
-
+{% block compressable_js %}
+{% endblock compressable_js %}
 {% block page_nav %}
   <nav class="page-nav">
     {% page_menu %}
   </nav>
 {% endblock page_nav %}
-
 {% block sidebar_title %}
   {{ object.uuid }}
 {% endblock sidebar_title %}
-
 {% block sidebar %}
   {% block sidebar_top %}
     {% block sidebar_image %}
       <div class="card text-white">{% avatar object width="100%" class="card-img" %}</div>
     {% endblock sidebar_image %}
-
     <div class="actions d-flex mb-2 justify-content-center">
       {% follow_button object %}
       {% share_button object %}
@@ -54,15 +46,12 @@
       </a>
       {% block actions %}
       {% endblock actions %}
-
     </div>
   {% endblock sidebar_top %}
-
   {% for card in sidebar_components %}
     {% include card %}
   {% endfor %}
 {% endblock sidebar %}
-
 {% block main %}
   <div class="tab-content d-flex flex-wrap w-100 h-100">
     {% for item in page_menu %}

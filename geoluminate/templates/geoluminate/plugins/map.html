@@ -1,7 +1,8 @@
 {% load i18n static sekizai_tags %}
 
+{% comment %} {% for key, geojson in geojson_list.items %}<pre>{{geojson|pprint}}</pre>{% endfor %} {% endcomment %}
 <div id="map">
-  <div id='shadow'></div>
+  <div id="shadow"></div>
 </div>
 <style>
   #map,
@@ -20,3 +21,10 @@
     pointer-events: none;
   }
 </style>
+<script>
+  var map = basicMap("map", {
+    {
+      map_source_list | safe
+    }
+  });
+</script>

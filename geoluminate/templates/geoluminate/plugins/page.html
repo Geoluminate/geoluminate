@@ -1,32 +1,35 @@
 {% load static %}
 
-<div class='container py-3'>
+<div class="container py-3">
   {% block header %}
-    <header class="page-header {% block page_header_css %}page-layout{% endblock %}
-       ">
-      <h1 class='display-1'>
-        {% block title %}{{ meta.title }}{% endblock %}
-
+    <header class="page-header mb-0 {% block page_header_css %}page-layout{% endblock page_header_css %}">
+      <h1 class="display-1">
+        {% block title %}
+          {{ meta.title }}
+        {% endblock title %}
       </h1>
-      <div class='toolbar'>
-        <div class="toolbar-left">
-          {% block toolbar_left %}{% endblock %}
-
-        </div>
-        <div class="toolbar-right">
-          {% block toolbar_right %}{% endblock %}
-
-        </div>
-      </div>
     </header>
   {% endblock header %}
-
-  <div>
-    {% block help_text %}{{ meta.description }}{% endblock %}
-
-    {% block content %}{% endblock %}
-
+  {% block help_text %}
+    <div class="page-description">{{ meta.description }}</div>
+  {% endblock help_text %}
+  {% block toolbar %}
+    <div class="toolbar py-2 d-flex w-100">
+      <div class="toolbar-left">
+        {% block toolbar_left %}
+        {% endblock toolbar_left %}
+      </div>
+      <div class="toolbar-right ms-auto">
+        {% block toolbar_right %}
+        {% endblock toolbar_right %}
+      </div>
+    </div>
+  {% endblock toolbar %}
+  <hr class="mt-0 border border-primary" />
+  <div class="page-content">
+    {% block content %}
+    {% endblock content %}
   </div>
+  {% block page_end %}
+  {% endblock page_end %}
 </div>
-{% block body_end %}
-{% endblock body_end %}

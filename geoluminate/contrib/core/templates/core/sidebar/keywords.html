@@ -1,12 +1,12 @@
 {% comment %} {% extends "geoluminate/components/sidebar/card.html" %} {% endcomment %}
 {% load i18n geoluminate cms_tags %}
 
-{% render_model_block object "tags" %}
+{% render_model_block object "keywords" %}
 <div class="card">
   <div class="card-body">
     <h6 class="card-title">{% trans "Keywords" %}</h6>
     {% for tag in object.get_tags_list %}
-      <span class='badge text-bg-primary rounded-pill'>{{ tag }}</span>
+      <span class="badge text-bg-primary rounded-pill">{{ tag }}</span>
     {% empty %}
       {% trans "No interests to show" %}
     {% endfor %}

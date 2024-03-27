@@ -1,14 +1,21 @@
-{% load i18n contributor_tags %}
+{% extends "geoluminate/plugins/page.html" %}
+{% load i18n formsetify contributor_tags geoluminate static %}
 
-<div class="container py-3 animate__animated animate__fadeIn bg-body-light">
+{% comment %} {% block title %}
+  {{ geoluminate.database.short_name }} {{ block.super }}
+{% endblock title %} {% endcomment %}
+{% block toolbar %}
+{% endblock toolbar %}
+{% block help_text %}
+{% endblock help_text %}
+{% block content %}
   <h1 class="display-3">{{ object.title }}</h1>
   <p class="small text-decoration-none">
-    {% include "contributors/names_list.html" with
-    contributors=object.contributors|role:"Creator" %}
+    {% include "contributors/names_list.html" with contributors=object.contributors|role:"Creator" %}
   </p>
   {% for description in object.get_descriptions %}
     {% include "core/description.html" %}
   {% empty %}
     {% trans "You do not have any descriptions yet." %}
   {% endfor %}
-</div>
+{% endblock content %}

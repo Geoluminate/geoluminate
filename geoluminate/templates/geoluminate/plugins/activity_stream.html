@@ -1,13 +1,15 @@
+{% extends "geoluminate/plugins/page.html" %}
 {% load activity_tags i18n %}
 
-<div class="page-content container d-block entry-list py-3">
-  <header>
-    <h1 class="display-1">{% trans "Recent Activity" %}</h1>
-  </header>
+{% block help_text %}
+{% endblock help_text %}
+{% block toolbar %}
+{% endblock toolbar %}
+{% block content %}
   {% activity_stream 'any' object %}
   {% for action in stream %}
     {% display_action action %}
   {% empty %}
     {% trans "Looks like there is nothing here!" %}
   {% endfor %}
-</div>
+{% endblock content %}

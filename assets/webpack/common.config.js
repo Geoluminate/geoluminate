@@ -17,7 +17,7 @@ module.exports = {
   entry: {
     jquery: 'jquery',
     bootstrap: path.resolve(VendorDir, './bootstrap'),
-    // datatables: path.resolve(__dirname, './datatables/index'),
+    datatables: path.resolve(AssetsDir, './src/datatables/index'),
     htmx: 'htmx.org',
     justGage: path.resolve(VendorDir, './justGage'),
     list: path.resolve(__dirname, '../src/list'),
@@ -28,6 +28,7 @@ module.exports = {
     path: BundleDir,
     publicPath: '/static/bundles/',
     filename: 'js/[name]-[fullhash].js',
+    // filename: 'js/[name].js',
     chunkFilename: 'js/[name]-[hash].js',
   },
   plugins: [
@@ -38,6 +39,7 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({
       filename: 'css/[name].[contenthash].css'
+      // filename: 'css/[name].css'
     }),
 
   ],
@@ -76,7 +78,7 @@ module.exports = {
   },
   resolve: {
     modules: ['node_modules'],
-    extensions: ['.ts', '.tsx', '.js', '.jsx'],
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.mjs'],
   },
   externals: {
     project: {

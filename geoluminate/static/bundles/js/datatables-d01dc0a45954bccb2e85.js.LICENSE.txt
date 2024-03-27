@@ -39,18 +39,6 @@
  * © SpryMedia Ltd - datatables.net/license
  */
 
-/*! DataTables 1.13.11
- * ©2008-2024 SpryMedia Ltd - datatables.net/license
- */
-
-/*! DataTables 2.0.2
- * © SpryMedia Ltd - datatables.net/license
- */
-
-/*! DataTables 2.0.3
- * © SpryMedia Ltd - datatables.net/license
- */
-
 /*! DataTables Bootstrap 5 integration
  * 2020 SpryMedia Ltd - datatables.net/license
  */
@@ -69,11 +57,11 @@
  * © SpryMedia Ltd - datatables.net/license
  */
 
-/*! KeyTable 2.12.0
+/*! Responsive 3.0.1
  * © SpryMedia Ltd - datatables.net/license
  */
 
-/*! Responsive 3.0.0
+/*! RowGroup 1.5.0
  * © SpryMedia Ltd - datatables.net/license
  */
 
@@ -107,9 +95,4 @@
 
 /*! StateRestore 1.4.0
  * © SpryMedia Ltd - datatables.net/license
- */
-
-/**
- * MapLibre GL JS
- * @license 3-Clause BSD. Full text of license: https://github.com/maplibre/maplibre-gl-js/blob/v4.0.2/LICENSE.txt
  */

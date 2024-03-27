@@ -1,0 +1,18 @@
+
+.dt-search {
+  label {
+    display: none;
+  }
+}
+
+.dtfc-top-blocker {
+  display: none !important;
+}
+
+.dropdown-menu {
+  &.dt-button-collection {
+    left: 0 !important;
+    width: 60vw !important;
+  }
+}
+

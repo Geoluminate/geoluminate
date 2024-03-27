@@ -1,4 +1,5 @@
-// import "./project/datatables"
+import "./datatables/index"
 import "./ts/mapgl"
 // import "./project/endless-paginate"
 import "./ts/isotope"
+

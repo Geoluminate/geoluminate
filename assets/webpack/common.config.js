@@ -17,7 +17,7 @@ module.exports = {
   entry: {
     jquery: 'jquery',
     bootstrap: path.resolve(VendorDir, './bootstrap'),
-    // datatables: path.resolve(VendorDir, './datatables'),
+    // datatables: path.resolve(__dirname, './datatables/index'),
     htmx: 'htmx.org',
     justGage: path.resolve(VendorDir, './justGage'),
     list: path.resolve(__dirname, '../src/list'),

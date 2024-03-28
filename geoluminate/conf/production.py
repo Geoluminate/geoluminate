@@ -1,25 +1,39 @@
 from split_settings.tools import include
+import environ
 
 # imports all settings defined in the geoluminate/conf/settings/ directory
 include("settings/general.py", "settings/*.py")
 
-# INSTALLED_APPS = GEOLUMINATE_APPS + INSTALLED_APPS
 
+env = environ.Env(
+    DJANGO_SECURE_SSL_REDIRECT=(bool, True),
+    DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS=(bool, True),
+    DJANGO_SECURE_HSTS_PRELOAD=(bool, True),
+    DJANGO_SECURE_CONTENT_TYPE_NOSNIFF=(bool, True),
+)
+
+GEOLUMINATE_APPS = globals().get("GEOLUMINATE_APPS", [])
+
+INSTALLED_APPS = globals().get("INSTALLED_APPS", [])
+
+STORAGES = globals().get("STORAGES", {})
+
+INSTALLED_APPS = GEOLUMINATE_APPS + INSTALLED_APPS
 
 # SECURITY
 # ------------------------------------------------------------------------------
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#secure-ssl-redirect
-SECURE_SSL_REDIRECT = env.bool("DJANGO_SECURE_SSL_REDIRECT", default=True)
+SECURE_SSL_REDIRECT = env("DJANGO_SECURE_SSL_REDIRECT")
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#secure-hsts-include-subdomains
-SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool("DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS", default=True)
+SECURE_HSTS_INCLUDE_SUBDOMAINS = env("DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS")
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#secure-hsts-preload
-SECURE_HSTS_PRELOAD = env.bool("DJANGO_SECURE_HSTS_PRELOAD", default=True)
+SECURE_HSTS_PRELOAD = env("DJANGO_SECURE_HSTS_PRELOAD")
 
 # https://docs.djangoproject.com/en/dev/ref/middleware/#x-content-type-options-nosniff
-SECURE_CONTENT_TYPE_NOSNIFF = env.bool("DJANGO_SECURE_CONTENT_TYPE_NOSNIFF", default=True)
+SECURE_CONTENT_TYPE_NOSNIFF = env("DJANGO_SECURE_CONTENT_TYPE_NOSNIFF")
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#secure-proxy-ssl-header
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")

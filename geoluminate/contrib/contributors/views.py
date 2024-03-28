@@ -35,9 +35,7 @@ class ContributorDetailView(BaseDetailView):
 
     def has_edit_permission(self):
         """Returns True if the user has permission to edit the profile. This is determined by whether the profile belongs to the current user."""
-        if self.request.user.is_anonymous:
-            return False
-        return self.request.user.profile == self.get_object()
+        return self.request.user.is_authenticated and self.request.user.profile == self.get_object()
 
 
 class ContributorFormView(BaseFormView):

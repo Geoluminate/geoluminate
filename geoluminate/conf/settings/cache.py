@@ -4,7 +4,7 @@ import environ
 logger = logging.getLogger(__name__)
 
 env = environ.Env(
-    DJANGO_CACHE=(bool, False),
+    DJANGO_CACHE=(bool, True),
     REDIS_URL=(str, "redis://localhost:6379/0"),
 )
 

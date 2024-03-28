@@ -14,7 +14,7 @@ env = environ.Env(
     DEBUG=(bool, False),
     DJANGO_SECRET_KEY=(str, "HoVcnlU2IqQN1YqvsY7dQ1xtdhLavAeXn1mUEAI0Wu8vkDbodEqRKkJbHyMEQS5F"),
     # SHOW_DEBUG_TOOLBAR=(bool, False),
-    DJANGO_ADMIN_URL=(str, "admin/"),
+    DJANGO_ADMIN_URL=(str, "site/"),
     DJANGO_ALLOWED_HOSTS=(list, []),
     DJANGO_READ_DOT_ENV_FILE=(bool, False),
     DJANGO_TIME_ZONE=(str, "UTC"),
@@ -43,7 +43,7 @@ SITE_DOMAIN = env("DJANGO_SITE_DOMAIN")
 SITE_NAME = META_SITE_NAME = env("DJANGO_SITE_NAME")
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = env("DJANGO_ALLOWED_HOSTS")
+ALLOWED_HOSTS = [SITE_DOMAIN] + env("DJANGO_ALLOWED_HOSTS")
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = [(admin["name"], admin["email"]) for admin in GEOLUMINATE["application"]["developers"]]
@@ -52,7 +52,7 @@ MANAGERS = ADMINS
 # https://docs.djangoproject.com/en/dev/ref/settings/#root-urlconf
 ROOT_URLCONF = "geoluminate.urls"
 
-ADMIN_URL = env("DJANGO_ADMIN_URL")
+ADMIN_URL = f"admin-{env('DJANGO_ADMIN_URL')}"
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
 WSGI_APPLICATION = None

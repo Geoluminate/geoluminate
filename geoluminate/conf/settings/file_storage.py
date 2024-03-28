@@ -3,7 +3,7 @@ from pathlib import Path
 import environ
 
 env = environ.Env(
-    DJANGO_CACHE=(bool, False),
+    DJANGO_CACHE=(bool, True),
 )
 
 

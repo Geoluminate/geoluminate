@@ -5,11 +5,6 @@ SHOW_DEBUG_TOOLBAR = False
 # imports all settings defined in the geoluminate/conf/settings/ directory
 include("settings/general.py", "settings/*.py")
 
-GEOLUMINATE_APPS = globals().get("GEOLUMINATE_APPS", [])
-
-INSTALLED_APPS = globals().get("INSTALLED_APPS", [])
-
-STORAGES = globals().get("STORAGES", {})
 
 INSTALLED_APPS = (
     [

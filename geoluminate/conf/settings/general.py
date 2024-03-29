@@ -11,10 +11,10 @@ GEOLUMINATE = globals().get("GEOLUMINATE", {})
 
 
 env = environ.Env(
-    DEBUG=(bool, False),
+    DJANGO_DEBUG=(bool, False),
     DJANGO_SECRET_KEY=(str, "HoVcnlU2IqQN1YqvsY7dQ1xtdhLavAeXn1mUEAI0Wu8vkDbodEqRKkJbHyMEQS5F"),
     # SHOW_DEBUG_TOOLBAR=(bool, False),
-    DJANGO_ADMIN_URL=(str, "site/"),
+    DJANGO_ADMIN_URL=(str, "admin/"),
     DJANGO_ALLOWED_HOSTS=(list, []),
     DJANGO_READ_DOT_ENV_FILE=(bool, False),
     DJANGO_TIME_ZONE=(str, "UTC"),

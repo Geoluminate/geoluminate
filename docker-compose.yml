@@ -1,5 +1,5 @@
-version: '3'
-name: geoluminate
+version: '3.7'
+name: geoluminate_dev
 
 volumes:
   postgres: {}
@@ -21,18 +21,16 @@ services:
     build:
       context: .
       dockerfile: ./compose/django/Dockerfile
-    image: geoluminate_demo
+    image: geoluminate_local
     depends_on:
       - geoluminate
       - postgres
-      - redis
+      # - redis
       - minio
     volumes:
       - ../:/external_apps
       - ./:/app:z
-    env_file:
-      - ./.envs/.django
-      - ./.envs/.postgres
+    env_file: stack.env
     ports:
       - 8000:8000
       - 5678:5678
@@ -44,8 +42,7 @@ services:
     volumes:
       - postgres:/var/lib/postgresql/data
       - postgres_backups:/backups
-    env_file:
-      - ./.envs/.postgres
+    env_file: stack.env
   redis:
     image: redis:6
 
@@ -68,8 +65,7 @@ services:
     image: quay.io/minio/minio:latest
     volumes:
       - media:/minio
-    env_file:
-      - ./.envs/.minio
+    env_file: stack.env
     ports:
       - "9000:9000"
       - "9001:9001"

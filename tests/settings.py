@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "example",
 ]
 
+
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
 geoluminate.setup(development=True)
@@ -45,5 +46,8 @@ WEBPACK_LOADER = {
     },
 }
 
+ALLOWED_HOSTS = [
+    "localhost",
+]
 
 # GEOLUMINATE_LABELS["sample"] = {"verbose_name": "Heat Flow Site", "verbose_name_plural": "Heat Flow Site"}

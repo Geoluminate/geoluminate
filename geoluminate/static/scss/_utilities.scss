@@ -1,0 +1,37 @@
+$utilities: (
+  // "test": (
+  //   property: opacity,
+  //   class: opacity,
+  //   state: hover,
+  //   values: (
+  //     0: 0,
+  //     25: .25,
+  //     50: .5,
+  //     75: .75,
+  //     100: 1,
+  //   )
+  // ),
+  // "display-on-hover": (
+  //   property: display,
+  //   class: d,
+  //   // responsive: true,
+  //   state: hover,
+  //   values: none block
+  // ),
+  "line-clamp": (
+    property: -webkit-line-clamp,
+    class: max-lines,
+    values: 1 2 3 4 5
+  ),
+  "darken": (
+    property: filter,
+    class: darken,
+    values: (
+      10: brightness(90%),
+      20: brightness(80%),
+      30: brightness(70%),
+      40: brightness(60%),
+      50: brightness(50%),
+    )
+  ),
+);

@@ -8,7 +8,7 @@ from .models import Project
 class ListFilterTop(df.FilterSet):
     title = df.CharFilter(
         lookup_expr="icontains",
-        widget=forms.TextInput(attrs={"placeholder": "Find a project..."}),
+        widget=forms.TextInput(attrs={"placeholder": _("Search by title")}),
     )
 
     status = df.ChoiceFilter(

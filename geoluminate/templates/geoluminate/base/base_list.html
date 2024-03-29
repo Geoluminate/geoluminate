@@ -64,14 +64,14 @@
         <django-formset class="list-filter-top hidden-labels" endpoint="{{ request.path }}" csrf-token="{{ csrf_token }}">
           {% for field in filter.form %}
             {% if field.name in list_filter_top %}
-              <div class="{% if forloop.first %} flex-grow-1 {% else %} flex-shrink-1{% endif %}">
+              <div class="{% if forloop.first %} flex-grow-1 {% else %} d-none d-md-block flex-shrink-1{% endif %}">
                 {% include "formset/default/field_group.html" %}
               </div>
             {% endif %}
           {% endfor %}
         </django-formset>
       {% endif %}
-      <button class="d-block d-xl-none btn btn-primary" data-bs-target="#pageSidebar" data-bs-toggle="modal">
+      <button class="d-block d-xl-none btn btn-primary ms-1" data-bs-target="#pageSidebar" data-bs-toggle="modal">
         <i class="fas fa-filter"></i>
       </button>
       {% if permissions.create %}

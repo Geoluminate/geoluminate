@@ -1,46 +1,23 @@
-{% extends "geoluminate/cards/base.html" %}
+{% extends "geoluminate/cards/two_column.html" %}
 {% load i18n geoluminate contributor_tags %}
 
 {% block card_header %}
 {% endblock card_header %}
-
 {% block card_head_status %}
   <span class="badge text-bg-primary project-status-{{ obj.status|slugify }}">{{ obj.get_status_display }}</span>
 {% endblock card_head_status %}
-
 {% block card_body %}
-  <div class="col col-lg-3 col-md-4">
-    <div class="card h-100 mt-1">
-      <div class="d-flex justify-content-center mb-3">
-        {% avatar obj width="75px" class='card-img-top shadow-sm rounded-circle object-fit-contain align-items-middle' %}
-      </div>
-      <h6 class="text-center mb-3">{{ obj }}</h6>
-    </div>
+  <div class="col col-2 text-center h-100">
+    {% avatar obj width="75px" class='card-img-top shadow-sm rounded-circle object-fit-contain align-items-middle' %}
+    <h6 class="card-title mt-2 mb-1">{{ obj }}</h6>
+    {% if obj.user %}<div class="card-subtitle mb-1">{{ obj.default_affiliation }}</div>{% endif %}
+    <div class="w-auto z-2">{% follow_button obj %}</div>
   </div>
-  <div class="col">
-    <div class="card h-100">
-      <div class="card-body pt-0">
-        <p class="card-text">
-          {% if obj.about %}
-            {{ obj.about|truncatewords_html:100 }}
-          {% else %}
-            {% blocktrans %}
-              No abstract has been provided for this {{ obj_name }} yet.
-            {% endblocktrans %}
-          {% endif %}
-        </p>
-      </div>
-    </div>
+  <div class="col overflow-hidden">
+    <p class="card-text line-clamp max-lines-5">
+      {% if obj.about %}{{ obj.about }}{% endif %}
+    </p>
   </div>
 {% endblock card_body %}
-
-{% comment %} {% block card_footer_content %}
-<span>Active: {{ obj.user.last_login|timesince }} ago</span>
-{{ block.super }} {% endblock card_footer_content %} {% endcomment %}
-{% block card_actions %}
-  {% follow_button obj %}
-  <a href="{{ obj.get_absolute_url }}" class="btn btn-sm btn-success">
-    <i class="fa-solid fa-right-to-bracket me-1"></i>
-    {% trans "View detail" %}
-  </a>
-{% endblock card_actions %}
+{% block card_footer %}
+{% endblock card_footer %}

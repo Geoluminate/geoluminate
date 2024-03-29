@@ -13,8 +13,8 @@ form {
 .list-filter-top {
   @extend .w-100;
   @extend .d-flex;
-  @extend .flex-column;
-  @extend .flex-lg-row;
+  // @extend .flex-column;
+  // @extend .flex-md-row;
 
   div {
     margin-bottom: 0 !important;
@@ -22,6 +22,7 @@ form {
 
   >div:not(:last-child) {
     @extend .me-lg-2;
+    @extend .me-md-1;
   }
 }
 

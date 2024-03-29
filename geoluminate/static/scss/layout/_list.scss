@@ -4,6 +4,13 @@
         @extend .shadow-sm;
         filter: brightness(0.97);
       }
+      .line-clamp {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+      }
   }
 }
 

@@ -10,7 +10,7 @@ from .models import Dataset
 class ListFilterTop(df.FilterSet):
     title = df.CharFilter(
         lookup_expr="icontains",
-        widget=forms.TextInput(attrs={"placeholder": "Find a dataset..."}),
+        widget=forms.TextInput(attrs={"placeholder": _("Search by title")}),
     )
 
     # status = df.ChoiceFilter(

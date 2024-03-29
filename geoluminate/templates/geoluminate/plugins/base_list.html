@@ -1,8 +1,6 @@
 {% extends "geoluminate/plugins/page.html" %}
 {% load i18n formsetify autotables geoluminate static %}
 
-{% comment %} {% block help_text %}
-{% endblock help_text %} {% endcomment %}
 {% block toolbar_left %}
   <django-formset class="list-filter-top hidden-labels" endpoint="{{ request.path }}" csrf-token="{{ csrf_token }}">
     {% for field in filter.form %}
@@ -14,7 +12,7 @@
     {% endfor %}
   </django-formset>
 {% endblock toolbar_left %}
-{% block page_end %}
+{% block add_button %}
   {% if user_has_permission.create %}
     <a class="btn btn-success text-nowrap m-2 position-absolute end-0 top-0"
        {% comment %}
@@ -30,7 +28,7 @@
       {% trans "Add new" %}</span>
     </a>
   {% endif %}
-{% endblock page_end %}
+{% endblock add_button %}
 {% block content %}
   {% include "geoluminate/base/list_view.html" %}
 {% endblock content %}

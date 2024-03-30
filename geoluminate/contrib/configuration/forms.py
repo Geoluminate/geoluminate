@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from djangocms_frontend.fields import (
     AttributesFormField,
 )
-from entangled.forms import EntangledModelForm
+from entangled.forms import EntangledModelForm, EntangledModelFormMixin
 
 # AutoNumberInput,
 # ButtonGroup,
@@ -12,7 +12,7 @@ from entangled.forms import EntangledModelForm
 from .models import Configuration
 
 
-class DatabaseConfigForm(EntangledModelForm):
+class DatabaseConfigForm(EntangledModelFormMixin):
     name = forms.CharField(
         label=_("Database Name"),
         required=False,
@@ -33,7 +33,7 @@ class DatabaseConfigForm(EntangledModelForm):
         }
 
 
-class AuthorityConfigForm(EntangledModelForm):
+class AuthorityConfigForm(EntangledModelFormMixin):
     name = forms.CharField(
         label=_("Authority Name"),
         required=False,
@@ -63,22 +63,28 @@ class AuthorityConfigForm(EntangledModelForm):
         }
 
 
-class SiteConfigForm(DatabaseConfigForm, AuthorityConfigForm, EntangledModelForm):
+class SiteConfigForm(EntangledModelForm):
+    name = forms.CharField(
+        label=_("Database Name"),
+        required=False,
+    )
+    short_name = forms.CharField(
+        label=_("Database Short Name"),
+        required=False,
+    )
+
     class Meta:
         model = Configuration
-        # fields = "__all__"
         entangled_fields = {
-            "authority": [
+            "database": [
                 "name",
                 "short_name",
-                "url",
-                "contact",
             ]
         }
         untangled_fields = (
-            "name",
             "logo",
             "icon",
+            # "theme",
         )
 
     theme = AttributesFormField(

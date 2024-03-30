@@ -6,11 +6,11 @@ from solo.models import SingletonModel
 
 
 class Configuration(SingletonModel):
-    name = models.CharField(
-        _("Site Name"),
-        max_length=255,
-        default="",
-    )
+    # name = models.CharField(
+    #     _("Site Name"),
+    #     max_length=255,
+    #     default="",
+    # )
 
     logo = models.ImageField(
         _("Logo"),

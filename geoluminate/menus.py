@@ -104,7 +104,7 @@ Sidebar.add_item(
         icon=icon("literature"),
         children=[
             MenuItem(
-                title=_("GHFDB Catalogue"),
+                title=_("Full Catalogue"),
                 url=reverse("review:literature_list"),
                 weight=5,
                 icon=icon("literature"),
@@ -113,7 +113,7 @@ Sidebar.add_item(
                 ),
             ),
             MenuItem(
-                title=_("Literature Review"),
+                title=_("For Review"),
                 url=reverse("review:list"),
                 weight=5,
                 icon=icon("review"),

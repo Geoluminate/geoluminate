@@ -2,7 +2,6 @@ from client_side_image_cropping import ClientsideCroppingWidget
 from django import forms
 from django.forms.models import ModelForm
 from django.utils.translation import gettext_lazy as _
-from django_select2.forms import Select2MultipleWidget
 from formset.widgets import Selectize, SelectizeMultiple, UploadedFileInput
 
 from geoluminate.contrib.core.choices import iso_639_1_languages
@@ -12,18 +11,18 @@ from .models import Contribution, Contributor
 
 
 class MultiTagForm(forms.Form):
-    interests = ControlledMultipleTagField(
-        choices=[
-            (i, _(i))
-            for i in [
-                "GIS",
-                "Remote Sensing",
-                "Geospatial Data Science",
-                "Geospatial Data Engineering",
-            ]
-        ],
-        widget=SelectizeMultiple(),
-    )
+    # interests = ControlledMultipleTagField(
+    #     choices=[
+    #         (i, _(i))
+    #         for i in [
+    #             "GIS",
+    #             "Remote Sensing",
+    #             "Geospatial Data Science",
+    #             "Geospatial Data Engineering",
+    #         ]
+    #     ],
+    #     widget=SelectizeMultiple(),
+    # )
 
     status = ControlledMultipleTagField(
         choices=[
@@ -70,18 +69,18 @@ class UserProfileForm(ModelForm):
         help_text=_("Preferred display language for this site (where possible)."),
         label=_("Language"),
     )
-    interests = ControlledMultipleTagField(
-        choices=[
-            (i, _(i))
-            for i in [
-                "GIS",
-                "Remote Sensing",
-                "Geospatial Data Science",
-                "Geospatial Data Engineering",
-            ]
-        ],
-        widget=Select2MultipleWidget,
-    )
+    # interests = ControlledMultipleTagField(
+    #     choices=[
+    #         (i, _(i))
+    #         for i in [
+    #             "GIS",
+    #             "Remote Sensing",
+    #             "Geospatial Data Science",
+    #             "Geospatial Data Engineering",
+    #         ]
+    #     ],
+    #     widget=Select2MultipleWidget,
+    # )
 
     name = forms.CharField(help_text=_("Your name as it will appear on this site."))
 
@@ -92,7 +91,6 @@ class UserProfileForm(ModelForm):
             "name",
             "lang",
             "about",
-            "interests",
         ]
 
 

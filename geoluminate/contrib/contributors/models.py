@@ -14,7 +14,7 @@ from django.urls import reverse
 from django.utils.encoding import force_str
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
-from taggit.managers import TaggableManager
+from research_vocabs.fields import TaggableConcepts
 
 from geoluminate.contrib.datasets.models import Dataset
 from geoluminate.contrib.projects.models import Project
@@ -24,7 +24,7 @@ from geoluminate.db import models
 
 # from geoluminate.models import Dataset, Project, Review, Sample
 from . import choices
-from .managers import ContributionManager, ContributorManager
+from .managers import ContributionManager, ContributorManager, OrganizationManager, PersonManager
 
 
 class Contributor(models.Model):
@@ -34,6 +34,13 @@ class Contributor(models.Model):
     Contributor schema."""
 
     objects = ContributorManager().as_manager()
+
+    image = models.ImageField(
+        upload_to="profile_images/",
+        verbose_name=_("profile image"),
+        blank=True,
+        null=True,
+    )
 
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
@@ -51,13 +58,6 @@ class Contributor(models.Model):
         on_delete=models.CASCADE,
     )
 
-    image = models.ImageField(
-        upload_to="profile_images/",
-        verbose_name=_("profile image"),
-        blank=True,
-        null=True,
-    )
-
     name = models.CharField(
         max_length=512,
         verbose_name=_("display name"),
@@ -66,10 +66,8 @@ class Contributor(models.Model):
 
     about = models.TextField(null=True, blank=True)
 
-    slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
-
-    interests = TaggableManager(
-        _("research interests"),
+    interests = TaggableConcepts(
+        verbose_name=_("research interests"),
         help_text=_("A list of research interests for the contributor."),
         blank=True,
     )
@@ -260,11 +258,6 @@ class Contributor(models.Model):
             return self.user
         return self.organization
 
-    def is_member(self):
-        """Returns True if the contributor is associated with a User account"""
-        if self.user:
-            return True
-
     @property
     def preferred_email(self):
         if self.user:
@@ -273,6 +266,24 @@ class Contributor(models.Model):
 
     # def is_active(self):
     # """Returns True if the contributor is listed on a dataset that has been accepted in the past"""
+
+
+class PersonalContributor(Contributor):
+    objects = PersonManager()
+
+    class Meta:
+        proxy = True
+        verbose_name = _("person")
+        verbose_name_plural = _("people")
+
+
+class OrganizationalContributor(Contributor):
+    objects = OrganizationManager()
+
+    class Meta:
+        proxy = True
+        verbose_name = _("organization")
+        verbose_name_plural = _("organizations")
 
 
 class Contribution(django_models.Model):

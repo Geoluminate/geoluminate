@@ -1,6 +1,11 @@
+from django.conf import settings
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 
 from .utils import get_measurement_models
+
+admin.site.site_header = settings.SITE_NAME + _(" Admin")
+
 
 # For each model, it creates a dictionary `opts` with a key `list_filter` that maps to an empty list.
 # It then iterates over each field in the model's meta information. If a field has a `choices` attribute and this attribute is not empty,

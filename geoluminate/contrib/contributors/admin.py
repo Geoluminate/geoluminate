@@ -1,10 +1,11 @@
 from django.contrib import admin
 from django.contrib.contenttypes.admin import GenericStackedInline
 from django.db.models import Count
+from django.utils.translation import gettext_lazy as _
 
 from geoluminate.contrib.core.admin import BaseAdmin
 
-from .models import Contribution, Contributor
+from .models import Contribution, Contributor, OrganizationalContributor, PersonalContributor
 
 
 class GenericContributionInline(GenericStackedInline):
@@ -25,7 +26,7 @@ class ContributorInline(admin.StackedInline):
     extra = 0
 
 
-@admin.register(Contributor)
+# @admin.register(Contributor)
 class ContributorAdmin(BaseAdmin):
     list_display = ["name", "about", "projects", "datasets", "samples"]
     search_fields = ["name"]
@@ -54,8 +55,28 @@ class ContributorAdmin(BaseAdmin):
         return obj.sample_count
 
 
-# c = ContributorAdmin(Contributor, admin.site)
-# print(c.get_urls())
+@admin.register(PersonalContributor)
+class PersonalContributorAdmin(ContributorAdmin):
+    exclude = ["organization"]
+    list_display = ["name", "has_account", "projects", "datasets", "samples"]
+
+    def has_account(self, obj):
+        return obj.user is not None
+
+    has_account.boolean = True
+    has_account.short_description = _("Has Account")
+
+
+@admin.register(OrganizationalContributor)
+class OrganizationalContributorAdmin(ContributorAdmin):
+    exclude = ["user"]
+    list_display = ["name", "projects", "datasets", "samples"]
+
+    # def members(self, obj):
+    #     return obj.organization.membership.count()
+
+    # members.boolean = True
+    # members.short_description = _("Members")
 
 
 @admin.register(Contribution)

@@ -17,6 +17,16 @@ class ContributorManager(models.QuerySet):
         return self.filter(organization__isnull=False)
 
 
+class PersonManager(models.Manager):
+    def get_queryset(self):
+        return ContributorManager(self.model, using=self._db).persons()
+
+
+class OrganizationManager(models.Manager):
+    def get_queryset(self):
+        return ContributorManager(self.model, using=self._db).organizations()
+
+
 class ContributionManager(models.QuerySet):
     def by_role(self, role):
         """Returns all contributions with the given role"""

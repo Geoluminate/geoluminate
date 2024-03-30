@@ -1,6 +1,6 @@
 GEOLUMINATE_APPS = [
     # Admin apps
-    "djangocms_admin_style",
+    # "djangocms_admin_style",
     "geoluminate.contrib.admin",
     # "adminactions",
     # "jazzmin",

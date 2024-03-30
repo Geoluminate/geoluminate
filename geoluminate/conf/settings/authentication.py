@@ -127,4 +127,4 @@ SOCIALACCOUNT_ADAPTER = "geoluminate.contrib.users.adapters.SocialAccountAdapter
 ACCOUNT_ALLOW_REGISTRATION = env("DJANGO_ACCOUNT_ALLOW_REGISTRATION")
 """allow registration"""
 
-# ACCOUNT_SIGNUP_FORM_CLASS = "geoluminate.contrib.users.forms.SignupExtraForm"
+ACCOUNT_SIGNUP_FORM_CLASS = "geoluminate.contrib.users.forms.SignupExtraForm"

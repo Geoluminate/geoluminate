@@ -36,7 +36,12 @@ class Review(models.Model):
         on_delete=models.SET_NULL,
         null=True,
     )
-
+    # submitted_by = models.ForeignKey(
+    #     to=settings.AUTH_USER_MODEL,
+    #     help_text=_("User who accepted this review"),
+    #     on_delete=models.SET_NULL,
+    #     null=True,
+    # )
     submitted = models.DateTimeField(
         verbose_name=_("date submitted"),
         help_text=_("Date the user submitted correction for final approval by site admins"),

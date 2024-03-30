@@ -89,7 +89,9 @@
     </div>
     <hr class="mt-0 border border-primary" />
     {% comment %} template_name defaults to "geoluminate/base/list_view.html" {% endcomment %}
-    {% include template_name %}
+    {% block list_template %}
+      {% include template_name %}
+    {% endblock list_template %}
   </div>
 {% endblock main %}
 {% block toolbar_right %}

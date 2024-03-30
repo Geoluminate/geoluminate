@@ -1,4 +1,7 @@
 from django.contrib import messages
+
+# import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count
 from django.http import HttpResponseRedirect
 from django.utils.translation import gettext as _
@@ -27,13 +30,13 @@ from .forms import (  # LiteratureForm,
 from .models import Review
 
 
-class AcceptLiteratureReview(HTMXMixin, MetadataMixin, SingleObjectMixin, FormView):
+class AcceptLiteratureReview(HTMXMixin, MetadataMixin, SingleObjectMixin, LoginRequiredMixin, FormView):
     """A simple view that asks the user to confirm that they want to accept the review. On accepting, a new Review object is created and the user is redirected to the detail view of the related dataset."""
 
     model = Literature
     template_name = "reviews/accept_review_form.html"
     form_class = AcceptReviewForm
-    title = _("Start literature review")
+    title = _("Begin review")
 
     def get(self, request, *args, **kwargs):
         """If the review has already been accepted, raise a 404 error. If the review has not been accepted, proceed with the form."""
@@ -226,18 +229,13 @@ class LiteratureReviewListView(BaseListView):
     """A view that lists a set of Review objects."""
 
     base_template = "reviews/review_list.html"
-    title = _("Literature Review")
-    description = _(
-        "The following literature items may contain data that are relevant to this portal but have not yet been added."
-        " You can contribute to our community by selecting an item to review, assessing any relevant data, then"
-        " submitting a request to add the data to the portal. All contributions will be appropriately acknowledged in"
-        " the next major database release. You can find out more about the release cycle of the Global Heat Flow"
-        " Database and how your contributions make a difference. "
-    )
-    object_template = "reviews/review_card.html"
+    object_template = "literature/literature_card.html"
+    title = _("Data extraction and review")
 
     filterset_class = ReviewFilter
-    queryset = Literature.objects.filter(review__isnull=True).order_by("-created")
+    queryset = Literature.objects.exclude(
+        review__status=Review.STATUS_CHOICES.ACCEPTED,
+    ).order_by("-created")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -259,7 +257,7 @@ class LiteratureListView(BaseListView):
     title = _("Literature")
     base_template = "literature/literature_list.html"
     object_template = "literature/literature_card.html"
-    queryset = Literature.objects.all().order_by("-created")
+    queryset = Literature.objects.filter(review__status=Review.STATUS_CHOICES.ACCEPTED).order_by("-created")
     filterset_class = LiteratureFilter
     list_filter_top = ["title", "o"]
 

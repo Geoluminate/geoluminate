@@ -21,5 +21,7 @@
       {% endblock card_footer_content %}
     </div>
   {% endblock card_footer %}
-  <a href="{{ obj.get_absolute_url }}" class="stretched-link"></a>
+  {% block card_end %}
+    <a href="{{ obj.get_absolute_url }}" class="stretched-link"></a>
+  {% endblock card_end %}
 </div>

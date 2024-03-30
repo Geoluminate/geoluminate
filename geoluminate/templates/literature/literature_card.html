@@ -1,29 +1,55 @@
-{% extends "geoluminate/base/card.html" %}
-{% load i18n static contributor_tags literature %}
+{% extends "geoluminate/cards/two_column.html" %}
+{% load i18n literature geoluminate %}
 
-{% block pretitle %}<h6 class="mb-1">{{ obj|CSL:"container-title" }}</h6>{% endblock %}
-
-{% block title_link %}
-  {% if obj.CSL.URL %}<a href="{{ obj.CSL.URL }}" class='text-decoration-none'>{% endif %}
-    <h5 class="card-title">
-      <span>{{ obj.title }}</span>
-    </h5>
-    {% if obj.CSL.URL %}</a>{% endif %}
-{% endblock %}
-
-{% block subtitle %}
-  {% for author in obj.CSL.author %}
-    {% if author.ORCID %}
-      <a href="{{ author.ORCID }}">
-        <img src="{% static 'img/brand/orcid_16x16.png' %}" alt="ORCID icon" />
-      </a>
+{% block card_header %}
+  <div class="container pt-2 d-flex justify-content-between">
+    {% if obj.review.status == 2 %}
+      <div>{% trans "Submitted by" %}: {{ obj.review.reviewer }}, {{ obj.review.submitted|date }}</div>
+      <span>{{ obj.review.get_status_display }}</span>
+      <div>{% trans "Accepted by" %}: TBD, {{ obj.review.accepted|date }}</div>
+    {% else %}
+      {% trans "Under review by" %}: {{ obj.review.reviewer }}
+      <span>{{ obj.review.get_status_display }}</span>
+      <div>{% trans "Due by" %}: Future Date TBD</div>
     {% endif %}
-    {{ author.family }}, {{ author.given }}
-    {% if not forloop.last %}|{% endif %}
+  </div>
+{% endblock card_header %}
+{% block card_body %}
+  <div class="text-truncate">
+    {# djlint:off #}
+  {% for author in obj.CSL.author %}
+    {{ author.family }}, {{ author.given }}{% if not forloop.last %},{% endif %}
   {% endfor %}
-{% endblock %}
-
-{% block list_group %}
+    {# djlint:on #}
+  </div>
+  <h5 class="card-title">{{ obj.title }}</h5>
+  <h6 class="card-subtitle mb-1">{{ obj|CSL:"container-title" }}</h6>
+  <p class="card-text line-clamp max-lines-5">
+    {% if obj.CSL.abstract %}{{ obj.CSL.abstract }}{% endif %}
+  </p>
+{% endblock card_body %}
+{% block card_footer_content %}
+  {% if obj.CSL.URL %}
+    <a href="{{ obj.CSL.URL }}" class="btn btn-sm btn-primary me-1 z-2">
+      <i class="fa-solid fa-globe"></i>
+      {% trans "View online" %}
+    </a>
+  {% endif %}
+  {% if not obj.review %}
+    <a href="{% url "review:accept-literature" pk=obj.pk %}" class="btn btn-sm btn-success me-1 z-2">
+      {% icon "review" %}
+      {% trans "Begin Review" %}
+    </a>
+  {% else %}
+    <a href="{% url "datasets:detail" uuid=obj.review.dataset.uuid %}" class="btn btn-sm btn-success z-2">
+      {% icon "dataset" class="me-1" %}
+      {% trans "View Dataset" %}
+    </a>
+  {% endif %}
+{% endblock card_footer_content %}
+{% block card_end %}
+{% endblock card_end %}
+{% comment %} {% block list_group %}
   {% if not obj.review %}
     <li>
       {% trans "Status" %}: <span>{% trans "Awaiting review" %}</span>
@@ -46,28 +72,9 @@
     {% trans "Page" %}: <span>{{ obj.CSL.page|default:"-" }}</span>
   </li>
   <li>
-    {% trans "Dataset" %}: <a href="{{ obj.review.get_absolute_url }}" class="float-end"><i class='fa-solid fa-folder-open text-primary'></i></a>
+    {% trans "Dataset" %}: <a href="{{ obj.review.get_absolute_url }}" class="float-end"><i class="fa-solid fa-folder-open text-primary"></i></a>
   </li>
-{% endblock list_group %}
-
-{% block actions %}
-  {% if not obj.review %}
-    <a href="{% url "review:accept-literature" pk=obj.pk %}" class='btn btn-success'>{% trans "Review now" %}</a>
-  {% endif %}
-{% endblock actions %}
-
-{% block info %}
+{% endblock list_group %} {% endcomment %}
+{% comment %} {% block info %}
   {% trans "Date Added" %}: <span>{{ obj.created|date:"dS M, Y" }}</span>
-{% endblock info %}
-
-{% block description %}
-  {% with obj.CSL.abstract as description %}
-    {% if description %}
-      {{ description|truncatewords_html:100 }}
-    {% else %}
-      {% blocktrans %}
-    No abstract has been provided for this {{ obj_name }} yet.
-    {% endblocktrans %}
-    {% endif %}
-  {% endwith %}
-{% endblock description %}
+{% endblock info %} {% endcomment %}

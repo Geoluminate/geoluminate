@@ -11,7 +11,6 @@ GEOLUMINATE_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.admin",
-    "django.contrib.admindocs",
     "django.contrib.sites",
     "django.contrib.sitemaps",
     "django.contrib.staticfiles",

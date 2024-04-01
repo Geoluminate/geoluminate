@@ -6,27 +6,28 @@
   {{ block.super }}
   <link rel="stylesheet" href="{% static "client_side_image_cropping/croppie.css" %}" />
 {% endblock css %}
-
 {% block sidebar_top %}
   <div class="text-center">
-    {% render_model_block object "image" %}
-    <img src="{{ object.profile_image }}" class="w-50 rounded-circle mb-2" alt="{{ object }}" />
+    {% comment %} {% render_model_block object "image" %} {% endcomment %}
+    <img src="{{ object.profile_image }}"
+         class="w-50 rounded-circle mb-2"
+         alt="{{ object }}"
+         width="auto"
+         height="auto" />
     {% comment %} <div class="card text-white">{% avatar object width="100%" class="card-img" %}</div> {% endcomment %}
-  {% endrender_model_block %}
-  <div class="actions d-flex mb-2 justify-content-center">
-    {% follow_button object %}
-    {% share_button object %}
-    <a href="" class="btn btn-sm btn-secondary">
-      <i class="fa-solid fa-envelope"></i>
-      {% trans "Contact" %}
-    </a>
-    {% block actions %}
-    {% endblock actions %}
-
+    {% comment %} {% endrender_model_block %} {% endcomment %}
+    <div class="actions d-flex mb-2 justify-content-center">
+      {% follow_button object %}
+      {% share_button object %}
+      <a href="" class="btn btn-sm btn-secondary">
+        <i class="fa-solid fa-envelope"></i>
+        {% trans "Contact" %}
+      </a>
+      {% block actions %}
+      {% endblock actions %}
+    </div>
   </div>
-</div>
-{% endblock %}
-
+{% endblock sidebar_top %}
 {% block javascript %}
   {{ block.super }}
   <script src="{% static "client_side_image_cropping/croppie.min.js" %}"></script>

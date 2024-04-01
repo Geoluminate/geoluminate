@@ -1,7 +1,7 @@
 {% comment %} {% extends "geoluminate/components/sidebar/card.html" %} {% endcomment %}
 {% load i18n geoluminate cms_tags %}
 
-{% render_model_block object "keywords" %}
+{% comment %} {% render_model_block object "keywords" %} {% endcomment %}
 <div class="card">
   <div class="card-body">
     <h6 class="card-title">{% trans "Keywords" %}</h6>
@@ -12,4 +12,4 @@
     {% endfor %}
   </div>
 </div>
-{% endrender_model_block %}
+{% comment %} {% endrender_model_block %} {% endcomment %}

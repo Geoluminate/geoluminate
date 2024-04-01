@@ -6,7 +6,6 @@ from geoluminate.contrib.core.admin import (
     DescriptionInline,
     FuzzyDatesInline,
 )
-from geoluminate.contrib.datasets.admin import DatasetsInline
 
 from .models import Project
 
@@ -17,7 +16,7 @@ class ProjectAdmin(BaseAdmin):
         DescriptionInline,
         FuzzyDatesInline,
         GenericContributionInline,
-        DatasetsInline,
+        # DatasetsInline,
     ]
     search_fields = ("uuid", "title")
     frontend_editable_fields = (

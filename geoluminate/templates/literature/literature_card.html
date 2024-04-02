@@ -41,11 +41,11 @@
       {% icon "review" %}
       {% trans "Begin Review" %}
     </a>
-    {% comment %} {% else %}
+  {% else %}
     <a href="{% url "datasets:detail" uuid=obj.review.dataset.uuid %}" class="btn btn-sm btn-success z-2">
       {% icon "dataset" class="me-1" %}
       {% trans "View Dataset" %}
-    </a> {% endcomment %}
+    </a>
   {% endif %}
 {% endblock card_footer_content %}
 {% block card_end %}

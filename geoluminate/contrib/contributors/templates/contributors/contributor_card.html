@@ -8,7 +8,7 @@
 {% endblock card_head_status %}
 {% block card_body %}
   <div class="col col-2 text-center h-100">
-    {% avatar obj width="75px" class='card-img-top shadow-sm rounded-circle object-fit-contain align-items-middle' %}
+    {% avatar obj width="75px" class='shadow-sm rounded-circle object-fit-contain align-items-middle' %}
     <h6 class="card-title mt-2 mb-1">{{ obj }}</h6>
     {% if obj.user %}<div class="card-subtitle mb-1">{{ obj.default_affiliation }}</div>{% endif %}
     <div class="w-auto z-2">{% follow_button obj %}</div>

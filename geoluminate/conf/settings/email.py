@@ -1,6 +1,7 @@
 import environ
 
 env = environ.Env(
+    DJANGO_SITE_NAME=(str, "Geoluminate Dev"),
     DJANGO_SITE_DOMAIN=(str, "localhost:8000"),
     EMAIL_HOST=(str, ""),
     EMAIL_HOST_USER=(str, ""),

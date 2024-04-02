@@ -45,12 +45,12 @@
     <a href="{% url "datasets:detail" uuid=obj.review.dataset.uuid %}" class="btn btn-sm btn-success z-2">
       {% icon "dataset" class="me-1" %}
       {% trans "View Dataset" %}
-    </a>
-    {% endif %} {% endcomment %}
-  {% endblock card_footer_content %}
-  {% block card_end %}
-  {% endblock card_end %}
-  {% comment %} {% block list_group %}
+    </a> {% endcomment %}
+  {% endif %}
+{% endblock card_footer_content %}
+{% block card_end %}
+{% endblock card_end %}
+{% comment %} {% block list_group %}
   {% if not obj.review %}
     <li>
       {% trans "Status" %}: <span>{% trans "Awaiting review" %}</span>
@@ -75,7 +75,7 @@
   <li>
     {% trans "Dataset" %}: <a href="{{ obj.review.get_absolute_url }}" class="float-end"><i class="fa-solid fa-folder-open text-primary"></i></a>
   </li>
-  {% endblock list_group %} {% endcomment %}
-  {% comment %} {% block info %}
+{% endblock list_group %} {% endcomment %}
+{% comment %} {% block info %}
   {% trans "Date Added" %}: <span>{{ obj.created|date:"dS M, Y" }}</span>
-  {% endblock info %} {% endcomment %}
+{% endblock info %} {% endcomment %}

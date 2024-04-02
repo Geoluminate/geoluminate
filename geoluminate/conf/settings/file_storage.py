@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 import environ
+from storages.backends.s3boto3 import S3Boto3Storage
 
 env = environ.Env(
     DJANGO_CACHE=(bool, True),
@@ -48,6 +49,8 @@ AWS_SECRET_ACCESS_KEY = os.environ.get("MINIO_SECRET_ACCESS_KEY")
 """"""
 AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_BUCKET_NAME")
 """"""
+
+print(AWS_STORAGE_BUCKET_NAME)
 
 AWS_S3_CUSTOM_DOMAIN = os.environ.get("AWS_S3_CUSTOM_DOMAIN")
 
@@ -102,18 +105,16 @@ STORAGES = {
         "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
         "OPTIONS": {
             "location": "public",
-            "bucket_name": "geoluminate",
             "default_acl": "public-read",
-            # "file_overwrite": False,
-            "url_protocol": "http:",
+            # "url_protocol": "http:",
         },
     },
     "private": {
         "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
         "OPTIONS": {
             "location": "private",
-            "bucket_name": "geoluminate",
-            "url_protocol": "http:",
+            "default_acl": "private",
+            # "url_protocol": "http:",
         },
     },
     "staticfiles": {

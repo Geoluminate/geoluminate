@@ -2,16 +2,8 @@
 {% load i18n literature geoluminate %}
 
 {% block card_header %}
-  <div class="container pt-2 d-flex justify-content-between">
-    {% if obj.review.status == 2 %}
-      <div>{% trans "Submitted by" %}: {{ obj.review.reviewer }}, {{ obj.review.submitted|date }}</div>
-      <span>{{ obj.review.get_status_display }}</span>
-      <div>{% trans "Accepted by" %}: TBD, {{ obj.review.accepted|date }}</div>
-    {% else %}
-      {% trans "Under review by" %}: {{ obj.review.reviewer }}
-      <span>{{ obj.review.get_status_display }}</span>
-      <div>{% trans "Due by" %}: Future Date TBD</div>
-    {% endif %}
+  <div class="position-absolute top-0 end-0 m-2">
+    <span class="badge rounded-pill text-bg-success">{{ obj.review.get_status_display }}</span>
   </div>
 {% endblock card_header %}
 {% block card_body %}
@@ -27,6 +19,15 @@
   <p class="card-text line-clamp max-lines-5">
     {% if obj.CSL.abstract %}{{ obj.CSL.abstract }}{% endif %}
   </p>
+  <div class="container pt-2 d-flex justify-content-between">
+    {% if obj.review.status == 2 %}
+      <div>{% trans "Submitted by" %}: {{ obj.review.reviewer }}, {{ obj.review.submitted|date }}</div>
+      <div>{% trans "Accepted by" %}: TBD, {{ obj.review.accepted|date }}</div>
+    {% elif obj.review %}
+      {% trans "Under review by" %}: {{ obj.review.reviewer }}
+      <div>{% trans "Due by" %}: Future Date TBD</div>
+    {% endif %}
+  </div>
 {% endblock card_body %}
 {% block card_footer_content %}
   {% if obj.CSL.URL %}

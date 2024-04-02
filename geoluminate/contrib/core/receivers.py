@@ -28,8 +28,9 @@ def update_identifiers_for_new_literature(sender, instance, created, **kwargs):
     """
     Update identifier fields for new literature.
     """
+    pass
     # update identifier fields
-    print("update_identifiers_for_new_literature", instance, created, kwargs)
+    # print("update_identifiers_for_new_literature", instance, created, kwargs)
 
     # for field in IdentifierTypes.labels:
     #     if self.CSL.get(field):

@@ -2,10 +2,7 @@ import logging
 
 from allauth.account.signals import user_signed_up
 from django.contrib.auth import get_user_model
-from django.db.models.signals import post_save
 from django.dispatch import receiver
-
-from geoluminate.contrib.contributors.models import Contributor
 
 logger = logging.getLogger(__name__)
 
@@ -32,10 +29,10 @@ def create_profile(request, user, **kwargs):
     #     logger.info(f"Created new profile for {user.username}")
 
 
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        profile, created = Contributor.objects.get_or_create(user=instance, defaults={"name": instance.get_full_name()})
-        print(profile, created)
-        if created:
-            logger.info(f"Created new profile for {instance.username}")
+# @receiver(post_save, sender=User)
+# def create_user_profile(sender, instance, created, **kwargs):
+#     if created:
+#         profile, created = Contributor.objects.get_or_create(user=instance, defaults={"name": instance.get_full_name()})
+#         print(profile, created)
+#         if created:
+#             logger.info(f"Created new profile for {instance.username}")

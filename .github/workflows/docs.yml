@@ -47,7 +47,7 @@ jobs:
         run: |
           git checkout -b documentation  # Create a new branch named 'documentation' if it doesn't exist
           rm -rf ./*  # Clean the current contents of the 'documentation' branch
-          cp -r _build/* ./  # Copy the built documentation
+          cp -r docs/_build/* ./  # Copy the built documentation
           git add .
           git commit -m "Update documentation"
           git push origin documentation  # Push changes to the 'documentation' branch

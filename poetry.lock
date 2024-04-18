@@ -1600,22 +1600,26 @@ name = "django-literature"
 version = "0.1.7"
 description = "A scientific literature management tool for Django"
 optional = false
-python-versions = ">=3.8,<4.0"
-files = [
-    {file = "django_literature-0.1.7-py3-none-any.whl", hash = "sha256:3cdbc80839544c64370e9fd6c7a31eb96e2e70367297eb02a9fa6fc972b1bec4"},
-    {file = "django_literature-0.1.7.tar.gz", hash = "sha256:a81279338069e6fb89170d19dc6f7e31e84ce131dd6b6d449ee38ea731e99154"},
-]
+python-versions = ">=3.10,<4.0"
+files = []
+develop = false
 
 [package.dependencies]
-django = ">=3.2"
-django-appconf = ">=1.0.5,<2.0.0"
-django-formset = ">=1.0,<2.0"
-django-model-utils = ">=4.3.1,<5.0.0"
-django-sortedm2m = ">=3.1.1,<4.0.0"
-django-taggit = ">=3.1.0,<4.0.0"
-djangorestframework = ">=3.14.0,<4.0.0"
-drf-schema-adapter = ">=3.0.6,<4.0.0"
-python-dateutil = ">=2.8.2,<3.0.0"
+django = ">=3.2,<5"
+django-entangled = "^0.5.4"
+django-formset = "^1.3.8"
+django-taggit = "^3.1.0"
+djangorestframework = "^3.14.0"
+djangorestframework-datatables = "^0.7.0"
+djangorestframework-datatables-editor = "^0.3.3"
+drf-schema-adapter = "^3.0.6"
+python-dateutil = "^2.8.2"
+
+[package.source]
+type = "git"
+url = "https://github.com/Geoluminate/django-literature"
+reference = "main"
+resolved_reference = "5b7e9b1ac8e887a09436fee23f0f27e8b31a6999"
 
 [[package]]
 name = "django-lockdown"
@@ -1817,17 +1821,6 @@ files = [
 
 [package.dependencies]
 django = ">=3.2"
-
-[[package]]
-name = "django-sortedm2m"
-version = "3.1.1"
-description = "Drop-in replacement for Django's many to many field with sorted relations."
-optional = false
-python-versions = "*"
-files = [
-    {file = "django-sortedm2m-3.1.1.tar.gz", hash = "sha256:136f3d4e0820b351608a7141d88ac3ba7fafcd37a9b8361ad00ffe616a790be5"},
-    {file = "django_sortedm2m-3.1.1-py2.py3-none-any.whl", hash = "sha256:c67ae0757e8e60ded15a9ba04d0862fe39fba3d5b865899c2472166ff0050f2c"},
-]
 
 [[package]]
 name = "django-split-settings"
@@ -5442,4 +5435,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<4.0"
-content-hash = "3b64576c0afd6348b8ec3299d434c6f98bebd6bdc66b3aadaf709f84e6ca5759"
+content-hash = "5602769aa4a9aef70972278ce5962ca97d65f2c8ef18d8039a64303891173b15"

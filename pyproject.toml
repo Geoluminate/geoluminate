@@ -52,7 +52,6 @@ django-imagekit = "^4.1.0"
 django-invitations = "^2.0.0"
 django-laboratory = "^0.0.1"
 django-libsass = "^0.9"
-django-literature = "^0.1.2"
 django-lockdown = "^4.0.0"
 django-meta = "^2.1.0"
 django-model-utils = "^4.3.1"
@@ -85,6 +84,7 @@ redis = "^4.5.2"
 tldextract = "^3.4.0"
 whitenoise = "^6.4.0"
 django-solo = "^2.2.0"
+django-literature = {git = "https://github.com/Geoluminate/django-literature", rev = "main"}
 
 
 [tool.poetry.group.dev.dependencies]

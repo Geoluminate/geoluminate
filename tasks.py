@@ -148,3 +148,13 @@ def savedemo(c):
             ]
         )
     )
+
+
+@task
+def docs(c):
+    """
+    Build the documentation and open it in the browser
+    """
+    # c.run("sphinx-apidoc -M -T -o docs/ project/schemas/* **/migrations/* -e --force -d 2")
+    c.run("sphinx-build -E -b html docs docs/_build")
+    # c.run("docker compose -f local.yml up docs")

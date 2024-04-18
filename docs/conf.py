@@ -4,6 +4,7 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).parent.parent.resolve()
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tests.settings")
+os.environ.setdefault("DATABASE_URL", "postgresql://username:password@hostname:5555/database_name")
 
 sys.path.append(str(BASE_DIR / "tests"))
 

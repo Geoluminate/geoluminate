@@ -1,7 +1,0 @@
-(frontend)=
-# Modern Frontend
-
-## Introduction
-
-
-

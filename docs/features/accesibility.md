@@ -1,6 +1,0 @@
-# Accessibility
-
-
-## Internationalization and Localization
-
-

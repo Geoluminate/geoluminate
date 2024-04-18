@@ -3,7 +3,6 @@
 
 Data exploration, consumption and reuse is the core purpose of the Geoluminate framework. The framework is designed to provide a robust, user-friendly interface for exploring and consuming **high-quality** data that your community can rely on. For the humans among us, data can be explored via catalogues of projects, datasets and featured literature items that are available within the application. Data can be downloaded in neatly packaged bundles in the formats that make sense to you. For those of a more digital persuasion, data can be consumed via a RESTful API that provides access to all of the data that is available within the application. 
 
-
 ## Browsing Projects and Datasets
 
 Browsing publicly available projects or datasets is simple and intuitive via the web interface. Filters that tap into rich metadata can help you find exactly what you're looking for. Whether that is a specific project, a dataset that has been published by a particular author, or a dataset that has been published in a particular journal.
@@ -33,7 +32,6 @@ The following database entries can be viewed in detail via the web interface:
 - [Datasets](functionality/datasets)
 - [Samples](functionality/samples)
 - [Locations](functionality/locations)
-
 
 ### Via the API
 

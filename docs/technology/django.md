@@ -2,6 +2,39 @@
 
 ## What is Django?
 
+Django is a modern, high-level web framework written in Python. It provides a wide range of features and tools out of the box to help developers build web applications quickly and efficiently, without having to reinvent the wheel. Django is actively maintained and has a large and vibrant community of developers who contribute to its growth and success. A large number of community-driven third-party packages are available to extend Django's functionality and add new features, creating an ecosystem of near-endless possibilities.
+
+For the unfamiliar, endless possibilities quickly becomes overwhelming.
+
+Geoluminate is built on top of Django and aims to reduce the complexity in building a modern research data platfrom by providing sensible default configurations and best practices out of the box. This "batteries-included" approach allows researchers to focus on building robust measurement schema that reflect the specific needs of their research community — everything else should just work.
+
+Geoluminate is designed to help researchers focus on building a robust measurement schema that reflects the specific needs of their research community and building their platform into a valuable resource for their community.
+
+
+
+Geoluminate is built on top of Django and therefore inherits all of its features and capabilities. This includes a powerful ORM (Object-Relational Mapping) system for interacting with databases, a robust authentication system for managing user accounts and permissions, a flexible templating engine for rendering HTML templates, and a built-in admin interface for managing data models. 
+
+Geoluminate further extends Django by providing tools and features specifically tailored towards the creation, maintenance and deployment of online research data portals. These include a robust core data model, a contributor framework for proper credit attribution and a site design that facilitates discovery and promotes community-engagement and collaboration. By taking care of this foundational work, Geoluminate allows researchers-turned-developers to focus on two things: building a robust measurement schema that reflects the specific needs of their research community and building their platform into a valuable resource for their community.      
+
+
+These include:
+
+- **Sensible Defaults**: Geoluminate comes with sensible default settings and best practices for building a secure online community.
+- **Account Management**: Geoluminate provides user account management features, such as user registration, login, and password reset functionality.
+- **Geospatial Capabilities**: Geoluminate is preconfigured to incorporate geospatial data and analysis, including integration with the PostGIS extension for efficient storage, retrieval, and analysis of spatial data.
+- **Core Data Model**: Geoluminate includes a core data model that covers all aspects of managing research data.
+- **Extendable Detail Views**: Geoluminate includes extendable detail views that allow developers to tailor the user experience to the specific needs of their research community.
+- **Contributor Framework**: Geoluminate includes a contributor framework that allows users to accurately and easily record contributions from both personal and organisational contributors.
+- **Research Data Management**: Geoluminate includes tools for managing research data, such as data upload, download, and visualization.
+- **Deployment Ready**: Geoluminate projects come deployment-ready, with pre-configured support for single-server Docker setups.
+
+
+ Geoluminate includes a range of geospatial capabilities, such as integration with the PostGIS extension, that allow researchers to efficiently store, retrieve, and analyze spatial data. 
+
+- 
+
+Geoluminate builds upon the Django philosophy by providing a set of tools and features specifically tailored for researchers looking wish to build web portals for their research communities. Geoluminate includes a range of geospatial capabilities, such as integration with the PostGIS extension, that allow researchers to efficiently store, retrieve, and analyze spatial data.
+
 Django is a high-level Python web framework that enables rapid development of secure and maintainable websites. Built by experienced developers, it takes care of much of the hassle of web development, so you can focus on writing your app without needing to reinvent the wheel. It’s free and open source.
 
 Given that many researchers are already familiar with Python, Django is the perfect framework to consider for building web portals. Django is a high-level web framework that is written in Python and offers a range of features and tools specifically designed to streamline web development.

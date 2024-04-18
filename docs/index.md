@@ -10,7 +10,7 @@ ______________________________________________________________________
 [![Code coverage](https://codecov.io/gh/SSJenny90/geoluminate/branch/master/graph/badge.svg)](https://codecov.io/gh/SSJenny90/geoluminate) 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
-```{include} overview/introduction.md
+```{include} introduction.md
 ```
 
 
@@ -18,11 +18,16 @@ ______________________________________________________________________
 :maxdepth: 1
 :hidden:
 
-background/index
-technology/index
-features/index
+background
+vision
+features
+<!-- functionality -->
+roadmap
+```
 
-
+```{toctree}
+<!-- technology/index -->
+<!-- features/index -->
 
 ```
 
@@ -34,7 +39,6 @@ features/index
 guides/user-guide/index
 guides/admin_guide/index
 guides/developer_guide/index
-guides/contributor-guide/index
 
 ```
 
@@ -44,16 +48,11 @@ guides/contributor-guide/index
 :maxdepth: 1
 :hidden:
 
-<!-- apidocs/geoluminate/geoluminate -->
-more/authors
-more/changelog
+contributing/index
 more/glossary
+<!-- more/current_projects -->
+more/changelog
 more/support
-more/roadmap
-more/current_projects
-more/authors
-more/history
-more/configuration
 ```
 
 <!-- ## Indices and tables

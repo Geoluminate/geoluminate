@@ -12,7 +12,6 @@ Geoluminate has switched to a Webpack-based frontend build system allowing for a
 2. Use the Django templating system to generate HTML. This allows for a more maintainable and testable codebase.
 
     Javascript should be used to enhance the user experience, not to create it. Where possible, always use Django's template system to create components.
-    
 
 3. Focus on reducing file size and improving performance by including only necessary components from required libraries.
 

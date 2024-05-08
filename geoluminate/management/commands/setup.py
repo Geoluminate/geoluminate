@@ -1,5 +1,3 @@
-import os
-
 from allauth.account.models import EmailAddress
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -63,15 +61,16 @@ class Command(BaseCommand):
         except CommandError:
             print("Failed to load creative commons licenses")
 
-        # 3. Load initial data
-        try:
-            call_command("loaddata", "demo")
-        except CommandError:
-            print("Failed to load initial data")
+        # # 3. Load initial data
+        # if os.environ.get("DJANGO_ENV") == "staging":
+        #     try:
+        #         call_command("loaddata", "demo")
+        #     except CommandError:
+        #         print("Failed to load initial data")
 
-        # 4. Load test data
-        if os.environ.get("DJANGO_ENV") == "staging":
-            call_command("loaddata", "test_data")
+        # # 4. Load test data
+        # if os.environ.get("DJANGO_ENV") == "staging":
+        #     call_command("loaddata", "test_data")
 
         # 5. Update site domain and name
         update_site()

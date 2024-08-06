@@ -9,14 +9,10 @@ class TestAbstractFactory(TestCase):
     def test_obj_creation(self):
         self.assertIsInstance(self.obj, self.model)
         self.assertIsNotNone(self.obj.title)
-        self.assertIsNotNone(self.obj.summary)
         self.assertIsNotNone(self.obj.visibility)
 
     def test_obj_has_descriptions(self):
         self.assertTrue(1 <= len(self.obj.descriptions.count()) <= 4)
-
-    def test_obj_has_key_dates(self):
-        self.assertTrue(1 <= len(self.obj.key_dates.count()) <= 3)
 
     def test_obj_has_contributors(self):
         self.assertTrue(2 <= len(self.obj.contributors.count()) <= 5)

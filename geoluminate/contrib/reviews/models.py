@@ -19,13 +19,13 @@ class Review(models.Model):
         default=StatusChoices.IN_PROGRESS,
     )
     literature = models.OneToOneField(
-        to="literature.Literature",
+        to="literature.LiteratureItem",
         help_text=_("Literature being reviewed"),
         on_delete=models.SET_NULL,
         null=True,
     )
     dataset = models.OneToOneField(
-        to="geoluminate.Dataset",
+        to="datasets.Dataset",
         help_text=_("Dataset being reviewed"),
         on_delete=models.SET_NULL,
         null=True,
@@ -59,7 +59,7 @@ class Review(models.Model):
         return f"Review of {self.dataset} by {self.reviewer}"
 
     def get_absolute_url(self):
-        return reverse("review:edit", kwargs={"pk": self.pk})
+        return reverse("review-edit", kwargs={"pk": self.pk})
 
     # def get_status(self):
     # if not self.status:

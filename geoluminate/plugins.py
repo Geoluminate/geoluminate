@@ -28,20 +28,22 @@ class PluginRegistry:
         self.registry = []
         self.menu = []
         self.actions = []
+        self.model_name = self.base.model._meta.model_name
 
     def append_to_registry(self, view_class, name="", *args, **kwargs):
         """Append a view to the registry."""
         name = slugify(name)
+        view_name = f"{self.model_name}-{name}"
         self.registry.append(
             {
                 "name": name,
                 "route": f"{name}/",
                 "view_class": view_class,
-                "view_name": f"{self.namespace}:{name}" if self.namespace else name,
+                "view_name": view_name,
                 "kwargs": kwargs,
             }
         )
-        return f"{self.namespace}:{name}" if self.namespace else name
+        return view_name
 
     def register_page(self, view_class, name="", *args, **kwargs):
         """Register a page view and add it as an item to the page menu."""
@@ -109,20 +111,18 @@ class PluginRegistry:
         )
 
     def get_urls(self):
-        # menu = self.build_menu()
-        menu = self.menu
         urls = []
         for i, plugin in enumerate(self.registry):
             view_kwargs = plugin["kwargs"].get("view_kwargs", {})
-            view = plugin["view_class"].as_view(menu=menu, actions=self.actions, **view_kwargs)
+            view = plugin["view_class"].as_view(menu=self.menu, actions=self.actions, base=self.base, **view_kwargs)
             if i == 0:
                 # duplicate the first plugin with a blank route to use as the default view
-                urls.append(path("", view, name="detail"))
+                urls.append(path("", view, name=f"{self.model_name}-detail"))
             # append the plugin with the route
             if plugin["route"] == "/":
                 print(self.namespace, plugin["view_class"])
 
-            urls.append(path(plugin["route"], view, name=plugin["name"]))
+            urls.append(path(plugin["route"], view, name=plugin["view_name"]))
         return urls
 
     @property

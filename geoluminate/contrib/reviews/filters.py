@@ -2,7 +2,7 @@ import django_filters as df
 from django import forms
 from django.utils.translation import gettext_lazy as _
 from formset.widgets import Selectize
-from literature.models import Literature
+from literature.models import LiteratureItem
 
 from geoluminate.contrib.contributors.models import Contributor
 
@@ -48,7 +48,7 @@ class ReviewFilter(ListFilterTop):
     )
 
     class Meta:
-        model = Literature
+        model = LiteratureItem
         fields = ["title", "status", "o", "reviewer"]
 
 
@@ -94,7 +94,7 @@ class LiteratureFilter(ListFilterTop):
     )
 
     class Meta:
-        model = Literature
+        model = LiteratureItem
         fields = [
             "title",
             "o",

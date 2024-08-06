@@ -1,47 +1,100 @@
+from django.db import models
 from django.utils.translation import gettext as _
-from research_vocabs.concepts import ConceptSchemeBuilder, LocalConceptScheme
+from research_vocabs.vocabularies import LocalVocabulary, VocabularyBuilder
 
 
-class FeatureType(LocalConceptScheme):
+class FeatureType(LocalVocabulary):
     class Meta:
-        source = "samplingfeaturetype.rdf"
+        source = "./vocab_data/samplingfeaturetype.rdf"
+        prefix = "odm2b"
+        namespace = "http://vocabulary.odm2.org/samplingfeaturetype/"
 
 
-class SamplingMedium(LocalConceptScheme):
+# http://vocabulary.odm2.org/api/v1/actiontype/?format=skos
+
+
+class SamplingMedium(LocalVocabulary):
     class Meta:
-        source = "medium.rdf"
+        source = "./vocab_data/medium.rdf"
+        namespace = "http://vocabulary.odm2.org/medium/"
+        prefix = "odm2"
 
 
-class SampleStatus(LocalConceptScheme):
+class SampleStatus(LocalVocabulary):
     class Meta:
-        source = "status.rdf"
+        source = "./vocab_data/status.rdf"
+        prefix = "odm2"
+        namespace = "http://vocabulary.odm2.org/status/"
 
 
-class SpecimenType(LocalConceptScheme):
+class SpecimenType(LocalVocabulary):
     class Meta:
-        source = "specimentype.rdf"
+        source = "./vocab_data/specimentype.rdf"
+        prefix = "odm2"
+        namespace = "http://vocabulary.odm2.org/specimentype/"
 
 
-class DescriptionTypes(ConceptSchemeBuilder):
+class SampleDescriptions(VocabularyBuilder):
+    Collection = {
+        "skos:prefLabel": _("Collection"),
+        "skos:definition": _("The process of collecting a sample."),
+    }
     Preparation = {
-        "SKOS.prefLabel": _("Preparation"),
-        "SKOS.definition": _("The process of preparing a sample for analysis."),
+        "skos:prefLabel": _("Preparation"),
+        "skos:definition": _("The process of preparing a sample for analysis."),
+    }
+    Storage = {
+        "skos:prefLabel": _("Storage"),
+        "skos:definition": _("The process of storing a sample."),
+    }
+    Destruction = {
+        "skos:prefLabel": _("Destruction"),
+        "skos:definition": _("The process of destroying a sample."),
+    }
+    Comment = {
+        "skos:prefLabel": _("Comment"),
+        "skos:definition": _("A general comment about the sample."),
     }
 
     class Meta:
-        namespace = "https://www.heatflow.world/vocabularies/"
-        namespace_prefix = "GEOLUM"
-        conceptscheme = {
-            "SKOS.prefLabel": _("Sample Description Types"),
-            "SKOS.hasTopConcept": [
-                "Preparation",
-            ],
-        }
-        collections = {
-            "Sample": ["Preparation"],
+        name = "sample-descriptions"
+        namespace = "https://www.geoluminate.net/vocabularies/"
+        prefix = "GEOL"
+        scheme_attrs = {
+            "skos:prefLabel": _("Sample Description Types"),
         }
 
 
-DescriptionTypes.as_collection("Sample")
+class SampleDates(VocabularyBuilder):
+    CollectionStart = {
+        "skos:prefLabel": _("Collection start"),
+        "skos:definition": _("The date on which the collection process for the sample started"),
+    }
+    CollectionFinish = {
+        "skos:prefLabel": _("Collection finish"),
+        "skos:definition": _("The date on which the collection process for the sample finished"),
+    }
+    CollectionDate = {
+        "skos:prefLabel": _("Collection date"),
+        "skos:definition": _("The date on which the sample was collected"),
+    }
 
-# print(list(DescriptionTypes.choices))
+    class Meta:
+        name = "sample-dates"
+        prefix = "GEOL"
+        namespace = "https://www.geoluminate.net/vocabularies/"
+        scheme_attrs = {
+            "skos:prefLabel": _("Sample Date Types"),
+            "skos:definition": _(
+                "Important dates regarding archival of metadata related to generic sample collection."
+            ),
+        }
+
+
+class SampleRoles(models.TextChoices):
+    """A class for storing"""
+
+    COLLECTION = "Collection", _("Collection")
+    PREPARATION = "Preparation", _("Preparation")
+    STORAGE = "Storage", _("Storage")
+    DESTRUCTION = "Destruction", _("Destruction")

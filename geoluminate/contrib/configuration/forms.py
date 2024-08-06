@@ -1,8 +1,5 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
-from djangocms_frontend.fields import (
-    AttributesFormField,
-)
 from entangled.forms import EntangledModelForm, EntangledModelFormMixin
 
 # AutoNumberInput,
@@ -87,10 +84,10 @@ class SiteConfigForm(EntangledModelForm):
             # "theme",
         )
 
-    theme = AttributesFormField(
-        label=_("Bootstrap 5 Variables"),
-        help_text=_(
-            "Key-value pairs of Bootstrap 5 theme variables used to customize the appearance of the site. Omit the leading $ symbol E.g. primary = blue"
-        ),
-        required=False,
-    )
+    # theme = AttributesFormField(
+    #     label=_("Bootstrap 5 Variables"),
+    #     help_text=_(
+    #         "Key-value pairs of Bootstrap 5 theme variables used to customize the appearance of the site. Omit the leading $ symbol E.g. primary = blue"
+    #     ),
+    #     required=False,
+    # )

@@ -1,13 +1,13 @@
 from django.db.models import *  # isort:skip
 from django.contrib.gis.db.models import *  # isort:skip
 import uuid
-from collections.abc import Iterable
 
 from django.contrib.gis.db.models import __all__ as models_all
 from django.db import models
 from django.db.models.base import ModelBase
 from django.urls import reverse
-from django.utils.translation import gettext_lazy as _
+from django.utils.html import escape
+from django.utils.safestring import mark_safe
 from django_bleach.models import BleachField as TextField
 from meta.models import ModelMeta
 from model_utils import FieldTracker
@@ -20,7 +20,7 @@ from quantityfield.fields import (
 )
 
 
-# doesn't do anything but I think it will be useful in the future for extra model-based configuration
+# doesn't do anything but it might be useful in the future for extra model-based configuration
 class GeoluminateMetaClass(ModelBase):
     def __new__(cls, name, bases, attrs):
         klas = super().__new__(cls, name, bases, attrs)
@@ -28,7 +28,7 @@ class GeoluminateMetaClass(ModelBase):
         return klas
 
 
-class Model(ModelMeta, models.Model, metaclass=GeoluminateMetaClass):
+class Model(ModelMeta, models.Model):
     """Helpful base model that can be used to kickstart your Geoluminate database models with common fields and methods.
     Use like this:
 
@@ -54,16 +54,13 @@ class Model(ModelMeta, models.Model, metaclass=GeoluminateMetaClass):
         See: https://django-meta.readthedocs.io/en/latest/models.html#models for usage details
     """
 
-    PRIMARY_DATA_FIELDS: Iterable[str] = []
-
-    uuid = models.UUIDField(
+    id = models.UUIDField(
         default=uuid.uuid4,
         editable=False,
         unique=True,
-        verbose_name="UUID",
-        help_text=_("Universally unique identifier for this record."),
+        verbose_name="ID",
+        primary_key=True,
     )
-    # id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, verbose_name="PID", primary_key=True)
     created = models.DateTimeField(
         auto_now_add=True,
         verbose_name="Created",
@@ -81,25 +78,27 @@ class Model(ModelMeta, models.Model, metaclass=GeoluminateMetaClass):
         abstract = True
 
     def get_absolute_url(self):
-        return reverse(f"{self._meta.model_name}s:detail", kwargs={"uuid": self.uuid})
+        return reverse(f"{self._meta.model_name}-detail", kwargs={"pk": self.pk})
 
-    def get_edit_url(self):
-        return self.get_absolute_url()
-        # return reverse(f"{self._meta.model_name}s:edit", kwargs={"uuid": self.uuid})
+    def get_update_url(self):
+        return reverse(f"{self._meta.model_name}-update", kwargs={"pk": self.pk})
+        # return self.get_absolute_url()
+        # return reverse(f"{self._meta.model_name}s:edit", kwargs={"pk": self.pk})
 
     def get_add_url(self):
-        return reverse(f"{self._meta.model_name}s:add")
+        return reverse(f"{self._meta.model_name}-create")
 
     def get_list_url(self):
-        return reverse(f"{self._meta.model_name}s:list")
+        return reverse(f"{self._meta.model_name}-list")
 
     def get_api_url(self):
-        return reverse(f"api:{self._meta.model_name}:detail", kwargs={"uuid": self.uuid})
+        return reverse(f"api:{self._meta.model_name}-detail", kwargs={"pk": self.pk})
 
-    def primary_data_types(self):
-        """Return a dictionary of the primary data fields and their values."""
-        for field in self.PRIMARY_DATA_FIELDS:
-            yield field, getattr(self, field)
+    def get_absolute_url_link(self):
+        string = escape(str(self))
+        return mark_safe(f"<a href='{self.get_absolute_url()}'>{string}</a>")
+
+    __html__ = get_absolute_url_link
 
 
 __all__ = [

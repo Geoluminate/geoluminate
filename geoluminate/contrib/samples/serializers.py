@@ -24,14 +24,6 @@ class SampleSerializer(BaseSerializerMixin, NestedHyperlinkedModelSerializer):
     class Meta:
         model = Sample
         exclude = ["options"]
-        extra_kwargs = {
-            "details": {"lookup_field": "uuid"},
-            "project": {"lookup_field": "uuid"},
-            "dataset": {"lookup_field": "uuid"},
-            "sample": {"lookup_field": "uuid"},
-            "parent": {"lookup_field": "uuid"},
-            "location": {"lookup_field": "uuid"},
-        }
 
     def get_absolute_url(self, obj):
         return obj.get_absolute_url()
@@ -46,13 +38,5 @@ class SampleGeojsonSerializer(BaseSerializerMixin, GeoFeatureModelSerializer):
     class Meta:
         model = Sample
         geo_field = "geom"
-        id_field = "uuid"
-        fields = ["uuid", "feature_type", "title", "geom"]
-        extra_kwargs = {
-            "details": {"lookup_field": "uuid"},
-            "project": {"lookup_field": "uuid"},
-            "dataset": {"lookup_field": "uuid"},
-            "sample": {"lookup_field": "uuid"},
-            "parent": {"lookup_field": "uuid"},
-            "location": {"lookup_field": "uuid"},
-        }
+        id_field = "pk"
+        fields = ["pk", "feature_type", "title", "geom"]

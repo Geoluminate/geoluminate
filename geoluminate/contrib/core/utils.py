@@ -1,5 +1,6 @@
 import re
 
+from django.db import models
 from django.db.models import Manager, TextChoices
 from django.template.loader import render_to_string
 from django.utils.translation import gettext_lazy as _
@@ -45,3 +46,14 @@ class PublicObjectsManager(Manager):
 
     def inactive(self):
         return self.get_queryset().inactive()
+
+
+def inherited_choices_factory(name, *args):
+    """Create a TextChoices class from an XMLSchema element."""
+    cls_attrs = {}
+    for choice_class in args:
+        attrs = {a: getattr(choice_class, a) for a in vars(choice_class) if not a.startswith("_")}
+        for key, choice in attrs.items():
+            cls_attrs[key] = choice.value, choice.label
+
+    return models.TextChoices(f"{name}Choices", cls_attrs)

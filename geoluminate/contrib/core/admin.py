@@ -1,26 +1,10 @@
-from cms.admin.placeholderadmin import FrontendEditableAdminMixin
 from django.contrib import admin
-
-# import GenericTabularInline
-from django.contrib.contenttypes.admin import GenericStackedInline
-
-from .models import Description, FuzzyDate
+from taggit.models import Tag
 
 
-class BaseAdmin(FrontendEditableAdminMixin, admin.ModelAdmin):
-    pass
+class InvisibleAdmin(admin.ModelAdmin):
+    def has_module_permission(self, request):
+        return False
 
 
-class FuzzyDatesInline(GenericStackedInline):
-    model = FuzzyDate
-    extra = 1
-
-
-class DescriptionInline(GenericStackedInline):
-    model = Description
-    extra = 1
-
-
-@admin.register(FuzzyDate)
-class FuzzyDateAdmin(admin.ModelAdmin):
-    pass
+admin.site.unregister(Tag)

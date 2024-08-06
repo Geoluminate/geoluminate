@@ -13,13 +13,13 @@ class ActivityStream:
     name = _("Activity")
     title = _("Recent Activity")
     icon = icon("activity")
-    template_name = "geoluminate/plugins/activity_stream.html"
+    template_name = "core/plugins/activity_stream.html"
 
 
 class Map:
     name = _("Explorer")
     icon = icon("map")
-    template_name = "geoluminate/plugins/map.html"
+    template_name = "core/plugins/map.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -29,10 +29,19 @@ class Map:
     def serialize_dataset_samples(self, dataset):
         qs = dataset.samples.annotate(geom=F("location__point"))
         serializer = SampleGeojsonSerializer(qs, many=True)
-        return {str(dataset.uuid): json.dumps(serializer.data)}
+        return {str(dataset.pk): json.dumps(serializer.data)}
 
 
 class Discussion:
-    name = _("Discussion")
+    title = name = _("Discussion")
     icon = icon("discussion")
-    template_name = "geoluminate/plugins/discussion.html"
+    template_name = "core/plugins/discussion.html"
+
+
+class Images:
+    name = _("Images")
+    icon = icon("images")
+    template_name = "core/plugins/images.html"
+    # queryset = Photo.objects.all()
+    # filterset_class = PhotoFilter
+    # table = PhotoTable

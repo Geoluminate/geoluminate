@@ -38,10 +38,6 @@ class Options(EntangledModelForm):
 
 
 class ProjectForm(ModelForm):
-    # legend = _("Project")
-    # help_text = _("Add a new project.")
-    # template_name = "forms/fieldset.html"
-
     title = forms.CharField(help_text=_("Give your new project a meaningful name"))
     status = forms.ChoiceField(
         choices=Project.STATUS_CHOICES.choices,
@@ -52,7 +48,6 @@ class ProjectForm(ModelForm):
         model = Project
         fields = [
             "title",
-            "summary",
             "status",
         ]
         # widgets = {
@@ -62,4 +57,3 @@ class ProjectForm(ModelForm):
 
 class ProjectFormCollection(FormCollection):
     project = ProjectForm()
-    # key_dates = FuzzyDateFormCollection()

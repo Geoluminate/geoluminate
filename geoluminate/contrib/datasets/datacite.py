@@ -56,18 +56,6 @@ class DataCiteRelationTypes(models.TextChoices):
     IsObsoletedBy = "IsObsoletedBy", _("Is Obsoleted By")
 
 
-class DataCiteDescriptionTypes(models.TextChoices):
-    """DataCite description types as per https://schema.datacite.org/meta/kernel-4.4/doc/DataCite-MetadataKernel_v4.4.pdf#page=65"""
-
-    ABSTRACT = "Abstract", _("Abstract")
-    METHODS = "Methods", _("Methods")
-    SERIES_INFORMATION = "SeriesInformation", _("Series Information")
-    TABLE_OF_CONTENTS = "TableOfContents", _("Table of Contents")
-    TECHNICAL_INFO = "TechnicalInfo", _("Technical Information")
-    OTHER = "Other", _("Other")
-    EXP = "ExpectedOutput", _("Expected Output")
-
-
 class DataCiteIdentifiers(models.TextChoices):
     """DataCite identifier types as per https://schema.datacite.org/meta/kernel-4.4/doc/DataCite-MetadataKernel_v4.4.pdf#page=54"""
 

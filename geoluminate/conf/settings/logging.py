@@ -91,4 +91,9 @@ LOGGING = {
         #     "propagate": True,
         # },
     },
+    "django_migration_zero": {
+        "handlers": ["console"],
+        "level": "INFO",
+        "propagate": True,
+    },
 }

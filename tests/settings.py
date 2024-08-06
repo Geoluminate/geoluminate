@@ -35,6 +35,10 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
 geoluminate.setup(development=True)
 
+
+# INSTALLED_APPS.insert(5, "django.contrib.admindocs")
+
+
 AWS_USE_SSL = False
 
 WEBPACK_LOADER = {

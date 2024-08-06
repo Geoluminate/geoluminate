@@ -1,26 +1,42 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from model_utils import FieldTracker
+from organizations.abstract import AbstractOrganizationInvitation, AbstractOrganizationOwner, AbstractOrganizationUser
+from organizations.base import OrganizationBase, OrgMeta
+from polymorphic.models import PolymorphicModelBase
 
-# from .managers import LocationManager
-from organizations.abstract import (
-    AbstractOrganization,
-    AbstractOrganizationInvitation,
-    AbstractOrganizationOwner,
-    AbstractOrganizationUser,
-)
+from geoluminate.contrib.contributors.models import Contributor
 
 
-class Organization(AbstractOrganization):
+class PolymorphicOrgMeta(OrgMeta, PolymorphicModelBase):
+    pass
+
+
+class Organization(Contributor, OrganizationBase, metaclass=PolymorphicOrgMeta):
     """Core organization model"""
+
+    # location = None
+    # types = []
+    # domains = []
+    # city = ""
+    # country = ""
+    # external_ids
+    # links = []
 
     data = models.JSONField(
         verbose_name=_("data"),
         help_text=_("JSON format respresentation of the organization after the ROR schema."),
         default=dict,
     )
+    tracker = FieldTracker()
 
     class Meta:
         default_related_name = "affiliations"
+
+    def save(self, *args, **kwargs):
+        if self.tracker.has_changed("data"):
+            self.name = self.data.get("name", self.name)
+        super().save(*args, **kwargs)
 
 
 class Membership(AbstractOrganizationUser):

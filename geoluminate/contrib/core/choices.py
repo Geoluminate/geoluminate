@@ -4,28 +4,16 @@ from django.utils.translation import gettext_lazy as _
 
 # parsing the allowed identifiers from settings
 SchemeChoices = []
-SchemeLookup = {}
 for choices in settings.GEOLUMINATE_ALLOWED_IDENTIFIERS.values():
-    for scheme, uri in choices.items():
-        if (scheme, scheme) not in SchemeChoices:
-            SchemeChoices.append((scheme, scheme))
-        SchemeLookup[scheme] = uri
+    for val in choices.items():
+        rev_val = tuple(reversed(val))
+        if rev_val not in SchemeChoices:
+            SchemeChoices.append(rev_val)
 
 
 class Visibility(models.IntegerChoices):
     PRIVATE = 0, _("Private")
     PUBLIC = 1, _("Public")
-
-
-class DateTimeChoices(models.TextChoices):
-    """A class for storing choices for DateTimeField models. To use with fuzzy dates."""
-
-    YEAR = "%Y", _("Year")
-    MONTH = "%M", _("Month")
-    DAY = "%d", _("Day")
-    HOUR = "%h", _("Hour")
-    MINUTE = "%m", _("Minute")
-    SECOND = "%s", _("Second")
 
 
 HAS_TAGS = [

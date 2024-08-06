@@ -11,9 +11,8 @@ from .serializers import DatasetSerializer
     list=extend_schema(description=api_doc(Dataset, "list")),
 )
 class DatasetViewset(ReadOnlyModelViewSet):
-    lookup_field = "uuid"
     serializer_class = DatasetSerializer
-    queryset = Dataset.objects.prefetch_related("contributors", "descriptions", "key_dates", "keywords").all()
+    queryset = Dataset.objects.prefetch_related("contributors", "descriptions", "keywords").all()
 
 
 class NestedDatasets(NestedViewset, DatasetViewset):

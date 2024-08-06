@@ -5,7 +5,7 @@ import logging
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django_comments import signals
-from literature.models import Literature
+from literature.models import LiteratureItem
 
 logger = logging.getLogger(__name__)
 
@@ -23,7 +23,7 @@ def on_comment_posted(sender, comment, request, **kwargs):
     print("content_object", content_object)
 
 
-@receiver(post_save, sender=Literature)
+@receiver(post_save, sender=LiteratureItem)
 def update_identifiers_for_new_literature(sender, instance, created, **kwargs):
     """
     Update identifier fields for new literature.

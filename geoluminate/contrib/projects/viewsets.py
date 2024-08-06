@@ -15,7 +15,6 @@ class ProjectViewset(ReadOnlyModelViewSet):
     is the top level model in the Geoluminate schema heirarchy and all datasets, samples,
     sites and measurements should relate back to a project."""
 
-    lookup_field = "uuid"
     max_paginate_by = 1000
     serializer_class = ProjectSerializer
     queryset = Project.objects.all()

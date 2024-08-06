@@ -1,73 +1,117 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-
-# from geoluminate.utils.generic import inherited_choices_factory
+from research_vocabs.vocabularies import VocabularyBuilder
 
 # ================== DATACITE ROLES ==================
 # https://support.datacite.org/docs/schema-43-attributes#section-contributor
 # https://schema.datacite.org/meta/kernel-4.3/doc/DataCite-MetadataKernel_v4.3.pdf
 
-# Datacite treat organisational and personal contributions in the same catergoy which ends up with a messy list of
-# options that combines the two. We don't want to present a personal contributor with the option to select
-# "HostingInstitution" or "ResearchGroup" as these are organisational roles. To overcome this, we have split the
-# Datacite ContributionnType vocabulary into three classes: PersonalRoles, OrganizationalRoles, and OtherRoles.
 
-# Unfortunately, Django choices don't support inheritance, so we have to create a new class that inherits from
-# all three classes. This is the ContributionRoles class. Text choices are also created for each class and stored on the
-# Contribution model class for easy access in forms.
+class CREDiT(VocabularyBuilder):
+    """A class for storing choices for CRediT roles on the Contribution model. Based on the
+    CRediT Contributor Roles Taxonomy."""
+
+    CONCEPTUALIZATION = {
+        "skos:prefLabel": _("Conceptualization"),
+        "SKOS.definition": _("Ideas; formulation or evolution of overarching research goals and aims."),
+    }
+    DATA_CURATION = {
+        "skos:prefLabel": _("Data Curation"),
+        "SKOS.definition": _("Management activities to maintain research data."),
+    }
+    FORMAL_ANALYSIS = {
+        "skos:prefLabel": _("Formal Analysis"),
+        "SKOS.definition": _(
+            "Application of statistical, mathematical, computational, or other formal techniques to analyze or synthesize study data."
+        ),
+    }
+    FUNDING_ACQUISITION = {
+        "skos:prefLabel": _("Funding Acquisition"),
+        "SKOS.definition": _("Obtaining financial support for the project leading to this publication."),
+    }
+    INVESTIGATION = {
+        "skos:prefLabel": _("Investigation"),
+        "SKOS.definition": _("Conducting a research and investigation process."),
+    }
+    METHODOLOGY = {
+        "skos:prefLabel": _("Methodology"),
+        "SKOS.definition": _("Development or design of methodology; creation of models."),
+    }
+    PROJECT_ADMINISTRATION = {
+        "skos:prefLabel": _("Project Administration"),
+        "SKOS.definition": _(
+            "Management and coordination responsibility for the research activity planning and execution."
+        ),
+    }
+    RESOURCES = {
+        "skos:prefLabel": _("Resources"),
+        "SKOS.definition": _(
+            "Provision of study materials, reagents, materials, patients, laboratory samples, animals, instrumentation, computing resources, or other analysis tools."
+        ),
+    }
+    SOFTWARE = {
+        "skos:prefLabel": _("Software"),
+        "SKOS.definition": _(
+            "Programming, software development; designing computer programs; implementation of the computer code and supporting algorithms."
+        ),
+    }
+    SUPERVISION = {
+        "skos:prefLabel": _("Supervision"),
+        "SKOS.definition": _(
+            "Oversight and leadership responsibility for the research activity planning and execution, including mentorship external to the core team."
+        ),
+    }
+    VALIDATION = {
+        "skos:prefLabel": _("Validation"),
+        "SKOS.definition": _(
+            "Verification, whether as a part of the activity or separate, of the overall replication/reproducibility of results/experiments and other research outputs."
+        ),
+    }
+    VISUALIZATION = {
+        "skos:prefLabel": _("Visualization"),
+        "SKOS.definition": _(
+            "Preparation, creation and/or presentation of the published work, specifically visualization/data presentation."
+        ),
+    }
+    WRITING_ORIGINAL_DRAFT = {
+        "skos:prefLabel": _("Writing - Original Draft"),
+        "SKOS.definition": _(
+            "Preparation, creation and/or presentation of the published work, specifically writing the initial draft (including substantive translation)."
+        ),
+    }
+    WRITING_REVIEW_EDITING = {
+        "skos:prefLabel": _("Writing - Review & Editing"),
+        "SKOS.definition": _(
+            "Preparation, creation and/or presentation of the published work by those from the original research group, specifically critical review, commentary or revision."
+        ),
+    }
+
+    class Meta:
+        # namespace = "https://credit.niso.org/contributor-roles/"
+        # namespace_prefix = "CREDiT"
+        scheme_attrs = {
+            "skos:prefLabel": _("Contributor Roles"),
+        }
 
 
-def inherited_choices_factory(name, *args):
-    """Create a TextChoices class from an XMLSchema element."""
-    cls_attrs = {}
-    for choice_class in args:
-        attrs = {a: getattr(choice_class, a) for a in vars(choice_class) if not a.startswith("_")}
-        for key, choice in attrs.items():
-            cls_attrs[key] = choice.value, choice.label
-
-    return models.TextChoices(f"{name}Choices", cls_attrs)
+class PersonalIdentifiers(models.TextChoices):
+    ORCID = "https://orcid.org/", "ORCID"
+    RESEARCHER_ID = "ResearcherID", "ResearcherID"
 
 
-class PersonalRoles(models.TextChoices):
-    """A class for storing choices for ContributionType on the Contribution model. Based on the
-    Datacite ContributionType vocabulary."""
-
-    CONTACT_PERSON = "ContactPerson", _("Contact Person")
-    DATA_COLLECTOR = "DataCollector", _("Data Collector")
-    DATA_CURATOR = "DataCurator", _("Data Curator")
-    DATA_MANAGER = "DataManager", _("Data Manager")
-    EDITOR = "Editor", _("Editor")
-    PRODUCER = "Producer", _("Producer")
-    RELATED_PERSON = "RelatedPerson", _("Related Person")
-    RESEARCHER = "Researcher", _("Researcher")
-    PROJECT_LEADER = "ProjectLeader", _("Project Leader")
-    PROJECT_MANAGER = "ProjectManager", _("Project Manager")
-    PROJECT_MEMBER = "ProjectMember", _("Project Member")
-    SUPERVISOR = "Supervisor", _("Supervisor")
-    WORK_PACKAGE_LEADER = "WorkPackageLeader", _("Work Package Leader")
+class OrganizationalIdentifiers(models.TextChoices):
+    ROR = "ROR", "ROR"
+    GRID = "GRID", "GRID"
+    WIKIDATA = "Wikidata", "Wikidata"
+    ISNI = "ISNI", "ISNI"
+    CROSSREF_FUNDER_ID = "Crossref Funder ID", "Crossref Funder ID"
 
 
-class OrganizationalRoles(models.TextChoices):
-    """A class for storing choices for ContributionnnType on the Contribution model. Based on the
-    Datacite ContributionType vocabulary."""
-
-    HOSTING_INSTITUTION = "HostingInstitution", _("Hosting Institution")
-    RESEARCH_GROUP = "ResearchGroup", _("Research Group")
-    SPONSOR = "Sponsor", _("Sponsor")
-
-
-class OtherRoles(models.TextChoices):
-    """A class for storing choices for ContributionType on the Contribution model. Based on the
-    Datacite ContributionType vocabulary."""
-
-    RIGHTS_HOLDER = "RightsHolder", _("Rights Holder")
-    OTHER = "Other", _("Other")
-
-    # This is specific to the Geoluminate project so that we can distinguish between creators and
-    # contributors of a dataset. This is not part of the Datacite ContributionType vocabulary.
-    CREATOR = "Creator", _("Creator")
-
-    # DISTRIBUTOR = "Distributor", _("Distributor")
-
-
-ContributionRoles = inherited_choices_factory("ContributionRole", PersonalRoles, OrganizationalRoles, OtherRoles)
+IdentifierLookup = {
+    "ORCID": "https://orcid.org/",
+    "ROR": "https://ror.org/",
+    "GRID": "https://www.grid.ac/institutes/",
+    "Wikidata": "https://www.wikidata.org/wiki/",
+    "ISNI": "https://isni.org/isni/",
+    "Crossref Funder ID": "https://doi.org/",
+}

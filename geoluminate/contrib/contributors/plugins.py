@@ -10,11 +10,11 @@ from geoluminate.contrib.reviews.views import ReviewPlugin
 from geoluminate.plugins import PluginRegistry
 from geoluminate.utils import icon
 
-from .forms import UserProfileForm
+from .forms.forms import UserProfileForm
 from .models import Contributor
 from .views import ContributorDetailView
 
-contributor = PluginRegistry("contributor", base=ContributorDetailView)
+contributor = PluginRegistry(base=ContributorDetailView)
 
 
 @contributor.page("overview", icon=icon("overview"))

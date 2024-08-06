@@ -12,62 +12,17 @@ GEOLUMINATE_LABELS = {
     "sample": {"verbose_name": "Sample", "verbose_name_plural": "Samples"},
 }
 
-IdentifierSchemes = {
-    "ARK": "https://n2t.net/ark:/",
-    "arXiv": "https://arxiv.org/",
-    "bibcode": "https://ui.adsabs.harvard.edu/",
-    "DOI": "https://doi.org/",
-    "EAN13": "https://www.ean-search.org/",
-    "EISSN": "https://www.issn.org/",
-    "Handle": "https://hdl.handle.net/",
-    "IGSN": "https://igsn.org/",
-    "ISBN": "https://www.isbn-international.org/",
-    "ISSN": "https://www.issn.org/",
-    "ISTC": "https://www.istc-international.org/",
-    "LISSN": "https://www.issn.org/",
-    "LSID": "https://www.lsid.info/",
-    "PMID": "https://www.ncbi.nlm.nih.gov/",
-    "PURL": "https://archive.org/services/purl/",
-    "UPC": "https://www.ean-search.org/",
-    "URL": "https://www.iana.org/",
-    "URN": "https://www.iana.org/",
-}
-
-
 GEOLUMINATE_ALLOWED_IDENTIFIERS = {
-    "geoluminate.Sample": {
+    "samples.Sample": {
         "IGSN": "https://igsn.org/",
         # "DOI": "https://doi.org/",
     },
-    "literature.Literature": {
-        "DOI": "https://doi.org/",
-        "ISBN": "https://www.isbn-international.org/",
-        "ISSN": "https://www.issn.org/",
-        "URL": "https://www.iana.org/",
+    "contributors.Personal": {
+        "ORCID": "https://orcid.org/",
+        # "researcher_id": "https://app.geosamples.org/sample/researcher_id/",
+        # "scopus_id": "https://app.geosamples.org/sample/scopus_id/",
+        # "researchgate_id": "https://app.geosamples.org/sample/researchgate_id/",
     },
-    "geoluminate.Dataset": {
-        "ARK": "https://n2t.net/ark:/",
-        "arXiv": "https://arxiv.org/",
-        "bibcode": "https://ui.adsabs.harvard.edu/",
-        "DOI": "https://doi.org/",
-        "EAN13": "https://www.ean-search.org/",
-        "EISSN": "https://www.issn.org/",
-        "Handle": "https://hdl.handle.net/",
-        "ISTC": "https://www.istc-international.org/",
-        "LISSN": "https://www.issn.org/",
-        "LSID": "https://www.lsid.info/",
-        "PMID": "https://www.ncbi.nlm.nih.gov/",
-        "PURL": "https://archive.org/services/purl/",
-        "UPC": "https://www.ean-search.org/",
-        "URL": "https://www.iana.org/",
-        "URN": "https://www.iana.org/",
-    },
-    # "contributors.Personal": {
-    #     "ORCID": "https://orcid.org/",
-    #     # "researcher_id": "https://app.geosamples.org/sample/researcher_id/",
-    #     # "scopus_id": "https://app.geosamples.org/sample/scopus_id/",
-    #     # "researchgate_id": "https://app.geosamples.org/sample/researchgate_id/",
-    # },
     "contributors.Organization": {
         "ROR": "https://ror.org/",
         "GRID": "https://www.grid.ac/institutes/",
@@ -87,10 +42,10 @@ GEOLUMINATE_SUBMISSION_APPROVAL is 'automatic' or 'both'"""
 # maybe this requires a method on each measurement Model that returns a boolean?
 
 GEOLUMINATE_NAVBAR_WIDGETS = [
-    "geoluminate/navigation/widgets/page_edit_toggle.html",
-    "geoluminate/navigation/widgets/admin_link.html",
-    "geoluminate/navigation/widgets/theme_toggle.html",
-    "geoluminate/navigation/widgets/user_navigation.html",
+    # "geoluminate/navigation/widgets/page_edit_toggle.html",
+    # "geoluminate/navigation/widgets/admin_link.html",
+    # "geoluminate/navigation/widgets/theme_toggle.html",
+    # "geoluminate/navigation/widgets/user_navigation.html",
 ]
 """A list of widget templates to render to the right side of the main navbar."""
 
@@ -101,16 +56,10 @@ GEOLUMINATE_USER_SIDEBAR_WIDGETS = [
 """A list of widget templates to render below the user display name in the user sidebar."""
 
 
-GEOLUMINATE_DESCRIPTION_TYPES = {
-    "core.Dataset": "geoluminate.contrib.datasets.choices.DataCiteDescriptionTypes",
-    "core.Project": "geoluminate.contrib.datasets.choices.DataCiteDescriptionTypes",
-    "core.Sample": "geoluminate.contrib.datasets.choices.DataCiteDescriptionTypes",
-}
-
 GEOLUMINATE_FILTERS = {
-    "geoluminate.Dataset": {
+    "datasets.Dataset": {
         "title": ["contains"],
-        "keywords__name": ["exact"],
+        # "keywords__name": ["exact"],
     }
 }
 
@@ -133,4 +82,5 @@ GEOLUMINATE_ICONS = {
     "plus": "fa-solid fa-plus",
     "spinner": "fa-solid fa-spinner fa-spin",
     "literature": "fa-solid fa-book",
+    "images": "fa-solid fa-image",
 }

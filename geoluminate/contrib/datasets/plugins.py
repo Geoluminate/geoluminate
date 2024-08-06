@@ -4,32 +4,27 @@ from django_downloadview.views import VirtualDownloadView
 from formset.views import FileUploadMixin, FormViewMixin
 from lxml import etree
 
-from geoluminate.contrib.contributors.utils import current_user_has_role
 from geoluminate.contrib.contributors.views import ContributorsPlugin
 from geoluminate.contrib.core import utils
 from geoluminate.contrib.core.plugins import ActivityStream, Discussion, Map
-from geoluminate.contrib.samples.views import SampleTablePlugin
+from geoluminate.contrib.samples.views import SamplePlugin
 from geoluminate.plugins import PluginRegistry
 from geoluminate.utils import icon
 
 from .views import DatasetDetailView
 
-dataset = PluginRegistry("datasets", base=DatasetDetailView)
+dataset = PluginRegistry(base=DatasetDetailView)
 
 
 @dataset.page("overview", icon=icon("overview"))
 class DatasetOverview(FileUploadMixin, FormViewMixin, UpdateView):
-    # title = _("Dataset")
     template_name = "geoluminate/plugins/overview.html"
-
-    def has_edit_permission(self):
-        return current_user_has_role(self.request, self.object, "Creator")
 
 
 dataset.register_page(ContributorsPlugin)
 
 
-dataset.register_page(SampleTablePlugin)
+dataset.register_page(SamplePlugin)
 
 
 @dataset.page()

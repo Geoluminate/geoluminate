@@ -20,11 +20,11 @@ class ProjectSerializer(BaseSerializerMixin, NestedHyperlinkedModelSerializer):
     class Meta:
         model = Project
         exclude = ["options", "visibility"]
-        extra_kwargs = {
-            "details": {"lookup_field": "uuid"},
-            "project": {"lookup_field": "uuid"},
-            "dataset": {"lookup_field": "uuid"},
-            "sample": {"lookup_field": "uuid"},
-            "parent": {"lookup_field": "uuid"},
-            "location": {"lookup_field": "uuid"},
-        }
+        # extra_kwargs = {
+        #     "details": {"lookup_field": "uuid"},
+        #     "project": {"lookup_field": "uuid"},
+        #     "dataset": {"lookup_field": "uuid"},
+        #     "sample": {"lookup_field": "uuid"},
+        #     "parent": {"lookup_field": "uuid"},
+        #     "location": {"lookup_field": "uuid"},
+        # }

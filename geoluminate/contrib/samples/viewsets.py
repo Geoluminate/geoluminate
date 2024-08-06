@@ -13,12 +13,11 @@ from .serializers import SampleGeojsonSerializer, SampleSerializer
     list=extend_schema(description=api_doc(Sample, "list")),
 )
 class SampleViewset(ReadOnlyModelViewSet):
-    lookup_field = "uuid"
     serializer_class = SampleSerializer
     geojson_serializer = SampleGeojsonSerializer
 
     queryset = (
-        Sample.objects.prefetch_related("contributors", "descriptions", "key_dates", "keywords")
+        Sample.objects.prefetch_related("contributors", "descriptions", "keywords")
         .select_related("dataset", "dataset__project")
         .all()
     )

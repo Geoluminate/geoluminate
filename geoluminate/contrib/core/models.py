@@ -1,22 +1,21 @@
 import random
 
-from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
-from django.contrib.contenttypes.models import ContentType
-from django.db import models as django_models
+# from rest_framework.authtoken.models import Token
 from django.templatetags.static import static
 from django.urls import reverse
 from django.utils.encoding import force_str
 from django.utils.functional import cached_property
-from django.utils.translation import gettext_lazy as _
-from imagekit.models import ProcessedImageField
-from imagekit.processors import ResizeToFit
+from django.utils.translation import gettext as _
 from research_vocabs.fields import TaggableConcepts
 
+from geoluminate.contrib.contributors.managers import ContributionManager
 from geoluminate.contrib.core import utils
-from geoluminate.contrib.datasets.choices import DataCiteDescriptionTypes
 from geoluminate.db import models
+from geoluminate.db.fields import PartialDateField
 
-from . import choices
+
+def contributor_permissions_default():
+    return {"edit": False}
 
 
 def default_image_path(instance, filename):
@@ -24,71 +23,15 @@ def default_image_path(instance, filename):
     # get lowercase plural name of the model
     model_name = instance._meta.verbose_name_plural.replace(" ", "_")
 
-    return f"{model_name}/{instance.uuid}/cover.{filename.split('.')[-1]}"
+    return f"{model_name}/{instance.pk}/cover.{filename.split('.')[-1]}"
 
 
 class Abstract(models.Model):
     """An abstract model that contains common fields and methods for both the Project and Dataset models."""
 
-    DESCRIPTION_TYPES: list = []
-    DISCOVERY_TAGS = choices.DiscoveryTags
-    VISIBILITY = choices.Visibility
-    image = ProcessedImageField(
-        verbose_name=_("image"),
-        help_text=_("Upload an image that represents your project."),
-        processors=[ResizeToFit(1200, 630)],
-        format="WEBP",
-        options={"quality": 60},
-        upload_to=default_image_path,
-        blank=True,
-        null=True,
-        default="world_map.webp",
-    )
-    title = models.CharField(
-        _("name"),
-        help_text="The title of the object.",
-        max_length=255,
-    )
-    summary = models.CharField(
-        _("summary"),
-        help_text=_("A short (max 512 characters) plain-language summary."),
-        max_length=512,
-        blank=True,
-        null=True,
-    )
     keywords = TaggableConcepts(
         verbose_name=_("keywords"),
         help_text=_("Controlled keywords for enhanced discoverability"),
-        blank=True,
-    )
-
-    key_dates = GenericRelation(
-        "core.FuzzyDate",
-        verbose_name=_("key dates"),
-        related_name="%(app_label)ss",
-        related_query_name="%(app_label)ss",
-        help_text=_("Add some key dates."),
-    )
-    descriptions = GenericRelation(
-        "core.Description",
-        verbose_name=_("descriptions"),
-        related_name="%(app_label)ss",
-        related_query_name="%(app_label)ss",
-        help_text=_("Add some descriptions."),
-    )
-
-    contributors = GenericRelation(
-        "contributors.Contribution",
-        verbose_name=_("contributors"),
-        related_name="%(app_label)ss",
-        related_query_name="%(app_label)ss",
-        help_text=_("Add some contributors."),
-    )
-
-    funding = models.JSONField(
-        verbose_name=_("funding"),
-        help_text=_("Related funding information."),
-        null=True,
         blank=True,
     )
 
@@ -97,13 +40,6 @@ class Abstract(models.Model):
         help_text=_("Item options."),
         null=True,
         blank=True,
-    )
-
-    visibility = models.IntegerField(
-        _("visibility"),
-        choices=VISIBILITY.choices,
-        default=VISIBILITY.PRIVATE,
-        help_text=_("Visibility within the application."),
     )
 
     class Meta:
@@ -116,16 +52,16 @@ class Abstract(models.Model):
     def is_contributor(self, user):
         """Returns true if the user is a contributor."""
 
-        return self.contributors.filter(profile__user=user).exists()
+        return self.contributions.filter(contributor=user).exists()
 
     def get_api_url(self):
-        return reverse(f"{type(self).__name__.lower()}-detail", kwargs={"uuid": self.uuid})
+        return reverse(f"{type(self).__name__.lower()}-detail", kwargs={"pk": self.pk})
 
     def get_abstract(self):
         """Returns the abstract description of the project."""
         try:
-            return self.descriptions.get(type=self.DESCRIPTION_TYPES.values[0])
-        except Description.DoesNotExist:
+            return self.descriptions.get(type="Abstract")
+        except self.DoesNotExist:
             return None
 
     def get_meta_description(self):
@@ -153,11 +89,11 @@ class Abstract(models.Model):
         return self.projects.all()
 
     def get_metadata_quality(self):
-        return random.randint(0, 100)  # noqa: S311
+        return random.randint(0, 100)
         # return self.metadata_quality
 
     def get_data_quality(self):
-        return random.randint(0, 100)  # noqa: S311
+        return random.randint(0, 100)
         # return self.data_quality
 
     @cached_property
@@ -167,133 +103,144 @@ class Abstract(models.Model):
         return descriptions
 
 
-class FuzzyDate(django_models.Model):
-    class DateTypes(models.TextChoices):
-        PROPOSED_START = "proposed_start", _("Proposed start")
-        PROPOSED_END = "proposed_end", _("Proposed end")
-        START = "start", _("Start")
-        END = "end", _("End")
-        COLLECTION_START = "collection_start", _("Collection start")
-
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey("content_type", "object_id")
-
-    type = models.CharField(
-        _("type"),
-        help_text=_("The type of date."),
-        max_length=255,
-        choices=DateTypes.choices,
-        default=DateTypes.PROPOSED_START,
-    )
-    date = models.DateTimeField(_("date"), help_text=_("The date."))
-
-    year = models.PositiveIntegerField(_("year"), help_text=_("The year."), blank=True, null=True)
-    month = models.PositiveIntegerField(_("month"), help_text=_("The month."), blank=True, null=True)
-    day = models.PositiveIntegerField(_("day"), help_text=_("The day."), blank=True, null=True)
-
-    class Meta:
-        verbose_name = _("key date")
-        verbose_name_plural = _("key dates")
-        ordering = ["date"]
-        unique_together = ("type", "content_type", "object_id")
-        indexes = [
-            models.Index(fields=["content_type", "object_id"]),
-        ]
-
-
-class Description(django_models.Model):
-    DESCRIPTION_TYPES = DataCiteDescriptionTypes
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey("content_type", "object_id")
-
-    type = models.CharField(_("type"), max_length=32)
+class AbstractDescription(models.Model):
+    type = ""
     text = models.TextField(_("description"))
 
     class Meta:
         verbose_name = _("description")
         verbose_name_plural = _("descriptions")
-        unique_together = ("type", "content_type", "object_id")
-        indexes = [
-            models.Index(fields=["content_type", "object_id"]),
-        ]
-        # order_with_respect_to = [""]
+        abstract = True
+        default_related_name = "descriptions"
+        unique_together = ("object", "type")
+
+    def __str__(self):
+        return force_str(self.text)
+
+    def __repr__(self):
+        return f"<{self.__class__.__name__}: {self.type}>"
 
     def clean(self):
         """Returns description text with p tags stripped"""
         return utils.strip_p_tags(self.text)
 
-    def get_type_display(self):
-        choices = self.content_object.DESCRIPTION_TYPES
 
-        type_field = self._meta.get_field("type")
-        type_field.choices = choices.choices
+class AbstractDate(models.Model):
+    type = ""
+    date = PartialDateField(_("date"))
 
-        return self._get_FIELD_display(type_field)
+    class Meta:
+        verbose_name = _("date")
+        verbose_name_plural = _("dates")
+        abstract = True
+        default_related_name = "dates"
+        unique_together = ("object", "type")
+
+    def __str__(self):
+        return force_str(self.date)
+
+    def __repr__(self):
+        return f"<{self.type}: {self.date}>"
 
 
-class Identifier(models.Model):
-    """A model for storing identifiers for users and organisations."""
+class AbstractIdentifier(models.Model):
+    """A model for storing generic PIDs."""
 
-    URI_LOOKUP = choices.SchemeLookup
-    SCHEMES = choices.SchemeChoices
-
-    identifier = models.CharField(max_length=255, verbose_name=_("identifier"), unique=True, db_index=True)
-    scheme = models.CharField(
-        _("scheme"),
-        max_length=255,
-        choices=SCHEMES,
-    )
+    IdentifierLookup = {}
+    SCHEME_CHOICES = []
+    scheme = None
+    object = None
+    identifier = models.CharField(_("identifier"), max_length=255, db_index=True)
 
     class Meta:
         verbose_name = _("identifier")
         verbose_name_plural = _("identifiers")
+        unique_together = ["scheme", "identifier"]
+        default_related_name = "identifiers"
+        abstract = True
 
     def __str__(self):
-        return f"<{self.scheme}: {self.identifier}>"
+        return f"<{self.get_scheme_display()}: {self.identifier}>"
 
-    @property
-    def scheme_uri(self):
-        return self.URI_LOOKUP[self.scheme]
+    def URI(self):
+        if url := self.IdentifierLookup.get(self.scheme):
+            return f"{url}{self.identifier}"
 
 
-# class Image(models.Model):
-#     """A model for storing images related to various objects in the database (typically samples)."""
+class AbstractContribution(models.Model):
+    """A contributor is a person or organisation that has contributed to the project or
+    dataset. This model is based on the Datacite schema for contributors."""
 
-#     original = models.ImageField(
-#         verbose_name=_("original"),
-#         upload_to=default_image_path,
-#         help_text=_("The original image file."),
-#         validators=[FileExtensionValidator(["jpg", "jpeg", "png", "webp"])],
-#     )
-#     large = ImageSpecField(
-#         source="original",
-#         processors=[ResizeToFit(1200, 1200)],
-#         format="WEBP",
-#         options={"quality": 90},
-#     )
-#     small = ImageSpecField(
-#         source="original",
-#         processors=[ResizeToFit(300, 300)],
-#         format="WEBP",
-#         options={"quality": 80},
-#     )
+    objects = ContributionManager().as_manager()
 
-#     thumb = ImageSpecField(
-#         source="original",
-#         processors=[ResizeToFit(150, 150)],
-#         format="WEBP",
-#         options={"quality": 70},
-#     )
+    CONTRIBUTOR_ROLES = []
 
-#     caption = models.CharField(max_length=512, blank=True)
-#     width = models.PositiveIntegerField(blank=True, null=True)
-#     height = models.PositiveIntegerField(blank=True, null=True)
+    object = None  # must be implemented in subclass
+    contributor = models.ForeignKey(
+        "contributors.Contributor",
+        verbose_name=_("contributor"),
+        help_text=_("The person or organisation that contributed to the project or dataset."),
+        related_name="%(app_label)s_%(class)ss",
+        related_query_name="%(app_label)s_%(class)s",
+        null=True,
+        on_delete=models.SET_NULL,
+    )
 
-#     class Meta:
-#         verbose_name = _("image")
-#         verbose_name_plural = _("images")
+    # we can't rely on the contributor field to store necessary information, as the profile may have changed or been deleted, therefore we need to store the contributor's name and other details at the time of publication
+    store = models.JSONField(
+        _("contributor"),
+        help_text=_("A JSON representation of the contributor profile at the time of publication"),
+        default=dict,
+    )
 
-#     def __str__(self):
-#         return f"{self.image.url}"
+    # holds the permissions for each contributor, e.g. whether they can edit the object
+    permissions = models.JSONField(
+        _("permissions"),
+        help_text=_("A JSON representation of the contributor's permissions at the time of publication"),
+        default=contributor_permissions_default,
+    )
+
+    class Meta:
+        abstract = True
+        verbose_name = _("contributor")
+        verbose_name_plural = _("contributors")
+        unique_together = ["object", "contributor"]
+
+    def __str__(self):
+        return force_str(self.contributor)
+
+    def __repr__(self):
+        return f"<{self.contributor}: {self.roles}>"
+
+    def get_absolute_url(self):
+        """Returns the absolute url of the contributor's profile."""
+        return self.contributor.get_absolute_url()
+
+    def get_update_url(self):
+        related_name = self.object._meta.model_name
+        letter = related_name[0]
+        return reverse("contribution-update", kwargs={"pk": self.object.pk, "model": letter})
+
+    def get_create_url(self):
+        related_name = self.object._meta.model_name
+        letter = related_name[0]
+        return reverse("contribution-create", kwargs={"model": letter, "pk": self.object.pk})
+
+    def profile_to_data(self):
+        """Converts the profile to a JSON object."""
+
+        data = {
+            "name": self.profile.name,
+            "given": self.profile.given,
+            "family": self.profile.family,
+        }
+
+        ORCID = self.profile.identifiers.filter(scheme="ORCID").first()
+        if ORCID:
+            data["ORCID"] = ORCID.identifier
+
+        affiliation = self.profile.default_affiliation()
+        if affiliation:
+            data["affiliation"] = affiliation
+
+        return data

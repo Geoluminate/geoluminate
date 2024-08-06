@@ -3,8 +3,33 @@ from typing import Any
 from django.apps import apps
 from django.db import models
 from django.db.models import QuerySet
+from django.urls import reverse
 from el_pagination.views import AjaxMultipleObjectTemplateResponseMixin
 from meta.views import MetadataMixin
+
+
+class HTMXMixin2:
+    """Adds HTMX support to a class-based view using django-template-partials. A fragment can be passed in the request using the 'fragment' query parameter. If the request is an HTMX request, the template_name attribute is used to render the view. Otherwise, the base_template attribute is used."""
+
+    base_template: str | None = None
+
+    def get_template_names(self):
+        template_names = [*super().get_template_names(), self.base_template]
+        # get fragment from request
+        fragment = self.request.GET.get("fragment", None)
+        if fragment:
+            template_names = [f"{t}#{fragment}" for t in template_names]
+
+        return template_names
+
+    # def discover_templates(self):
+    #     """Follows the "extends" chain to discover the templates that are used to render the view."""
+    #     # django-template-partials will only look for partials in the direct template (e.g. it will not look in base templates)
+    #     # it does accept a list of template names
+    #     template_name = self.template
+    #     template = get_template(template_name)
+
+    #     source = template.source
 
 
 class HTMXMixin:
@@ -63,29 +88,40 @@ class HTMXMixin:
         """
         context = super().get_context_data(**kwargs)
         context["template_name"] = super().get_template_names()
+
         return context
 
 
 class ListMixin(AjaxMultipleObjectTemplateResponseMixin):
     page_size = 20
     columns: int = 1
-
-    template_name = "geoluminate/base/list_view.html"
-    page_template = "geoluminate/base/card_list.html"
+    base_template = "geoluminate/base/list_view.html"
+    page_template = "geoluminate/base/list_view.html#card"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         # the template to be used for displaying individual objects in the list
-        context["object_template"] = self.object_template
-
+        context["object_template"] = self.get_object_template()
         # normally, this is handled by the get method on el_pagination.views.AjaxListView but that conflicts with FilterView.
-        context["page_template"] = self.page_template
+        # context["page_template"] = self.page_template
         context["total_object_count"] = self.get_queryset().count()
         context["page_size"] = self.page_size
         context["col"] = 12 // self.columns
 
         return context
+
+    def get_object_template(self):
+        opts = self.model._meta if self.model else self.object_list.model._meta
+        templates = [
+            f"{opts.app_label}/{opts.model_name}_card.html",
+            f"{opts.model_name}_card.html",
+        ]
+
+        if template := getattr(self, "object_template", None):
+            templates.insert(0, template)
+
+        return templates
 
 
 class ListFilterMixin(ListMixin):
@@ -114,12 +150,26 @@ class ListFilterMixin(ListMixin):
 
 
 class ListPluginMixin(ListMixin):
-    template_name = "geoluminate/plugins/base_list.html"
+    template_name = "geoluminate/base/list_view.html#page"
+    create_view_name = ""
+
+    def dispatch(self, request, *args, **kwargs):
+        self.related_model = kwargs.pop("related_model", None)
+        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["object_list"] = self.get_queryset()
+        context["create_url"] = self.get_create_url()
         return context
+
+    def get_create_url(self):
+        if self.create_view_name:
+            return reverse(self.create_view_name)
+        else:
+            model_name = self.get_queryset().model._meta.model_name
+            # kwargs.update({"model": model_name[0]})
+            return reverse(f"{model_name}-create", kwargs=self.kwargs)
 
 
 class GeoluminatePermissionMixin:
@@ -136,26 +186,38 @@ class GeoluminatePermissionMixin:
         return context
 
     def has_create_permission(self):
-        return False
+        return False or self.request.user.is_superuser
 
     def has_edit_permission(self):
-        return False
+        return False or self.request.user.is_superuser
 
     def has_delete_permission(self):
-        return False
+        return False or self.request.user.is_superuser
 
     def has_view_permission(self):
-        return False
+        return False or self.request.user.is_superuser
 
     def has_detail_permission(self):
-        return False
+        return False or self.request.user.is_superuser
 
     def has_list_permission(self):
-        return False
+        return False or self.request.user.is_superuser
 
     def has_permission(self, action: str):
         return getattr(self, f"has_{action}_permission")()
 
 
 class BaseMixin(MetadataMixin):
-    pass
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if getattr(self, "queryset", None):
+            context["model_name"] = self.queryset.model._meta.verbose_name
+            context["model_name_plural"] = self.queryset.model._meta.verbose_name_plural
+        elif getattr(self, "model", None):
+            context["model_name"] = self.model._meta.verbose_name
+            context["model_name_plural"] = self.model._meta.verbose_name_plural
+        context["breadcrumbs"] = self.get_breadcrumbs()
+        return context
+
+    def get_breadcrumbs(self):
+        return []

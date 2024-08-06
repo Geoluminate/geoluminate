@@ -2,17 +2,20 @@ from actstream import actions
 from django.apps import apps
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import Group
 from django.contrib.contenttypes.models import ContentType
 from django.forms import modelform_factory
 from django.http import Http404
+from django.http.response import HttpResponse as HttpResponse
 from django.shortcuts import get_object_or_404, render
-from django.urls import reverse
-from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.views.generic import TemplateView
+from django.views.generic.edit import CreateView
 from django_contact_form.views import ContactFormView
 
-from .forms import GenericDescriptionForm
-from .models import Description
+from .forms import DescriptionForm
+
+# from .forms import GenericDescriptionForm
+# from .models import Description
 
 
 def follow_unfollow(request, content_type_id, object_id, flag=None, do_follow=True, actor_only=True):
@@ -69,157 +72,161 @@ def update_object(request, content_type_id, object_id):
     return render(request, "core/update_object.html", {"form": form})
 
 
-@login_required
-def manage_description(request, object_type, uuid, dtype=None):
-    """Returns a form for managing the description of the given object.
-
-    If dtype matches a description related to the object, the form will be populated with the existing description.
-
-    If dtype is empty, a form will be initialised with a new description related to the object.
-
-    """
-
-    type_map = {
-        "p": "geoluminate.Project",
-        "d": "geoluminate.Dataset",
-        "s": "geoluminate.Sample",
-    }
-
-    ctype = ContentType.objects.get_for_model(apps.get_model(type_map[object_type]))
-
-    # the object being described
-    obj = get_object_or_404(ctype.model_class(), uuid=uuid)
-
-    # the description object
-    description = obj.descriptions.get(type=dtype)
-
-    # the description form
-    form_class = (
-        modelform_factory(Description, form=GenericDescriptionForm, exclude=["type"])
-        if description
-        else GenericDescriptionForm
-    )
-
-    context = {
-        "description": description,
-        "object": obj,
-        "dtype": dtype,
-        "has_edit_permission": True,
-    }
-
-    if request.method == "POST":
-        form = form_class(data=request.POST, instance=description, obj=obj)
-        if form.is_valid():
-            form.save()
-            context.update({"form": form, "editing": False})
-            return render(request, "core/description.html", context)
-        else:
-            print(form.errors)
-
-    form = form_class(instance=description, obj=obj)
-
-    context.update({"form": form, "editing": True})
-
-    return render(request, "core/description.html", context)
-
-
 type_map = {
-    "p": "geoluminate.Project",
-    "d": "geoluminate.Dataset",
-    "s": "geoluminate.Sample",
+    "project": "projects.Project",
+    "dataset": "datasets.Dataset",
+    "sample": "samples.Sample",
 }
 
 
-class GenericBaseView:
-    """A base class for generic views that can be applied to any Geoluminate object type that has a uuid(Project, Dataset, Sample). The url for such a view should include the object type and the uuid in the form "<obj_type>/<uuid>/". (e.g. /p/uuid/ or /d/uuid/ or /s/uuid/)"""
-
-    slug_field = "uuid"
-    slug_url_kwarg = "uuid"
-
-    def get_object(self, queryset=None):
-        model_class = apps.get_model(type_map[self.kwargs["object_type"]])
-        return model_class.objects.get(uuid=self.kwargs["uuid"])
-
-
-class DescriptionBase(LoginRequiredMixin):
-    model = Description
-    slug_field = "uuid"
-    slug_url_kwarg = "uuid"
-    form_class = GenericDescriptionForm
+class DescriptionCreateView(CreateView):
+    form_class = DescriptionForm
     template_name = "core/description.html"
-
-    def dispatch(self, request, *args, **kwargs):
-        model_class = apps.get_model(type_map[self.kwargs["object_type"]])
-
-        self.ctype = ContentType.objects.get_for_model(model_class)
-
-        self.content_object = model_class.objects.get(uuid=self.kwargs["uuid"])
-        return super().dispatch(request, *args, **kwargs)
-
-    def get_object(self, queryset=None):
-        return Description.objects.filter(
-            content_type=self.ctype,
-            object_id=self.content_object.id,
-            type=self.kwargs.get("dtype"),
-        ).first()
-
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs.update({"obj": self.content_object})
-        return kwargs
-
-    def get_form_class(self):
-        return (
-            modelform_factory(Description, form=GenericDescriptionForm, exclude=["type"])
-            if self.object
-            else GenericDescriptionForm
-        )
+    related_field = "descriptions"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context.update(
-            {
-                "object": self.content_object,
-                "dtype": self.kwargs.get("dtype"),
-                "has_edit_permission": True,
-            }
-        )
+        context["form_title"] = "Description Edit"
         return context
 
-    def get_success_url(self):
-        kwargs = self.kwargs
-        kwargs.update({"dtype": self.object.type})
-        return reverse("description-detail", kwargs=kwargs)
+    def dispatch(self, request, *args, **kwargs):
+        self.fields = self.request.GET.get("fields")
+        self.fragment = self.request.GET.get("fragment", "form")
+        self.success_url = self.request.GET.get("next", None)
+        self.related_pk = self.kwargs.get("pk", None)
+        self.related_model = self.get_related_model()
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_initial(self):
+        initial = super().get_initial()
+        return {**initial, **{"object": self.related_pk}}
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update(
+            {
+                "model": self.model,
+                "request": self.request,
+            }
+        )
+        return kwargs
+
+    # def get_form(self, form_class=None):
+    #     form = super().get_form(form_class)
+    #     form.fields["type"].widget.choices = self.model.type_vocab.choices
+
+    #     form.fields["object"].widget = form.fields["object"].hidden_widget()
+    #     return form
+
+    def get_related_model(self):
+        return apps.get_model(type_map[self.kwargs["object_type"]])
+
+    @property
+    def model(self):
+        # get the correct Description model based on self.related_model and the name of the related field
+        model = self.related_model._meta.get_field(self.related_field).related_model
+
+        print(model)
+        return model
+
+    def get_form_class(self):
+        return modelform_factory(self.model, self.form_class, fields=self.fields)
 
 
-class DescriptionDetailView(DescriptionBase, DetailView):
-    pass
+# class DescriptionBase(LoginRequiredMixin):
+#     model = Description
+#     form_class = GenericDescriptionForm
+#     template_name = "core/description.html"
+
+#     def dispatch(self, request, *args, **kwargs):
+#         model_class = apps.get_model(type_map[self.kwargs["object_type"]])
+
+#         self.ctype = ContentType.objects.get_for_model(model_class)
+
+#         self.content_object = model_class.objects.get(pk=self.kwargs["pk"])
+#         return super().dispatch(request, *args, **kwargs)
+
+#     def get_object(self, queryset=None):
+#         return Description.objects.filter(
+#             content_type=self.ctype,
+#             object_id=self.content_object.id,
+#             type=self.kwargs.get("dtype"),
+#         ).first()
+
+#     def get_form_kwargs(self):
+#         kwargs = super().get_form_kwargs()
+#         kwargs.update({"obj": self.content_object})
+#         return kwargs
+
+#     def get_form_class(self):
+#         return (
+#             modelform_factory(Description, form=GenericDescriptionForm, exclude=["type"])
+#             if self.object
+#             else GenericDescriptionForm
+#         )
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context.update(
+#             {
+#                 "object": self.content_object,
+#                 "dtype": self.kwargs.get("dtype"),
+#                 "has_edit_permission": True,
+#             }
+#         )
+#         return context
+
+#     def get_success_url(self):
+#         kwargs = self.kwargs
+#         kwargs.update({"dtype": self.object.type})
+#         return reverse("description-detail", kwargs=kwargs)
 
 
-class DescriptionUpdateView(DescriptionBase, UpdateView):
-    extra_context = {"update": True}
+# class DescriptionDetailView(DescriptionBase, DetailView):
+#     pass
 
 
-class DescriptionCreateView(DescriptionBase, CreateView):
-    extra_context = {"create": True}
+# class DescriptionUpdateView(DescriptionBase, UpdateView):
+#     extra_context = {"update": True}
 
 
-class DescriptionDeleteView(DescriptionBase, DeleteView):
-    pass
+# class DescriptionCreateView(DescriptionBase, CreateView):
+#     extra_context = {"create": True}
+
+
+# class DescriptionDeleteView(DescriptionBase, DeleteView):
+#     pass
+
+
+class PortalTeamView(TemplateView):
+    template_name = "core/portal_team.html"
+
+    def get_context_data(self):
+        context = super().get_context_data()
+
+        groups = Group.objects.prefetch_related("user_set").all()
+
+        context.update(
+            {
+                "groups": groups,
+            },
+        )
+
+        return context
 
 
 class GenericContactForm(LoginRequiredMixin, ContactFormView):
-    """A view class that will send an email to all contributors with the ContactPerson role. The url for such a view should include the object type and the uuid in the form "<obj_type>/<uuid>/". (e.g. /p/uuid/ or /d/uuid/ or /s/uuid/)"""
+    """A view class that will send an email to all contributors with the ContactPerson role."""
 
     def get_object(self, queryset=None):
         model_class = apps.get_model(type_map[self.kwargs["object_type"]])
-        return model_class.objects.get(uuid=self.kwargs["uuid"])
+        return model_class.objects.get(pk=self.kwargs["pk"])
 
     @property
     def recipient_list(self):
         self.object = self.get_object()
 
-        contacts = self.object.contributors.filter(roles__contains=["ContactPerson"])
+        contacts = self.object.contributions.filter(roles__contains=["ContactPerson"])
 
         # get the email addresses of the contributors
         emails = []

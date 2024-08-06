@@ -3,7 +3,7 @@ from django.contrib.gis import admin
 from .functions import Lat, Lon
 
 
-class SiteAdminMixin(admin.OSMGeoAdmin):
+class SiteAdminMixin(admin.GISModelAdmin):
     geom_field = "point"
 
     def get_queryset(self, request):

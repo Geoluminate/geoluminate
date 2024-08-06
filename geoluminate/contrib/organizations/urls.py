@@ -1,7 +1,9 @@
-# from .views.account import AccountEmailView
+from django.urls import path
 
-# app_name = "organizations"
-# urlpatterns = [
-#     path("projects/<uuid:uuid>/", ProjectDetail.as_view(extra_context={"edit": True}, name="project-edit")),
-#     path("new/project/", AddProjectView.as_view(), name="project-add"),
-# ]
+from .views import OrganizationCreateView, OrganizationListView
+
+app_name = "organizations"
+urlpatterns = [
+    path("organization/add/", OrganizationCreateView.as_view(), name="create"),
+    path("organization/list/", OrganizationListView.as_view(), name="list"),
+]

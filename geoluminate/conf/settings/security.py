@@ -41,4 +41,3 @@ BLEACH_STRIP_TAGS = True
 BLEACH_STRIP_COMMENTS = True
 
 # BLEACH_DEFAULT_WIDGET = "formset.richtext.widgets.RichTextarea"
-# BLEACH_DEFAULT_WIDGET = "djangocms_text_ckeditor.widgets.TextEditorWidget"

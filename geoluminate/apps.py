@@ -12,11 +12,7 @@ class GeoluminateConfig(AppConfig):
         # patch django-filters to not use crispy forms. should be safe to remove on the
         # next release of geoluminate
 
-        self.register_activity_models()
-
         self.discover_plugins()
-
-        self.register_measurement_models()
 
         from django_filters import compat
 
@@ -28,19 +24,6 @@ class GeoluminateConfig(AppConfig):
 
     def discover_plugins(self):
         autodiscover_modules("plugins")
-
-    def register_activity_models(self):
-        from actstream import registry
-
-        for model in ["Project", "Dataset", "Sample", "Location"]:
-            registry.register(self.get_model(model))
-
-    def register_measurement_models(self):
-        from geoluminate.measurements import measurements
-        from geoluminate.utils import get_measurement_models
-
-        for model in get_measurement_models():
-            measurements.register(model)
 
     def update_drf_field_mapping(self):
         """

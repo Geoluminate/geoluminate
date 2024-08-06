@@ -1,4 +1,5 @@
 import logging
+
 import environ
 
 logger = logging.getLogger(__name__)
@@ -11,7 +12,7 @@ env = environ.Env(
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#caches
 if env("DJANGO_CACHE"):
-    logger.debug("Using Redis cache")
+    logger.info("Using Redis cache")
     CACHES = {
         "default": {
             "BACKEND": "django_redis.cache.RedisCache",
@@ -41,7 +42,7 @@ if env("DJANGO_CACHE"):
         },
     }
 else:
-    logger.debug("Using Dummy cache")
+    logger.info("Using Dummy cache")
     CACHES = {
         "default": {
             "BACKEND": "django.core.cache.backends.dummy.DummyCache",
@@ -63,3 +64,5 @@ SELECT2_CACHE_BACKEND = "select2"
 COLLECTFASTA_CACHE = "collectfasta"
 
 COLLECTFASTA_THREADS = 8
+
+VOCABULARY_DEFAULT_CACHE = "default"

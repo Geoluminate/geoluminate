@@ -22,7 +22,6 @@ INSTALLED_APPS = (
     ]
 )
 
-DEBUG = True
 
 # http://whitenoise.evans.io/en/latest/django.html#using-whitenoise-in-development
 # INSTALLED_APPS = ["whitenoise.runserver_nostatic", *GEOLUMINATE_APPS]

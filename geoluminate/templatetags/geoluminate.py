@@ -1,6 +1,4 @@
-from classytags.arguments import (
-    Argument,
-)
+from classytags.arguments import Argument
 from classytags.core import Options
 from classytags.helpers import InclusionTag
 from classytags.utils import flatten_context
@@ -8,13 +6,14 @@ from django import template
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
+
+# import flatattrs
+from django.forms.utils import flatatt
 from django.template.loader import render_to_string
 from django.templatetags.static import static
 from django.urls import reverse, reverse_lazy
 from django.utils.safestring import mark_safe
 from quantityfield import settings as qsettings
-
-from geoluminate.contrib.core.forms import GenericDescriptionForm
 
 register = template.Library()
 ureg = qsettings.DJANGO_PINT_UNIT_REGISTER
@@ -97,19 +96,10 @@ def brand(icon_or_logo: str):
 @register.simple_tag
 def icon(icon: str, **kwargs):
     """Retrieves the default icon for a given object."""
-
-    context = kwargs.pop("context", None)
-    context_title = kwargs.pop("context_title", None)
-    context_type = kwargs.pop("context_type", "bs-tooltip")
-
     icon = settings.GEOLUMINATE_ICONS.get(icon)
     extra_classes = kwargs.pop("class", "")
-    attrs = " ".join([f'{k}="{v}"' for k, v in kwargs.items()])
-
-    icon = f'<i class="{icon} {extra_classes}" {attrs}></i>'
-    if context:
-        icon = f'<span data-bs-toggle="{context_type}" data-bs-title="{context_title}" data-bs-content="{context}">{icon}</span>'
-    return mark_safe(icon)  # noqa: S308
+    attrs = flatatt(kwargs)
+    return mark_safe(f'<i class="{icon} {extra_classes}" {attrs}></i>')
 
 
 @register.filter
@@ -142,52 +132,19 @@ def addstr(arg1, arg2):
 def avatar(profile=None, width="48px", **kwargs):
     """Renders a default img tag for the given profile. If the profile.image is None, renders a default icon if no image is set."""
 
-    kwarg_str = " ".join([f'{k}="{v}"' for k, v in kwargs.items()])
-
     if not profile:
-        avatar = (
-            f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" fill="currentColor" class="bi bi-person-fill"'
-            f' {kwarg_str} viewBox="0 0 16 16"><path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/><path'
-            ' fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805'
-            ' 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/></svg>'
-        )
+        return render_to_string("icons/user.svg")
 
-    elif profile.image:
-        avatar = f'<img src="{profile.image.url}" width="{width}" {kwarg_str} />'
-    elif profile.type == "Personal":
-        avatar = (
-            f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" fill="currentColor" class="bi bi-person-fill'
-            f' {kwarg_str}" viewBox="0 0 16 16"><path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/><path'
-            ' fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805'
-            ' 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/></svg>'
-        )
+    if profile.image:
+        return mark_safe(f'<img src="{profile.image.url}" width="{width}" {flatatt(kwargs)} />')
     else:
-        avatar = (
-            f'<svg xmlns="http://www.w3.org/2000/svg" height="{width}" viewBox="0 0 384 512"><!--!Font Awesome Free'
-            " 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright"
-            ' 2023 Fonticons, Inc.--><path d="M48 0C21.5 0 0 21.5 0 48V464c0 26.5 21.5 48 48 48h96V432c0-26.5 21.5-48'
-            " 48-48s48 21.5 48 48v80h96c26.5 0 48-21.5 48-48V48c0-26.5-21.5-48-48-48H48zM64 240c0-8.8 7.2-16"
-            " 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V240zm112-16h32c8.8 0 16 7.2 16"
-            " 16v32c0 8.8-7.2 16-16 16H176c-8.8 0-16-7.2-16-16V240c0-8.8 7.2-16 16-16zm80 16c0-8.8 7.2-16 16-16h32c8.8"
-            " 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H272c-8.8 0-16-7.2-16-16V240zM80 96h32c8.8 0 16 7.2 16 16v32c0"
-            " 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16zm80 16c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2"
-            " 16 16v32c0 8.8-7.2 16-16 16H176c-8.8 0-16-7.2-16-16V112zM272 96h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16"
-            ' 16H272c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16z"/></svg>'
-        )
-
-    return mark_safe(avatar)  # noqa: S308
+        return render_to_string("icons/user.svg")
 
 
 @register.inclusion_tag("contributors/avatar.html")
 def render_contributor_icon(profile, width="48px", **kwargs):
     " ".join([f'{k}="{v}"' for k, v in kwargs.items()])
     return {"profile": profile, "attrs": 'width="{width}" {attrs}'}
-
-
-@register.inclusion_tag("core/description.html", takes_context=True)
-def render_description_form(context, obj):
-    context.update({"form": GenericDescriptionForm(obj=obj)})
-    return context
 
 
 @register.simple_tag
@@ -249,6 +206,65 @@ def description_url(instance, dtype=None):
     if dtype:
         return reverse(
             "description-edit",
-            kwargs={"uuid": instance.uuid, "object_type": object_type, "dtype": dtype},
+            kwargs={"pk": instance.pk, "object_type": object_type, "dtype": dtype},
         )
-    return reverse("description-add", kwargs={"uuid": instance.uuid, "object_type": object_type})
+    return reverse("description-add", kwargs={"pk": instance.pk, "object_type": object_type})
+
+
+@register.simple_tag(takes_context=True)
+def urlx(context, view_name, **kwargs):
+    # doesn't work. OLD
+    view_kwargs = context["view_kwargs"]
+    model = view_kwargs.pop("base_model")
+    letter = model._meta.model_name[0]
+    view_kwargs.update(kwargs)
+    return reverse(view_name, kwargs={"model": letter, **view_kwargs})
+
+
+@register.simple_tag
+def modal_form_attrs(**kwargs):
+    attrs = {
+        "data-bs-toggle": "modal",
+        "data-bs-target": "#formModal",
+        "hx-target": "#formModal .modal-body",
+        "hx-push-url": "false",
+    }
+    attrs.update(kwargs)
+    return flatatt(attrs)
+
+
+@register.simple_tag
+def svg(icon: str, **kwargs):
+    """Retrieves the default icon for a given object."""
+    svg_str = render_to_string(f"icons/{icon}.svg")
+    first, sep, rest = svg_str.partition("><")
+    defaults = {
+        "height": "1em",
+        "fill": "currentColor",
+    }
+    defaults.update(kwargs)
+    attrs = flatatt(defaults)
+    return mark_safe(f"{first}{attrs}{sep}{rest}")
+
+
+@register.simple_tag
+def render_fields(obj, fields):
+    def iter_func():
+        for f in fields:
+            mf = obj._meta.get_field(f)
+            # if mf is a ManyToManyField, we need to get the related objects
+            if mf.many_to_many:
+                related_objects = getattr(obj, f).all()
+                yield (mf.verbose_name, ", ".join([obj.__html__() for obj in related_objects]))
+            # if mf is a ForeignKey, get the related object and create a link using the get_absolute_url method
+            elif mf.is_relation:
+                related = getattr(obj, f)
+                if related:
+                    yield (mf.verbose_name, related.__html__())
+                else:
+                    yield (mf.verbose_name, "-")
+
+            else:
+                yield (mf.verbose_name, mf.value_to_string(obj))
+
+    return iter_func

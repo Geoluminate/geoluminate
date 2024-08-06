@@ -66,7 +66,7 @@ MESSAGE_TAGS = {
     messages.ERROR: "error alert-danger",
 }
 
-TAGGIT_CASE_INSENSITIVE = True
+# TAGGIT_CASE_INSENSITIVE = True
 
 TEMPLATES = [
     {
@@ -85,7 +85,7 @@ TEMPLATES = [
                 "sekizai.context_processors.sekizai",
                 "django.template.context_processors.static",
                 "geoluminate.utils.context_processor",
-                "cms.context_processors.cms_settings",
+                # "cms.context_processors.cms_settings",
             ],
             "loaders": [
                 "django.template.loaders.filesystem.Loader",
@@ -99,7 +99,7 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "corsheaders.middleware.CorsMiddleware",
-    "cms.middleware.utils.ApphookReloadMiddleware",
+    # "cms.middleware.utils.ApphookReloadMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -107,10 +107,11 @@ MIDDLEWARE = [
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "cms.middleware.user.CurrentUserMiddleware",
-    "cms.middleware.page.CurrentPageMiddleware",
-    "cms.middleware.toolbar.ToolbarMiddleware",
-    "cms.middleware.language.LanguageCookieMiddleware",
+    # "cms.middleware.user.CurrentUserMiddleware",
+    # "cms.middleware.page.CurrentPageMiddleware",
+    # "cms.middleware.toolbar.ToolbarMiddleware",
+    # "cms.middleware.language.LanguageCookieMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
     "django_htmx.middleware.HtmxMiddleware",
     "lockdown.middleware.LockdownMiddleware",
 ]
@@ -148,7 +149,7 @@ if SHOW_DEBUG_TOOLBAR:
     #     "template_profiler_panel.panels.template.TemplateProfilerPanel",
     # ]
 
-FORM_RENDERER = "geoluminate.utils.forms.DefaultFormRenderer"
+# FORM_RENDERER = "geoluminate.utils.forms.DefaultFormRenderer"
 
 # http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"

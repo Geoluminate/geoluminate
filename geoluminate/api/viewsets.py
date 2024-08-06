@@ -49,9 +49,7 @@ class GeoJsonViewset(BaseViewSet):
 
 
 class ViewsetMixin(NestedViewSetMixin, viewsets.ReadOnlyModelViewSet):
-    """A viewset mixin that allows both nested and base API routes to be processed by the same viewset. Default lookup is uuid."""
-
-    lookup_field = "uuid"
+    """A viewset mixin that allows both nested and base API routes to be processed by the same viewset."""
 
     def get_queryset(self):
         if self.is_nested():

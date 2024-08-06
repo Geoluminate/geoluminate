@@ -1,21 +1,20 @@
 from django.contrib import admin
-from django.contrib.contenttypes.admin import GenericStackedInline
-from django.db.models import Count
-from django.utils.translation import gettext_lazy as _
+from django.db import models
+from fluent_comments.models import FluentComment
+from image_uploader_widget.widgets import ImageUploaderWidget
+from polymorphic.admin import PolymorphicChildModelFilter, PolymorphicParentModelAdmin
+from threadedcomments.models import ThreadedComment
 
-from geoluminate.contrib.core.admin import BaseAdmin
+# from django_select2.forms import Select2AdminMixin
+from geoluminate.contrib.core.admin import InvisibleAdmin
+from geoluminate.contrib.organizations.models import Organization
+from geoluminate.contrib.users.models import User
 
-from .models import Contribution, Contributor, OrganizationalContributor, PersonalContributor
-
-
-class GenericContributionInline(GenericStackedInline):
-    model = Contribution
-    extra = 1
-    fields = ("profile", "roles")
+from .models import Contributor, Identifier
 
 
 class ContributionInline(admin.StackedInline):
-    model = Contribution
+    # model = Contribution
     extra = 1
     fields = ("profile", "roles")
 
@@ -26,59 +25,49 @@ class ContributorInline(admin.StackedInline):
     extra = 0
 
 
-# @admin.register(Contributor)
-class ContributorAdmin(BaseAdmin):
-    list_display = ["name", "about", "projects", "datasets", "samples"]
+class IdentifierInline(admin.TabularInline):
+    model = Identifier
+    field = ["scheme", "identifier"]
+    extra = 0
+
+
+@admin.register(Contributor)
+class ContributorAdmin(PolymorphicParentModelAdmin):
+    base_model = Contributor
+    child_models = (Contributor, User, Organization)
+    list_display = ["_name", "about"]
     search_fields = ["name"]
-    frontend_editable_fields = ["image", "name", "about", "status"]
-    # list_filter = ["type"]
-    inlines = [ContributionInline]
+    inlines = [IdentifierInline]
+    list_filter = (PolymorphicChildModelFilter,)
+
+    formfield_overrides = {
+        models.ImageField: {"widget": ImageUploaderWidget},
+    }
 
     def get_queryset(self, request):
         return (
-            super()
-            .get_queryset(request)
-            .annotate(
-                dataset_count=Count(Contributor.get_contribution_by_type("geoluminate.Dataset")),
-                project_count=Count(Contributor.get_contribution_by_type("geoluminate.Project")),
-                sample_count=Count(Contributor.get_contribution_by_type("geoluminate.Sample")),
-            )
+            super().get_queryset(request)
+            # .annotate(
+            #     project_count=Count("projects"),
+            #     dataset_count=Count("datasets"),
+            #     sample_count=Count("samples"),
+            # )
         )
 
-    def datasets(self, obj):
+    def _name(self, obj):
+        return obj.name or "-"
+
+    def _datasets(self, obj):
         return obj.dataset_count
 
-    def projects(self, obj):
+    def _projects(self, obj):
         return obj.project_count
 
-    def samples(self, obj):
+    def _samples(self, obj):
         return obj.sample_count
 
 
-@admin.register(PersonalContributor)
-class PersonalContributorAdmin(ContributorAdmin):
-    exclude = ["organization"]
-    list_display = ["name", "has_account", "projects", "datasets", "samples"]
+admin.site.register(Identifier, InvisibleAdmin)
 
-    def has_account(self, obj):
-        return obj.user is not None
-
-    has_account.boolean = True
-    has_account.short_description = _("Has Account")
-
-
-@admin.register(OrganizationalContributor)
-class OrganizationalContributorAdmin(ContributorAdmin):
-    exclude = ["user"]
-    list_display = ["name", "projects", "datasets", "samples"]
-
-    # def members(self, obj):
-    #     return obj.organization.membership.count()
-
-    # members.boolean = True
-    # members.short_description = _("Members")
-
-
-@admin.register(Contribution)
-class ContributionAdmin(BaseAdmin):
-    pass
+admin.site.unregister(ThreadedComment)
+admin.site.unregister(FluentComment)

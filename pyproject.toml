@@ -27,20 +27,22 @@ celery = "^5.2.7"
 crispy-bootstrap5 = "^2024.2"
 dj-rest-auth = "^3.0.0"
 django = {extras = ["argon2"], version = ">=3.2"}
+django-account-management = {git = "https://github.com/SamuelJennings/django-account-management.git", rev = "main"}
 django-activity-stream = "^2.0.0"
 django-adminactions = "^2.0.0"
-django-allauth = "^0.53.1"
+django-allauth = {extras = ["mfa", "socialaccount"], version = "^64.0.0"}
 django-bleach = "^3.0.1"
 django-celery-beat = "^2.5.0"
 django-classy-tags = "^4.1.0"
+django-cleanup = "^8.1.0"
 django-client-side-image-cropping = "^0.1.10"
-django-cms = ">4"
 django-compressor = "^4.3.1"
 django-contact-form = "^2.1"
 django-cors-headers = "^3.14.0"
 django-crispy-forms = "^2.0"
 django-dbbackup = "^4.0.2"
 django-downloadview = "^2.3.0"
+django-easy-icons = {git = "https://github.com/SamuelJennings/django-easy-icons.git", rev = "main"}
 django-el-pagination = "^4.0.0"
 django-entangled = "^0.5.4"
 django-environ = "^0.10.0"
@@ -48,23 +50,31 @@ django-filter = ">=24.1"
 django-fluent-comments = {extras = ["threadedcomments"], version = "^3.0"}
 django-formset = "^1.2.1"
 django-htmx = "^1.16.0"
+django-image-uploader-widget = "^0.5.0"
 django-imagekit = "^4.1.0"
+django-import-export = "^4.0.3"
 django-invitations = "^2.0.0"
 django-laboratory = "^0.0.1"
 django-libsass = "^0.9"
+django-literature = {git = "https://github.com/Geoluminate/django-literature", rev = "main"}
 django-lockdown = "^4.0.0"
 django-meta = "^2.1.0"
+django-migration-zero = "^2.0.0"
 django-model-utils = "^4.3.1"
 django-organizations = "^2.1.0"
+django-partial-date = "^1.3.2"
 django-pint = "^0.7.1"
 django-redis = "^5.2.0"
+django-rest-polymorphic = "^0.1.10"
 django-select2 = "^8.1.1"
 django-simple-menu = "^2.1.1"
 django-social-share = "^2.3.0"
+django-solo = "^2.2.0"
 django-split-settings = "^1.2.0"
 django-storages = {extras = ["boto3"], version = "^1.14.2"}
+django-template-partials = "^24.2"
+django-watchfiles = "^0.2.0"
 django-webpack-loader = "^3.0.1"
-djangocms-frontend = "^1.1.0"
 djangorestframework = "^3.14.0"
 djangorestframework-gis = "^1.0"
 drf-access-policy = "^1.5.0"
@@ -73,20 +83,19 @@ drf-nested-routers = "^0.93.4"
 drf-orjson-renderer = "^1.7.1"
 drf-schema-adapter = "^3.0.6"
 drf-spectacular = {extras = ["sidecar"], version = "^0.26.1"}
+easy-thumbnails = "^2.9"
 factory-boy = "^3.2.1"
 faker = "^24.1.0"
 flower = "^1.2.0"
 gunicorn = "^20.1.0"
 lxml = "^5.1.0"
+neapolitan = "^24.4"
 psycopg2-binary = "^2.9.5"
 pyyaml = "^6.0"
 redis = "^4.5.2"
 tldextract = "^3.4.0"
 whitenoise = "^6.4.0"
-django-solo = "^2.2.0"
-django-literature = {git = "https://github.com/Geoluminate/django-literature", rev = "main"}
-django-partial-date = "^1.3.2"
-django-rest-polymorphic = "^0.1.10"
+
 
 
 [tool.poetry.group.dev.dependencies]
@@ -115,6 +124,7 @@ types-requests = "^2.28.11.17"
 django-content-license = {git = "https://github.com/Geoluminate/django-content-license", rev = "main"}
 django-research-vocabs = {git = "https://github.com/Geoluminate/django-research-vocabs", rev = "master"}
 django-auto-datatables = {git = "https://github.com/SSJenny90/django-auto-datatables", rev = "main"}
+importtime-waterfall = "^1.0.0"
 
 [build-system]
 requires = ["poetry-core"]
@@ -192,7 +202,10 @@ ignore = [
     # ClassAttributesShouldBeAnnotated
     "RUF012",
     "TRY003",
-
+    # Use of mark_safe
+    "S308",
+    # Use of standard pseudo-random generators
+    "S311",
     "A003",
     "F403",
     "F405",
@@ -213,7 +226,7 @@ exclude = [
 ]
 
 [tool.djlint]
-blank_line_after_tag="load"
+blank_line_after_tag="load,endpartialdef,endblock"
 close_void_tags=true
 custom_blocks="addtoblock"
 custom_html="django-formset"
@@ -279,25 +292,26 @@ django_settings_module = "tests.settings"
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "tests.settings"
-python_files = ["test_*.py", "*_test.py", "testing/python/*.py"]
+python_files = ["test_*.py"]
 filterwarnings = [
     "ignore",
-    "default:::geoluminate",
+    "default:::keywords",
 ]
-
+addopts = "--cov --cov-report html"
 
 [tool.coverage.report]
 skip_empty = true
-omit = [
-    "*site-packages*",
-    "*tests*",
-    "*.tox*",
-    ]
 show_missing = "true"
 
 [tool.coverage.run]
 branch = "true"
-source = ["geoluminate"]
+omit = [
+    "*site-packages*",
+    "*/tests/*",
+    "*.tox*",
+    "*__init__.py",
+    "*/migrations/*"
+    ]
 
 
 [tool.deptry]
@@ -324,7 +338,6 @@ ignore_obsolete = [
         "django-social-share",
         "django-spaghetti-and-meatballs",
         "django-tellme",
-        "djangocms-frontend",
         "gunicorn",
         "psycopg2-binary",
         "redis",

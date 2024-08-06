@@ -2,35 +2,8 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from django.forms.models import ModelForm
-from formset.collection import FormCollection
 
-from geoluminate.contrib.contributors.forms import UserProfileForm
-
-
-class BaseUserForm(ModelForm):
-    class Meta:
-        model = get_user_model()
-        fields = ["first_name", "last_name", "email"]
-
-
-class UserForm(FormCollection):
-    user = BaseUserForm()
-    profile = UserProfileForm()
-
-
-class UserAdminCreationForm(UserCreationForm):
-    class Meta(UserCreationForm):
-        model = get_user_model()
-        fields = ["email", "password"]
-
-
-class UserAdminChangeForm(UserChangeForm):
-    class Meta:
-        model = get_user_model()
-        fields = (
-            "email",
-            "password",
-        )
+User = get_user_model()
 
 
 class SignupExtraForm(forms.ModelForm):
@@ -51,3 +24,51 @@ class SignupExtraForm(forms.ModelForm):
         user.first_name = self.cleaned_data["first_name"]
         user.last_name = self.cleaned_data["last_name"]
         user.save()
+
+
+class BaseUserForm(ModelForm):
+    class Meta:
+        model = get_user_model()
+        fields = ["first_name", "last_name", "email"]
+
+
+# class UserForm(FormCollection):
+#     user = BaseUserForm()
+# profile = UserProfileForm()
+
+
+class UserAdminCreationForm(UserCreationForm):
+    class Meta(UserCreationForm):
+        model = User
+        fields = ["email", "password"]
+
+
+class UserAdminChangeForm(UserChangeForm):
+    class Meta:
+        model = User
+        fields = ["email", "password"]
+
+
+class UserForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ["first_name", "last_name", "email"]
+
+    # def model_to_dict(self, contributor):
+    #     try:
+    #         return model_to_dict(contributor, fields=self._meta.fields, exclude=self._meta.exclude)
+    #     except PersonalContributor.DoesNotExist:
+    #         return {}
+
+    # def construct_instance(self, contributor):
+    #     try:
+    #         profile = contributor
+    #     except PersonalContributor.DoesNotExist:
+    #         profile = PersonalContributor(user=user)
+    #     form = ContributorForm(data=self.cleaned_data, instance=profile)
+    #     if form.is_valid():
+    #         construct_instance(form, profile)
+    #         form.save()
+
+
+# class CodeOfConductForm()

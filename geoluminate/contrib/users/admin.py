@@ -1,37 +1,25 @@
 from allauth.account.models import EmailAddress
-from allauth.socialaccount.models import SocialAccount
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from polymorphic.admin import PolymorphicChildModelAdmin
 
+from geoluminate.contrib.contributors.models import Contributor
 from geoluminate.contrib.users.models import User
 
-# from jazzmin import templatetags
-from .forms import UserAdminChangeForm, UserAdminCreationForm
 
-
-class SocialAccountInline(admin.StackedInline):
-    model = SocialAccount
-    fields = ["uid", "provider", "extra_data"]
-    readonly_fields = ["uid", "provider", "extra_data"]
-    extra = 0
-
-
-class AccountEmailInline(admin.StackedInline):
+class AccountEmailInline(admin.TabularInline):
     model = EmailAddress
-    fields = [("primary", "verified"), "email"]
+    fields = ["email", "primary", "verified"]
     extra = 0
-
-
-# class ProfileInline(admin.StackedInline):
-# model = Personal
 
 
 @admin.register(User)
-class UserAdmin(BaseUserAdmin):
+class UserAdmin(BaseUserAdmin, PolymorphicChildModelAdmin):
+    base_model = Contributor
     # The forms to add and change user instances
-    form = UserAdminChangeForm
-    add_form = UserAdminCreationForm
-    inlines = [AccountEmailInline, SocialAccountInline]
+    # form = UserAdminChangeForm
+    # add_form = UserAdminCreationForm
+    inlines = [AccountEmailInline]
     list_display = [
         "first_name",
         "last_name",
@@ -42,22 +30,17 @@ class UserAdmin(BaseUserAdmin):
         "last_login",
         "date_joined",
     ]
-    list_filter = (
-        "is_staff",
-        "is_superuser",
-    )
-
+    list_filter = ("is_staff", "is_superuser")
     # fieldsets for modifying user
     fieldsets = (
         (
             "Basic info",
             {
                 "fields": (
-                    "first_name",
-                    "last_name",
+                    "image",
+                    ("first_name", "last_name"),
                     "email",
                     "password",
-                    # "profile",
                 )
             },
         ),
@@ -71,7 +54,14 @@ class UserAdmin(BaseUserAdmin):
     add_fieldsets = (
         (
             None,
-            {"fields": ("last_name", "first_name", "email", "password1", "password2")},
+            {
+                "fields": (
+                    ("first_name", "last_name"),
+                    "email",
+                    "password1",
+                    "password2",
+                )
+            },
         ),
     )
 

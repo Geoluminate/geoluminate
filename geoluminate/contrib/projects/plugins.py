@@ -11,7 +11,7 @@ from geoluminate.utils import icon
 from .models import Project
 from .views import ProjectDetailView
 
-project = PluginRegistry("projects", base=ProjectDetailView)
+project = PluginRegistry(base=ProjectDetailView)
 
 
 @project.page("overview", icon=icon("overview"))

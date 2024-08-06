@@ -1,12 +1,15 @@
 import os
 from pathlib import Path
+
 import environ
-from storages.backends.s3boto3 import S3Boto3Storage
 
 env = environ.Env(
     DJANGO_CACHE=(bool, True),
+    DJANGO_DEBUG=(bool, False),
 )
 
+
+DEBUG = env("DJANGO_DEBUG")
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-root
 STATIC_ROOT = COMPRESS_ROOT = str(BASE_DIR / "staticfiles")
@@ -50,7 +53,6 @@ AWS_SECRET_ACCESS_KEY = os.environ.get("MINIO_SECRET_ACCESS_KEY")
 AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_BUCKET_NAME")
 """"""
 
-print(AWS_STORAGE_BUCKET_NAME)
 
 AWS_S3_CUSTOM_DOMAIN = os.environ.get("AWS_S3_CUSTOM_DOMAIN")
 
@@ -73,6 +75,8 @@ AWS_S3_REGION_NAME = os.environ.get("REGION_NAME")
 
 AWS_DEFAULT_ACL = None
 """"""
+
+AWS_S3_URL_PROTOCOL = "http:" if DEBUG else "https:"
 
 
 # django-compressor
@@ -106,7 +110,7 @@ STORAGES = {
         "OPTIONS": {
             "location": "public",
             "default_acl": "public-read",
-            # "url_protocol": "http:",
+            # "url_protocol": "http:" if DEBUG else "https:",
         },
     },
     "private": {
@@ -114,7 +118,7 @@ STORAGES = {
         "OPTIONS": {
             "location": "private",
             "default_acl": "private",
-            # "url_protocol": "http:",
+            # "url_protocol": "http:" if DEBUG else "https:",
         },
     },
     "staticfiles": {
@@ -124,49 +128,7 @@ STORAGES = {
 }
 
 
-FILER_STORAGES = {
-    "public": {
-        "main": {
-            "ENGINE": "storages.backends.s3boto3.S3Boto3Storage",
-            "OPTIONS": {
-                "location": "public/filer/original/",
-                "url_protocol": "http:",
-            },
-            "UPLOAD_TO": "filer.utils.generate_filename.randomized",
-            "UPLOAD_TO_PREFIX": "filer_public",
-        },
-        "thumbnails": {
-            "ENGINE": "storages.backends.s3boto3.S3Boto3Storage",
-            "OPTIONS": {
-                "location": "public/filer/thumbs/",
-                "url_protocol": "http:",
-                # "base_url": "filer_thumbnails",
-            },
-        },
-    },
-    "private": {
-        "main": {
-            "ENGINE": "filer.storage.PrivateFileSystemStorage",
-            "OPTIONS": {
-                "location": "/path/to/smedia/filer",
-                "base_url": "/smedia/filer/",
-            },
-            "UPLOAD_TO": "filer.utils.generate_filename.randomized",
-            "UPLOAD_TO_PREFIX": "filer_public",
-        },
-        "thumbnails": {
-            "ENGINE": "filer.storage.PrivateFileSystemStorage",
-            "OPTIONS": {
-                "location": "/path/to/smedia/filer_thumbnails",
-                "base_url": "/smedia/filer_thumbnails/",
-            },
-        },
-    },
-}
-
-FILER_FILE_STORAGE_BACKEND = STORAGES["default"]
-
-THUMBNAIL_DEFAULT_STORAGE = STORAGES["default"]
+# THUMBNAIL_DEFAULT_STORAGE = STORAGES["default"]
 
 
 WEBPACK_LOADER = {

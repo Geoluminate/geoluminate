@@ -9,22 +9,20 @@ from django.views.generic import FormView
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.edit import UpdateView
 from literature.forms import LiteratureForm
-from literature.formset import LiteratureFileCollection
-from literature.models import Literature
-from literature.views import LiteratureEditView
+from literature.models import LiteratureItem
+from literature.views import LiteratureView
 from meta.views import MetadataMixin
 
 from geoluminate.contrib.core.view_mixins import ListPluginMixin
 from geoluminate.models import Dataset
 from geoluminate.utils import icon
-from geoluminate.views import BaseDetailView, BaseFormView, BaseListView, HTMXMixin
+from geoluminate.views import BaseDetailView, BaseEditView, BaseListView, HTMXMixin
 
 from . import utils
 from .filters import LiteratureFilter, ReviewFilter
-from .forms import (  # LiteratureForm,
-    AcceptReviewForm,
+from .forms import (
+    AcceptReviewForm,  # LiteratureForm,
     LiteratureFormCollection,
-    LiteratureUploadForm,
     ReviewStatusForm,
 )
 from .models import Review
@@ -33,7 +31,7 @@ from .models import Review
 class AcceptLiteratureReview(HTMXMixin, MetadataMixin, SingleObjectMixin, LoginRequiredMixin, FormView):
     """A simple view that asks the user to confirm that they want to accept the review. On accepting, a new Review object is created and the user is redirected to the detail view of the related dataset."""
 
-    model = Literature
+    model = LiteratureItem
     template_name = "reviews/accept_review_form.html"
     form_class = AcceptReviewForm
     title = _("Begin review")
@@ -105,9 +103,9 @@ reject_review = AcceptReview.as_view(status=Review.STATUS_CHOICES.IN_PROGRESS)
 submit_review = AcceptReview.as_view(status=Review.STATUS_CHOICES.SUBMITTED)
 
 
-class ReviewCreateView(BaseFormView):
-    model = Literature
-    form_class = LiteratureUploadForm
+class ReviewEditView(BaseEditView):
+    model = LiteratureItem
+    form_class = ReviewStatusForm
     title = _("Start review")
     template_name = "reviews/literature_form.html"
     slug_field = "slug"
@@ -152,7 +150,7 @@ class ReviewListView(BaseListView):
 
 
 class ReviewPlugin(ListPluginMixin):
-    template_name = "geoluminate/plugins/base_list.html"
+    template_name = "geoluminate/plugins/list_view.html"
     object_template = "reviews/review_card.html"
     title = name = _("Reviews")
     icon = icon("review")
@@ -173,7 +171,7 @@ class ReviewDetailView(BaseDetailView):
     ]
 
 
-class ReviewCheckoutView(BaseFormView):
+class ReviewCheckoutView(BaseEditView):
     """This view is used as a final request to submit supporting documents that were used during the review process. It will be accessible to the reviewer only after the review has been successfully completed and formally accepted into the database."""
 
     model = Review
@@ -196,7 +194,7 @@ class ReviewDataUploadView(ReviewDetailView):
     template_name = "datasets/literature_form.html"
 
 
-class ReviewLiteratureEdit(HTMXMixin, LiteratureEditView):
+class ReviewLiteratureEdit(HTMXMixin, LiteratureView):
     collection_class = LiteratureFormCollection
     template_name = "literature/literature_form.html"
     title = _("Confirm literature details")
@@ -205,7 +203,7 @@ class ReviewLiteratureEdit(HTMXMixin, LiteratureEditView):
     )
 
     def get_object(self):
-        return self.get_queryset().get(dataset__review__uuid=self.kwargs.get("uuid"))
+        return self.get_queryset().get(dataset__review__uuid=self.kwargs.get("pk"))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -216,15 +214,6 @@ class ReviewLiteratureEdit(HTMXMixin, LiteratureEditView):
         return context
 
 
-class ReviewFilesEdit(ReviewLiteratureEdit):
-    collection_class = LiteratureFileCollection
-    title = _("File Upload")
-    help_text = _(
-        "Please upload here any files used during the revision of this dataset. Files are stored for archival purposes"
-        " only and are not shared publicly. "
-    )
-
-
 class LiteratureReviewListView(BaseListView):
     """A view that lists a set of Review objects."""
 
@@ -233,13 +222,14 @@ class LiteratureReviewListView(BaseListView):
     title = _("Data extraction and review")
 
     filterset_class = ReviewFilter
-    queryset = Literature.objects.exclude(
-        review__status=Review.STATUS_CHOICES.ACCEPTED,
-    ).order_by("-created")
+    queryset = LiteratureItem.objects.order_by("-created")
+    # queryset = LiteratureItem.objects.exclude(
+    #     review__status=Review.STATUS_CHOICES.ACCEPTED,
+    # ).order_by("-created")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["total"] = Literature.objects.count()
+        context["total"] = LiteratureItem.objects.count()
         summary = {}
         for item in Review.objects.values("status").annotate(total=Count("status")):
             label = Review.STATUS_CHOICES(item["status"]).label
@@ -253,17 +243,18 @@ class LiteratureReviewListView(BaseListView):
 
 
 class LiteratureListView(BaseListView):
-    model = Literature
+    model = LiteratureItem
     title = _("Literature")
-    base_template = "literature/literature_list.html"
+    # base_template = "literature/literature_list.html"
     object_template = "literature/literature_card.html"
-    queryset = Literature.objects.filter(review__status=Review.STATUS_CHOICES.ACCEPTED).order_by("-created")
+    queryset = LiteratureItem.objects.order_by("-created")
+    # queryset = LiteratureItem.objects.filter(review__status=Review.STATUS_CHOICES.ACCEPTED).order_by("-created")
     filterset_class = LiteratureFilter
     list_filter_top = ["title", "o"]
 
 
-class AddLiteratureView(BaseFormView):
-    model = Literature
+class LiteratureEditView(BaseEditView):
+    model = LiteratureItem
     title = _("Create a new project")
     help_text = None
     form_class = LiteratureForm

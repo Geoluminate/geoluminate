@@ -11,5 +11,4 @@ class TestDatasetFactory(TestAbstractFactory):
 
     def test_obj_additional_fields_creation(self):
         self.assertIsNotNone(self.obj.title)
-        self.assertIsNotNone(self.obj.summary)
         self.assertIsNotNone(self.obj.visibility)

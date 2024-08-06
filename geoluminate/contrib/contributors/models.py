@@ -1,67 +1,129 @@
-import json
+import mimetypes
 import random
+from pathlib import Path
 
-from django.apps import apps
-from django.conf import settings
-from django.contrib.contenttypes.fields import GenericForeignKey
-from django.contrib.contenttypes.models import ContentType
+import formset
 from django.contrib.postgres.fields import ArrayField
-from django.db import models as django_models
-from django.db.models import Case, CharField, F, IntegerField, Value, When
-from django.db.models.functions import Concat
+from django.contrib.staticfiles.storage import staticfiles_storage
+from django.core.files.base import ContentFile
 from django.templatetags.static import static
 from django.urls import reverse
-from django.utils.encoding import force_str
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
+from formset.upload import depict_size, file_icon_url, get_thumbnail_path, split_mime_type
+from imagekit.models import ProcessedImageField
+from imagekit.processors import SmartResize
+from polymorphic.models import PolymorphicModel
 from research_vocabs.fields import TaggableConcepts
 
-from geoluminate.contrib.datasets.models import Dataset
-from geoluminate.contrib.projects.models import Project
-from geoluminate.contrib.reviews.models import Review
-from geoluminate.contrib.samples.models import Sample
+from geoluminate.contrib.core.models import AbstractIdentifier
+from geoluminate.contrib.core.utils import inherited_choices_factory
 from geoluminate.db import models
 
-# from geoluminate.models import Dataset, Project, Review, Sample
 from . import choices
-from .managers import ContributionManager, ContributorManager, OrganizationManager, PersonManager
+
+# from django.db.models.fields.files import FieldFile
 
 
-class Contributor(models.Model):
+def profile_image_path(instance, filename):
+    """Return the path to the profile image for a contributor."""
+    return f"contributors/{instance.pk}.webp"
+
+
+THUMBNAIL_MAX_HEIGHT = 200
+THUMBNAIL_MAX_WIDTH = 350
+
+
+def thumbnail_image(storage, file_path, image_height=THUMBNAIL_MAX_HEIGHT):
+    try:
+        from PIL import Image, ImageOps
+
+        image = Image.open(storage.open(file_path))
+    except Exception as e:
+        print(e)
+        return staticfiles_storage.url("formset/icons/file-picture.svg")
+    else:
+        height = int(image_height)
+        width = int(round(image.width * height / image.height))
+        width, height = min(width, THUMBNAIL_MAX_WIDTH), min(height, THUMBNAIL_MAX_HEIGHT)
+        thumb = ImageOps.fit(ImageOps.exif_transpose(image), (width, height))
+        thumbnail_path = get_thumbnail_path(file_path, image_height)
+        thumb_io = ContentFile(b"")
+        thumb.save(thumb_io, format=image.format)
+        thumb_io.seek(0)
+        storage.save(thumbnail_path, thumb_io)
+        return storage.url(thumbnail_path)
+
+
+def get_file_info(field_file):
+    if not field_file:
+        return None
+    file_path = Path(field_file.name)
+    storage = field_file.storage
+    content_type, _ = mimetypes.guess_type(file_path)
+    mime_type, sub_type = split_mime_type(content_type)
+
+    if mime_type == "image":
+        if sub_type == "svg+xml":
+            thumbnail_url = field_file.url
+        else:
+            thumbnail_path = get_thumbnail_path(file_path)
+            if storage.exists(thumbnail_path):
+                thumbnail_url = storage.url(thumbnail_path)
+            else:
+                thumbnail_url = thumbnail_image(storage, file_path)
+    else:
+        thumbnail_url = file_icon_url(mime_type, sub_type)
+
+    if storage.exists(file_path):
+        download_url = field_file.url
+        file_size = depict_size(field_file.size)
+    else:
+        download_url = "javascript:void(0);"
+        thumbnail_url = staticfiles_storage.url("formset/icons/file-missing.svg")
+        file_size = "-"
+    return {
+        "content_type": content_type,
+        "name": file_path.name,
+        "path": field_file.name,
+        "download_url": download_url,
+        "thumbnail_url": thumbnail_url,
+        "size": file_size,
+    }
+
+
+formset.upload.get_file_info = get_file_info
+formset.upload.thumbnail_image = thumbnail_image
+
+
+class Contributor(PolymorphicModel, models.Model):
     """A Contributor is a person or organisation that makes a contribution to a project, dataset, sample or measurement
     within the database. This model stores publicly available information about the contributor that can be used
     for proper attribution and formal publication of datasets. The fields are designed to align with the DataCite
     Contributor schema."""
 
-    objects = ContributorManager().as_manager()
-
-    image = models.ImageField(
-        upload_to="profile_images/",
+    image = ProcessedImageField(
         verbose_name=_("profile image"),
+        processors=[SmartResize(600, 600)],
+        format="WEBP",
+        options={"quality": 60},
         blank=True,
         null=True,
-    )
-
-    user = models.OneToOneField(
-        settings.AUTH_USER_MODEL,
-        related_name="profile",
-        null=True,
-        blank=True,
-        on_delete=models.CASCADE,
-    )
-
-    organization = models.OneToOneField(
-        "organizations.Organization",
-        related_name="profile",
-        null=True,
-        blank=True,
-        on_delete=models.CASCADE,
+        upload_to=profile_image_path,
     )
 
     name = models.CharField(
         max_length=512,
         verbose_name=_("display name"),
         help_text=_("This name is displayed publicly within the website."),
+    )
+
+    alternative_names = ArrayField(
+        base_field=models.CharField(max_length=512),
+        verbose_name=_("alternative names"),
+        help_text=_("Any other names by which the contributor is known."),
+        blank=True,
+        default=list,
     )
 
     about = models.TextField(null=True, blank=True)
@@ -80,21 +142,6 @@ class Contributor(models.Model):
         null=True,
     )
 
-    identifiers = models.ManyToManyField(
-        "core.Identifier",
-        verbose_name=_("identifiers"),
-        help_text=_("A list of identifiers for the contributor."),
-        blank=True,
-    )
-
-    # preferred_lang = models.CharField(
-    #     max_length=255,
-    #     verbose_name=_("preferred language"),
-    #     help_text=_("Language of the contributor."),
-    #     blank=True,
-    #     null=True,
-    # )
-
     class Meta:
         ordering = ["name"]
         verbose_name = _("contributor")
@@ -111,13 +158,16 @@ class Contributor(models.Model):
 
     def location(self):
         """Returns the location of the contributor. TODO: make this a foreign key to a location model."""
-        return random.choice(["Potsdam", "Adelaide", "Dresden"])  # noqa: S311
+        return random.choice(["Potsdam", "Adelaide", "Dresden"])
         if self.user:
             return self.user.organization.location
         return None
 
     def get_absolute_url(self):
-        return reverse("contributor:detail", kwargs={"uuid": self.uuid})
+        return reverse("contributor-detail", kwargs={"pk": self.pk})
+
+    def get_update_url(self):
+        return reverse("contributor-update", kwargs={"pk": self.pk})
 
     def profile_image(self):
         if self.image:
@@ -142,121 +192,16 @@ class Contributor(models.Model):
             return self.user.last_name
         return ""
 
-    @classmethod
-    def get_contribution_by_type(cls, model):
-        if isinstance(model, str):
-            model = apps.get_model(model)
-        return Case(
-            When(
-                contributions__content_type=ContentType.objects.get_for_model(model),
-                then=1,
-            ),
-            output_field=IntegerField(),
-        )
-
-    @property
-    def datasets(self):
-        return Dataset.objects.filter(
-            contributors__profile=self,
-        )
-
-    @property
-    def projects(self):
-        return Project.objects.filter(
-            contributors__profile=self,
-        )
-        # return Contribution.objects.filter(
-        #     profile=self,
-        #     content_type=ContentType.objects.get_for_model(Project),
-        # )
-
-    @property
-    def samples(self):
-        return Contribution.objects.filter(
-            profile=self,
-            content_type=ContentType.objects.get_for_model(Sample),
-        )
-
     @property
     def reviews(self):
         if self.user:
             return self.user.review_set.all()
         # return an empty Review queryset
-        return Review.objects.none()
-
-    def get_related_contributions(self):
-        """Returns a queryset of all contributions related to datasets contributed to by the current contributor."""
-
-        dataset_ids = self.contributions.filter(
-            content_type=ContentType.objects.get_for_model(Dataset),
-        ).values_list("object_id", flat=True)
-
-        return Contribution.objects.filter(object_id__in=dataset_ids)
-
-    def get_network(self):
-        # get list of content_types that the contributor has contributed to
-        object_ids = self.contributions.values_list("object_id", flat=True)
-
-        # get all contributions to those content_types
-        data = (
-            self.get_related_contributions()
-            .values("profile", "object_id")
-            .annotate(
-                id=models.F("profile__id"),
-                label=models.F("profile__name"),
-                image=models.F("profile__image"),
-            )
-            .values("id", "label", "object_id", "image")
-        )
-
-        Concat(
-            F("model__user_first_name"),
-            Value(" "),
-            F("model__user_last_name"),
-            output_field=CharField(),
-        )
-
-        # get unique contributors and count the number of times they appear in the queryset
-        nodes_qs = data.values("id", "label", "image").annotate(value=models.Count("id")).distinct()
-
-        nodes = []
-        for d in nodes_qs:
-            if d["image"]:
-                d["image"] = settings.MEDIA_URL + d["image"]
-            nodes.append(d)
-
-        print("Nodes: ", nodes)
-
-        object_ids = {d["object_id"] for d in data}
-
-        edges = []
-        for obj in object_ids:
-            ids = list({i["id"] for i in data if i["object_id"] == obj})
-
-            ids.sort()
-
-            # get list of unique id pairs
-            pairs = []
-            for i in range(len(ids)):
-                for j in range(i + 1, len(ids)):
-                    pairs.append((ids[i], ids[j]))
-
-            edges += pairs
-
-        # count the number of times each pair appears in edges
-        edges = [{"from": f, "to": t, "value": edges.count((f, t))} for f, t in set(edges)]
-
-        vis_js = {"nodes": list(nodes), "edges": edges}
-        print(edges)
-        # serialize nodes queryset to json
-
-        return json.dumps(vis_js)
+        # return Review.objects.none()
 
     @cached_property
     def owner(self):
-        if self.user:
-            return self.user
-        return self.organization
+        return self.user or self.organization
 
     @property
     def preferred_email(self):
@@ -264,109 +209,11 @@ class Contributor(models.Model):
             return self.user.email
         return self.organization.owner.user.email
 
-    # def is_active(self):
-    # """Returns True if the contributor is listed on a dataset that has been accepted in the past"""
 
-
-class PersonalContributor(Contributor):
-    objects = PersonManager()
-
-    class Meta:
-        proxy = True
-        verbose_name = _("person")
-        verbose_name_plural = _("people")
-
-
-class OrganizationalContributor(Contributor):
-    objects = OrganizationManager()
-
-    class Meta:
-        proxy = True
-        verbose_name = _("organization")
-        verbose_name_plural = _("organizations")
-
-
-class Contribution(django_models.Model):
-    """A contributor is a person or organisation that has contributed to the project or
-    dataset. This model is based on the Datacite schema for contributors."""
-
-    objects = ContributionManager().as_manager()
-
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey("content_type", "object_id")
-
-    CONTRIBUTOR_ROLES = choices.ContributionRoles
-    PERSONAL_ROLES = choices.PersonalRoles
-    ORGANIZATIONAL_ROLES = choices.OrganizationalRoles
-    OTHER_ROLES = choices.OtherRoles
-
-    roles = ArrayField(
-        models.CharField(
-            max_length=len(max(CONTRIBUTOR_ROLES.values, key=len)),
-            choices=CONTRIBUTOR_ROLES.choices,
-            # verbose_name=_("roles"),
-            # help_text=_("Contribution roles as per the Datacite ContributionType vocabulary."),
-        ),
-        verbose_name=_("roles"),
-        help_text=_("Assigned roles for this contributor."),
-        size=len(CONTRIBUTOR_ROLES.choices),
-    )
-    profile = models.ForeignKey(
-        "contributors.Contributor",
-        verbose_name=_("contributor"),
-        help_text=_("The person or organisation that contributed to the project or dataset."),
-        related_name="contributions",
-        null=True,
-        on_delete=models.SET_NULL,
-    )
-    contributor = models.JSONField(
-        _("contributor"),
-        help_text=_("A JSON representation of the contributor profile at the time of publication"),
-        default=dict,
-    )
-
-    class Meta:
-        verbose_name = _("contribution")
-        verbose_name_plural = _("contributions")
-        unique_together = ("profile", "content_type", "object_id")
-        indexes = [
-            models.Index(fields=["content_type", "object_id"]),
-        ]
-
-    def save(self, *args, **kwargs):
-        """Either data or a profile should be passed to the constructor. If data is passed, search the obect for an ORCID and try to find an existing profile. If no profile is found, create a new one. If a profile is passed, use that profile to create a data object."""
-        # if not self.pk:
-        #     # if data is passed to constructor on creation, set the profile field to the data
-        #     if self.contributor and not self.profile:
-        #         self.profile = utils.csljson_to_contributor(self.contributor)
-        #     elif self.profile and not self.contributor:
-        #         self.contributor = utils.csljson_from_contributor(self.profile)
-
-        super().save(*args, **kwargs)
-
-    def __str__(self):
-        return force_str(self.profile)
-
-    def get_absolute_url(self):
-        """Returns the absolute url of the contributor's profile."""
-        return self.profile.get_absolute_url()
-
-    def profile_to_data(self):
-        """Converts the profile to a JSON object."""
-
-        data = {
-            "name": self.profile.name,
-            "given": self.profile.given,
-            "family": self.profile.family,
-        }
-
-        ORCID = self.profile.identifiers.filter(scheme="ORCID").first()
-        if ORCID:
-            data["ORCID"] = ORCID.identifier
-
-        affiliation = self.profile.default_affiliation()
-        if affiliation:
-            data["affiliation"] = affiliation
-
-        return data
+class Identifier(AbstractIdentifier):
+    IdentifierLookup = choices.IdentifierLookup
+    PERS_ID_TYPES = choices.PersonalIdentifiers
+    ORG_ID_TYPES = choices.OrganizationalIdentifiers
+    SCHEME_CHOICES = inherited_choices_factory("ContributorIdentifiers", PERS_ID_TYPES, ORG_ID_TYPES)
+    scheme = models.CharField(_("scheme"), max_length=32, choices=SCHEME_CHOICES)
+    object = models.ForeignKey(to=Contributor, on_delete=models.CASCADE)

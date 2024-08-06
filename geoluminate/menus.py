@@ -1,15 +1,57 @@
-from django.conf import settings
-from django.urls import reverse
-from django.utils.translation import gettext_lazy as _
-from simple_menu import Menu, MenuItem
+import logging
+from contextlib import suppress
 
-from geoluminate.utils import icon
+from django.conf import settings
+from django.urls import reverse, reverse_lazy
+from django.urls.exceptions import NoReverseMatch
+from django.utils.translation import gettext_lazy as _
+from simple_menu import Menu
+from simple_menu import MenuItem as SimpleMenuItem
+
+from geoluminate.contrib.samples.models import Sample
+from geoluminate.utils import get_subclasses, icon
 
 LABELS = settings.GEOLUMINATE_LABELS
 
 
-class GeoluminateMenuBase:
+logger = logging.getLogger(__name__)
+
+
+def is_staff_user(request):
+    return request.user.is_staff
+
+
+def check_url(viewname):
+    """Check to see if a url can be resolved. Return false if not."""
+
+    def inner(request):
+        with suppress(NoReverseMatch):
+            return reverse(viewname)
+
+    return inner
+
+
+def get_sample_menu_items():
+    """Returns a list of all models in the project that subclass from :class:`geoluminate.contrib.samples.models.Sample`."""
+    subclasses = get_subclasses(Sample, include_self=False)
+    # from geoluminate.contrib.samples.models import Sample
+    menus = []
+    for model in subclasses:
+        menu = MenuItem(
+            title=model._meta.verbose_name_plural,
+            url=reverse("sample-list"),
+            weight=7,
+            icon=icon("sample"),
+            description=_("Heat flow are great!"),
+        )
+        menus.append(menu)
+
+    return menus
+
+
+class GeoluminateMenuBase(dict):
     menu_name = ""
+    submenus = {}
 
     @classmethod
     def add_item(c, item):
@@ -24,10 +66,31 @@ class GeoluminateMenuBase:
         add_item adds MenuItems to the menu identified by 'name'
         """
         for menu_item in args:
-            if isinstance(menu_item, MenuItem):
+            if isinstance(menu_item, SubMenu):
+                c.submenus[menu_item.title] = menu_item
+
+            if isinstance(menu_item, MenuItem | SubMenu):
                 c.add_item(menu_item)
             else:
                 raise TypeError(f"add_items expected a MenuItem, but got {type(menu_item)}")
+
+
+class SubMenu(SimpleMenuItem):
+    is_submenu = True
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, url=None, **kwargs)
+
+
+class MenuItem(SimpleMenuItem):
+    def check(self, request):
+        try:
+            reverse_lazy(self.url)
+        except NoReverseMatch:
+            logger.warning(f"Menu item {self.title} has an invalid URL: {self.url}")
+            self.visible = False
+
+        super().check(request)
 
 
 class NavWidgets(GeoluminateMenuBase):
@@ -41,7 +104,7 @@ class Sidebar(GeoluminateMenuBase):
 Sidebar.add_item(
     MenuItem(
         title=LABELS["project"]["verbose_name_plural"],
-        url=reverse("projects:list"),
+        url=reverse("project-list"),
         weight=1,
         icon=icon("project"),
         description=_(
@@ -53,7 +116,7 @@ Sidebar.add_item(
 Sidebar.add_item(
     MenuItem(
         title=LABELS["dataset"]["verbose_name_plural"],
-        url=reverse("datasets:list"),
+        url=reverse("dataset-list"),
         weight=2,
         icon=icon("dataset"),
         description=_(
@@ -62,17 +125,18 @@ Sidebar.add_item(
     ),
 )
 
-# Sidebar.add_item(
-#     MenuItem(
-#         title=LABELS["sample"]["verbose_name_plural"],
-#         url=reverse("samples:list"),
-#         weight=3,
-#         icon=icon("sample"),
-#         description=_(
-#             "Find exactly what you need to advance your data analytics workflow by exploring our extensive collection of samples. Filter through diverse sample types, measured properties, locations and more to find the perfect supplement for your current and future research."
-#         ),
-#     ),
-# )
+Sidebar.add_item(
+    MenuItem(
+        title=LABELS["sample"]["verbose_name_plural"],
+        url=reverse("sample-list"),
+        weight=3,
+        icon=icon("sample"),
+        description=_(
+            "Find exactly what you need to advance your data analytics workflow by exploring our extensive collection of samples. Filter through diverse sample types, measured properties, locations and more to find the perfect supplement for your current and future research."
+        ),
+        children=get_sample_menu_items(),
+    ),
+)
 
 # Sidebar.add_item(
 #     MenuItem(
@@ -105,7 +169,7 @@ Sidebar.add_item(
         children=[
             MenuItem(
                 title=_("Full Catalogue"),
-                url=reverse("review:literature_list"),
+                url=reverse("literature-list"),
                 weight=5,
                 icon=icon("literature"),
                 description=_(
@@ -114,7 +178,7 @@ Sidebar.add_item(
             ),
             MenuItem(
                 title=_("For Review"),
-                url=reverse("review:list"),
+                url=reverse("review-list"),
                 weight=5,
                 icon=icon("review"),
                 description=_(
@@ -128,7 +192,7 @@ Sidebar.add_item(
 Sidebar.add_item(
     MenuItem(
         title=_("Contributors"),
-        url=reverse("contributor:list"),
+        url=reverse("contributor-list"),
         weight=7,
         icon=icon("contributors"),
         description=_(

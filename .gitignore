@@ -101,5 +101,5 @@ geoluminate/static/geoluminate/temp/*
 *.ipython
 assets/webpack-stats.json
 staticfiles
-geoluminate/templates/geoluminate/base/card_copy.html
+geoluminate/templates/geoluminate/cards/standard_copy.html
 *.env

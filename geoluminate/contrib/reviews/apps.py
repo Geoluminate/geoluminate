@@ -7,7 +7,6 @@ class ReviewsConfig(AppConfig):
     label = "reviews"
     verbose_name = _("Reviews")
 
-    # dataset = {"filterset_class": "datasets.filters.DatasetFilter", "filterset_fields": {"title": ["icontains"]}}
     def ready(self):
         from actstream import registry
 

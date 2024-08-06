@@ -39,7 +39,7 @@ ACCOUNT_ADAPTER = "geoluminate.contrib.users.adapters.AccountAdapter"
 """"""
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
-LOGIN_REDIRECT_URL = "user:profile"
+LOGIN_REDIRECT_URL = "/"
 """"""
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-url
@@ -81,7 +81,7 @@ ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 """Log new user in after confirming email"""
 
-ACCOUNT_MAX_EMAIL_ADDRESSES = 5
+ACCOUNT_MAX_EMAIL_ADDRESSES = 4
 """"""
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#authentication-backends
@@ -104,11 +104,11 @@ AUTHENTICATION_BACKENDS = [
 # }
 # """"""
 
-SOCIALACCOUNT_FORMS = {
-    "disconnect": "allauth.socialaccount.forms.DisconnectForm",
-    "signup": "user.forms.SocialSignupForm",
-}
-""""""
+# SOCIALACCOUNT_FORMS = {
+#     "disconnect": "allauth.socialaccount.forms.DisconnectForm",
+#     "signup": "geoluminate.contrib.users.forms.SocialSignupForm",
+# }
+# """"""
 
 SOCIALACCOUNT_AUTO_SIGNUP = False
 """"""
@@ -122,7 +122,7 @@ SOCIALACCOUNT_PROVIDERS = {
 """"""
 
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
-SOCIALACCOUNT_ADAPTER = "geoluminate.contrib.users.adapters.SocialAccountAdapter"
+# SOCIALACCOUNT_ADAPTER = "geoluminate.contrib.users.adapters.SocialAccountAdapter"
 
 ACCOUNT_ALLOW_REGISTRATION = env("DJANGO_ACCOUNT_ALLOW_REGISTRATION")
 """allow registration"""

@@ -1,8 +1,8 @@
-{% extends "geoluminate/base/card.html" %}
+{% extends "geoluminate/cards/standard.html" %}
 {% load i18n contributor_tags %}
 
 {% block subtitle %}
-  {% with obj.contributors.all|role:"ProjectLeader" as contributors %}
+  {% with obj.contributions.all|role:"ProjectLeader" as contributors %}
     {% if contributors %}
       {% include "contributors/names_list.html" %}
       <span data-bs-toggle="popover"

@@ -6,7 +6,7 @@
   <version>{{ dataset.version|default:1 }}</version>
   <sizes>
     <size>{{ dataset.samples.count }} Samples</size>
-    <size>{{ dataset.geoluminate.Location.distinct.count }} Geographic Locations</size>
+    <size>{{ dataset.locations.distinct.count }} Geographic Locations</size>
     {% comment %} create some data in the view {% endcomment %}
   </sizes>
   <formats>

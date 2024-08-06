@@ -7,9 +7,9 @@
   {% endif %}
   <div class="row mx-0 py-1">
     <div class="col-auto px-0">
-      {% avatar comment.user.profile class='shadow rounded-circle' %}
-      <div class='text-center'>
-        <button class='comment-list-toggle mt-1'
+      {% avatar comment.user class='shadow rounded-circle' %}
+      <div class="text-center">
+        <button class="comment-list-toggle mt-1"
                 data-bs-toggle="collapse"
                 data-bs-target="#comments-list-{{ comment.id }}"
                 aria-expanded="true"
@@ -17,11 +17,11 @@
       </div>
     </div>
     <div class="col">
-      <h6 class='card-title'>
+      <h6 class="card-title">
         {% block comment_title %}
           {% if comment.url %}<a href="{{ comment.url }}" rel="nofollow">{% endif %}
             {% if comment.name %}
-              {{ comment.user.profile.name }}
+              {{ comment.user. }}
             {% else %}
               {% trans "Anonymous" %}
             {% endif %}
@@ -33,7 +33,7 @@
           {% if comment.user_id and comment.user_id == comment.content_object.author_id %}
             <span class="comment-author-flag">[{% trans "author" %}]</span>
           {% endif %}
-        {% endblock %}
+        {% endblock comment_title %}
 
       </h6>
       <div class="comment-text">{{ comment.comment|linebreaks }}</div>
@@ -42,7 +42,7 @@
           <a href="#c{{ comment.id }}"
              data-comment-id="{{ comment.id }}"
              class="comment-reply-link btn btn-sm btn-success text-capitalize">
-            <i class='fas fa-reply'></i>
+            {% comment %} {% icon "reply" %} {% endcomment %}
           {% trans "reply" %}</a>
         {% endif %}
       </div>

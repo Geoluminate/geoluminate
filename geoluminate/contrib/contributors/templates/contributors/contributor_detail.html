@@ -1,11 +1,12 @@
-{% extends "geoluminate/base/base_detail.html" %}
+{% extends "geoluminate/base/detail_view.html" %}
 {% load i18n sekizai_tags %}
-{% load static i18n formsetify cms_tags geoluminate sekizai_tags activity_tags %}
+{% load static i18n formsetify geoluminate sekizai_tags activity_tags %}
 
 {% block css %}
   {{ block.super }}
   <link rel="stylesheet" href="{% static "client_side_image_cropping/croppie.css" %}" />
 {% endblock css %}
+
 {% block sidebar_top %}
   <div class="text-center">
     {% comment %} {% render_model_block object "image" %} {% endcomment %}
@@ -25,9 +26,11 @@
       </a>
       {% block actions %}
       {% endblock actions %}
+
     </div>
   </div>
 {% endblock sidebar_top %}
+
 {% block javascript %}
   {{ block.super }}
   <script src="{% static "client_side_image_cropping/croppie.min.js" %}"></script>

@@ -1,0 +1,39 @@
+{% extends "geoluminate/plugins/base.html" %}
+{% load geoluminate i18n partials %}
+
+{% block container %}
+  {% include "geoluminate/base/list_view.html#page" %}
+  <div class="position-absolute top-0 end-0 d-flex flex-column justify-content-center align-items-center">
+    {% if user_has_permission.create %}
+      <a class="btn btn-lg btn-primary shadow rounded-circle m-2"
+         {% modal_form_attrs %}
+         {% comment %}
+         hx-get="{{ create_url }}"
+         {% endcomment %}
+         hx-get="{% url 'contribution-create' pk=object.pk %}">
+        <span>{% icon "plus" title="Add new" %}</span>
+      </a>
+    {% endif %}
+    <div class="dropdown">
+      <button class="btn btn-secondary btn-sm rounded-circle shadow"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false">
+        <i class="fa-solid fa-filter"></i>
+      </button>
+      <div class="dropdown-menu filter-button-group"
+           role="group"
+           aria-label="Contributor type filter dropdown">
+        <button class="dropdown-item" data-filter=".Personal">Person</button>
+        <button class="dropdown-item" data-filter=".Organizational">Organization</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(document).ready(function() {
+      $('.flippable').flip({
+        trigger: 'hover'
+      });
+    });
+  </script>
+{% endblock container %}

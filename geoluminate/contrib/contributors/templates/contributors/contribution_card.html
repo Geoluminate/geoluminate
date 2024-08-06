@@ -1,32 +1,68 @@
 {% load i18n geoluminate contributor_tags %}
 
 {% spaceless %}
-  {% with obj.profile as contributor %}
-    <div class="entry-list-item col-{{ col }} {% if col < 12 %}px-2{% endif %} {{ obj.roles|join:" " }} {{ obj.profile.type }}">
-      <div class="card border-bottom h-100 mb-2">
-        <div class="card-body">
-          <div class="row mx-auto">
-            <div class="col-auto px-0">{% avatar contributor class="rounded-circle" %}</div>
-            <div class="col">
-              <div class="card">
-                <a href="{{ contributor.get_absolute_url }}" class="text-decoration-none">
-                  <div class="card-title">{{ contributor }}</div>
-                </a>
-                {% if contributor.user %}
-                  <div class="card-subtitle">
-                    {% icon "organization" %}
-                    {{ contributor.default_affiliation }}
-                  </div>
-                {% endif %}
-                <div class="card-subtitle">
-                  {% icon "location" %}
-                  {{ contributor.location }}
-                </div>
-              </div>
-            </div>
+  <style>
+    .flippable {
+      aspect-ratio: 1 / 1;
+    }
+  </style>
+  {% with obj.contributor as contributor %}
+    <div class="entry-list-item flippable  {{ contributor.type }}" style="width: 20%">
+      {% comment %} CARD FRONT {% endcomment %}
+      <div class="card front bg-secondary-subtle text-light">
+        {% if object.image %}
+          <img class="card-img" src="{{ object.image.url }}" alt="{{ object }}" height="100%" width="100%" />
+        {% else %}
+          <div class="d-flex h-100  justify-content-center align-items-center text-light">{% svg "user" height="50%" %}</div>
+        {% endif %}
+        <div class="card-img-overlay bg-gradient d-flex align-items-end">
+          <div>
+            <h5 class="card-title">{{ contributor }}</h5>
           </div>
         </div>
-        <div class="card-footer">{% follow_button contributor %}</div>
+      </div>
+      {% comment %} CARD BACK {% endcomment %}
+      <div class="card back">
+        <div class="dropdown position-absolute top-0 end-0">
+          <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa-solid fa-gear"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <a class="dropdown-item"
+                 data-bs-toggle="modal"
+                 data-bs-target="#formModal"
+                 hx-get="{% url "contribution-update" pk=object.pk contribution_pk=obj.pk %}"
+                 hx-target="#formModal .modal-body"
+                 hx-vals='{"fields": "roles"}'
+                 hx-push-url="false">{% trans "Edit" %}</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="{% url "contribution-delete" pk=object.pk contribution_pk=obj.pk %}">{% trans "Remove" %}</a>
+            </li>
+          </ul>
+        </div>
+        <div class="card-body">
+          {% if contributor.user %}
+            <div class="card-subtitle">
+              {% icon "organization" %}
+              {{ contributor.default_affiliation }}
+            </div>
+          {% endif %}
+          <div class="card-subtitle">
+            {% icon "location" %}
+            {{ contributor.location }}
+          </div>
+          <i class="fa-solid fa-envelope"></i>
+          <i class="fa-brands fa-orcid"></i>
+          {% comment %} <i>
+            {% include "icons/brands/orcid.svg" %}
+          </i> {% endcomment %}
+        </div>
+        <div class="card-footer d-flex">
+          <a href="{{ contributor.get_absolute_url }}" class="btn btn-sm btn-primary ms-auto">{% trans "View profile" %}</a>
+        </div>
+        {% comment %} <div class="card-footer">{% follow_button contributor %}</div> {% endcomment %}
       </div>
     </div>
   {% endwith %}

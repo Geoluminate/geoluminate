@@ -3,6 +3,7 @@
 
 {% block card_header %}
 {% endblock card_header %}
+
 {% block card_body %}
   <div class="card-body p-0 p-md-3 h-100 d-flex flex-column justify-content-end">
     {% comment %} <div class="pt-2 d-flex flex-wrap justify-content-center">
@@ -19,6 +20,7 @@
       {% block title %}
         <span>{{ obj.title }}</span>
       {% endblock title %}
+
     </h5>
     <h6>
       {% block subtitle %}
@@ -28,11 +30,13 @@
               data-bs-title="{% trans "Creators" %}"
               data-bs-content="{% trans "The following people are listed as creators of this database item." %}">{% icon "contributors" %}</span>
       {% endblock subtitle %}
+
     </h6>
     <p class="card-text line-clamp max-lines-5 d-none d-md-block overflow-y-hidden" height="50px">
       {% block description %}
-        {{ obj.get_abstract.clean }}
+        {% comment %} {{ obj.get_abstract.clean }} {% endcomment %}
       {% endblock description %}
+
     </p>
     {% if obj.get_tags_list %}
       <div class="card-footer">
@@ -42,11 +46,14 @@
               {% block badges %}
                 {% for tag in obj.get_tags_list %}<span class="badge rounded-pill">{{ tag }}</span>{% endfor %}
               {% endblock badges %}
+
             </div>
             {% block info %}
             {% endblock info %}
+
           </div>
         {% endblock footer %}
+
       </div>
     {% endif %}
     {% with obj.modified|timesince as last_updated %}
@@ -61,5 +68,6 @@
     </div> {% endcomment %}
   </a>
 {% endblock card_body %}
+
 {% block card_footer %}
 {% endblock card_footer %}

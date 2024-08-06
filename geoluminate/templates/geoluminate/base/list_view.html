@@ -1,15 +1,143 @@
-{% load i18n formsetify geoluminate static %}
+{% extends "geoluminate/sidebar_left.html" %}
+{% load i18n geoluminate static partials el_pagination_tags crispy_forms_tags %}
+{% load render_bundle from webpack_loader %}
 
+{% partialdef list-filter %}
+{% if is_filtered %}
+  <div class="filter-info container d-flex justify-content-between">
+    <span class="text-muted">Filters matched {{ filtered_object_count }} out of {{ total_object_count }} total {{ meta.title }}.</span>
+    <button class="btn btn-sm btn-warning list-filter-clear"
+            hx-get="{{ request.path }}"
+            hx-target="#templateWrapper"
+            hx-push-url="true">{% trans "Clear Filters" %}</button>
+  </div>
+{% endif %}
+{% endpartialdef %}
+
+{% partialdef object-list %}
+{% paginate page_size object_list %}
+{% with object_list|verbose_name_plural as obj_name_plural %}
+  {% for obj in object_list %}
+    {% with obj|verbose_name as obj_name %}
+      {% include object_template %}
+    {% endwith %}
+  {% empty %}
+    {% blocktranslate %}
+    <p>Looks like there are no {{ obj_name_plural }} here yet.</p>
+    {% endblocktranslate  %}
+  {% endfor %}
+  {% show_more %}
+{% endwith %}
+{% endpartialdef %}
+
+{% partialdef page %}
 <div id="templateWrapper" class="entry-list-container">
-  {% if is_filtered %}
-    <div class="filter-info container d-flex justify-content-between">
-      <span class="text-muted">Filters matched {{ filtered_object_count }} out of {{ total_object_count }} total {{ meta.title }}.</span>
-      <button class="btn btn-sm btn-warning list-filter-clear"
-              hx-get="{{ request.path }}"
-              hx-target="#templateWrapper"
-              hx-push-url="true">{% trans "Clear Filters" %}</button>
-    </div>
-    <hr />
-  {% endif %}
-  <div class="entry-list">{% include page_template %}</div>
+  {% partial list-filter %}
+  <div class="w-100 d-flex flex-wrap">{% partial object-list %}</div>
 </div>
+{% endpartialdef %}
+
+{% block css %}
+  {{ block.super }}
+  {% render_bundle "detail" "css" "GEOLUMINATE" %}
+{% endblock css %}
+
+{% block javascript %}
+  {{ block.super }}
+  {% render_bundle "list" "js" "GEOLUMINATE" attrs="defer" %}
+  <script src="{% static "el-pagination/js/el-pagination.js" %}" defer></script>
+{% endblock javascript %}
+
+{% block sidebar_title %}
+  {% trans "Filter by" %}
+{% endblock sidebar_title %}
+
+{% block sidebar %}
+  {% crispy filter.form filter.sidebar %}
+{% endblock sidebar %}
+
+{% block sidebar_footer %}
+  <button class="btn btn-warning list-filter-clear"
+          hx-get="{{ request.path }}"
+          hx-target="#templateWrapper"
+          hx-push-url="true"
+          {% comment %}
+          hx-on::before-request="clearFilter()"
+          {% endcomment %}>{% trans "Clear Filters" %}</button>
+  <button class="btn btn-primary"
+          type="submit"
+          form="{{ filter.form.form_id }}"
+          hx-get="{{ request.path }}"
+          hx-include="#{{ filter.form.form_id }}"
+          hx-target="#templateWrapper"
+          hx-push-url="true">{% trans "Apply" %}</button>
+{% endblock sidebar_footer %}
+
+{% block main %}
+  <div class="page-content container d-block entry-list py-3">
+    <header>
+      <h1 class="display-1">
+        {% block heading %}
+          {{ meta.title }}
+        {% endblock heading %}
+
+      </h1>
+      {% comment %} <a type="button" class="text-primary ms-auto fs-3" data-bs-toggle="modal" data-bs-target="#listDescriptionModal">{% svg "info" %}</a> {% endcomment %}
+    </header>
+    {% if list_filter_top %}
+      <div class="toolbar py-2 w-100">
+        {% crispy filter.form filter.top_helper %}
+      {% endif %}
+      <button class="d-block d-xl-none btn btn-primary ms-1" data-bs-target="#pageSidebar" data-bs-toggle="modal">
+        <i class="fas fa-filter"></i>
+      </button>
+      {% if permissions.create %}
+        <a class="btn btn-success text-nowrap ms-2"
+           hx-target="#exampleModal .modal-content"
+           data-bs-toggle="modal"
+           data-bs-target="#exampleModal">
+          <span>{% icon "plus" title="Create new" %}
+          {% trans "New " %}</span>
+        </a>
+      {% endif %}
+    </div>
+    <hr class="mt-0 border border-primary" />
+    {% partial page %}
+  </div>
+{% endblock main %}
+
+{% block toolbar_right %}
+  <a class="btn text-primary content-sidebar-toggle"
+     href="#pageSidebar"
+     data-bs-toggle="offcanvas"
+     role="button"
+     aria-controls="pageSidebar"
+     aria-expanded="true">
+    <i class="fas fa-filter"></i>
+  </a>
+{% endblock toolbar_right %}
+
+{% block body_end %}
+  {{ block.super }}
+  <!-- Modal -->
+  <div class="modal fade"
+       id="listDescriptionModal"
+       tabindex="-1"
+       aria-labelledby="listDescriptionModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="listDescriptionModalLabel">{{ meta.title }}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          {% block description %}
+            {{ description }}
+          {% endblock description %}
+
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock body_end %}

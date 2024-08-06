@@ -1,0 +1,24 @@
+{% load static sekizai_tags %}
+
+<div class="table-wrapper h-100">
+  <table id="{{ table.get_id }}"
+         class="datatable w-100 {{ table_css_class }}"
+         data-ajax="{{ table.url|default_if_none:request.path }}?format=datatables">
+    {{ table.get_config|json_script }}
+    <thead>
+      <tr>
+        {% for f in table.build_columns %}
+          <th {% for k, v in f.items %}{% if k != "title" %}data-{{ k }}= "{{ v }}"{% endif %}{% endfor %} class="{{ f.class }} {{ f.name }}">{{ f.title|capfirst }}
+          </th>
+        {% endfor %}
+      </tr>
+    </thead>
+  </table>
+</div>
+{% comment %} djlint:off {% endcomment %}
+<script>
+  $(document).ready(function() {
+    var $table = $("#{{ table.get_id }}").AutoTable();
+  })
+</script>
+{% comment %} djlint:on {% endcomment %}

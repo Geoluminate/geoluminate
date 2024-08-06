@@ -27,7 +27,6 @@ celery = "^5.2.7"
 crispy-bootstrap5 = "^2024.2"
 dj-rest-auth = "^3.0.0"
 django = {extras = ["argon2"], version = ">=3.2"}
-django-account-management = {git = "https://github.com/SamuelJennings/django-account-management.git", rev = "main"}
 django-activity-stream = "^2.0.0"
 django-adminactions = "^2.0.0"
 django-allauth = {extras = ["mfa", "socialaccount"], version = "^64.0.0"}

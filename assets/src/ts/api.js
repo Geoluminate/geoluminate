@@ -8,7 +8,7 @@ export const fetchAPISchema = SwaggerClient({
 })
 
 fetchAPISchema.then((client) => {
-  client.apis.samples.samples_list({}).then((response) => {
+  client.apis.geoluminate.Samples_list({}).then((response) => {
     console.log('Response from samples:', response.body)
   })
 })

@@ -1054,7 +1054,7 @@ name = "django-account-management"
 version = "0.1.0"
 description = "Tools for managing django user accounts."
 optional = false
-python-versions = "^3.10"
+python-versions = ">=3.10,<4.0"
 files = []
 develop = false
 
@@ -1066,7 +1066,7 @@ django-simple-menu = "^2.1.3"
 type = "git"
 url = "https://github.com/SamuelJennings/django-account-management.git"
 reference = "main"
-resolved_reference = "8da66d37851a427be6d77e5503d991408fceb13c"
+resolved_reference = "66a12f114febe0d812349821716a0d7fbd7bc1ca"
 
 [[package]]
 name = "django-activity-stream"

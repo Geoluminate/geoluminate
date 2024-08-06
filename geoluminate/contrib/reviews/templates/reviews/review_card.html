@@ -3,8 +3,10 @@
 
 {% block card_header %}
 {% endblock card_header %}
+
 {% block card_body %}
 {% endblock card_body %}
+
 {% block pretitle %}
   {% with obj.review.reviewer.profile as profile %}
     <h6 class="my-0 text-muted fw-light">
@@ -13,12 +15,15 @@
     </h6>
   {% endwith %}
 {% endblock pretitle %}
+
 {% block card_head_status %}
   <span class="badge text-bg-primary {{ obj.review.status|slugify }}">{{ obj.review.get_status_display|default:"Open" }}</span>
 {% endblock card_head_status %}
+
 {% block subtitle %}
   <span class="text-muted">{{ obj.authors }}</span>
 {% endblock subtitle %}
+
 {% block card_left %}
   <h6>{% trans "Submitted" %}:</h6>
   <span>{{ obj.review.submitted|date|default:"-" }}</span>
@@ -27,12 +32,13 @@
   <h6>{% trans "Database Release" %}:</h6>
   <span class="ms-2">{{ geoluminate.database.name }} v{% now "Y" %}.1</span>
 {% endblock card_left %}
+
 {% comment %} {% block footer_info %}
   {% trans "Release" %}: <span class="ms-2">{{ geoluminate.database.name }} v{% now "Y" %}.1</span>
 {% endblock footer_info %} {% endcomment %}
 {% block actions %}
   {% if not obj.review %}
-    <a href="{% url "review:accept-literature" pk=obj.id %}" class="btn btn-success btn-sm">{% trans "Begin Review" %}</a>
+    <a href="{% url "review-accept-literature" pk=obj.id %}" class="btn btn-success btn-sm">{% trans "Begin Review" %}</a>
   {% endif %}
   {% if request.user == obj.review.reviewer %}
     <a href="{{ obj.get_absolute_url }}" class="btn btn-success btn-sm">{% trans "Continue" %}</a>

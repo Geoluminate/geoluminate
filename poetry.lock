@@ -1144,21 +1144,20 @@ name = "django-auto-datatables"
 version = "0.0.1"
 description = "A high-level Django app for easily creating datatables(.net) from models."
 optional = false
-python-versions = ">=3.9,<4.0"
+python-versions = ">=3.10,<4.0"
 files = []
 develop = false
 
 [package.dependencies]
-django = ">=3.2"
-djangorestframework-datatables = "^0.7.0"
-djangorestframework-datatables-editor = "^0.3.3"
+django = "^5.0.7"
+djangorestframework-datatables = "^0.7.2"
 drf-schema-adapter = "^3.0.6"
 
 [package.source]
 type = "git"
 url = "https://github.com/SSJenny90/django-auto-datatables.git"
 reference = "main"
-resolved_reference = "c9d3dffe738ce67364a6ab5052cc7f1077feb561"
+resolved_reference = "0bedc7f6c108bfd5c6d8066d31d111b26fe53dc3"
 
 [[package]]
 name = "django-bleach"
@@ -2164,20 +2163,6 @@ files = [
 
 [package.dependencies]
 djangorestframework = ">=3.14.0"
-
-[[package]]
-name = "djangorestframework-datatables-editor"
-version = "0.3.3"
-description = "Seamless integration between Django REST framework and Datatables (https://datatables.net) with supporting Datatables editor"
-optional = false
-python-versions = "*"
-files = [
-    {file = "djangorestframework-datatables-editor-0.3.3.tar.gz", hash = "sha256:735b66a574694fcf958a58a364fd070c18866c3ac845f96490ac648858415465"},
-    {file = "djangorestframework_datatables_editor-0.3.3-py2.py3-none-any.whl", hash = "sha256:9c688a553e4d0c78324969b695ecd7cfcb8903edd57c2d462f9eb17966daa7e0"},
-]
-
-[package.dependencies]
-djangorestframework = ">=3.9.1"
 
 [[package]]
 name = "djangorestframework-gis"

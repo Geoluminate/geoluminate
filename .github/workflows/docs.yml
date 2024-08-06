@@ -43,15 +43,6 @@ jobs:
           sudo apt-get install --no-install-recommends -y binutils libproj-dev gdal-bin libsqlite3-mod-spatialite
           source .venv/bin/activate
           poetry run invoke docs
-      # - name: Copy docs to documentation branch
-      #   run: |
-      #     git checkout -b documentation  # Create a new branch named 'documentation' if it doesn't exist
-      #     # rm -rf ./*  # Clean the current contents of the 'documentation' branch
-      #     cp -r docs/_build/* ./  # Copy the built documentation
-      #     git add .
-      #     git commit -m "Update documentation"
-      #     git push origin documentation  # Push changes to the 'documentation' branch
-
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1

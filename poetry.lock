@@ -1246,24 +1246,6 @@ docs = ["furo", "sphinx", "sphinx-copybutton", "sphinx-inline-tabs", "sphinx-not
 tests = ["akismet", "coverage", "tomli"]
 
 [[package]]
-name = "django-content-license"
-version = "0.0.1"
-description = "Store license information alongside your Django data models"
-optional = false
-python-versions = ">=3.8,<4.0"
-files = []
-develop = false
-
-[package.dependencies]
-django = ">=3.2"
-
-[package.source]
-type = "git"
-url = "https://github.com/Geoluminate/django-content-license.git"
-reference = "main"
-resolved_reference = "329b5631751ecb4b19ac5b150f154ebfb0be8752"
-
-[[package]]
 name = "django-contrib-comments"
 version = "2.2.0"
 description = "The code formerly known as django.contrib.comments."
@@ -5599,4 +5581,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<4.0"
-content-hash = "5541af395e31e6b7d3695769b4d3cce2147a5cd1de9554c6e7ed1cc254dec1e2"
+content-hash = "346ad7984e5c7fe9af3f1ea7bfba78b8ac308575f142d86530d257af93916b96"

@@ -1,0 +1,7 @@
+{% extends "geoluminate/layout/container.html" %}
+{% block container %}
+  {% for group in groups %}
+    <h1>{{ group.name }}</h1>
+    {% for user in group.user_set.all %}<p>{{ user.first_name }} {{ user.last_name }}</p>{% endfor %}
+  {% endfor %}
+{% endblock container %}

@@ -1,0 +1,33 @@
+{% extends "geoluminate/plugins/page.html" %}
+{% load i18n static comments geoluminate %}
+
+{% block title %}
+  {% trans "Discussion" %}
+{% endblock title %}
+
+{% block toolbar %}
+{% endblock toolbar %}
+
+{% block help_text %}
+  {% if user.is_authenticated %}
+    This section aims to promote healthy discussion within the community. Before contributing, please read and fully understand the community's expectations regarding respectful and professional communication laid out in our <a href="{% url "user:code_of_conduct" %}" class="alert-link">code of conduct</a>.
+  {% else %}
+    This section aims to promote healthy discussion within the community.
+    <a href="#"
+       class="alert-link"
+       role="button"
+       aria-expanded="false"
+       data-bs-toggle="offcanvas"
+       data-bs-target="#userToolbar">Login or sign up</a> now to contribute to this discussion.
+  {% endif %}
+{% endblock help_text %}
+
+{% block content %}
+  <script type="text/javascript" src="{% static "fluent_comments/js/ajaxcomments.js" %}"></script>
+  {% get_comment_count for object as comment_count %}
+  {% render_comment_form for object %}
+  {% if not comment_count and not user.is_authenticated %}
+    {% trans "Looks like there's nothing here yet." %}
+  {% endif %}
+  {% render_comment_list for object %}
+{% endblock content %}

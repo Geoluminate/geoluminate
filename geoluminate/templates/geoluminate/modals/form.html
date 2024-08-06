@@ -1,4 +1,4 @@
-{% load crispy_forms_tags i18n %}
+{% load i18n %}
 
 <div id="{{ modal_id }}"
      class="modal fade"
@@ -8,8 +8,8 @@
      aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
-      {% include 'geoluminate/modals/header.html' with header='Filter Publications' %}
-      <div class='modal-body'>
+      {% include "geoluminate/modals/header.html" with header="Filter Publications" %}
+      <div class="modal-body">
         <div>
           {% comment %} {% if helper %}{% crispy form helper %}{% else %}{% crispy form %}{% endif %} {% endcomment %}
         </div>

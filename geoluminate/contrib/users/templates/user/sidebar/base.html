@@ -1,0 +1,34 @@
+{% load i18n geoluminate %}
+
+<div id="userNavOffcanvas"
+     class="offcanvas offcanvas-end"
+     tabindex="-1"
+     aria-labelledby="userNavOffcanvasHeader">
+  <div id="userNavOffcanvasHeader" class="offcanvas-header">
+    <div class="d-flex align-items-center justify-content-center w-100">
+      {% avatar user class='rounded-circle shadow' %}
+      {% trans "Guest" as guest %}
+      <h5 class="offcanvas-title ms-2">{{ user|default:guest }}</h5>
+      <button type="button"
+              class="btn-close ms-auto"
+              data-bs-dismiss="offcanvas"
+              aria-label="{% trans "Close" %}"></button>
+    </div>
+  </div>
+  {% block widgets %}
+  {% endblock widgets %}
+
+  {% comment %} <div class='d-flex w-100 border-bottom bg-border-subtle'>
+    {% for widget in user_sidebar_widgets %}
+      {% include widget %}
+    {% endfor %}
+  </div> {% endcomment %}
+  <div class="offcanvas-body">
+    {% block body %}
+    {% endblock body %}
+
+  </div>
+  {% block footer %}
+  {% endblock footer %}
+
+</div>

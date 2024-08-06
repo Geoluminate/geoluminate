@@ -1,0 +1,19 @@
+{% load i18n easy_icons geoluminate %}
+
+{% if not user.is_authenticated %}
+  <a class="navbar-toggler border-0 d-flex align-items-center" href="{% url "account_login" %}">
+    <span data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="{% trans "Sign In" %}">
+      {% icon "login" %}
+    </span>
+  </a>
+{% else %}
+  <a class="py-lg-0 nav-link d-flex align-items-center h-100"
+     role="button"
+     aria-expanded="false"
+     data-bs-toggle="offcanvas"
+     data-bs-target="#userNavOffcanvas"
+     title="{% trans "Toggle user navigation" %}"
+     aria-label="{% trans "Toggle user navigation" %}">
+    {% avatar user width="36.7px" class='rounded-circle shadow border border-2 border-light shadow' %}
+  </a>
+{% endif %}

@@ -1,0 +1,45 @@
+{% extends "user/settings/base.html" %}
+{% load i18n socialaccount %}
+
+{% block form_content %}
+  <style>
+    i>svg {
+      width: 24px;
+    }
+  </style>
+  <h6>{% trans "ORCID" %}</h6>
+  {% if user.orcid %}
+    {% url "socialaccount_connections" as connected_accounts_url %}
+    {% with user.orcid.id as orcid_id %}
+      {% blocktrans %}
+    <p>You have an authenticated ORCID iD <span class='fw-medium'>{{ orcid_id }}</span> connected to your profile. You can disconnect it via the <a href="{{ connected_accounts_url }}">Connected Accounts</a> page.</p>
+    {% endblocktrans %}
+    {% endwith %}
+  {% else %}
+    {% blocktrans %}
+  <p>
+    Connecting an authenticated ORCID iD to your profile is crucial in order for you to gain appropriate credit for your research data outputs. Without this, the only identifying information available to publishers, DOI minting services and metadata harvesters is your name and primary affiliation. Connecting an authenticated ORCID iD will ensure proper credit is <em>always</em> attributed back to you.
+  </p>
+  <p>
+    You can learn more about the benefits of an ORCID iD at <a href="https://orcid.org">orcid.org</a>
+  </p>
+  {% endblocktrans %}
+    {% get_providers as socialaccount_providers %}
+    {% for provider in socialaccount_providers %}
+      {% if provider.id == "orcid" %}
+        <form method="post" action="{% provider_login_url "orcid" process="connect" %}">
+          {% csrf_token %}
+          <button class="btn bg-secondary-subtle d-flex align-items-center mb-3" type="submit">
+            <i class="me-1">
+              {% include "icons/brands/orcid.svg" %}
+            </i>
+            {% trans "Connect your ORCID iD" %}
+          </button>
+        </form>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+  <hr />
+  <h6>{% trans "Additional identifiers" %}</h6>
+  {{ block.super }}
+{% endblock form_content %}

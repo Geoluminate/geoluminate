@@ -96,7 +96,6 @@ tldextract = "^3.4.0"
 whitenoise = "^6.4.0"
 django-content-license = {git = "https://github.com/Geoluminate/django-content-license.git", rev = "main"}
 django-research-vocabs = {git = "https://github.com/Geoluminate/django-research-vocabs.git", rev = "master"}
-django-auto-datatables = {git = "https://github.com/SSJenny90/django-auto-datatables.git", rev = "main"}
 
 
 

@@ -1140,26 +1140,6 @@ files = [
 django = "*"
 
 [[package]]
-name = "django-auto-datatables"
-version = "0.0.1"
-description = "A high-level Django app for easily creating datatables(.net) from models."
-optional = false
-python-versions = ">=3.10,<4.0"
-files = []
-develop = false
-
-[package.dependencies]
-django = "^5.0.7"
-djangorestframework-datatables = "^0.7.2"
-drf-schema-adapter = "^3.0.6"
-
-[package.source]
-type = "git"
-url = "https://github.com/SSJenny90/django-auto-datatables.git"
-reference = "main"
-resolved_reference = "0bedc7f6c108bfd5c6d8066d31d111b26fe53dc3"
-
-[[package]]
 name = "django-bleach"
 version = "3.1.0"
 description = "Easily use bleach with Django models and templates"
@@ -2149,20 +2129,6 @@ files = [
 [package.dependencies]
 django = ">=3.0"
 pytz = "*"
-
-[[package]]
-name = "djangorestframework-datatables"
-version = "0.7.2"
-description = "Seamless integration between Django REST framework and Datatables (https://datatables.net)"
-optional = false
-python-versions = "*"
-files = [
-    {file = "djangorestframework_datatables-0.7.2-py2.py3-none-any.whl", hash = "sha256:fd5747b1e3d0bfb84713a975394dd4d879b57ee8bc66cc0f97566fa67f4406f4"},
-    {file = "djangorestframework_datatables-0.7.2.tar.gz", hash = "sha256:d7953968088ceb14968621a0c0a83d2f39ec1cda24b5ebe1240f3c9619bc7129"},
-]
-
-[package.dependencies]
-djangorestframework = ">=3.14.0"
 
 [[package]]
 name = "djangorestframework-gis"
@@ -5633,4 +5599,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<4.0"
-content-hash = "b88377db35ed2f1deb0b760089c8ed874fa1c87baf3b0e9396d889accbc2b76e"
+content-hash = "5541af395e31e6b7d3695769b4d3cce2147a5cd1de9554c6e7ed1cc254dec1e2"

@@ -1,21 +1,32 @@
-{% extends "geoluminate/plugins/page.html" %}
-{% load i18n formsetify contributor_tags geoluminate static %}
+{% extends "geoluminate/plugins/base.html" %}
+{% load i18n formsetify contributor_tags geoluminate static partials %}
 
-{% comment %} {% block title %}
-  {{ geoluminate.database.short_name }} {{ block.super }}
-{% endblock title %} {% endcomment %}
-{% block toolbar %}
-{% endblock toolbar %}
-{% block help_text %}
-{% endblock help_text %}
-{% block content %}
-  <h1 class="display-3">{{ object.title }}</h1>
-  <p class="small text-decoration-none">
-    {% include "contributors/names_list.html" with contributors=object.contributors|role:"Creator" %}
-  </p>
-  {% for description in object.get_descriptions %}
-    {% include "core/description.html" %}
-  {% empty %}
-    {% trans "You do not have any descriptions yet." %}
-  {% endfor %}
-{% endblock content %}
+{% partialdef description %}
+<div id="{{ description.type }}Description" class="section-header">
+  <h5 class="mb-0">{{ description.get_type_display }}</h5>
+  {{ description.text|linebreaks }}
+</div>
+{% endpartialdef %}
+
+{% block container %}
+  <h1 class="display-3">{{ object }}</h1>
+  {% comment %} <p class="small text-decoration-none">
+    {% include "contributors/names_list.html" with contributors=object.contributions|role:"Creator" %}
+  </p> {% endcomment %}
+  <div class="description-container">
+    {% for description in object.descriptions.all %}
+      {% include "core/description.html#description" %}
+    {% empty %}
+      <p>{% trans "No descriptions have been provided for this resource yet." %}</p>
+    {% endfor %}
+    <div class="position-absolute top-0 end-0 d-flex flex-column justify-content-center align-items-center m-2">
+      {% if user_has_permission.create %}
+        <a class="btn btn-lg btn-primary shadow rounded-circle"
+           {% modal_form_attrs %}
+           hx-get="{% url 'description-create' pk=object.pk object_type=base_model_name %}">
+          <span>{% icon "plus" title="Add new" %}</span>
+        </a>
+      {% endif %}
+    </div>
+  </div>
+{% endblock container %}

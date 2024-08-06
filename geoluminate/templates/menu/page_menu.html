@@ -5,8 +5,10 @@
     <li class="nav-item" role="presentation">
       <a class="nav-link {{ item.extra_classes }} {% if forloop.first %}show active{% endif %}"
          id="{{ item.title|slugify }}-tab"
-         data-bs-toggle="pill"
-         data-bs-target="#{{ item.title|slugify }}-panel"
+         hx-get="{{ item.resolved }}"
+         {% comment %}
+         hx-target="#{{ item.title|slugify }}-panel"
+         {% endcomment %}
          type="button"
          role="tab"
          aria-controls="pills-home"
@@ -14,10 +16,6 @@
         <i class="fas {{ item.icon }}"></i>
         <span class="d-none d-md-inline-block">{{ item.title }}</span>
       </a>
-      {% comment %} <a href="{{ item.resolved }}" class="nav-link {{ item.extra_classes }} {% if forloop.first %}active{% endif %}" hx-get="{{ item.resolved }}" {% for key, val in htmx.items %} hx-{{ key }}="{{ val }}" {% endfor %} hx-replace-url="{{ item.resolved }}" data-bs-toggle="tab" role="tab">
-        <i class="fas {{ item.icon }}"></i>
-        <span class='d-none d-md-inline-block'>{{ item.title }}</span>
-      </a> {% endcomment %}
     </li>
   {% endfor %}
   <div class="ms-auto d-inline-flex">

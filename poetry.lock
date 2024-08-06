@@ -1175,7 +1175,7 @@ drf-schema-adapter = "^3.0.6"
 
 [package.source]
 type = "git"
-url = "https://github.com/SSJenny90/django-auto-datatables"
+url = "https://github.com/SSJenny90/django-auto-datatables.git"
 reference = "main"
 resolved_reference = "c9d3dffe738ce67364a6ab5052cc7f1077feb561"
 
@@ -1299,7 +1299,7 @@ django = ">=3.2"
 
 [package.source]
 type = "git"
-url = "https://github.com/Geoluminate/django-content-license"
+url = "https://github.com/Geoluminate/django-content-license.git"
 reference = "main"
 resolved_reference = "329b5631751ecb4b19ac5b150f154ebfb0be8752"
 
@@ -1894,9 +1894,9 @@ rdflib = "^7.0.0"
 
 [package.source]
 type = "git"
-url = "https://github.com/Geoluminate/django-research-vocabs"
+url = "https://github.com/Geoluminate/django-research-vocabs.git"
 reference = "master"
-resolved_reference = "4fdd05b27403a693c2eefc5deedeb77024c11ac7"
+resolved_reference = "034b52417d50db01bfb3afad1ffebbdce14cb884"
 
 [[package]]
 name = "django-rest-polymorphic"
@@ -2172,18 +2172,17 @@ pytz = "*"
 
 [[package]]
 name = "djangorestframework-datatables"
-version = "0.7.1"
+version = "0.7.2"
 description = "Seamless integration between Django REST framework and Datatables (https://datatables.net)"
 optional = false
 python-versions = "*"
 files = [
-    {file = "djangorestframework-datatables-0.7.1.tar.gz", hash = "sha256:09c3202b61a9fe937074796c518fa06e8996569fab5f7214f5340e89cbdd51cb"},
-    {file = "djangorestframework_datatables-0.7.1-py2.py3-none-any.whl", hash = "sha256:54a2acd1932075033c4cabb0bb98b23e5cfc79e80369549b3c5e27fe4203ef98"},
+    {file = "djangorestframework_datatables-0.7.2-py2.py3-none-any.whl", hash = "sha256:fd5747b1e3d0bfb84713a975394dd4d879b57ee8bc66cc0f97566fa67f4406f4"},
+    {file = "djangorestframework_datatables-0.7.2.tar.gz", hash = "sha256:d7953968088ceb14968621a0c0a83d2f39ec1cda24b5ebe1240f3c9619bc7129"},
 ]
 
 [package.dependencies]
 djangorestframework = ">=3.14.0"
-pytz = "*"
 
 [[package]]
 name = "djangorestframework-datatables-editor"
@@ -5668,4 +5667,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<4.0"
-content-hash = "92fde2671e9f353bac3fffe70e8029b0bcb287d844186144672d406c38c026fd"
+content-hash = "c6e6b6fdcab8f447f1d71e6242ce24c7ee91776a604a3a22a9b3483e5df93127"

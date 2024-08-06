@@ -95,6 +95,9 @@ pyyaml = "^6.0"
 redis = "^4.5.2"
 tldextract = "^3.4.0"
 whitenoise = "^6.4.0"
+django-content-license = {git = "https://github.com/Geoluminate/django-content-license.git", rev = "main"}
+django-research-vocabs = {git = "https://github.com/Geoluminate/django-research-vocabs.git", rev = "master"}
+django-auto-datatables = {git = "https://github.com/SSJenny90/django-auto-datatables.git", rev = "main"}
 
 
 
@@ -121,9 +124,6 @@ pytest-sugar = "^0.9.7"
 tox = "^4.4.6"
 types-python-dateutil = "^2.8.19.12"
 types-requests = "^2.28.11.17"
-django-content-license = {git = "https://github.com/Geoluminate/django-content-license", rev = "main"}
-django-research-vocabs = {git = "https://github.com/Geoluminate/django-research-vocabs", rev = "master"}
-django-auto-datatables = {git = "https://github.com/SSJenny90/django-auto-datatables", rev = "main"}
 importtime-waterfall = "^1.0.0"
 
 [build-system]

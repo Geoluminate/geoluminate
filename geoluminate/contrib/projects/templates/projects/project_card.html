@@ -1,6 +1,6 @@
-{% extends "geoluminate/base/card.html" %}
+{% extends "geoluminate/cards/standard.html" %}
 {% load i18n contributor_tags %}
 
 {% block subtitle %}
-  {% include "contributors/names_list.html" with contributors=obj.contributors.all|role:"ProjectLeader" %}
+  {% include "contributors/names_list.html" with contributors=obj.contributions.all|role:"ProjectLeader" %}
 {% endblock subtitle %}

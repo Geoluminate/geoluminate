@@ -1,56 +1,47 @@
-{% load i18n static geoluminate cms_tags menu_tags %}
+{% load i18n static geoluminate %}
 
 <header class="navbar navbar-expand-lg bd-navbar navbar-dark bg-primary bg-gradient mb-0">
   <nav class="container-fluid bd-gutter flex-wrap flex-lg-nowrap" aria-label="Main navigation">
     {% include "geoluminate/navigation/widgets/database_navigation.html" %}
-    {# djlint:off D018 #}
-    <a class="navbar-brand p-0 me-0 me-lg-2" href="/">{{ geoluminate.database.short_name }}</a>{# djlint:on #}
-    <div class="d-flex">
-      <button class="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent"
-              aria-expanded="false"
-              aria-label="{% trans "Toggle site navigation" %}">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    </div>
-    <div class="offcanvas-lg offcanvas-end flex-grow-1"
-         tabindex="-1"
-         id="bdNavbar"
-         aria-labelledby="bdNavbarOffcanvasLabel"
-         data-bs-scroll="true">
-      <div class="offcanvas-header px-4 pb-0">
-        <h5 class="offcanvas-title text-white" id="bdNavbarOffcanvasLabel">Bootstrap</h5>
-        <button type="button"
-                class="btn-close btn-close-white"
-                data-bs-dismiss="offcanvas"
-                aria-label="Close"
-                data-bs-target="#bdNavbar"></button>
-      </div>
-      <div class="offcanvas-body p-4 pt-0 p-lg-0">
-        <hr class="d-lg-none text-white-50" />
-        <ul class="navbar-nav flex-row flex-wrap bd-navbar-nav">
-          {% block navbar_menu %}
-            {% show_menu 0 100 100 100 "bootstrap5/menu.html" %}
-          {% endblock navbar_menu %}
-        </ul>
-        <hr class="d-lg-none text-white-50" />
-        {% comment %} START RIGHT SIDE WIDGETS {% endcomment %}
-        <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
-          <li class="nav-item col-6 col-lg-auto"></li>
-          {% for widget in navbar_widgets %}
-            {% include widget %}
-            {% if not forloop.last %}
-              <li class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
-                <div class="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
-                <hr class="d-lg-none my-2 text-white-50" />
-              </li>
-            {% endif %}
-          {% endfor %}
-        </ul>
-      </div>
-    </div>
+    <a class="navbar-brand" href="{% url "home" %}">{{ geoluminate.database.short_name }}</a>
+    <ul class="navbar-nav flex-row flex-wrap bd-navbar-nav">
+      {% block navbar_menu %}
+        {% for item in breadcrumbs %}
+          <li class="navbar-brand navbar-text text-white ">{% svg "angle-right" %}</li>
+          <li class="navbar-text text-white ">
+            <a class="navbar-brand " href="{{ item.url }}">{{ item.title|title }}</a>
+          </li>
+        {% endfor %}
+      {% endblock navbar_menu %}
+
+    </ul>
+    <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
+      <li class="nav-item col-6 col-lg-auto"></li>
+      {% for widget in navbar_widgets %}
+        {% include widget %}
+        {% if not forloop.last %}
+          <li class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+            <div class="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+            <hr class="d-lg-none my-2 text-white-50" />
+          </li>
+        {% endif %}
+      {% endfor %}
+      {% if not user.is_authenticated %}
+        <a class="navbar-toggler border-0 d-flex align-items-center" href="{% url "account_login" %}">
+          <span data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="{% trans "Sign In" %}">
+            <i class="fa-solid fa-right-to-bracket fa-lg"></i>
+          </span>
+        </a>
+      {% else %}
+        {% include "account_management/sidebar_toggle.html" %}
+        {% comment %} <li class="nav-item">
+          <a class="py-lg-0 nav-link d-flex align-items-center h-100" href="#" role="button" aria-expanded="false" data-bs-toggle="offcanvas" data-bs-target="#userNavOffcanvas" aria-label="{% trans "Toggle user navigation" %}">
+            <span data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="{% trans "Toggle user navigation" %}">
+              {% avatar user width="36.7px" class='rounded-circle shadow border border-2 border-light shadow' %}
+            </span>
+          </a>
+        </li> {% endcomment %}
+      {% endif %}
+    </ul>
   </nav>
 </header>

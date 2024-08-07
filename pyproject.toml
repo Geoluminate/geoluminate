@@ -40,7 +40,6 @@ django-cors-headers = "^3.14.0"
 django-crispy-forms = "^2.0"
 django-dbbackup = "^4.0.2"
 django-downloadview = "^2.3.0"
-django-easy-icons = {git = "https://github.com/SamuelJennings/django-easy-icons.git", rev = "main"}
 django-el-pagination = "^4.0.0"
 django-entangled = "^0.5.4"
 django-environ = "^0.10.0"
@@ -54,7 +53,6 @@ django-import-export = "^4.0.3"
 django-invitations = "^2.0.0"
 django-laboratory = "^0.0.1"
 django-libsass = "^0.9"
-django-literature = {git = "https://github.com/Geoluminate/django-literature", rev = "main"}
 django-lockdown = "^4.0.0"
 django-meta = "^2.1.0"
 django-migration-zero = "^2.0.0"
@@ -93,7 +91,13 @@ pyyaml = "^6.0"
 redis = "^4.5.2"
 tldextract = "^3.4.0"
 whitenoise = "^6.4.0"
+django-account-management = {git = "https://github.com/SamuelJennings/django-account-management.git", rev = "main"}
+django-auto-datatables = {git = "https://github.com/SamuelJennings/django-auto-datatables.git", rev = "main"}
+django-content-license = {git = "https://github.com/Geoluminate/django-content-license.git", rev = "main"}
+django-easy-icons = {git = "https://github.com/SamuelJennings/django-easy-icons.git", rev = "main"}
+django-literature = {git = "https://github.com/Geoluminate/django-literature", rev = "main"}
 django-research-vocabs = {git = "https://github.com/Geoluminate/django-research-vocabs.git", rev = "master"}
+django-sekizai = "^4.1.0"
 
 
 

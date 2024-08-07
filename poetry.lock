@@ -1050,6 +1050,25 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+name = "django-account-management"
+version = "0.1.0"
+description = "Tools for managing django user accounts."
+optional = false
+python-versions = ">=3.10,<4.0"
+files = []
+develop = false
+
+[package.dependencies]
+django-htmx = "^1.18.0"
+django-simple-menu = "^2.1.3"
+
+[package.source]
+type = "git"
+url = "https://github.com/SamuelJennings/django-account-management.git"
+reference = "main"
+resolved_reference = "66a12f114febe0d812349821716a0d7fbd7bc1ca"
+
+[[package]]
 name = "django-activity-stream"
 version = "2.0.0"
 description = "Generate generic activity streams from the actions on your site. Users can follow any actors' activities for personalized streams."
@@ -1138,6 +1157,27 @@ files = [
 
 [package.dependencies]
 django = "*"
+
+[[package]]
+name = "django-auto-datatables"
+version = "0.0.1"
+description = "A high-level Django app for easily creating datatables(.net) from models."
+optional = false
+python-versions = ">=3.10,<4.0"
+files = []
+develop = false
+
+[package.dependencies]
+django = "^5.0.7"
+djangorestframework-datatables = "^0.7.2"
+djangorestframework-datatables-editor = "^0.3.3"
+drf-schema-adapter = "^3.0.6"
+
+[package.source]
+type = "git"
+url = "https://github.com/SamuelJennings/django-auto-datatables.git"
+reference = "main"
+resolved_reference = "c095a2a616131298bd37b60d99368d9712a12aec"
 
 [[package]]
 name = "django-bleach"
@@ -1244,6 +1284,24 @@ Django = ">=3.2,<4.0.dev0 || >=4.1.dev0"
 akismet = ["akismet"]
 docs = ["furo", "sphinx", "sphinx-copybutton", "sphinx-inline-tabs", "sphinx-notfound-page", "sphinxcontrib-django", "sphinxext-opengraph"]
 tests = ["akismet", "coverage", "tomli"]
+
+[[package]]
+name = "django-content-license"
+version = "0.0.1"
+description = "Store license information alongside your Django data models"
+optional = false
+python-versions = ">=3.8,<4.0"
+files = []
+develop = false
+
+[package.dependencies]
+django = ">=3.2"
+
+[package.source]
+type = "git"
+url = "https://github.com/Geoluminate/django-content-license.git"
+reference = "main"
+resolved_reference = "329b5631751ecb4b19ac5b150f154ebfb0be8752"
 
 [[package]]
 name = "django-contrib-comments"
@@ -1858,6 +1916,21 @@ djangorestframework = "*"
 six = "*"
 
 [[package]]
+name = "django-sekizai"
+version = "4.1.0"
+description = "Django Sekizai"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "django-sekizai-4.1.0.tar.gz", hash = "sha256:2aca36cbae0b5c0cefed9565416ec442335767fb3145bff11e58622fc653cdad"},
+    {file = "django_sekizai-4.1.0-py3-none-any.whl", hash = "sha256:aa12e66ba0335fbe726b7d74cf4e8716b89a0be99a1304a9b9e8b191229e2e4a"},
+]
+
+[package.dependencies]
+django = ">=3.2"
+django-classy-tags = ">=3.0"
+
+[[package]]
 name = "django-select2"
 version = "8.1.2"
 description = "This is a Django_ integration of Select2_."
@@ -2111,6 +2184,34 @@ files = [
 [package.dependencies]
 django = ">=3.0"
 pytz = "*"
+
+[[package]]
+name = "djangorestframework-datatables"
+version = "0.7.2"
+description = "Seamless integration between Django REST framework and Datatables (https://datatables.net)"
+optional = false
+python-versions = "*"
+files = [
+    {file = "djangorestframework_datatables-0.7.2-py2.py3-none-any.whl", hash = "sha256:fd5747b1e3d0bfb84713a975394dd4d879b57ee8bc66cc0f97566fa67f4406f4"},
+    {file = "djangorestframework_datatables-0.7.2.tar.gz", hash = "sha256:d7953968088ceb14968621a0c0a83d2f39ec1cda24b5ebe1240f3c9619bc7129"},
+]
+
+[package.dependencies]
+djangorestframework = ">=3.14.0"
+
+[[package]]
+name = "djangorestframework-datatables-editor"
+version = "0.3.3"
+description = "Seamless integration between Django REST framework and Datatables (https://datatables.net) with supporting Datatables editor"
+optional = false
+python-versions = "*"
+files = [
+    {file = "djangorestframework-datatables-editor-0.3.3.tar.gz", hash = "sha256:735b66a574694fcf958a58a364fd070c18866c3ac845f96490ac648858415465"},
+    {file = "djangorestframework_datatables_editor-0.3.3-py2.py3-none-any.whl", hash = "sha256:9c688a553e4d0c78324969b695ecd7cfcb8903edd57c2d462f9eb17966daa7e0"},
+]
+
+[package.dependencies]
+djangorestframework = ">=3.9.1"
 
 [[package]]
 name = "djangorestframework-gis"
@@ -5581,4 +5682,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<4.0"
-content-hash = "346ad7984e5c7fe9af3f1ea7bfba78b8ac308575f142d86530d257af93916b96"
+content-hash = "37483845fb5943125eb2581529fb99e5bb768480d58bbbea15889a792b3a5a58"

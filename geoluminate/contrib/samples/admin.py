@@ -5,7 +5,7 @@ from polymorphic.admin import PolymorphicChildModelAdmin, PolymorphicChildModelF
 
 from geoluminate.utils import get_subclasses
 
-from .models import Date, Description, Location, Sample
+from .models import BaseSample, Date, Description, Location
 
 
 class DescriptionInline(admin.TabularInline):
@@ -21,11 +21,11 @@ class DateInline(admin.TabularInline):
     fields = ["type", "date"]
 
 
-@admin.register(Sample)
+@admin.register(BaseSample)
 class SampleParentAdmin(PolymorphicParentModelAdmin):
-    base_model = Sample
-    child_models = get_subclasses(Sample, include_self=True)
-    list_display = ["id", "feature_type", "name", "created"]
+    base_model = BaseSample
+    child_models = get_subclasses(BaseSample, include_self=True)
+    list_display = ["id", "name", "created"]
     exclude = ["options"]
     list_filter = (PolymorphicChildModelFilter,)
 
@@ -40,5 +40,5 @@ class LocationAdmin(admin.GISModelAdmin):
 
 
 class SampleAdmin(PolymorphicChildModelAdmin):
-    base_model = Sample
+    base_model = BaseSample
     inlines = [DescriptionInline, DateInline]

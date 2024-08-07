@@ -6,7 +6,7 @@ from geoluminate.plugins import PluginRegistry
 from geoluminate.utils import icon, label
 from geoluminate.views import BaseTableView
 
-from .models import Location, Sample
+from .models import BaseSample, Location
 from .tables import SampleTable
 from .views import LocationDetailView, SampleDetailView, SamplePlugin
 
@@ -16,7 +16,7 @@ location = PluginRegistry(base=LocationDetailView)
 
 @sample.page("overview", icon=icon("overview"))
 class SampleOverview:
-    model = Sample
+    model = BaseSample
     template_name = "geoluminate/plugins/overview.html"
     title = label("sample")["verbose_name"]
 

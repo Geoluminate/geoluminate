@@ -1,9 +1,6 @@
 from geoluminate.db import models
 from geoluminate.models import Measurement, Sample
 
-# from polymorphic.models import PolymorphicModel
-# from research_vocabs.fields import VocabularyField
-
 
 class CustomSample(Sample):
     # standard django fields
@@ -29,10 +26,19 @@ class CustomSample(Sample):
     )
     float_field = models.FloatField("Float Field", help_text="Enter a floating point number.")
 
-    # medium = "test"
+    class Meta:
+        verbose_name = "Custom Sample"
+        verbose_name_plural = "Custom Samples"
 
 
 class ExampleMeasurement(Measurement):
+    sample = models.ForeignKey(
+        "CustomSample",
+        verbose_name="my custom sample",
+        help_text="The sample on which the measurement was made.",
+        on_delete=models.PROTECT,
+    )
+
     # standard django fields
     char_field = models.CharField(
         "Character Field", max_length=200, help_text="Enter a string of up to 200 characters."

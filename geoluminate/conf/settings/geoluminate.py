@@ -13,7 +13,7 @@ GEOLUMINATE_LABELS = {
 }
 
 GEOLUMINATE_ALLOWED_IDENTIFIERS = {
-    "samples.Sample": {
+    "samples.BaseSample": {
         "IGSN": "https://igsn.org/",
         # "DOI": "https://doi.org/",
     },

@@ -1,9 +1,10 @@
 from django.contrib.gis import admin
 from polymorphic.admin import PolymorphicChildModelAdmin, PolymorphicChildModelFilter, PolymorphicParentModelAdmin
 
+from geoluminate.contrib.measurements.models import BaseMeasurement
 from geoluminate.utils import get_subclasses
 
-from .models import Date, Description, Measurement
+from .models import Date, Description
 
 
 class DescriptionInline(admin.TabularInline):
@@ -19,13 +20,14 @@ class DateInline(admin.TabularInline):
     fields = ["type", "date"]
 
 
-@admin.register(Measurement)
+@admin.register(BaseMeasurement)
 class MeasurementParentAdmin(PolymorphicParentModelAdmin):
-    base_model = Measurement
-    child_models = get_subclasses(Measurement, include_self=False)
+    # class MeasurementParentAdmin(admin.ModelAdmin):
+    model = BaseMeasurement
+    child_models = get_subclasses(BaseMeasurement, include_self=False)
     list_filter = (PolymorphicChildModelFilter,)
 
 
 class MeasurementAdmin(PolymorphicChildModelAdmin):
-    base_model = Measurement
+    base_model = BaseMeasurement
     inlines = [DescriptionInline, DateInline]

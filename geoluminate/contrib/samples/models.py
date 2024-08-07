@@ -80,8 +80,8 @@ class Location(models.Model):
         return self.objects.filter(point__distance_lt=(self.point, Distance(km=radius)))
 
 
-class Sample(Abstract, ShowFieldType, PolymorphicModel):
-    """This model attempts to roughly replicate the schema of the International Generic Sample Number (IGSN) registry. Each sample in this table MUST belong to
+class BaseSample(Abstract, ShowFieldType, PolymorphicModel):
+    """This model attempts to roughly replicate the schema of the International Generic BaseSample Number (IGSN) registry. Each sample in this table MUST belong to
     a `geoluminate.contrib.datasets.models.Dataset`."""
 
     name = models.CharField(_("name"), max_length=255)
@@ -90,21 +90,6 @@ class Sample(Abstract, ShowFieldType, PolymorphicModel):
         verbose_name=_("status"),
         vocabulary=SampleStatus,
         default="unknown",
-    )
-    feature_type = ConceptField(
-        verbose_name=_("feature"),
-        vocabulary=FeatureType,
-        default=settings.GEOLUMINATE_DEFAULT_FEATURE_TYPE,
-    )
-    medium = ConceptField(
-        verbose_name=_("medium"),
-        vocabulary=SamplingMedium,
-        default="solid",
-    )
-    specimen_type = ConceptField(
-        verbose_name=_("specimen"),
-        vocabulary=SpecimenType,
-        default="theSpecimenTypeIsUnknown",
     )
 
     location = models.ForeignKey(
@@ -116,14 +101,7 @@ class Sample(Abstract, ShowFieldType, PolymorphicModel):
         null=True,
         blank=True,
     )
-    parent = models.ForeignKey(
-        "self",
-        verbose_name=_("parent sample"),
-        help_text=_("The sample from which this sample was derived."),
-        blank=True,
-        null=True,
-        on_delete=models.CASCADE,
-    )
+
     dataset = models.ForeignKey(
         "datasets.Dataset",
         verbose_name=_("dataset"),
@@ -180,14 +158,44 @@ class Sample(Abstract, ShowFieldType, PolymorphicModel):
         return choices
 
 
+class Sample(BaseSample):
+    parent = models.ForeignKey(
+        "samples.BaseSample",
+        verbose_name=_("parent sample"),
+        help_text=_("The sample from which this sample was derived."),
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE,
+        related_name="subsamples",
+    )
+    feature_type = ConceptField(
+        verbose_name=_("feature"),
+        vocabulary=FeatureType,
+        default=settings.GEOLUMINATE_DEFAULT_FEATURE_TYPE,
+    )
+    medium = ConceptField(
+        verbose_name=_("medium"),
+        vocabulary=SamplingMedium,
+        default="solid",
+    )
+    specimen_type = ConceptField(
+        verbose_name=_("specimen"),
+        vocabulary=SpecimenType,
+        default="theSpecimenTypeIsUnknown",
+    )
+
+    class Meta:
+        abstract = True
+
+
 class Description(AbstractDescription):
     type = ConceptField(verbose_name=_("type"), vocabulary=choices.SampleDescriptions)
-    object = models.ForeignKey(to=Sample, on_delete=models.CASCADE)
+    object = models.ForeignKey(to=BaseSample, on_delete=models.CASCADE)
 
 
 class Date(AbstractDate):
     type = ConceptField(verbose_name=_("type"), vocabulary=choices.SampleDates)
-    object = models.ForeignKey(to=Sample, on_delete=models.CASCADE)
+    object = models.ForeignKey(to=BaseSample, on_delete=models.CASCADE)
 
 
 class Contribution(AbstractContribution):
@@ -196,7 +204,7 @@ class Contribution(AbstractContribution):
     CONTRIBUTOR_ROLES = choices.SampleRoles
 
     object = models.ForeignKey(
-        Sample,
+        BaseSample,
         on_delete=models.CASCADE,
         related_name="contributions",
         verbose_name=_("sample"),

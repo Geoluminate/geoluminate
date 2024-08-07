@@ -3,12 +3,12 @@ from django.utils.safestring import mark_safe
 from geoluminate.api.v1.serializers import SampleSerializer
 from geoluminate.tables import GeoluminateTable, ScrollerTable
 
-from .models import Sample
+from .models import BaseSample
 
 
 class SampleTable(GeoluminateTable):
     config_class = ScrollerTable
-    model = Sample
+    model = BaseSample
     serializer_class = SampleSerializer
     details_template = '<a href="${data}"><i class="fa-solid fa-file-lines"></i></a>'
     absolute_url_template = '<a href="${data}"><i class="fa-solid fa-file-lines"></i></a>'
@@ -34,7 +34,7 @@ class SampleTable(GeoluminateTable):
         #     "class": "text-center",
         # },
         "absolute_url": {
-            "title": mark_safe('<i class="fa-solid fa-file-lines"></i>'),  # noqa: S308
+            "title": mark_safe('<i class="fa-solid fa-file-lines"></i>'),
             "class": "text-center",
         },
         # "details": {

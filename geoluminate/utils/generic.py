@@ -25,6 +25,6 @@ def object_from_letter(letter):
     type_map = {
         "p": "projects.Project",
         "d": "datasets.Dataset",
-        "s": "samples.Sample",
+        "s": "samples.BaseSample",
     }
     return apps.get_model(type_map.get(letter))

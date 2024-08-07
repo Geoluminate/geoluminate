@@ -52,7 +52,7 @@ MANAGERS = ADMINS
 # https://docs.djangoproject.com/en/dev/ref/settings/#root-urlconf
 ROOT_URLCONF = "geoluminate.urls"
 
-ADMIN_URL = f"admin-{env('DJANGO_ADMIN_URL')}"
+ADMIN_URL = f"{env('DJANGO_ADMIN_URL')}"
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
 WSGI_APPLICATION = None

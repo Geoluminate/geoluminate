@@ -2,7 +2,28 @@ from geoluminate.db import models
 from geoluminate.models import Measurement, Sample
 
 
+class CustomParentSample(Sample):
+    # standard django fields
+    char_field = models.CharField(
+        "Character Field", max_length=200, help_text="Enter a string of up to 200 characters."
+    )
+
+    class Meta:
+        verbose_name = "Custom Sample"
+        verbose_name_plural = "Custom Samples"
+
+
 class CustomSample(Sample):
+    parent = models.ForeignKey(
+        "CustomParentSample",
+        verbose_name="parent sample",
+        help_text="The sample from which this sample was derived.",
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE,
+        related_name="custom_samples",
+    )
+
     # standard django fields
     char_field = models.CharField(
         "Character Field", max_length=200, help_text="Enter a string of up to 200 characters."

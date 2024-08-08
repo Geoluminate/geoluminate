@@ -1,7 +1,7 @@
 from django.contrib.gis import admin
 from polymorphic.admin import PolymorphicChildModelAdmin
 
-from .models import BaseSample, Date, Description, Location
+from .models import BaseSample, Date, Description
 
 
 class DescriptionInline(admin.TabularInline):
@@ -28,11 +28,6 @@ class DateInline(admin.TabularInline):
 #     def save_form(self, request: Any, form: Any, change: Any) -> Any:
 #         print(form.data)
 #         return super().save_form(request, form, change)
-
-
-@admin.register(Location)
-class LocationAdmin(admin.GISModelAdmin):
-    list_display = ["name", "latitude", "longitude", "elevation"]
 
 
 class SampleAdmin(PolymorphicChildModelAdmin):

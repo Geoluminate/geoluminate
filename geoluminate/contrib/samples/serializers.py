@@ -4,14 +4,9 @@ from rest_framework_gis.serializers import GeoFeatureModelSerializer, GeometrySe
 from rest_framework_nested.serializers import NestedHyperlinkedModelSerializer
 
 from geoluminate.api.serializers import BaseSerializerMixin
+from geoluminate.contrib.gis.serializers import LocationSerializer
 
-from .models import BaseSample, Location
-
-
-class LocationSerializer(BaseSerializerMixin, serializers.ModelSerializer):
-    class Meta:
-        model = Location
-        exclude = ["id", "created", "elevation"]
+from .models import BaseSample
 
 
 class SampleSerializer(BaseSerializerMixin, NestedHyperlinkedModelSerializer):

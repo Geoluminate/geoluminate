@@ -2,8 +2,14 @@ from django.apps import AppConfig
 from django.utils.translation import gettext_lazy as _
 
 
-class TectonicPlateConfig(AppConfig):
-    default_auto_field = "django.db.models.BigAutoField"
+class GISConfig(AppConfig):
     name = "geoluminate.contrib.gis"
+    label = "gis"
     verbose_name = _("GIS")
-    verbose_name_plural = _("GIS")
+
+    def ready(self) -> None:
+        from actstream import registry
+
+        registry.register(self.get_model("Location"))
+
+        return super().ready()

@@ -5,8 +5,6 @@ from django.contrib.postgres.aggregates import JSONBAgg
 
 from geoluminate.db.gis.functions import AsGeoFeature
 
-# DATA_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "data"))
-
 
 class LocationManager(models.QuerySet):
     def with_distance(self, point):

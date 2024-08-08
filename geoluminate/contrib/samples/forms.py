@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import BaseSample, Location
+from .models import BaseSample
 
 
 class SampleForm(forms.ModelForm):
@@ -8,9 +8,3 @@ class SampleForm(forms.ModelForm):
         model = BaseSample
         # fields = ["dataset", "name"]
         exclude = ["created", "modified", "keywords"]
-
-
-class LocationForm(forms.ModelForm):
-    class Meta:
-        model = Location
-        fields = ["point"]

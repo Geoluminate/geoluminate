@@ -4,8 +4,8 @@ from geoluminate.contrib.core.view_mixins import ListPluginMixin
 from geoluminate.utils import icon, label
 from geoluminate.views import BaseDetailView, BaseEditView, BaseListView, BaseTableView
 
-from .forms import LocationForm, SampleForm
-from .models import BaseSample, Location
+from .forms import SampleForm
+from .models import BaseSample
 from .tables import SampleTable
 
 
@@ -79,16 +79,3 @@ class SampleTablePlugin(BaseTableView):
     template_name = "geoluminate/base/table_view.html"
     title = name = label("sample")["verbose_name_plural"]
     icon = icon("sample")
-
-
-class LocationDetailView(BaseDetailView):
-    base_template = "samples/location_detail.html"
-    model = Location
-    title = _("Location")
-    form_class = LocationForm
-
-
-class LocationEditView(BaseEditView):
-    model = Location
-    form_class = LocationForm
-    related_name = "sample"

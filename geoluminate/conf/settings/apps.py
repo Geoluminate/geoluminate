@@ -14,7 +14,7 @@ GEOLUMINATE_APPS = [
     "django.contrib.sitemaps",
     "django.contrib.staticfiles",
     "django.contrib.messages",
-    "django.contrib.gis",
+    # "django.contrib.gis",
     "django.contrib.humanize",
     "actstream",
     # COMMENTING FRAMEWORK
@@ -29,6 +29,7 @@ GEOLUMINATE_APPS = [
     "geoluminate.contrib.projects",
     "geoluminate.contrib.datasets",
     "geoluminate.contrib.reviews",
+    "geoluminate.contrib.gis",
     "geoluminate.contrib.samples",
     "geoluminate.contrib.measurements",
     "geoluminate.contrib.contributors",

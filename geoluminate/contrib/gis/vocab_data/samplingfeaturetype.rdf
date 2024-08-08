@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:odm2="http://vocabulary.odm2.org/ODM2/ODM2Terms/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+>
+  <rdf:Description rdf:about="http://vocabulary.odm2.org/samplingfeaturetype/weatherStation">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="http://vocabulary.odm2.org/samplingfeaturetype"/>
+    <skos:prefLabel>Weather station</skos:prefLabel>
+    <skos:definition>A facility, either on land or sea, with instruments and equipment for measuring atmospheric conditions to provide information for weather forecasts and to study weather and climate.</skos:definition>
+    <odm2:category>SamplingPoint</odm2:category>
+    <skos:historyNote>Term adapted from Wikipedia</skos:historyNote>
+    <skos:note>Definition adapted from Wikpedia (http://en.wikipedia.org/wiki/Weather_station).</skos:note>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://vocabulary.odm2.org/samplingfeaturetype/observationWell">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="http://vocabulary.odm2.org/samplingfeaturetype"/>
+    <skos:prefLabel>Observation well</skos:prefLabel>
+    <skos:definition>A hole or shaft constructed in the earth intended to be used to locate, sample, or develop groundwater, oil, gas, or some other subsurface material. The diameter of a well is typically much smaller than the depth. Wells are also used to artificially recharge groundwater or to pressurize oil and gas production zones. Specific kinds of wells should be specified in the SamplingFeature description. For example, underground waste-disposal wells should be classified as waste injection wells.</skos:definition>
+    <odm2:category>SamplingCurve</odm2:category>
+    <skos:historyNote>OGC Observations &amp; Measurements</skos:historyNote>
+    <skos:note>The term is from OGC Observations and Measurements (see https://www.seegrid.csiro.au/wiki/AppSchemas/ObservationsAndSampling#Sampling_model), but the definition is from the USGS SiteTypes http://wdr.water.usgs.gov/nwisgmap/help/sitetype.html.</skos:note>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://vocabulary.odm2.org/samplingfeaturetype/fieldArea">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="http://vocabulary.odm2.org/samplingfeaturetype"/>
+    <skos:prefLabel>Field area</skos:prefLabel>
+    <skos:definition>A location at which field experiments or observations of ambient conditions are conducted. A field area may contain many sites and has a geographical footprint that can be represented by a polygon.</skos:definition>
+    <odm2:category>SamplingSurface</odm2:category>
+    <skos:historyNote>Used by CriticalZone.org</skos:historyNote>
+    <skos:note>Useful for Critical Zone Observatory network and other programs to describe a terrestrial research area.  Can be hiearchical (i.e. CRB-CZO &gt; WhiteClayCreek@SWRC &gt; TransectA.  See http://criticalzone.org/christina/infrastructure/field-areas-christina/).</skos:note>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://vocabulary.odm2.org/samplingfeaturetype/streamGage">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="http://vocabulary.odm2.org/samplingfeaturetype"/>
+    <skos:prefLabel>Stream gage</skos:prefLabel>
+    <skos:definition>A location used to monitor and test terrestrial bodies of water. Hydrometric measurements of water level, surface elevation ("stage") and/or volumetric discharge (flow) are generally taken, and observations of biota and water quality may also be made. </skos:definition>
+    <odm2:category>SamplingPoint</odm2:category>
+    <skos:historyNote>Term adapted from Wikipedia</skos:historyNote>
+    <skos:note>Definition adapted from Wikpedia (http://en.wikipedia.org/wiki/Stream_gauge).</skos:note>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://vocabulary.odm2.org/samplingfeaturetype/transect">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="http://vocabulary.odm2.org/samplingfeaturetype"/>
+    <skos:prefLabel>Transect</skos:prefLabel>
+    <skos:definition>A path along which ocurrences of a phenomena of study are counted or measured.</skos:definition>
+    <odm2:category>SamplingCurve</odm2:category>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://vocabulary.odm2.org/samplingfeaturetype">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+    <dc:title>SamplingFeatureType</dc:title>
+    <dc:creator>ODM2 Working Group</dc:creator>
+    <dc:description>A vocabulary for describing the type of SamplingFeature. Many different SamplingFeature types can be represented in ODM2. SamplingFeatures of type Site and Specimen will be the most common, but many different types of varying levels of complexity can be used.</dc:description>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://vocabulary.odm2.org/samplingfeaturetype/soilPitSection">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="http://vocabulary.odm2.org/samplingfeaturetype"/>
+    <skos:prefLabel>Soil pit section</skos:prefLabel>
+    <skos:definition>Two-dimensional vertical face of a soil pit that is described and sampled.</skos:definition>
+    <odm2:category>SamplingSurface</odm2:category>
+    <skos:historyNote>CZchemDB</skos:historyNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://vocabulary.odm2.org/samplingfeaturetype/scene">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="http://vocabulary.odm2.org/samplingfeaturetype"/>
+    <skos:prefLabel>Scene</skos:prefLabel>
+    <skos:definition>A two-dimensional visual extent within a physical environment.</skos:definition>
+    <odm2:category>SamplingSurface</odm2:category>
+    <skos:historyNote>Term from OGC Observations &amp; Measurements. Partial definition from Wikipedia.</skos:historyNote>
+    <skos:note>Term retrived from OGC Observations &amp; Measurements (e.g., see https://www.seegrid.csiro.au/wiki/AppSchemas/ObservationsAndSampling#Sampling_model).  Parts of the definition came from Wikipedia (see http://en.wikipedia.org/wiki/Scene_(perception)).</skos:note>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://vocabulary.odm2.org/samplingfeaturetype/borehole">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="http://vocabulary.odm2.org/samplingfeaturetype"/>
+    <skos:prefLabel>Borehole</skos:prefLabel>
+    <skos:definition>A narrow shaft bored into the ground, either vertically or horizontally. A borehole includes the hole cavity and walls surrounding that cavity.  </skos:definition>
+    <odm2:category>SamplingCurve</odm2:category>
+    <skos:historyNote>Example from OGC Observations &amp; Measurements, but listed as Sample Type in SESAR</skos:historyNote>
+    <skos:note>Term retrived from OGC Observations &amp; Measurements (e.g., see https://www.seegrid.csiro.au/wiki/AppSchemas/ObservationsAndSampling#Sampling_model).  Parts of the definition came from Wikipedia (see http://en.wikipedia.org/wiki/Borehole).</skos:note>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://vocabulary.odm2.org/samplingfeaturetype/interval">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="http://vocabulary.odm2.org/samplingfeaturetype"/>
+    <skos:prefLabel>Interval</skos:prefLabel>
+    <skos:definition>A discrete segment along a longer path in which an observation or specimen is collected over the distance between the upper and lower bounds of the interval. A Depth Interval is a sub-type of Interval.</skos:definition>
+    <odm2:category>SamplingCurve</odm2:category>
+    <skos:historyNote>OGC Observations &amp; Measurements</skos:historyNote>
+    <skos:note>Term retrived from OGC Observations &amp; Measurements (e.g., see https://www.seegrid.csiro.au/wiki/AppSchemas/ObservationsAndSampling#Sampling_model)</skos:note>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://vocabulary.odm2.org/samplingfeaturetype/traverse">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="http://vocabulary.odm2.org/samplingfeaturetype"/>
+    <skos:prefLabel>Traverse</skos:prefLabel>
+    <skos:definition>A field control network consisting of survey stations placed along a line or path of travel.</skos:definition>
+    <odm2:category>SamplingCurve</odm2:category>
+    <skos:historyNote>Term from OGC Observations &amp; Measurements. Partial definition from Wikipedia.</skos:historyNote>
+    <skos:note>Term retrived from OGC Observations &amp; Measurements (e.g., see https://www.seegrid.csiro.au/wiki/AppSchemas/ObservationsAndSampling#Sampling_model). Parts of the definition came from Wikipedia (see http://en.wikipedia.org/wiki/Traverse_(surveying)).</skos:note>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://vocabulary.odm2.org/samplingfeaturetype/ecologicalLandClassification">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="http://vocabulary.odm2.org/samplingfeaturetype"/>
+    <skos:prefLabel>Ecological land classification</skos:prefLabel>
+    <skos:definition>Ecological land classification is a cartographical delineation of distinct ecological areas, identified by their geology, topography, soils, vegetation, climate conditions, living species, habitats, water resources, as well as anthropic factors. These factors control and influence biotic composition and ecological processes.</skos:definition>
+    <odm2:category>SamplingSurface</odm2:category>
+    <skos:historyNote>Wikipedia</skos:historyNote>
+    <skos:exactMatch>https://en.wikipedia.org/wiki/Ecological_land_classification</skos:exactMatch>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://vocabulary.odm2.org/samplingfeaturetype/profile">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="http://vocabulary.odm2.org/samplingfeaturetype"/>
+    <skos:prefLabel>Profile</skos:prefLabel>
+    <skos:definition>A one-dimensional grid at fixed (x, y, t) coordinates within a four-dimensional (x, y, z, t) coordinate reference system. The grid axis is aligned with the coordinate reference system z-axis. Typically used to characterize or measure phenomena as a function of depth.</skos:definition>
+    <odm2:category>SamplingCurve</odm2:category>
+    <skos:historyNote>OGC Observations &amp; Measurements</skos:historyNote>
+    <skos:note>Term retrived from OGC Observations &amp; Measurements (e.g., see https://www.seegrid.csiro.au/wiki/AppSchemas/ObservationsAndSampling#Sampling_model)</skos:note>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://vocabulary.odm2.org/samplingfeaturetype/shipsTrack">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="http://vocabulary.odm2.org/samplingfeaturetype"/>
+    <skos:prefLabel>Ships track</skos:prefLabel>
+    <skos:definition>A path along which a ship or vessel travels while measuring a phenomena of study.  Represented as a line connecting the ship's consecutive positions on the surface of the earth.</skos:definition>
+    <odm2:category>SamplingCurve</odm2:category>
+    <skos:historyNote>OGC Observations &amp; Measurements</skos:historyNote>
+    <skos:note>Term retrived from OGC Observations &amp; Measurements (e.g., see https://www.seegrid.csiro.au/wiki/AppSchemas/ObservationsAndSampling#Sampling_model)</skos:note>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://vocabulary.odm2.org/samplingfeaturetype/crossSection">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="http://vocabulary.odm2.org/samplingfeaturetype"/>
+    <skos:prefLabel>Cross section</skos:prefLabel>
+    <skos:definition>The intersection of a body in three-dimensional space with a plane.  Represented as a polygon. </skos:definition>
+    <odm2:category>SamplingSurface</odm2:category>
+    <skos:historyNote>Term from OGC Observations &amp; Measurements. Partial definition from Wikipedia.</skos:historyNote>
+    <skos:note>Term retrived from OGC Observations &amp; Measurements (e.g., see https://www.seegrid.csiro.au/wiki/AppSchemas/ObservationsAndSampling#Sampling_model).  Parts of the definition came from Wikipedia (see http://en.wikipedia.org/wiki/Cross_section_(geometry)).</skos:note>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://vocabulary.odm2.org/samplingfeaturetype/specimen">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="http://vocabulary.odm2.org/samplingfeaturetype"/>
+    <skos:prefLabel>Specimen</skos:prefLabel>
+    <skos:definition>A physical sample (object or entity) obtained for observations, typically performed ex situ, often in a laboratory.  </skos:definition>
+    <odm2:category>Specimen</odm2:category>
+    <skos:historyNote>OGC Observations &amp; Measurements</skos:historyNote>
+    <skos:exactMatch>http://www.opengis.net/def/samplingFeatureType/OGC-OM/2.0/SF_Specimen</skos:exactMatch>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://vocabulary.odm2.org/samplingfeaturetype/CTD">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="http://vocabulary.odm2.org/samplingfeaturetype"/>
+    <skos:prefLabel>CTD</skos:prefLabel>
+    <skos:definition>A CTD (Conductivity, Temperature, and Depth) cast is a water column depth profile collected over a specific and relatively short date-time range, that can be considered as a parent specimen.</skos:definition>
+    <odm2:category>Specimen</odm2:category>
+    <skos:historyNote>SESAR. See http://www.geosamples.org/help/vocabularies#object.</skos:historyNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://vocabulary.odm2.org/samplingfeaturetype/excavation">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="http://vocabulary.odm2.org/samplingfeaturetype"/>
+    <skos:prefLabel>Excavation</skos:prefLabel>
+    <skos:definition>An artificially constructed cavity in the earth that is deeper than the soil, larger than a well bore, and substantially open to the atmosphere. The diameter of an excavation is typically similar or larger than the depth. Excavations include building-foundation diggings, roadway cuts, and surface mines.</skos:definition>
+    <odm2:category>SamplingSolid</odm2:category>
+    <skos:historyNote>Originally from USGS Site Types</skos:historyNote>
+    <skos:note>This is a term from the USGS site types http://wdr.water.usgs.gov/nwisgmap/help/sitetype.html that was originally included in the CUAHSI SiteTypeCV.  It is more appropriate as a SamplingFeatureType.</skos:note>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://vocabulary.odm2.org/samplingfeaturetype/flightline">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="http://vocabulary.odm2.org/samplingfeaturetype"/>
+    <skos:prefLabel>Flightline</skos:prefLabel>
+    <skos:definition>A path along which an aircraft travels while measuring a phenomena of study.</skos:definition>
+    <odm2:category>SamplingCurve</odm2:category>
+    <skos:historyNote>OGC Observations &amp; Measurements</skos:historyNote>
+    <skos:note>Term retrived from OGC Observations &amp; Measurements (e.g., see https://www.seegrid.csiro.au/wiki/AppSchemas/ObservationsAndSampling#Sampling_model)</skos:note>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://vocabulary.odm2.org/samplingfeaturetype/quadrat">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="http://vocabulary.odm2.org/samplingfeaturetype"/>
+    <skos:prefLabel>Quadrat</skos:prefLabel>
+    <skos:definition>A small plot used to isolate a standard unit of area for study of the distribution of an item over a large area.</skos:definition>
+    <odm2:category>SamplingSurface</odm2:category>
+    <skos:historyNote>Term from OGC Observations &amp; Measurements. Partial definition from Wikipedia.</skos:historyNote>
+    <skos:note>Term retrived from OGC Observations &amp; Measurements (e.g., see https://www.seegrid.csiro.au/wiki/AppSchemas/ObservationsAndSampling#Sampling_model). Parts of the definition came from Wikipedia (see http://en.wikipedia.org/wiki/Quadrat).</skos:note>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://vocabulary.odm2.org/samplingfeaturetype/trajectory">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="http://vocabulary.odm2.org/samplingfeaturetype"/>
+    <skos:prefLabel>Trajectory</skos:prefLabel>
+    <skos:definition>The path that a moving object follows through space as a function of time. A trajectory can be described by the geometry of the path or as the position of the object over time. </skos:definition>
+    <odm2:category>SamplingCurve</odm2:category>
+    <skos:historyNote>Term from OGC Observations &amp; Measurements. Partial definition from Wikipedia.</skos:historyNote>
+    <skos:note>Term retrived from OGC Observations &amp; Measurements (e.g., see https://www.seegrid.csiro.au/wiki/AppSchemas/ObservationsAndSampling#Sampling_model). Parts of the definition came from Wikipedia (see http://en.wikipedia.org/wiki/Trajectory).</skos:note>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://vocabulary.odm2.org/samplingfeaturetype/waterQualityStation">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="http://vocabulary.odm2.org/samplingfeaturetype"/>
+    <skos:prefLabel>Water quality station</skos:prefLabel>
+    <skos:definition>A location used to monitor and test the quality of terrestrial bodies of water. Water quality stations may be locations at which physical water samples are collected for ex situ analysis.  Water qulaity stations may also have instruments and equipment for continuous, in situ measurement of water quality variables. </skos:definition>
+    <odm2:category>SamplingPoint</odm2:category>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://vocabulary.odm2.org/samplingfeaturetype/depthInterval">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="http://vocabulary.odm2.org/samplingfeaturetype"/>
+    <skos:prefLabel>Depth interval</skos:prefLabel>
+    <skos:definition>A discrete segment along a longer vertical path, such as a borehole, soil profile or other depth profile, in which an observation or specimen is collected over the distance between the upper and lower depth limits of the interval. A Depth Interval is a sub-type of Interval.</skos:definition>
+    <odm2:category>SamplingCurve</odm2:category>
+    <skos:historyNote>CZchemDB</skos:historyNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://vocabulary.odm2.org/samplingfeaturetype/site">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="http://vocabulary.odm2.org/samplingfeaturetype"/>
+    <skos:prefLabel>Site</skos:prefLabel>
+    <skos:definition>A facility or location at which observations have been collected. A site may have instruments or equipment installed and may contain multiple other sampling features (e.g., a stream gage, weather station, observation well, etc.). Additionally, many specimen sampling features may be collected at a site. Sites are also often referred to as stations. A site is represented as a point, but it may have a geographical footprint that is not a point. The site coordinates serve as a reference for the site and offsets may be specified from this reference location.</skos:definition>
+    <odm2:category>SamplingPoint</odm2:category>
+    <skos:historyNote>CUAHSI Observations Data Model</skos:historyNote>
+  </rdf:Description>
+</rdf:RDF>

@@ -11,6 +11,5 @@ class SamplesConfig(AppConfig):
         from actstream import registry
 
         registry.register(self.get_model("BaseSample"))
-        registry.register(self.get_model("Location"))
 
         return super().ready()

@@ -1,6 +1,11 @@
 from django.apps import AppConfig
 from django.conf import settings
+from django.contrib.admin.apps import AdminConfig
 from django.utils.module_loading import autodiscover_modules
+
+
+class GeoluminateCustomAdmin(AdminConfig):
+    default_site = "geoluminate.admin.GeoluminateAdminSite"
 
 
 class GeoluminateConfig(AppConfig):

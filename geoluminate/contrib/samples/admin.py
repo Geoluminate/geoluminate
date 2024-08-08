@@ -1,9 +1,5 @@
-from typing import Any
-
 from django.contrib.gis import admin
-from polymorphic.admin import PolymorphicChildModelAdmin, PolymorphicChildModelFilter, PolymorphicParentModelAdmin
-
-from geoluminate.utils import get_subclasses
+from polymorphic.admin import PolymorphicChildModelAdmin
 
 from .models import BaseSample, Date, Description, Location
 
@@ -21,17 +17,17 @@ class DateInline(admin.TabularInline):
     fields = ["type", "date"]
 
 
-@admin.register(BaseSample)
-class SampleParentAdmin(PolymorphicParentModelAdmin):
-    base_model = BaseSample
-    child_models = get_subclasses(BaseSample, include_self=True)
-    list_display = ["id", "name", "created"]
-    exclude = ["options"]
-    list_filter = (PolymorphicChildModelFilter,)
+# # @admin.register(BaseSample)
+# class SampleParentAdmin(PolymorphicParentModelAdmin):
+#     base_model = BaseSample
+#     child_models = get_subclasses(BaseSample, include_self=True)
+#     list_display = ["id", "name", "created"]
+#     exclude = ["options"]
+#     list_filter = (PolymorphicChildModelFilter,)
 
-    def save_form(self, request: Any, form: Any, change: Any) -> Any:
-        print(form.data)
-        return super().save_form(request, form, change)
+#     def save_form(self, request: Any, form: Any, change: Any) -> Any:
+#         print(form.data)
+#         return super().save_form(request, form, change)
 
 
 @admin.register(Location)

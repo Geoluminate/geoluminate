@@ -4,7 +4,8 @@ GEOLUMINATE_APPS = [
     # "jazzmin",
     # "modeltranslation",
     # DJANGO CORE
-    "django.contrib.admin",
+    # "django.contrib.admin",
+    "geoluminate.apps.GeoluminateCustomAdmin",
     "django.contrib.auth",
     "polymorphic",
     "django.contrib.contenttypes",
@@ -22,7 +23,7 @@ GEOLUMINATE_APPS = [
     "django_comments",
     "taggit",  # providing taggable keywords to any model
     # GEOLUMINATE CORE
-    "geoluminate",
+    "geoluminate.apps.GeoluminateConfig",
     "geoluminate.contrib.core",
     "geoluminate.contrib.configuration",
     "geoluminate.contrib.projects",

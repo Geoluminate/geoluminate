@@ -9,8 +9,8 @@ class CustomParentSample(Sample):
     )
 
     class Meta:
-        verbose_name = "Custom Sample"
-        verbose_name_plural = "Custom Samples"
+        verbose_name = "Rock Sample"
+        verbose_name_plural = "Rock Samples"
 
 
 class CustomSample(Sample):
@@ -38,8 +38,8 @@ class CustomSample(Sample):
     float_field = models.FloatField("Float Field", help_text="Enter a floating point number.")
 
     class Meta:
-        verbose_name = "Custom Sample"
-        verbose_name_plural = "Custom Samples"
+        verbose_name = "Thin Section"
+        verbose_name_plural = "Thin Sections"
 
 
 class ExampleMeasurement(Measurement):

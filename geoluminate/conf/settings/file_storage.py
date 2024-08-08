@@ -22,10 +22,12 @@ STATIC_URL = COMPRESS_URL = "/static/"
 MEDIA_ROOT = str(BASE_DIR / "media")
 
 # https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
-STATICFILES_DIRS = [
-    # this is where the enduser will store their files
-    str(BASE_DIR / "assets"),
-]
+
+if os.path.exists(str(BASE_DIR / "assets")):
+    STATICFILES_DIRS = [
+        # this is where the end user will store their static files
+        str(BASE_DIR / "assets"),
+    ]
 
 # https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
 STATICFILES_FINDERS = [

@@ -84,6 +84,16 @@ class BaseSample(Abstract, ShowFieldType, PolymorphicModel):
     """This model attempts to roughly replicate the schema of the International Generic BaseSample Number (IGSN) registry. Each sample in this table MUST belong to
     a `geoluminate.contrib.datasets.models.Dataset`."""
 
+    parent = models.ForeignKey(
+        "self",
+        verbose_name=_("parent sample"),
+        help_text=_("The sample from which this sample was derived."),
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE,
+        related_name="subsamples",
+    )
+
     name = models.CharField(_("name"), max_length=255)
 
     status = ConceptField(
@@ -159,15 +169,6 @@ class BaseSample(Abstract, ShowFieldType, PolymorphicModel):
 
 
 class Sample(BaseSample):
-    parent = models.ForeignKey(
-        "samples.BaseSample",
-        verbose_name=_("parent sample"),
-        help_text=_("The sample from which this sample was derived."),
-        blank=True,
-        null=True,
-        on_delete=models.CASCADE,
-        related_name="subsamples",
-    )
     feature_type = ConceptField(
         verbose_name=_("feature"),
         vocabulary=FeatureType,

@@ -75,7 +75,7 @@ def update_object(request, content_type_id, object_id):
 type_map = {
     "project": "projects.Project",
     "dataset": "datasets.Dataset",
-    "sample": "samples.BaseSample",
+    "sample": "samples.Sample",
 }
 
 

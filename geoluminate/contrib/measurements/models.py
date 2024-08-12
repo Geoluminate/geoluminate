@@ -12,13 +12,13 @@ from geoluminate.db import models
 from . import choices
 
 
-class BaseMeasurement(models.Model, ShowFieldType, PolymorphicModel):
-    # sample = models.ForeignKey(
-    #     "samples.Sample",
-    #     verbose_name=_("sample"),
-    #     help_text=_("The sample on which the measurement was made."),
-    #     on_delete=models.PROTECT,
-    # )
+class Measurement(models.Model, ShowFieldType, PolymorphicModel):
+    sample = models.ForeignKey(
+        "samples.Sample",
+        verbose_name=_("sample"),
+        help_text=_("The sample on which the measurement was made."),
+        on_delete=models.PROTECT,
+    )
 
     contributors = models.ManyToManyField(
         "contributors.Contributor",
@@ -43,27 +43,14 @@ class BaseMeasurement(models.Model, ShowFieldType, PolymorphicModel):
         return self.sample.get_absolute_url()
 
 
-class Measurement(BaseMeasurement):
-    sample = models.ForeignKey(
-        "samples.BaseSample",
-        verbose_name=_("sample"),
-        help_text=_("The sample on which the measurement was made."),
-        on_delete=models.PROTECT,
-    )
-
-    class Meta:
-        abstract = True
-        ordering = ["-modified"]
-
-
 class Description(AbstractDescription):
     type = ConceptField(verbose_name=_("type"), vocabulary=choices.MeasurementDescriptions)
-    object = models.ForeignKey(to="measurements.BaseMeasurement", on_delete=models.CASCADE)
+    object = models.ForeignKey(to="measurements.Measurement", on_delete=models.CASCADE)
 
 
 class Date(AbstractDate):
     type = ConceptField(verbose_name=_("type"), vocabulary=choices.MeasurementDates)
-    object = models.ForeignKey(to=BaseMeasurement, on_delete=models.CASCADE)
+    object = models.ForeignKey(to=Measurement, on_delete=models.CASCADE)
 
 
 class Contribution(AbstractContribution):
@@ -72,7 +59,7 @@ class Contribution(AbstractContribution):
     CONTRIBUTOR_ROLES = choices.MeasurementRoles
 
     object = models.ForeignKey(
-        "measurements.BaseMeasurement",
+        "measurements.Measurement",
         on_delete=models.CASCADE,
         related_name="contributions",
         verbose_name=_("measurement"),

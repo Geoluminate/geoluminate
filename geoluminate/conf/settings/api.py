@@ -8,8 +8,6 @@
 All settings can be overridden in your project settings file.
 """
 
-from django.template.loader import render_to_string
-
 # django-rest-framework - https://www.django-rest-framework.org/api-guide/settings/
 REST_FRAMEWORK = {
     "HTML_SELECT_CUTOFF": 10,

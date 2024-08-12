@@ -6,7 +6,7 @@ from rest_framework_nested.serializers import NestedHyperlinkedModelSerializer
 from geoluminate.api.serializers import BaseSerializerMixin
 from geoluminate.contrib.gis.serializers import LocationSerializer
 
-from .models import BaseSample
+from .models import Sample
 
 
 class SampleSerializer(BaseSerializerMixin, NestedHyperlinkedModelSerializer):
@@ -14,7 +14,7 @@ class SampleSerializer(BaseSerializerMixin, NestedHyperlinkedModelSerializer):
     absolute_url = serializers.SerializerMethodField()
 
     class Meta:
-        model = BaseSample
+        model = Sample
         exclude = ["options"]
 
     def get_absolute_url(self, obj):
@@ -28,7 +28,7 @@ class SampleGeojsonSerializer(BaseSerializerMixin, GeoFeatureModelSerializer):
         return obj.location.point
 
     class Meta:
-        model = BaseSample
+        model = Sample
         geo_field = "geom"
         id_field = "pk"
         fields = ["pk", "feature_type", "title", "geom"]

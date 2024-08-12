@@ -1,7 +1,7 @@
 from django.contrib.gis import admin
 from polymorphic.admin import PolymorphicChildModelAdmin
 
-from .models import BaseSample, Date, Description
+from .models import Date, Description, Sample
 
 
 class DescriptionInline(admin.TabularInline):
@@ -17,10 +17,10 @@ class DateInline(admin.TabularInline):
     fields = ["type", "date"]
 
 
-# # @admin.register(BaseSample)
+# # @admin.register(Sample)
 # class SampleParentAdmin(PolymorphicParentModelAdmin):
-#     base_model = BaseSample
-#     child_models = get_subclasses(BaseSample, include_self=True)
+#     base_model = Sample
+#     child_models = get_subclasses(Sample, include_self=True)
 #     list_display = ["id", "name", "created"]
 #     exclude = ["options"]
 #     list_filter = (PolymorphicChildModelFilter,)
@@ -31,5 +31,5 @@ class DateInline(admin.TabularInline):
 
 
 class SampleAdmin(PolymorphicChildModelAdmin):
-    base_model = BaseSample
+    base_model = Sample
     inlines = [DescriptionInline, DateInline]

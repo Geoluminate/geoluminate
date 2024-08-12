@@ -1,8 +1,8 @@
 from django.apps import apps
 from django.contrib import admin
 
-from geoluminate.contrib.measurements.models import BaseMeasurement
-from geoluminate.contrib.samples.models import BaseSample
+from geoluminate.contrib.measurements.models import Measurement
+from geoluminate.contrib.samples.models import Sample
 
 # from geoluminate.contrib.measurements.admin import MeasurementAdmin
 # from geoluminate.contrib.samples.admin import SampleAdmin
@@ -15,8 +15,8 @@ class GeoluminateAdminSite(admin.AdminSite):
     def get_app_list(self, request):
         app_list = super().get_app_list(request)
 
-        sample_models = self.find_subclass_of(app_list, BaseSample)
-        measurement_models = self.find_subclass_of(app_list, BaseMeasurement)
+        sample_models = self.find_subclass_of(app_list, Sample)
+        measurement_models = self.find_subclass_of(app_list, Measurement)
         app_list.append(
             {
                 "name": "Sample Types",

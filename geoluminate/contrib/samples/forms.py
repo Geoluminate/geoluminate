@@ -1,10 +1,10 @@
 from django import forms
 
-from .models import BaseSample
+from .models import Sample
 
 
 class SampleForm(forms.ModelForm):
     class Meta:
-        model = BaseSample
+        model = Sample
         # fields = ["dataset", "name"]
         exclude = ["created", "modified", "keywords"]

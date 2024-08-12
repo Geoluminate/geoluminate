@@ -5,19 +5,19 @@ from geoluminate.utils import icon, label
 from geoluminate.views import BaseDetailView, BaseEditView, BaseListView, BaseTableView
 
 from .forms import SampleForm
-from .models import BaseSample
+from .models import Sample
 from .tables import SampleTable
 
 
 class SampleListView(BaseListView):
     title = _("Datasets")
-    queryset = BaseSample.objects.prefetch_related("contributors").order_by("-created")
+    queryset = Sample.objects.prefetch_related("contributors").order_by("-created")
     # filterset_class = DatasetFilter
 
 
 class SampleDetailView(BaseDetailView):
     base_template = "samples/sample_detail.html"
-    model = BaseSample
+    model = Sample
     title = _("Sample")
     sidebar_fields = [
         "name",
@@ -47,7 +47,7 @@ class SampleDetailView(BaseDetailView):
 
 
 class SampleEditView(BaseEditView):
-    model = BaseSample
+    model = Sample
     form_class = SampleForm
     related_name = "dataset"
 
@@ -55,13 +55,13 @@ class SampleEditView(BaseEditView):
 class SamplePlugin(ListPluginMixin):
     title = name = _("Samples")
     icon = icon("sample")
-    # model = BaseSample
+    # model = Sample
     template_name = "contributors/contribution_list.html"
     object_template = "samples/sample_card.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["sample_poly_choices"] = BaseSample.get_polymorphic_choices()
+        context["sample_poly_choices"] = Sample.get_polymorphic_choices()
         print(context)
         return context
 

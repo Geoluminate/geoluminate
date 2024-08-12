@@ -1,7 +1,7 @@
 import factory
 from factory.fuzzy import FuzzyChoice
 
-from geoluminate.contrib.samples.models import BaseSample, Contribution, Date, Description, Location
+from geoluminate.contrib.samples.models import Contribution, Date, Description, Location, Sample
 
 from .contributors import AbstractContributionFactory
 from .core import AbstractDateFactory, AbstractDescriptionFactory, randint
@@ -53,7 +53,7 @@ class ContributionFactory(AbstractContributionFactory):
 
 
 class SampleFactory(factory.django.DjangoModelFactory):
-    """A factory for creating BaseSample objects."""
+    """A factory for creating Sample objects."""
 
     # used when SampleFactory is called directly in order to create a dataset. samples is set to none so that DatasetFactory doesn't try to create new samples.
     dataset = factory.SubFactory("geoluminate.factories.DatasetFactory", samples=None)
@@ -61,10 +61,10 @@ class SampleFactory(factory.django.DjangoModelFactory):
     name = factory.Faker("sentence", nb_words=2, variable_nb_words=True)
 
     location = factory.SubFactory(LocationFactory, samples=None)
-    status = FuzzyChoice(BaseSample.status_vocab.values)
-    feature_type = FuzzyChoice(BaseSample.feature_type_vocab.values)
-    medium = FuzzyChoice(BaseSample.medium_vocab.values)
-    specimen_type = FuzzyChoice(BaseSample.specimen_type_vocab.values)
+    status = FuzzyChoice(Sample.status_vocab.values)
+    feature_type = FuzzyChoice(Sample.feature_type_vocab.values)
+    medium = FuzzyChoice(Sample.medium_vocab.values)
+    specimen_type = FuzzyChoice(Sample.specimen_type_vocab.values)
 
     descriptions = factory.RelatedFactoryList(
         DescriptionFactory,
@@ -85,4 +85,4 @@ class SampleFactory(factory.django.DjangoModelFactory):
     )
 
     class Meta:
-        model = BaseSample
+        model = Sample

@@ -12,13 +12,13 @@ from geoluminate.db import models
 from geoluminate.utils import get_subclasses
 
 from . import choices
-from .choices import FeatureType, SampleStatus, SamplingMedium, SpecimenType
+from .choices import SampleStatus
 
 LABELS = settings.GEOLUMINATE_LABELS
 
 
-class BaseSample(Abstract, ShowFieldType, PolymorphicModel):
-    """This model attempts to roughly replicate the schema of the International Generic BaseSample Number (IGSN) registry. Each sample in this table MUST belong to
+class Sample(Abstract, ShowFieldType, PolymorphicModel):
+    """This model attempts to roughly replicate the schema of the International Generic Sample Number (IGSN) registry. Each sample in this table MUST belong to
     a `geoluminate.contrib.datasets.models.Dataset`."""
 
     parent = models.ForeignKey(
@@ -105,35 +105,14 @@ class BaseSample(Abstract, ShowFieldType, PolymorphicModel):
         return choices
 
 
-class Sample(BaseSample):
-    feature_type = ConceptField(
-        verbose_name=_("feature"),
-        vocabulary=FeatureType,
-        default=settings.GEOLUMINATE_DEFAULT_FEATURE_TYPE,
-    )
-    medium = ConceptField(
-        verbose_name=_("medium"),
-        vocabulary=SamplingMedium,
-        default="solid",
-    )
-    specimen_type = ConceptField(
-        verbose_name=_("specimen"),
-        vocabulary=SpecimenType,
-        default="theSpecimenTypeIsUnknown",
-    )
-
-    class Meta:
-        abstract = True
-
-
 class Description(AbstractDescription):
     type = ConceptField(verbose_name=_("type"), vocabulary=choices.SampleDescriptions)
-    object = models.ForeignKey(to=BaseSample, on_delete=models.CASCADE)
+    object = models.ForeignKey(to=Sample, on_delete=models.CASCADE)
 
 
 class Date(AbstractDate):
     type = ConceptField(verbose_name=_("type"), vocabulary=choices.SampleDates)
-    object = models.ForeignKey(to=BaseSample, on_delete=models.CASCADE)
+    object = models.ForeignKey(to=Sample, on_delete=models.CASCADE)
 
 
 class Contribution(AbstractContribution):
@@ -142,7 +121,7 @@ class Contribution(AbstractContribution):
     CONTRIBUTOR_ROLES = choices.SampleRoles
 
     object = models.ForeignKey(
-        BaseSample,
+        Sample,
         on_delete=models.CASCADE,
         related_name="contributions",
         verbose_name=_("sample"),

@@ -1,6 +1,6 @@
 import factory
 
-from geoluminate.contrib.measurements.models import BaseMeasurement, Contribution, Date, Description
+from geoluminate.contrib.measurements.models import Contribution, Date, Description, Measurement
 
 from .contributors import AbstractContributionFactory
 from .core import AbstractDateFactory, AbstractDescriptionFactory, randint
@@ -37,7 +37,7 @@ class ContributionFactory(AbstractContributionFactory):
 
 
 class MeasurementFactory(factory.django.DjangoModelFactory):
-    """A factory for creating BaseMeasurement objects."""
+    """A factory for creating Measurement objects."""
 
     sample = factory.SubFactory("geoluminate.factories.SampleFactory", measurements=None)
 
@@ -59,4 +59,4 @@ class MeasurementFactory(factory.django.DjangoModelFactory):
     )
 
     class Meta:
-        model = BaseMeasurement
+        model = Measurement

@@ -67,11 +67,11 @@ def get_subclasses(cls, include_self=False):
 
 
 def get_sample_models():
-    """Returns a dictionary of all models in the project that subclass from :class:`geoluminate.contrib.samples.models.BaseSample`."""
+    """Returns a dictionary of all models in the project that subclass from :class:`geoluminate.contrib.samples.models.Sample`."""
     sample_types = []
-    from geoluminate.contrib.samples.models import BaseSample
+    from geoluminate.contrib.samples.models import Sample
 
     for model in apps.get_models():
-        if issubclass(model, BaseSample):
+        if issubclass(model, Sample):
             sample_types.append(model)
     return sample_types

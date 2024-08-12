@@ -3,12 +3,12 @@ from django.utils.safestring import mark_safe
 from geoluminate.api.v1.serializers import SampleSerializer
 from geoluminate.tables import GeoluminateTable, ScrollerTable
 
-from .models import BaseSample
+from .models import Sample
 
 
 class SampleTable(GeoluminateTable):
     config_class = ScrollerTable
-    model = BaseSample
+    model = Sample
     serializer_class = SampleSerializer
     details_template = '<a href="${data}"><i class="fa-solid fa-file-lines"></i></a>'
     absolute_url_template = '<a href="${data}"><i class="fa-solid fa-file-lines"></i></a>'

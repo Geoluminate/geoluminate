@@ -212,3 +212,16 @@ Sidebar.add_item(
         ),
     ),
 )
+
+
+Sidebar.add_item(
+    MenuItem(
+        title=_("Vocabularies"),
+        url=reverse("vocabularies:list"),
+        weight=9,
+        icon="fa-solid fa-comments",
+        description=_(
+            "Explore our API documentation to learn how to interact programatically with our database and access our extensive collection of datasets, samples, projects and more. Integrate our online resources into your custom applications, notebooks and workflows."
+        ),
+    ),
+)

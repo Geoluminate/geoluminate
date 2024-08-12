@@ -39,6 +39,7 @@ I18N_URLS = [
     path("", include("geoluminate.contrib.contributors.urls")),
     path("", include("geoluminate.contrib.organizations.urls")),
     path("", include("geoluminate.contrib.core.urls")),  # must be before actstream.urls
+    path("vocabularies/", include("research_vocabs.urls")),
     path("measurements/", include(measurements.urls)),
     path("account/", include("allauth.urls")),
     path("", include("geoluminate.contrib.users.urls")),

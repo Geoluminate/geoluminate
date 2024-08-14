@@ -7,7 +7,7 @@ from geoluminate.contrib.users.models import User
 
 from ..contrib.contributors.models import Contributor
 from ..contrib.organizations.models import Membership, Organization
-from .core import randint
+from .utils import randint
 
 
 class GenericContributorFactory(factory.django.DjangoModelFactory):
@@ -22,10 +22,42 @@ class GenericContributorFactory(factory.django.DjangoModelFactory):
         model = Contributor
 
 
-class AbstractContributionFactory(factory.django.DjangoModelFactory):
+class ContributionFactory(factory.django.DjangoModelFactory):
     """A factory for creating relationships between contributors and objects in the database.Should not be used directly but as a subfactory for other model factories that require contributor relationships."""
 
-    contributor = Faker("random_instance", model=Contributor)
+    class Params:
+        generate_contributors = False
+        roles_choices = None
+
+    class Meta:
+        django_get_or_create = ["contributor", "object"]
+
+    @factory.lazy_attribute
+    def roles(self):
+        # parent_meta = self.factory_parent._Resolver__step.builder.factory_meta
+        # parent_model = parent_meta.model
+        max_roles = len(self.roles_choices)
+        return random.sample(self.roles_choices, k=random.randint(1, max_roles))
+
+    @factory.lazy_attribute
+    def contributor(self):
+        if self.generate_contributors:
+            create_contributors(10, 5, 5)
+            # self.__class__._contributor_cache = Contributor.objects.all()
+            self.generate_contributors = False
+        if not hasattr(self.__class__, "_contributor_cache"):
+            self.__class__._contributor_cache = Contributor.objects.all()
+        return random.choice(self._contributor_cache)
+
+    @classmethod
+    def _create(cls, model_class, *args, **kwargs):
+        """Create an instance of the model, and save it to the database."""
+        model_class = kwargs.pop("model", model_class)
+        if cls._meta.django_get_or_create:
+            return cls._get_or_create(model_class, *args, **kwargs)
+
+        manager = cls._get_manager(model_class)
+        return manager.create(*args, **kwargs)
 
 
 class UserFactory(GenericContributorFactory):
@@ -79,3 +111,20 @@ class OrganizationMembershipFactory(factory.django.DjangoModelFactory):
         "geoluminate.factories.OrganizationFactory",
     )
     is_admin = factory.Faker("boolean", chance_of_getting_true=10)
+
+
+def create_contributors(n_active, n_organizations, n_inactive):
+    """Create a set of users and organizations."""
+    users = UserFactory.create_batch(n_active)
+    inactive = GenericContributorFactory.create_batch(n_inactive)
+    orgs = OrganizationFactory.create_batch(n_organizations)
+
+    return users, inactive, orgs
+    # OrganizationMembershipFactory.create_batch(n_organizations)
+
+
+class ContributorFactoryList(factory.RelatedFactoryList):
+    def __init__(self, model, **kwargs):
+        related_factory = factory.make_factory(model, FACTORY_CLASS=ContributionFactory)
+        factory_related_name = "object"
+        super().__init__(related_factory, factory_related_name, **kwargs)

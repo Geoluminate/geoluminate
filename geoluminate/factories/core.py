@@ -2,21 +2,20 @@ import random
 
 import factory
 import faker
-from django.contrib.gis.geos import Point
+
+# from django.contrib.gis.geos import Point
 from factory.fuzzy import FuzzyChoice
 from research_vocabs.models import TaggedConcept
 
 from ..contrib.core.choices import Visibility
-
-
-def randint(min_value, max_value):
-    return lambda: random.randint(min_value, max_value)
+from .utils import randint
 
 
 class GeoluminateProvider(faker.providers.BaseProvider):
     def geo_point(self, **kwargs):
         coords = faker.Faker().format("latlng", **kwargs)
-        return Point(x=float(coords[1]), y=float(coords[0]), srid=4326)
+        return "POINT({} {})".format(*coords)
+        # return Point(x=float(coords[1]), y=float(coords[0]), srid=4326)
 
     def html_paragraphs(self, nb=5, **kwargs):
         if callable(nb):
@@ -48,13 +47,13 @@ class GeoluminateProvider(faker.providers.BaseProvider):
 factory.Faker.add_provider(GeoluminateProvider)
 
 
-class AbstractDescriptionFactory(factory.django.DjangoModelFactory):
+class DescriptionFactory(factory.django.DjangoModelFactory):
     """A factory for creating Description objects."""
 
     text = factory.Faker("multiline_text", nb=randint(3, 6), nb_sentences=12)
 
 
-class AbstractDateFactory(factory.django.DjangoModelFactory):
+class DateFactory(factory.django.DjangoModelFactory):
     """A factory for creating Date objects."""
 
     date = factory.Faker("partial_date")

@@ -2,7 +2,8 @@ minio/
 # **/migrations/*
 !**/migrations/__init__.py
 !**/users/migrations/*
-test.py
+test.*
+
 # would be nice to ignore these and build bundle in CI workflow
 # geoluminate/static/bundles/
 
@@ -31,7 +32,6 @@ docs/apidocs
 .DS_Store
 _test*.py
 /node_modules
-test.html
 
 # Project files
 .ropeproject

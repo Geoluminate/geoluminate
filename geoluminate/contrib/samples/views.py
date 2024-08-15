@@ -25,9 +25,6 @@ class SampleDetailView(BaseDetailView):
         "dataset",
         "location",
         "status",
-        "feature_type",
-        "medium",
-        "specimen_type",
     ]
 
     def get_object(self):

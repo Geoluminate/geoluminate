@@ -1,7 +1,6 @@
 import random
 
-from django.contrib.gis.db.models import Collect
-from django.contrib.postgres.fields import ArrayField
+# from django.contrib.gis.db.models import Collect
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 from imagekit.models import ProcessedImageField
@@ -113,20 +112,20 @@ class Dataset(Abstract):
     def locations(self):
         return self.samples.prefetch_related("location").values("location__point")
 
-    @cached_property
-    def GeometryCollection(self):
-        """Returns a GeometryCollection of all the samples in the dataset"""
-        return self.locations.aggregate(collection=Collect("location__point"))["collection"]
+    # @cached_property
+    # def GeometryCollection(self):
+    #     """Returns a GeometryCollection of all the samples in the dataset"""
+    #     return self.locations.aggregate(collection=Collect("location__point"))["collection"]
 
-    @cached_property
-    def centroid(self):
-        """Returns the centroid of the dataset as a Point"""
-        return self.GeometryCollection.centroid
+    # @cached_property
+    # def centroid(self):
+    #     """Returns the centroid of the dataset as a Point"""
+    #     return self.GeometryCollection.centroid
 
-    @cached_property
-    def bbox(self):
-        """Returns the bounding box of the dataset as a list of coordinates in the format [xmin, ymin, xmax, ymax]."""
-        return self.GeometryCollection.extent
+    # @cached_property
+    # def bbox(self):
+    #     """Returns the bounding box of the dataset as a list of coordinates in the format [xmin, ymin, xmax, ymax]."""
+    #     return self.GeometryCollection.extent
 
     @cached_property
     def status(self):
@@ -157,22 +156,11 @@ class Identifier(AbstractIdentifier):
 class Contribution(AbstractContribution):
     """A contribution to a project."""
 
-    CONTRIBUTOR_ROLES = choices.DataciteContributorRoles
+    CONTRIBUTOR_ROLES = choices.DataciteContributorRoles()
 
     object = models.ForeignKey(
         Dataset,
         on_delete=models.CASCADE,
         related_name="contributions",
         verbose_name=_("dataset"),
-    )
-    roles = ArrayField(
-        ConceptField(verbose_name=_("roles"), vocabulary=choices.DataciteContributorRoles),
-        # models.CharField(
-        #     max_length=len(max(CONTRIBUTOR_ROLES.values, key=len)),
-        #     choices=CONTRIBUTOR_ROLES.choices,
-        # ),
-        verbose_name=_("roles"),
-        help_text=_("Assigned roles for this contributor."),
-        size=32,
-        # size=len(CONTRIBUTOR_ROLES.choices),
     )

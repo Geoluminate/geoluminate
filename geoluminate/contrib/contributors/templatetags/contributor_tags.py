@@ -10,4 +10,7 @@ def role(contributions, roles):
     Args:
         roles (str): A comma separated list of roles to filter by.
     """
-    return contributions.filter(roles__contains=roles.split(","))
+    # croles = contributions.values_list("roles", flat=True)
+    # return
+    return contributions.all()
+    # return contributions.filter(roles__contains=roles.split(","))

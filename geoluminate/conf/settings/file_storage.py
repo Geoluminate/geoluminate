@@ -12,7 +12,7 @@ env = environ.Env(
 DEBUG = env("DJANGO_DEBUG")
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-root
-STATIC_ROOT = COMPRESS_ROOT = str(BASE_DIR / "staticfiles")
+STATIC_ROOT = COMPRESS_ROOT = str(BASE_DIR / "static")
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-url
 STATIC_URL = COMPRESS_URL = "/static/"

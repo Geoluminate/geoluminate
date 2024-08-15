@@ -1,4 +1,4 @@
-from django.contrib.gis import admin
+from django.contrib import admin
 from polymorphic.admin import PolymorphicChildModelAdmin, PolymorphicChildModelFilter, PolymorphicParentModelAdmin
 
 from geoluminate.contrib.measurements.models import Measurement

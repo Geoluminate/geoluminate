@@ -1,4 +1,3 @@
-from django.contrib.postgres.fields import ArrayField
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 from model_utils import FieldTracker
@@ -56,7 +55,7 @@ class Date(AbstractDate):
 class Contribution(AbstractContribution):
     """A contribution to a project."""
 
-    CONTRIBUTOR_ROLES = choices.MeasurementRoles
+    CONTRIBUTOR_ROLES = choices.MeasurementRoles()
 
     object = models.ForeignKey(
         "measurements.Measurement",
@@ -64,9 +63,9 @@ class Contribution(AbstractContribution):
         related_name="contributions",
         verbose_name=_("measurement"),
     )
-    roles = ArrayField(
-        base_field=ConceptField(verbose_name=_("type"), vocabulary=CONTRIBUTOR_ROLES),
-        verbose_name=_("roles"),
-        help_text=_("Assigned roles for this contributor."),
-        # size=len(CONTRIBUTOR_ROLES().choices),
-    )
+    # roles = ArrayField(
+    #     base_field=ConceptField(verbose_name=_("type"), vocabulary=CONTRIBUTOR_ROLES),
+    #     verbose_name=_("roles"),
+    #     help_text=_("Assigned roles for this contributor."),
+    #     # size=len(CONTRIBUTOR_ROLES().choices),
+    # )

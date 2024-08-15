@@ -1,4 +1,5 @@
 from geoluminate.db import models
+from geoluminate.metadata import Metadata
 from geoluminate.models import Measurement, Sample
 
 
@@ -43,13 +44,6 @@ class CustomSample(Sample):
 
 
 class ExampleMeasurement(Measurement):
-    sample = models.ForeignKey(
-        "CustomSample",
-        verbose_name="my custom sample",
-        help_text="The sample on which the measurement was made.",
-        on_delete=models.PROTECT,
-    )
-
     # standard django fields
     char_field = models.CharField(
         "Character Field", max_length=200, help_text="Enter a string of up to 200 characters."
@@ -72,3 +66,18 @@ class ExampleMeasurement(Measurement):
         "Decimal Field", max_digits=5, decimal_places=2, help_text="Enter a decimal number."
     )
     float_field = models.FloatField("Float Field", help_text="Enter a floating point number.")
+
+    _description = Metadata(
+        primary_data_fields=["value"],
+        # primary_data_types = ["float"],
+        summary="Example Measurement",
+        description="An example measurement model.",
+        authority="Geoluminate",
+        website="https://geoluminate.com",
+        keywords=["example", "measurement"],
+        repo_url="",
+        citation="",
+        citation_doi="",
+        maintainer="Geoluminate Developers",
+        maintainer_email="contact@geoluminate.com",
+    )

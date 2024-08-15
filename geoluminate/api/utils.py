@@ -7,7 +7,6 @@ from django_filters import rest_framework
 from rest_framework import viewsets
 from rest_framework.renderers import BrowsableAPIRenderer
 from rest_framework_datatables_editor.viewsets import EditorModelMixin
-from rest_framework_gis import filters
 from rest_framework_nested.viewsets import NestedViewSetMixin
 
 logger = getLogger(__name__)
@@ -30,27 +29,6 @@ class BrowsableAPIRendererWithoutForms(BrowsableAPIRenderer):
 
 class DatatablesReadOnlyModelViewSet(EditorModelMixin, viewsets.ReadOnlyModelViewSet):
     pass
-
-
-class DistanceToPointOrderingFilter(filters.DistanceToPointOrderingFilter):
-    def get_schema_operation_parameters(self, view):
-        params = super().get_schema_operation_parameters(view)
-        params.append(
-            {
-                "name": self.order_param,
-                "required": False,
-                "in": "query",
-                "description": "",
-                "schema": {
-                    "type": "enum",
-                    "items": {"type": "string", "enum": ["asc", "desc"]},
-                    "example": "desc",
-                },
-                "style": "form",
-                "explode": False,
-            }
-        )
-        return params
 
 
 def public_api(endpoints):

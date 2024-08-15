@@ -1,8 +1,9 @@
 from django.db.models import *  # isort:skip
-from django.contrib.gis.db.models import *  # isort:skip
+
+# from django.contrib.gis.db.models import *  # isort:skip
 import uuid
 
-from django.contrib.gis.db.models import __all__ as models_all
+# from django.contrib.gis.db.models import __all__ as models_all
 from django.db import models
 from django.db.models.base import ModelBase
 from django.urls import reverse
@@ -102,7 +103,7 @@ class Model(ModelMeta, models.Model):
 
 
 __all__ = [
-    *models_all,
+    # *models_all,
     "Model",
     "QuantityField",
     "IntegerQuantityField",

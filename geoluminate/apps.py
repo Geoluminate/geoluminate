@@ -40,11 +40,21 @@ class GeoluminateConfig(AppConfig):
 
         This function is called during the `GeoluminateConfig.ready` method.
         """
+
         from rest_framework.serializers import ModelSerializer
-        from rest_framework_gis.fields import GeometryField
 
         from geoluminate.api.fields import QuantityField
         from geoluminate.db import models
+
+        if settings.GIS_ENABLED:
+            from django.contrib.gis.db import models as gis_models
+            from rest_framework_gis.fields import GeometryField
+
+            ModelSerializer.serializer_field_mapping.update(
+                {
+                    gis_models.PointField: GeometryField,
+                }
+            )
 
         # at the moment we are using the QuantifyField serializer for all QuantityField types
         # however, we will need to update this if we want to support non-readonly models
@@ -55,6 +65,5 @@ class GeoluminateConfig(AppConfig):
                 models.IntegerQuantityField: QuantityField,
                 models.BigIntegerQuantityField: QuantityField,
                 models.PositiveIntegerQuantityField: QuantityField,
-                models.PointField: GeometryField,
             }
         )

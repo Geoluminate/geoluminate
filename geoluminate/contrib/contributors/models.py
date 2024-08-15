@@ -3,7 +3,6 @@ import random
 from pathlib import Path
 
 import formset
-from django.contrib.postgres.fields import ArrayField
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.files.base import ContentFile
 from django.templatetags.static import static
@@ -118,13 +117,21 @@ class Contributor(PolymorphicModel, models.Model):
         help_text=_("This name is displayed publicly within the website."),
     )
 
-    alternative_names = ArrayField(
-        base_field=models.CharField(max_length=512),
+    alternative_names = models.JSONField(
         verbose_name=_("alternative names"),
         help_text=_("Any other names by which the contributor is known."),
+        null=True,
         blank=True,
         default=list,
     )
+
+    # alternative_names = ArrayField(
+    #     base_field=models.CharField(max_length=512),
+    #     verbose_name=_("alternative names"),
+    #     help_text=_("Any other names by which the contributor is known."),
+    #     blank=True,
+    #     default=list,
+    # )
 
     about = models.TextField(null=True, blank=True)
 

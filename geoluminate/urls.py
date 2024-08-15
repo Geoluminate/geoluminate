@@ -3,8 +3,8 @@ import adminactions.actions as actions
 # from cms.sitemaps import CMSSitemap
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib import admin
 from django.contrib.admin import site
-from django.contrib.gis import admin
 from django.urls import include, path
 from django.views import defaults as default_views
 from django.views.decorators.cache import cache_page
@@ -36,6 +36,7 @@ I18N_URLS = [
     path("", include("geoluminate.contrib.reviews.urls")),
     path("", include("geoluminate.contrib.projects.urls")),
     path("", include("geoluminate.contrib.samples.urls")),
+    path("", include("geoluminate.contrib.gis.urls")),
     path("", include("geoluminate.contrib.contributors.urls")),
     path("", include("geoluminate.contrib.organizations.urls")),
     path("", include("geoluminate.contrib.core.urls")),  # must be before actstream.urls

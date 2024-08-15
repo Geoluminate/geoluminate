@@ -1,4 +1,4 @@
-from django.contrib.gis import admin
+from django.contrib import admin
 from polymorphic.admin import PolymorphicChildModelAdmin
 
 from .models import Date, Description, Sample

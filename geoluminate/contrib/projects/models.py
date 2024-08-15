@@ -1,4 +1,3 @@
-from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
@@ -102,6 +101,10 @@ class Project(Abstract):
         """Returns the bounding box of the dataset as a list of coordinates in the format [xmin, ymin, xmax, ymax]."""
         return self.GeometryCollection.extent
 
+    @classmethod
+    def contributor_roles(cls):
+        return Contribution.CONTRIBUTOR_ROLES
+
     def get_summary(self):
         """Used to fill out the summary panel in the project detail view sidebar."""
         summary = [
@@ -162,12 +165,13 @@ class Contribution(AbstractContribution):
         related_name="contributions",
         verbose_name=_("project"),
     )
-    roles = ArrayField(
-        models.CharField(
-            max_length=len(max(CONTRIBUTOR_ROLES.values, key=len)),
-            choices=CONTRIBUTOR_ROLES.choices,
-        ),
-        verbose_name=_("roles"),
-        help_text=_("Assigned roles for this contributor."),
-        size=len(CONTRIBUTOR_ROLES.choices),
-    )
+
+    # roles = ArrayField(
+    #     models.CharField(
+    #         max_length=len(max(CONTRIBUTOR_ROLES.values, key=len)),
+    #         choices=CONTRIBUTOR_ROLES.choices,
+    #     ),
+    #     verbose_name=_("roles"),
+    #     help_text=_("Assigned roles for this contributor."),
+    #     size=len(CONTRIBUTOR_ROLES.choices),
+    # )

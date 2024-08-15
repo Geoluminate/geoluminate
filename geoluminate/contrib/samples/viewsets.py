@@ -6,7 +6,7 @@ from rest_framework.viewsets import ReadOnlyModelViewSet
 from geoluminate.api.utils import NestedViewset, api_doc
 
 from .models import Sample
-from .serializers import SampleGeojsonSerializer, SampleSerializer
+from .serializers import SampleSerializer
 
 
 @extend_schema_view(
@@ -14,7 +14,7 @@ from .serializers import SampleGeojsonSerializer, SampleSerializer
 )
 class SampleViewset(ReadOnlyModelViewSet):
     serializer_class = SampleSerializer
-    geojson_serializer = SampleGeojsonSerializer
+    # geojson_serializer = SampleGeojsonSerializer
 
     queryset = (
         Sample.objects.prefetch_related("contributors", "descriptions", "keywords")

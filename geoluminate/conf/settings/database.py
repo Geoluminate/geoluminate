@@ -1,10 +1,8 @@
-import os
-
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-DATABASES = {"default": env.db()}
-DATABASES["default"]["ATOMIC_REQUESTS"] = True
-DATABASES["default"]["CONN_MAX_AGE"] = env.int("CONN_MAX_AGE", default=60)  # noqa F405
+# DATABASES = {"default": env.db()}
+# DATABASES["default"]["ATOMIC_REQUESTS"] = True
+# DATABASES["default"]["CONN_MAX_AGE"] = env.int("CONN_MAX_AGE", default=60)  # noqa F405
 
 DBBACKUP_STORAGE = "django.core.files.storage.FileSystemStorage"
 

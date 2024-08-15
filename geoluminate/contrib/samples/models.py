@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.contrib.postgres.fields import ArrayField
 from django.urls import reverse
 from django.utils.decorators import classonlymethod
 from django.utils.translation import gettext_lazy as _
@@ -87,7 +86,7 @@ class Sample(Abstract, ShowFieldType, PolymorphicModel):
         default_related_name = "samples"
 
     def __str__(self):
-        return f"{self.feature_type}: {self.name}"
+        return f"{self.polymorphic_ctype}: {self.name}"
 
     def get_absolute_url(self):
         return reverse("sample-detail", kwargs={"pk": self.pk})
@@ -126,12 +125,12 @@ class Contribution(AbstractContribution):
         related_name="contributions",
         verbose_name=_("sample"),
     )
-    roles = ArrayField(
-        models.CharField(
-            max_length=len(max(CONTRIBUTOR_ROLES.values, key=len)),
-            choices=CONTRIBUTOR_ROLES.choices,
-        ),
-        verbose_name=_("roles"),
-        help_text=_("Assigned roles for this contributor."),
-        size=len(CONTRIBUTOR_ROLES.choices),
-    )
+    # roles = ArrayField(
+    #     models.CharField(
+    #         max_length=len(max(CONTRIBUTOR_ROLES.values, key=len)),
+    #         choices=CONTRIBUTOR_ROLES.choices,
+    #     ),
+    #     verbose_name=_("roles"),
+    #     help_text=_("Assigned roles for this contributor."),
+    #     size=len(CONTRIBUTOR_ROLES.choices),
+    # )

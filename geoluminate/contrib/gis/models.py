@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.contrib import admin
-from django.contrib.gis.measure import Distance
 from django.core.validators import MaxValueValidator as MaxVal
 from django.core.validators import MinValueValidator as MinVal
 from django.urls import reverse
@@ -21,8 +20,26 @@ class Location(models.Model):
         blank=True,
         null=True,
     )
-    point = models.PointField(null=True, blank=True)
-    polygon = models.PolygonField(null=True, blank=True)
+    # point = models.PointField(null=True, blank=True)
+    # polygon = models.PolygonField(null=True, blank=True)
+
+    x = models.DecimalField(
+        verbose_name=_("x"),
+        help_text=_("The x-coordinate of the location."),
+        max_digits=9,
+        decimal_places=6,
+        blank=True,
+        null=True,
+    )
+    y = models.DecimalField(
+        verbose_name=_("y"),
+        help_text=_("The y-coordinate of the location."),
+        max_digits=9,
+        decimal_places=6,
+        blank=True,
+        null=True,
+    )
+
     elevation = models.QuantityField(
         base_units="m",
         unit_choices=["m", "ft"],
@@ -41,30 +58,32 @@ class Location(models.Model):
         """Returns the string representation of this site"""
         return f"{self.latitude}, {self.longitude}"
 
+    def point2d(self):
+        return {"type": "Point", "coordinates": [self.x, self.y]}
+
+    def point3d(self):
+        return {"type": "Point", "coordinates": [self.x, self.y, self.elevation]}
+
     @property
     @admin.display(description=_("latitude"))
     def latitude(self):
         """Convenience method for retrieving the site's latitude ordinate."""
-        return self.point.y
+        return self.y
 
     @latitude.setter
     def latitude(self, val):
-        self.point.y = val
+        self.y = val
 
     @property
     @admin.display(description=_("longitude"))
     def longitude(self):
         """Convenience method for retrieving the site's longitude ordinate."""
-        return self.point.x
+        return self.x
 
     @longitude.setter
     def longitude(self, val):
-        self.point.x = val
+        self.x = val
 
     def get_absolute_url(self):
         """Returns the absolute URL for this site"""
         return reverse("location-detail", kwargs={"lon": self.longitude, "lat": self.latitude})
-
-    def get_sites_within(self, radius=25):
-        """Gets nearby sites within {radius} km radius"""
-        return self.objects.filter(point__distance_lt=(self.point, Distance(km=radius)))

@@ -186,6 +186,14 @@ class AbstractContribution(models.Model):
         on_delete=models.SET_NULL,
     )
 
+    roles = models.JSONField(
+        verbose_name=_("roles"),
+        help_text=_("Assigned roles for this contributor."),
+        default=list,
+        null=True,
+        blank=True,
+    )
+
     # we can't rely on the contributor field to store necessary information, as the profile may have changed or been deleted, therefore we need to store the contributor's name and other details at the time of publication
     store = models.JSONField(
         _("contributor"),

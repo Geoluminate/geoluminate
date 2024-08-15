@@ -25,8 +25,8 @@ services:
     depends_on:
       - geoluminate
       - postgres
-      # - redis
-      - minio
+      - redis
+      # - minio
     volumes:
       - ../:/external_apps
       - ./:/app:z
@@ -34,7 +34,10 @@ services:
     ports:
       - 8000:8000
       - 5678:5678
-    command: start-django-local
+    # command: start-django-local
+    command: ./compose/django/start
+    # command: sleep infinity
+    entrypoint: ./compose/django/entrypoint
   postgres:
     image: geoluminate/postgis
     depends_on:

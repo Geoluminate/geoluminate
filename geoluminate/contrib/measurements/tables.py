@@ -21,9 +21,6 @@ class SampleTable(GeoluminateTable):
         # "dataset",
         # "location",
         "title",
-        "feature_type",
-        "medium",
-        "specimen_type",
         # "parent",
     ]
     search_fields = ["title"]

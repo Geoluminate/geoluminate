@@ -1,9 +1,19 @@
 import os
 import socket
 import sys
+from contextlib import suppress
 
 import environ
 from django.contrib.messages import constants as messages
+from django.core.exceptions import ImproperlyConfigured
+
+GIS_ENABLED = False
+
+with suppress(ImproperlyConfigured):
+    import django.contrib.gis.db.models  # noqa
+
+    GIS_ENABLED = True
+
 
 sys.path.append(os.path.join(BASE_DIR, "project", "schemas"))
 

@@ -1,18 +1,10 @@
 from pathlib import Path
 
 import environ
-from django.core.exceptions import ImproperlyConfigured
 
 import geoluminate
 
 environ.Env.read_env("stack.env")
-try:
-    import django.contrib.gis.db.models  # noqa
-except ImproperlyConfigured as e:  # noqa
-    GIS_ENABLED = False
-    # print(e)
-else:
-    GIS_ENABLED = True
 
 
 GEOLUMINATE = {

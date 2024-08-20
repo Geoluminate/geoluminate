@@ -1,7 +1,5 @@
 from django.contrib import admin
 
-from geoluminate.contrib.core.admin import InvisibleAdmin
-
 from .models import Date, Description, Project
 
 
@@ -36,4 +34,4 @@ class ProjectAdmin(admin.ModelAdmin):
     )
 
 
-admin.site.register(Description, InvisibleAdmin)
+admin.site.register(Description)

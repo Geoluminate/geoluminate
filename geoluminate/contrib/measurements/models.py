@@ -1,17 +1,15 @@
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 from model_utils import FieldTracker
-from polymorphic.models import PolymorphicModel
-from polymorphic.showfields import ShowFieldType
 from research_vocabs.fields import ConceptField
 
-from geoluminate.contrib.core.models import AbstractContribution, AbstractDate, AbstractDescription
+from geoluminate.contrib.core.models import AbstractContribution, AbstractDate, AbstractDescription, PolymorphicMixin
 from geoluminate.db import models
 
 from . import choices
 
 
-class Measurement(models.Model, ShowFieldType, PolymorphicModel):
+class Measurement(models.Model, PolymorphicMixin):
     sample = models.ForeignKey(
         "samples.Sample",
         verbose_name=_("sample"),

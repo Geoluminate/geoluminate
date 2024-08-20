@@ -9,7 +9,7 @@ from simple_menu import Menu
 from simple_menu import MenuItem as SimpleMenuItem
 
 from geoluminate.contrib.samples.models import Sample
-from geoluminate.utils import get_subclasses, icon
+from geoluminate.utils import icon
 
 LABELS = settings.GEOLUMINATE_LABELS
 
@@ -33,10 +33,8 @@ def check_url(viewname):
 
 def get_sample_menu_items():
     """Returns a list of all models in the project that subclass from :class:`geoluminate.contrib.samples.models.Sample`."""
-    subclasses = get_subclasses(Sample, include_self=False)
-    # from geoluminate.contrib.samples.models import Sample
     menus = []
-    for model in subclasses:
+    for model in Sample.get_subclasses():
         menu = MenuItem(
             title=model._meta.verbose_name_plural,
             url=reverse("sample-list"),

@@ -3,15 +3,19 @@ import random
 # from rest_framework.authtoken.models import Token
 from django.templatetags.static import static
 from django.urls import reverse
+from django.utils.decorators import classonlymethod
 from django.utils.encoding import force_str
 from django.utils.functional import cached_property
 from django.utils.translation import gettext as _
+from polymorphic.models import PolymorphicModel
+from polymorphic.showfields import ShowFieldType
 from research_vocabs.fields import TaggableConcepts
 
 from geoluminate.contrib.contributors.managers import ContributionManager
 from geoluminate.contrib.core import utils
 from geoluminate.db import models
 from geoluminate.db.fields import PartialDateField
+from geoluminate.utils import get_subclasses
 
 
 def contributor_permissions_default():
@@ -252,3 +256,20 @@ class AbstractContribution(models.Model):
             data["affiliation"] = affiliation
 
         return data
+
+
+class PolymorphicMixin(ShowFieldType, PolymorphicModel):
+    class Meta:
+        abstract = True
+
+    @classonlymethod
+    def get_subclasses(cls):
+        return get_subclasses(cls)
+
+    @classonlymethod
+    def get_polymorphic_choices(cls, include_self=False):
+        choices = []
+        for subclass in cls.get_subclasses():
+            opts = subclass._meta
+            choices.append((f"{opts.app_label}.{opts.model_name}", opts.verbose_name))
+        return choices

@@ -1,7 +1,5 @@
 from django.contrib import admin
 
-from geoluminate.contrib.core.admin import InvisibleAdmin
-
 from .models import Contribution, Dataset, Date, Description, Identifier
 
 
@@ -39,7 +37,7 @@ class DatasetAdmin(admin.ModelAdmin):
     fields = ("title", "project", "image", "reference", "visibility")
 
 
-admin.site.register(Contribution, InvisibleAdmin)
-admin.site.register(Description, InvisibleAdmin)
-admin.site.register(Date, InvisibleAdmin)
-admin.site.register(Identifier, InvisibleAdmin)
+admin.site.register(Contribution)
+admin.site.register(Description)
+admin.site.register(Date)
+admin.site.register(Identifier)

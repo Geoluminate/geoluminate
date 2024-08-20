@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from polymorphic.admin import PolymorphicChildModelAdmin
 
+from geoluminate.contrib.contributors.admin import IdentifierInline
 from geoluminate.contrib.contributors.models import Contributor
 from geoluminate.contrib.users.models import User
 
@@ -16,10 +17,11 @@ class AccountEmailInline(admin.TabularInline):
 @admin.register(User)
 class UserAdmin(BaseUserAdmin, PolymorphicChildModelAdmin):
     base_model = Contributor
+    show_in_index = True
     # The forms to add and change user instances
     # form = UserAdminChangeForm
     # add_form = UserAdminCreationForm
-    inlines = [AccountEmailInline]
+    inlines = [AccountEmailInline, IdentifierInline]
     list_display = [
         "first_name",
         "last_name",

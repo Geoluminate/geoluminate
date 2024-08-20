@@ -22,12 +22,12 @@ class DateInline(admin.TabularInline):
 
 @admin.register(Measurement)
 class MeasurementParentAdmin(PolymorphicParentModelAdmin):
-    # class MeasurementParentAdmin(admin.ModelAdmin):
     model = Measurement
-    child_models = get_subclasses(Measurement, include_self=False)
+    child_models = get_subclasses(Measurement)
     list_filter = (PolymorphicChildModelFilter,)
 
 
 class MeasurementAdmin(PolymorphicChildModelAdmin):
+    show_in_index = True
     base_model = Measurement
     inlines = [DescriptionInline, DateInline]

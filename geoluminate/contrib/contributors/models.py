@@ -12,16 +12,14 @@ from django.utils.translation import gettext_lazy as _
 from formset.upload import depict_size, file_icon_url, get_thumbnail_path, split_mime_type
 from imagekit.models import ProcessedImageField
 from imagekit.processors import SmartResize
-from polymorphic.models import PolymorphicModel
 from research_vocabs.fields import TaggableConcepts
 
-from geoluminate.contrib.core.models import AbstractIdentifier
+# from django.db.models.fields.files import FieldFile
+from geoluminate.contrib.core.models import AbstractIdentifier, PolymorphicMixin
 from geoluminate.contrib.core.utils import inherited_choices_factory
 from geoluminate.db import models
 
 from . import choices
-
-# from django.db.models.fields.files import FieldFile
 
 
 def profile_image_path(instance, filename):
@@ -95,7 +93,7 @@ formset.upload.get_file_info = get_file_info
 formset.upload.thumbnail_image = thumbnail_image
 
 
-class Contributor(PolymorphicModel, models.Model):
+class Contributor(models.Model, PolymorphicMixin):
     """A Contributor is a person or organisation that makes a contribution to a project, dataset, sample or measurement
     within the database. This model stores publicly available information about the contributor that can be used
     for proper attribution and formal publication of datasets. The fields are designed to align with the DataCite

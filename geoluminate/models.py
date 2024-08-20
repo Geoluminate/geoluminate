@@ -1,4 +1,3 @@
-from geoluminate.contrib.configuration.models import Configuration
 from geoluminate.contrib.contributors.models import Contributor
 from geoluminate.contrib.datasets.models import Dataset
 from geoluminate.contrib.gis.models import Location
@@ -14,6 +13,5 @@ __all__ = [
     "Review",
     "Sample",
     "Location",
-    "Configuration",
     "Measurement",
 ]

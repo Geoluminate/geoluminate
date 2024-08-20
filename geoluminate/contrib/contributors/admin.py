@@ -6,7 +6,6 @@ from polymorphic.admin import PolymorphicChildModelFilter, PolymorphicParentMode
 from threadedcomments.models import ThreadedComment
 
 # from django_select2.forms import Select2AdminMixin
-from geoluminate.contrib.core.admin import InvisibleAdmin
 from geoluminate.contrib.organizations.models import Organization
 from geoluminate.contrib.users.models import User
 
@@ -44,30 +43,10 @@ class ContributorAdmin(PolymorphicParentModelAdmin):
         models.ImageField: {"widget": ImageUploaderWidget},
     }
 
-    def get_queryset(self, request):
-        return (
-            super().get_queryset(request)
-            # .annotate(
-            #     project_count=Count("projects"),
-            #     dataset_count=Count("datasets"),
-            #     sample_count=Count("samples"),
-            # )
-        )
-
     def _name(self, obj):
         return obj.name or "-"
 
-    def _datasets(self, obj):
-        return obj.dataset_count
 
-    def _projects(self, obj):
-        return obj.project_count
-
-    def _samples(self, obj):
-        return obj.sample_count
-
-
-admin.site.register(Identifier, InvisibleAdmin)
-
+admin.site.register(Identifier)
 admin.site.unregister(ThreadedComment)
 admin.site.unregister(FluentComment)

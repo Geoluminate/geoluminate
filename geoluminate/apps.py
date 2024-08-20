@@ -1,16 +1,10 @@
 from django.apps import AppConfig
 from django.conf import settings
-from django.contrib.admin.apps import AdminConfig
 from django.utils.module_loading import autodiscover_modules
-
-
-class GeoluminateCustomAdmin(AdminConfig):
-    default_site = "geoluminate.admin.GeoluminateAdminSite"
 
 
 class GeoluminateConfig(AppConfig):
     name = "geoluminate"
-    verbose_name = settings.GEOLUMINATE["database"]["name"]
 
     def ready(self) -> None:
         # adds a default renderer to all forms to keep a consistent look across the site. This way we don't have to specify it every time

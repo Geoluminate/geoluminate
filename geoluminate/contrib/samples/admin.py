@@ -1,5 +1,6 @@
 from django.contrib import admin
-from polymorphic.admin import PolymorphicChildModelAdmin
+from polymorphic.admin import PolymorphicChildModelFilter
+from polymorphic_treebeard.admin import PolymorphicTreeAdmin, PolymorphicTreeChildAdmin
 
 from .models import Date, Description, Sample
 
@@ -17,19 +18,16 @@ class DateInline(admin.TabularInline):
     fields = ["type", "date"]
 
 
-# # @admin.register(Sample)
-# class SampleParentAdmin(PolymorphicParentModelAdmin):
-#     base_model = Sample
-#     child_models = get_subclasses(Sample, include_self=True)
-#     list_display = ["id", "name", "created"]
-#     exclude = ["options"]
-#     list_filter = (PolymorphicChildModelFilter,)
-
-#     def save_form(self, request: Any, form: Any, change: Any) -> Any:
-#         print(form.data)
-#         return super().save_form(request, form, change)
+@admin.register(Sample)
+class BaseSampleAdmin(PolymorphicTreeAdmin):
+    base_model = Sample
+    child_models = Sample.get_subclasses()
+    list_display = ["id", "name", "created"]
+    exclude = ["options"]
+    list_filter = (PolymorphicChildModelFilter,)
 
 
-class SampleAdmin(PolymorphicChildModelAdmin):
+class SampleAdmin(PolymorphicTreeChildAdmin):
+    # show_in_index = True
     base_model = Sample
     inlines = [DescriptionInline, DateInline]

@@ -29,18 +29,22 @@ class SampleDetailView(BaseDetailView):
 
     def get_object(self):
         # note: we are using base_objects here to get the base model (Sample) instance
-        return self.base.model.base_objects.get(pk=self.kwargs.get("pk"))
+        obj = self.base.model.base_objects.get(pk=self.kwargs.get("pk"))
+        self.real = obj.get_real_instance()
+        return obj
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        real = self.object.get_real_instance()
-        context["real"] = real
-        context[real._meta.model_name] = real
+        context["real"] = self.real
+        context[self.real._meta.model_name] = self.real
         base_fields = [f.name for f in self.base.model._meta.fields]
-        context["additional_fields"] = [f.name for f in real._meta.fields if f.name not in base_fields]
+        context["additional_fields"] = [f.name for f in self.real._meta.fields if f.name not in base_fields]
         if "sample_ptr" in context["additional_fields"]:
             context["additional_fields"].remove("sample_ptr")
         return context
+
+    def get_meta_title(self, context):
+        return f"{self.real}"
 
 
 class SampleEditView(BaseEditView):

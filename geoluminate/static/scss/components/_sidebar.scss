@@ -24,12 +24,11 @@
 @include media-breakpoint-up(xl) {
 
   .sidebar {
-    display: block !important;
+    display: block;
     position: relative;
     width: $sidebar-width;
     min-height: 100%;
     z-index: inherit;
-
 
 
     .modal-header {

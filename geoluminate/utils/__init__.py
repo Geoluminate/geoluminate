@@ -1,3 +1,4 @@
+from configuration.models import Configuration
 from django.apps import apps
 from django.conf import settings
 from django_contact_form.forms import ContactForm
@@ -26,6 +27,7 @@ def context_processor(request):
     - ``ACCOUNT_ALLOW_REGISTRATION``: The ``ACCOUNT_ALLOW_REGISTRATION`` setting.
     """
     context = {
+        "site_config": Configuration.get_solo(),
         "geoluminate": settings.GEOLUMINATE,
         "ACCOUNT_ALLOW_REGISTRATION": settings.ACCOUNT_ALLOW_REGISTRATION,
         "user_sidebar_widgets": settings.GEOLUMINATE_USER_SIDEBAR_WIDGETS,
@@ -36,42 +38,6 @@ def context_processor(request):
     return context
 
 
-def get_subclasses(cls, include_self=False):
-    """
-    Returns a list of all non-abstract subclasses of the given Django model class.
-
-    Args:
-    cls (type): The Django model class to find subclasses of.
-    include_self (bool): Whether to include the given class itself in the list.
-
-    Returns:
-    list: A list of non-abstract subclasses.
-    """
-    subclasses = set()
-
-    def recurse(subclass):
-        if subclass not in subclasses and not getattr(subclass._meta, "abstract", False):
-            subclasses.add(subclass)
-            for sub in subclass.__subclasses__():
-                recurse(sub)
-
-    recurse(cls)
-
-    if include_self:
-        if not getattr(cls._meta, "abstract", False):
-            subclasses.add(cls)
-    else:
-        subclasses.discard(cls)
-
-    return list(subclasses)
-
-
-def get_sample_models():
-    """Returns a dictionary of all models in the project that subclass from :class:`geoluminate.contrib.samples.models.Sample`."""
-    sample_types = []
-    from geoluminate.contrib.samples.models import Sample
-
-    for model in apps.get_models():
-        if issubclass(model, Sample):
-            sample_types.append(model)
-    return sample_types
+def get_subclasses(model):
+    models = apps.get_models()
+    return [m for m in models if issubclass(m, model) and m != model]

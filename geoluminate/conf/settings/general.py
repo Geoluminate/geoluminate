@@ -2,6 +2,7 @@ import os
 import socket
 import sys
 from contextlib import suppress
+from template_partials.apps import wrap_loaders
 
 import environ
 from django.contrib.messages import constants as messages
@@ -38,33 +39,17 @@ if env("DJANGO_READ_DOT_ENV_FILE"):
     env.read_env(str(BASE_DIR / ".env"))
 
 
-# https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
-SECRET_KEY = env("DJANGO_SECRET_KEY")
-
-TIME_ZONE = env("DJANGO_TIME_ZONE", default="UTC")
-""""""
-
-# https://docs.djangoproject.com/en/dev/ref/settings/#use-tz
-USE_TZ = True
-
-# https://docs.djangoproject.com/en/dev/ref/settings/#site-id
-SITE_ID = env("DJANGO_SITE_ID")
-SITE_DOMAIN = env("DJANGO_SITE_DOMAIN")
-SITE_NAME = META_SITE_NAME = env("DJANGO_SITE_NAME")
-
-# https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = [SITE_DOMAIN] + env("DJANGO_ALLOWED_HOSTS")
-
-# https://docs.djangoproject.com/en/dev/ref/settings/#admins
-ADMINS = [(admin["name"], admin["email"]) for admin in GEOLUMINATE["application"]["developers"]]
-MANAGERS = ADMINS
-
-# https://docs.djangoproject.com/en/dev/ref/settings/#root-urlconf
-ROOT_URLCONF = "geoluminate.urls"
-
 ADMIN_URL = f"{env('DJANGO_ADMIN_URL')}"
-
-# https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
+ADMINS = [(admin["name"], admin["email"]) for admin in GEOLUMINATE["application"]["developers"]]
+ALLOWED_HOSTS = [env("DJANGO_SITE_DOMAIN")] + env("DJANGO_ALLOWED_HOSTS")
+MANAGERS = ADMINS
+ROOT_URLCONF = "geoluminate.urls"
+SECRET_KEY = env("DJANGO_SECRET_KEY")
+SITE_DOMAIN = env("DJANGO_SITE_DOMAIN")
+SITE_ID = env("DJANGO_SITE_ID")
+SITE_NAME = META_SITE_NAME = env("DJANGO_SITE_NAME")
+TIME_ZONE = env("DJANGO_TIME_ZONE", default="UTC")
+USE_TZ = True
 WSGI_APPLICATION = None
 
 # Coloured Messages
@@ -95,21 +80,26 @@ TEMPLATES = [
                 "sekizai.context_processors.sekizai",
                 "django.template.context_processors.static",
                 "geoluminate.utils.context_processor",
-                # "cms.context_processors.cms_settings",
-            ],
-            "loaders": [
-                "django.template.loaders.filesystem.Loader",
-                "django.template.loaders.app_directories.Loader",
             ],
         },
     },
 ]
+# for django-template-partials to work alongside django-admin-tools (for some reason, wrap_loaders is not working)
+default_loaders = [
+    "admin_tools.template_loaders.Loader",
+    "django.template.loaders.filesystem.Loader",
+    "django.template.loaders.app_directories.Loader",
+]
+cached_loaders = [("django.template.loaders.cached.Loader", default_loaders)]
+partial_loaders = [("template_partials.loader.Loader", cached_loaders)]
+
+TEMPLATES[0]["OPTIONS"]["loaders"] = partial_loaders
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "corsheaders.middleware.CorsMiddleware",
-    # "cms.middleware.utils.ApphookReloadMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -117,10 +107,6 @@ MIDDLEWARE = [
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    # "cms.middleware.user.CurrentUserMiddleware",
-    # "cms.middleware.page.CurrentPageMiddleware",
-    # "cms.middleware.toolbar.ToolbarMiddleware",
-    # "cms.middleware.language.LanguageCookieMiddleware",
     "allauth.account.middleware.AccountMiddleware",
     "django_htmx.middleware.HtmxMiddleware",
     "lockdown.middleware.LockdownMiddleware",

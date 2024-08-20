@@ -20,9 +20,7 @@ def setup(development=False):
 
     # add a BASE_DIR variable to the global namespace
     if not globs.get("BASE_DIR"):
-        globs["BASE_DIR"] = (
-            Path(globs["__file__"]).resolve(strict=True).parent.parent.parent
-        )
+        globs["BASE_DIR"] = Path(globs["__file__"]).resolve(strict=True).parent.parent.parent
 
     # django-split-settings requires that the __file__ global variable is set relative to the current file
     globs["__file__"] = os.path.realpath(__file__)

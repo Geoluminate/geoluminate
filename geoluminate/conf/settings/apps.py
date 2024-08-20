@@ -1,13 +1,14 @@
 GEOLUMINATE_APPS = [
     # Admin apps
     # "adminactions",
-    # "jazzmin",
     # "modeltranslation",
+    "admin_tools",
+    "admin_tools.theming",
+    "admin_tools.menu",
+    "admin_tools.dashboard",
     # DJANGO CORE
-    # "django.contrib.admin",
-    "geoluminate.apps.GeoluminateCustomAdmin",
+    "django.contrib.admin",
     "django.contrib.auth",
-    "polymorphic",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.sites",
@@ -23,9 +24,9 @@ GEOLUMINATE_APPS = [
     "django_comments",
     "taggit",  # providing taggable keywords to any model
     # GEOLUMINATE CORE
-    "geoluminate.apps.GeoluminateConfig",
+    "geoluminate",
     "geoluminate.contrib.core",
-    "geoluminate.contrib.configuration",
+    "configuration",
     "geoluminate.contrib.projects",
     "geoluminate.contrib.datasets",
     "geoluminate.contrib.reviews",
@@ -36,6 +37,9 @@ GEOLUMINATE_APPS = [
     "geoluminate.contrib.users",
     "geoluminate.contrib.organizations",
     "auto_datatables",
+    "polymorphic",
+    "polymorphic_treebeard",
+    "treebeard",
     # AUTHENTICATION AND USERS
     "account_management",
     "allauth",
@@ -90,7 +94,8 @@ GEOLUMINATE_APPS = [
     "laboratory",  # cataloguing of scientific instruments
     "research_vocabs",
     "neapolitan",
-    "template_partials",
+    # "template_partials",
+    "template_partials.apps.SimpleAppConfig",
 ]
 
 

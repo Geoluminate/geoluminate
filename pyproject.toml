@@ -98,6 +98,8 @@ django-easy-icons = {git = "https://github.com/SamuelJennings/django-easy-icons.
 django-literature = {git = "https://github.com/Geoluminate/django-literature", rev = "main"}
 django-research-vocabs = {git = "https://github.com/Geoluminate/django-research-vocabs.git", rev = "master"}
 django-sekizai = "^4.1.0"
+django-admin-tools = "^0.9.3"
+django-treebeard = "^4.7.1"
 
 
 

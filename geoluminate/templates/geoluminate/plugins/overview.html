@@ -9,7 +9,7 @@
 {% endpartialdef %}
 
 {% block container %}
-  <h1 class="display-3">{{ object }}</h1>
+  <h1 class="display-3">{{ meta.title }}</h1>
   {% comment %} <p class="small text-decoration-none">
     {% include "contributors/names_list.html" with contributors=object.contributions|role:"Creator" %}
   </p> {% endcomment %}

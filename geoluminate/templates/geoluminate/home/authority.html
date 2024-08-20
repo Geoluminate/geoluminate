@@ -1,0 +1,8 @@
+{% load i18n %}
+
+<section>
+  <h2>{% trans "Governance" %}</h2>
+  <h3>{{ site_config.authority.name }}</h3>
+  <a href="{{ site_config.authority.url }}">{{ site_config.authority.url }}</a>
+  <p>{{ site_config.authority.description }}</p>
+</section>

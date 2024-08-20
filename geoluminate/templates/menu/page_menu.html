@@ -1,6 +1,14 @@
-{% load geoluminate %}
+{% load geoluminate easy_icons %}
 
 <ul class="nav nav-tabs nav-pills nav-pills-alternate d-print-none" id="pageMenu" role="tablist">
+  <li>
+    <a class="nav-link sidebar-toggle"
+       data-bs-toggle="collapse"
+       href="#pageSidebar"
+       role="button"
+       aria-expanded="false"
+       aria-controls="pageSidebar">{% icon "bars-solid" %}</a>
+  </li>
   {% for item in page_menu %}
     <li class="nav-item" role="presentation">
       <a class="nav-link {{ item.extra_classes }} {% if forloop.first %}show active{% endif %}"

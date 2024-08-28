@@ -1,6 +1,0 @@
-{% load i18n geoluminate sekizai_tags %}
-
-{% if not user.is_authenticated %}
-  <a href="{% url "account_login" %}" class="btn btn-outline-light">{% trans "Sign In" %}</a>
-  <a href="{% url "account_signup" %}" class="btn btn-outline-light">{% trans "Sign Up" %}</a>
-{% endif %}

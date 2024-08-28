@@ -11,6 +11,7 @@ from django.views.decorators.cache import cache_page
 from django.views.generic import TemplateView
 
 from geoluminate.measurements import measurements
+from geoluminate.views import HomeView
 
 # from .admin import admin_measurement_view
 # register all adminactions
@@ -26,7 +27,7 @@ NON_I18N_URLS = [
 
 I18N_URLS = [
     path(settings.ADMIN_URL, admin.site.urls),
-    path("", TemplateView.as_view(template_name="home.html"), name="home"),
+    path("", HomeView.as_view(), name="home"),
     path(
         "explorer/",
         cache_page(60 * 5)(TemplateView.as_view(template_name="geoluminate/components/map.html")),
@@ -36,7 +37,7 @@ I18N_URLS = [
     path("", include("geoluminate.contrib.reviews.urls")),
     path("", include("geoluminate.contrib.projects.urls")),
     path("", include("geoluminate.contrib.samples.urls")),
-    path("", include("geoluminate.contrib.gis.urls")),
+    path("", include("geoluminate.contrib.measurements.urls")),
     path("", include("geoluminate.contrib.contributors.urls")),
     path("", include("geoluminate.contrib.organizations.urls")),
     path("", include("geoluminate.contrib.core.urls")),  # must be before actstream.urls
@@ -48,6 +49,7 @@ I18N_URLS = [
     path("contact/", include("django_contact_form.urls")),
     path("select2/", include("django_select2.urls")),
     path("activity/", include("actstream.urls")),
+    path("admin_tools/", include("admin_tools.urls")),
     # path("admin/measurements/", admin_measurement_view, name="admin_measurements"),
 ]
 urlpatterns = NON_I18N_URLS + I18N_URLS
@@ -81,9 +83,9 @@ if settings.DEBUG:
     ]
 
     if "debug_toolbar" in settings.INSTALLED_APPS:
-        import debug_toolbar
+        from debug_toolbar.toolbar import debug_toolbar_urls
 
-        urlpatterns.insert(0, path("__debug__/", include(debug_toolbar.urls)))
+        urlpatterns += debug_toolbar_urls()
 
 
 # urlpatterns += [path("", include("cms.urls"))]  # must be last

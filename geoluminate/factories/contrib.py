@@ -3,7 +3,6 @@ from factory.fuzzy import FuzzyChoice
 from licensing.models import License
 
 from geoluminate.contrib.datasets import models as dataset_models
-from geoluminate.contrib.gis.models import Location
 from geoluminate.contrib.measurements import models as meas_models
 from geoluminate.contrib.projects import models as project_models
 from geoluminate.contrib.samples import models as sample_models
@@ -93,7 +92,6 @@ class SampleFactory(factory.django.DjangoModelFactory):
 
     name = factory.Faker("sentence", nb_words=2, variable_nb_words=True)
 
-    location = factory.SubFactory("geoluminate.factories.contrib.LocationFactory", samples=None)
     status = FuzzyChoice(Sample.status_vocab.values)
 
     descriptions = ReusableFactoryList(
@@ -143,23 +141,6 @@ class MeasurementFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = Measurement
-
-
-class LocationFactory(factory.django.DjangoModelFactory):
-    name = factory.Faker("sentence", nb_words=2, variable_nb_words=True)
-    # point = factory.Faker("geo_point")
-    x = factory.Faker("pyfloat", min_value=-180, max_value=180)
-    y = factory.Faker("pyfloat", min_value=-90, max_value=90)
-
-    elevation = factory.Faker("pyfloat", min_value=-12000, max_value=10000)
-    samples = factory.RelatedFactoryList(
-        "geoluminate.factories.SampleFactory",
-        factory_related_name="location",
-        size=randint(2, 8),
-    )
-
-    class Meta:
-        model = Location
 
 
 class ReviewFactory(AbstractFactory):

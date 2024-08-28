@@ -5,7 +5,7 @@ import faker
 
 # from django.contrib.gis.geos import Point
 from factory.fuzzy import FuzzyChoice
-from research_vocabs.models import TaggedConcept
+from research_vocabs.models import Concept
 
 from ..contrib.core.choices import Visibility
 from .utils import randint
@@ -63,7 +63,7 @@ class AbstractKeywordsFactory(factory.django.DjangoModelFactory):
     """A factory for creating Keywords objects."""
 
     class Meta:
-        model = TaggedConcept
+        model = Concept
 
 
 class AbstractFactory(factory.django.DjangoModelFactory):

@@ -1,18 +1,12 @@
-import mimetypes
 import random
-from pathlib import Path
 
-import formset
-from django.contrib.staticfiles.storage import staticfiles_storage
-from django.core.files.base import ContentFile
 from django.templatetags.static import static
 from django.urls import reverse
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
-from formset.upload import depict_size, file_icon_url, get_thumbnail_path, split_mime_type
 from imagekit.models import ProcessedImageField
 from imagekit.processors import SmartResize
-from research_vocabs.fields import TaggableConcepts
+from jsonfield_toolkit.models import ArrayField
 
 # from django.db.models.fields.files import FieldFile
 from geoluminate.contrib.core.models import AbstractIdentifier, PolymorphicMixin
@@ -25,72 +19,6 @@ from . import choices
 def profile_image_path(instance, filename):
     """Return the path to the profile image for a contributor."""
     return f"contributors/{instance.pk}.webp"
-
-
-THUMBNAIL_MAX_HEIGHT = 200
-THUMBNAIL_MAX_WIDTH = 350
-
-
-def thumbnail_image(storage, file_path, image_height=THUMBNAIL_MAX_HEIGHT):
-    try:
-        from PIL import Image, ImageOps
-
-        image = Image.open(storage.open(file_path))
-    except Exception as e:
-        print(e)
-        return staticfiles_storage.url("formset/icons/file-picture.svg")
-    else:
-        height = int(image_height)
-        width = int(round(image.width * height / image.height))
-        width, height = min(width, THUMBNAIL_MAX_WIDTH), min(height, THUMBNAIL_MAX_HEIGHT)
-        thumb = ImageOps.fit(ImageOps.exif_transpose(image), (width, height))
-        thumbnail_path = get_thumbnail_path(file_path, image_height)
-        thumb_io = ContentFile(b"")
-        thumb.save(thumb_io, format=image.format)
-        thumb_io.seek(0)
-        storage.save(thumbnail_path, thumb_io)
-        return storage.url(thumbnail_path)
-
-
-def get_file_info(field_file):
-    if not field_file:
-        return None
-    file_path = Path(field_file.name)
-    storage = field_file.storage
-    content_type, _ = mimetypes.guess_type(file_path)
-    mime_type, sub_type = split_mime_type(content_type)
-
-    if mime_type == "image":
-        if sub_type == "svg+xml":
-            thumbnail_url = field_file.url
-        else:
-            thumbnail_path = get_thumbnail_path(file_path)
-            if storage.exists(thumbnail_path):
-                thumbnail_url = storage.url(thumbnail_path)
-            else:
-                thumbnail_url = thumbnail_image(storage, file_path)
-    else:
-        thumbnail_url = file_icon_url(mime_type, sub_type)
-
-    if storage.exists(file_path):
-        download_url = field_file.url
-        file_size = depict_size(field_file.size)
-    else:
-        download_url = "javascript:void(0);"
-        thumbnail_url = staticfiles_storage.url("formset/icons/file-missing.svg")
-        file_size = "-"
-    return {
-        "content_type": content_type,
-        "name": file_path.name,
-        "path": field_file.name,
-        "download_url": download_url,
-        "thumbnail_url": thumbnail_url,
-        "size": file_size,
-    }
-
-
-formset.upload.get_file_info = get_file_info
-formset.upload.thumbnail_image = thumbnail_image
 
 
 class Contributor(models.Model, PolymorphicMixin):
@@ -111,8 +39,8 @@ class Contributor(models.Model, PolymorphicMixin):
 
     name = models.CharField(
         max_length=512,
-        verbose_name=_("display name"),
-        help_text=_("This name is displayed publicly within the website."),
+        verbose_name=_("preferred name"),
+        # help_text=_("This name is displayed publicly within the website."),
     )
 
     alternative_names = models.JSONField(
@@ -123,20 +51,21 @@ class Contributor(models.Model, PolymorphicMixin):
         default=list,
     )
 
-    # alternative_names = ArrayField(
-    #     base_field=models.CharField(max_length=512),
-    #     verbose_name=_("alternative names"),
-    #     help_text=_("Any other names by which the contributor is known."),
+    profile = models.TextField(_("profile"), null=True, blank=True)
+
+    # interests = TaggableConcepts(
+    #     verbose_name=_("research interests"),
+    #     help_text=_("A list of research interests for the contributor."),
     #     blank=True,
-    #     default=list,
     # )
 
-    about = models.TextField(null=True, blank=True)
-
-    interests = TaggableConcepts(
-        verbose_name=_("research interests"),
-        help_text=_("A list of research interests for the contributor."),
+    links = ArrayField(
+        base_field=models.URLField(),
+        verbose_name=_("links"),
+        help_text=_("A list of online resources related to this contributor."),
+        null=True,
         blank=True,
+        default=list,
     )
 
     lang = models.CharField(

@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.utils.decorators import classonlymethod
 from django.utils.translation import gettext as _
 from polymorphic_treebeard.models import PolymorphicMP_Node
-from research_vocabs.fields import ConceptField, TaggableConcepts
+from research_vocabs.fields import ConceptField
 
 from geoluminate.contrib.core.models import (
     Abstract,
@@ -26,15 +26,11 @@ class Sample(Abstract, PolymorphicMP_Node):
     """This model attempts to roughly replicate the schema of the International Generic Sample Number (IGSN) registry. Each sample in this table MUST belong to
     a `geoluminate.contrib.datasets.models.Dataset`."""
 
-    # parent = models.ForeignKey(
-    #     "self",
-    #     verbose_name=_("parent sample"),
-    #     help_text=_("The sample from which this sample was derived."),
-    #     blank=True,
-    #     null=True,
-    #     on_delete=models.CASCADE,
-    #     related_name="subsamples",
-    # )
+    internal_id = models.CharField(
+        _("internal ID"),
+        max_length=255,
+        help_text=_("An alphanumeric identifier used by the creator/s to identify the sample within a dataset"),
+    )
 
     name = models.CharField(_("name"), max_length=255)
 
@@ -42,16 +38,6 @@ class Sample(Abstract, PolymorphicMP_Node):
         verbose_name=_("status"),
         vocabulary=SampleStatus,
         default="unknown",
-    )
-
-    location = models.ForeignKey(
-        "gis.Location",
-        verbose_name=_("location"),
-        help_text=_("The location of the sample."),
-        related_name="samples",
-        on_delete=models.PROTECT,
-        null=True,
-        blank=True,
     )
 
     dataset = models.ForeignKey(
@@ -66,11 +52,6 @@ class Sample(Abstract, PolymorphicMP_Node):
         through="samples.Contribution",
         verbose_name=_("contributors"),
         help_text=_("The contributors to this sample."),
-        blank=True,
-    )
-    keywords = TaggableConcepts(
-        verbose_name=_("keywords"),
-        help_text=_("Controlled keywords for enhanced discoverability"),
         blank=True,
     )
 
@@ -104,7 +85,7 @@ class Sample(Abstract, PolymorphicMP_Node):
         return choices
 
     def __str__(self):
-        return f"{self._meta.verbose_name}: {self.name}"
+        return f"{self.name}"
 
     def get_absolute_url(self):
         return reverse("sample-detail", kwargs={"pk": self.pk})

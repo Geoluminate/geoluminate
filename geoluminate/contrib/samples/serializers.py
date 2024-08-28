@@ -8,8 +8,6 @@ from .models import Sample
 
 
 class SampleSerializer(BaseSerializerMixin, NestedHyperlinkedModelSerializer):
-    # location = LocationSerializer()
-
     absolute_url = serializers.SerializerMethodField()
 
     class Meta:

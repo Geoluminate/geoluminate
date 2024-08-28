@@ -1,7 +1,6 @@
 from auto_datatables.views import AutoTableMixin
 from crispy_forms.helper import FormHelper
 from django import forms
-from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models.base import Model as Model
 from django.forms import modelform_factory
@@ -19,8 +18,6 @@ from geoluminate.contrib.core.view_mixins import (
     HTMXMixin2,
     ListFilterMixin,
 )
-
-GEOLUMINATE = settings.GEOLUMINATE
 
 
 @method_decorator(cache_page(60 * 5), name="dispatch")
@@ -217,3 +214,14 @@ class BaseEditView(BaseMixin, LoginRequiredMixin, GeoluminatePermissionMixin, CR
 
 class BaseUpdateView(BaseFormView, UpdateView):
     pass
+
+
+class HomeView(TemplateView):
+    template_name = "home.html"
+    templates = [
+        "geoluminate/home/database.html",
+        "geoluminate/home/authority.html",
+    ]
+
+    def register_template(self, template_name: str):
+        return template_name

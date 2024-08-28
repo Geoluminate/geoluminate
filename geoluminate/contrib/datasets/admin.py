@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.db import models
+from django_select2.forms import Select2MultipleWidget, Select2Widget
 
 from .models import Contribution, Dataset, Date, Description, Identifier
 
@@ -33,8 +35,12 @@ class DatasetAdmin(admin.ModelAdmin):
     inlines = [ContributionInline, DescriptionInline]
     search_fields = ("pk", "title")
     list_display = ("title", "created", "modified")
-    frontend_editable_fields = ("title",)
-    fields = ("title", "project", "image", "reference", "visibility")
+    fieldsets = ((None, {"fields": ("title", "project", "image", "reference", "visibility")}),)
+    formfield_overrides = {
+        models.ManyToManyField: {"widget": Select2MultipleWidget},
+        models.ForeignKey: {"widget": Select2Widget},
+        models.OneToOneField: {"widget": Select2Widget},
+    }
 
 
 admin.site.register(Contribution)

@@ -8,7 +8,6 @@
 # from django.test import RequestFactory
 # from django.urls import reverse
 
-# from {{ cookiecutter.project_slug }}.users.forms import UserAdminChangeForm
 # from {{ cookiecutter.project_slug }}.users.models import User
 # from {{ cookiecutter.project_slug }}.users.tests.factories import UserFactory
 # from {{ cookiecutter.project_slug }}.users.views import (
@@ -62,7 +61,6 @@
 #         view.request = request
 
 #         # Initialize the form
-#         form = UserAdminChangeForm()
 #         form.cleaned_data = {}
 #         form.instance = user
 #         view.form_valid(form)

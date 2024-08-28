@@ -15,11 +15,16 @@ class PolymorphicOrgMeta(OrgMeta, PolymorphicModelBase):
 class Organization(Contributor, OrganizationBase, metaclass=PolymorphicOrgMeta):
     """Core organization model"""
 
-    # location = None
-    # types = []
-    # domains = []
+    # location = models.JSONField(
+    #     verbose_name=_("location"),
+    #     help_text=_("the organization's location."),
+    #     default=dict,
+    # )
     # city = ""
     # country = ""
+    types = []
+    domains = []
+
     # external_ids
     # links = []
 

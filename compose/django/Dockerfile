@@ -1,42 +1,14 @@
-FROM geoluminate/geoluminate as base
+FROM python:3.11-slim-bullseye as builder
 
-# ====================== BUILD STAGE ============================
-FROM base as build-stage
-
-ENV POETRY_VERSION=1.3.1
-
-# Install apt packages
-RUN apt-get update && apt-get install --no-install-recommends -y \
-  # psycopg2 dependencies
-  libpq-dev \
-  # dependencies for building Python packages
-  build-essential && \
-  # install git
-  apt-get install -y git && \
-  # install poetry for dependencies
-  pip install "poetry==$POETRY_VERSION" && \
-  # cleaning up unused files
-  apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false  && \
-  rm -rf /var/lib/apt/lists/*
-
-COPY pyproject.toml poetry.lock ./
-
-# Create Python Dependency and Sub-Dependency Wheels.
-RUN poetry export --without-hashes -o requirements.txt --with dev && \
-  pip wheel --wheel-dir /usr/src/app/wheels \
-  -r requirements.txt
-
-# # ====================== RUN STAGE ============================
-FROM base as run-stage
-
-# update system and install apt packages
 RUN apt-get update && \
-    apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false && \
-    rm -rf /var/lib/apt/lists/*
+    pip install poetry && \
+    poetry self add poetry-plugin-bundle && \
+    apt-get install --no-install-suggests --no-install-recommends
 
-# copy wheels from build-stage
-COPY --from=build-stage /usr/src/app/wheels /wheels/
+WORKDIR /app
+COPY . .
+RUN poetry bundle venv --only=main /venv
 
-# use wheels to install python dependencies
-RUN pip install --no-cache-dir --no-index --find-links=/wheels/ /wheels/* \
-	&& rm -rf /wheels/
+FROM geoluminate/geoluminate:latest AS run-stage
+
+COPY --from=builder /venv /venv

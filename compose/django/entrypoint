@@ -6,8 +6,12 @@ set -o nounset
 
 . /venv/bin/activate
 
-python --version
-which python
+
+echo "Using: $(python --version)"
+echo ""
+echo "Running:"
+echo ""
+pip show geoluminate
 
 # N.B. If only .env files supported variable expansion...
 export CELERY_BROKER_URL="${REDIS_URL}"
@@ -18,10 +22,19 @@ if [ -z "${POSTGRES_USER}" ]; then
 fi
 export DATABASE_URL="postgis://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}"
 
+
+# echo "Waiting for postgres..."
+
+# while ! nc -z $SQL_HOST $SQL_PORT; do
+#     sleep 0.1
+# done
+
+# echo "PostgreSQL started"
+
+
 python << END
 import sys
 import time
-
 import psycopg2
 
 suggest_unrecoverable_after = 30

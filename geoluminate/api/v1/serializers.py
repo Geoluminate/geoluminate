@@ -11,7 +11,6 @@ class MeasurementSerializer(BaseSerializerMixin, serializers.ModelSerializer):
         fields=[
             "type",
             "title",
-            "location",
             "details",
             "parent",
             "dataset",

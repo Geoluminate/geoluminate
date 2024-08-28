@@ -1,6 +1,5 @@
 from logging import getLogger
 
-from django.conf import settings
 from django.template import TemplateDoesNotExist
 from django.template.loader import render_to_string
 from django_filters import rest_framework
@@ -89,7 +88,7 @@ def api_doc(model, path):
     """
     try:
         template = f"api/docs/{model._meta.model_name.lower()}_{path}.md"
-        return render_to_string(template, context={"model": model, "geoluminate": settings.GEOLUMINATE})
+        return render_to_string(template, context={"model": model})
     except TemplateDoesNotExist:
         logger.warning(f"Template {template} does not exist.")
     return ""

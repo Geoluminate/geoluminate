@@ -28,7 +28,6 @@ def context_processor(request):
     """
     context = {
         "site_config": Configuration.get_solo(),
-        "geoluminate": settings.GEOLUMINATE,
         "ACCOUNT_ALLOW_REGISTRATION": settings.ACCOUNT_ALLOW_REGISTRATION,
         "user_sidebar_widgets": settings.GEOLUMINATE_USER_SIDEBAR_WIDGETS,
         "navbar_widgets": settings.GEOLUMINATE_NAVBAR_WIDGETS,

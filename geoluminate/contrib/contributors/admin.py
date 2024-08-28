@@ -20,7 +20,7 @@ class ContributionInline(admin.StackedInline):
 
 class ContributorInline(admin.StackedInline):
     model = Contributor
-    fields = ["about"]
+    fields = ["profile"]
     extra = 0
 
 
@@ -34,7 +34,7 @@ class IdentifierInline(admin.TabularInline):
 class ContributorAdmin(PolymorphicParentModelAdmin):
     base_model = Contributor
     child_models = (Contributor, User, Organization)
-    list_display = ["_name", "about"]
+    list_display = ["_name", "profile"]
     search_fields = ["name"]
     inlines = [IdentifierInline]
     list_filter = (PolymorphicChildModelFilter,)

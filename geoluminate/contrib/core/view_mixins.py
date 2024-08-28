@@ -221,3 +221,25 @@ class BaseMixin(MetadataMixin):
 
     def get_breadcrumbs(self):
         return []
+
+
+class PolymorphicSubclassMixin:
+    template_name = "geoluminate/base/polymorphic_subclass_list.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        subclasses = self.model.get_subclasses()
+
+        result = []
+        for stype in subclasses:
+            meta = getattr(stype, "_description", None)
+
+            result.append(
+                {
+                    "name": stype._meta.verbose_name_plural,
+                    "count": stype.objects.count(),
+                    "description": meta.description if meta else None,
+                }
+            )
+        context["subclasses"] = result
+        return context

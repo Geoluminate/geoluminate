@@ -39,7 +39,7 @@ class UserProfileForm(ModelForm):
             "image",
             "name",
             "lang",
-            "about",
+            "profile",
         ]
 
 
@@ -58,12 +58,12 @@ class AddContributorForm(ModelForm):
             "image",
             "name",
             "lang",
-            "about",
+            "profile",
         ]
 
         widgets = {
             "image": UploadedFileInput,
-            # "about": RichTextarea,
+            # "profile": RichTextarea,
         }
 
     def clean(self):
@@ -112,7 +112,7 @@ class ContributorForm(ModelForm):
 
     class Meta:
         model = Contributor
-        fields = ["image", "name", "about", "lang"]
+        fields = ["image", "name", "profile", "lang"]
 
 
 class IdentifierForm(ModelForm):

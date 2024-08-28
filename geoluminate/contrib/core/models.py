@@ -9,7 +9,6 @@ from django.utils.functional import cached_property
 from django.utils.translation import gettext as _
 from polymorphic.models import PolymorphicModel
 from polymorphic.showfields import ShowFieldType
-from research_vocabs.fields import TaggableConcepts
 
 from geoluminate.contrib.contributors.managers import ContributionManager
 from geoluminate.contrib.core import utils
@@ -33,7 +32,8 @@ def default_image_path(instance, filename):
 class Abstract(models.Model):
     """An abstract model that contains common fields and methods for both the Project and Dataset models."""
 
-    keywords = TaggableConcepts(
+    keywords = models.ManyToManyField(
+        "research_vocabs.Concept",
         verbose_name=_("keywords"),
         help_text=_("Controlled keywords for enhanced discoverability"),
         blank=True,

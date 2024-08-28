@@ -64,11 +64,11 @@ SPECTACULAR_SETTINGS = {
     # "DESCRIPTION": render_to_string("api/docs/api_description.md", context={"geoluminate": GEOLUMINATE}),
     # "TOS": render_to_string("geoluminate/generic/api/tos.html"),
     "TOS": "/api/v1/tos/",
-    "CONTACT": {
-        "name": GEOLUMINATE["governance"]["name"],
-        "url": GEOLUMINATE["governance"]["url"],
-        "email": "",
-    },
+    # "CONTACT": {
+    #     "name": GEOLUMINATE["governance"]["name"],
+    #     "url": GEOLUMINATE["governance"]["url"],
+    #     "email": "",
+    # },
     "LICENSE": {
         "name": "CC BY 4.0",
         "url": "https://creativecommons.org/licenses/by/4.0/",
@@ -88,7 +88,7 @@ SPECTACULAR_SETTINGS = {
     # Tools that generate code samples can use SERVERS to point to the correct domain
     "SERVERS": [
         {
-            "url": GEOLUMINATE["application"]["domain"],
+            # "url": GEOLUMINATE["application"]["domain"],
             "description": "Production server",
         }
     ],
@@ -96,7 +96,7 @@ SPECTACULAR_SETTINGS = {
     #     "TCorrTop/TCorrBot": "database.choices.TempCorrectionMethod",
     #     "TMethodTop/TMethodBot": "database.choices.TempMethod",
     #     },
-    "TAGS": GEOLUMINATE["database"]["keywords"],
+    # "TAGS": GEOLUMINATE["database"]["keywords"],
     # Tags defined in the global scope
     "SWAGGER_UI_SETTINGS": {
         "deepLinking": True,

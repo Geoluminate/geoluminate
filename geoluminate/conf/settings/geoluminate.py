@@ -84,3 +84,13 @@ GEOLUMINATE_ICONS = {
     "literature": "fa-solid fa-book",
     "images": "fa-solid fa-image",
 }
+
+
+GEOLUMINATE_LOCATION = {
+    "x": {
+        "decimal_places": 6,
+    },
+    "y": {
+        "decimal_places": 6,
+    },
+}

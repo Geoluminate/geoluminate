@@ -1,33 +1,44 @@
+from email.mime import base
 import inspect
 import logging
 import os
+import environ
 from pathlib import Path
-
 from split_settings.tools import include
 
 logger = logging.getLogger(__name__)
 
+DJANGO_ENV = os.environ.setdefault("DJANGO_ENV", "production")
+env = environ.Env.read_env(f"stack.{DJANGO_ENV}.env")
 
-def setup(development=False):
+
+def setup(apps=[], base_dir=None):
     """Adds all the default variables defined in geoluminate.conf.settings to the global namespace.
 
     Args:
         development (bool): Whether or not to load development settings. Defaults to False.
     """
 
-    # get global variables from the calling module
-    globs = inspect.stack()[1][0].f_globals
+    globals = inspect.stack()[1][0].f_globals
+    if not base_dir:
+        base_dir = Path(globals["__file__"]).resolve(strict=True).parent.parent
 
-    # add a BASE_DIR variable to the global namespace
-    if not globs.get("BASE_DIR"):
-        globs["BASE_DIR"] = Path(globs["__file__"]).resolve(strict=True).parent.parent.parent
+    globals.update(
+        {
+            "GEOLUMINATE_APPS": apps,
+            "DJANGO_ENV": DJANGO_ENV,
+            "BASE_DIR": base_dir,
+            "__file__": os.path.realpath(__file__),
+        }
+    )
 
-    # django-split-settings requires that the __file__ global variable is set relative to the current file
-    globs["__file__"] = os.path.realpath(__file__)
-
-    if development:
+    if DJANGO_ENV == "development":
         logger.info("Loading development settings")
-        include("local.py", scope=globs)
+        # env("DJANGO_INSECURE", default=True)
+        os.environ.setdefault("DJANGO_INSECURE", "True")
+        # include("local.py", scope=globals)
+        include("settings/general.py", "settings/*.py", "dev_settings.py", scope=globals)
+
     else:
         logger.info("Loading production settings")
-        include("production.py", scope=globs)
+        include("settings/general.py", "settings/*.py", scope=globals)

@@ -24,7 +24,7 @@ GEOLUMINATE = globals().get("GEOLUMINATE", {})
 env = environ.Env(
     DJANGO_DEBUG=(bool, False),
     DJANGO_SECRET_KEY=(str, "HoVcnlU2IqQN1YqvsY7dQ1xtdhLavAeXn1mUEAI0Wu8vkDbodEqRKkJbHyMEQS5F"),
-    # SHOW_DEBUG_TOOLBAR=(bool, False),
+    SHOW_DEBUG_TOOLBAR=(bool, False),
     DJANGO_ADMIN_URL=(str, "admin/"),
     DJANGO_ALLOWED_HOSTS=(list, []),
     DJANGO_READ_DOT_ENV_FILE=(bool, False),
@@ -40,7 +40,8 @@ if env("DJANGO_READ_DOT_ENV_FILE"):
 
 
 ADMIN_URL = f"{env('DJANGO_ADMIN_URL')}"
-ADMINS = [(admin["name"], admin["email"]) for admin in GEOLUMINATE["application"]["developers"]]
+ADMINS = [("Your Name", "youremail@example.com")]
+# ADMINS = [(admin["name"], admin["email"]) for admin in GEOLUMINATE["application"]["developers"]]
 ALLOWED_HOSTS = [env("DJANGO_SITE_DOMAIN")] + env("DJANGO_ALLOWED_HOSTS")
 MANAGERS = ADMINS
 ROOT_URLCONF = "geoluminate.urls"
@@ -61,7 +62,6 @@ MESSAGE_TAGS = {
     messages.ERROR: "error alert-danger",
 }
 
-# TAGGIT_CASE_INSENSITIVE = True
 
 TEMPLATES = [
     {
@@ -132,18 +132,18 @@ FIXTURE_DIRS = (str(BASE_DIR / "project" / "fixtures"),)
 LOCALE_PATHS = [str(BASE_DIR / "project" / "locale")]
 
 
-if SHOW_DEBUG_TOOLBAR:
-    # GEOLUMINATE_APPS.append("debug_toolbar")
-    MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
+# if SHOW_DEBUG_TOOLBAR:
+#     # GEOLUMINATE_APPS.append("debug_toolbar")
+#     MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
 
-    DEBUG_TOOLBAR_CONFIG = {
-        "DISABLE_PANELS": ["debug_toolbar.panels.redirects.RedirectsPanel"],
-        "SHOW_TEMPLATE_CONTEXT": True,
-    }
+#     DEBUG_TOOLBAR_CONFIG = {
+#         "DISABLE_PANELS": ["debug_toolbar.panels.redirects.RedirectsPanel"],
+#         "SHOW_TEMPLATE_CONTEXT": True,
+#     }
 
-    # DEBUG_TOOLBAR_PANELS += [
-    #     "template_profiler_panel.panels.template.TemplateProfilerPanel",
-    # ]
+# DEBUG_TOOLBAR_PANELS += [
+#     "template_profiler_panel.panels.template.TemplateProfilerPanel",
+# ]
 
 # FORM_RENDERER = "geoluminate.utils.forms.DefaultFormRenderer"
 

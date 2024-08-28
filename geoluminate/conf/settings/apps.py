@@ -1,4 +1,4 @@
-GEOLUMINATE_APPS = [
+INSTALLED_APPS = [
     # Admin apps
     # "adminactions",
     # "modeltranslation",
@@ -22,7 +22,7 @@ GEOLUMINATE_APPS = [
     "fluent_comments",
     "threadedcomments",
     "django_comments",
-    "taggit",  # providing taggable keywords to any model
+    # "taggit",  # required from django-literature
     # GEOLUMINATE CORE
     "geoluminate",
     "geoluminate.contrib.core",
@@ -30,7 +30,6 @@ GEOLUMINATE_APPS = [
     "geoluminate.contrib.projects",
     "geoluminate.contrib.datasets",
     "geoluminate.contrib.reviews",
-    "geoluminate.contrib.gis",
     "geoluminate.contrib.samples",
     "geoluminate.contrib.measurements",
     "geoluminate.contrib.contributors",
@@ -46,6 +45,8 @@ GEOLUMINATE_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "allauth.socialaccount.providers.orcid",
+    "allauth.mfa",
+    "allauth.usersessions",
     "invitations",
     # DJANGO REST FRAMEWORK
     "rest_framework",
@@ -94,10 +95,13 @@ GEOLUMINATE_APPS = [
     "laboratory",  # cataloguing of scientific instruments
     "research_vocabs",
     "neapolitan",
-    # "template_partials",
     "template_partials.apps.SimpleAppConfig",
+    "jsonfield_toolkit",
+    "django_extensions",
+    "flex_menu",
+    *GEOLUMINATE_APPS,
 ]
 
 
-if SHOW_DEBUG_TOOLBAR:
-    GEOLUMINATE_APPS.append("debug_toolbar")
+# if SHOW_DEBUG_TOOLBAR:
+#     INSTALLED_APPS.append("debug_toolbar")

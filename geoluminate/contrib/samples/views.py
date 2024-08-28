@@ -1,12 +1,18 @@
 from django.utils.translation import gettext as _
 
-from geoluminate.contrib.core.view_mixins import ListPluginMixin
+from geoluminate.contrib.core.view_mixins import ListPluginMixin, PolymorphicSubclassMixin
 from geoluminate.utils import icon, label
 from geoluminate.views import BaseDetailView, BaseEditView, BaseListView, BaseTableView
 
 from .forms import SampleForm
 from .models import Sample
 from .tables import SampleTable
+
+
+class SampleTypeListView(PolymorphicSubclassMixin, BaseListView):
+    title = _("Sample Types")
+    model = Sample
+    filterset_fields = ["status"]
 
 
 class SampleListView(BaseListView):

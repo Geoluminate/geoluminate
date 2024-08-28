@@ -75,17 +75,15 @@
 
 {% block main %}
   <div class="page-content container d-block entry-list py-3">
-    <header>
-      <h1 class="display-1">
-        {% block heading %}
-          {{ meta.title }}
-        {% endblock heading %}
+    <h1>
+      {% block heading %}
+        {{ meta.title }}
+      {% endblock heading %}
 
-      </h1>
-      {% comment %} <a type="button" class="text-primary ms-auto fs-3" data-bs-toggle="modal" data-bs-target="#listDescriptionModal">{% svg "info" %}</a> {% endcomment %}
-    </header>
-    {% if list_filter_top %}
-      <div class="toolbar py-2 w-100">
+    </h1>
+    <hr class="mt-0" />
+    <div class="toolbar py-2 w-100">
+      {% if filter.top_helper %}
         {% crispy filter.form filter.top_helper %}
       {% endif %}
       <button class="d-block d-xl-none btn btn-primary ms-1" data-bs-target="#pageSidebar" data-bs-toggle="modal">
@@ -101,8 +99,10 @@
         </a>
       {% endif %}
     </div>
-    <hr class="mt-0 border border-primary" />
-    {% partial page %}
+    {% block page %}
+      {% partial page %}
+    {% endblock page %}
+
   </div>
 {% endblock main %}
 

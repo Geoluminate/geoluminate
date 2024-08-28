@@ -1,8 +1,7 @@
 from django.urls import path
 
-from . import views
+from .views import MeasurementTypeListView
 
-app_name = "measurements"
 urlpatterns = [
-    path("samples/", views.SampleTableView.as_view(), name="list"),
+    path("measurements/", MeasurementTypeListView.as_view(), name="measurement-list"),
 ]

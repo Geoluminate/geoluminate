@@ -29,22 +29,7 @@
           </li>
         {% endif %}
       {% endfor %}
-      {% if not user.is_authenticated %}
-        <a class="navbar-toggler border-0 d-flex align-items-center" href="{% url "account_login" %}">
-          <span data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="{% trans "Sign In" %}">
-            <i class="fa-solid fa-right-to-bracket fa-lg"></i>
-          </span>
-        </a>
-      {% else %}
-        {% include "account_management/sidebar_toggle.html" %}
-        {% comment %} <li class="nav-item">
-          <a class="py-lg-0 nav-link d-flex align-items-center h-100" href="#" role="button" aria-expanded="false" data-bs-toggle="offcanvas" data-bs-target="#userNavOffcanvas" aria-label="{% trans "Toggle user navigation" %}">
-            <span data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="{% trans "Toggle user navigation" %}">
-              {% avatar user width="36.7px" class='rounded-circle shadow border border-2 border-light shadow' %}
-            </span>
-          </a>
-        </li> {% endcomment %}
-      {% endif %}
+      {% include "account_management/sidebar_toggle.html" %}
     </ul>
   </nav>
 </header>

@@ -11,7 +11,6 @@ from django.db.utils import OperationalError, ProgrammingError
 
 User = get_user_model()
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -57,48 +56,44 @@ class Command(BaseCommand):
         # self.stdout.write(self.style.MIGRATE_HEADING("This is an HTTP info message!"))
 
         try:
-            has_users = User.objects.exists()
+            User.objects.exists()
         except (ProgrammingError, OperationalError):
-            # logger.info("Initializing a new project...")
-            self.stdout.write(self.style.SUCCESS("Initializing a new database..."))
-            has_users = False
-            call_command("makemigrations", "--no-input")
+            self.setup_database()
         else:
-            self.stdout.write(self.style.HTTP_INFO("Database already exists. Skipping initialization..."))
+            self.stdout.write(self.style.HTTP_INFO("Skipping database initialization..."))
+            call_command("migrate", "--no-input")
 
-        # Apply all migrations
+    def setup_database(self):
+        """Setup the database for the first time"""
+        self.stdout.write(self.style.SUCCESS("Initializing a new database..."))
+        # 1. Make and apply all migrations
+        call_command("makemigrations", "--no-input")
         call_command("migrate", "--no-input")
-        # now we can be sure the database is set up
 
-        # 1. Create superuser if no users exist
-        if not has_users:
-            self.stdout.write(self.style.MIGRATE_HEADING("Creating superuser"))
-            call_command("createsuperuser", "--no-input")
-            if settings.DEBUG:
-                self.stdout.write("Login with:")
-                self.stdout.write(self.style.HTTP_INFO("EMAIL: "), ending="")
-                self.stdout.write(f"{os.environ.get('DJANGO_SUPERUSER_EMAIL')}")
-                self.stdout.write(self.style.HTTP_INFO("PASSWORD: "), ending="")
-                self.stdout.write(f"{os.environ.get('DJANGO_SUPERUSER_PASSWORD')}")
-                self.stdout.write("You can customize these defaults in your stack.local.env file.")
+        # 2. Create a new superuser
+        self.stdout.write(self.style.MIGRATE_HEADING("Creating superuser"))
+        call_command("createsuperuser", "--no-input")
+        if settings.DEBUG:
+            self.stdout.write("Login with:")
+            self.stdout.write(self.style.HTTP_INFO("EMAIL: "), ending="")
+            self.stdout.write(f"{os.environ.get('DJANGO_SUPERUSER_EMAIL')}")
+            self.stdout.write(self.style.HTTP_INFO("PASSWORD: "), ending="")
+            self.stdout.write(f"{os.environ.get('DJANGO_SUPERUSER_PASSWORD')}")
+            self.stdout.write("You can customize these defaults in your stack.local.env file.")
 
-        # 2. Load creative commons license fixtures
+        # 3. Load default open-source licenses
         try:
-            self.stdout.write(self.style.MIGRATE_HEADING("Loading default Open Source licenses"))
+            self.stdout.write(self.style.MIGRATE_HEADING("Population default OS licenses"))
             call_command("loaddata", "creativecommons")
         except CommandError:
             self.stdout.write(self.style.WARNING("No licenses found. You will need to manually add your own."))
 
-        # # 3. Load initial data
+        # 4. Load initial data
         # if os.environ.get("DJANGO_ENV") == "staging":
         #     try:
         #         call_command("loaddata", "demo")
         #     except CommandError:
         #         print("Failed to load initial data")
-
-        # # 4. Load test data
-        # if os.environ.get("DJANGO_ENV") == "staging":
-        #     call_command("loaddata", "test_data")
 
         # 5. Update site domain and name
         self.stdout.write(self.style.HTTP_INFO("Synchronizing site name with settings..."))

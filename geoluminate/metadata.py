@@ -1,3 +1,37 @@
+class MetaBase:
+    def __init__(self, **kwargs):
+        for k, v in kwargs.items():
+            if k.startswith("_"):
+                continue
+
+            setattr(self, k, v)
+
+            if getattr(self, k, None) is None:
+                msg = f"Invalid metadata option '{k}' specified on class"
+                raise AttributeError(msg)
+            # else:
+            # setattr(self, k, v)
+
+
+class Authority(MetaBase):
+    name: str = ""
+    """The name of the authority that created this metadata. This is required."""
+
+    short_name: str = ""
+    """The short name of the authority that created this metadata."""
+
+    website: str = ""
+    """The website of the authority that created this metadata."""
+
+
+class Citation(MetaBase):
+    text: str = ""
+    """The citation for the data model."""
+
+    doi: str = ""
+    """The DOI for the citation."""
+
+
 class MetadataOpts:
     metadata_version = "1.0"
 
@@ -53,7 +87,7 @@ class MetadataOpts:
     # return {field: cls.primary_data_types[field] for field in cls.primary_data_fields}
 
 
-class Metadata:
+class Metadata(MetaBase):
     metadata_version = "1.0"
 
     # model: models.Model = None
@@ -71,11 +105,8 @@ class Metadata:
     description = ""
     """A detailed description of the data model. This is required."""
 
-    authority = ""
+    authority: Authority = None
     """The authority that created this metadata. This is required."""
-
-    website = ""
-    """The website of the authority that created this metadata."""
 
     keywords: list = []
     """A list of keywords that describe the data model."""
@@ -83,23 +114,11 @@ class Metadata:
     repo_url: str = ""
     """The URL of the repository where the data model is stored."""
 
-    citation: str = ""
+    citation: Citation = None
     """The citation for the data model."""
-
-    citation_doi: str = ""
 
     maintainer: str = ""
     """The name of the package maintainer of the data model."""
 
     maintainer_email: str = ""
     """The email address of the package maintainer of the data model."""
-
-    def __init__(self, **kwargs):
-        for k, v in kwargs.items():
-            if k.startswith("_"):
-                continue
-            elif getattr(self, k, None) is None:
-                msg = f"Invalid metadata option '{k}' specified on class"
-                raise AttributeError(msg)
-            else:
-                setattr(self, k, v)

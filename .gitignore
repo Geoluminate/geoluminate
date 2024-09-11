@@ -102,3 +102,4 @@ assets/webpack-stats.json
 staticfiles
 geoluminate/templates/geoluminate/cards/standard_copy.html
 *.env
+!stack.development.env

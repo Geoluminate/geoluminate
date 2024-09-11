@@ -1073,15 +1073,14 @@ files = []
 develop = false
 
 [package.dependencies]
-anytree = "^2.12.1"
+django-flex-menus = {git = "https://github.com/SamuelJennings/django-flex-menus"}
 django-htmx = "^1.18.0"
-django-simple-menu = "^2.1.3"
 
 [package.source]
 type = "git"
 url = "https://github.com/SamuelJennings/django-account-management"
 reference = "HEAD"
-resolved_reference = "48294f351af6465cb201cb0eac7647640cb3bb24"
+resolved_reference = "17e1363b34e5c5a52872f5f9a1e8822e020cd0d3"
 
 [[package]]
 name = "django-activity-stream"
@@ -1552,6 +1551,24 @@ files = [
 
 [package.dependencies]
 Django = ">=4.2"
+
+[[package]]
+name = "django-flex-menus"
+version = "0.1.0"
+description = "Flexible site menus for Django"
+optional = false
+python-versions = ">=3.1,<4.0"
+files = []
+develop = false
+
+[package.dependencies]
+anytree = "^2.12.1"
+
+[package.source]
+type = "git"
+url = "https://github.com/SamuelJennings/django-flex-menus"
+reference = "HEAD"
+resolved_reference = "52439593de0ed9bf5657fd6fbecc31cdc172c213"
 
 [[package]]
 name = "django-fluent-comments"

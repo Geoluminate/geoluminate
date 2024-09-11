@@ -1,4 +1,4 @@
-{% load i18n geoluminate contributor_tags %}
+{% load i18n contributor_tags easy_icons %}
 
 {% spaceless %}
   <style>
@@ -13,7 +13,7 @@
         {% if object.image %}
           <img class="card-img" src="{{ object.image.url }}" alt="{{ object }}" height="100%" width="100%" />
         {% else %}
-          <div class="d-flex h-100  justify-content-center align-items-center text-light">{% svg "user" height="50%" %}</div>
+          <div class="d-flex h-100  justify-content-center align-items-center text-light">{% icon "user" height="50%" %}</div>
         {% endif %}
         <div class="card-img-overlay bg-gradient d-flex align-items-end">
           <div>

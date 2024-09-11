@@ -1,23 +1,46 @@
 from django.utils.translation import gettext as _
+from django.views.generic import TemplateView
 
-from geoluminate.contrib.core.view_mixins import ListPluginMixin, PolymorphicSubclassMixin
-from geoluminate.utils import icon, label
-from geoluminate.views import BaseDetailView, BaseEditView, BaseListView, BaseTableView
+from geoluminate.core.view_mixins import ListPluginMixin, PolymorphicSubclassBaseView, PolymorphicSubclassMixin
+from geoluminate.utils import icon
+from geoluminate.views import BaseDetailView, BaseEditView, BaseListView
 
 from .forms import SampleForm
 from .models import Sample
-from .tables import SampleTable
 
 
 class SampleTypeListView(PolymorphicSubclassMixin, BaseListView):
     title = _("Sample Types")
     model = Sample
     filterset_fields = ["status"]
+    list_url = "sample-list"
+    detail_url = "sample-type-detail"
 
 
-class SampleListView(BaseListView):
+class SampleTypeDetailView(PolymorphicSubclassBaseView, TemplateView):
+    """Lists all the measurement types available in the database."""
+
+    base_model = Sample
+
+    def get(self, request, *args, **kwargs):
+        self.model = self.get_model()
+        return super().get(request, *args, **kwargs)
+
+    def get_template_names(self):
+        return ["samples/sample_type_detail.html"]
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = _("Sample Type Detail")
+        context["model"] = self.model
+        context["metadata"] = self.model.get_metadata()
+        return context
+
+
+class SampleListView(PolymorphicSubclassBaseView, BaseListView):
     title = _("Datasets")
-    queryset = Sample.objects.prefetch_related("contributors").order_by("-created")
+    base_model = Sample
+    # queryset = Sample.objects.prefetch_related("contributors").order_by("-created")
     # filterset_class = DatasetFilter
 
 
@@ -25,13 +48,7 @@ class SampleDetailView(BaseDetailView):
     base_template = "samples/sample_detail.html"
     model = Sample
     title = _("Sample")
-    sidebar_fields = [
-        "name",
-        "parent",
-        "dataset",
-        "location",
-        "status",
-    ]
+    sidebar_exclude = ["sample_ptr", "polymorphic_ctype", "created", "modified", "options", "path", "depth", "numchild"]
 
     def get_object(self):
         # note: we are using base_objects here to get the base model (Sample) instance
@@ -47,10 +64,35 @@ class SampleDetailView(BaseDetailView):
         context["additional_fields"] = [f.name for f in self.real._meta.fields if f.name not in base_fields]
         if "sample_ptr" in context["additional_fields"]:
             context["additional_fields"].remove("sample_ptr")
+        context["sidebar_fields"] = self.get_sidebar_fields(self.real.__class__)
         return context
 
+    def get_sidebar_fields(self, klass):
+        declared_fields = set(self.sidebar_exclude)
+
+        result = {}
+
+        # Loop through the real model's MRO
+        for base in reversed(klass.__mro__):
+            # Only process Django models that are subclasses of models.Model
+            if hasattr(base, "_meta") and issubclass(base, Sample):
+                declared_in_base = []
+                # for field in base._meta.get_fields():
+                for field in base._meta.local_fields:
+                    # Check if field is already declared by a parent class
+                    if field.name not in declared_fields:
+                        # Mark this field as declared
+                        declared_fields.add(field.name)
+                        declared_in_base.append(field.name)
+
+                if declared_in_base:
+                    result[base._meta.verbose_name] = declared_in_base
+
+        return result
+
     def get_meta_title(self, context):
-        return f"{self.real}"
+        real_name = self.real._meta.verbose_name
+        return f"{real_name} - {self.real}"
 
 
 class SampleEditView(BaseEditView):
@@ -74,15 +116,3 @@ class SamplePlugin(ListPluginMixin):
 
     def get_queryset(self, *args, **kwargs):
         return self.get_object().samples.all()
-
-
-class SampleTableView(BaseTableView):
-    table = SampleTable
-    table_view_name = "sample-list"
-
-
-class SampleTablePlugin(BaseTableView):
-    table = SampleTable
-    template_name = "geoluminate/base/table_view.html"
-    title = name = label("sample")["verbose_name_plural"]
-    icon = icon("sample")

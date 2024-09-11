@@ -9,8 +9,8 @@ from imagekit.processors import SmartResize
 from jsonfield_toolkit.models import ArrayField
 
 # from django.db.models.fields.files import FieldFile
-from geoluminate.contrib.core.models import AbstractIdentifier, PolymorphicMixin
-from geoluminate.contrib.core.utils import inherited_choices_factory
+from geoluminate.core.models import AbstractIdentifier, PolymorphicMixin
+from geoluminate.core.utils import inherited_choices_factory
 from geoluminate.db import models
 
 from . import choices
@@ -125,13 +125,6 @@ class Contributor(models.Model, PolymorphicMixin):
         if self.user:
             return self.user.last_name
         return ""
-
-    @property
-    def reviews(self):
-        if self.user:
-            return self.user.review_set.all()
-        # return an empty Review queryset
-        # return Review.objects.none()
 
     @cached_property
     def owner(self):

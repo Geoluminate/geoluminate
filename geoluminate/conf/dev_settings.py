@@ -33,6 +33,9 @@ CACHES["vocabularies"] = {
     "LOCATION": BASE_DIR / ".vocabularies-cache",
 }
 
+VOCABULARY_DEFAULT_CACHE = "vocabularies"
+
+
 SHELL_PLUS = "ipython"
 
 INSTALLED_APPS.insert(0, "whitenoise.runserver_nostatic")

@@ -3,8 +3,8 @@ from django.views.generic import UpdateView
 from formset.views import FileUploadMixin, FormViewMixin
 
 from geoluminate.contrib.contributors.views import ContributorsPlugin
-from geoluminate.contrib.core.plugins import ActivityStream, Discussion, Map
 from geoluminate.contrib.datasets.views import DatasetPlugin
+from geoluminate.core.plugins import ActivityStream, Discussion, Map
 from geoluminate.plugins import PluginRegistry
 from geoluminate.utils import icon
 

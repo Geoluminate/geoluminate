@@ -1,6 +1,7 @@
 INSTALLED_APPS = [
     # Admin apps
     # "adminactions",
+    "admin_extra_buttons",
     # "modeltranslation",
     "admin_tools",
     "admin_tools.theming",
@@ -23,22 +24,22 @@ INSTALLED_APPS = [
     "threadedcomments",
     "django_comments",
     # "taggit",  # required from django-literature
-    # GEOLUMINATE CORE
+    # GEOLUMINATE
     "geoluminate",
-    "geoluminate.contrib.core",
-    "configuration",
+    "geoluminate.core",
+    "geoluminate.identity",
+    # "configuration",
     "geoluminate.contrib.projects",
     "geoluminate.contrib.datasets",
-    "geoluminate.contrib.reviews",
     "geoluminate.contrib.samples",
     "geoluminate.contrib.measurements",
     "geoluminate.contrib.contributors",
     "geoluminate.contrib.users",
     "geoluminate.contrib.organizations",
-    "auto_datatables",
     "polymorphic",
     "polymorphic_treebeard",
     "treebeard",
+    "parler",
     # AUTHENTICATION AND USERS
     "account_management",
     "allauth",
@@ -62,7 +63,6 @@ INSTALLED_APPS = [
     "easy_thumbnails",
     "easy_icons",
     "django_celery_beat",  # celery based task manager
-    # "rest_framework_datatables_editor",
     # OTHERS
     "solo",  # singleton model for storing dynamic global variables in the DB
     "django_contact_form",  # for contact forms

@@ -3,10 +3,9 @@ from django.db import models
 from django.views.generic import DetailView, UpdateView
 from formset.views import FileUploadMixin, FormViewMixin
 
-from geoluminate.contrib.core.plugins import ActivityStream, Map
 from geoluminate.contrib.datasets.views import DatasetPlugin
 from geoluminate.contrib.projects.views import ProjectPlugin
-from geoluminate.contrib.reviews.views import ReviewPlugin
+from geoluminate.core.plugins import ActivityStream, Map
 from geoluminate.plugins import PluginRegistry
 from geoluminate.utils import icon
 
@@ -26,7 +25,6 @@ class ContributorOverview(ContributorDetailView, FileUploadMixin, FormViewMixin,
 
 contributor.register_page(ProjectPlugin)
 contributor.register_page(DatasetPlugin)
-contributor.register_page(ReviewPlugin)
 
 
 @contributor.page()
@@ -107,9 +105,3 @@ class ContributorNetworkView(ContributorDetailView, DetailView):
 
         # count the number of times each pair appears in edges
         return [{"from": f, "to": t, "value": edges.count((f, t))} for f, t in set(edges)]
-
-
-# @contributor.page("samples", icon=icon("sample"))
-# class ContributorSamplesView(ContributorDetailView, BaseTableView):
-#     table = SampleTable
-#     template_name = "auto_datatables/base.html"

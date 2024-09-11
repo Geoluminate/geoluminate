@@ -4,7 +4,7 @@ from django.utils.translation import gettext as _
 from entangled.forms import EntangledModelForm
 from formset.collection import FormCollection
 
-# from geoluminate.contrib.core.forms import FuzzyDateFormCollection
+# from geoluminate.core.forms import FuzzyDateFormCollection
 from .models import Project
 
 

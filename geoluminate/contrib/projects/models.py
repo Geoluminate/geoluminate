@@ -5,9 +5,9 @@ from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFit
 from research_vocabs.fields import ConceptField
 
-from geoluminate.contrib.core.choices import Visibility
-from geoluminate.contrib.core.models import Abstract, AbstractContribution, AbstractDate, AbstractDescription
-from geoluminate.contrib.core.utils import inherited_choices_factory
+from geoluminate.core.choices import Visibility
+from geoluminate.core.models import Abstract, AbstractContribution, AbstractDate, AbstractDescription
+from geoluminate.core.utils import inherited_choices_factory
 
 # from geoluminate.utils import icon
 from .choices import ProjectDates, ProjectDescriptions, ProjectStatus, RAiDPositions, RAiDRoles

@@ -10,7 +10,6 @@ from literature.models import LiteratureItem
 
 from geoluminate.contrib.samples.models import Sample
 from geoluminate.models import Contributor, Dataset, Measurement, Project
-from geoluminate.utils import icon
 
 LABELS = settings.GEOLUMINATE_LABELS
 
@@ -30,22 +29,6 @@ def check_url(viewname):
             return reverse(viewname)
 
     return inner
-
-
-def get_sample_menu_items():
-    """Returns a list of all models in the project that subclass from :class:`geoluminate.contrib.samples.models.Sample`."""
-    menus = []
-    for model in Sample.get_subclasses():
-        menu = MenuItem(
-            title=model._meta.verbose_name_plural,
-            url=reverse("sample-list"),
-            weight=7,
-            icon=icon("sample"),
-            description=_("Heat flow are great!"),
-        )
-        menus.append(menu)
-
-    return menus
 
 
 DatabaseMenu = Menu(
@@ -74,7 +57,7 @@ DatabaseMenu = Menu(
         ),
         MenuItem(
             _("Samples"),
-            view_name="sample-list",
+            view_name="sample-type-list",
             icon="sample",
             count=Sample.objects.count,
             description=_(
@@ -83,7 +66,7 @@ DatabaseMenu = Menu(
         ),
         MenuItem(
             _("Measurements"),
-            view_name="measurement-list",
+            view_name="measurement-type-list",
             icon="measurement",
             count=Measurement.objects.count,
             description=_(

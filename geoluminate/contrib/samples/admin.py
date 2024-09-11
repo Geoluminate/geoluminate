@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.translation import gettext as _
 from polymorphic.admin import PolymorphicChildModelFilter
 from polymorphic_treebeard.admin import PolymorphicTreeAdmin, PolymorphicTreeChildAdmin
 
@@ -22,12 +23,30 @@ class DateInline(admin.TabularInline):
 class BaseSampleAdmin(PolymorphicTreeAdmin):
     base_model = Sample
     child_models = Sample.get_subclasses()
-    list_display = ["id", "name", "created"]
+    list_display = ["sample_type", "name", "created"]
     exclude = ["options"]
     list_filter = (PolymorphicChildModelFilter,)
+
+    def sample_type(self, obj):
+        return obj._meta.verbose_name
+
+    sample_type.short_description = "Type"
 
 
 class SampleAdmin(PolymorphicTreeChildAdmin):
     # show_in_index = True
     base_model = Sample
     inlines = [DescriptionInline, DateInline]
+
+    fieldsets = [
+        (
+            _("Basic information"),
+            {
+                "fields": (
+                    ("name", "status"),
+                    "internal_id",
+                    "dataset",
+                )
+            },
+        ),
+    ]

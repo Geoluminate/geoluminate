@@ -7,7 +7,7 @@ import faker
 from factory.fuzzy import FuzzyChoice
 from research_vocabs.models import Concept
 
-from ..contrib.core.choices import Visibility
+from ...core.choices import Visibility
 from .utils import randint
 
 

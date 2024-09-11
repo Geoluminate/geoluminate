@@ -1,5 +1,5 @@
 {% extends "geoluminate/plugins/base.html" %}
-{% load geoluminate i18n partials %}
+{% load geoluminate i18n partials easy_icons %}
 
 {% block container %}
   {% include "geoluminate/base/list_view.html#page" %}
@@ -7,9 +7,6 @@
     {% if user_has_permission.create %}
       <a class="btn btn-lg btn-primary shadow rounded-circle m-2"
          {% modal_form_attrs %}
-         {% comment %}
-         hx-get="{{ create_url }}"
-         {% endcomment %}
          hx-get="{% url 'contribution-create' pk=object.pk %}">
         <span>{% icon "plus" title="Add new" %}</span>
       </a>

@@ -8,7 +8,7 @@ from geoluminate.contrib.projects import models as project_models
 from geoluminate.contrib.samples import models as sample_models
 from geoluminate.models import Dataset, Measurement, Project, Sample
 
-from ..contrib.core.choices import Visibility
+from ...core.choices import Visibility
 from .contributors import ContributorFactoryList
 from .core import AbstractFactory, DateFactory, DescriptionFactory
 from .utils import ReusableFactoryList, randint

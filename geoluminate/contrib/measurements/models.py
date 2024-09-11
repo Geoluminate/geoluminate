@@ -1,10 +1,11 @@
+from django.utils.decorators import classonlymethod
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
-from model_utils import FieldTracker
 from research_vocabs.fields import ConceptField
 
-from geoluminate.contrib.core.models import AbstractContribution, AbstractDate, AbstractDescription, PolymorphicMixin
+from geoluminate.core.models import AbstractContribution, AbstractDate, AbstractDescription, PolymorphicMixin
 from geoluminate.db import models
+from geoluminate.utils import get_inheritance_chain
 
 from . import choices
 
@@ -24,13 +25,33 @@ class Measurement(models.Model, PolymorphicMixin):
         help_text=_("The contributors to this measurement."),
     )
 
-    tracker = FieldTracker()
-
     class Meta:
         verbose_name = _("measurement")
         verbose_name_plural = _("measurements")
         ordering = ["-modified"]
         default_related_name = "measurements"
+
+    @classmethod
+    def get_metadata(cls):
+        metadata = {}
+
+        # for k in inheritance:
+        if cls._metadata is not None:
+            metadata.update(**cls._metadata.as_dict())
+
+        inheritance = [k.get_metadata() for k in cls.mro()[:0:-1] if issubclass(k, Measurement) and k != Measurement]
+
+        metadata.update(
+            name=cls._meta.verbose_name,
+            name_plural=cls._meta.verbose_name_plural,
+            inheritance=inheritance,
+        )
+
+        return metadata
+
+    @classonlymethod
+    def get_inheritance_chain(cls):
+        return get_inheritance_chain(cls, Measurement)
 
     @cached_property
     def get_location(self):

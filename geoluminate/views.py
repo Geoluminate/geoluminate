@@ -1,4 +1,3 @@
-from auto_datatables.views import AutoTableMixin
 from crispy_forms.helper import FormHelper
 from django import forms
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -11,7 +10,7 @@ from django.views.generic import DetailView, TemplateView, UpdateView
 from django_filters.views import FilterView
 from neapolitan.views import CRUDView, Role
 
-from geoluminate.contrib.core.view_mixins import (
+from geoluminate.core.view_mixins import (
     BaseMixin,
     GeoluminatePermissionMixin,
     HTMXMixin,
@@ -28,33 +27,12 @@ class BaseListView(BaseMixin, ListFilterMixin, HTMXMixin2, FilterView):
 
     list_filter_top = ["title", "o"]
 
-    def get_breadcrumbs(self):
-        model = self.get_model()
-        return [{"title": model._meta.verbose_name_plural, "url": reverse(f"{model._meta.model_name}-list")}]
+    # def get_breadcrumbs(self):
+    #     model = self.get_model()
+    #     return [{"title": model._meta.verbose_name_plural, "url": reverse(f"{model._meta.model_name}-list")}]
 
     def get_model(self):
         return self.model or self.queryset.model
-
-
-@method_decorator(cache_page(60 * 10), name="dispatch")
-class BaseTableView(BaseMixin, AutoTableMixin, TemplateView):
-    filter = None
-    table_view_name = "sample-list"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["filter"] = self.filter
-        context["endpoint"] = self.get_table().url
-        return context
-
-    def get_table_url(self):
-        if self.table_view_name and self.kwargs.get("pk"):
-            model_name = self.model._meta.model_name
-            return reverse(
-                self.table_view_name,
-                kwargs={f"{model_name}_uuid": self.kwargs.get("pk")},
-            )
-        return super().get_table_url()
 
 
 class BaseDetailView(BaseMixin, HTMXMixin, GeoluminatePermissionMixin, DetailView):
@@ -62,12 +40,6 @@ class BaseDetailView(BaseMixin, HTMXMixin, GeoluminatePermissionMixin, DetailVie
     base_template_suffix = "_detail.html"
     menu = []
     actions = []
-    sidebar_components = [
-        "core/sidebar/basic_info.html",
-        "core/sidebar/keywords.html",
-        "core/sidebar/status.html",
-        "core/sidebar/summary.html",
-    ]
 
     def get_object(self, queryset=None):
         """Returns the profile object."""

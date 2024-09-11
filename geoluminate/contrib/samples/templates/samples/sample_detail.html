@@ -1,24 +1,2 @@
 {% extends "geoluminate/base/detail_view.html" %}
 {% load i18n geoluminate %}
-
-{% block sidebar_cards %}
-  {% render_fields real additional_fields as fields %}
-  <div class="card">
-    <div class="card-body">
-      <div class="position-absolute top-0 end-0 m-2">
-        <a hx-get="{{ object.get_update_url }}" class="btn btn-lg btn-sm text-success">
-          <i class="fa-solid fa-edit"></i>
-        </a>
-      </div>
-      <h6 class="card-title">{% trans "Additional Information" %}</h6>
-      <dl>
-        {% for name, value in fields %}
-          <dt>{{ name|capfirst }}</dt>
-          <dd class="ms-1">
-            {{ value }}
-          </dd>
-        {% endfor %}
-      </dl>
-    </div>
-  </div>
-{% endblock sidebar_cards %}

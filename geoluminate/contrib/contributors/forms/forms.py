@@ -6,7 +6,7 @@ from django.utils.translation import gettext as _
 from django_select2.forms import Select2MultipleWidget, Select2Widget
 from formset.widgets import Selectize, UploadedFileInput
 
-from geoluminate.contrib.core.choices import iso_639_1_languages
+from geoluminate.core.choices import iso_639_1_languages
 
 from ..models import Contributor, Identifier
 

@@ -34,15 +34,9 @@ REST_FRAMEWORK = {
         "geoluminate.api.renderers.GeoJSONRenderer",
         # "rest_framework.renderers.TemplateHTMLRenderer",
         # "rest_framework_csv.renderers.PaginatedCSVRenderer",
-        # "datatables.renderers.DatatablesORJSONRenderer",
-        "auto_datatables.renderers.DatatablesRenderer",
     ],
-    "DEFAULT_FILTER_BACKENDS": (
-        "django_filters.rest_framework.DjangoFilterBackend",
-        "auto_datatables.filters.SearchPanesFilter",
-    ),
-    # "DEFAULT_FILTER_BACKENDS": ("geoluminate.utils.drf.DjangoFilterBackend",),
-    "DEFAULT_PAGINATION_CLASS": "rest_framework_datatables.pagination.DatatablesPageNumberPagination",
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "DEFAULT_FILTER_BACKENDS": ("django_filters.rest_framework.DjangoFilterBackend",),
     "PAGE_SIZE": 100,
     "DEFAULT_PARSER_CLASSES": [
         "drf_orjson_renderer.parsers.ORJSONParser",

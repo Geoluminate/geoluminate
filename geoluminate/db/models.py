@@ -5,12 +5,10 @@ import uuid
 
 # from django.contrib.gis.db.models import __all__ as models_all
 from django.db import models
-from django.db.models.base import ModelBase
 from django.urls import reverse
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
 from django_bleach.models import BleachField as TextField
-from meta.models import ModelMeta
 from model_utils import FieldTracker
 from quantityfield.fields import (
     BigIntegerQuantityField,
@@ -20,16 +18,10 @@ from quantityfield.fields import (
     QuantityField,
 )
 
-
-# doesn't do anything but it might be useful in the future for extra model-based configuration
-class GeoluminateMetaClass(ModelBase):
-    def __new__(cls, name, bases, attrs):
-        klas = super().__new__(cls, name, bases, attrs)
-
-        return klas
+from geoluminate.metadata import Metadata
 
 
-class Model(ModelMeta, models.Model):
+class Model(models.Model):
     """Helpful base model that can be used to kickstart your Geoluminate database models with common fields and methods.
     Use like this:
 
@@ -49,8 +41,6 @@ class Model(ModelMeta, models.Model):
 
         See: https://django-model-utils.readthedocs.io/en/latest/tracker.html for usage details
 
-    _metadata (must be added yourself): Adding this dictionary to your model will allow the django-meta application to
-    populate HTML meta tags from your model fields.
 
         See: https://django-meta.readthedocs.io/en/latest/models.html#models for usage details
     """
@@ -59,7 +49,7 @@ class Model(ModelMeta, models.Model):
         default=uuid.uuid4,
         editable=False,
         unique=True,
-        verbose_name="ID",
+        verbose_name="UUID",
         primary_key=True,
     )
     created = models.DateTimeField(
@@ -74,6 +64,8 @@ class Model(ModelMeta, models.Model):
     )
 
     tracker = FieldTracker()
+
+    _metadata: Metadata = None
 
     class Meta:
         abstract = True

@@ -1,6 +1,6 @@
 from django.utils.translation import gettext as _
 
-from geoluminate.contrib.core.view_mixins import ListPluginMixin
+from geoluminate.core.view_mixins import ListPluginMixin
 from geoluminate.utils import icon
 from geoluminate.views import BaseDetailView, BaseEditView, BaseListView
 

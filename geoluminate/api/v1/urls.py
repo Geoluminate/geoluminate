@@ -2,8 +2,6 @@ from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView
 from rest_framework_nested import routers
 
-from geoluminate.measurements import measurements
-
 from ..views import MeasurementMetadataView
 from . import viewsets
 
@@ -32,7 +30,6 @@ urlpatterns = [
     path("", include(nested_dataset.urls)),
     path("", include(nested_samples.urls)),
     path("measurements/", MeasurementMetadataView.as_view(), name="measurement-metadata"),
-    path("measurements/", include(measurements.router.urls)),
     path("", include("geoluminate.contrib.users.api.urls")),
     path("schema/", SpectacularAPIView.as_view(), name="schema"),
     # path("auth/", include("rest_framework.urls", namespace="rest_framework")),

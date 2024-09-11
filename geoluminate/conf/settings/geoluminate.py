@@ -77,7 +77,6 @@ GEOLUMINATE_ICONS = {
     "contributors": "fa-solid fa-users",
     "overview": "fa-solid fa-book-open",
     "activity": "fa-solid fa-rss fa-rotate-270",
-    "review": "fa-solid fa-magnifying-glass-chart",
     "discussion": "fa-solid fa-comments",
     "plus": "fa-solid fa-plus",
     "spinner": "fa-solid fa-spinner fa-spin",

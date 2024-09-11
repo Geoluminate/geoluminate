@@ -5,9 +5,9 @@ from formset.views import FileUploadMixin, FormViewMixin
 from lxml import etree
 
 from geoluminate.contrib.contributors.views import ContributorsPlugin
-from geoluminate.contrib.core import utils
-from geoluminate.contrib.core.plugins import ActivityStream, Discussion, Map
 from geoluminate.contrib.samples.views import SamplePlugin
+from geoluminate.core import utils
+from geoluminate.core.plugins import ActivityStream, Discussion, Map
 from geoluminate.plugins import PluginRegistry
 from geoluminate.utils import icon
 

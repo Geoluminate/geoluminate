@@ -68,6 +68,7 @@ TEMPLATES = [
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [BASE_DIR / "templates"],
         "OPTIONS": {
+            "builtins": ["easy_icons.templatetags.easy_icons"],
             "context_processors": [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
@@ -145,7 +146,6 @@ LOCALE_PATHS = [str(BASE_DIR / "project" / "locale")]
 #     "template_profiler_panel.panels.template.TemplateProfilerPanel",
 # ]
 
-# FORM_RENDERER = "geoluminate.utils.forms.DefaultFormRenderer"
 
 # http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"

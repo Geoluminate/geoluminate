@@ -2,18 +2,10 @@ from logging import getLogger
 
 from django.template import TemplateDoesNotExist
 from django.template.loader import render_to_string
-from django_filters import rest_framework
-from rest_framework import viewsets
 from rest_framework.renderers import BrowsableAPIRenderer
-from rest_framework_datatables_editor.viewsets import EditorModelMixin
 from rest_framework_nested.viewsets import NestedViewSetMixin
 
 logger = getLogger(__name__)
-
-
-class DjangoFilterBackend(rest_framework.DjangoFilterBackend):
-    def to_html(self, request, queryset, view):
-        return ""
 
 
 class BrowsableAPIRendererWithoutForms(BrowsableAPIRenderer):
@@ -26,8 +18,8 @@ class BrowsableAPIRendererWithoutForms(BrowsableAPIRenderer):
         return None
 
 
-class DatatablesReadOnlyModelViewSet(EditorModelMixin, viewsets.ReadOnlyModelViewSet):
-    pass
+# class DatatablesReadOnlyModelViewSet(EditorModelMixin, viewsets.ReadOnlyModelViewSet):
+#     pass
 
 
 def public_api(endpoints):

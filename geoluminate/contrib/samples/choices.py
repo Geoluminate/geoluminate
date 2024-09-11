@@ -1,37 +1,23 @@
 from django.db import models
 from django.utils.translation import gettext as _
-from research_vocabs.vocabularies import LocalVocabulary, VocabularyBuilder
-
-
-class FeatureType(LocalVocabulary):
-    class Meta:
-        source = "./vocab_data/samplingfeaturetype.rdf"
-        prefix = "odm2b"
-        namespace = "http://vocabulary.odm2.org/samplingfeaturetype/"
-
+from research_vocabs.vocabularies import RemoteVocabulary, VocabularyBuilder
 
 # http://vocabulary.odm2.org/api/v1/actiontype/?format=skos
+# class SampleStatus(LocalVocabulary):
+#     class Meta:
+#         source = "./vocab_data/status.rdf"
+#         prefix = "odm2"
+#         namespace = "http://vocabulary.odm2.org/status/"
 
 
-class SamplingMedium(LocalVocabulary):
+class SampleStatus(RemoteVocabulary):
     class Meta:
-        source = "./vocab_data/medium.rdf"
-        namespace = "http://vocabulary.odm2.org/medium/"
-        prefix = "odm2"
-
-
-class SampleStatus(LocalVocabulary):
-    class Meta:
-        source = "./vocab_data/status.rdf"
-        prefix = "odm2"
+        source = {
+            "source": "http://vocabulary.odm2.org/api/v1/status/?format=skos",
+            "format": "xml",
+        }
+        prefix = "odm2b"
         namespace = "http://vocabulary.odm2.org/status/"
-
-
-class SpecimenType(LocalVocabulary):
-    class Meta:
-        source = "./vocab_data/specimentype.rdf"
-        prefix = "odm2"
-        namespace = "http://vocabulary.odm2.org/specimentype/"
 
 
 class SampleDescriptions(VocabularyBuilder):

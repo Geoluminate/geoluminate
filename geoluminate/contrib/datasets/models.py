@@ -8,15 +8,15 @@ from imagekit.processors import ResizeToFit
 from licensing.fields import LicenseField
 from research_vocabs.fields import ConceptField
 
-from geoluminate.contrib.core.choices import Visibility
-from geoluminate.contrib.core.models import (
+from geoluminate.contrib.projects.choices import ProjectDates
+from geoluminate.core.choices import Visibility
+from geoluminate.core.models import (
     Abstract,
     AbstractContribution,
     AbstractDate,
     AbstractDescription,
     AbstractIdentifier,
 )
-from geoluminate.contrib.projects.choices import ProjectDates
 from geoluminate.db import models
 
 from . import choices

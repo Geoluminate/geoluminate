@@ -1,7 +1,10 @@
-from configuration.models import Configuration
 from django.apps import apps
 from django.conf import settings
 from django_contact_form.forms import ContactForm
+
+from geoluminate.identity.models import Authority, Database
+
+# from geoluminate.core.models import Configuration
 
 
 def icon(icon):
@@ -27,7 +30,11 @@ def context_processor(request):
     - ``ACCOUNT_ALLOW_REGISTRATION``: The ``ACCOUNT_ALLOW_REGISTRATION`` setting.
     """
     context = {
-        "site_config": Configuration.get_solo(),
+        "identity": {
+            "database": Database.get_solo(),
+            "authority": Authority.get_solo(),
+        },
+        # "site_config": Configuration.get_solo(),
         "ACCOUNT_ALLOW_REGISTRATION": settings.ACCOUNT_ALLOW_REGISTRATION,
         "user_sidebar_widgets": settings.GEOLUMINATE_USER_SIDEBAR_WIDGETS,
         "navbar_widgets": settings.GEOLUMINATE_NAVBAR_WIDGETS,
@@ -40,3 +47,11 @@ def context_processor(request):
 def get_subclasses(model):
     models = apps.get_models()
     return [m for m in models if issubclass(m, model) and m != model]
+
+
+def get_inheritance_chain(model, base_model):
+    chain = []
+    for base in model.__mro__:
+        if hasattr(base, "_meta") and issubclass(base, base_model):
+            chain.append(base)
+    return chain

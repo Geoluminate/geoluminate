@@ -1,8 +1,0 @@
-
-{{name}} has made an enquiry at {{site}} regarding the following:
-
-{{ body }}
-
-You can respond by hitting reply, then copy and paste the email address below into the "To" field:
-
-{{ email }}

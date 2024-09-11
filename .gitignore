@@ -2,7 +2,7 @@ minio/
 **/migrations/*
 !**/migrations/__init__.py
 test.*
-
+.vocabularies-cache
 # would be nice to ignore these and build bundle in CI workflow
 # geoluminate/static/bundles/
 

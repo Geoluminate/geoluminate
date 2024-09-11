@@ -1,0 +1,53 @@
+{% load i18n geoluminate contributor_tags %}
+
+<div id="{{ obj.pk }}" class="card mb-3 w-100">
+  {% block card_header %}
+    <div class="card-header d-flex justify-content-between">
+      {% block card_header_inner %}
+      {% endblock card_header_inner %}
+
+    </div>
+  {% endblock card_header %}
+
+  {% block card_img %}
+    {% if obj.image %}
+      <img src="{{ obj.image.url }}"
+           class="card-img darken-20"
+           alt="{{ obj.title }}"
+           height="auto"
+           width="auto" />
+    {% endif %}
+  {% endblock card_img %}
+
+  <div class="flex-column g-0 {% block card_body_class %}{% endblock card_body_class %}
+     ">
+    <div class="d-flex w-100">
+      {% for keyword in obj.keywords.all %}
+        <span class="pill ">
+          <a href="{% url 'contributor-keyword' keyword.slug %}" class="text-decoration-none text-white">{{ keyword.name }}</a>
+        </span>
+      {% endfor %}
+    </div>
+    {% block card_body %}
+    {% endblock card_body %}
+
+    {% block card_footer %}
+      <div class="d-flex">
+        {% block card_footer_content %}
+          <div class="ms-auto">
+            {% block card_actions %}
+            {% endblock card_actions %}
+
+          </div>
+        {% endblock card_footer_content %}
+
+      </div>
+    {% endblock card_footer %}
+
+  </div>
+  <div class="position-absolute top-0 end-0 m-3">
+    <h5>
+      <span class="badge rounded-pill shadow text-bg-success">{{ obj.get_status_display }}</span>
+    </h5>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+<div class="card mx-0">
+  <div class="card-body">
+    <h6 class='card-title'>
+      {% block title %}{% endblock %}
+
+    </h6>
+    {% block content %}{% endblock %}
+
+  </div>
+  {% if has_edit_permission %}
+    <button hx-get="{{ edit_url }}?fields={{ fields }}"
+            hx-target="closest .card"
+            class='card-edit-button btn position-absolute top-0 end-0 m-2 d-none'>
+      <i class='fa-solid fa-pencil text-success'></i>
+    </button>
+  {% endif %}
+</div>

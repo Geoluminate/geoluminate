@@ -1,0 +1,18 @@
+<section class="mb-3">
+  {% if has_permission.edit %}
+    <div class="position-absolute top-0 end-0 m-2">
+      <a hx-get="{{ object.get_update_url }}" class="btn btn-lg btn-sm text-success">
+        <i class="fa-solid fa-edit"></i>
+      </a>
+    </div>
+  {% endif %}
+  <h2 class="fs-5">{{ heading|title }}</h2>
+  <dl>
+    {% for name, value, help in fields %}
+      <dt title="{{ help }}">{{ name|capfirst }}</dt>
+      <dd class="ms-1">
+        {{ value }}
+      </dd>
+    {% endfor %}
+  </dl>
+</section>

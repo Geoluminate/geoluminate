@@ -1,0 +1,10 @@
+{% load sekizai_tags %}
+
+<a href="#"
+   class='py-0 px-1 fas fa-share'
+   type="button"
+   data-bs-toggle="modal"
+   data-bs-target="#shareModal"></a>
+{% addtoblock "body_end" %}
+  {% include "geoluminate/components/social_share/modal.html" %}
+{% endaddtoblock %}

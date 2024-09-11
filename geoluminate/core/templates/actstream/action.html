@@ -1,0 +1,35 @@
+{% load i18n geoluminate %}
+
+<div class="card w-100 mb-3">
+  <div class="card-header d-flex align-items-center">
+    {% if action.actor.get_absolute_url %}
+      <a href="{{ action.actor.get_absolute_url }}">{% avatar action.actor.profile class='rounded-circle me-2' %}</a>
+    {% else %}
+      <a href="{{ action.actor_url }}">{{ action.actor }}</a>
+    {% endif %}
+    <div class="d-inline-block">
+      <b>{{ action.actor }}</b> <span>{{ action.verb }}</span>
+      <div class="small">{{ action.timestamp|timesince }} {% trans "ago" %}</div>
+    </div>
+  </div>
+  <div class="card-body">
+    {% if action.action_object %}
+      {% if action.action_object.get_absolute_url %}
+        <a href="{{ action.action_object.get_absolute_url }}">{{ action.action_object }}</a>
+      {% else %}
+        <a href="{{ action.action_object_url }}">{{ action.action_object }}</a>
+      {% endif %}
+    {% endif %}
+    {% comment %} {% if action.action_object and
+    action.target %}to{% endif %} {% endcomment %}
+    {% if action.target %}
+      <h5 class="card-title">
+        {% if action.target.get_absolute_url %}
+          <a href="{{ action.target.get_absolute_url }}">{{ action.target }}</a>
+        {% else %}
+          <a href="{{ action.target_url }}">{{ action.target }}</a>
+        {% endif %}
+      </h5>
+    {% endif %}
+  </div>
+</div>

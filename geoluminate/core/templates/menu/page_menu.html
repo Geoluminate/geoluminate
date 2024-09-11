@@ -1,0 +1,34 @@
+{% load geoluminate easy_icons %}
+
+<ul class="nav nav-tabs nav-pills nav-pills-alternate d-print-none" id="pageMenu" role="tablist">
+  <li>
+    <a class="nav-link sidebar-toggle"
+       data-bs-toggle="collapse"
+       href="#pageSidebar"
+       role="button"
+       aria-expanded="false"
+       aria-controls="pageSidebar">{% icon "bars-solid" %}</a>
+  </li>
+  {% for item in page_menu %}
+    <li class="nav-item" role="presentation">
+      <a class="nav-link {{ item.extra_classes }} {% if forloop.first %}show active{% endif %}"
+         id="{{ item.title|slugify }}-tab"
+         hx-get="{{ item.resolved }}"
+         {% comment %}
+         hx-target="#{{ item.title|slugify }}-panel"
+         {% endcomment %}
+         type="button"
+         role="tab"
+         aria-controls="pills-home"
+         aria-selected="true">
+        <i class="fas {{ item.icon }}"></i>
+        <span class="d-none d-md-inline-block">{{ item.title }}</span>
+      </a>
+    </li>
+  {% endfor %}
+  <div class="ms-auto d-inline-flex">
+    {% if page_actions %}
+      {% include "menu/page_actions.html" %}
+    {% endif %}
+  </div>
+</ul>

@@ -1,0 +1,25 @@
+{% extends "geoluminate/base/list_view.html" %}
+{% load i18n crispy_forms_tags easy_icons %}
+
+{% block page_left %}
+{% endblock page_left %}
+
+{% block page %}
+  {% for c in subclasses %}
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title mb-0">{{ c.name }}</h5>
+        <div class="mb-2">
+          <a href={{ c.authority.website }}>{{ c.authority.name }}</a>
+        </div>
+        {{ c.description }}
+        {{ c.count }}
+      </div>
+      <div class="card-footer">
+        <a href="{{ c.list_url }}" class="btn btn-primary">{% icon "search.svg" %} {% trans "Search" %}</a>
+        <a href="{{ c.detail_url }}" class="btn btn-secondary">{% icon "chart.svg" %} {% trans "Visualize" %}</a>
+        <a href="{{ c.detail_url }}" class="btn btn-secondary">{% trans "Learn More" %}</a>
+      </div>
+    </div>
+  {% endfor %}
+{% endblock page %}

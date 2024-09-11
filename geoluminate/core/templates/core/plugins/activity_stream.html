@@ -1,0 +1,17 @@
+{% extends "geoluminate/plugins/page.html" %}
+{% load activity_tags i18n %}
+
+{% block help_text %}
+{% endblock help_text %}
+
+{% block toolbar %}
+{% endblock toolbar %}
+
+{% block content %}
+  {% activity_stream 'any' object %}
+  {% for action in stream %}
+    {% display_action action %}
+  {% empty %}
+    {% trans "Looks like there is nothing here!" %}
+  {% endfor %}
+{% endblock content %}

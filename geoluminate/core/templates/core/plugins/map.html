@@ -1,0 +1,28 @@
+{% load i18n static sekizai_tags %}
+
+{% comment %} {% for key, geojson in geojson_list.items %}<pre>{{geojson|pprint}}</pre>{% endfor %} {% endcomment %}
+<div id="map">
+  <div id="shadow"></div>
+</div>
+<style>
+  #map,
+  .maplibregl-canvas {
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 0;
+  }
+
+  #shadow {
+    box-shadow: inset -2px -2px 8px 7px #00000026;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+  }
+</style>
+{% comment %} djlint:off {% endcomment %}
+<script>
+  var map = basicMap("map", {{ map_source_list | safe }});
+</script>
+{% comment %} djlint:on {% endcomment %}

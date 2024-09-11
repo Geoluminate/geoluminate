@@ -1,0 +1,14 @@
+{% extends "geoluminate/components/modal.html" %}
+{% load i18n geoluminate social_share %}
+
+{% block header %}
+  {% trans "Share this page with your network" %}
+{% endblock %}
+
+{% block body %}
+  {% send_email geoluminate.database.name object request.path %}
+  {% post_to_twitter object.summary|default:"" request.path %}
+  {% post_to_linkedin request.path %}
+  {% post_to_facebook request.path %}
+  {% post_to_whatsapp request.path %}
+{% endblock body %}

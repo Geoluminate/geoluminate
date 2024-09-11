@@ -1,0 +1,51 @@
+{% extends "geoluminate/plugins/base.html" %}
+{% load static %}
+
+{% block container %}
+  {% block page_top %}
+    <div class="page-top position-relative">
+      {% block header %}
+        <header class="page-header mb-0 {% block page_header_css %}page-layout{% endblock page_header_css %}
+           ">
+          <h1 class="display-1">
+            {% block title %}
+              {{ meta.title }}
+            {% endblock title %}
+
+          </h1>
+          {% block add_button %}
+          {% endblock add_button %}
+
+        </header>
+      {% endblock header %}
+
+      {% comment %} {% block help_text %}
+        {% if meta.description %}<div class="page-description">{{ meta.description }}</div>{% endif %}
+      {% endblock help_text %} {% endcomment %}
+      {% block toolbar %}
+        <div class="toolbar py-2 d-flex w-100">
+          <div class="toolbar-left">
+            {% block toolbar_left %}
+            {% endblock toolbar_left %}
+
+          </div>
+          <div class="toolbar-right ms-auto">
+            {% block toolbar_right %}
+            {% endblock toolbar_right %}
+
+          </div>
+        </div>
+      {% endblock toolbar %}
+
+    </div>
+    <hr class="mt-0 border border-primary" />
+  {% endblock page_top %}
+
+  <div class="page-content">
+    {% block content %}
+    {% endblock content %}
+
+  </div>
+  {% block page_end %}
+  {% endblock page_end %}
+{% endblock container %}

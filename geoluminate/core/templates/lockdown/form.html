@@ -1,0 +1,20 @@
+{% extends 'geoluminate/layout/full_screen_form.html' %}
+{% load i18n %}
+
+{% block page_title %}
+  {% trans "Lockdown Enabled" %}
+{% endblock %}
+
+{% block content %}
+  <p>
+    {% trans "This research community has been locked down by site administrators and can only be accessed by staff members." %}
+  </p>
+  <form id="form" method='post'>
+    {% csrf_token %}
+    {{ form.as_p }}
+  </form>
+{% endblock %}
+
+{% block footer %}
+  <button class="btn btn-lg btn-primary" form="form" type="submit">{% trans "Submit" %}</button>
+{% endblock %}

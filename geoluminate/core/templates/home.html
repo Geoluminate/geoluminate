@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block main %}
+  <div class="container mt-3 col-md-9">
+    {% for template in view.templates %}
+      {% include template %}
+    {% endfor %}
+  </div>
+{% endblock main %}

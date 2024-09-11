@@ -1,0 +1,40 @@
+{% extends "comments/form.html" %}
+{% load comments i18n fluent_comments_tags geoluminate %}
+
+{% block comment_form %}
+  <div id="{% if preview %}comment-preview{% else %}c{{ comment.id }}{% endif %}"
+       class="comment-item{% if comment.user_id and comment.user_id == comment.content_object.author_id %} by-author{% endif %} card my-2 border-0">
+    {% if preview %}
+      <h3>{% trans "Preview of your comment" %}</h3>
+    {% endif %}
+    <div class="row mx-0 py-1">
+      <div class="col-auto px-0">{% avatar user class='shadow rounded-circle' %}</div>
+      <div class="col">
+        <h6 class="card-title">
+          {{ user }} - <span class="comment-date">{% now "DATETIME_FORMAT" %}</span>
+          {% if comment.user_id and comment.user_id == comment.content_object.author_id %}
+            <span class="comment-author-flag">[{% trans "author" %}]</span>
+          {% endif %}
+        </h6>
+        {% block form_fields %}
+          {% crispy form %}
+        {% endblock form_fields %}
+
+        {% block form_actions %}
+          {% if not form.helper.inputs %}
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <input type="submit" name="post" class="btn btn-primary" value="{% trans "Post Comment" %}" />
+                <input type="submit" name="preview" class="btn btn-info" value="{% trans "Preview" %}" />
+                {% ajax_comment_tags for form.target_object %}
+              </div>
+            </div>
+          {% else %}
+            {% ajax_comment_tags for form.target_object %}
+          {% endif %}
+        {% endblock form_actions %}
+
+      </div>
+    </div>
+  </div>
+{% endblock comment_form %}

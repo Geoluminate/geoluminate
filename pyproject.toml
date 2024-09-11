@@ -102,6 +102,7 @@ django-account-management = {git = "https://github.com/SamuelJennings/django-acc
 django-admin-extra-buttons = "^1.5.8"
 django-parler = "^2.3"
 django-polymorphic-treebeard = {git = "https://github.com/SamuelJennings/django-polymorphic-treebeard.git"}
+django-jsonfield-toolkit = {git = "https://github.com/SamuelJennings/django-jsonfield-toolkit.git"}
 
 
 

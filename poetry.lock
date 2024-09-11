@@ -1694,6 +1694,25 @@ files = [
 ]
 
 [[package]]
+name = "django-jsonfield-toolkit"
+version = "0.1.0"
+description = "Tools, utilities and addons for Django JSONField"
+optional = false
+python-versions = ">=3.10,<4.0"
+files = []
+develop = false
+
+[package.dependencies]
+django = ">=3.2"
+django-better-admin-arrayfield = "^1.4.2"
+
+[package.source]
+type = "git"
+url = "https://github.com/SamuelJennings/django-jsonfield-toolkit.git"
+reference = "HEAD"
+resolved_reference = "ac82b21adaeb787e0cc432cf364246b3d82fdd48"
+
+[[package]]
 name = "django-jsonform"
 version = "2.22.0"
 description = "A user-friendly JSON editing form for Django admin."
@@ -5806,4 +5825,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<4.0"
-content-hash = "9e93cd5b13fd2df075b603b1674cd161c03d73fa52287bf796aaaa4a060b4949"
+content-hash = "81788633376c3bc85584d2f0f6e9ef497aa104e9dc6323eeeb888ecee911ff76"

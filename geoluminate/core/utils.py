@@ -33,7 +33,6 @@ def context_processor(request):
     - ``geoluminate``: The ``GEOLUMINATE`` setting.
     - ``ACCOUNT_ALLOW_REGISTRATION``: The ``ACCOUNT_ALLOW_REGISTRATION`` setting.
     """
-    x = 9
     context = {
         "identity": {
             "database": Database.get_solo(),

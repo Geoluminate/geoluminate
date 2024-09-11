@@ -1907,6 +1907,26 @@ files = [
 Django = ">=2.1"
 
 [[package]]
+name = "django-polymorphic-treebeard"
+version = "0.0.1"
+description = "Django polymorphic combined with django-treebeard"
+optional = false
+python-versions = ">=3.10,<4.0"
+files = []
+develop = false
+
+[package.dependencies]
+django = ">4"
+django-polymorphic = "^3.1.0"
+django-treebeard = "^4.7.1"
+
+[package.source]
+type = "git"
+url = "https://github.com/SamuelJennings/django-polymorphic-treebeard.git"
+reference = "HEAD"
+resolved_reference = "b93a2b22cb7f46f9abfddb6df6141f373de5286f"
+
+[[package]]
 name = "django-redis"
 version = "5.4.0"
 description = "Full featured redis cache backend for Django."
@@ -5786,4 +5806,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<4.0"
-content-hash = "3143ba5c8252ae21ad3b6a42ce247a1d4b33737dc0c71a831c69428e51aaac47"
+content-hash = "9e93cd5b13fd2df075b603b1674cd161c03d73fa52287bf796aaaa4a060b4949"

@@ -101,6 +101,7 @@ django-treebeard = "^4.7.1"
 django-account-management = {git = "https://github.com/SamuelJennings/django-account-management"}
 django-admin-extra-buttons = "^1.5.8"
 django-parler = "^2.3"
+django-polymorphic-treebeard = {git = "https://github.com/SamuelJennings/django-polymorphic-treebeard.git"}
 
 
 

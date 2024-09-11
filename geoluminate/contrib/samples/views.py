@@ -1,8 +1,8 @@
 from django.utils.translation import gettext as _
 from django.views.generic import TemplateView
 
+from geoluminate.core.utils import icon
 from geoluminate.core.view_mixins import ListPluginMixin, PolymorphicSubclassBaseView, PolymorphicSubclassMixin
-from geoluminate.utils import icon
 from geoluminate.views import BaseDetailView, BaseEditView, BaseListView
 
 from .forms import SampleForm

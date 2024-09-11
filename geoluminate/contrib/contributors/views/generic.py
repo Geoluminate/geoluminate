@@ -5,8 +5,8 @@ from django.utils.translation import gettext as _
 from django.views.generic.detail import SingleObjectMixin
 from django_contact_form.views import ContactFormView
 
+from geoluminate.core.utils import icon
 from geoluminate.core.view_mixins import ListPluginMixin
-from geoluminate.utils import icon
 from geoluminate.views import BaseDetailView, BaseEditView, BaseListView
 
 from ..filters import ContributorFilter

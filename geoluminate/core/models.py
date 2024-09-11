@@ -12,9 +12,9 @@ from polymorphic.showfields import ShowFieldType
 
 from geoluminate.contrib.contributors.managers import ContributionManager
 from geoluminate.core import utils
+from geoluminate.core.utils import get_subclasses
 from geoluminate.db import models
 from geoluminate.db.fields import PartialDateField
-from geoluminate.utils import get_subclasses
 
 
 def contributor_permissions_default():

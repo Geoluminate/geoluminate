@@ -2,7 +2,7 @@ from django.contrib import admin
 from polymorphic.admin import PolymorphicChildModelAdmin, PolymorphicChildModelFilter, PolymorphicParentModelAdmin
 
 from geoluminate.contrib.measurements.models import Measurement
-from geoluminate.utils import get_subclasses
+from geoluminate.core.utils import get_subclasses
 
 from .models import Date, Description
 

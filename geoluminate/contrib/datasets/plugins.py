@@ -8,8 +8,8 @@ from geoluminate.contrib.contributors.views import ContributorsPlugin
 from geoluminate.contrib.samples.views import SamplePlugin
 from geoluminate.core import utils
 from geoluminate.core.plugins import ActivityStream, Discussion, Map
+from geoluminate.core.utils import icon
 from geoluminate.plugins import PluginRegistry
-from geoluminate.utils import icon
 
 from .views import DatasetDetailView
 

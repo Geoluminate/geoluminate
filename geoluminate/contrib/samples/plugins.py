@@ -1,7 +1,7 @@
 from geoluminate.contrib.contributors.views import ContributorsPlugin
 from geoluminate.core.plugins import Discussion, Images, Map
+from geoluminate.core.utils import icon, label
 from geoluminate.plugins import PluginRegistry
-from geoluminate.utils import icon, label
 
 from .models import Sample
 from .views import SampleDetailView, SamplePlugin

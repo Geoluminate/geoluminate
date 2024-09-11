@@ -2,7 +2,7 @@
 
 from django.utils.translation import gettext as _
 
-from geoluminate.utils import icon
+from geoluminate.core.utils import icon
 
 
 class ActivityStream:

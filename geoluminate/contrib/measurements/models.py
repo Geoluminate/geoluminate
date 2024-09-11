@@ -4,8 +4,8 @@ from django.utils.translation import gettext_lazy as _
 from research_vocabs.fields import ConceptField
 
 from geoluminate.core.models import AbstractContribution, AbstractDate, AbstractDescription, PolymorphicMixin
+from geoluminate.core.utils import get_inheritance_chain
 from geoluminate.db import models
-from geoluminate.utils import get_inheritance_chain
 
 from . import choices
 

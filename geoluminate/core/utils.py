@@ -1,9 +1,97 @@
 import re
 
+from django.apps import apps
+from django.conf import settings
 from django.db import models
 from django.db.models import Manager, TextChoices
 from django.template.loader import render_to_string
 from django.utils.translation import gettext_lazy as _
+from django_contact_form.forms import ContactForm
+
+from geoluminate.identity.models import Authority, Database
+
+
+def icon(icon):
+    """Returns the icon for the project."""
+    icon = settings.GEOLUMINATE_ICONS.get(icon, icon)
+    if not icon:
+        raise ValueError(f"Icon {icon} not found in settings.GEOLUMINATE_ICONS.")
+    return icon
+
+
+def label(label):
+    """Returns the given label specified in settings.GEOLUMINATE_LABELS."""
+    label = settings.GEOLUMINATE_LABELS.get(label)
+    if not label:
+        raise ValueError(f"settings.GEOLUMINATE_LABELS does not contain a key for '{label}'.")
+    return label
+
+
+def context_processor(request):
+    """A context processor that adds the following variables to the context:
+
+    - ``geoluminate``: The ``GEOLUMINATE`` setting.
+    - ``ACCOUNT_ALLOW_REGISTRATION``: The ``ACCOUNT_ALLOW_REGISTRATION`` setting.
+    """
+    x = 9
+    context = {
+        "identity": {
+            "database": Database.get_solo(),
+            "authority": Authority.get_solo(),
+        },
+        # "site_config": Configuration.get_solo(),
+        "ACCOUNT_ALLOW_REGISTRATION": settings.ACCOUNT_ALLOW_REGISTRATION,
+        "user_sidebar_widgets": settings.GEOLUMINATE_USER_SIDEBAR_WIDGETS,
+        "navbar_widgets": settings.GEOLUMINATE_NAVBAR_WIDGETS,
+        "contact_form": ContactForm(request=request),
+    }
+
+    return context
+
+
+def get_subclasses(model):
+    models = apps.get_models()
+    return [m for m in models if issubclass(m, model) and m != model]
+
+
+def get_inheritance_chain(model, base_model):
+    chain = []
+    for base in model.__mro__:
+        if hasattr(base, "_meta") and issubclass(base, base_model):
+            chain.append(base)
+    return chain
+
+
+def choices_from_qs(qs, field):
+    """Return a list of choices from a queryset"""
+    return [(k, k) for k in (qs.order_by(field).values_list(field, flat=True).distinct())]
+
+
+def get_choices(model, field):
+    """Return a list of choices from a model"""
+
+    def func():
+        return [(k, k) for k in (model.objects.order_by(field).values_list(field, flat=True).distinct())]
+
+    return func
+
+
+def max_length_from_choices(choices):
+    """Return the max length from a list of choices"""
+    return max([len(choice[0]) for choice in choices])
+
+
+def object_from_letter(letter):
+    """Return an object from a letter"""
+    type_map = {
+        "p": "projects.Project",
+        "d": "datasets.Dataset",
+        "s": "samples.Sample",
+    }
+    return apps.get_model(type_map.get(letter))
+
+
+# ascascas
 
 
 def strip_p_tags(text):

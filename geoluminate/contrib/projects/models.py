@@ -9,7 +9,7 @@ from geoluminate.core.choices import Visibility
 from geoluminate.core.models import Abstract, AbstractContribution, AbstractDate, AbstractDescription
 from geoluminate.core.utils import inherited_choices_factory
 
-# from geoluminate.utils import icon
+# from geoluminate.core.utils import icon
 from .choices import ProjectDates, ProjectDescriptions, ProjectStatus, RAiDPositions, RAiDRoles
 
 

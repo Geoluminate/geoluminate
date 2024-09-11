@@ -13,8 +13,8 @@ from geoluminate.core.models import (
     AbstractDate,
     AbstractDescription,
 )
+from geoluminate.core.utils import get_inheritance_chain, get_subclasses
 from geoluminate.db import models
-from geoluminate.utils import get_inheritance_chain, get_subclasses
 
 from . import choices
 from .choices import SampleStatus

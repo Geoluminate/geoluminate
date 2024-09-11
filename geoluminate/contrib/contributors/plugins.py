@@ -6,8 +6,8 @@ from formset.views import FileUploadMixin, FormViewMixin
 from geoluminate.contrib.datasets.views import DatasetPlugin
 from geoluminate.contrib.projects.views import ProjectPlugin
 from geoluminate.core.plugins import ActivityStream, Map
+from geoluminate.core.utils import icon
 from geoluminate.plugins import PluginRegistry
-from geoluminate.utils import icon
 
 from .forms.forms import UserProfileForm
 from .models import Contributor

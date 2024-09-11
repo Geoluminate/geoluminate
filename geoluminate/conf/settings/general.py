@@ -80,7 +80,7 @@ TEMPLATES = [
                 "django.template.context_processors.tz",
                 "sekizai.context_processors.sekizai",
                 "django.template.context_processors.static",
-                "geoluminate.utils.context_processor",
+                "geoluminate.core.utils.context_processor",
             ],
         },
     },

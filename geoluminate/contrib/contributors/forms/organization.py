@@ -3,7 +3,7 @@ from django.conf import settings
 from django.forms.widgets import Select
 from django.utils.translation import gettext as _
 
-from .models import Organization
+from ..models import Organization
 
 
 class RORSelect2Widget(Select):

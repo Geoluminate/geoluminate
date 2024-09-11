@@ -4,6 +4,7 @@ from django.views.generic import RedirectView
 from .plugins import contributor
 from .views import ContributorContactView, ContributorListView
 from .views.edit import UpdateAffiliations, UpdateIdentifiers, UpdateProfile
+from .views.organization import OrganizationCreateView, OrganizationListView
 
 urlpatterns = [
     path(
@@ -24,6 +25,8 @@ urlpatterns = [
     path("contributors/", ContributorListView.as_view(), name="contributor-list"),
     path("c/<uuid:pk>/", include(contributor.urls)),
     path("c/<uuid:pk>/contact/", ContributorContactView.as_view(), name="contributor-contact"),
+    path("organization/add/", OrganizationCreateView.as_view(), name="create"),
+    path("organization/list/", OrganizationListView.as_view(), name="list"),
     # path(
     #     "<str:model>/<uuid:pk>/",
     #     include(ContributionCRUDView.get_urls(roles=[Role.CREATE, Role.UPDATE, Role.DELETE])),

@@ -6,8 +6,8 @@ from django.views.generic import CreateView, ListView
 
 from geoluminate.views import BaseMixin
 
-from .forms import OrganizationCreateForm
-from .models import Organization
+from ..forms.organization import OrganizationCreateForm
+from ..models import Organization
 
 
 class OrganizationMixin:

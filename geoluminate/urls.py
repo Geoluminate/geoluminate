@@ -28,11 +28,11 @@ urlpatterns = [
     path("", include("geoluminate.contrib.samples.urls")),
     path("", include("geoluminate.contrib.measurements.urls")),
     path("", include("geoluminate.contrib.contributors.urls")),
-    path("", include("geoluminate.contrib.organizations.urls")),
+    # path("", include("geoluminate.contrib.organizations.urls")),
     path("", include("geoluminate.core.urls")),  # must be before actstream.urls
     path("vocabularies/", include("research_vocabs.urls")),
     path("account/", include("allauth.urls")),
-    path("", include("geoluminate.contrib.users.urls")),
+    # path("", include("geoluminate.contrib.users.urls")),
     path("invitations/", include("invitations.urls", namespace="invitations")),
     path("contact/", include("django_contact_form.urls")),
     path("select2/", include("django_select2.urls")),

@@ -3,15 +3,13 @@ import random
 import factory
 from factory import Faker, post_generation
 
-from geoluminate.contrib.users.models import User
-
 from ..contrib.contributors.models import Contributor
 from ..contrib.organizations.models import Membership, Organization
 from .utils import randint
 
 
 class GenericContributorFactory(factory.django.DjangoModelFactory):
-    """Creates a Contributor object with no relationship to a User or Organization."""
+    """Creates a Contributor object with no relationship to a Personal or Organization."""
 
     name = factory.Faker("name")
     about = factory.Faker("multiline_text", nb=randint(3, 5), nb_sentences=12)
@@ -88,7 +86,7 @@ class UserFactory(GenericContributorFactory):
         self.set_password(password)
 
     class Meta:
-        model = User
+        model = Personal
         django_get_or_create = ["email"]
 
 

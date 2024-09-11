@@ -30,7 +30,7 @@ urlpatterns = [
     path("", include(nested_dataset.urls)),
     path("", include(nested_samples.urls)),
     path("measurements/", MeasurementMetadataView.as_view(), name="measurement-metadata"),
-    path("", include("geoluminate.contrib.users.api.urls")),
+    path("", include("geoluminate.contrib.contributors.api.urls")),
     path("schema/", SpectacularAPIView.as_view(), name="schema"),
     # path("auth/", include("rest_framework.urls", namespace="rest_framework")),
 ]

@@ -178,8 +178,8 @@ class CustomMenu(Menu):
             items.ModelList(
                 icon("community"),
                 models=(
-                    "geoluminate.contrib.users.models.User",
-                    "geoluminate.contrib.organizations.models.Organization",
+                    "geoluminate.contrib.contributors.models.Person",
+                    "geoluminate.contrib.contributors.models.Organization",
                 ),
             ),
             # items.AppList(_("Administration"), models=("django.contrib.*",)),

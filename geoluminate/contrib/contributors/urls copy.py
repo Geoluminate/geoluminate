@@ -1,6 +1,6 @@
 from django.urls import include, path
 
-from .views import AccountEdit, CodeOfConduct, TermsOfUse
+from ..contributors.views.person import AccountEdit, CodeOfConduct, TermsOfUse
 
 app_name = "user"
 urlpatterns = [

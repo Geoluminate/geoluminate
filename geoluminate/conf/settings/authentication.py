@@ -31,11 +31,11 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
-AUTH_USER_MODEL = "users.User"
+AUTH_USER_MODEL = "contributors.Person"
 """"""
 
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
-ACCOUNT_ADAPTER = "geoluminate.contrib.users.adapters.AccountAdapter"
+ACCOUNT_ADAPTER = "geoluminate.contrib.contributors.adapters.AccountAdapter"
 """"""
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
@@ -127,4 +127,4 @@ SOCIALACCOUNT_PROVIDERS = {
 ACCOUNT_ALLOW_REGISTRATION = env("DJANGO_ACCOUNT_ALLOW_REGISTRATION")
 """allow registration"""
 
-ACCOUNT_SIGNUP_FORM_CLASS = "geoluminate.contrib.users.forms.SignupExtraForm"
+ACCOUNT_SIGNUP_FORM_CLASS = "geoluminate.contrib.contributors.forms.person.SignupExtraForm"

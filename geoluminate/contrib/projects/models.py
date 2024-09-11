@@ -30,7 +30,7 @@ class Project(Abstract):
 
     # RAiD core metadata fields
     owner = models.ForeignKey(
-        "organizations.Organization",
+        "contributors.Organization",
         on_delete=models.PROTECT,
         related_name="owned_projects",
         verbose_name=_("owner"),

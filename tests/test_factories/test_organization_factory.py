@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from geoluminate.contrib.organizations.models import Organization
+from geoluminate.contrib.contributors.models import Organization
 from geoluminate.factories import OrganizationFactory
 
 

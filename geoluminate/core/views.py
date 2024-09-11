@@ -14,9 +14,6 @@ from django_contact_form.views import ContactFormView
 
 from .forms import DescriptionForm
 
-# from .forms import GenericDescriptionForm
-# from .models import Description
-
 
 def follow_unfollow(request, content_type_id, object_id, flag=None, do_follow=True, actor_only=True):
     """This is a rewrite of the follow_unfollow view from django-activity-stream. The view now returns a html snippet for async HTMX updates of the follow button."""

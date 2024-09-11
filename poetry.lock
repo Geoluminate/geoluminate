@@ -1941,7 +1941,7 @@ rdflib = "^7.0.0"
 type = "git"
 url = "https://github.com/Geoluminate/django-research-vocabs.git"
 reference = "master"
-resolved_reference = "70d2c6fcb6d92b7ef3cc180f28188de4922d2efa"
+resolved_reference = "7ee0dbec88841c3a22b3cd9223fb6dd64c8de1cc"
 
 [[package]]
 name = "django-rest-polymorphic"

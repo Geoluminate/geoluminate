@@ -158,3 +158,20 @@ def docs(c):
     # c.run("sphinx-apidoc -M -T -o docs/ project/schemas/* **/migrations/* -e --force -d 2")
     c.run("sphinx-build -E -b html docs docs/_build")
     # c.run("docker compose -f local.yml up docs")
+
+
+@task
+def update_deps(c):
+    """
+    Update the project dependencies
+    """
+    packages = [
+        "django-literature",
+        "django-jsonfield-toolkit",
+        "django-polymorphic-treebeard",
+        "django-account-management",
+        "geoluminate-docs",
+        "django-research-vocabs",
+    ]
+
+    c.run(f"poetry update {' '.join(packages)}")

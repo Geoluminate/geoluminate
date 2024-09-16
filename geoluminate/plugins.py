@@ -1,8 +1,12 @@
 from django.urls import path
 from django.utils.text import slugify
-
-# from simple_menu import MenuItem
 from flex_menu import MenuItem
+
+from geoluminate.contrib.contributors.views import ContributorDetailView
+from geoluminate.contrib.datasets.views import DatasetDetailView
+from geoluminate.contrib.projects.views import ProjectDetailView
+from geoluminate.contrib.samples.views import SampleDetailView
+from geoluminate.menus import ContributorDetailMenu, DatasetDetailMenu, ProjectDetailMenu, SampleDetailMenu
 
 
 class PluginRegistry:
@@ -56,12 +60,6 @@ class PluginRegistry:
         view_name = self.append_to_registry(view_class, name, *args, **kwargs)
         self.build_menu_item(view_class, view_name, name, **kwargs)
 
-    def register_action(self, view_class, name="", **kwargs):
-        """Register an action view and add it as an item to the action menu."""
-        name = name or getattr(view_class, "name", None)
-        view_name = self.append_to_registry(view_class, name, **kwargs)
-        # self.actions.append(self.build_menu_item(view_class, view_name, name, **kwargs))
-
     def page(self, *args, **kwargs):
         """Decorator to register a page view and add it as an item to the page menu.
 
@@ -78,29 +76,6 @@ class PluginRegistry:
 
         return decorator
 
-    def action(self, *args, **kwargs):
-        """Decorator to register an action view and add it as an item to the action menu.
-
-        Usage:
-
-        @dataset.action("download", icon="fas fa-file-download")
-        class DownloadView(BaseAppView, DatasetDetailView):
-            def get_file(self):
-                obj = self.get_object()
-                return ContentFile(obj.generate_xml(), name=f"{slugify(obj.title)}.xml")
-        """
-
-        def decorator(view_class):
-            self.register_action(view_class, *args, **kwargs)
-            return view_class
-
-        return decorator
-
-    def build_menu(self):
-        """Builds the menu from the menu items."""
-        self._menu = [self.build_menu_item(**item) for item in self.registry]
-        return self._menu
-
     def build_menu_item(self, view_class, view_name, name=None, **kwargs):
         """Creates a menu item from the view class."""
         name = name or getattr(view_class, "name", None)
@@ -112,13 +87,6 @@ class PluginRegistry:
                 # check=lambda request: view_class.has_permission(request),
             )
         )
-
-        # return MenuItem(
-        #     label=kwargs.get("title", name),
-        #     view_name=view_name,
-        #     icon=kwargs.get("icon", getattr(view_class, "icon", None)),
-        #     # check=lambda request: view_class.has_permission(request),
-        # )
 
     def get_urls(self):
         urls = []
@@ -140,3 +108,12 @@ class PluginRegistry:
         if not hasattr(self, "_urls"):
             self._urls = self.get_urls()
         return self._urls
+
+
+project = PluginRegistry(base=ProjectDetailView, menu=ProjectDetailMenu)
+
+dataset = PluginRegistry(base=DatasetDetailView, menu=DatasetDetailMenu)
+
+sample = PluginRegistry(base=SampleDetailView, menu=SampleDetailMenu)
+
+contributor = PluginRegistry(base=ContributorDetailView, menu=ContributorDetailMenu)

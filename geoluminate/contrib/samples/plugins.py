@@ -1,13 +1,10 @@
 from geoluminate.contrib.contributors.views import ContributorsPlugin
-from geoluminate.core.plugins import Discussion, Images, Map
+from geoluminate.core.plugins import Discussion, Images
 from geoluminate.core.utils import label
-from geoluminate.menus import SampleDetailMenu
-from geoluminate.plugins import PluginRegistry
+from geoluminate.plugins import sample
 
 from .models import Sample
-from .views import SampleDetailView, SamplePlugin
-
-sample = PluginRegistry(base=SampleDetailView, menu=SampleDetailMenu)
+from .views import SamplePlugin
 
 
 @sample.page("overview", icon="overview")
@@ -18,7 +15,6 @@ class SampleOverview:
 
 
 sample.register_page(ContributorsPlugin)
-sample.register_page(Map)
 sample.register_page(SamplePlugin, title="Sub-samples")
 sample.register_page(Images)
 sample.register_page(Discussion)

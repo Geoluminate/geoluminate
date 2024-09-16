@@ -7,13 +7,10 @@ from lxml import etree
 from geoluminate.contrib.contributors.views import ContributorsPlugin
 from geoluminate.contrib.samples.views import SamplePlugin
 from geoluminate.core import utils
-from geoluminate.core.plugins import ActivityStream, Discussion, Map
-from geoluminate.menus import DatasetDetailMenu
-from geoluminate.plugins import PluginRegistry
+from geoluminate.core.plugins import ActivityStream, Discussion
+from geoluminate.plugins import dataset
 
 from .views import DatasetDetailView
-
-dataset = PluginRegistry(base=DatasetDetailView, menu=DatasetDetailMenu)
 
 
 @dataset.page("overview", icon="overview")
@@ -22,28 +19,14 @@ class DatasetOverview(FileUploadMixin, FormViewMixin, UpdateView):
 
 
 dataset.register_page(ContributorsPlugin)
-
-
 dataset.register_page(SamplePlugin)
-
-
-@dataset.page()
-class DatasetMap(Map):
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["map_source_list"].update(self.serialize_dataset_samples(self.get_object()))
-
-        return context
-
-
-# dataset.register_page(Map)
 dataset.register_page(Discussion)
 dataset.register_page(ActivityStream)
 
 
-@dataset.action("flag", icon="fas fa-flag")
-@dataset.action("download", icon="fas fa-file-zipper")
-@dataset.action("metadata", icon="fas fa-file-code")
+# @dataset.action("flag", icon="fas fa-flag")
+# @dataset.action("download", icon="fas fa-file-zipper")
+# @dataset.action("metadata", icon="fas fa-file-code")
 class XMLDownload(DatasetDetailView, VirtualDownloadView):
     def get_file(self):
         obj = self.get_object()

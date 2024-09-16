@@ -10,20 +10,6 @@ class ActivityStream:
     template_name = "core/plugins/activity_stream.html"
 
 
-class Map:
-    name = _("Explorer")
-    icon = "map.svg"
-    template_name = "core/plugins/map.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["map_source_list"] = {}
-        return context
-
-    def serialize_dataset_samples(self, dataset):
-        return None
-
-
 class Discussion:
     title = name = _("Discussion")
     icon = "comments.svg"

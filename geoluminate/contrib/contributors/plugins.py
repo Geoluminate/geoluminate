@@ -5,19 +5,15 @@ from formset.views import FileUploadMixin, FormViewMixin
 
 from geoluminate.contrib.datasets.views import DatasetPlugin
 from geoluminate.contrib.projects.views import ProjectPlugin
-from geoluminate.core.plugins import ActivityStream, Map
-from geoluminate.core.utils import icon
-from geoluminate.menus import ContributorDetailMenu
-from geoluminate.plugins import PluginRegistry
+from geoluminate.core.plugins import ActivityStream
+from geoluminate.plugins import contributor
 
 from .forms.forms import UserProfileForm
 from .models import Contributor
 from .views import ContributorDetailView
 
-contributor = PluginRegistry(base=ContributorDetailView, menu=ContributorDetailMenu)
 
-
-@contributor.page("overview", icon=icon("overview"))
+@contributor.page("overview", icon="overview")
 class ContributorOverview(ContributorDetailView, FileUploadMixin, FormViewMixin, UpdateView):
     model = Contributor
     form_class = UserProfileForm
@@ -26,17 +22,6 @@ class ContributorOverview(ContributorDetailView, FileUploadMixin, FormViewMixin,
 
 contributor.register_page(ProjectPlugin)
 contributor.register_page(DatasetPlugin)
-
-
-@contributor.page()
-class ProjectMap(Map):
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        for dataset in self.get_object().datasets.all():
-            context["map_source_list"].update(self.serialize_dataset_samples(dataset))
-        return context
-
-
 contributor.register_page(ActivityStream)
 
 

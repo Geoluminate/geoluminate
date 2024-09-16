@@ -13,8 +13,10 @@ class SamplesConfig(AppConfig):
     def ready(self) -> None:
         from actstream import registry
 
+        # make sure the Sample model is registered with actstream
         registry.register(self.get_model("Sample"))
 
+        # register the sample children with the admin site
         self.register_sample_children()
 
         return super().ready()

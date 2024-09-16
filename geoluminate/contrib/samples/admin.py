@@ -1,5 +1,7 @@
 from django.contrib import admin
+from django.db import models
 from django.utils.translation import gettext as _
+from django_select2.forms import Select2MultipleWidget, Select2Widget
 from polymorphic.admin import PolymorphicChildModelFilter
 from polymorphic_treebeard.admin import PolymorphicTreeAdmin, PolymorphicTreeChildAdmin
 
@@ -34,11 +36,8 @@ class BaseSampleAdmin(PolymorphicTreeAdmin):
 
 
 class SampleAdmin(PolymorphicTreeChildAdmin):
-    # show_in_index = True
     base_model = Sample
-    inlines = [DescriptionInline, DateInline]
-
-    fieldsets = [
+    base_fieldsets = (
         (
             _("Basic information"),
             {
@@ -46,7 +45,19 @@ class SampleAdmin(PolymorphicTreeChildAdmin):
                     ("name", "status"),
                     "internal_id",
                     "dataset",
+                    "keywords",
+                    "options",
                 )
             },
         ),
-    ]
+        (
+            _("Position"),
+            {"fields": (("_position", "_ref_node_id"),)},
+        ),
+    )
+    inlines = [DescriptionInline, DateInline]
+    # show_in_index = True
+    formfield_overrides = {
+        models.ForeignKey: {"widget": Select2Widget},
+        models.ManyToManyField: {"widget": Select2MultipleWidget},
+    }

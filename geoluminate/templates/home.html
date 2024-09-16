@@ -3,6 +3,16 @@
 
 {% block main %}
   <div class="container mt-3 col-md-9">
+    <section>
+      <h1>{{ identity.database.name }}</h1>
+      <p>{{ identity.database.description }}</p>
+    </section>
+    <section>
+      <h2>{% trans "Governance" %}</h2>
+      <h3>{{ identity.authority.name }}</h3>
+      <a href="{{ identity.authority.url }}">{{ identity.authority.url }}</a>
+      <p>{{ identity.authority.description }}</p>
+    </section>
     {% for template in view.templates %}
       {% include template %}
     {% endfor %}

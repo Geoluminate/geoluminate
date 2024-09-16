@@ -1,12 +1,29 @@
-{% load static meta sekizai_tags thumbnail geoluminate simple_menu i18n compress easy_icons %}
+{% load static i18n meta sekizai_tags geoluminate compress easy_icons django_htmx %}
+{% load render_bundle from webpack_loader %}
 
 <!DOCTYPE html>
-{% generate_menu %}
 {% get_current_language as LANGUAGE_CODE %}
 <html lang="{{ LANGUAGE_CODE }}" data-bs-theme="auto">
   <head {% meta_namespaces %}>
     {% block head %}
-      {% include "geoluminate/utils/head.html" %}
+      <meta charset="utf-8" />
+      <meta http-equiv="x-ua-compatible" content="ie=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      {% include "meta/meta.html" %}
+      <link rel="icon" type="image/svg+xml" href="{% brand "icon" %}" />
+      <link href="{% static 'formset/css/bootstrap5-extra.css' %}" rel="stylesheet" />
+      <link href="{% static 'formset/css/collections.css' %}" rel="stylesheet" />
+      <script type="module" src="{% static 'formset/js/django-formset.js' %}" crossorigin="anonymous"></script>
+      {% django_htmx_script %}
+      {% compress css %}
+        <link rel="stylesheet" type="text/x-scss" href="{% static "scss/stylesheet.scss" %}" />
+      {% endcompress %}
+      {% render_bundle "project" "css" "GEOLUMINATE" %}
+      {% render_bundle 'bootstrap' 'js' 'GEOLUMINATE' attrs="defer" %}
+      {% render_bundle 'htmx' 'js' 'GEOLUMINATE' attrs="defer" %}
+      {% render_bundle 'justGage' 'js' 'GEOLUMINATE' attrs="defer" %}
+      {% render_bundle 'project' 'js' 'GEOLUMINATE' attrs="defer" %}
+      <script src="{% static "vendor/citation-js/citation.js" %}" defer></script>
     {% endblock head %}
 
     {% render_block "css" %}
@@ -28,7 +45,7 @@
     {% block body %}
       {% block application %}
         {% block site_nav %}
-          {% include "geoluminate/navigation/navbar.html" %}
+          {% include "geoluminate/menus/main/menu.html" %}
         {% endblock site_nav %}
 
         {% block page_nav %}

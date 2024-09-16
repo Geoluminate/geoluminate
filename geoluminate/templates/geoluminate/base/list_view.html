@@ -1,4 +1,4 @@
-{% extends "geoluminate/sidebar_left.html" %}
+{% extends "geoluminate/layout/sidebar_left.html" %}
 {% load i18n geoluminate static partials el_pagination_tags crispy_forms_tags %}
 {% load render_bundle from webpack_loader %}
 
@@ -49,22 +49,24 @@
 {% endblock javascript %}
 
 {% block sidebar_header %}
-  <span>{% trans "Filter by" %}</span>
-  <div class="ms-auto">
-    <button class="btn btn-sm btn-warning list-filter-clear"
-            hx-get="{{ request.path }}"
-            hx-target="#templateWrapper"
-            hx-push-url="true"
-            {% comment %}
-            hx-on::before-request="clearFilter()"
-            {% endcomment %}>{% trans "Clear" %}</button>
-    <button class="btn btn-sm btn-primary"
-            type="submit"
-            form="{{ filter.form.form_id }}"
-            hx-get="{{ request.path }}"
-            hx-include="#{{ filter.form.form_id }}"
-            hx-target="#templateWrapper"
-            hx-push-url="true">{% trans "Apply" %}</button>
+  <div class="card-header bg-white d-flex align-items-center sticky-top">
+    <span>{% trans "Filter by" %}</span>
+    <div class="ms-auto">
+      <button class="btn btn-sm btn-warning list-filter-clear"
+              hx-get="{{ request.path }}"
+              hx-target="#templateWrapper"
+              hx-push-url="true"
+              {% comment %}
+              hx-on::before-request="clearFilter()"
+              {% endcomment %}>{% trans "Clear" %}</button>
+      <button class="btn btn-sm btn-primary"
+              type="submit"
+              form="{{ filter.form.form_id }}"
+              hx-get="{{ request.path }}"
+              hx-include="#{{ filter.form.form_id }}"
+              hx-target="#templateWrapper"
+              hx-push-url="true">{% trans "Apply" %}</button>
+    </div>
   </div>
 {% endblock sidebar_header %}
 

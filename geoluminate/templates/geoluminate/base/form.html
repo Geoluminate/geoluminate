@@ -27,11 +27,21 @@
 
     <div class="page-content">
       {% block content %}
-      {% endblock content %}
+        {% if view.help_text %}{{ view.help_text }}{% endif %}
+        <div class="my-3">
+          {% partialdef form inline=True %}
+          {% crispy form %}
+          <div id="form-actions" hx-swap-oob="true">
+            <button type="submit" form="{{ form.helper.form_id }}" class="btn btn-primary">{% trans "Save" %}</button>
+          </div>
+        {% endpartialdef %}
 
-    </div>
-    {% block page_end %}
-    {% endblock page_end %}
+      </div>
+    {% endblock content %}
 
   </div>
+  {% block page_end %}
+  {% endblock page_end %}
+
+</div>
 {% endblock main %}

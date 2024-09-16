@@ -92,7 +92,7 @@ class BaseEditView(BaseMixin, LoginRequiredMixin, GeoluminatePermissionMixin, CR
         fragment = "form"
         if self.request.htmx:
             template_names = [f"{t}#{fragment}" for t in template_names]
-            return ["geoluminate/forms/crispy.html#form"]
+            return ["geoluminate/base/form.html#form"]
         return template_names
 
     def get_form_class(self):
@@ -146,14 +146,6 @@ class BaseEditView(BaseMixin, LoginRequiredMixin, GeoluminatePermissionMixin, CR
         related = getattr(self.object, self.related_name)
         return related.get_absolute_url()
 
-    def form_valid(self, form):
-        # if self.request.htmx:
-        # model_name = self.model._meta.model_name
-        # template = f"{model_name}_form.html"
-
-        # return render_to_response("geoluminate/forms/crispy.html", {"form": form})
-        return super().form_valid(form)
-
     @classonlymethod
     def get_urls(cls, model=None, roles=None):
         """Classmethod to generate URL patterns for the view."""
@@ -171,10 +163,6 @@ class BaseUpdateView(BaseFormView, UpdateView):
 
 class HomeView(TemplateView):
     template_name = "home.html"
-    templates = [
-        "geoluminate/home/database.html",
-        "geoluminate/home/authority.html",
-    ]
 
     def register_template(self, template_name: str):
         return template_name

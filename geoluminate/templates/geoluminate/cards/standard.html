@@ -6,16 +6,6 @@
 
 {% block card_body %}
   <div class="card-body p-0 p-md-3 h-100 d-flex flex-column justify-content-end">
-    {% comment %} <div class="pt-2 d-flex flex-wrap justify-content-center">
-      <div>
-        <h6>{% trans "Metadata" %}</h6>
-        <div id="metadataQuality-{{ obj.id }}" class="gauge" width="45px"></div>
-      </div>
-      <div>
-        <h6>{% trans "Data Quality" %}</h6>
-        <div id="dataQuality-{{ obj.id }}" class="gauge" data-value="{{ obj.get_data_quality }}"></div>
-      </div>
-    </div> {% endcomment %}
     <h5 class="card-title text-decoration-none">
       {% block title %}
         <span>{{ obj }}</span>
@@ -34,7 +24,6 @@
     </h6>
     <p class="card-text line-clamp max-lines-5 d-none d-md-block overflow-y-hidden" height="50px">
       {% block description %}
-        {% comment %} {{ obj.get_abstract.clean }} {% endcomment %}
       {% endblock description %}
 
     </p>

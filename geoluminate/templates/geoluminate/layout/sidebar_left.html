@@ -1,5 +1,4 @@
 {% extends "geoluminate/layout/application.html" %}
-{% comment %} {% extends "base.html" %} {% endcomment %}
 {% load geoluminate partials %}
 
 {% block page_left %}
@@ -9,19 +8,17 @@
          data-bs-toggle="collapse"
          data-bs-backdrop="false">
     <div class="card rounded-0 border-0">
-      {% comment %} {% block sidebar_header %}
-        <div class="card-header bg-white d-flex align-items-center sticky-top"></div>
-      {% endblock sidebar_header %} {% endcomment %}
+      {% block sidebar_header %}
+      {% endblock sidebar_header %}
+
       <div class="card-body">
         {% block sidebar %}
         {% endblock sidebar %}
 
       </div>
-      {% comment %} <div class="card-footer">
-        {% block sidebar_footer %}
-        {% endblock sidebar_footer %}
+      {% block sidebar_footer %}
+      {% endblock sidebar_footer %}
 
-      </div> {% endcomment %}
     </div>
   </aside>
 {% endpartialdef %}

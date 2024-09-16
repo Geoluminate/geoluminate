@@ -5,16 +5,16 @@ from formset.views import FileUploadMixin, FormViewMixin
 from geoluminate.contrib.contributors.views import ContributorsPlugin
 from geoluminate.contrib.datasets.views import DatasetPlugin
 from geoluminate.core.plugins import ActivityStream, Discussion, Map
-from geoluminate.core.utils import icon
+from geoluminate.menus import ProjectDetailMenu
 from geoluminate.plugins import PluginRegistry
 
 from .models import Project
 from .views import ProjectDetailView
 
-project = PluginRegistry(base=ProjectDetailView)
+project = PluginRegistry(base=ProjectDetailView, menu=ProjectDetailMenu)
 
 
-@project.page("overview", icon=icon("overview"))
+@project.page("overview", icon="overview")
 class ProjectOverview(FileUploadMixin, FormViewMixin, UpdateView):
     model = Project
     title = _("Project")

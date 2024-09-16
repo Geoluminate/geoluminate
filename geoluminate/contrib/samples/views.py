@@ -1,7 +1,6 @@
 from django.utils.translation import gettext as _
 from django.views.generic import TemplateView
 
-from geoluminate.core.utils import icon
 from geoluminate.core.view_mixins import ListPluginMixin, PolymorphicSubclassBaseView, PolymorphicSubclassMixin
 from geoluminate.views import BaseDetailView, BaseEditView, BaseListView
 
@@ -49,6 +48,9 @@ class SampleDetailView(BaseDetailView):
     model = Sample
     title = _("Sample")
     sidebar_exclude = ["sample_ptr", "polymorphic_ctype", "created", "modified", "options", "path", "depth", "numchild"]
+    extra_context = {
+        "menu": "SampleDetailMenu",
+    }
 
     def get_object(self):
         # note: we are using base_objects here to get the base model (Sample) instance
@@ -103,7 +105,7 @@ class SampleEditView(BaseEditView):
 
 class SamplePlugin(ListPluginMixin):
     title = name = _("Samples")
-    icon = icon("sample")
+    icon = "sample.svg"
     # model = Sample
     template_name = "contributors/contribution_list.html"
     object_template = "samples/sample_card.html"

@@ -1,6 +1,5 @@
 from django.utils.translation import gettext as _
 
-from geoluminate.core.utils import icon
 from geoluminate.core.view_mixins import ListPluginMixin
 from geoluminate.views import BaseDetailView, BaseEditView, BaseListView
 
@@ -30,6 +29,9 @@ class DatasetDetailView(BaseDetailView):
     model = Dataset
     title = _("Dataset")
     form_class = DatasetForm
+    extra_context = {
+        "menu": "DatasetDetailMenu",
+    }
     sidebar_fields = [
         "title",
         "project",
@@ -53,7 +55,7 @@ class DatasetEditView(BaseEditView):
 
 class DatasetPlugin(ListPluginMixin):
     title = name = _("Datasets")
-    icon = icon("dataset")
+    icon = "dataset"
 
     def get_queryset(self, *args, **kwargs):
         return self.get_object().datasets.all()

@@ -8,15 +8,15 @@ from geoluminate.contrib.contributors.views import ContributorsPlugin
 from geoluminate.contrib.samples.views import SamplePlugin
 from geoluminate.core import utils
 from geoluminate.core.plugins import ActivityStream, Discussion, Map
-from geoluminate.core.utils import icon
+from geoluminate.menus import DatasetDetailMenu
 from geoluminate.plugins import PluginRegistry
 
 from .views import DatasetDetailView
 
-dataset = PluginRegistry(base=DatasetDetailView)
+dataset = PluginRegistry(base=DatasetDetailView, menu=DatasetDetailMenu)
 
 
-@dataset.page("overview", icon=icon("overview"))
+@dataset.page("overview", icon="overview")
 class DatasetOverview(FileUploadMixin, FormViewMixin, UpdateView):
     template_name = "geoluminate/plugins/overview.html"
 

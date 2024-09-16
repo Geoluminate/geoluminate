@@ -7,13 +7,14 @@ from geoluminate.contrib.datasets.views import DatasetPlugin
 from geoluminate.contrib.projects.views import ProjectPlugin
 from geoluminate.core.plugins import ActivityStream, Map
 from geoluminate.core.utils import icon
+from geoluminate.menus import ContributorDetailMenu
 from geoluminate.plugins import PluginRegistry
 
 from .forms.forms import UserProfileForm
 from .models import Contributor
 from .views import ContributorDetailView
 
-contributor = PluginRegistry(base=ContributorDetailView)
+contributor = PluginRegistry(base=ContributorDetailView, menu=ContributorDetailMenu)
 
 
 @contributor.page("overview", icon=icon("overview"))

@@ -1,5 +1,5 @@
 {% extends "geoluminate/sidebar_left.html" %}
-{% load static i18n formsetify geoluminate sekizai_tags activity_tags imagekit neapolitan easy_icons %}
+{% load static i18n formsetify geoluminate sekizai_tags activity_tags imagekit neapolitan easy_icons flex_menu %}
 {% load render_bundle from webpack_loader %}
 
 {% block css %}
@@ -26,7 +26,7 @@
 
 {% block page_nav %}
   <nav class="page-nav">
-    {% page_menu %}
+    {% render_menu menu pk=object.pk %}
   </nav>
 {% endblock page_nav %}
 

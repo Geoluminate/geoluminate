@@ -117,3 +117,28 @@ DatabaseMenu = Menu(
         ),
     ],
 )
+
+
+ProjectDetailMenu = Menu(
+    "ProjectDetailMenu",
+    label=_("Project"),
+    root_template="geoluminate/menus/detail/root.html",
+)
+
+DatasetDetailMenu = Menu(
+    "DatasetDetailMenu",
+    label=_("Dataset"),
+    root_template="geoluminate/menus/detail/root.html",
+)
+
+SampleDetailMenu = Menu(
+    "SampleDetailMenu",
+    label=_("Sample"),
+    root_template="geoluminate/menus/detail/root.html",
+)
+
+ContributorDetailMenu = Menu(
+    "ContributorDetailMenu",
+    label=_("Contributor"),
+    root_template="geoluminate/menus/detail/root.html",
+)

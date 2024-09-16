@@ -51,8 +51,6 @@ class BaseDetailView(BaseMixin, HTMXMixin, GeoluminatePermissionMixin, DetailVie
         context["base_model_name"] = self.base.model._meta.model_name
         context["base_model_verbose_name"] = self.base.model._meta.verbose_name
         context["base_model_name_plural"] = self.base.model._meta.verbose_name_plural
-        context["page_menu"] = self.resolve_menu_urls()
-        context["page_actions"] = self.resolve_action_urls()
         context["dates"] = self.get_dates()
         return context
 
@@ -69,23 +67,6 @@ class BaseDetailView(BaseMixin, HTMXMixin, GeoluminatePermissionMixin, DetailVie
             output[date.type]["value"] = date.date
 
         return output
-
-    def resolve_menu_urls(self):
-        """The menu item urls generated during the plugin registration process are not resolved until this method is called."""
-        # tab = self.request.GET.get("tab", None)
-
-        if not self.menu:
-            raise NotImplementedError("You must define a menu attribute on the view.")
-        for item in self.menu:
-            item.resolved = reverse(item.url, kwargs={"pk": self.kwargs.get("pk")})
-        return self.menu
-
-    def resolve_action_urls(self):
-        """The action item urls generated during the plugin registration process are not resolved until this method is called."""
-        for item in self.actions:
-            item.resolved = reverse(item.url, kwargs={"pk": self.kwargs.get("pk")})
-
-        return self.actions
 
 
 class BaseFormView(BaseMixin, HTMXMixin, LoginRequiredMixin, GeoluminatePermissionMixin):

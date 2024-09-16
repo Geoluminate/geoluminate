@@ -2,19 +2,17 @@
 
 from django.utils.translation import gettext as _
 
-from geoluminate.core.utils import icon
-
 
 class ActivityStream:
     name = _("Activity")
     title = _("Recent Activity")
-    icon = icon("activity")
+    icon = "activity.svg"
     template_name = "core/plugins/activity_stream.html"
 
 
 class Map:
     name = _("Explorer")
-    icon = icon("map")
+    icon = "map.svg"
     template_name = "core/plugins/map.html"
 
     def get_context_data(self, **kwargs):
@@ -28,13 +26,13 @@ class Map:
 
 class Discussion:
     title = name = _("Discussion")
-    icon = icon("discussion")
+    icon = "comments.svg"
     template_name = "core/plugins/discussion.html"
 
 
 class Images:
     name = _("Images")
-    icon = icon("images")
+    icon = "images.svg"
     template_name = "core/plugins/images.html"
     # queryset = Photo.objects.all()
     # filterset_class = PhotoFilter

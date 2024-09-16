@@ -20,6 +20,9 @@ class ProjectDetailView(BaseDetailView):
     title = _("Project")
     model = Project
     form_class = ProjectForm
+    extra_context = {
+        "menu": "ProjectDetailMenu",
+    }
 
 
 class ProjectEditView(BaseEditView):

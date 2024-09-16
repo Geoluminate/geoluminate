@@ -1,6 +1,8 @@
 from django.urls import path
 from django.utils.text import slugify
-from simple_menu import MenuItem
+
+# from simple_menu import MenuItem
+from flex_menu import MenuItem
 
 
 class PluginRegistry:
@@ -22,12 +24,11 @@ class PluginRegistry:
 
     """
 
-    def __init__(self, namespace="", base=None):
+    def __init__(self, namespace="", base=None, menu=None):
         self.namespace = namespace
         self.base = base
         self.registry = []
-        self.menu = []
-        self.actions = []
+        self.menu = menu
         self.model_name = self.base.model._meta.model_name
 
     def append_to_registry(self, view_class, name="", *args, **kwargs):
@@ -53,13 +54,13 @@ class PluginRegistry:
         view_class = type(f"{view_class.__name__}Plugin", (view_class, *bases, self.base), {})
         name = name or getattr(view_class, "name", None)
         view_name = self.append_to_registry(view_class, name, *args, **kwargs)
-        self.menu.append(self.build_menu_item(view_class, view_name, name, **kwargs))
+        self.build_menu_item(view_class, view_name, name, **kwargs)
 
     def register_action(self, view_class, name="", **kwargs):
         """Register an action view and add it as an item to the action menu."""
         name = name or getattr(view_class, "name", None)
         view_name = self.append_to_registry(view_class, name, **kwargs)
-        self.actions.append(self.build_menu_item(view_class, view_name, name, **kwargs))
+        # self.actions.append(self.build_menu_item(view_class, view_name, name, **kwargs))
 
     def page(self, *args, **kwargs):
         """Decorator to register a page view and add it as an item to the page menu.
@@ -103,18 +104,27 @@ class PluginRegistry:
     def build_menu_item(self, view_class, view_name, name=None, **kwargs):
         """Creates a menu item from the view class."""
         name = name or getattr(view_class, "name", None)
-        return MenuItem(
-            title=kwargs.get("title", name),
-            url=view_name,
-            icon=kwargs.get("icon", getattr(view_class, "icon", None)),
-            check=lambda request: view_class.has_permission(request),
+        self.menu.append(
+            MenuItem(
+                name=kwargs.get("title", name),
+                view_name=view_name,
+                icon=kwargs.get("icon", getattr(view_class, "icon", None)),
+                # check=lambda request: view_class.has_permission(request),
+            )
         )
+
+        # return MenuItem(
+        #     label=kwargs.get("title", name),
+        #     view_name=view_name,
+        #     icon=kwargs.get("icon", getattr(view_class, "icon", None)),
+        #     # check=lambda request: view_class.has_permission(request),
+        # )
 
     def get_urls(self):
         urls = []
         for i, plugin in enumerate(self.registry):
             view_kwargs = plugin["kwargs"].get("view_kwargs", {})
-            view = plugin["view_class"].as_view(menu=self.menu, actions=self.actions, base=self.base, **view_kwargs)
+            view = plugin["view_class"].as_view(menu=self.menu, base=self.base, **view_kwargs)
             if i == 0:
                 # duplicate the first plugin with a blank route to use as the default view
                 urls.append(path("", view, name=f"{self.model_name}-detail"))

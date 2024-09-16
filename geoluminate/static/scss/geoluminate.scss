@@ -34,6 +34,16 @@
 
 
 
+svg {
+	overflow: visible;
+    box-sizing: content-box;
+	display: var(--fa-display, inline-block);
+    height: 1em;
+    vertical-align: -0.125em;
+}
+
+
+
 @media print {
 	#application-sidebar, #appMenu, nav {
 		display: none !important;

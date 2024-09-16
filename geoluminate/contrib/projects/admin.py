@@ -23,14 +23,33 @@ class ProjectAdmin(admin.ModelAdmin):
         DateInline,
     ]
     search_fields = ("pk", "title")
-    frontend_editable_fields = (
-        "title",
-        "status",
-    )
     list_display = (
         "title",
         "status",
         "created",
+    )
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": (
+                    "image",
+                    "title",
+                    "status",
+                    # "description",
+                )
+            },
+        ),
+        (
+            "Details",
+            {
+                "fields": (
+                    "owner",
+                    "visibility",
+                    "keywords",
+                )
+            },
+        ),
     )
 
 

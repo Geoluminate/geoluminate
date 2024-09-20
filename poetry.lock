@@ -1018,18 +1018,18 @@ with-social = ["django-allauth (>=0.40.0,<0.53.0)"]
 
 [[package]]
 name = "django"
-version = "5.1.1"
+version = "5.0.9"
 description = "A high-level Python web framework that encourages rapid development and clean, pragmatic design."
 optional = false
 python-versions = ">=3.10"
 files = [
-    {file = "Django-5.1.1-py3-none-any.whl", hash = "sha256:71603f27dac22a6533fb38d83072eea9ddb4017fead6f67f2562a40402d61c3f"},
-    {file = "Django-5.1.1.tar.gz", hash = "sha256:021ffb7fdab3d2d388bc8c7c2434eb9c1f6f4d09e6119010bbb1694dda286bc2"},
+    {file = "Django-5.0.9-py3-none-any.whl", hash = "sha256:f219576ba53be4e83f485130a7283f0efde06a9f2e3a7c3c5180327549f078fa"},
+    {file = "Django-5.0.9.tar.gz", hash = "sha256:6333870d342329b60174da3a60dbd302e533f3b0bb0971516750e974a99b5a39"},
 ]
 
 [package.dependencies]
 argon2-cffi = {version = ">=19.1.0", optional = true, markers = "extra == \"argon2\""}
-asgiref = ">=3.8.1,<4"
+asgiref = ">=3.7.0,<4"
 sqlparse = ">=0.3.1"
 tzdata = {version = "*", markers = "sys_platform == \"win32\""}
 
@@ -1254,6 +1254,25 @@ files = [
 
 [package.dependencies]
 Django = ">=2.2"
+
+[[package]]
+name = "django-comments-xtd"
+version = "2.10.0"
+description = "Django Comments Framework extension app with thread support, follow up notifications and email confirmations."
+optional = false
+python-versions = "*"
+files = [
+    {file = "django_comments_xtd-2.10.0-py3-none-any.whl", hash = "sha256:d9e670931a427028a7b8f4f2e6a737b014bf83d713368bd6ff4823bc2caca04e"},
+    {file = "django_comments_xtd-2.10.0.tar.gz", hash = "sha256:6217c41ed398942c07a44374a308cd9bf541f5444d3d25b3eaae0447c4a66d48"},
+]
+
+[package.dependencies]
+Django = ">=3,<5.1"
+django-contrib-comments = ">=2.2,<2.3"
+djangorestframework = ">=3.12,<3.16"
+docutils = "*"
+pytz = "*"
+six = "*"
 
 [[package]]
 name = "django-compressor"
@@ -5752,4 +5771,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "c98c2a3f50482398fb1752fc88e0ab694df6d2cb04846488ec6d68991cf943cf"
+content-hash = "fdd229cfc67f2d6c03a4d15c862ece64270cb4b36440de3197a682baabb299aa"

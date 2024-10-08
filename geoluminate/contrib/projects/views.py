@@ -1,6 +1,5 @@
 from django.utils.translation import gettext as _
 
-from geoluminate.core.utils import icon
 from geoluminate.core.view_mixins import ListPluginMixin
 from geoluminate.views import BaseDetailView, BaseEditView, BaseListView
 
@@ -32,7 +31,7 @@ class ProjectEditView(BaseEditView):
 
 class ProjectPlugin(ListPluginMixin):
     title = name = _("Projects")
-    icon = icon("project")
+    icon = "project.svg"
 
     def get_queryset(self, *args, **kwargs):
         return self.get_object().projects.all()

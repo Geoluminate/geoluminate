@@ -1,4 +1,21 @@
 .sidebar {
+
+  button {
+    @extend .btn-sm;
+  }
+
+  form {
+    .form-control {
+      @extend .form-control-sm;
+    }
+    .form-select {
+      @extend .form-select-sm;
+    }
+    .form-text {
+      display: none;
+    }
+
+  }
   @extend .border-end;
   // @extend .bg-primary;
   // @extend .bg-gradient;

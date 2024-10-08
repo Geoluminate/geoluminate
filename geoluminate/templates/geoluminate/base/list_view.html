@@ -30,10 +30,25 @@
 {% endwith %}
 {% endpartialdef %}
 
+{% partialdef table %}
+<table>
+  <tbody>
+    {% for obj in object_list %}
+      {% with obj|verbose_name as obj_name %}
+        {% include object_template %}
+      {% endwith %}
+    {% endfor %}
+  </tbody>
+</table>
+{% endpartialdef table %}
+
 {% partialdef page %}
 <div id="templateWrapper" class="entry-list-container">
   {% partial list-filter %}
-  <div class="w-100 d-flex flex-wrap">{% partial object-list %}</div>
+  <div class="w-100 d-flex flex-wrap">
+    {% include "geoluminate/base/list_view.html#"|add:"table" %}
+    {% comment %} {% partial object-list %} {% endcomment %}
+  </div>
 </div>
 {% endpartialdef %}
 
@@ -49,7 +64,7 @@
 {% endblock javascript %}
 
 {% block sidebar_header %}
-  <div class="card-header bg-white d-flex align-items-center sticky-top">
+  <div class="px-3 py-2 bg-secondary-subtle d-flex align-items-center sticky-top">
     <span>{% trans "Filter by" %}</span>
     <div class="ms-auto">
       <button class="btn btn-sm btn-warning list-filter-clear"
@@ -76,13 +91,12 @@
 
 {% block main %}
   <div class="page-content container d-block entry-list py-3">
-    <h1>
+    <h1 class="display-3">
       {% block heading %}
         {{ meta.title }}
       {% endblock heading %}
-
     </h1>
-    <hr class="mt-0 text-primary" />
+    {% comment %} <hr class="mt-0 text-primary" /> {% endcomment %}
     {% comment %} <div class="toolbar py-2 w-100">
       <button class="d-block d-xl-none btn btn-primary ms-1" data-bs-target="#pageSidebar" data-bs-toggle="modal">
         <i class="fas fa-filter"></i>

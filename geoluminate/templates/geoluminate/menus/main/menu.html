@@ -4,10 +4,10 @@
   <nav class="container-fluid bd-gutter flex-wrap flex-lg-nowrap" aria-label="Main navigation">
     {% include "geoluminate/menus/main/widgets/database_navigation.html" %}
     <a class="navbar-brand" href="{% url "home" %}" title={{ site_config.database.name }}>
-      <span class="d-md-none">{{ site_config.database.short_name }}</span>
-      <span class="d-none d-md-block ">{{ site_config.database.name }}</span>
+      <span class="d-md-none">{{ identity.database.short_name|default:"Geoluminate" }}</span>
+      <span class="d-none d-md-block ">{{ identity.database.name|default:"Geoluminate" }}</span>
     </a>
-    <ul class="navbar-nav flex-row flex-wrap bd-navbar-nav">
+    {% comment %} <ul class="navbar-nav flex-row flex-wrap bd-navbar-nav">
       {% block navbar_menu %}
         {% for item in breadcrumbs %}
           <li class="navbar-brand navbar-text text-white ">{% icon "angle-right" %}</li>
@@ -17,7 +17,14 @@
         {% endfor %}
       {% endblock navbar_menu %}
 
-    </ul>
+    </ul> {% endcomment %}
+    {% comment %} <button class="btn btn-outline-light d-flex justify-content-between align-items-center" style="width:280px">
+      <span>{% icon "search" %} {% trans "Search" %}</span>
+      <span>
+        <kbd>CTRL</kbd>+<kbd>K</kbd>
+      </span>
+    </button> {% endcomment %}
+    {% comment %} <a class="navbar-brand" href="#">Global Heat Flow Database</a> {% endcomment %}
     <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
       <li class="nav-item col-6 col-lg-auto"></li>
       {% for widget in navbar_widgets %}

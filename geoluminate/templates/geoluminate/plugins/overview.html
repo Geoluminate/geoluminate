@@ -8,6 +8,36 @@
 </div>
 {% endpartialdef %}
 
+{% block toolbar %}
+  {% if user_has_permission.create %}
+    <a class="btn"
+       {% modal_form_attrs %}
+       hx-get="{% url 'description-create' pk=object.pk object_type=base_model_name %}">
+      {% icon "plus" title="Add new" %}
+    </a>
+    <a class="btn"
+       {% modal_form_attrs %}
+       hx-get="{% url 'description-create' pk=object.pk object_type=base_model_name %}">
+      {% icon "calendar" title="Add new" %}
+    </a>
+  {% endif %}
+{% endblock toolbar %}
+
+{% comment %} {% block page %}
+  <div class="d-flex">
+    {{ block.super }}
+    <div class="toolbar h-100 bg-secondary text-white">
+      {% if user_has_permission.create %}
+        <a class="btn text-white" {% modal_form_attrs %} hx-get="{% url 'description-create' pk=object.pk object_type=base_model_name %}">
+          {% icon "plus" title="Add new" %}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+{% endblock page %}
+
+
+{% endcomment %}
 {% block container %}
   <h1 class="display-3">{{ meta.title }}</h1>
   {% comment %} <p class="small text-decoration-none">
@@ -19,14 +49,12 @@
     {% empty %}
       <p>{% trans "No descriptions have been provided for this resource yet." %}</p>
     {% endfor %}
-    <div class="position-absolute top-0 end-0 d-flex flex-column justify-content-center align-items-center m-2">
+    {% comment %} <div class="position-absolute top-0 end-0 d-flex flex-column justify-content-center align-items-center m-2">
       {% if user_has_permission.create %}
-        <a class="btn btn-lg btn-primary shadow rounded-circle"
-           {% modal_form_attrs %}
-           hx-get="{% url 'description-create' pk=object.pk object_type=base_model_name %}">
+        <a class="btn btn-lg btn-primary shadow rounded-circle" {% modal_form_attrs %} hx-get="{% url 'description-create' pk=object.pk object_type=base_model_name %}">
           <span>{% icon "plus" title="Add new" %}</span>
         </a>
       {% endif %}
-    </div>
+    </div> {% endcomment %}
   </div>
 {% endblock container %}

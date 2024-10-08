@@ -11,9 +11,6 @@
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       {% include "meta/meta.html" %}
       <link rel="icon" type="image/svg+xml" href="{% brand "icon" %}" />
-      <link href="{% static 'formset/css/bootstrap5-extra.css' %}" rel="stylesheet" />
-      <link href="{% static 'formset/css/collections.css' %}" rel="stylesheet" />
-      <script type="module" src="{% static 'formset/js/django-formset.js' %}" crossorigin="anonymous"></script>
       {% django_htmx_script %}
       {% compress css %}
         <link rel="stylesheet" type="text/x-scss" href="{% static "scss/stylesheet.scss" %}" />
@@ -51,13 +48,13 @@
         {% block page_nav %}
         {% endblock page_nav %}
 
-        <div class="container-fluid flex-grow-1 overflow-hidden">
-          <div class="row h-100 {% block row_css %}overflow-hidden{% endblock row_css %}
+        <div class="flex-grow-1 overflow-hidden">
+          <div class="d-flex h-100 {% block row_css %}overflow-hidden{% endblock row_css %}
              ">
             {% block page_left %}
             {% endblock page_left %}
 
-            <div class="h-100 col px-0 overflow-auto position-relative">
+            <div class="h-100 col overflow-auto position-relative">
               <main class=" {% block page_css_class %}{% endblock page_css_class %}
                  ">
                 {% block content_wrapper %}

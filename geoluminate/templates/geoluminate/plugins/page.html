@@ -5,18 +5,14 @@
   {% block page_top %}
     <div class="page-top position-relative">
       {% block header %}
-        <header class="page-header mb-0 {% block page_header_css %}page-layout{% endblock page_header_css %}
-           ">
-          <h1 class="display-1">
-            {% block title %}
-              {{ meta.title }}
-            {% endblock title %}
+        <h1 class="display-3">
+          {% block title %}
+            {{ meta.title }}
+          {% endblock title %}
 
-          </h1>
-          {% block add_button %}
-          {% endblock add_button %}
-
-        </header>
+        </h1>
+        {% block add_button %}
+        {% endblock add_button %}
       {% endblock header %}
 
       {% comment %} {% block help_text %}
@@ -38,7 +34,7 @@
       {% endblock toolbar %}
 
     </div>
-    <hr class="mt-0 border border-primary" />
+    <hr class="mt-0" />
   {% endblock page_top %}
 
   <div class="page-content">

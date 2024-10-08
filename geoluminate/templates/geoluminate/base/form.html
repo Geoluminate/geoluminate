@@ -1,5 +1,17 @@
 {% extends "base.html" %}
-{% load static %}
+{% load i18n static partials crispy_forms_tags %}
+
+{% partialdef form inline=True %}
+<form method="post"
+      class="my-class"
+      hx-post="{{ request.get_full_path }}"
+      {% if request.htmx.target %}hx-target="#{{ request.htmx.target }}"{% endif %}>
+  {% csrf_token %}
+  {{ form|crispy }}
+  <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
+</form>
+{% comment %} {% crispy form %} {% endcomment %}
+{% endpartialdef %}
 
 {% block main %}
   <div class="container py-3 col-6">
@@ -28,20 +40,12 @@
     <div class="page-content">
       {% block content %}
         {% if view.help_text %}{{ view.help_text }}{% endif %}
-        <div class="my-3">
-          {% partialdef form inline=True %}
-          {% crispy form %}
-          <div id="form-actions" hx-swap-oob="true">
-            <button type="submit" form="{{ form.helper.form_id }}" class="btn btn-primary">{% trans "Save" %}</button>
-          </div>
-        {% endpartialdef %}
+        <div class="my-3">{% partial form %}</div>
+      {% endblock content %}
 
-      </div>
-    {% endblock content %}
+    </div>
+    {% block page_end %}
+    {% endblock page_end %}
 
   </div>
-  {% block page_end %}
-  {% endblock page_end %}
-
-</div>
 {% endblock main %}

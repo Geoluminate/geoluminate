@@ -49,13 +49,8 @@
       <span>{% blocktrans %}Updated: {{ last_updated }} ago{% endblocktrans %}</span>
     {% endwith %}
     {{ block.super }}
+    <a href="{{ obj.get_absolute_url }}" class="btn btn-primary">{% trans "View detail" %}</a>
   </div>
-  <a href="{{ obj.get_absolute_url }}" class="stretched-link text-reset">
-    {% comment %} {% trans "View detail" %} {% endcomment %}
-    {% comment %} <div class="position-absolute bottom-0 end-0">
-      <i class="fa-solid fa-door-open fa-lg"></i>
-    </div> {% endcomment %}
-  </a>
 {% endblock card_body %}
 
 {% block card_footer %}

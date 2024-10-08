@@ -66,25 +66,6 @@
     <hr />
     {% for heading, section_fields in sidebar_fields.items %}
       {% sidebar_section real heading section_fields %}
-      {% comment %} {% render_fields real section_fields as fields %}
-      <section class="mb-3">
-        {% if has_permission.edit %}
-          <div class="position-absolute top-0 end-0 m-2">
-            <a hx-get="{{ object.get_update_url }}" class="btn btn-lg btn-sm text-success">
-              <i class="fa-solid fa-edit"></i>
-            </a>
-          </div>
-        {% endif %}
-        <h2 class="fs-5">{{ heading|title }}</h2>
-        <dl>
-          {% for name, value in fields %}
-            <dt>{{ name|capfirst }}</dt>
-            <dd class="ms-1">
-              {{ value }}
-            </dd>
-          {% endfor %}
-        </dl>
-      </section> {% endcomment %}
       {% if not forloop.last %}<hr />{% endif %}
     {% endfor %}
     {% block sidebar_cards %}
@@ -116,3 +97,7 @@
     </div>
   </div>
 {% endblock body_end %}
+
+{% block after_page %}
+  <div id="plugin-toolbar" class="h-100 bg-secondary d-flex flex-column" hx-swap-oob="true"></div>
+{% endblock after_page %}

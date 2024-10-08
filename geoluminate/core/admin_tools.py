@@ -182,6 +182,10 @@ class CustomMenu(Menu):
                     "geoluminate.contrib.contributors.models.Organization",
                 ),
             ),
+            items.ModelList(
+                icon("comments"),
+                models=("django_comments_xtd.models.*",),
+            ),
             # items.AppList(_("Administration"), models=("django.contrib.*",)),
             # items.MenuItem(icon("invite"), reverse("admin:invitations_invitation_add")),
             # items.MenuItem(

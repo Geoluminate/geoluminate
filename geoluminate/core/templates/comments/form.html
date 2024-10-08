@@ -1,40 +1,35 @@
-{% extends "comments/form.html" %}
-{% load comments i18n fluent_comments_tags geoluminate %}
+{% load i18n %}
+{% load comments %}
 
-{% block comment_form %}
-  <div id="{% if preview %}comment-preview{% else %}c{{ comment.id }}{% endif %}"
-       class="comment-item{% if comment.user_id and comment.user_id == comment.content_object.author_id %} by-author{% endif %} card my-2 border-0">
-    {% if preview %}
-      <h3>{% trans "Preview of your comment" %}</h3>
-    {% endif %}
-    <div class="row mx-0 py-1">
-      <div class="col-auto px-0">{% avatar user class='shadow rounded-circle' %}</div>
-      <div class="col">
-        <h6 class="card-title">
-          {{ user }} - <span class="comment-date">{% now "DATETIME_FORMAT" %}</span>
-          {% if comment.user_id and comment.user_id == comment.content_object.author_id %}
-            <span class="comment-author-flag">[{% trans "author" %}]</span>
-          {% endif %}
-        </h6>
-        {% block form_fields %}
-          {% crispy form %}
-        {% endblock form_fields %}
-
-        {% block form_actions %}
-          {% if not form.helper.inputs %}
-            <div class="form-group">
-              <div class="col-sm-offset-2 col-sm-10">
-                <input type="submit" name="post" class="btn btn-primary" value="{% trans "Post Comment" %}" />
-                <input type="submit" name="preview" class="btn btn-info" value="{% trans "Preview" %}" />
-                {% ajax_comment_tags for form.target_object %}
-              </div>
-            </div>
-          {% else %}
-            {% ajax_comment_tags for form.target_object %}
-          {% endif %}
-        {% endblock form_actions %}
-
+<form method="post" action="{% comment_form_target %}" onsubmit="post.disabled = true; return true;">
+  {% csrf_token %}
+  <fieldset>
+    <input type="hidden" name="next" value="{% url 'comments-xtd-sent' %}" />
+    <div class="alert alert-danger" data-comment-element="errors" hidden></div>
+    {% for field in form %}
+      {% if field.is_hidden %}<div>{{ field }}</div>{% endif %}
+    {% endfor %}
+    <div style="display:none">{{ form.honeypot }}</div>
+    <div class="row mb-3 form-group{% if 'comment' in form.errors %} has-danger{% endif %}">
+      <div>{{ form.comment }}</div>
+    </div>
+    <div class="row form-group">
+      <div class="col-7"></div>
+    </div>
+  </fieldset>
+  <div class="row form-group">
+    <div class="d-flex w-100 text-capitalize align-items-center">
+      <input type="submit" name="post" value="{% trans 'send' %}" class=" text-capitalize me-1 btn btn-primary" />
+      <input type="submit"
+             name="preview"
+             value="{% trans 'preview' %}"
+             class="text-capitalize btn btn-secondary" />
+      <div class="form-check ms-auto ">
+        {{ form.followup }}
+        <label for="id_followup{% if cid %}_{{ cid }}{% endif %}" class="form-check-label">
+          &nbsp;{{ form.followup.label }}
+        </label>
       </div>
     </div>
   </div>
-{% endblock comment_form %}
+</form>

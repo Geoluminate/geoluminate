@@ -10,13 +10,12 @@ from django_contact_form.forms import ContactForm
 
 from geoluminate.identity.models import Authority, Database
 
-
-def icon(icon):
-    """Returns the icon for the project."""
-    icon = settings.GEOLUMINATE_ICONS.get(icon, icon)
-    if not icon:
-        raise ValueError(f"Icon {icon} not found in settings.GEOLUMINATE_ICONS.")
-    return icon
+# def icon(icon):
+#     """Returns the icon for the project."""
+#     icon = settings.GEOLUMINATE_ICONS.get(icon, icon)
+#     if not icon:
+#         raise ValueError(f"Icon {icon} not found in settings.GEOLUMINATE_ICONS.")
+#     return icon
 
 
 def label(label):

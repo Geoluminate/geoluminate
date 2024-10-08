@@ -5,6 +5,7 @@ from django.db import models
 from django.forms.utils import flatatt
 from django.template.loader import render_to_string
 from django.templatetags.static import static
+from django.urls import reverse
 from django.utils.safestring import mark_safe
 from quantityfield import settings as qsettings
 
@@ -121,6 +122,7 @@ def render_fields(obj, fields):
                 related_objects = getattr(obj, f).all()
                 yield (mf.verbose_name, ", ".join([obj for obj in related_objects]), mf.help_text)
             # if mf is a ForeignKey, get the related object and create a link using the get_absolute_url method
+
             elif mf.is_relation:
                 related = getattr(obj, f)
                 if related:
@@ -138,7 +140,37 @@ def render_fields(obj, fields):
 
 
 @register.simple_tag
+def get_fields(obj, fields):
+    return [(obj._meta.get_field(f), getattr(obj, f)) for f in fields]
+
+
+@register.simple_tag
+def get_sample_update_url(obj, fields=None):
+    url = reverse("sample-update", kwargs={"pk": obj.pk})  # Adjust the URL name as needed
+
+    if fields is None:
+        return url
+    else:
+        # field_names = ",".join(fields)
+        return f"{url}?fields={','.join(fields)}"
+
+
+@register.simple_tag
 def sidebar_section(obj, heading, fields):
     template = "core/sidebar_section.html"
-    fields = render_fields(obj, fields)
-    return render_to_string(template, {"heading": heading, "fields": fields})
+    field_meta = get_fields(obj, fields)
+    return render_to_string(template, {"heading": heading, "fields": fields, "field_meta": field_meta, "object": obj})
+
+
+@register.simple_tag
+def avatar_url(contributor, **kwargs):
+    """Renders a default img tag for the given profile. If the profile.image is None, renders a default icon if no image is set."""
+
+    if not contributor:
+        # for anonymous users
+        return render_to_string("icons/user.svg")
+
+    if contributor.image:
+        return contributor.image.url
+    else:
+        return render_to_string("icons/user.svg")

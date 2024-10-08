@@ -1,9 +1,9 @@
 {% extends "geoluminate/plugins/page.html" %}
-{% load i18n static comments geoluminate %}
+{% load i18n static comments comments_xtd  geoluminate %}
 
-{% block title %}
-  {% trans "Discussion" %}
-{% endblock title %}
+{% block page_top %}
+  {% comment %} {% trans "Discussion" %} {% endcomment %}
+{% endblock page_top %}
 
 {% block toolbar %}
 {% endblock toolbar %}
@@ -23,11 +23,34 @@
 {% endblock help_text %}
 
 {% block content %}
-  <script type="text/javascript" src="{% static "fluent_comments/js/ajaxcomments.js" %}"></script>
-  {% get_comment_count for object as comment_count %}
-  {% render_comment_form for object %}
-  {% if not comment_count and not user.is_authenticated %}
-    {% trans "Looks like there's nothing here yet." %}
+  {% if request.user.is_authenticated %}
+    <div class="alert alert-info" role="alert">
+      {% trans "Contributing to discussions on this site requires an active account. Join our community today and let us know what you think about this " %}{{ verbose_name }}
+    </div>
+  {% else %}
+    <div class="d-flex justify-content-center">
+      <div class="card w-75 mb-3">
+        <div class="card-body">{% render_comment_form for real %}</div>
+      </div>
+    </div>
   {% endif %}
-  {% render_comment_list for object %}
+  {% if object.polymorphic_model_marker %}
+    {% get_comment_count for real as comment_count %}
+  {% else %}
+    {% get_comment_count for object as comment_count %}
+  {% endif %}
+  <div class="text-center">
+    {{ comment_count }} comment{{ comment_count|pluralize }}
+    ha{{ comment_count|pluralize:"s,ve" }} been posted.
+  </div>
+  {% if comment_count %}
+    <hr />
+    <div class="comments">
+      {% if object.polymorphic_model_marker %}
+        {% render_xtdcomment_tree for real %}
+      {% else %}
+        {% render_xtdcomment_tree for object %}
+      {% endif %}
+    </div>
+  {% endif %}
 {% endblock content %}

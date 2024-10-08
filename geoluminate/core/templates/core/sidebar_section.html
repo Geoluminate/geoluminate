@@ -1,18 +1,22 @@
+{% load easy_icons geoluminate %}
+
 <section class="mb-3">
-  {% if has_permission.edit %}
-    <div class="position-absolute top-0 end-0 m-2">
-      <a hx-get="{{ object.get_update_url }}" class="btn btn-lg btn-sm text-success">
-        <i class="fa-solid fa-edit"></i>
-      </a>
-    </div>
-  {% endif %}
-  <h2 class="fs-5">{{ heading|title }}</h2>
-  <dl>
-    {% for name, value, help in fields %}
-      <dt title="{{ help }}">{{ name|capfirst }}</dt>
-      <dd class="ms-1">
-        {{ value }}
-      </dd>
-    {% endfor %}
-  </dl>
+  <div class="d-flex justify-content-between align-items-baseline">
+    <h2 class="fs-5">{{ heading|title }}</h2>
+    {% get_sample_update_url object fields as edit_url %}
+    <a hx-get="{{ edit_url }}"
+       hx-target="#{{ heading|slugify }}-field-list"
+       href="{{ edit_url }}"
+       class="btn btn-lg btn-sm text-success">{% icon "edit" %}</a>
+  </div>
+  <div id="{{ heading|slugify }}-field-list" class="field-list">
+    <dl>
+      {% for field, value in field_meta %}
+        <dt title="{{ field.help_text }}">{{ field.verbose_name|capfirst }}</dt>
+        <dd class="ms-1">
+          {{ value }}
+        </dd>
+      {% endfor %}
+    </dl>
+  </div>
 </section>

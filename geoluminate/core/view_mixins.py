@@ -165,7 +165,7 @@ class ListPluginMixin(ListMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["object_list"] = self.get_queryset()
-        context["create_url"] = self.get_create_url()
+        # context["create_url"] = self.get_create_url()
         return context
 
     def get_create_url(self):

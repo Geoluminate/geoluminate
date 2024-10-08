@@ -1,16 +1,15 @@
-from django.utils.decorators import classonlymethod
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
+from polymorphic.models import PolymorphicModel
 from research_vocabs.fields import ConceptField
 
 from geoluminate.core.models import AbstractContribution, AbstractDate, AbstractDescription, PolymorphicMixin
-from geoluminate.core.utils import get_inheritance_chain
 from geoluminate.db import models
 
 from . import choices
 
 
-class Measurement(models.Model, PolymorphicMixin):
+class Measurement(models.Model, PolymorphicMixin, PolymorphicModel):
     sample = models.ForeignKey(
         "samples.Sample",
         verbose_name=_("sample"),
@@ -31,27 +30,10 @@ class Measurement(models.Model, PolymorphicMixin):
         ordering = ["-modified"]
         default_related_name = "measurements"
 
-    @classmethod
-    def get_metadata(cls):
-        metadata = {}
-
-        # for k in inheritance:
-        if cls._metadata is not None:
-            metadata.update(**cls._metadata.as_dict())
-
-        inheritance = [k.get_metadata() for k in cls.mro()[:0:-1] if issubclass(k, Measurement) and k != Measurement]
-
-        metadata.update(
-            name=cls._meta.verbose_name,
-            name_plural=cls._meta.verbose_name_plural,
-            inheritance=inheritance,
-        )
-
-        return metadata
-
-    @classonlymethod
-    def get_inheritance_chain(cls):
-        return get_inheritance_chain(cls, Measurement)
+    @staticmethod
+    def base_class():
+        # this is required for many of the class methods in PolymorphicMixin
+        return Measurement
 
     @cached_property
     def get_location(self):

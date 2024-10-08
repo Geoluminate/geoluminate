@@ -11,7 +11,7 @@ class GeoluminateConfig(AppConfig):
         # patch django-filters to not use crispy forms. should be safe to remove on the
         # next release of geoluminate
 
-        self.discover_plugins()
+        autodiscover_modules("plugins")
 
         from django_filters import compat
 
@@ -20,9 +20,6 @@ class GeoluminateConfig(AppConfig):
         self.update_drf_field_mapping()
 
         return super().ready()
-
-    def discover_plugins(self):
-        autodiscover_modules("plugins")
 
     def update_drf_field_mapping(self):
         """

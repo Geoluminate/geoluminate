@@ -101,20 +101,20 @@ DatabaseMenu = Menu(
         ),
         MenuItem(
             _("API"),
-            view_name="swagger-ui",
+            view_name="api:swagger-ui",
             icon="api",
             description=_(
                 "Explore our API documentation to learn how to interact programatically with our database and access our extensive collection of datasets, samples, projects and more. Integrate our online resources into your custom applications, notebooks and workflows."
             ),
         ),
-        MenuItem(
-            _("Vocabularies"),
-            view_name="vocabularies:list",
-            icon="vocabularies",
-            description=_(
-                "Explore our API documentation to learn how to interact programatically with our database and access our extensive collection of datasets, samples, projects and more. Integrate our online resources into your custom applications, notebooks and workflows."
-            ),
-        ),
+        # MenuItem(
+        #     _("Vocabularies"),
+        #     view_name="vocabularies:list",
+        #     icon="vocabularies",
+        #     description=_(
+        #         "Explore our API documentation to learn how to interact programatically with our database and access our extensive collection of datasets, samples, projects and more. Integrate our online resources into your custom applications, notebooks and workflows."
+        #     ),
+        # ),
     ],
 )
 

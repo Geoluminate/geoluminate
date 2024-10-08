@@ -17,6 +17,7 @@ from geoluminate.core.view_mixins import (
     HTMXMixin2,
     ListFilterMixin,
 )
+from geoluminate.models import Measurement, Sample
 
 
 @method_decorator(cache_page(60 * 5), name="dispatch")
@@ -38,8 +39,6 @@ class BaseListView(BaseMixin, ListFilterMixin, HTMXMixin2, FilterView):
 class BaseDetailView(BaseMixin, HTMXMixin, GeoluminatePermissionMixin, DetailView):
     base = None
     base_template_suffix = "_detail.html"
-    menu = []
-    actions = []
 
     def get_object(self, queryset=None):
         """Returns the profile object."""
@@ -51,7 +50,7 @@ class BaseDetailView(BaseMixin, HTMXMixin, GeoluminatePermissionMixin, DetailVie
         context["base_model_name"] = self.base.model._meta.model_name
         context["base_model_verbose_name"] = self.base.model._meta.verbose_name
         context["base_model_name_plural"] = self.base.model._meta.verbose_name_plural
-        context["dates"] = self.get_dates()
+        # context["dates"] = self.get_dates()
         return context
 
     def get_dates(self):
@@ -70,8 +69,8 @@ class BaseDetailView(BaseMixin, HTMXMixin, GeoluminatePermissionMixin, DetailVie
 
 
 class BaseFormView(BaseMixin, HTMXMixin, LoginRequiredMixin, GeoluminatePermissionMixin):
-    base_template = "geoluminate/base/form_view.html"
-    template_name = "geoluminate/base/form_view.html"
+    base_template = "geoluminate/base/form.html"
+    template_name = "geoluminate/base/form.html#form"
 
 
 class BaseEditView(BaseMixin, LoginRequiredMixin, GeoluminatePermissionMixin, CRUDView):
@@ -163,6 +162,29 @@ class BaseUpdateView(BaseFormView, UpdateView):
 
 class HomeView(TemplateView):
     template_name = "home.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        result = []
+        for stype in Sample.get_subclasses():
+            metadata = stype.get_metadata()
+            # metadata["detail_url"] = reverse(self.detail_url, kwargs={"subclass": stype._meta.model_name.lower()})
+            # metadata["list_url"] = reverse(self.list_url, kwargs={"subclass": stype._meta.model_name.lower()})
+            result.append(metadata)
+
+        context["sample_types"] = result
+
+        result = []
+        for stype in Measurement.get_subclasses():
+            metadata = stype.get_metadata()
+            # metadata["detail_url"] = reverse(self.detail_url, kwargs={"subclass": stype._meta.model_name.lower()})
+            # metadata["list_url"] = reverse(self.list_url, kwargs={"subclass": stype._meta.model_name.lower()})
+            result.append(metadata)
+
+        context["measurement_types"] = result
+
+        # context["measurement_types"] = MeasurementType.objects.all()
+        return context
 
     def register_template(self, template_name: str):
         return template_name

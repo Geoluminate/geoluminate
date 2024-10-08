@@ -92,7 +92,7 @@ class PluginRegistry:
         urls = []
         for i, plugin in enumerate(self.registry):
             view_kwargs = plugin["kwargs"].get("view_kwargs", {})
-            view = plugin["view_class"].as_view(menu=self.menu, base=self.base, **view_kwargs)
+            view = plugin["view_class"].as_view(base=self.base, **view_kwargs)
             if i == 0:
                 # duplicate the first plugin with a blank route to use as the default view
                 urls.append(path("", view, name=f"{self.model_name}-detail"))

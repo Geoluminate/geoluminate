@@ -2,7 +2,6 @@ from django.conf import settings
 
 # from rest_framework.authtoken.models import Token
 from django.urls import reverse
-from django.utils.decorators import classonlymethod
 from django.utils.translation import gettext as _
 from polymorphic_treebeard.models import PolymorphicMP_Node
 from research_vocabs.fields import ConceptField
@@ -12,8 +11,8 @@ from geoluminate.core.models import (
     AbstractContribution,
     AbstractDate,
     AbstractDescription,
+    PolymorphicMixin,
 )
-from geoluminate.core.utils import get_inheritance_chain, get_subclasses
 from geoluminate.db import models
 
 from . import choices
@@ -22,7 +21,7 @@ from .choices import SampleStatus
 LABELS = settings.GEOLUMINATE_LABELS
 
 
-class Sample(Abstract, PolymorphicMP_Node):
+class Sample(Abstract, PolymorphicMixin, PolymorphicMP_Node):
     """This model attempts to roughly replicate the schema of the International Generic Sample Number (IGSN) registry. Each sample in this table MUST belong to
     a `geoluminate.contrib.datasets.models.Dataset`."""
 
@@ -71,41 +70,10 @@ class Sample(Abstract, PolymorphicMP_Node):
         ordering = ["created"]
         default_related_name = "samples"
 
-    # __doc__ = _metadata.description
-
-    @classmethod
-    def get_metadata(cls):
-        metadata = {}
-
-        # for k in inheritance:
-        if cls._metadata is not None:
-            metadata.update(**cls._metadata.as_dict())
-
-        inheritance = [k.get_metadata() for k in cls.mro()[:0:-1] if issubclass(k, Sample) and k != Sample]
-
-        metadata.update(
-            name=cls._meta.verbose_name,
-            name_plural=cls._meta.verbose_name_plural,
-            inheritance=inheritance,
-        )
-
-        return metadata
-
-    @classonlymethod
-    def get_subclasses(cls):
-        return get_subclasses(cls)
-
-    @classonlymethod
-    def get_polymorphic_choices(cls, include_self=False):
-        choices = []
-        for subclass in cls.get_subclasses():
-            opts = subclass._meta
-            choices.append((f"{opts.app_label}.{opts.model_name}", opts.verbose_name))
-        return choices
-
-    @classonlymethod
-    def get_inheritance_chain(cls):
-        return get_inheritance_chain(cls, Sample)
+    @staticmethod
+    def base_class():
+        # this is required for many of the class methods in PolymorphicMixin
+        return Sample
 
     def __str__(self):
         return f"{self.name}"

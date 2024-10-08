@@ -7,4 +7,4 @@ class SampleForm(forms.ModelForm):
     class Meta:
         model = Sample
         # fields = ["dataset", "name"]
-        exclude = ["created", "modified", "keywords"]
+        exclude = ["created", "modified", "keywords", "options", "path", "depth", "numchild"]

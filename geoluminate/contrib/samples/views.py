@@ -1,8 +1,13 @@
+from django.forms import modelform_factory
+from django.http import HttpResponseRedirect
 from django.utils.translation import gettext as _
 from django.views.generic import TemplateView
+from django_tables2 import tables
+from django_tables2.views import SingleTableMixin
+from easy_icons.templatetags.easy_icons import icon
 
 from geoluminate.core.view_mixins import ListPluginMixin, PolymorphicSubclassBaseView, PolymorphicSubclassMixin
-from geoluminate.views import BaseDetailView, BaseEditView, BaseListView
+from geoluminate.views import BaseDetailView, BaseListView, BaseUpdateView
 
 from .forms import SampleForm
 from .models import Sample
@@ -90,6 +95,14 @@ class SampleDetailView(BaseDetailView):
                 if declared_in_base:
                     result[base._meta.verbose_name] = declared_in_base
 
+        sample = result.pop("Sample")
+        last_key = list(result.keys())[-1]
+
+        combined_fields = sample + result[last_key]
+
+        del result[last_key]
+        result = {last_key: combined_fields, **result}
+
         return result
 
     def get_meta_title(self, context):
@@ -97,24 +110,74 @@ class SampleDetailView(BaseDetailView):
         return f"{real_name} - {self.real}"
 
 
-class SampleEditView(BaseEditView):
+class SampleEditView(BaseUpdateView):
     model = Sample
     form_class = SampleForm
     related_name = "dataset"
 
+    def get_object(self):
+        # note: we are using base_objects here to get the base model (Sample) instance
+        base_obj = self.model.objects.get(pk=self.kwargs.get("pk"))
+        self.obj = base_obj.get_real_instance()
+        return self.obj
 
-class SamplePlugin(ListPluginMixin):
+    def get_form_class(self):
+        return modelform_factory(self.obj._meta.model, form=SampleForm, fields=self.get_fields())
+
+    def get_fields(self):
+        fields = self.request.GET.get("fields", None)
+        if not fields:
+            return None
+        fields = fields.split(",")
+
+        return [f for f in fields if self.object._meta.get_field(f).editable]
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        """If the form is valid, redirect to the supplied URL."""
+        if not self.request.htmx:
+            return HttpResponseRedirect(self.get_success_url())
+        else:
+            fields = self.get_fields()
+
+
+class SampleTable(tables.Table):
+    name = tables.columns.Column(linkify=True)
+    location = tables.columns.Column(linkify=True)
+
+    class Meta:
+        model = Sample
+        fields = [
+            "location",
+            "name",
+            "status",
+            "numchild",
+            # "corr_HP_flag",
+        ]
+
+    def render_location(self, record):
+        return icon("map.svg")
+
+
+class SamplePlugin(SingleTableMixin, ListPluginMixin):
+    model = Sample
     title = name = _("Samples")
     icon = "sample.svg"
-    # model = Sample
-    template_name = "contributors/contribution_list.html"
+    template_name = "measurements/measurement_list.html"
+    # template_name = "contributors/contribution_list.html"
     object_template = "samples/sample_card.html"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["sample_poly_choices"] = Sample.get_polymorphic_choices()
-        print(context)
-        return context
+    table_class = SampleTable
+
+    def get_table_data(self):
+        return self.get_queryset()
 
     def get_queryset(self, *args, **kwargs):
-        return self.get_object().samples.all()
+        return self.get_object().samples.filter(depth=1)

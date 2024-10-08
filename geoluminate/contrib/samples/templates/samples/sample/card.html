@@ -1,6 +1,15 @@
 {% extends "geoluminate/cards/standard.html" %}
 {% load i18n contributor_tags %}
 
+{% block title %}
+  <span>{{ obj.get_type.verbose_name }} - {{ obj }}</span>
+  <a href="{{ obj.location.get_absolute_url }}">{{ obj.location }}</a>
+{% endblock title %}
+
+{% block description %}
+  {% trans "Direct child samples" %}: {{ obj.numchild }}
+{% endblock description %}
+
 {% block subtitle %}
   {% with obj.contributions.all|role:"ProjectLeader" as contributors %}
     {% if contributors %}

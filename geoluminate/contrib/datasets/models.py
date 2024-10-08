@@ -7,6 +7,7 @@ from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFit
 from licensing.fields import LicenseField
 from research_vocabs.fields import ConceptField
+from shortuuid.django_fields import ShortUUIDField
 
 from geoluminate.contrib.projects.choices import ProjectDates
 from geoluminate.core.choices import Visibility
@@ -34,6 +35,14 @@ class Dataset(Abstract):
     samples and sample measurements MUST relate back to a dataset."""
 
     VISIBILITY_CHOICES = Visibility
+
+    id = ShortUUIDField(
+        editable=False,
+        unique=True,
+        prefix="d",
+        verbose_name="UUID",
+        primary_key=True,
+    )
 
     project = models.ForeignKey(
         "projects.Project",

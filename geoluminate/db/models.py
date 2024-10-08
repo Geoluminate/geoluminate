@@ -1,7 +1,6 @@
 from django.db.models import *  # isort:skip
 
 # from django.contrib.gis.db.models import *  # isort:skip
-import uuid
 
 # from django.contrib.gis.db.models import __all__ as models_all
 from django.db import models
@@ -45,13 +44,13 @@ class Model(models.Model):
         See: https://django-meta.readthedocs.io/en/latest/models.html#models for usage details
     """
 
-    id = models.UUIDField(
-        default=uuid.uuid4,
-        editable=False,
-        unique=True,
-        verbose_name="UUID",
-        primary_key=True,
-    )
+    # id = models.UUIDField(
+    #     default=uuid.uuid4,
+    #     editable=False,
+    #     unique=True,
+    #     verbose_name="UUID",
+    #     primary_key=True,
+    # )
     created = models.DateTimeField(
         auto_now_add=True,
         verbose_name="Created",

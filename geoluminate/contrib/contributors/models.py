@@ -3,7 +3,6 @@ import random
 from django.apps import apps
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
-from django.db import models
 from django.db.models import Count
 from django.templatetags.static import static
 from django.urls import reverse
@@ -12,6 +11,7 @@ from django.utils.translation import gettext_lazy as _
 from easy_thumbnails.fields import ThumbnailerImageField
 from jsonfield_toolkit.models import ArrayField
 from polymorphic.models import PolymorphicModel
+from shortuuid.django_fields import ShortUUIDField
 
 # from django.db.models.fields.files import FieldFile
 from geoluminate.core.models import AbstractIdentifier, PolymorphicMixin
@@ -32,6 +32,14 @@ class Contributor(models.Model, PolymorphicMixin, PolymorphicModel):
     within the database. This model stores publicly available information about the contributor that can be used
     for proper attribution and formal publication of datasets. The fields are designed to align with the DataCite
     Contributor schema."""
+
+    id = ShortUUIDField(
+        editable=False,
+        unique=True,
+        prefix="c",
+        verbose_name="UUID",
+        primary_key=True,
+    )
 
     image = ThumbnailerImageField(
         verbose_name=_("profile image"),

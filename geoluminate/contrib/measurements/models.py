@@ -2,6 +2,7 @@ from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 from polymorphic.models import PolymorphicModel
 from research_vocabs.fields import ConceptField
+from shortuuid.django_fields import ShortUUIDField
 
 from geoluminate.core.models import AbstractContribution, AbstractDate, AbstractDescription, PolymorphicMixin
 from geoluminate.db import models
@@ -10,6 +11,14 @@ from . import choices
 
 
 class Measurement(models.Model, PolymorphicMixin, PolymorphicModel):
+    id = ShortUUIDField(
+        editable=False,
+        unique=True,
+        prefix="m",
+        verbose_name="UUID",
+        primary_key=True,
+    )
+
     sample = models.ForeignKey(
         "samples.Sample",
         verbose_name=_("sample"),

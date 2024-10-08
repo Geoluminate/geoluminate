@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.utils.translation import gettext as _
 from polymorphic_treebeard.models import PolymorphicMP_Node
 from research_vocabs.fields import ConceptField
+from shortuuid.django_fields import ShortUUIDField
 
 from geoluminate.core.models import (
     Abstract,
@@ -26,6 +27,14 @@ class Sample(Abstract, PolymorphicMixin, PolymorphicMP_Node):
     a `geoluminate.contrib.datasets.models.Dataset`."""
 
     # _metadata = Metadata()
+
+    id = ShortUUIDField(
+        editable=False,
+        unique=True,
+        prefix="p",
+        verbose_name="UUID",
+        primary_key=True,
+    )
 
     internal_id = models.CharField(
         _("internal ID"),

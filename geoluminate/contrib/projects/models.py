@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFit
 from research_vocabs.fields import ConceptField
+from shortuuid.django_fields import ShortUUIDField
 
 from geoluminate.core.choices import Visibility
 from geoluminate.core.models import Abstract, AbstractContribution, AbstractDate, AbstractDescription
@@ -27,6 +28,8 @@ class Project(Abstract):
     DESCRIPTION_TYPES = ProjectDescriptions
 
     STATUS_CHOICES = ProjectStatus
+
+    id = ShortUUIDField(editable=False, unique=True, prefix="p", verbose_name="UUID", primary_key=True)
 
     # RAiD core metadata fields
     owner = models.ForeignKey(

@@ -44,7 +44,7 @@ ADMINS = [("Your Name", "youremail@example.com")]
 # ADMINS = [(admin["name"], admin["email"]) for admin in GEOLUMINATE["application"]["developers"]]
 ALLOWED_HOSTS = [env("DJANGO_SITE_DOMAIN")] + env("DJANGO_ALLOWED_HOSTS")
 MANAGERS = ADMINS
-ROOT_URLCONF = "geoluminate.urls"
+ROOT_URLCONF = "config.urls"
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 SITE_DOMAIN = env("DJANGO_SITE_DOMAIN")
 SITE_ID = env("DJANGO_SITE_ID")
@@ -150,3 +150,6 @@ LOCALE_PATHS = [str(BASE_DIR / "project" / "locale")]
 # http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+
+DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap5-responsive.html"

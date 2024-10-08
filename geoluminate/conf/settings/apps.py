@@ -19,10 +19,6 @@ INSTALLED_APPS = [
     # "django.contrib.gis",
     "django.contrib.humanize",
     "actstream",
-    # COMMENTING FRAMEWORK
-    "fluent_comments",
-    "threadedcomments",
-    "django_comments",
     # "taggit",  # required from django-literature
     # GEOLUMINATE
     "geoluminate",
@@ -34,8 +30,9 @@ INSTALLED_APPS = [
     "geoluminate.contrib.samples",
     "geoluminate.contrib.measurements",
     "geoluminate.contrib.contributors",
-    # "geoluminate.contrib.users",
-    # "geoluminate.contrib.organizations",
+    # COMMENTING FRAMEWORK
+    "django_comments_xtd",
+    "django_comments",
     "polymorphic",
     "polymorphic_treebeard",
     "treebeard",
@@ -76,29 +73,27 @@ INSTALLED_APPS = [
     "meta",  # for seo optimization
     "django_social_share",  # easy links to social sharing sites
     "django_bleach",  # for sanitizing html input
-    # not sure if these are explicitly needed or not
     "compressor",
-    # 'newsletter',
-    # 'rest_framework_gis',
     "django_htmx",
     "el_pagination",
-    "django_select2",  # select2 widget integration with models
+    "django_select2",
     "client_side_image_cropping",
     "dbbackup",
     "webpack_loader",
     "imagekit",
     "image_uploader_widget",
-    # GEOLUMINATE DEFAULT PLUGINS
     "literature",
     "formset",
     "licensing",
-    "laboratory",  # cataloguing of scientific instruments
+    "laboratory",
     "research_vocabs",
     "neapolitan",
     "template_partials.apps.SimpleAppConfig",
     "jsonfield_toolkit",
     "django_extensions",
     "flex_menu",
+    "django_tables2",
+    "django_setup_tools",
     *GEOLUMINATE_APPS,
 ]
 

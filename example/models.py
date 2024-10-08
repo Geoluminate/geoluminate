@@ -22,6 +22,9 @@ class CustomParentSample(Sample):
         verbose_name = "Rock Sample"
         verbose_name_plural = "Rock Samples"
 
+    class Options:
+        filterset_fields = ["name", "char_field"]
+
 
 class CustomSample(Sample):
     # standard django fields

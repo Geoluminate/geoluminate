@@ -78,11 +78,11 @@ class UserAdmin(BaseUserAdmin, PolymorphicChildModelAdmin, DcsicAdminMixin):
         models.ManyToManyField: {"widget": Select2MultipleWidget},
         models.ImageField: {
             "widget": ClientsideCroppingWidget(
-                width=300,
-                height=300,
+                width=1200,
+                height=1200,
                 preview_width=150,
                 preview_height=150,
-                format="webp",  # "jpeg", "png", "webp
+                # format="webp",  # "jpeg", "png", "webp
             )
         },
         # models.JSONField: {"widget": FlatJSONWidget},

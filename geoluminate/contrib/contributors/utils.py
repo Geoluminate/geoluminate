@@ -3,8 +3,33 @@ import json
 from django.conf import settings
 from django.db import models
 from django.db.models import CharField, F, Value
+from easy_thumbnails.files import get_thumbnailer
 
 from .models import Contributor
+
+
+def get_contributor_avatar(contributor):
+    """Returns the avatar URL for a given contributor.
+
+    Args:
+        contributor (Contributor): A Contributor object.
+
+    Returns:
+        str: The URL of the contributor's avatar.
+    """
+    if not contributor.image:
+        return None
+
+    return get_thumbnailer(contributor.image)["thumb"].url
+
+
+def get_avatar_url(comment):
+    if comment.user is not None:
+        try:
+            return get_contributor_avatar(comment.user)
+        except Exception:
+            pass
+    return get_contributor_avatar(comment)
 
 
 def current_user_has_role(request, obj, role):

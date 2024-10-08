@@ -1,0 +1,9 @@
+{% load i18n geoluminate contributor_tags %}
+
+<tr>
+  <td>{% avatar obj width="42px" class='shadow-sm rounded-circle object-fit-contain align-items-middle' %}</td>
+  <td>{{ obj }}</td>
+  <td>
+    <a href="{{ obj.get_absolute_url }}" class="btn btn-primary text-capitalize">{% trans "view profile" %}</a>
+  </td>
+</tr>

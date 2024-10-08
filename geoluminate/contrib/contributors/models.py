@@ -9,9 +9,9 @@ from django.templatetags.static import static
 from django.urls import reverse
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
-from imagekit.models import ProcessedImageField
-from imagekit.processors import SmartResize
+from easy_thumbnails.fields import ThumbnailerImageField
 from jsonfield_toolkit.models import ArrayField
+from polymorphic.models import PolymorphicModel
 
 # from django.db.models.fields.files import FieldFile
 from geoluminate.core.models import AbstractIdentifier, PolymorphicMixin
@@ -24,20 +24,20 @@ from .managers import UserManager
 
 def profile_image_path(instance, filename):
     """Return the path to the profile image for a contributor."""
-    return f"contributors/{instance.pk}.webp"
+    return f"contributors/{instance.pk}.{filename.split('.')[-1]}"
 
 
-class Contributor(models.Model, PolymorphicMixin):
+class Contributor(models.Model, PolymorphicMixin, PolymorphicModel):
     """A Contributor is a person or organisation that makes a contribution to a project, dataset, sample or measurement
     within the database. This model stores publicly available information about the contributor that can be used
     for proper attribution and formal publication of datasets. The fields are designed to align with the DataCite
     Contributor schema."""
 
-    image = ProcessedImageField(
+    image = ThumbnailerImageField(
         verbose_name=_("profile image"),
-        processors=[SmartResize(600, 600)],
-        format="WEBP",
-        options={"quality": 60},
+        resize_source={"size": (1200, 1200)},
+        # processors=[SmartResize(600, 600)],
+        # options={"quality": 60},
         blank=True,
         null=True,
         upload_to=profile_image_path,

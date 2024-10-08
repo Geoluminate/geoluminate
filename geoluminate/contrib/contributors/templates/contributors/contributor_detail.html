@@ -1,6 +1,5 @@
 {% extends "geoluminate/base/detail_view.html" %}
-{% load i18n sekizai_tags %}
-{% load static i18n formsetify geoluminate sekizai_tags activity_tags %}
+{% load static i18n geoluminate sekizai_tags activity_tags %}
 
 {% block css %}
   {{ block.super }}
@@ -9,14 +8,11 @@
 
 {% block sidebar_top %}
   <div class="text-center">
-    {% comment %} {% render_model_block object "image" %} {% endcomment %}
     <img src="{{ object.profile_image }}"
          class="w-50 rounded-circle mb-2"
          alt="{{ object }}"
          width="auto"
          height="auto" />
-    {% comment %} <div class="card text-white">{% avatar object width="100%" class="card-img" %}</div> {% endcomment %}
-    {% comment %} {% endrender_model_block %} {% endcomment %}
     <div class="actions d-flex mb-2 justify-content-center">
       {% follow_button object %}
       {% share_button object %}

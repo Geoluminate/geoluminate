@@ -23,7 +23,6 @@ nested_dataset.register(r"samples", viewsets.NestedSamples)
 # ============= NESTED SAMPLE ROUTER =============
 nested_samples = routers.NestedSimpleRouter(router, r"samples", lookup="sample")
 
-app_name = "api"
 urlpatterns = [
     path("", include(router.urls)),
     path("", include(nested_project.urls)),

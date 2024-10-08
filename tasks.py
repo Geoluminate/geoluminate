@@ -172,6 +172,7 @@ def update_deps(c):
         "django-account-management",
         "geoluminate-docs",
         "django-research-vocabs",
+        "django-setup-tools",
     ]
 
     c.run(f"poetry update {' '.join(packages)}")

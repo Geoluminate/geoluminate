@@ -27,6 +27,8 @@ crispy-bootstrap5 = "^2024.2"
 dj-rest-auth = "^3.0.0"
 django = {version = "^5", extras = ["argon2"]}
 django-activity-stream = "^2.0.0"
+django-admin-extra-buttons = "^1.5.8"
+django-admin-tools = "^0.9.3"
 django-adminactions = "^2.0.0"
 django-allauth = {extras = ["mfa", "socialaccount"], version = "^64.2.1"}
 django-bleach = "^3.1.0"
@@ -34,6 +36,7 @@ django-celery-beat = "^2.5.0"
 django-classy-tags = "^4.1.0"
 django-cleanup = "^8.1.0"
 django-client-side-image-cropping = "^0.1.10"
+django-comments-xtd = "^2.10.0"
 django-compressor = "^4.5.1"
 django-contact-form = "^2.1"
 django-cors-headers = "^3.14.0"
@@ -58,17 +61,21 @@ django-meta = "^2.1.0"
 django-migration-zero = "^2.0.0"
 django-model-utils = "^4.3.1"
 django-organizations = "^2.1.0"
+django-parler = "^2.3"
 django-partial-date = "^1.3.2"
 django-pint = "^0.7.3"
 django-redis = "^5.2.0"
 django-rest-polymorphic = "^0.1.10"
+django-sekizai = "^4.1.0"
 django-select2 = "^8.1.1"
 django-simple-menu = "^2.1.1"
 django-social-share = "^2.3.0"
 django-solo = "^2.2.0"
 django-split-settings = "^1.2.0"
 django-storages = {extras = ["boto3"], version = "^1.14.2"}
+django-tables2 = "^2.7.0"
 django-template-partials = "^24.2"
+django-treebeard = "^4.7.1"
 django-webpack-loader = "^3.0.1"
 djangorestframework = "^3.14.0"
 djangorestframework-gis = "^1.0"
@@ -90,19 +97,15 @@ pyyaml = "^6.0"
 redis = "^4.5.2"
 tldextract = "^3.4.0"
 whitenoise = "^6.4.0"
-django-content-license = {git = "https://github.com/Geoluminate/django-content-license.git", rev = "main"}
-django-easy-icons = {git = "https://github.com/SamuelJennings/django-easy-icons.git", rev = "main"}
-django-literature = {git = "https://github.com/Geoluminate/django-literature", rev = "main"}
-django-research-vocabs = {git = "https://github.com/Geoluminate/django-research-vocabs.git", rev = "master"}
-django-sekizai = "^4.1.0"
-django-admin-tools = "^0.9.3"
-django-treebeard = "^4.7.1"
+django-content-license = {git = "https://github.com/Geoluminate/django-content-license"}
+django-easy-icons = {git = "https://github.com/SamuelJennings/django-easy-icons"}
+django-literature = {git = "https://github.com/Geoluminate/django-literature"}
+django-research-vocabs = {git = "https://github.com/Geoluminate/django-research-vocabs"}
 django-account-management = {git = "https://github.com/SamuelJennings/django-account-management"}
-django-admin-extra-buttons = "^1.5.8"
-django-parler = "^2.3"
-django-polymorphic-treebeard = {git = "https://github.com/SamuelJennings/django-polymorphic-treebeard.git"}
-django-jsonfield-toolkit = {git = "https://github.com/SamuelJennings/django-jsonfield-toolkit.git"}
-django-comments-xtd = "^2.10.0"
+django-polymorphic-treebeard = {git = "https://github.com/SamuelJennings/django-polymorphic-treebeard"}
+django-jsonfield-toolkit = {git = "https://github.com/SamuelJennings/django-jsonfield-toolkit"}
+django-setup-tools = {git = "https://github.com/SamuelJennings/django-setup-tools"}
+shortuuid = "^1.0.13"
 
 
 

@@ -1047,6 +1047,7 @@ files = []
 develop = false
 
 [package.dependencies]
+django-easy-icons = {git = "https://github.com/SamuelJennings/django-easy-icons"}
 django-flex-menus = {git = "https://github.com/SamuelJennings/django-flex-menus"}
 django-htmx = "^1.18.0"
 
@@ -1054,7 +1055,7 @@ django-htmx = "^1.18.0"
 type = "git"
 url = "https://github.com/SamuelJennings/django-account-management"
 reference = "HEAD"
-resolved_reference = "17e1363b34e5c5a52872f5f9a1e8822e020cd0d3"
+resolved_reference = "7df877c4036923e95e4edf52f3dfb4c73dc49897"
 
 [[package]]
 name = "django-activity-stream"
@@ -1324,8 +1325,8 @@ django = ">=3.2"
 
 [package.source]
 type = "git"
-url = "https://github.com/Geoluminate/django-content-license.git"
-reference = "main"
+url = "https://github.com/Geoluminate/django-content-license"
+reference = "HEAD"
 resolved_reference = "329b5631751ecb4b19ac5b150f154ebfb0be8752"
 
 [[package]]
@@ -1458,9 +1459,9 @@ develop = false
 
 [package.source]
 type = "git"
-url = "https://github.com/SamuelJennings/django-easy-icons.git"
-reference = "main"
-resolved_reference = "08d01361150f895cffa58df62317d1df01ffddfa"
+url = "https://github.com/SamuelJennings/django-easy-icons"
+reference = "HEAD"
+resolved_reference = "13094788f188dec7d87174063b1d7791cce544c2"
 
 [[package]]
 name = "django-el-pagination"
@@ -1719,7 +1720,7 @@ django-better-admin-arrayfield = "^1.4.2"
 
 [package.source]
 type = "git"
-url = "https://github.com/SamuelJennings/django-jsonfield-toolkit.git"
+url = "https://github.com/SamuelJennings/django-jsonfield-toolkit"
 reference = "HEAD"
 resolved_reference = "ac82b21adaeb787e0cc432cf364246b3d82fdd48"
 
@@ -1780,24 +1781,29 @@ develop = false
 citeproc-py = "^0.6.0"
 crispy-bootstrap5 = "^2024.2"
 django = "^5.0.4"
+django-admin-extra-buttons = "^1.5.8"
 django-admin-sortable2 = "^2.2.1"
 django-crispy-forms = "^2.2"
+django-easy-icons = {git = "https://github.com/SamuelJennings/django-easy-icons"}
 django-entangled = "^0.5.4"
+django-extensions = "^3.2.3"
 django-extra-views = "^0.14.0"
+django-flex-menus = {git = "https://github.com/SamuelJennings/django-flex-menus"}
 django-formset = "^1.3.8"
 django-json-widget = "^2.0.1"
 django-jsonform = "^2.22.0"
 django-partial-date = "^1.3.2"
 django-select2 = "^8.1.2"
 django-sortedm2m = "^3.1.1"
+django-tables2 = "^2.7.0"
 neapolitan = "^24.4"
 python-dateutil = "^2.8.2"
 
 [package.source]
 type = "git"
 url = "https://github.com/Geoluminate/django-literature"
-reference = "main"
-resolved_reference = "792e2946fcad2ea62286e9d84b7bf2ffbc55a623"
+reference = "HEAD"
+resolved_reference = "880e34aba64b0e0d1766753de8f5e5c239cceaab"
 
 [[package]]
 name = "django-lockdown"
@@ -1955,7 +1961,7 @@ django-treebeard = "^4.7.1"
 
 [package.source]
 type = "git"
-url = "https://github.com/SamuelJennings/django-polymorphic-treebeard.git"
+url = "https://github.com/SamuelJennings/django-polymorphic-treebeard"
 reference = "HEAD"
 resolved_reference = "ddb33709550b9ac2dad790f716e67bab7c644138"
 
@@ -1992,8 +1998,8 @@ rdflib = "^7.0.0"
 
 [package.source]
 type = "git"
-url = "https://github.com/Geoluminate/django-research-vocabs.git"
-reference = "master"
+url = "https://github.com/Geoluminate/django-research-vocabs"
+reference = "HEAD"
 resolved_reference = "7ee0dbec88841c3a22b3cd9223fb6dd64c8de1cc"
 
 [[package]]
@@ -2047,6 +2053,21 @@ django-appconf = ">=0.6.0"
 docs = ["sphinx"]
 selenium = ["selenium"]
 test = ["pytest", "pytest-cov", "pytest-django", "selenium"]
+
+[[package]]
+name = "django-setup-tools"
+version = "0.1.0"
+description = "Declaratively setup Django before deployment in any environment"
+optional = false
+python-versions = ">=3.10,<4.0"
+files = []
+develop = false
+
+[package.source]
+type = "git"
+url = "https://github.com/SamuelJennings/django-setup-tools"
+reference = "HEAD"
+resolved_reference = "c6b5e92130304997c548507221b7ad0727656ed7"
 
 [[package]]
 name = "django-simple-menu"
@@ -2170,6 +2191,23 @@ files = [
 [package.dependencies]
 django = "*"
 typing-extensions = "*"
+
+[[package]]
+name = "django-tables2"
+version = "2.7.0"
+description = "Table/data-grid framework for Django"
+optional = false
+python-versions = "*"
+files = [
+    {file = "django-tables2-2.7.0.tar.gz", hash = "sha256:4113fcc575eb438a12e83a4d4ea01452e4800d970e8bdd0e4122ac171af1900d"},
+    {file = "django_tables2-2.7.0-py2.py3-none-any.whl", hash = "sha256:99e06d966ca8ac69fd74092eb45c79a280dd5ca0ccb81395d96261f62128e1af"},
+]
+
+[package.dependencies]
+Django = ">=3.2"
+
+[package.extras]
+tablib = ["tablib"]
 
 [[package]]
 name = "django-tag-parser"
@@ -4984,6 +5022,17 @@ testing = ["build[virtualenv]", "filelock (>=3.4.0)", "flake8-2020", "ini2toml[l
 testing-integration = ["build[virtualenv] (>=1.0.3)", "filelock (>=3.4.0)", "jaraco.envs (>=2.2)", "jaraco.path (>=3.2.0)", "packaging (>=23.2)", "pytest", "pytest-enabler", "pytest-xdist", "tomli", "virtualenv (>=13.0.0)", "wheel"]
 
 [[package]]
+name = "shortuuid"
+version = "1.0.13"
+description = "A generator library for concise, unambiguous and URL-safe UUIDs."
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "shortuuid-1.0.13-py3-none-any.whl", hash = "sha256:a482a497300b49b4953e15108a7913244e1bb0d41f9d332f5e9925dba33a3c5a"},
+    {file = "shortuuid-1.0.13.tar.gz", hash = "sha256:3bb9cf07f606260584b1df46399c0b87dd84773e7b25912b7e391e30797c5e72"},
+]
+
+[[package]]
 name = "six"
 version = "1.16.0"
 description = "Python 2 and 3 compatibility utilities"
@@ -5771,4 +5820,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "fdd229cfc67f2d6c03a4d15c862ece64270cb4b36440de3197a682baabb299aa"
+content-hash = "06fba4561e9b6835686eda0a8396495ce073720bdbe68c6d63fb9e3d2071c674"

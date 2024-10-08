@@ -2,7 +2,7 @@ from django.utils.translation import gettext as _
 from django.views.generic import TemplateView
 from django_tables2 import SingleTableMixin, tables
 
-from geoluminate.core.view_mixins import ListPluginMixin, PolymorphicSubclassBaseView, PolymorphicSubclassMixin
+from geoluminate.core.views.mixins import ListPluginMixin, PolymorphicSubclassBaseView, PolymorphicSubclassMixin
 from geoluminate.views import BaseListView
 
 from .models import Measurement

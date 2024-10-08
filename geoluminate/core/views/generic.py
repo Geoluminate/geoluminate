@@ -9,10 +9,11 @@ from django.http import Http404
 from django.http.response import HttpResponse as HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import TemplateView
+from django.views.generic.base import RedirectView
 from django.views.generic.edit import CreateView
 from django_contact_form.views import ContactFormView
 
-from .forms import DescriptionForm
+from ..forms import DescriptionForm
 
 
 def follow_unfollow(request, content_type_id, object_id, flag=None, do_follow=True, actor_only=True):
@@ -232,3 +233,21 @@ class GenericContactForm(LoginRequiredMixin, ContactFormView):
                 emails.append(c.profile.user.email)
         print(emails)
         return emails
+
+
+class DirectoryView(RedirectView):
+    permanent = False
+    prefix_map = {
+        "p": "project-detail",
+        "d": "dataset-detail",
+        "s": "sample-detail",
+        # "m": "measurements.Measurement",
+        "c": "contributor-detail",
+    }
+
+    def get_redirect_url(self, *args, **kwargs):
+        obj_id = self.kwargs.GET.get("uuid")
+
+        self.pattern_name = self.prefix_map[obj_id[0]]
+
+        return super().get_redirect_url(*args, **kwargs)

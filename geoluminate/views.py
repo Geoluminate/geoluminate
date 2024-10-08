@@ -10,7 +10,7 @@ from django.views.generic import DetailView, TemplateView, UpdateView
 from django_filters.views import FilterView
 from neapolitan.views import CRUDView, Role
 
-from geoluminate.core.view_mixins import (
+from geoluminate.core.views.mixins import (
     BaseMixin,
     GeoluminatePermissionMixin,
     HTMXMixin,

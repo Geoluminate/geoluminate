@@ -1,6 +1,6 @@
 from django.utils.translation import gettext as _
 
-from geoluminate.core.view_mixins import ListPluginMixin
+from geoluminate.core.views.mixins import ListPluginMixin
 from geoluminate.views import BaseDetailView, BaseEditView, BaseListView
 
 from .filters import ProjectFilter

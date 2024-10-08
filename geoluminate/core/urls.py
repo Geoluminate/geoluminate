@@ -1,11 +1,11 @@
 from django.urls import include, path, re_path
 
-from . import views
+from .views import generic
 
 urlpatterns = [
     re_path(
         r"^update/(?P<content_type_id>[^/]+)/(?P<object_id>[^/]+)/",
-        views.update_object,
+        generic.update_object,
         name="update_object",
     ),
     path(
@@ -14,24 +14,24 @@ urlpatterns = [
             [
                 re_path(
                     r"^follow/(?P<content_type_id>[^/]+)/(?P<object_id>[^/]+)/(?:(?P<flag>[^/]+)/)?$",
-                    views.follow_unfollow,
+                    generic.follow_unfollow,
                     name="actstream_follow",
                 ),
                 re_path(
                     r"^follow_all/(?P<content_type_id>[^/]+)/(?P<object_id>[^/]+)/(?:(?P<flag>[^/]+)/)?$",
-                    views.follow_unfollow,
+                    generic.follow_unfollow,
                     {"actor_only": False},
                     name="actstream_follow_all",
                 ),
                 re_path(
                     r"^unfollow_all/(?P<content_type_id>[^/]+)/(?P<object_id>[^/]+)/(?:(?P<flag>[^/]+)/)?$",
-                    views.follow_unfollow,
+                    generic.follow_unfollow,
                     {"actor_only": False, "do_follow": False},
                     name="actstream_unfollow_all",
                 ),
                 re_path(
                     r"^unfollow/(?P<content_type_id>[^/]+)/(?P<object_id>[^/]+)/(?:(?P<flag>[^/]+)/)?$",
-                    views.follow_unfollow,
+                    generic.follow_unfollow,
                     {"do_follow": False},
                     name="actstream_unfollow",
                 ),
@@ -42,10 +42,10 @@ urlpatterns = [
         "<object_type>/<uuid:pk>/",
         include(
             [
-                path("contact/", views.GenericContactForm.as_view(), name="contact"),
+                path("contact/", generic.GenericContactForm.as_view(), name="contact"),
                 path(
                     "description/new/",
-                    views.DescriptionCreateView.as_view(),
+                    generic.DescriptionCreateView.as_view(),
                     name="description-create",
                 ),
                 # path(
@@ -66,5 +66,5 @@ urlpatterns = [
             ]
         ),
     ),
-    path("team/", views.PortalTeamView.as_view(), name="portal-team"),
+    path("team/", generic.PortalTeamView.as_view(), name="portal-team"),
 ]

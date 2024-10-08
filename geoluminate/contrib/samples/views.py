@@ -6,7 +6,7 @@ from django_tables2 import tables
 from django_tables2.views import SingleTableMixin
 from easy_icons.templatetags.easy_icons import icon
 
-from geoluminate.core.view_mixins import ListPluginMixin, PolymorphicSubclassBaseView, PolymorphicSubclassMixin
+from geoluminate.core.views.mixins import ListPluginMixin, PolymorphicSubclassBaseView, PolymorphicSubclassMixin
 from geoluminate.views import BaseDetailView, BaseListView, BaseUpdateView
 
 from .forms import SampleForm

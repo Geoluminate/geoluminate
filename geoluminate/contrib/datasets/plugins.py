@@ -1,10 +1,10 @@
 from django.core.files.base import ContentFile
 from django.views.generic import UpdateView
 from django_downloadview.views import VirtualDownloadView
-from formset.views import FileUploadMixin, FormViewMixin
 from lxml import etree
 
 from geoluminate.contrib.contributors.views import ContributorsPlugin
+from geoluminate.contrib.measurements.views import MeasurementPlugin
 from geoluminate.contrib.samples.views import SamplePlugin
 from geoluminate.core import utils
 from geoluminate.core.plugins import ActivityStream, Discussion
@@ -14,12 +14,13 @@ from .views import DatasetDetailView
 
 
 @dataset.page("overview", icon="overview")
-class DatasetOverview(FileUploadMixin, FormViewMixin, UpdateView):
+class DatasetOverview(UpdateView):
     template_name = "geoluminate/plugins/overview.html"
 
 
 dataset.register_page(ContributorsPlugin)
 dataset.register_page(SamplePlugin)
+dataset.register_page(MeasurementPlugin)
 dataset.register_page(Discussion)
 dataset.register_page(ActivityStream)
 

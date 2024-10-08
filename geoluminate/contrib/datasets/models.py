@@ -112,6 +112,10 @@ class Dataset(Abstract):
     def locations(self):
         return self.samples.prefetch_related("location").values("location__point")
 
+    @cached_property
+    def measurements(self):
+        return self.samples.prefetch_related("measurements")
+
     # @cached_property
     # def GeometryCollection(self):
     #     """Returns a GeometryCollection of all the samples in the dataset"""

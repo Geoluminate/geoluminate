@@ -2,7 +2,6 @@ from django.urls import include, path
 from neapolitan.views import Role
 
 from geoluminate.contrib.contributors.views import ContributionCRUDView
-from geoluminate.contrib.samples.views import SampleEditView
 
 from .models import Contribution
 from .plugins import dataset
@@ -17,7 +16,7 @@ urlpatterns = [
             [
                 *dataset.urls,
                 *ContributionCRUDView.get_urls(Contribution, roles=[Role.CREATE, Role.UPDATE, Role.DELETE]),
-                *SampleEditView.get_urls(roles=[Role.CREATE]),
+                # *SampleEditView.get_urls(roles=[Role.CREATE]),
             ]
         ),
     ),

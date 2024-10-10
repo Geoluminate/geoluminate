@@ -153,3 +153,33 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 
 DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap5-responsive.html"
+
+ACCOUNT_MANAGEMENT_GET_AVATAR_URL = "geoluminate.contrib.contributors.utils.get_contributor_avatar"  # This line connects the avatar_url template tag to the function that retrieves the contributor's avatar URL.  # noqa: E501
+
+# DJANGO_BUILD_PIPELINE = {}
+DJANGO_SETUP_TOOLS = {
+    # "default": {},
+    "": {
+        "on_initial": [
+            ("makemigrations", "--no-input"),
+            ("migrate", "--no-input"),
+            ("createsuperuser", "--no-input"),
+            ("loaddata", "creativecommons"),
+        ],
+        "always_run": [
+            ("migrate", "--no-input"),
+            ("collectstatic", "--noinput"),
+            ("compress",),
+            "django_setup_tools.scripts.sync_site_id",
+        ],
+    },
+    "development": {
+        "merge": True,  # merge with the default commands
+        "on_initial": [
+            ("loaddata", "myapp"),
+        ],
+        "always_run": [
+            "django_setup_tools.scripts.some_extra_func",
+        ],
+    },
+}

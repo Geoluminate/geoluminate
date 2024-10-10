@@ -1,11 +1,29 @@
+from environ import Env
+
+env = Env(
+    POSTGRES_USER=(str, "postgres"),
+    POSTGRES_HOST=(str, "postgres"),
+    POSTGRES_PORT=(int, 5432),
+)
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# DATABASES = {"default": env.db()}
-# DATABASES["default"]["ATOMIC_REQUESTS"] = True
-# DATABASES["default"]["CONN_MAX_AGE"] = env.int("CONN_MAX_AGE", default=60)  # noqa F405
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": env.str("POSTGRES_DB"),
+        "PASSWORD": env.str("POSTGRES_PASSWORD"),
+        "USER": env.str("POSTGRES_USER"),
+        "HOST": env.str("POSTGRES_HOST"),
+        "PORT": env.str("POSTGRES_PORT"),
+    }
+}
+
+
+DATABASES["default"]["ATOMIC_REQUESTS"] = True
+DATABASES["default"]["CONN_MAX_AGE"] = env.int("CONN_MAX_AGE", default=60)  # noqa F405
 
 DBBACKUP_STORAGE = "django.core.files.storage.FileSystemStorage"
-
 DBBACKUP_STORAGE_OPTIONS = {"location": "/app/dbbackups/"}
 
 

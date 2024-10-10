@@ -6,7 +6,7 @@ env = Env(
     DJANGO_ALLOW_SIGNUP=(bool, True),
     DJANGO_ALLOWED_HOSTS=(list, []),
     DJANGO_CACHE=(bool, True),
-    DJANGO_DEBUG=(bool, False),
+    DJANGO_DEBUG=(bool, True),
     DJANGO_READ_DOT_ENV_FILE=(bool, False),
     DJANGO_SECRET_KEY=(str, "insecure-qQN1YqvsY7dQ1xtdhLavAeXn1mUEAI0Wu8vkDbodEqRKkJbHyMEQS5F"),
     DJANGO_SITE_DOMAIN=(str, "localhost:8000"),
@@ -28,7 +28,6 @@ env = Env(
     EMAIL_BACKEND=(str, "django.core.mail.backends.smtp.EmailBackend"),
     # MISCELLANEOUS
     REDIS_URL=(str, "redis://redis:6379/0"),
-    DEBUG_TOOLBAR=(bool, False),
     USE_DOCKER=(bool, False),
     SHOW_DEBUG_TOOLBAR=(bool, False),
     LOCKDOWN_PASSWORDS=(list, []),

@@ -47,4 +47,9 @@ def setup(apps=[], base_dir=None):
         # read any override config from the stack.env file (if it exists)
         environ.Env.read_env("stack.env")
         logger.info("Loading production settings")
-        include("settings/general.py", "settings/*.py", scope=globals)
+        include(
+            "environment.py",
+            "settings/general.py",
+            "settings/*.py",
+            scope=globals,
+        )

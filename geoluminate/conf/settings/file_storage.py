@@ -3,7 +3,6 @@ from pathlib import Path
 
 env = globals()["env"]
 
-IS_DEBUG = env("DJANGO_DEBUG")
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-root
 STATIC_ROOT = COMPRESS_ROOT = str(BASE_DIR / "static")
@@ -72,7 +71,7 @@ AWS_S3_REGION_NAME = os.environ.get("REGION_NAME")
 AWS_DEFAULT_ACL = None
 """"""
 
-AWS_S3_URL_PROTOCOL = "http:" if IS_DEBUG else "https:"
+AWS_S3_URL_PROTOCOL = "https:"
 
 
 # django-compressor

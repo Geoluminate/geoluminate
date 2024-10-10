@@ -1,5 +1,9 @@
 import os
 
+env = globals()["env"]
+
+DEBUG = env("DJANGO_DEBUG")
+
 ALLOWED_HOSTS = ["*"]
 AUTH_PASSWORD_VALIDATORS = []
 ACCOUNT_EMAIL_VERIFICATION = "optional"
@@ -43,7 +47,7 @@ if os.getenv("USE_DOCKER"):
         },
     }
 
-if os.getenv("DEBUG_TOOLBAR"):
+if os.getenv("SHOW_DEBUG_TOOLBAR"):
     INSTALLED_APPS.append("debug_toolbar")
     MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
 
@@ -51,3 +55,5 @@ if os.getenv("DEBUG_TOOLBAR"):
 INTERNAL_IPS = ["127.0.0.1"]
 
 ROOT_URLCONF = "geoluminate.urls"
+
+AWS_S3_URL_PROTOCOL = "http:"

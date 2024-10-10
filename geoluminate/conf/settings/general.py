@@ -115,20 +115,6 @@ FIXTURE_DIRS = (str(BASE_DIR / "project" / "fixtures"),)
 LOCALE_PATHS = [str(BASE_DIR / "project" / "locale")]
 
 
-# if SHOW_DEBUG_TOOLBAR:
-#     # GEOLUMINATE_APPS.append("debug_toolbar")
-#     MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
-
-#     DEBUG_TOOLBAR_CONFIG = {
-#         "DISABLE_PANELS": ["debug_toolbar.panels.redirects.RedirectsPanel"],
-#         "SHOW_TEMPLATE_CONTEXT": True,
-#     }
-
-# DEBUG_TOOLBAR_PANELS += [
-#     "template_profiler_panel.panels.template.TemplateProfilerPanel",
-# ]
-
-
 # http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"

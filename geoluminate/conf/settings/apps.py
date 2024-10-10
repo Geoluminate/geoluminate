@@ -96,7 +96,3 @@ INSTALLED_APPS = [
     "django_setup_tools",
     *GEOLUMINATE_APPS,
 ]
-
-
-# if SHOW_DEBUG_TOOLBAR:
-#     INSTALLED_APPS.append("debug_toolbar")

@@ -6,3 +6,5 @@ geoluminate.setup(
         "django_better_admin_arrayfield",
     ]
 )
+
+ROOT_URLCONF = "geoluminate.urls"

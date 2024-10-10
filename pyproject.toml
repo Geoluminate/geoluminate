@@ -5,8 +5,8 @@ description = ""
 authors = ["Sam Jennings <samuel.scott.jennings@gmail.com>"]
 license = "GPL-3.0-or-later"
 readme = "README.md"
-packages = [{include = "geoluminate"}]
 include = [
+    "geoluminate",
     "README.md",
     "LICENSE",
 ]

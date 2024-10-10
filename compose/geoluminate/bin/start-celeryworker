@@ -4,5 +4,13 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
+if [ "$DJANGO_ENV" = "production" ]; then
+    echo "Starting Celery worker in production mode..."
+    exec celery -A geoluminate.conf.celery worker -l INFO
 
-exec celery -A geoluminate.conf.celery worker -l INFO
+else
+    echo "Starting Celery worker in development mode..."
+    exec watchfiles celery.__main__.main --args '-A geoluminate.conf.celery worker -l INFO'
+fi
+
+

@@ -3,9 +3,12 @@
 set -o errexit
 set -o nounset
 
+BASIC_AUTH="${DJANGO_SUPERUSER_EMAIL}:${FLOWER_PASSWORD}"
 
-exec celery \
-    -A geoluminate.conf.celery \
-    -b "${CELERY_BROKER_URL}" \
-    flower \
-    --basic_auth="${CELERY_FLOWER_USER}:${CELERY_FLOWER_PASSWORD}"
+if [ "$DJANGO_ENV" = "production" ]; then
+    echo "Starting Flower in production mode..."
+    exec celery -A geoluminate.conf.celery flower --basic_auth=$BASIC_AUTH
+else
+    echo "Starting Flower in development mode..."
+    exec watchfiles celery.__main__.main --args "-A geoluminate.conf.celery flower"
+fi

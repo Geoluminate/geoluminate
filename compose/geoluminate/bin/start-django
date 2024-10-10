@@ -4,36 +4,13 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
+python manage.py setup
 
-python /app/manage.py setup
-
-echo "Migrating database changes..."
-python /app/manage.py migrate --noinput
-
-echo "Collecting static files..."
-python /app/manage.py collectstatic --noinput
-
-
-compress_enabled() {
-python << END
-import sys
-
-from environ import Env
-
-env = Env(COMPRESS_ENABLED=(bool, True))
-if env('COMPRESS_ENABLED'):
-    sys.exit(0)
-else:
-    sys.exit(1)
-
-END
-}
-
-if compress_enabled; then
-  # NOTE this command will fail if django-compressor is disabled
-  echo "Compressing static files..."
-  python /app/manage.py compress
-
+if [ "$DJANGO_ENV" = "production" ]; then
+    echo "Running in production mode..."
+    exec gunicorn config.wsgi --bind 0.0.0.0:5000 --chdir=/app
+else
+    # Do something else
+    echo "Running in development mode..."
+    exec python manage.py runserver 0.0.0.0:8000
 fi
-
-exec /usr/local/bin/gunicorn config.wsgi --bind 0.0.0.0:5000 --chdir=/app

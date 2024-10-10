@@ -6,13 +6,7 @@ LOCKDOWN_SUPERUSERS_ONLY: A boolean that restricts access to superusers only.
 
 """
 
-import environ
-
-env = environ.Env(
-    LOCKDOWN_PASSWORDS=(list, []),
-    LOCKDOWN_STAFF_ONLY=(bool, False),
-    LOCKDOWN_SUPERUSERS_ONLY=(bool, False),
-)
+env = globals()["env"]
 
 LOCKDOWN_ENABLED = any(
     [

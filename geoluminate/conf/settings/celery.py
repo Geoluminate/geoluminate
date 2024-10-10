@@ -1,9 +1,4 @@
-import environ
-
-env = environ.Env(
-    DJANGO_TIME_ZONE=(str, "UTC"),
-    REDIS_URL=(str, "redis://redis:6379/0"),
-)
+env = globals()["env"]
 
 
 # https://docs.celeryq.dev/en/stable/userguide/configuration.html#std:setting-timezone

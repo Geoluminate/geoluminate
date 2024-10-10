@@ -1,11 +1,4 @@
-import environ
-
-
-env = environ.Env(
-    USE_DOCKER=(bool, False),
-    DEBUG_TOOLBAR=(bool, False),
-)
-
+import os
 
 ALLOWED_HOSTS = ["*"]
 AUTH_PASSWORD_VALIDATORS = []
@@ -40,7 +33,7 @@ SHELL_PLUS = "ipython"
 INSTALLED_APPS.insert(0, "whitenoise.runserver_nostatic")
 
 
-if env("USE_DOCKER"):
+if os.getenv("USE_DOCKER"):
     WEBPACK_LOADER = {
         "GEOLUMINATE": {
             "CACHE": False,
@@ -50,7 +43,7 @@ if env("USE_DOCKER"):
         },
     }
 
-if env("DEBUG_TOOLBAR"):
+if os.getenv("DEBUG_TOOLBAR"):
     INSTALLED_APPS.append("debug_toolbar")
     MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
 

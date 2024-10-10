@@ -1,21 +1,15 @@
-from environ import Env
-
-env = Env(
-    POSTGRES_USER=(str, "postgres"),
-    POSTGRES_HOST=(str, "postgres"),
-    POSTGRES_PORT=(int, 5432),
-)
+env = globals()["env"]
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": env.str("POSTGRES_DB"),
-        "PASSWORD": env.str("POSTGRES_PASSWORD"),
-        "USER": env.str("POSTGRES_USER"),
-        "HOST": env.str("POSTGRES_HOST"),
-        "PORT": env.str("POSTGRES_PORT"),
+        "NAME": env("POSTGRES_DB"),
+        "PASSWORD": env("POSTGRES_PASSWORD"),
+        "USER": env("POSTGRES_USER"),
+        "HOST": env("POSTGRES_HOST"),
+        "PORT": env("POSTGRES_PORT"),
     }
 }
 

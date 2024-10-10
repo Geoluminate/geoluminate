@@ -1,16 +1,4 @@
-import environ
-
-env = environ.Env(
-    DJANGO_SITE_NAME=(str, "Geoluminate Dev"),
-    DJANGO_SITE_DOMAIN=(str, "localhost:8000"),
-    EMAIL_HOST=(str, ""),
-    EMAIL_HOST_USER=(str, ""),
-    EMAIL_HOST_PASSWORD=(str, ""),
-    EMAIL_PORT=(int, 587),
-    EMAIL_USE_TLS=(bool, True),
-    EMAIL_BACKEND=(str, "django.core.mail.backends.smtp.EmailBackend"),
-)
-
+env = globals()["env"]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#default-from-email
 DEFAULT_FROM_EMAIL = f"noreply@{env('DJANGO_SITE_DOMAIN')}"

@@ -4,9 +4,10 @@ import sys
 from contextlib import suppress
 from template_partials.apps import wrap_loaders
 
-import environ
 from django.contrib.messages import constants as messages
 from django.core.exceptions import ImproperlyConfigured
+
+env = globals()["env"]
 
 GIS_ENABLED = False
 
@@ -16,28 +17,9 @@ with suppress(ImproperlyConfigured):
     GIS_ENABLED = True
 
 
-sys.path.append(os.path.join(BASE_DIR, "project", "schemas"))
+# sys.path.append(os.path.join(BASE_DIR, "project", "schemas"))
 
 GEOLUMINATE = globals().get("GEOLUMINATE", {})
-
-
-env = environ.Env(
-    DJANGO_DEBUG=(bool, False),
-    DJANGO_SECRET_KEY=(str, "HoVcnlU2IqQN1YqvsY7dQ1xtdhLavAeXn1mUEAI0Wu8vkDbodEqRKkJbHyMEQS5F"),
-    SHOW_DEBUG_TOOLBAR=(bool, False),
-    DJANGO_ADMIN_URL=(str, "admin/"),
-    DJANGO_ALLOWED_HOSTS=(list, []),
-    DJANGO_READ_DOT_ENV_FILE=(bool, False),
-    DJANGO_TIME_ZONE=(str, "UTC"),
-    DJANGO_SITE_ID=(int, 1),
-    DJANGO_SITE_DOMAIN=(str, "localhost:8000"),
-    DJANGO_SITE_NAME=(str, "Geoluminate Research Portal"),
-)
-
-if env("DJANGO_READ_DOT_ENV_FILE"):
-    # OS environment variables take precedence over variables from .env
-    env.read_env(str(BASE_DIR / ".env"))
-
 
 ADMIN_URL = f"{env('DJANGO_ADMIN_URL')}"
 ADMINS = [("Your Name", "youremail@example.com")]

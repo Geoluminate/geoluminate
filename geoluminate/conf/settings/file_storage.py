@@ -1,15 +1,9 @@
 import os
 from pathlib import Path
 
-import environ
+env = globals()["env"]
 
-env = environ.Env(
-    DJANGO_CACHE=(bool, True),
-    DJANGO_DEBUG=(bool, False),
-)
-
-
-DEBUG = env("DJANGO_DEBUG")
+IS_DEBUG = env("DJANGO_DEBUG")
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-root
 STATIC_ROOT = COMPRESS_ROOT = str(BASE_DIR / "static")
@@ -78,7 +72,7 @@ AWS_S3_REGION_NAME = os.environ.get("REGION_NAME")
 AWS_DEFAULT_ACL = None
 """"""
 
-AWS_S3_URL_PROTOCOL = "http:" if DEBUG else "https:"
+AWS_S3_URL_PROTOCOL = "http:" if IS_DEBUG else "https:"
 
 
 # django-compressor

@@ -5,11 +5,9 @@
 All settings can be overridden in your project settings file.
 """
 
-import environ
+env = globals()["env"]
 
-env = environ.Env(
-    DJANGO_ACCOUNT_ALLOW_REGISTRATION=(bool, True),
-)
+ACCOUNT_ALLOW_REGISTRATION = env("DJANGO_ALLOW_SIGNUP")
 
 # PASSWORDS
 # ------------------------------------------------------------------------------
@@ -124,7 +122,5 @@ SOCIALACCOUNT_PROVIDERS = {
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
 # SOCIALACCOUNT_ADAPTER = "geoluminate.contrib.users.adapters.SocialAccountAdapter"
 
-ACCOUNT_ALLOW_REGISTRATION = env("DJANGO_ACCOUNT_ALLOW_REGISTRATION")
-"""allow registration"""
 
 ACCOUNT_SIGNUP_FORM_CLASS = "geoluminate.contrib.contributors.forms.person.SignupExtraForm"

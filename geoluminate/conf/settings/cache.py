@@ -1,18 +1,8 @@
-import logging
-
-import environ
-
-logger = logging.getLogger(__name__)
-
-env = environ.Env(
-    DJANGO_CACHE=(bool, True),
-    REDIS_URL=(str, "redis://redis:6379/0"),
-)
+env = globals()["env"]
 
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#caches
 if env("DJANGO_CACHE"):
-    logger.info("Using Redis cache")
     CACHES = {
         "default": {
             "BACKEND": "django_redis.cache.RedisCache",
@@ -42,7 +32,6 @@ if env("DJANGO_CACHE"):
         },
     }
 else:
-    logger.info("Using Dummy cache")
     CACHES = {
         "default": {
             "BACKEND": "django.core.cache.backends.dummy.DummyCache",

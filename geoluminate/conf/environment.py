@@ -8,11 +8,17 @@ env = Env(
     DJANGO_CACHE=(bool, True),
     DJANGO_DEBUG=(bool, False),
     DJANGO_READ_DOT_ENV_FILE=(bool, False),
-    DJANGO_SECRET_KEY=(str, "insecure-qQN1YqvsY7dQ1xtdhLavAeXn1mUEAI0Wu8vkDbodEqRKkJbHyMEQS5F"),
+    DJANGO_SECRET_KEY=(str, "django-insecure-qQN1YqvsY7dQ1xtdhLavAeXn1mUEAI0Wu8vkDbodEqRKkJbHyMEQS5F"),
     DJANGO_SITE_DOMAIN=(str, "localhost:8000"),
     DJANGO_SITE_ID=(int, 1),
     DJANGO_SITE_NAME=(str, "Geoluminate Research Portal"),
     DJANGO_TIME_ZONE=(str, "UTC"),
+    # SECURITY
+    DJANGO_SECURE_SSL_REDIRECT=(bool, True),
+    DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS=(bool, True),
+    DJANGO_SECURE_HSTS_PRELOAD=(bool, True),
+    DJANGO_SECURE_CONTENT_TYPE_NOSNIFF=(bool, True),
+    DJANGO_INSECURE=(bool, False),
     # DATABASE
     POSTGRES_DB=(str, "postgres"),
     POSTGRES_PASSWORD=(str, "postgres"),

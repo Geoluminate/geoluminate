@@ -37,7 +37,7 @@ SHELL_PLUS = "ipython"
 INSTALLED_APPS.insert(0, "whitenoise.runserver_nostatic")
 
 
-if os.getenv("USE_DOCKER"):
+if env("USE_DOCKER"):
     WEBPACK_LOADER = {
         "GEOLUMINATE": {
             "CACHE": False,
@@ -47,9 +47,11 @@ if os.getenv("USE_DOCKER"):
         },
     }
 
-if os.getenv("SHOW_DEBUG_TOOLBAR"):
+if env("SHOW_DEBUG_TOOLBAR"):
     INSTALLED_APPS.append("debug_toolbar")
     MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
+
+# if env("DJANGO_CACHE"):
 
 
 INTERNAL_IPS = ["127.0.0.1"]

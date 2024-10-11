@@ -35,7 +35,7 @@ def setup(apps=[], base_dir=None):
         environ.Env.read_env("stack.development.env")
         logger.info("Loading development settings")
         # env("DJANGO_INSECURE", default=True)
-        os.environ.setdefault("DJANGO_INSECURE", "True")
+        # os.environ.setdefault("DJANGO_INSECURE", "True")
         include(
             "environment.py",
             "settings/general.py",

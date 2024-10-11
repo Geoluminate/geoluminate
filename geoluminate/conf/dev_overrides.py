@@ -2,7 +2,7 @@ import os
 
 env = globals()["env"]
 
-DEBUG = env("DJANGO_DEBUG")
+DEBUG = env.bool("DJANGO_DEBUG")
 
 ALLOWED_HOSTS = ["*"]
 AUTH_PASSWORD_VALIDATORS = []

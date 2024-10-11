@@ -12,7 +12,6 @@ from geoluminate.views import HomeView
 # register all adminactions
 actions.add_to_site(site)
 
-
 urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
     path("", HomeView.as_view(), name="home"),

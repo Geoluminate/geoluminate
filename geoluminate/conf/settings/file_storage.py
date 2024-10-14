@@ -65,14 +65,17 @@ COMPRESS_FILTERS = {
 # ------------------------
 COMPRESS_PRECOMPILERS = (("text/x-scss", "django_libsass.SassCompiler"),)
 
+S3_BUCKET_NAME = env("S3_BUCKET_NAME")
+S3_CUSTOM_DOMAIN = f"media.{SITE_NAME}/{S3_BUCKET_NAME}"
 
 # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html
 S3_SETTINGS = {
     "access_key": env("S3_ACCESS_KEY_ID"),
     "secret_key": env("S3_SECRET_ACCESS_KEY"),
-    "bucket_name": env("S3_BUCKET_NAME"),
-    "custom_domain": env("S3_CUSTOM_DOMAIN"),
-    "endpoint_url": f"https://media.{SITE_NAME}:9000",
+    "bucket_name": S3_BUCKET_NAME,
+    "custom_domain": S3_CUSTOM_DOMAIN,
+    "endpoint_url": "http://minio:9000",
+    # "endpoint_url": f"media.{SITE_NAME}:9000",
     "object_parameters": {
         "CacheControl": "max-age=86400",
     },

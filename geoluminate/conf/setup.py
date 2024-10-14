@@ -31,6 +31,7 @@ def setup(apps=[], base_dir=None):
     )
 
     if DJANGO_ENV == "development":
+        print("Loading development settings")
         # read any override config from the .env file
         environ.Env.read_env("stack.development.env")
         logger.info("Loading development settings")
@@ -46,6 +47,7 @@ def setup(apps=[], base_dir=None):
     else:
         # read any override config from the stack.env file (if it exists)
         environ.Env.read_env("stack.env")
+        print("Loading production settings")
         logger.info("Loading production settings")
         include(
             "environment.py",

@@ -1,5 +1,7 @@
 from environ import Env
 
+print("Loading environment variables")
+
 env = Env(
     # DJANGO
     DJANGO_ADMIN_URL=(str, "admin/"),

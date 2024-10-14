@@ -3,8 +3,8 @@ from pathlib import Path
 
 env = globals()["env"]
 
-BASE_DIR = env.get("BASE_DIR")
-SITE_NAME = env.get("DJANGO_SITE_NAME")
+BASE_DIR = env("BASE_DIR")
+SITE_NAME = env("DJANGO_SITE_NAME")
 
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-root
@@ -40,9 +40,6 @@ LIBSASS_SOURCEMAPS = True
 WHITENOISE_MANIFEST_STRICT = False
 
 
-# AWS_S3_URL_PROTOCOL = "https:"
-
-
 # django-compressor
 # ------------------------------------------------------------------------------
 # https://django-compressor.readthedocs.io/en/latest/settings/#django.conf.settings.COMPRESS_ENABLED
@@ -71,16 +68,16 @@ COMPRESS_PRECOMPILERS = (("text/x-scss", "django_libsass.SassCompiler"),)
 
 # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html
 S3_SETTINGS = {
-    "default_acl": "public-read",
-    "access_key": env.get("S3_ACCESS_KEY_ID"),
-    "secret_key": env.get("S3_SECRET_ACCESS_KEY"),
-    "bucket_name": env.get("S3_BUCKET_NAME"),
-    "custom_domain": env.get("S3_CUSTOM_DOMAIN"),
+    "access_key": env("S3_ACCESS_KEY_ID"),
+    "secret_key": env("S3_SECRET_ACCESS_KEY"),
+    "bucket_name": env("S3_BUCKET_NAME"),
+    "custom_domain": env("S3_CUSTOM_DOMAIN"),
     "endpoint_url": f"https://media.{SITE_NAME}:9000",
     "object_parameters": {
         "CacheControl": "max-age=86400",
     },
-    "region_name": env.get("S3_REGION_NAME"),
+    "region_name": env("S3_REGION_NAME"),
+    # "url_protocol": "https:",
 }
 
 
@@ -89,6 +86,7 @@ STORAGES = {
         "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
         "OPTIONS": {
             "location": "public",
+            "default_acl": "public-read",
             **S3_SETTINGS,
         },
     },
@@ -96,8 +94,8 @@ STORAGES = {
         "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
         "OPTIONS": {
             "location": "private",
-            **S3_SETTINGS,
             "default_acl": "private",
+            **S3_SETTINGS,
             # "url_protocol": "http:" if DEBUG else "https:",
         },
     },

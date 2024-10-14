@@ -4,7 +4,7 @@ from pathlib import Path
 env = globals()["env"]
 
 BASE_DIR = globals()["BASE_DIR"]
-SITE_NAME = globals()["SITE_NAME"]
+SITE_DOMAIN = globals()["SITE_DOMAIN"]
 
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-root
@@ -66,7 +66,7 @@ COMPRESS_FILTERS = {
 COMPRESS_PRECOMPILERS = (("text/x-scss", "django_libsass.SassCompiler"),)
 
 S3_BUCKET_NAME = env("S3_BUCKET_NAME")
-S3_CUSTOM_DOMAIN = f"media.{SITE_NAME}/{S3_BUCKET_NAME}"
+S3_CUSTOM_DOMAIN = f"media.{SITE_DOMAIN}/{S3_BUCKET_NAME}"
 
 # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html
 S3_SETTINGS = {
@@ -88,18 +88,9 @@ STORAGES = {
     "default": {
         "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
         "OPTIONS": {
-            "location": "public",
+            # "location": "public",
             "default_acl": "public-read",
             **S3_SETTINGS,
-        },
-    },
-    "private": {
-        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
-        "OPTIONS": {
-            "location": "private",
-            "default_acl": "private",
-            **S3_SETTINGS,
-            # "url_protocol": "http:" if DEBUG else "https:",
         },
     },
     "staticfiles": {

@@ -22,7 +22,7 @@ with suppress(ImproperlyConfigured):
 GEOLUMINATE = globals().get("GEOLUMINATE", {})
 
 ADMIN_URL = f"{env('DJANGO_ADMIN_URL')}"
-ADMINS = [("Your Name", "youremail@example.com")]
+ADMINS = [("Super User", env("DJANGO_SUPERUSER_EMAIL"))]
 # ADMINS = [(admin["name"], admin["email"]) for admin in GEOLUMINATE["application"]["developers"]]
 ALLOWED_HOSTS = [env("DJANGO_SITE_DOMAIN")] + env("DJANGO_ALLOWED_HOSTS")
 MANAGERS = ADMINS
@@ -124,7 +124,7 @@ DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap5-responsive.html"
 
 ACCOUNT_MANAGEMENT_GET_AVATAR_URL = "geoluminate.contrib.contributors.utils.get_contributor_avatar"  # This line connects the avatar_url template tag to the function that retrieves the contributor's avatar URL.  # noqa: E501
 
-# DJANGO_BUILD_PIPELINE = {}
+# DEPLOYMENT_PIPELINE = {}
 DJANGO_SETUP_TOOLS = {
     # "default": {},
     "": {

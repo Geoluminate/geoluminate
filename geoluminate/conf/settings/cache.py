@@ -1,6 +1,5 @@
 env = globals()["env"]
 
-
 # https://docs.djangoproject.com/en/dev/ref/settings/#caches
 if env("DJANGO_CACHE"):
     CACHES = {
@@ -14,14 +13,6 @@ if env("DJANGO_CACHE"):
                 "IGNORE_EXCEPTIONS": True,
             },
         },
-        # "collectfasta": {
-        #     "BACKEND": "django_redis.cache.RedisCache",
-        #     "LOCATION": env("REDIS_URL"),
-        #     "OPTIONS": {
-        #         "CLIENT_CLASS": "django_redis.client.DefaultClient",
-        #         "IGNORE_EXCEPTIONS": True,
-        #     },
-        # },
         "select2": {
             "BACKEND": "django_redis.cache.RedisCache",
             "LOCATION": env("REDIS_URL"),

@@ -1,7 +1,5 @@
 from environ import Env
 
-print("Loading environment variables")
-
 env = Env(
     # DJANGO
     DJANGO_ADMIN_URL=(str, "admin/"),
@@ -36,6 +34,7 @@ env = Env(
     EMAIL_BACKEND=(str, "django.core.mail.backends.smtp.EmailBackend"),
     # STORAGE
     S3_ENDPOINT_URL=(str, "https://media.localhost:9000"),
+    S3_REGION_NAME=(str, "us-east-1"),
     # MISCELLANEOUS
     REDIS_URL=(str, "redis://redis:6379/0"),
     USE_DOCKER=(bool, False),

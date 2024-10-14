@@ -4,7 +4,7 @@
 {% get_current_language as LANGUAGE_CODE %}
 <html lang="{{ LANGUAGE_CODE }}" data-bs-theme="auto">
   <head {% meta_namespaces %}>
-    {% include "geoluminate/utils/head.html" %}
+    {% comment %} {% include "geoluminate/utils/head.html" %} {% endcomment %}
     {% block title %}
     {% endblock title %}
 

@@ -3,6 +3,9 @@ from pathlib import Path
 
 env = globals()["env"]
 
+BASE_DIR = env.get("BASE_DIR")
+SITE_NAME = env.get("DJANGO_SITE_NAME")
+
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-root
 STATIC_ROOT = COMPRESS_ROOT = str(BASE_DIR / "static")
@@ -10,12 +13,10 @@ STATIC_ROOT = COMPRESS_ROOT = str(BASE_DIR / "static")
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-url
 STATIC_URL = COMPRESS_URL = "/static/"
 
-
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-root
 MEDIA_ROOT = str(BASE_DIR / "media")
 
 # https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
-
 if os.path.exists(str(BASE_DIR / "assets")):
     STATICFILES_DIRS = [
         # this is where the end user will store their static files
@@ -31,47 +32,15 @@ STATICFILES_FINDERS = [
 
 
 # https://github.com/torchbox/django-libsass
-# better for in-browser debugging
 LIBSASS_SOURCEMAPS = True
 
 
 # WHITENOISE
 # ------------------------------------------------------------------------------
-
 WHITENOISE_MANIFEST_STRICT = False
 
 
-AWS_ACCESS_KEY_ID = os.environ.get("MINIO_ACCESS_KEY_ID")
-""""""
-AWS_SECRET_ACCESS_KEY = os.environ.get("MINIO_SECRET_ACCESS_KEY")
-""""""
-AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_BUCKET_NAME")
-""""""
-
-
-AWS_S3_CUSTOM_DOMAIN = os.environ.get("AWS_S3_CUSTOM_DOMAIN")
-
-AWS_S3_ENDPOINT_URL = "http://minio:9000/"
-
-# if domain := os.environ.get("AWS_CUSTOM_DOMAIN", None):
-#     AWS_S3_CUSTOM_DOMAIN = f"{domain}/{AWS_STORAGE_BUCKET_NAME}"
-# else:
-#     AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
-#     """"""
-
-AWS_S3_OBJECT_PARAMETERS = {
-    "CacheControl": "max-age=86400",
-}
-""""""
-
-AWS_S3_REGION_NAME = os.environ.get("REGION_NAME")
-""""""
-
-
-AWS_DEFAULT_ACL = None
-""""""
-
-AWS_S3_URL_PROTOCOL = "https:"
+# AWS_S3_URL_PROTOCOL = "https:"
 
 
 # django-compressor
@@ -99,19 +68,35 @@ COMPRESS_FILTERS = {
 # ------------------------
 COMPRESS_PRECOMPILERS = (("text/x-scss", "django_libsass.SassCompiler"),)
 
+
+# https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html
+S3_SETTINGS = {
+    "default_acl": "public-read",
+    "access_key": env.get("S3_ACCESS_KEY_ID"),
+    "secret_key": env.get("S3_SECRET_ACCESS_KEY"),
+    "bucket_name": env.get("S3_BUCKET_NAME"),
+    "custom_domain": env.get("S3_CUSTOM_DOMAIN"),
+    "endpoint_url": f"https://media.{SITE_NAME}:9000",
+    "object_parameters": {
+        "CacheControl": "max-age=86400",
+    },
+    "region_name": env.get("S3_REGION_NAME"),
+}
+
+
 STORAGES = {
     "default": {
         "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
         "OPTIONS": {
             "location": "public",
-            "default_acl": "public-read",
-            # "url_protocol": "http:" if DEBUG else "https:",
+            **S3_SETTINGS,
         },
     },
     "private": {
         "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
         "OPTIONS": {
             "location": "private",
+            **S3_SETTINGS,
             "default_acl": "private",
             # "url_protocol": "http:" if DEBUG else "https:",
         },

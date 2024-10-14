@@ -32,6 +32,8 @@ env = Env(
     EMAIL_PORT=(int, 587),
     EMAIL_USE_TLS=(bool, True),
     EMAIL_BACKEND=(str, "django.core.mail.backends.smtp.EmailBackend"),
+    # STORAGE
+    S3_ENDPOINT_URL=(str, "https://media.localhost:9000"),
     # MISCELLANEOUS
     REDIS_URL=(str, "redis://redis:6379/0"),
     USE_DOCKER=(bool, False),

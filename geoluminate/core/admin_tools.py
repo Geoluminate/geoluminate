@@ -115,7 +115,7 @@ class CustomIndexDashboard(Dashboard):
                     },
                     {
                         "title": _("Media Files"),
-                        "url": os.environ.get("AWS_S3_CUSTOM_DOMAIN", ""),
+                        "url": os.environ.get("S3_CUSTOM_DOMAIN", ""),
                         "external": True,
                     },
                     # {

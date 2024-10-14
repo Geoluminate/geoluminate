@@ -19,7 +19,6 @@ X_FRAME_OPTIONS = "DENY"
 # X_FRAME_OPTIONS = "SAMEORIGIN"
 
 # ------------------------------------------------------------------------------
-print(env("DJANGO_INSECURE"))
 # if not env("DJANGO_INSECURE"):
 # https://docs.djangoproject.com/en/dev/ref/settings/#secure-ssl-redirect
 SECURE_SSL_REDIRECT = env("DJANGO_SECURE_SSL_REDIRECT")

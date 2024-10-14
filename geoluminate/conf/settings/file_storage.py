@@ -3,8 +3,8 @@ from pathlib import Path
 
 env = globals()["env"]
 
-BASE_DIR = env("BASE_DIR")
-SITE_NAME = env("DJANGO_SITE_NAME")
+BASE_DIR = globals()["BASE_DIR"]
+SITE_NAME = globals()["SITE_NAME"]
 
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-root

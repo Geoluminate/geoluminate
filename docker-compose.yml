@@ -3,7 +3,7 @@ name: geoluminate
 
 volumes:
   postgres: {}
-  postgres_backups: {}
+  letsencrypt:
   media: {}
 
 services:
@@ -11,7 +11,7 @@ services:
     build:
       context: .
       dockerfile: ./compose/geoluminate/Dockerfile
-    image: geoluminate/geoluminate:latest
+    image: ssjenny90/geoluminate:latest
   geoluminate-postgis:
     build:
       context: .
@@ -21,48 +21,45 @@ services:
     build:
       context: .
       dockerfile: ./compose/django/Dockerfile
-    image: geoluminate_local
+    # image: geoluminate_local
     depends_on:
       - geoluminate
       - postgres
       - redis
       # - minio
     volumes:
-      - ../:/external_apps
       - ./:/app:z
     env_file: stack.env
     ports:
       - 8000:8000
       - 5678:5678
-    # command: start-django-local
-    command: ./compose/django/start
-    # command: sleep infinity
-    entrypoint: ./compose/django/entrypoint
+    command: start-django
   postgres:
     image: geoluminate/postgis
     depends_on:
       - geoluminate-postgis
     volumes:
       - postgres:/var/lib/postgresql/data
-      - postgres_backups:/backups
     env_file: stack.env
   redis:
     image: redis:6
 
-  # celeryworker:
-  #   <<: *django
-  #   ports: []
-  #   command: start-celeryworker-local
+  celeryworker:
+    <<: *django
+    # depends_on:
+      # - django
+    ports: []
+    command: start-celeryworker
   # celerybeat:
   #   <<: *django
   #   ports: []
-  #   command: start-celerybeat-local
+  #   command: start-celerybeat
 
   # flower:
   #   <<: *django
   #   ports:
   #     - "5555:5555"
-  #   command: start-flower-local
+  #   command: start-flower
 
   minio:
     image: quay.io/minio/minio:latest
@@ -74,23 +71,16 @@ services:
       - "9001:9001"
     command: server /minio
 
-  # docs:
-  #   <<: *django
-  #   working_dir: /app/docs
+  # node:
+  #   build:
+  #     context: .
+  #     dockerfile: ./compose/node/Dockerfile
+  #   image: geoluminate_node
+  #   depends_on:
+  #     - django
+  #   volumes:
+  #     - ./:/app:z
+  #     - /app/node_modules
+  #   command: npm run dev
   #   ports:
-  #     - "5000:5000"
-  #   command: start-docs
-
-  node:
-    build:
-      context: .
-      dockerfile: ./compose/node/Dockerfile
-    image: geoluminate_node
-    depends_on:
-      - django
-    volumes:
-      - ./:/app:z
-      - /app/node_modules
-    command: npm run dev
-    ports:
-      - '3000:3000'
+  #     - '3000:3000'

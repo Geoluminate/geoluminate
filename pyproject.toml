@@ -106,6 +106,7 @@ django-polymorphic-treebeard = {git = "https://github.com/SamuelJennings/django-
 django-jsonfield-toolkit = {git = "https://github.com/SamuelJennings/django-jsonfield-toolkit"}
 django-setup-tools = {git = "https://github.com/SamuelJennings/django-setup-tools"}
 shortuuid = "^1.0.13"
+django-cotton = "^1.2.1"
 
 
 
@@ -125,7 +126,7 @@ mypy = "^1.2.0"
 pre-commit = "^3.2.2"
 pylint-celery = "^0.3"
 pylint-django = "^2.5.3"
-pytest = "^7.2.2"
+pytest = "^8.3.3"
 pytest-cov = "^4.0.0"
 pytest-django = "^4.5.2"
 pytest-sugar = "^0.9.7"
@@ -136,6 +137,8 @@ importtime-waterfall = "^1.0.0"
 pandas = "^2.2.2"
 django-better-admin-arrayfield = "^1.4.2"
 django-debug-toolbar = "^4.4.6"
+pytest-env = "^1.1.5"
+pip-licenses = "^5.0.0"
 
 
 [build-system]
@@ -241,14 +244,15 @@ exclude = [
 blank_line_after_tag="load,endpartialdef,endblock"
 close_void_tags=true
 custom_blocks="addtoblock"
-custom_html="django-formset"
+custom_html="django-formset,c-[\\w.]+"
 format_js=true
 format_css=true
 indent=2
-max_attribute_length=100
+max_attribute_length=10
 max_blank_lines=0
 max_line_length=119
 ignore="H016,H030,H031,H021,D018,H037"
+format_attribute_template_tags=false
 
 [tool.djlint.css]
 indent_size=2
@@ -303,13 +307,16 @@ django_settings_module = "tests.settings"
 
 
 [tool.pytest.ini_options]
-DJANGO_SETTINGS_MODULE = "tests.settings"
+DJANGO_SETTINGS_MODULE = "config.settings"
+env = [
+    "DJANGO_ENV=development",
+]
 python_files = ["test_*.py"]
 filterwarnings = [
     "ignore",
     "default:::keywords",
 ]
-addopts = "--cov --cov-report html"
+# addopts = "--cov --cov-report html"
 
 [tool.coverage.report]
 skip_empty = true

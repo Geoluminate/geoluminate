@@ -173,6 +173,7 @@ def update_deps(c):
         "geoluminate-docs",
         "django-research-vocabs",
         "django-setup-tools",
+        "django-flex-menus",
     ]
 
     c.run(f"poetry update {' '.join(packages)}")

@@ -41,7 +41,7 @@
     "toml": "^3.0.0",
     "ts-loader": "^9.5.1",
     "typescript": "^5.3.3",
-    "webpack": "^5.65.0",
+    "webpack": "^5.95.0",
     "webpack-bundle-tracker": "^3.0.1",
     "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^4.6.0",
@@ -80,7 +80,6 @@
     "datatables.net-staterestore-bs5": "^1.4.0",
     "jszip": "^3.10.1",
     "pdfmake": "^0.2.10",
-    "raphael": "^2.3.0",
-    "watchman": "^1.0.0"
+    "raphael": "^2.3.0"
   }
 }

@@ -1,14 +1,17 @@
+import pytest
+
 from geoluminate.contrib.datasets.models import Dataset
 from geoluminate.factories import DatasetFactory
 
-from .abstract_factory import TestAbstractFactory
+
+@pytest.fixture
+@pytest.mark.django_db
+def dataset():
+    yield DatasetFactory(project=None, samples=None)
 
 
-class TestDatasetFactory(TestAbstractFactory):
-    def setUp(self):
-        self.obj = DatasetFactory()
-        self.model = Dataset
-
-    def test_obj_additional_fields_creation(self):
-        self.assertIsNotNone(self.obj.title)
-        self.assertIsNotNone(self.obj.visibility)
+@pytest.mark.django_db
+class TestDatasetFactory:
+    def test_factory_create(self, dataset):
+        assert isinstance(dataset, Dataset)
+        assert dataset.contributors.count() > 0

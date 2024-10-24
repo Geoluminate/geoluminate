@@ -1,36 +1,38 @@
+import pytest
 from django.test import TestCase
 
 from geoluminate.contrib.contributors.models import Contributor
 from geoluminate.factories import (
-    ContributionFactory,
-    OrganizationalContributorFactory,
-    PersonalContributorFactory,
-    UnclaimedContributorFactory,
+    OrganizationFactory,
+    PersonFactory,
 )
 
 
-class TestUnclaimedContributorFactory(TestCase):
-    def setUp(self):
-        self.obj = UnclaimedContributorFactory()
-
-    def test_factory_creation(self):
-        self.assertIsInstance(self.obj, Contributor)
-        self.assertIsNotNone(self.obj.name)
-        self.assertIsNotNone(self.obj.about)
-
-    def test_has_no_relationships(self):
-        self.assertIsNotNone(self.obj.user)
-        self.assertIsNotNone(self.obj.organization)
+@pytest.fixture
+@pytest.mark.django_db
+def user():
+    yield PersonFactory()
 
 
-class TestPersonalContributorFactory(TestCase):
-    def setUp(self):
-        self.obj = PersonalContributorFactory()
+@pytest.fixture
+@pytest.mark.django_db
+def organization():
+    return OrganizationFactory()
 
-    def test_factory_creation(self):
-        self.assertIsInstance(self.obj, Contributor)
-        self.assertIsNotNone(self.obj.name)
-        self.assertIsNotNone(self.obj.about)
+
+@pytest.fixture
+@pytest.mark.django_db
+def unregistered_user():
+    return PersonFactory()
+
+
+@pytest.mark.django_db
+class TestPersonFactory:
+    def test_factory_create(self, user):
+        assert isinstance(user, Contributor)
+        assert user.name is not None
+        assert user.profile is not None
+        assert user.affiliations.count() > 0
 
     def test_user_relationship(self):
         self.assertIsNotNone(self.obj.user)
@@ -38,13 +40,10 @@ class TestPersonalContributorFactory(TestCase):
     def test_has_no_organization(self):
         self.assertIsNone(self.obj.organization)
 
-    def test_user_profile_same_name(self):
-        self.assertEqual(f"{self.obj.user.first_name} {self.obj.user.last_name}", self.obj.name)
 
-
-class TestOrganizationalContributorFactory(TestCase):
+class TestOrganizationFactory(TestCase):
     def setUp(self):
-        self.obj = OrganizationalContributorFactory()
+        self.obj = OrganizationFactory()
 
     def test_factory_creation(self):
         self.assertIsInstance(self.obj, Contributor)

@@ -1,14 +1,16 @@
-from geoluminate.contrib.samples.models import Sample
+import pytest
+
 from geoluminate.factories import SampleFactory
+from geoluminate.models import Sample
 
-from .abstract_factory import TestAbstractFactory
+
+@pytest.fixture
+@pytest.mark.django_db
+def sample():
+    yield SampleFactory()
 
 
-class TestProjectFactory(TestAbstractFactory):
-    def setUp(self):
-        self.obj = SampleFactory()
-        self.model = Sample
-
-    def test_obj_additional_fields_creation(self):
-        self.assertIsNotNone(self.obj.title)
-        self.assertIsNotNone(self.obj.visibility)
+@pytest.mark.django_db
+class TestSampleFactory:
+    def test_factory_create(self, sample):
+        assert isinstance(sample, Sample)

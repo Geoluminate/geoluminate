@@ -1,6 +1,6 @@
 from django.urls import include, path, re_path
 
-from .views import generic
+from .views import generic, literature
 
 urlpatterns = [
     re_path(
@@ -39,7 +39,7 @@ urlpatterns = [
         ),
     ),
     path(
-        "<object_type>/<uuid:pk>/",
+        "create/description/<str:pk>/",
         include(
             [
                 path("contact/", generic.GenericContactForm.as_view(), name="contact"),
@@ -67,4 +67,5 @@ urlpatterns = [
         ),
     ),
     path("team/", generic.PortalTeamView.as_view(), name="portal-team"),
+    path("references/", literature.ReferenceListView.as_view(), name="reference-list"),
 ]

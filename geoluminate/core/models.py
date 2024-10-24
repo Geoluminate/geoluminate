@@ -106,7 +106,14 @@ class Abstract(models.Model):
         return descriptions
 
 
+class DescriptionQuerySet(models.QuerySet):
+    def get_first(self):
+        choices = self.model.type_vocab.values
+        return self.filter(type=choices[0]).first()
+
+
 class AbstractDescription(models.Model):
+    objects = DescriptionQuerySet.as_manager()
     type = ""
     text = models.TextField(_("description"))
 

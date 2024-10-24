@@ -4,6 +4,7 @@ from django.db import models
 from django.db.models import QuerySet
 from django.http import Http404
 from django.urls import reverse
+from django.views.generic import ListView
 from el_pagination.views import AjaxMultipleObjectTemplateResponseMixin
 from meta.views import MetadataMixin
 
@@ -87,16 +88,16 @@ class HTMXMixin:
         Adds the result of get_template_names to the view context as template_name.
         """
         context = super().get_context_data(**kwargs)
-        context["template_name"] = super().get_template_names()
+        context["template_name"] = self.get_template_names()
 
         return context
 
 
 class ListMixin(AjaxMultipleObjectTemplateResponseMixin):
     page_size = 20
-    columns: int = 1
     base_template = "geoluminate/base/list_view.html"
     page_template = "geoluminate/base/list_view.html#card"
+    object_template = None
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -107,11 +108,12 @@ class ListMixin(AjaxMultipleObjectTemplateResponseMixin):
         # context["page_template"] = self.page_template
         context["total_object_count"] = self.get_queryset().count()
         context["page_size"] = self.page_size
-        context["col"] = 12 // self.columns
 
         return context
 
     def get_object_template(self):
+        if self.object_template:
+            return self.object_template
         if hasattr(self.model, "get_inheritance_chain"):
             inherited_models = self.model.get_inheritance_chain()
             model_opts = [m._meta for m in inherited_models]
@@ -154,27 +156,14 @@ class ListFilterMixin(ListMixin):
         return context
 
 
-class ListPluginMixin(ListMixin):
-    template_name = "geoluminate/base/list_view.html#page"
-    create_view_name = ""
-
-    def dispatch(self, request, *args, **kwargs):
-        self.related_model = kwargs.pop("related_model", None)
-        return super().dispatch(request, *args, **kwargs)
+class ListPluginMixin(ListMixin, ListView):
+    # template_name = "geoluminate/base/list_view.html#page"
+    template_name = "core/plugins/list.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["object_list"] = self.get_queryset()
-        # context["create_url"] = self.get_create_url()
         return context
-
-    def get_create_url(self):
-        if self.create_view_name:
-            return reverse(self.create_view_name)
-        else:
-            model_name = self.get_queryset().model._meta.model_name
-            # kwargs.update({"model": model_name[0]})
-            return reverse(f"{model_name}-create", kwargs=self.kwargs)
 
 
 class GeoluminatePermissionMixin:

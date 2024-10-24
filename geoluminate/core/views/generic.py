@@ -238,16 +238,21 @@ class GenericContactForm(LoginRequiredMixin, ContactFormView):
 class DirectoryView(RedirectView):
     permanent = False
     prefix_map = {
-        "p": "project-detail",
-        "d": "dataset-detail",
-        "s": "sample-detail",
+        "p": "projects.Project",
+        "d": "datasets.Dataset",
+        "s": "samples.Sample",
         # "m": "measurements.Measurement",
-        "c": "contributor-detail",
+        "c": "contributors.Contributor",
     }
 
     def get_redirect_url(self, *args, **kwargs):
-        obj_id = self.kwargs.GET.get("uuid")
+        obj_id = self.kwargs.get("pk")
 
-        self.pattern_name = self.prefix_map[obj_id[0]]
+        model_name = self.prefix_map[obj_id[0]]
 
+        model = apps.get_model(model_name)
+
+        obj = model.objects.get(pk=obj_id)
+
+        self.url = obj.get_absolute_url()
         return super().get_redirect_url(*args, **kwargs)

@@ -73,6 +73,6 @@ if env("SHOW_DEBUG_TOOLBAR"):
 
 INTERNAL_IPS = ["127.0.0.1"]
 
-ROOT_URLCONF = "geoluminate.urls"
+CORS_ALLOW_ALL_ORIGINS = True
 
 AWS_S3_URL_PROTOCOL = "http:"

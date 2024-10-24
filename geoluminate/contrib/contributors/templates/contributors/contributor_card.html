@@ -1,23 +1,11 @@
-{% extends "geoluminate/cards/two_column.html" %}
-{% load i18n geoluminate contributor_tags %}
+{% load geoluminate contributor_tags easy_icons %}
 
-{% block card_header %}
-{% endblock card_header %}
-{% block card_head_status %}
-  <span class="badge text-bg-primary project-status-{{ obj.status|slugify }}">{{ obj.get_status_display }}</span>
-{% endblock card_head_status %}
-{% block card_body %}
-  <div class="col col-2 text-center h-100">
-    {% avatar obj width="75px" class='shadow-sm rounded-circle object-fit-contain align-items-middle' %}
-    <h6 class="card-title mt-2 mb-1">{{ obj }}</h6>
-    {% if obj.user %}<div class="card-subtitle mb-1">{{ obj.default_affiliation }}</div>{% endif %}
-    <div class="w-auto z-2">{% follow_button obj %}</div>
+{% with obj as contributor %}
+  <div class="entry-list-item card border-0 text-center {{ contributor.type }}">
+    <c-avatar :image="contributor.image" />
+    <h5 class="card-title fs-6">
+      <a href="{{ contributor.get_absolute_url }}"
+         class="text-reset">{{ contributor }}</a>
+    </h5>
   </div>
-  <div class="col overflow-hidden">
-    <p class="card-text line-clamp max-lines-5">
-      {% if obj.about %}{{ obj.about }}{% endif %}
-    </p>
-  </div>
-{% endblock card_body %}
-{% block card_footer %}
-{% endblock card_footer %}
+{% endwith %}

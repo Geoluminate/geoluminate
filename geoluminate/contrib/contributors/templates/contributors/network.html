@@ -1,140 +1,140 @@
-{% load i18n static sekizai_tags %}
-
+{% loadstatic sekizai_tags %}
 {% comment %} {% block title %}{% trans "Network" %}{% endblock %} {% endcomment %}
 {% comment %} {% block content %} {% endcomment %}
 <div id="mynetwork" class='w-100 text-success'></div>
 {% addtoblock 'body_end' %}
-<script type="text/javascript" src="{% static "node_modules/vis-network/standalone/umd/vis-network.min.js" %}"></script>{% endaddtoblock %}
+     <script type="text/javascript" src="{% static "node_modules/vis-network/standalone/umd/vis-network.min.js" %}"></script>
+{% endaddtoblock %}
 <style type="text/css">
   #mynetwork {
     height: 600px;
   }
 </style>
 {% addtoblock 'body_end' %}
-<script>
-     const data = {
-          {
-               object.get_network | safe
-          }
-     };
+     <script>
+       const data = {
+         {
+           object.get_network | safe
+         }
+       };
 
-     $(function() {
+       $(function() {
 
-          const options = {
-               nodes: {
-                    {
-                         %
-                         comment %
-                    }
-                    shape: "circularImage",
-                    {
-                         %
-                         endcomment %
-                    } {
-                         %
-                         comment %
-                    }
-                    brokenImage: "{% static 'img/profile-placeholder.svg' %}",
-                    {
-                         %
-                         endcomment %
-                    } {
-                         %
-                         comment %
-                    }
-                    image: "{% static 'img/profile-placeholder.svg' %}",
-                    {
-                         %
-                         endcomment %
-                    }
-                    shape: "icon",
-                    icon: {
-                         face: "'Font Awesome 5 Free'",
-                         weight: "900", // Font Awesome 5 doesn't work properly unless bold.
-                         code: "\uf2bd",
-                         size: 50,
-                         color: "#aa00ff",
-                    },
-               },
-          };
-
-          {
+         const options = {
+           nodes: {
+             {
                %
                comment %
-          } // create an array with nodes
-          const nodes = [{
-               id: 1,
-               label: "User 1",
-               group: "users",
-          }, {
-               id: 2,
-               label: "User 2",
-               group: "users",
-          }, {
-               id: 3,
-               label: "Usergroup 1",
-               group: "usergroups",
-          }, {
-               id: 4,
-               label: "Usergroup 2",
-               group: "usergroups",
-          }, {
-               id: 5,
-               label: "Organisation 1",
-               shape: "icon",
-               icon: {
-                    face: "'Font Awesome 5 Free'",
-                    weight: "bold", // Font Awesome 5 doesn't work properly unless bold.
-                    code: "\uf1ad",
-                    size: 50,
-                    color: "#f0a30a",
-               },
-          }, ];
-
-          // create an array with edges
-          const edges = [{
-               from: 1,
-               to: 3
-          }, {
-               from: 1,
-               to: 4
-          }, {
-               from: 2,
-               to: 4
-          }, {
-               from: 3,
-               to: 5
-          }, {
-               from: 4,
-               to: 5
-          }, ];
-          {
+             }
+             shape: "circularImage",
+             {
                %
                endcomment %
-          }
-          console.log(data)
-          // prepare the arguments
-          const container = document.getElementById("mynetwork");
-          {
+             } {
                %
                comment %
-          }
-          const data = {
-               nodes,
-               edges
-          };
-          {
+             }
+             brokenImage: "{% static 'img/profile-placeholder.svg' %}",
+             {
                %
                endcomment %
-          }
+             } {
+               %
+               comment %
+             }
+             image: "{% static 'img/profile-placeholder.svg' %}",
+             {
+               %
+               endcomment %
+             }
+             shape: "icon",
+             icon: {
+               face: "'Font Awesome 5 Free'",
+               weight: "900", // Font Awesome 5 doesn't work properly unless bold.
+               code: "\uf2bd",
+               size: 50,
+               color: "#aa00ff",
+             },
+           },
+         };
 
-          setTimeout(function() {
-               // create a network
-               const network = new vis.Network(container, data, options);
-          }, 500);
+         {
+           %
+           comment %
+         } // create an array with nodes
+         const nodes = [{
+           id: 1,
+           label: "User 1",
+           group: "users",
+         }, {
+           id: 2,
+           label: "User 2",
+           group: "users",
+         }, {
+           id: 3,
+           label: "Usergroup 1",
+           group: "usergroups",
+         }, {
+           id: 4,
+           label: "Usergroup 2",
+           group: "usergroups",
+         }, {
+           id: 5,
+           label: "Organisation 1",
+           shape: "icon",
+           icon: {
+             face: "'Font Awesome 5 Free'",
+             weight: "bold", // Font Awesome 5 doesn't work properly unless bold.
+             code: "\uf1ad",
+             size: 50,
+             color: "#f0a30a",
+           },
+         }, ];
+
+         // create an array with edges
+         const edges = [{
+           from: 1,
+           to: 3
+         }, {
+           from: 1,
+           to: 4
+         }, {
+           from: 2,
+           to: 4
+         }, {
+           from: 3,
+           to: 5
+         }, {
+           from: 4,
+           to: 5
+         }, ];
+         {
+           %
+           endcomment %
+         }
+         console.log(data)
+         // prepare the arguments
+         const container = document.getElementById("mynetwork");
+         {
+           %
+           comment %
+         }
+         const data = {
+           nodes,
+           edges
+         };
+         {
+           %
+           endcomment %
+         }
+
+         setTimeout(function() {
+           // create a network
+           const network = new vis.Network(container, data, options);
+         }, 500);
 
 
 
-     });
-</script>
+       });
+     </script>
 {% endaddtoblock %}

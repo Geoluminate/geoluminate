@@ -1,34 +1,9 @@
 {% extends "geoluminate/base/detail_view.html" %}
-{% load static i18n geoluminate sekizai_tags activity_tags %}
+{% load static geoluminate sekizai_tags activity_tags easy_icons %}
 
-{% block css %}
-  {{ block.super }}
-  <link rel="stylesheet" href="{% static "client_side_image_cropping/croppie.css" %}" />
-{% endblock css %}
-
-{% block sidebar_top %}
-  <div class="text-center">
-    <img src="{{ object.profile_image }}"
-         class="w-50 rounded-circle mb-2"
-         alt="{{ object }}"
-         width="auto"
-         height="auto" />
-    <div class="actions d-flex mb-2 justify-content-center">
-      {% follow_button object %}
-      {% share_button object %}
-      <a href="" class="btn btn-sm btn-secondary">
-        <i class="fa-solid fa-envelope"></i>
-        {% trans "Contact" %}
-      </a>
-      {% block actions %}
-      {% endblock actions %}
-
-    </div>
+{% block sidebar_image %}
+  <div class="mb-3 text-center">
+    <c-avatar :image="base_object.image"
+              wrapper_class="w-50" />
   </div>
-{% endblock sidebar_top %}
-
-{% block javascript %}
-  {{ block.super }}
-  <script src="{% static "client_side_image_cropping/croppie.min.js" %}"></script>
-  <script src="{% static "client_side_image_cropping/cropping_widget.js" %}"></script>
-{% endblock javascript %}
+{% endblock sidebar_image %}

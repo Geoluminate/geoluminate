@@ -1,5 +1,5 @@
 {% for c in contributors %}
   {% comment %} djlint:off {% endcomment %}
-  <a class='text-reset text-decoration-none' href="{{ c.get_absolute_url }}">{{ c }}</a>{% if not forloop.last %}{{ separator|default:"," }}{% endif %}
+  <a class='text-reset link-underline-secondary link-underline-opacity-0 link-underline-opacity-75-hover' href="{{ c.get_absolute_url }}">{{ c }}</a>{% if not forloop.last %}{{ separator|default:"," }}{% endif %}
 {% comment %} djlint:on {% endcomment %}
 {% endfor %}

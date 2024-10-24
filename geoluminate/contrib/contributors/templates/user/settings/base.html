@@ -1,41 +1,8 @@
-{% extends "base.html" %}
-{% comment %} {% extends 'geoluminate/base/detail_view.html' %} {% endcomment %}
-{% block main %}
-  <div class="container"
-       hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
-       hx-target="#accountManagementForm">
-    <div class="row">
-      <div class="col-3 border-end">
-        {% include "account_management/partials/user_display.html" %}
-        <hr class="mb-0" />
-        {% include "account_management/menu.html" with menu=menus.account_sidebar %}
-      </div>
-      <div class="col-9 mt-3">
-        <div id="messageContainer" hx-swap-oob="true">
-          {% for message in messages %}
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-              {{ message }}
-              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-          {% endfor %}
-        </div>
-        <div id="accountManagementForm"></div>
-      </div>
-    </div>
-  </div>
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="htmxTitle" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="htmxTitle">Modal title</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">...</div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
-{% endblock main %}
+{% extends "account_management/base.html" %}
+{% load crispy_forms_tags static %}
+
+{% block content %}
+  <c-header title="{{ meta.title }}"
+            hr />
+  {% crispy formset helper %}
+{% endblock content %}

@@ -35,6 +35,9 @@ env = Env(
     # STORAGE
     S3_ENDPOINT_URL=(str, "https://media.localhost:9000"),
     S3_REGION_NAME=(str, "us-east-1"),
+    S3_BUCKET_NAME=(str, "media"),
+    S3_ACCESS_KEY_ID=(str, "minio"),
+    S3_SECRET_ACCESS_KEY=(str, "minio123"),
     # MISCELLANEOUS
     REDIS_URL=(str, "redis://redis:6379/0"),
     USE_DOCKER=(bool, False),

@@ -461,109 +461,73 @@
       "path": "..\\bootstrap\\scss\\vendor\\_rfs.scss",
       "publicPath": "/static/bundles/../bootstrap/scss/vendor/_rfs.scss"
     },
-    "css/datatables.49909867b0ef3321f6b3.css": {
-      "name": "css/datatables.49909867b0ef3321f6b3.css",
-      "path": "css\\datatables.49909867b0ef3321f6b3.css",
-      "publicPath": "/static/bundles/css/datatables.49909867b0ef3321f6b3.css"
+    "js/bootstrap-698ca71a1c4b10dd4a37.js": {
+      "name": "js/bootstrap-698ca71a1c4b10dd4a37.js",
+      "path": "js\\bootstrap-698ca71a1c4b10dd4a37.js",
+      "publicPath": "/static/bundles/js/bootstrap-698ca71a1c4b10dd4a37.js"
     },
-    "css/detail.bd242483822c0bf16dab.css": {
-      "name": "css/detail.bd242483822c0bf16dab.css",
-      "path": "css\\detail.bd242483822c0bf16dab.css",
-      "publicPath": "/static/bundles/css/detail.bd242483822c0bf16dab.css"
+    "js/bootstrap-698ca71a1c4b10dd4a37.js.LICENSE.txt": {
+      "name": "js/bootstrap-698ca71a1c4b10dd4a37.js.LICENSE.txt",
+      "path": "js\\bootstrap-698ca71a1c4b10dd4a37.js.LICENSE.txt",
+      "publicPath": "/static/bundles/js/bootstrap-698ca71a1c4b10dd4a37.js.LICENSE.txt"
     },
-    "css/project.f3ef233cd9864a4bcc45.css": {
-      "name": "css/project.f3ef233cd9864a4bcc45.css",
-      "path": "css\\project.f3ef233cd9864a4bcc45.css",
-      "publicPath": "/static/bundles/css/project.f3ef233cd9864a4bcc45.css"
+    "js/detail-698ca71a1c4b10dd4a37.js": {
+      "name": "js/detail-698ca71a1c4b10dd4a37.js",
+      "path": "js\\detail-698ca71a1c4b10dd4a37.js",
+      "publicPath": "/static/bundles/js/detail-698ca71a1c4b10dd4a37.js"
     },
-    "js/bootstrap-d01dc0a45954bccb2e85.js": {
-      "name": "js/bootstrap-d01dc0a45954bccb2e85.js",
-      "path": "js\\bootstrap-d01dc0a45954bccb2e85.js",
-      "publicPath": "/static/bundles/js/bootstrap-d01dc0a45954bccb2e85.js"
+    "js/htmx-698ca71a1c4b10dd4a37.js": {
+      "name": "js/htmx-698ca71a1c4b10dd4a37.js",
+      "path": "js\\htmx-698ca71a1c4b10dd4a37.js",
+      "publicPath": "/static/bundles/js/htmx-698ca71a1c4b10dd4a37.js"
     },
-    "js/bootstrap-d01dc0a45954bccb2e85.js.LICENSE.txt": {
-      "name": "js/bootstrap-d01dc0a45954bccb2e85.js.LICENSE.txt",
-      "path": "js\\bootstrap-d01dc0a45954bccb2e85.js.LICENSE.txt",
-      "publicPath": "/static/bundles/js/bootstrap-d01dc0a45954bccb2e85.js.LICENSE.txt"
+    "js/jquery-698ca71a1c4b10dd4a37.js": {
+      "name": "js/jquery-698ca71a1c4b10dd4a37.js",
+      "path": "js\\jquery-698ca71a1c4b10dd4a37.js",
+      "publicPath": "/static/bundles/js/jquery-698ca71a1c4b10dd4a37.js"
     },
-    "js/datatables-d01dc0a45954bccb2e85.js": {
-      "name": "js/datatables-d01dc0a45954bccb2e85.js",
-      "path": "js\\datatables-d01dc0a45954bccb2e85.js",
-      "publicPath": "/static/bundles/js/datatables-d01dc0a45954bccb2e85.js"
+    "js/justGage-698ca71a1c4b10dd4a37.js": {
+      "name": "js/justGage-698ca71a1c4b10dd4a37.js",
+      "path": "js\\justGage-698ca71a1c4b10dd4a37.js",
+      "publicPath": "/static/bundles/js/justGage-698ca71a1c4b10dd4a37.js"
     },
-    "js/datatables-d01dc0a45954bccb2e85.js.LICENSE.txt": {
-      "name": "js/datatables-d01dc0a45954bccb2e85.js.LICENSE.txt",
-      "path": "js\\datatables-d01dc0a45954bccb2e85.js.LICENSE.txt",
-      "publicPath": "/static/bundles/js/datatables-d01dc0a45954bccb2e85.js.LICENSE.txt"
+    "js/list-698ca71a1c4b10dd4a37.js": {
+      "name": "js/list-698ca71a1c4b10dd4a37.js",
+      "path": "js\\list-698ca71a1c4b10dd4a37.js",
+      "publicPath": "/static/bundles/js/list-698ca71a1c4b10dd4a37.js"
     },
-    "js/detail-d01dc0a45954bccb2e85.js": {
-      "name": "js/detail-d01dc0a45954bccb2e85.js",
-      "path": "js\\detail-d01dc0a45954bccb2e85.js",
-      "publicPath": "/static/bundles/js/detail-d01dc0a45954bccb2e85.js"
+    "js/project-698ca71a1c4b10dd4a37.js": {
+      "name": "js/project-698ca71a1c4b10dd4a37.js",
+      "path": "js\\project-698ca71a1c4b10dd4a37.js",
+      "publicPath": "/static/bundles/js/project-698ca71a1c4b10dd4a37.js"
     },
-    "js/detail-d01dc0a45954bccb2e85.js.LICENSE.txt": {
-      "name": "js/detail-d01dc0a45954bccb2e85.js.LICENSE.txt",
-      "path": "js\\detail-d01dc0a45954bccb2e85.js.LICENSE.txt",
-      "publicPath": "/static/bundles/js/detail-d01dc0a45954bccb2e85.js.LICENSE.txt"
-    },
-    "js/htmx-d01dc0a45954bccb2e85.js": {
-      "name": "js/htmx-d01dc0a45954bccb2e85.js",
-      "path": "js\\htmx-d01dc0a45954bccb2e85.js",
-      "publicPath": "/static/bundles/js/htmx-d01dc0a45954bccb2e85.js"
-    },
-    "js/jquery-d01dc0a45954bccb2e85.js": {
-      "name": "js/jquery-d01dc0a45954bccb2e85.js",
-      "path": "js\\jquery-d01dc0a45954bccb2e85.js",
-      "publicPath": "/static/bundles/js/jquery-d01dc0a45954bccb2e85.js"
-    },
-    "js/justGage-d01dc0a45954bccb2e85.js": {
-      "name": "js/justGage-d01dc0a45954bccb2e85.js",
-      "path": "js\\justGage-d01dc0a45954bccb2e85.js",
-      "publicPath": "/static/bundles/js/justGage-d01dc0a45954bccb2e85.js"
-    },
-    "js/list-d01dc0a45954bccb2e85.js": {
-      "name": "js/list-d01dc0a45954bccb2e85.js",
-      "path": "js\\list-d01dc0a45954bccb2e85.js",
-      "publicPath": "/static/bundles/js/list-d01dc0a45954bccb2e85.js"
-    },
-    "js/project-d01dc0a45954bccb2e85.js": {
-      "name": "js/project-d01dc0a45954bccb2e85.js",
-      "path": "js\\project-d01dc0a45954bccb2e85.js",
-      "publicPath": "/static/bundles/js/project-d01dc0a45954bccb2e85.js"
-    },
-    "js/project-d01dc0a45954bccb2e85.js.LICENSE.txt": {
-      "name": "js/project-d01dc0a45954bccb2e85.js.LICENSE.txt",
-      "path": "js\\project-d01dc0a45954bccb2e85.js.LICENSE.txt",
-      "publicPath": "/static/bundles/js/project-d01dc0a45954bccb2e85.js.LICENSE.txt"
+    "js/project-698ca71a1c4b10dd4a37.js.LICENSE.txt": {
+      "name": "js/project-698ca71a1c4b10dd4a37.js.LICENSE.txt",
+      "path": "js\\project-698ca71a1c4b10dd4a37.js.LICENSE.txt",
+      "publicPath": "/static/bundles/js/project-698ca71a1c4b10dd4a37.js.LICENSE.txt"
     }
   },
   "chunks": {
     "bootstrap": [
-      "js/bootstrap-d01dc0a45954bccb2e85.js"
-    ],
-    "datatables": [
-      "js/datatables-d01dc0a45954bccb2e85.js",
-      "css/datatables.49909867b0ef3321f6b3.css"
+      "js/bootstrap-698ca71a1c4b10dd4a37.js"
     ],
     "detail": [
-      "js/detail-d01dc0a45954bccb2e85.js",
-      "css/detail.bd242483822c0bf16dab.css"
+      "js/detail-698ca71a1c4b10dd4a37.js"
     ],
     "htmx": [
-      "js/htmx-d01dc0a45954bccb2e85.js"
+      "js/htmx-698ca71a1c4b10dd4a37.js"
     ],
     "jquery": [
-      "js/jquery-d01dc0a45954bccb2e85.js"
+      "js/jquery-698ca71a1c4b10dd4a37.js"
     ],
     "justGage": [
-      "js/justGage-d01dc0a45954bccb2e85.js"
+      "js/justGage-698ca71a1c4b10dd4a37.js"
     ],
     "list": [
-      "js/list-d01dc0a45954bccb2e85.js"
+      "js/list-698ca71a1c4b10dd4a37.js"
     ],
     "project": [
-      "js/project-d01dc0a45954bccb2e85.js",
-      "css/project.f3ef233cd9864a4bcc45.css"
+      "js/project-698ca71a1c4b10dd4a37.js"
     ]
   },
   "publicPath": "/static/bundles/"

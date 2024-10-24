@@ -17,7 +17,7 @@ GEOLUMINATE_ALLOWED_IDENTIFIERS = {
         "IGSN": "https://igsn.org/",
         # "DOI": "https://doi.org/",
     },
-    "contributors.Personal": {
+    "contributors.Person": {
         "ORCID": "https://orcid.org/",
         # "researcher_id": "https://app.geosamples.org/sample/researcher_id/",
         # "scopus_id": "https://app.geosamples.org/sample/scopus_id/",

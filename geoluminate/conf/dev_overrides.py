@@ -1,19 +1,24 @@
 import os
 
+
 env = globals()["env"]
+
 
 DEBUG = env.bool("DJANGO_DEBUG")
 
+ACCOUNT_EMAIL_VERIFICATION = "optional"
 ALLOWED_HOSTS = ["*"]
 AUTH_PASSWORD_VALIDATORS = []
-ACCOUNT_EMAIL_VERIFICATION = "optional"
-COMPRESS_OFFLINE = False
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 AWS_USE_SSL = False
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+SECURE_SSL_REDIRECT = False
 DATABASES = {
     "default": {
+        "ATOMIC_REQUESTS": True,
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
+        "CONN_MAX_AGE": 60,
     }
 }
 
@@ -23,6 +28,18 @@ STORAGES["default"] = {
 }
 
 THUMBNAIL_DEFAULT_STORAGE = "easy_thumbnails.storage.ThumbnailFileSystemStorage"
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.dummy.DummyCache",
+        "LOCATION": "",
+    },
+    "select2": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "LOCATION": "",
+    },
+}
+
 
 CACHES["vocabularies"] = {
     "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
@@ -34,8 +51,10 @@ VOCABULARY_DEFAULT_CACHE = "vocabularies"
 
 SHELL_PLUS = "ipython"
 
+# STATIC FILES OVERRIDES
 INSTALLED_APPS.insert(0, "whitenoise.runserver_nostatic")
-
+COMPRESS_OFFLINE = False
+COMPRESS_ENABLED = False
 
 if env("USE_DOCKER"):
     WEBPACK_LOADER = {
@@ -50,8 +69,6 @@ if env("USE_DOCKER"):
 if env("SHOW_DEBUG_TOOLBAR"):
     INSTALLED_APPS.append("debug_toolbar")
     MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
-
-# if env("DJANGO_CACHE"):
 
 
 INTERNAL_IPS = ["127.0.0.1"]

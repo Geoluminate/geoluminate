@@ -6,7 +6,6 @@ env = globals()["env"]
 BASE_DIR = globals()["BASE_DIR"]
 SITE_DOMAIN = globals()["SITE_DOMAIN"]
 
-
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-root
 STATIC_ROOT = COMPRESS_ROOT = str(BASE_DIR / "static")
 
@@ -67,10 +66,10 @@ COMPRESS_PRECOMPILERS = (("text/x-scss", "django_libsass.SassCompiler"),)
 
 S3_BUCKET_NAME = env("S3_BUCKET_NAME")
 S3_CUSTOM_DOMAIN = f"media.{SITE_DOMAIN}/{S3_BUCKET_NAME}"
-
+S3_ACCESS_KEY = env("S3_BUCKET_NAME") or env("DJANGO_SUPERUSER_EMAIL")
 # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html
 S3_SETTINGS = {
-    "access_key": env("S3_ACCESS_KEY_ID"),
+    "access_key": S3_ACCESS_KEY,
     "secret_key": env("S3_SECRET_ACCESS_KEY"),
     "bucket_name": S3_BUCKET_NAME,
     "custom_domain": S3_CUSTOM_DOMAIN,

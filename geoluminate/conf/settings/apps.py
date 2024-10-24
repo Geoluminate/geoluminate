@@ -94,5 +94,6 @@ INSTALLED_APPS = [
     "flex_menu",
     "django_tables2",
     "django_setup_tools",
+    "django_cotton.apps.SimpleAppConfig",
     *GEOLUMINATE_APPS,
 ]

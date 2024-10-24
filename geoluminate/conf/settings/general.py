@@ -64,12 +64,17 @@ TEMPLATES = [
                 "django.template.context_processors.static",
                 "geoluminate.core.utils.context_processor",
             ],
+            "builtins": [
+                "django.templatetags.i18n",
+                "django_cotton.templatetags.cotton",
+            ],
         },
     },
 ]
 # for django-template-partials to work alongside django-admin-tools (for some reason, wrap_loaders is not working)
 default_loaders = [
     "admin_tools.template_loaders.Loader",
+    "django_cotton.cotton_loader.Loader",
     "django.template.loaders.filesystem.Loader",
     "django.template.loaders.app_directories.Loader",
 ]
@@ -151,3 +156,5 @@ DJANGO_SETUP_TOOLS = {
         ],
     },
 }
+
+COTTON_DIR = "components"

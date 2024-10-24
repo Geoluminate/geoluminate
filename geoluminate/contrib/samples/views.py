@@ -56,11 +56,16 @@ class SampleDetailView(BaseDetailView):
         "menu": "SampleDetailMenu",
     }
 
-    def get_object(self):
-        # note: we are using base_objects here to get the base model (Sample) instance
-        obj = self.base.model.base_objects.get(pk=self.kwargs.get("pk"))
-        self.real = obj.get_real_instance()
-        return obj
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.real = self.object.get_real_instance()
+        return super().get(request, *args, **kwargs)
+
+    # def get_object(self):
+    #     # note: we are using base_objects here to get the base model (Sample) instance
+    #     obj = self.base.model.base_objects.get(pk=self.kwargs.get("pk"))
+    #     self.real = obj.get_real_instance()
+    #     return obj
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -104,9 +109,9 @@ class SampleDetailView(BaseDetailView):
 
         return result
 
-    def get_meta_title(self, context):
-        real_name = self.real._meta.verbose_name
-        return f"{real_name} - {self.real}"
+    # def get_meta_title(self, context):
+    #     real_name = self.real._meta.verbose_name
+    #     return f"{real_name} - {self.real}"
 
 
 class SampleEditView(BaseUpdateView):

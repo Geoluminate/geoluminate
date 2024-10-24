@@ -1,15 +1,15 @@
-const path = require('path');
-const BundleTracker = require('webpack-bundle-tracker');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const path = require('path')
+const BundleTracker = require('webpack-bundle-tracker')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
-const BaseDir = path.resolve(__dirname, '../../');
-const BundleDir = path.resolve(BaseDir, './geoluminate/static/bundles/');
-const AssetsDir = path.resolve(__dirname, '../');
-const VendorDir = path.resolve(__dirname, '../src/vendors/');
+const BaseDir = path.resolve(__dirname, '../../')
+const BundleDir = path.resolve(BaseDir, './geoluminate/static/bundles/')
+const AssetsDir = path.resolve(__dirname, '../')
+const VendorDir = path.resolve(__dirname, '../src/vendors/')
 
-console.log('Webpack common config:');
-console.log('Output Path:', BundleDir);
-console.log('Context Path:', AssetsDir);
+console.log('Webpack common config:')
+console.log('Output Path:', BundleDir)
+console.log('Context Path:', AssetsDir)
 
 module.exports = {
   target: 'web',
@@ -17,7 +17,7 @@ module.exports = {
   entry: {
     jquery: 'jquery',
     bootstrap: path.resolve(VendorDir, './bootstrap'),
-    datatables: path.resolve(AssetsDir, './src/datatables/index'),
+    // datatables: path.resolve(AssetsDir, './src/datatables/index'),
     htmx: 'htmx.org',
     justGage: path.resolve(VendorDir, './justGage'),
     list: path.resolve(__dirname, '../src/list'),
@@ -98,4 +98,4 @@ module.exports = {
   //     maxSize: 244000,
   //   },
   // },
-};
+}

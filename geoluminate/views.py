@@ -1,12 +1,20 @@
+from typing import Any
+
 from crispy_forms.helper import FormHelper
 from django import forms
+from django.apps import apps
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db import models
+from django.db.models import QuerySet
 from django.db.models.base import Model as Model
 from django.forms import modelform_factory
+from django.http import Http404
+from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.utils.decorators import classonlymethod, method_decorator
 from django.views.decorators.cache import cache_page
-from django.views.generic import DetailView, TemplateView, UpdateView
+from django.views.generic import TemplateView, UpdateView
+from django.views.generic.detail import SingleObjectTemplateResponseMixin
 from django_filters.views import FilterView
 from neapolitan.views import CRUDView, Role
 
@@ -26,32 +34,78 @@ class BaseListView(BaseMixin, ListFilterMixin, HTMXMixin2, FilterView):
     The base class for displaying a list of objects within the Geoluminate framework.
     """
 
+    ncols = 1
     list_filter_top = ["title", "o"]
-
-    # def get_breadcrumbs(self):
-    #     model = self.get_model()
-    #     return [{"title": model._meta.verbose_name_plural, "url": reverse(f"{model._meta.model_name}-list")}]
 
     def get_model(self):
         return self.model or self.queryset.model
 
 
-class BaseDetailView(BaseMixin, HTMXMixin, GeoluminatePermissionMixin, DetailView):
-    base = None
+class BaseDetailView(BaseMixin, GeoluminatePermissionMixin, SingleObjectTemplateResponseMixin):
     base_template_suffix = "_detail.html"
+    base_template: str | None = None
+    base_template_suffix: str = ".html"
+    template_name: str | None = None
+    object_list: QuerySet | None = None
+    base_model: models.Model = None
+    core_mapping = {
+        "p": "projects.Project",
+        "d": "datasets.Dataset",
+        "s": "samples.Sample",
+        "m": "measurements.Measurement",
+        "c": "contributors.Contributor",
+    }
 
-    def get_object(self, queryset=None):
-        """Returns the profile object."""
-        return self.base.model.objects.get(pk=self.kwargs.get("pk"))
+    def dispatch(self, request, *args, **kwargs):
+        pk = self.kwargs.get("pk")
+        if mtype := self.core_mapping.get(pk[0], None):
+            self.base_model = apps.get_model(mtype)
+        else:
+            raise Http404("Object does not exist")
+        if hasattr(self.base_model, "polymorphic_model_marker"):
+            self.base_object = get_object_or_404(self.base_model.objects.non_polymorphic(), pk=pk)
+        else:
+            self.base_object = get_object_or_404(self.base_model, pk=pk)
+
+        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["base"] = self.base
-        context["base_model_name"] = self.base.model._meta.model_name
-        context["base_model_verbose_name"] = self.base.model._meta.verbose_name
-        context["base_model_name_plural"] = self.base.model._meta.verbose_name_plural
-        # context["dates"] = self.get_dates()
+        context["base_model"] = self.base_model
+        context["base_model_name"] = self.base_model._meta.verbose_name
+        context["base_model_name_plural"] = self.base_model._meta.verbose_name_plural
+        context["base_object"] = self.base_object
+        context[self.base_model._meta.model_name] = self.base_object
+        # context["template_name"] = self.get_template_names()
+        context["template_name"] = self.template_name
         return context
+
+    def get_base_template(self, **kwargs: Any) -> list[str]:
+        """
+        Returns the base template name based on the model's meta information and the requesting app's name.
+        """
+        opts = self.base_model._meta
+
+        requesting_app_name = self.request.resolver_match.app_name
+        names = [
+            f"{requesting_app_name}/base{self.base_template_suffix}",
+            # f"{opts.app_label}/{opts.model_name}{self.base_template_suffix}",
+            f"{opts.app_label}/base{self.base_template_suffix}",
+            # f"{opts.app_label}/{opts.model_name}_base.html",
+            f"base{self.base_template_suffix}",
+            "base.html",
+        ]
+        if base_template := self.kwargs.get("base_template") or self.base_template:
+            names.insert(0, base_template)
+        return names
+
+    def get_template_names(self) -> list[str]:
+        """
+        Returns the template name. If the request is an HTMX request, it returns `self.template_name`. Otherwise, it returns the result of `self.get_base_template()`.
+        """
+        if self.request.htmx:
+            return [self.template_name]
+        return self.get_base_template()
 
     def get_dates(self):
         output = {}
@@ -162,9 +216,17 @@ class BaseUpdateView(BaseFormView, UpdateView):
 
 class HomeView(TemplateView):
     template_name = "home.html"
+    authenticated_template = "dashboard.html"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+    def get_template_names(self):
+        if self.request.user.is_authenticated:
+            return self.authenticated_template
+        return super().get_template_names()
+
+    def authenticated_context(self, context, **kwargs):
+        return context
+
+    def anonymous_context(self, context, **kwargs):
         result = []
         for stype in Sample.get_subclasses():
             metadata = stype.get_metadata()
@@ -186,5 +248,8 @@ class HomeView(TemplateView):
         # context["measurement_types"] = MeasurementType.objects.all()
         return context
 
-    def register_template(self, template_name: str):
-        return template_name
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            return self.authenticated_context(context, **kwargs)
+        return self.anonymous_context(context, **kwargs)

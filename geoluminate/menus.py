@@ -82,8 +82,8 @@ DatabaseMenu = Menu(
         #     ),
         # ),
         MenuItem(
-            _("Literature"),
-            url="/literature/",
+            _("References"),
+            view_name="reference-list",
             icon="literature",
             count=LiteratureItem.objects.count,
             description=_(

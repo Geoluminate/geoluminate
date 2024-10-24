@@ -34,4 +34,4 @@ class ProjectPlugin(ListPluginMixin):
     icon = "project.svg"
 
     def get_queryset(self, *args, **kwargs):
-        return self.get_object().projects.all()
+        return self.base_object.projects.all()

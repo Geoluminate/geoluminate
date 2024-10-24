@@ -9,6 +9,6 @@ from .views import ProjectEditView, ProjectListView
 urlpatterns = [
     *ProjectEditView.get_urls(),
     path("projects/", ProjectListView.as_view(), name="project-list"),
-    path("p/<uuid:pk>/", include(project.urls)),
-    path("p/<uuid:pk>/", include(DatasetEditView.get_urls(roles=[Role.CREATE]))),
+    path("p/<str:pk>/", include(project.urls)),
+    path("p/<str:pk>/", include(DatasetEditView.get_urls(roles=[Role.CREATE]))),
 ]

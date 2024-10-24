@@ -3,7 +3,6 @@ from django.utils.translation import gettext as _
 from geoluminate.core.views.mixins import ListPluginMixin
 from geoluminate.views import BaseDetailView, BaseEditView, BaseListView
 
-from .filters import DatasetFilter
 from .forms import DatasetForm
 from .models import Dataset
 
@@ -21,30 +20,28 @@ class DatasetListView(BaseListView):
 
     title = _("Datasets")
     queryset = Dataset.objects.prefetch_related("contributors").order_by("-created")
-    filterset_class = DatasetFilter
+    # filterset_class = DatasetFilter
+    model = Dataset
+    filterset_fields = [
+        "id",
+        "title",
+        "license",
+    ]
 
 
 class DatasetDetailView(BaseDetailView):
     base_template = "datasets/dataset_detail.html"
     model = Dataset
     title = _("Dataset")
-    form_class = DatasetForm
     extra_context = {
         "menu": "DatasetDetailMenu",
+        "sidebar_fields": [
+            "title",
+            "project",
+            "created",
+            "modified",
+        ],
     }
-    sidebar_fields = [
-        "title",
-        "project",
-        "created",
-        "modified",
-    ]
-    sidebar_components = [
-        "core/sidebar/basic_info.html",
-        "datasets/sidebar/project.html",
-        "core/sidebar/keywords.html",
-        "core/sidebar/status.html",
-        "core/sidebar/summary.html",
-    ]
 
 
 class DatasetEditView(BaseEditView):
@@ -58,4 +55,4 @@ class DatasetPlugin(ListPluginMixin):
     icon = "dataset"
 
     def get_queryset(self, *args, **kwargs):
-        return self.get_object().datasets.all()
+        return self.base_object.datasets.all()

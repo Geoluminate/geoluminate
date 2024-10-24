@@ -1,3 +1,6 @@
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Column, Layout, Row, Submit
+from django import forms
 from formset.collection import FormCollection
 from formset.fields import Activator
 from formset.renderers import ButtonVariant
@@ -80,14 +83,20 @@ class ProfileIdentifierForm(FormCollection):
     #                 holder.construct_instance(holder.instance)
 
 
-class UserIdentifierForm(FormCollection):
-    identifiers = ProfileIdentifierForm()
-    submit = DEFAULT_SUBMIT_BUTTON
-    default_renderer = FormRenderer(
-        form_css_classes="row mb-2",
-        label_css_classes="visually-hidden",
-        field_css_classes={
-            "scheme": "col-3",
-            "identifier": "col-6",
-        },
-    )
+class UserIdentifierForm(forms.ModelForm):
+    class Meta:
+        model = Identifier
+        fields = ["scheme", "identifier"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Row(
+                Column("scheme", css_class="col-3"),
+                Column("identifier", css_class="col-6"),
+                Column("delete", css_class="col-3"),
+            )
+        )
+        self.helper.add_input(Submit("submit", "Save"))
+        self.helper.render_required_fields = True

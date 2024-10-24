@@ -4,7 +4,6 @@ from django.utils.translation import gettext as _
 from django.views.generic import TemplateView
 from django_tables2 import tables
 from django_tables2.views import SingleTableMixin
-from easy_icons.templatetags.easy_icons import icon
 
 from geoluminate.core.views.mixins import ListPluginMixin, PolymorphicSubclassBaseView, PolymorphicSubclassMixin
 from geoluminate.views import BaseDetailView, BaseListView, BaseUpdateView
@@ -150,20 +149,10 @@ class SampleEditView(BaseUpdateView):
 
 class SampleTable(tables.Table):
     name = tables.columns.Column(linkify=True)
-    location = tables.columns.Column(linkify=True)
 
     class Meta:
         model = Sample
-        fields = [
-            "location",
-            "name",
-            "status",
-            "numchild",
-            # "corr_HP_flag",
-        ]
-
-    def render_location(self, record):
-        return icon("map.svg")
+        fields = ["name", "status", "numchild"]
 
 
 class SamplePlugin(SingleTableMixin, ListPluginMixin):
@@ -180,4 +169,4 @@ class SamplePlugin(SingleTableMixin, ListPluginMixin):
         return self.get_queryset()
 
     def get_queryset(self, *args, **kwargs):
-        return self.get_object().samples.filter(depth=1)
+        return self.base_object.samples.filter(depth=1)

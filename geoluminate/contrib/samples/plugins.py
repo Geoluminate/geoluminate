@@ -1,3 +1,5 @@
+from django.views.generic.base import TemplateView
+
 from geoluminate.contrib.contributors.views import ContributorsPlugin
 from geoluminate.core.plugins import Discussion, Images
 from geoluminate.core.utils import label
@@ -8,9 +10,9 @@ from .views import SamplePlugin
 
 
 @sample.page("overview", icon="overview")
-class SampleOverview:
+class SampleOverview(TemplateView):
     model = Sample
-    template_name = "geoluminate/plugins/overview.html"
+    template_name = "core/plugins/overview.html"
     title = label("sample")["verbose_name"]
 
 

@@ -11,7 +11,7 @@ urlpatterns = [
     path("datasets/", DatasetListView.as_view(), name="dataset-list"),
     *DatasetEditView.get_urls(),
     path(
-        "d/<uuid:pk>/",
+        "d/<str:pk>/",
         include(
             [
                 *dataset.urls,
@@ -20,5 +20,5 @@ urlpatterns = [
             ]
         ),
     ),
-    # path("d/<uuid:pk>/", include(SampleEditView.get_urls(roles=[Role.CREATE])), kwargs={"related_name": Dataset}),
+    # path("d/<str:pk>/", include(SampleEditView.get_urls(roles=[Role.CREATE])), kwargs={"related_name": Dataset}),
 ]

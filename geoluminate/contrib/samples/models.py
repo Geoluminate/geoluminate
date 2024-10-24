@@ -31,7 +31,7 @@ class Sample(Abstract, PolymorphicMixin, PolymorphicMP_Node):
     id = ShortUUIDField(
         editable=False,
         unique=True,
-        prefix="p",
+        prefix="s",
         verbose_name="UUID",
         primary_key=True,
     )

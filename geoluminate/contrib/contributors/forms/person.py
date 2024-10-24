@@ -1,6 +1,12 @@
+from client_side_image_cropping import ClientsideCroppingWidget
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import ButtonHolder, Column, Layout, Row, Submit
 from django import forms
 from django.contrib.auth import get_user_model
 from django.forms.models import ModelForm
+from django.utils.translation import gettext as _
+
+from geoluminate.core.choices import iso_639_1_languages
 
 User = get_user_model()
 
@@ -31,26 +37,59 @@ class BaseUserForm(ModelForm):
         fields = ["first_name", "last_name", "email"]
 
 
-class UserForm(ModelForm):
+class UserProfileForm(forms.ModelForm):
+    image = forms.ImageField(
+        widget=ClientsideCroppingWidget(
+            width=300,
+            height=300,
+            preview_width="100%",
+            preview_height="100%",
+            file_name="profile.jpg",
+        ),
+        required=False,
+        label=False,
+    )
+    lang = forms.ChoiceField(
+        choices=iso_639_1_languages,
+        initial="en",
+        # widget=Selectize(),
+        help_text=_("Preferred display language for this site (where possible)."),
+        label=_("Language"),
+    )
+
+    name = forms.CharField(help_text=_("Your name as it will appear on this site."))
+
+    # hopefully this can be removed when this issue is solved: https://github.com/koendewit/django-client-side-image-cropping/issues/15
+    class Media:
+        css = {
+            "all": (
+                "client_side_image_cropping/croppie.css",
+                # "client_side_image_cropping/cropping_widget.css",
+            ),
+        }
+        js = (
+            "client_side_image_cropping/croppie.min.js",
+            "client_side_image_cropping/cropping_widget.js",
+        )
+
     class Meta:
         model = User
-        fields = ["first_name", "last_name", "email"]
+        fields = "__all__"
+        fields = ["image", "lang", "first_name", "last_name", "email", "name"]
 
-    # def model_to_dict(self, contributor):
-    #     try:
-    #         return model_to_dict(contributor, fields=self._meta.fields, exclude=self._meta.exclude)
-    #     except PersonalContributor.DoesNotExist:
-    #         return {}
-
-    # def construct_instance(self, contributor):
-    #     try:
-    #         profile = contributor
-    #     except PersonalContributor.DoesNotExist:
-    #         profile = PersonalContributor(user=user)
-    #     form = ContributorForm(data=self.cleaned_data, instance=profile)
-    #     if form.is_valid():
-    #         construct_instance(form, profile)
-    #         form.save()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Row(
+                Column("name", "first_name", "last_name", css_class="col-md-8"),
+                Column("image"),
+                css_class="gx-5",
+            ),
+            "lang",
+            "email",
+            ButtonHolder(Submit("submit", "Save")),
+        )
 
 
 # class CodeOfConductForm()

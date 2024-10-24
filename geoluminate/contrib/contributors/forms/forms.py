@@ -1,7 +1,6 @@
 from client_side_image_cropping import ClientsideCroppingWidget
 from crispy_forms.helper import FormHelper
 from django import forms
-from django.forms.models import ModelForm
 from django.utils.translation import gettext as _
 from django_select2.forms import Select2MultipleWidget, Select2Widget
 from formset.widgets import Selectize, UploadedFileInput
@@ -11,7 +10,7 @@ from geoluminate.core.choices import iso_639_1_languages
 from ..models import Contributor, Identifier
 
 
-class UserProfileForm(ModelForm):
+class UserProfileForm(forms.ModelForm):
     image = forms.ImageField(
         widget=ClientsideCroppingWidget(
             width=300,
@@ -43,7 +42,7 @@ class UserProfileForm(ModelForm):
         ]
 
 
-class AddContributorForm(ModelForm):
+class AddContributorForm(forms.ModelForm):
     """A form that can be used by a user to add details for a new contributor."""
 
     lang = forms.ChoiceField(
@@ -72,7 +71,7 @@ class AddContributorForm(ModelForm):
         return cleaned_data
 
 
-class ContributionForm(ModelForm):
+class ContributionForm(forms.ModelForm):
     """Used to modify contributors on a project, dataset, etc. and assign roles."""
 
     class Meta:
@@ -99,7 +98,7 @@ class ContributionForm(ModelForm):
     #     return is_valid
 
 
-class ContributorForm(ModelForm):
+class ContributorForm(forms.ModelForm):
     image = forms.ImageField(
         widget=UploadedFileInput(
             attrs={
@@ -115,7 +114,7 @@ class ContributorForm(ModelForm):
         fields = ["image", "name", "profile", "lang"]
 
 
-class IdentifierForm(ModelForm):
+class IdentifierForm(forms.ModelForm):
     min_siblings = 0
 
     id = forms.IntegerField(required=False, widget=forms.HiddenInput)

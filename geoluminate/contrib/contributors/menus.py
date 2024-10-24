@@ -1,38 +1,37 @@
-from account_management.menus import UserManagementMenu
+from account_management.menus import AccountMenu, FloatingAccountMenu
+from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from flex_menu import Menu, MenuItem
 
-UserManagementMenu.add_child(
-    Menu(
-        "ProfileMenu",
-        label=_("Profile"),
-        children=[
-            MenuItem(_("Your Profile"), view_name="contributor-profile", icon="user"),
-            MenuItem(_("Recent Activity"), view_name="contributor-profile"),
-            MenuItem(_("Following"), view_name="contributor-profile"),
-            MenuItem(_("Database Admin"), view_name="admin:index"),
-        ],
-    ),
+
+def get_contibutor_url(request):
+    return reverse_lazy("contributor-detail", args=[request.user.id])
+
+
+AccountMenu.add_children(
+    [
+        Menu(
+            "ProfileMenu",
+            label=_("Profile"),
+            children=[
+                MenuItem(_("Edit Profile"), view_name="contributor-profile", icon="user"),
+                MenuItem(_("Recent Activity"), view_name="contributor-profile", icon="activity"),
+                MenuItem(_("Following"), view_name="contributor-profile", icon="star-solid"),
+                MenuItem(_("Identifiers"), view_name="contributor-identifiers", icon="identifier"),
+                MenuItem(_("Affiliations"), view_name="contributor-affiliations", icon="organization"),
+            ],
+        ),
+    ],
     position=0,
 )
 
 
-# SettingsMenu.add_items(
-#     SubMenu(
-#         _("profile"),
-#         weight=1,
-#         children=[
-#             MenuItem(_("Public Profile"), reverse("contributor-profile"), icon=icon("person")),
-#             MenuItem(_("affiliations"), reverse("contributor-affiliations"), icon="fas fa-building-user"),
-#             MenuItem(_("identifiers"), reverse("contributor-identifiers"), icon="fa fa-fingerprint"),
-#         ],
-#     )
-# )
-
-
-# AccountSubMenu = SettingsMenu.submenus["Account"]
-
-
-# AccountSubMenu.children.append(
-#     MenuItem(_("identifiers"), reverse("user:contributor-identifiers"), icon="fa fa-fingerprint"),
-# )
+FloatingAccountMenu.add_children(
+    [
+        MenuItem(_("Profile"), url=get_contibutor_url, icon="user"),
+        MenuItem(_("Manage Account"), view_name="account-management", icon="activity"),
+        MenuItem(_("Recent Activity"), view_name="contributor-profile", icon="activity"),
+        MenuItem(_("Database Admin"), view_name="admin:index", icon="administration"),
+    ],
+    position=0,
+)

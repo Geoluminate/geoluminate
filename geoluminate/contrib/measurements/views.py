@@ -72,10 +72,10 @@ class MeasurementPlugin(SingleTableMixin, ListPluginMixin):
     def get_table_data(self):
         return self.get_queryset()
 
-    def get_queryset(self, *args, **kwargs):
-        measurement_type = self.request.GET.get("measurement_type")
-        measurement_type = "HeatFlowSite"
-        from django.apps import apps
+    # def get_queryset(self, *args, **kwargs):
+    # measurement_type = self.request.GET.get("mtype")
+    # measurement_type = "HeatFlowSite"
+    # from django.apps import apps
 
-        mtype = apps.get_model("heat_flow.ParentHeatFlow")
-        return mtype.objects.filter(sample__dataset=self.get_object()).select_related("sample__dataset")
+    # mtype = apps.get_model("heat_flow.ParentHeatFlow")
+    # return mtype.objects.filter(sample__dataset=self.get_object()).select_related("sample__dataset")

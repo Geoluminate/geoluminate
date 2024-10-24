@@ -6,7 +6,6 @@ from django.contrib.auth.models import AbstractUser
 from django.db.models import Count
 from django.templatetags.static import static
 from django.urls import reverse
-from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 from easy_thumbnails.fields import ThumbnailerImageField
 from jsonfield_toolkit.models import ArrayField
@@ -57,7 +56,8 @@ class Contributor(models.Model, PolymorphicMixin, PolymorphicModel):
         # help_text=_("This name is displayed publicly within the website."),
     )
 
-    alternative_names = models.JSONField(
+    alternative_names = ArrayField(
+        base_field=models.CharField(max_length=255),
         verbose_name=_("alternative names"),
         help_text=_("Any other names by which the contributor is known."),
         null=True,
@@ -82,12 +82,13 @@ class Contributor(models.Model, PolymorphicMixin, PolymorphicModel):
         default=list,
     )
 
-    lang = models.CharField(
-        max_length=255,
+    lang = ArrayField(
+        base_field=models.CharField(max_length=5),
         verbose_name=_("language"),
         help_text=_("Language of the contributor."),
         blank=True,
         null=True,
+        default=list,
     )
 
     class Meta:
@@ -95,21 +96,13 @@ class Contributor(models.Model, PolymorphicMixin, PolymorphicModel):
         verbose_name = _("contributor")
         verbose_name_plural = _("contributors")
 
+    @staticmethod
+    def base_class():
+        # this is required for many of the class methods in PolymorphicMixin
+        return Contributor
+
     def __str__(self):
         return self.name
-
-    def default_affiliation(self):
-        """Returns the default affiliation for the contributor. TODO: make this a foreign key to an organization model."""
-        if self.user:
-            return self.user.organizations_organization.first()
-        return None
-
-    def location(self):
-        """Returns the location of the contributor. TODO: make this a foreign key to a location model."""
-        return random.choice(["Potsdam", "Adelaide", "Dresden"])
-        if self.user:
-            return self.user.organization.location
-        return None
 
     def get_absolute_url(self):
         return reverse("contributor-detail", kwargs={"pk": self.pk})
@@ -122,33 +115,11 @@ class Contributor(models.Model, PolymorphicMixin, PolymorphicModel):
             return self.image.url
         return static("img/brand/icon.svg")
 
-    @property
     def type(self):
-        if self.user:
-            return _("Personal")
-        return _("Organizational")
-
-    @property
-    def given(self):
-        if self.user:
-            return self.user.first_name
-        return ""
-
-    @property
-    def family(self):
-        if self.user:
-            return self.user.last_name
-        return ""
-
-    @cached_property
-    def owner(self):
-        return self.user or self.organization
-
-    @property
-    def preferred_email(self):
-        if self.user:
-            return self.user.email
-        return self.organization.owner.user.email
+        return self.polymorphic_ctype.model
+        # if hasattr(self, "person", None):
+        #     return "person"
+        # return "organization"
 
 
 class Person(AbstractUser, Contributor):
@@ -164,17 +135,38 @@ class Person(AbstractUser, Contributor):
     username = Contributor.__str__
     # polymorphic_primary_key_name = "id"
 
+    def __str__(self):
+        return self.name
+
     def save(self, *args, **kwargs):
         if not self.pk:
             self.name = f"{self.first_name} {self.last_name}"
         super().save(*args, **kwargs)
 
-    def __str__(self):
-        return self.name
-
     def get_provider(self, provider: str):
         qs = self.socialaccount_set.filter(provider=provider)  # type: ignore[attr-defined]
         return qs.get() if qs else None
+
+    def default_affiliation(self):
+        """Returns the default affiliation for the contributor. TODO: make this a foreign key to an organization model."""
+        if self.user:
+            return self.user.organizations_organization.first()
+        return None
+
+    def location(self):
+        """Returns the location of the contributor. TODO: make this a foreign key to a location model."""
+        return random.choice(["Potsdam", "Adelaide", "Dresden"])
+        return self.organization.location
+
+    @property
+    def given(self):
+        """Alias for self.first_name."""
+        return self.first_name
+
+    @property
+    def family(self):
+        """Alias for self.last_name."""
+        return self.last_name
 
 
 class OrganizationMember(models.Model):
@@ -224,6 +216,7 @@ class Organization(Contributor):
         to="contributors.Person",
         through="contributors.OrganizationMember",
         verbose_name=_("members"),
+        related_name="affiliations",
         help_text=_("A list of personal contributors that are members of the organization."),
     )
 
@@ -243,12 +236,6 @@ class Organization(Contributor):
 
     def __str__(self):
         return self.name
-
-    def get_absolute_url(self):
-        return reverse("organization-detail", kwargs={"pk": self.pk})
-
-    def get_update_url(self):
-        return reverse("organization-update", kwargs={"pk": self.pk})
 
     # @property
     # def type(self):

@@ -1,6 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models.base import Model as Model
-from django.urls import reverse
 from django.utils.translation import gettext as _
 from django.views.generic.detail import SingleObjectMixin
 from django_contact_form.views import ContactFormView
@@ -15,50 +14,34 @@ from ..models import Contributor
 
 class ContributorListView(BaseListView):
     title = _("Contributors")
-    base_template = "contributors/contributor_list.html"
-    object_template = "contributors/contributor_row.html"
+    # base_template = "contributors/contributor_list.html"
+    # object_template = "contributors/contributor_card.html"
     queryset = Contributor.objects.non_polymorphic()
     filterset_class = ContributorFilter
-    list_filter_top = ["name", "o"]
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["object_template"] = self.object_template
-        return context
+    ncols = 5
 
 
 class ContributorDetailView(BaseDetailView):
     base_template = "contributors/contributor_detail.html"
     model = Contributor
-    form_class = UserProfileForm
-    sidebar_components = [
-        ("contributors/sidebar/basic_info.html", "name,about"),
-        ("core/sidebar/summary.html", None),
-    ]
     extra_context = {
         "menu": "ContributorDetailMenu",
+        "sidebar_fields": [
+            "name",
+            "created",
+            "modified",
+        ],
     }
-
-    def get_object(self):
-        # note: we are using base_objects here to get the base model (Sample) instance
-        obj = self.base.model.base_objects.get(pk=self.kwargs.get("pk"))
-        self.real = obj.get_real_instance()
-        return obj
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["real"] = self.real
-        context[self.real._meta.model_name] = self.real
-        base_fields = [f.name for f in self.base.model._meta.fields]
-        context["additional_fields"] = [f.name for f in self.real._meta.fields if f.name not in base_fields]
-        if "sample_ptr" in context["additional_fields"]:
-            context["additional_fields"].remove("sample_ptr")
-        # context["sidebar_fields"] = self.get_sidebar_fields(self.real.__class__)
+        context["real"] = self.base_object.get_real_instance()
+        # context["contributions"] = self.object.contributions.all()
         return context
 
     def has_edit_permission(self):
         """Returns True if the user has permission to edit the profile. This is determined by whether the profile belongs to the current user."""
-        return self.request.user.is_authenticated and self.request.user == self.get_object()
+        return self.request.user.is_authenticated and self.request.user == self.base_object
 
 
 class ContributorFormView(BaseEditView):
@@ -67,11 +50,7 @@ class ContributorFormView(BaseEditView):
     template_name = "contributors/contributor_form.html"
 
 
-class ContributorContactView(
-    LoginRequiredMixin,
-    SingleObjectMixin,
-    ContactFormView,
-):
+class ContributorContactView(LoginRequiredMixin, SingleObjectMixin, ContactFormView):
     """Contact form for a contributor."""
 
     model = Contributor
@@ -88,21 +67,13 @@ class ContributorContactView(
 
 
 class ContributorsPlugin(ListPluginMixin):
-    template_name = "contributors/contribution_list.html"
     object_template = "contributors/contribution_card.html"
     icon = "contributors"
     title = name = _("Contributors")
-    # filterset_class = ContributionFilter
+    ncols = 5
 
     def get_queryset(self, *args, **kwargs):
-        self.related_object = self.get_object()
-        return self.related_object.contributions.all()
-
-    def get_create_url(self):
-        # return Contribution().get_create_url(self.kwargs)
-        # letter = self.base.model._meta.model_name[0]
-        # return reverse("contribution-create", kwargs={**self.kwargs, "model": letter})
-        return reverse("contribution-create", kwargs={**self.kwargs})
+        return self.base_object.contributions.all()
 
 
 class ContributionCRUDView(BaseEditView):

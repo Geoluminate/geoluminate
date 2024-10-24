@@ -1,6 +1,5 @@
 from django.utils.translation import gettext as _
-from django.views.generic import UpdateView
-from formset.views import FileUploadMixin, FormViewMixin
+from django.views.generic import TemplateView
 
 from geoluminate.contrib.contributors.views import ContributorsPlugin
 from geoluminate.contrib.datasets.views import DatasetPlugin
@@ -11,10 +10,10 @@ from .models import Project
 
 
 @project.page("overview", icon="overview")
-class ProjectOverview(FileUploadMixin, FormViewMixin, UpdateView):
+class ProjectOverview(TemplateView):
     model = Project
     title = _("Project")
-    template_name = "geoluminate/plugins/overview.html"
+    template_name = "core/plugins/overview.html"
 
 
 project.register_page(ContributorsPlugin)

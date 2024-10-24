@@ -1055,7 +1055,7 @@ django-htmx = "^1.18.0"
 type = "git"
 url = "https://github.com/SamuelJennings/django-account-management"
 reference = "HEAD"
-resolved_reference = "7df877c4036923e95e4edf52f3dfb4c73dc49897"
+resolved_reference = "1c0563c7437b855e38b30420b8e050b38921dfef"
 
 [[package]]
 name = "django-activity-stream"
@@ -1578,7 +1578,7 @@ anytree = "^2.12.1"
 type = "git"
 url = "https://github.com/SamuelJennings/django-flex-menus"
 reference = "HEAD"
-resolved_reference = "ce659456d8896387e7841b17810ebb5661fe6c05"
+resolved_reference = "b40fda26a0009064bab5930264a029b05c0de126"
 
 [[package]]
 name = "django-fluent-comments"

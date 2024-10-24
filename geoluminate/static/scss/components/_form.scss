@@ -1,7 +1,7 @@
 form {
-    .dj-field-errors {
-      display: none;
-    }
+  .dj-field-errors {
+    display: none;
+  }
 }
 
 .hidden-labels {
@@ -20,7 +20,7 @@ form {
     margin-bottom: 0 !important;
   }
 
-  >div:not(:last-child) {
+  > div:not(:last-child) {
     @extend .me-lg-2;
     @extend .me-md-1;
   }
@@ -31,118 +31,35 @@ form {
   @extend .d-flex;
 }
 
-// .sidebar-content {
-//   select {
-//     @extend .list-group;
-//     @extend .list-group-flush;
-//     width: 100%;
-//     border: none;
-//     padding: 0 !important;
-//     cursor: pointer;
-//     option {
-//       @extend .list-group-item;
-//       @extend .list-group-item-action;
-//       @extend .list-group-item-light;
-//     }
-//   }
-// }
-
-
-
-
 .dcsic_wrapper {
-
-  .image-wrapper {
-    width: fit-content;
+  .dcsic_choose_other_img {
+    cursor: pointer;
   }
+
 
   img {
     @extend .rounded-circle;
-  }
-
-  .dcsic_image {
-    display: block;
-  }
-
-
-	.dcsic_choose_other_img {
-		display: none;
-	}
-	.dcsic_delete_image {
-		display: none;
-	}
-	.dcsic_current_img {
-		display: none;
-	}
-	.dcsic_choose_img {
-		display: inline;
-	}
-
-
-
-  &.has_image {
-    .dcsic_choose_other_img {
-      display: inline;
-    }
-    .dcsic_delete_image {
-      display: inline;
-    }
-    .dcsic_current_img {
-      display: inline;
-    }
-    .dcsic_choose_img {
-      display: none;
-    }
-    .bi-person-fill {
-      display: none;
+    &:hover {
+      cursor: pointer;
+      filter: brightness(0.9);
     }
   }
 }
-
-.dcsic_file_input {
-	display: none;
-}
-
 
 .dcsic_overlay {
-  @extend .modal;
 
-  .dcsic_buttons {
-    justify-content: space-evenly;
-
-    >div {
-      min-width: 25%;
-    }
-
-    .cr-slider-wrap {
-      text-align: center;
-      padding-top: 8px;
-    }
-  }
-  .dcsic_current_img {
-    vertical-align: middle;
-  }
-
-  .modal-header {
-    @extend .rounded-top;
-  }
-
-  .modal-content {
-    @extend .rounded;
-    @extend .shadow;
+  .dcsic_dialog {
+    @extend .modal-dialog;
+    @extend .modal-dialog-centered;
   }
 
 
-  .dcsic_croppie_container {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
+  .cr-slider-wrap {
+    text-align: center;
+    padding-top: 8px;
   }
 
   .cr-viewport.cr-vp-square {
     @extend .rounded-circle;
   }
-
 }

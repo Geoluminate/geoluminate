@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n static partials crispy_forms_tags %}
+{% load static partials crispy_forms_tags %}
 
 {% partialdef form inline=True %}
 <form method="post"
@@ -8,44 +8,19 @@
       {% if request.htmx.target %}hx-target="#{{ request.htmx.target }}"{% endif %}>
   {% csrf_token %}
   {{ form|crispy }}
-  <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
+  <button type="submit"
+          class="btn btn-primary">{% trans "Save" %}</button>
 </form>
 {% comment %} {% crispy form %} {% endcomment %}
 {% endpartialdef %}
 
-{% block main %}
+{% block content %}
   <div class="container py-3 col-6">
-    {% block page_top %}
-      <div class="page-top position-relative">
-        {% block header %}
-          <header class="page-header mb-0 {% block page_header_css %}page-layout{% endblock page_header_css %}
-             ">
-            <h1 class="display-1">
-              {% block title %}
-                {{ meta.title }}
-              {% endblock title %}
-
-            </h1>
-          </header>
-        {% endblock header %}
-
-        {% block help_text %}
-          {% if meta.description %}<div class="page-description">{{ meta.description }}</div>{% endif %}
-        {% endblock help_text %}
-
-      </div>
-      <hr class="mt-0 border border-primary" />
-    {% endblock page_top %}
-
+    <c-header title="{{ meta.title }}"
+              hr />
     <div class="page-content">
-      {% block content %}
-        {% if view.help_text %}{{ view.help_text }}{% endif %}
-        <div class="my-3">{% partial form %}</div>
-      {% endblock content %}
-
+      {% if view.help_text %}{{ view.help_text }}{% endif %}
+      <div class="my-3">{% partial form %}</div>
     </div>
-    {% block page_end %}
-    {% endblock page_end %}
-
   </div>
-{% endblock main %}
+{% endblock content %}

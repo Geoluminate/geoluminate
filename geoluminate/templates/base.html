@@ -1,4 +1,4 @@
-{% load static i18n meta sekizai_tags geoluminate compress easy_icons django_htmx %}
+{% load static meta sekizai_tags geoluminate compress easy_icons django_htmx %}
 {% load render_bundle from webpack_loader %}
 
 <!DOCTYPE html>
@@ -41,45 +41,17 @@
      ">
     {% block body %}
       {% block application %}
-        {% block site_nav %}
+        {% block content_menu %}
           {% include "geoluminate/menus/main/menu.html" %}
-        {% endblock site_nav %}
+        {% endblock content_menu %}
 
         {% block page_nav %}
         {% endblock page_nav %}
 
-        <div class="flex-grow-1 overflow-hidden">
-          <div class="d-flex h-100 {% block row_css %}overflow-hidden{% endblock row_css %}
-             ">
-            {% block page_left %}
-            {% endblock page_left %}
-
-            <div class="h-100 col overflow-auto position-relative">
-              <main class=" {% block page_css_class %}{% endblock page_css_class %}
-                 ">
-                {% block content_wrapper %}
-                  {% block main %}
-                    {% if template_name %}
-                      {% include template_name %}
-                    {% endif %}
-                  {% endblock main %}
-                {% endblock content_wrapper %}
-
-              </main>
-              <div id="mainIndicator"
-                   class="dataTables_processing htmx-indicator endless_loading fs-1"
-                   style="width: 3rem;
-                          height: 3rem"
-                   role="status">
-                {% icon "spinner" %}
-                <span class="visually-hidden">{% trans "Loading..." %}</span>
-              </div>
-            </div>
-            {% block after_page %}
-            {% endblock after_page %}
-
-          </div>
-        </div>
+        {% block content_wrapper %}
+          {% block content %}
+          {% endblock content %}
+        {% endblock content_wrapper %}
       {% endblock application %}
 
       {% comment %} MESSAGES {% endcomment %}
@@ -105,6 +77,9 @@
       </div>
       {% block body_end %}
       {% endblock body_end %}
+
+      {% block js %}
+      {% endblock js %}
 
       {% if user.is_authenticated %}
         {% include "account_management/sidebar.html" %}

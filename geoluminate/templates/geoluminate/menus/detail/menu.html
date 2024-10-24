@@ -1,14 +1,12 @@
 {% load easy_icons %}
 
-<li class="nav-item" role="presentation">
-  <a class="nav-link {{ child.extra_classes }}"
-     id="{{ item.label|slugify }}-tab"
-     hx-get="{{ item.url }}"
-     type="button"
-     role="tab"
-     aria-controls="pills-home"
-     aria-selected="true">
-    {% icon item.icon %}
-    <span class="d-none d-md-inline-block">{{ item.label }}</span>
-  </a>
-</li>
+<a class="nav-link m-1 py-1 px-2 {{ child.extra_classes }}"
+   id="{{ item.label|slugify }}-tab"
+   hx-get="{{ item.url }}"
+   type="button"
+   role="tab"
+   aria-controls="pills-home"
+   aria-selected="true">
+  {% icon item.icon %}
+  <span class="d-none d-md-inline-block">{{ item.label }}</span>
+</a>

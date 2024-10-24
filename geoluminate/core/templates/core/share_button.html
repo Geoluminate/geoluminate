@@ -1,11 +1,11 @@
-{% load i18n sekizai_tags %}
+{% load sekizai_tags easy_icons %}
 
 <a href="#"
    class='btn btn-success btn-sm'
    type="button"
    data-bs-toggle="modal"
    data-bs-target="#shareModal">
-  <i class='fa-solid fa-share'></i>
+  {% icon "share" %}
   {% trans "Share" %}
 </a>
 {% addtoblock "body_end" %}

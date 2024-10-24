@@ -1,23 +1,13 @@
-{% extends "geoluminate/cards/standard.html" %}
-{% load i18n contributor_tags %}
+{% load contributor_tags %}
 
-{% block title %}
+<c-bs5.card title="{{ obj }}">
+  <c-slot name="subtitle">
+    <c-contributor.names class="fs-6 text-secondary mt-2 mb-3"
+                         :contributors="obj.contributions.all" />
+  </c-slot>
+  {% trans "Direct child samples" %}: {{ obj.numchild }}
+</c-bs5.card>
+{% comment %} {% block title %}
   <span>{{ obj.get_type.verbose_name }} - {{ obj }}</span>
   <a href="{{ obj.location.get_absolute_url }}">{{ obj.location }}</a>
-{% endblock title %}
-
-{% block description %}
-  {% trans "Direct child samples" %}: {{ obj.numchild }}
-{% endblock description %}
-
-{% block subtitle %}
-  {% with obj.contributions.all|role:"ProjectLeader" as contributors %}
-    {% if contributors %}
-      {% include "contributors/names_list.html" %}
-      <span data-bs-toggle="popover"
-            data-bs-placement="bottom"
-            data-bs-title="{% trans "All Contributors" %}"
-            data-bs-content="">+ {{ obj.contributors.count }} Others</span>
-    {% endif %}
-  {% endwith %}
-{% endblock subtitle %}
+{% endblock title %} {% endcomment %}

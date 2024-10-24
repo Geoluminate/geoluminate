@@ -1,0 +1,21 @@
+<div class="modal {{ modal_class }}"
+     tabindex="-1">
+  <div class="modal-dialog {{ dialog_class }}">
+    <div class="modal-content {{ content_class }}">
+      {% if header or title %}
+        <div class="modal-header {{ header_class }}">
+          {{ header }}
+          {% if title %}
+            <h5 class="modal-title">{{ title }}</h5>
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+          {% endif %}
+        </div>
+      {% endif %}
+      <div class="modal-body {{ body_class }}">{{ slot }}</div>
+      {% if footer %}<div class="modal-footer {{ footer_class }}">{{ footer }}</div>{% endif %}
+    </div>
+  </div>
+</div>

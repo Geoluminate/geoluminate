@@ -1,0 +1,118 @@
+{% load static meta sekizai_tags geoluminate compress easy_icons django_htmx %}
+{% load render_bundle from webpack_loader %}
+
+<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}" data-bs-theme="auto">
+  <head {% meta_namespaces %}>
+    {% block head %}
+      <meta charset="utf-8" />
+      <meta http-equiv="x-ua-compatible" content="ie=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      {% include "meta/meta.html" %}
+      <link rel="icon" type="image/svg+xml" href="{% brand "icon" %}" />
+      {% django_htmx_script %}
+      {% compress css %}
+        <link rel="stylesheet" type="text/x-scss" href="{% static "scss/stylesheet.scss" %}" />
+      {% endcompress %}
+      {% render_bundle "project" "css" "GEOLUMINATE" %}
+      {% render_bundle 'bootstrap' 'js' 'GEOLUMINATE' attrs="defer" %}
+      {% render_bundle 'htmx' 'js' 'GEOLUMINATE' attrs="defer" %}
+      {% render_bundle 'justGage' 'js' 'GEOLUMINATE' attrs="defer" %}
+      {% render_bundle 'project' 'js' 'GEOLUMINATE' attrs="defer" %}
+      <script src="{% static "vendor/citation-js/citation.js" %}" defer></script>
+    {% endblock head %}
+
+    {% render_block "css" %}
+    {% block css %}
+    {% endblock css %}
+
+    <script src={% static "vendors/jquery-3.7.1.min.js" %}></script>
+    {% block javascript %}
+    {% endblock javascript %}
+
+    <style>
+      .select2-container--open {
+        z-index: 1055;
+      }
+    </style>
+  </head>
+  <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-target="main" hx-indicator="#mainIndicator" hx-ext="debug" class="{% block body_class %}{% endblock body_class %}
+     ">
+    {% block body %}
+      {% block application %}
+        {% block content_menu %}
+          {% include "geoluminate/menus/main/menu.html" %}
+        {% endblock content_menu %}
+
+        {% block page_nav %}
+        {% endblock page_nav %}
+
+        <div class="flex-grow-1 overflow-hidden">
+          <div class="d-flex h-100 {% block row_css %}overflow-hidden{% endblock row_css %}
+             ">
+            {% block page_left %}
+            {% endblock page_left %}
+
+            <div class="h-100 col overflow-auto position-relative">
+              <main class=" {% block page_css_class %}{% endblock page_css_class %}
+                 ">
+                {% block content_wrapper %}
+                  {% block content %}
+                    {% if template_name %}
+                      {% include template_name %}
+                    {% endif %}
+                  {% endblock content %}
+                {% endblock content_wrapper %}
+
+              </main>
+              <div id="mainIndicator"
+                   class="dataTables_processing htmx-indicator endless_loading fs-1"
+                   style="width: 3rem;
+                          height: 3rem"
+                   role="status">
+                {% icon "spinner" %}
+                <span class="visually-hidden">{% trans "Loading..." %}</span>
+              </div>
+            </div>
+            {% block after_page %}
+            {% endblock after_page %}
+
+          </div>
+        </div>
+      {% endblock application %}
+
+      {% comment %} MESSAGES {% endcomment %}
+      <div id="messageContainer" class="position-absolute bottom-0 end-0">
+        <div class="d-flex container justify-content-center">
+          {% for message in messages %}
+            <div aria-live="polite" aria-atomic="true" class="w-100 d-flex px-1">
+              <div class="card alert border mb-3 bg-white p-0 shadow-sm"
+                   data-delay="5000"
+                   role="alert"
+                   style="width: 18rem">
+                <div class="card-header">
+                  {% trans "Message" %}
+                  <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <div class="card-body">
+                  <p class="card-text">{{ message }}</p>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% block body_end %}
+      {% endblock body_end %}
+
+      {% if user.is_authenticated %}
+        {% include "account_management/sidebar.html" %}
+        {% comment %} {% include "user/sidebar/authenticated.html" %} {% endcomment %}
+      {% endif %}
+    {% endblock body %}
+
+    {% render_block "js" %}
+    {% render_block "body_end" %}
+  </body>
+</html>

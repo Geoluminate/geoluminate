@@ -1,30 +1,24 @@
 {% extends "base.html" %}
-{% load sekizai_tags i18n static compress %}
+{% load sekizai_tags static compress %}
 
-{% block page_header %}
-{% endblock page_header %}
+{% block head %}
+  {{ block.super }}
+  <link rel="stylesheet"
+        href="{{ swagger_ui_css }}" />
+{% endblock head %}
 
-{% block title %}
-  {{ geoluminate.database.short_name }} API
-{% endblock title %}
-
-{% block main %}
-  <div id="swagger-ui" class="container"></div>
-  {% addtoblock "body_end" %}
-    <script src="{% static "drf_spectacular_sidecar/swagger-ui-dist/swagger-ui-bundle.js" %}"></script>
-  {% endaddtoblock %}
-  {% addtoblock "body_end" %}
-    <script src="{% static "drf_spectacular_sidecar/swagger-ui-dist/swagger-ui-standalone-preset.js" %}"></script>
-  {% endaddtoblock %}
+{% block content %}
+  <div class="container py-3">
+    {% comment %} <c-header hr /> {% endcomment %}
+    <div id="swagger-ui"></div>
+  </div>
+  <script src="{{ swagger_ui_bundle }}"></script>
+  <script src="{{ swagger_ui_standalone }}"></script>
   {% if script_url %}
-    {% addtoblock "body_end" %}
-      <script src="{{ script_url }}"></script>
-    {% endaddtoblock %}
+    <script src="{{ script_url }}"></script>
   {% else %}
-    {% addtoblock "body_end" %}
-      {# djlint:off #}
-    <script>{% include template_name_js %}</script>
-      {# djlint:on #}
-    {% endaddtoblock %}
+    {# djlint:off #}
+  <script>{% include template_name_js %}</script>
+    {# djlint:on #}
   {% endif %}
-{% endblock main %}
+{% endblock content %}

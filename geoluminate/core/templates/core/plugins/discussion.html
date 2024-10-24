@@ -1,43 +1,22 @@
-{% extends "geoluminate/plugins/page.html" %}
-{% load i18n static comments comments_xtd  geoluminate %}
+{% load comments comments_xtd geoluminate %}
 
-{% block page_top %}
-  {% comment %} {% trans "Discussion" %} {% endcomment %}
-{% endblock page_top %}
-
-{% block toolbar %}
-{% endblock toolbar %}
-
-{% block help_text %}
-  {% if user.is_authenticated %}
-    This section aims to promote healthy discussion within the community. Before contributing, please read and fully understand the community's expectations regarding respectful and professional communication laid out in our <a href="{% url "user:code_of_conduct" %}" class="alert-link">code of conduct</a>.
-  {% else %}
-    This section aims to promote healthy discussion within the community.
-    <a href="#"
-       class="alert-link"
-       role="button"
-       aria-expanded="false"
-       data-bs-toggle="offcanvas"
-       data-bs-target="#userToolbar">Login or sign up</a> now to contribute to this discussion.
-  {% endif %}
-{% endblock help_text %}
-
-{% block content %}
+<c-plugin layout="page">
   {% if request.user.is_authenticated %}
-    <div class="alert alert-info" role="alert">
+    <div class="alert alert-info"
+         role="alert">
       {% trans "Contributing to discussions on this site requires an active account. Join our community today and let us know what you think about this " %}{{ verbose_name }}
     </div>
   {% else %}
     <div class="d-flex justify-content-center">
       <div class="card w-75 mb-3">
-        <div class="card-body">{% render_comment_form for real %}</div>
+        <div class="card-body">{% render_comment_form for base_object %}</div>
       </div>
     </div>
   {% endif %}
-  {% if object.polymorphic_model_marker %}
-    {% get_comment_count for real as comment_count %}
+  {% if base_object.polymorphic_model_marker %}
+    {% get_comment_count for base_object as comment_count %}
   {% else %}
-    {% get_comment_count for object as comment_count %}
+    {% get_comment_count for base_object as comment_count %}
   {% endif %}
   <div class="text-center">
     {{ comment_count }} comment{{ comment_count|pluralize }}
@@ -46,11 +25,11 @@
   {% if comment_count %}
     <hr />
     <div class="comments">
-      {% if object.polymorphic_model_marker %}
-        {% render_xtdcomment_tree for real %}
+      {% if base_object.polymorphic_model_marker %}
+        {% render_xtdcomment_tree for base_object %}
       {% else %}
-        {% render_xtdcomment_tree for object %}
+        {% render_xtdcomment_tree for base_object %}
       {% endif %}
     </div>
   {% endif %}
-{% endblock content %}
+</c-plugin>

@@ -1,0 +1,19 @@
+{% load literature geoluminate easy_icons %}
+
+<c-bs5.card title="{{ obj.title }}"
+            subtitle="{{ obj.item|csl_field:"container-title" }}">
+  {{ obj.item.abstract }}
+  <c-slot name="footer">
+    {% if obj.datasets %}
+      <c-bs5.button href="{{ obj.datasets.get_absolute_url }}"
+                    icon="dataset"
+                    text="{% trans "View Dataset" %}" />
+    {% endif %}
+    {% if obj.item.URL %}
+      <c-bs5.button href="{{ obj.item.URL }}"
+                    icon="globe"
+                    variant="primary"
+                    text="{% trans "Read online" %}" />
+    {% endif %}
+  </c-slot>
+</c-bs5.card>

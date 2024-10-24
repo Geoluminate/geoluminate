@@ -1,4 +1,4 @@
-{% load i18n geoluminate %}
+{% load minate %}
 
 <div id="{% if preview %}comment-preview{% else %}c{{ comment.id }}{% endif %}"
      class="comment-item{% if comment.user_id and comment.user_id == comment.content_object.author_id %} by-author{% endif %} card my-2 border-0">

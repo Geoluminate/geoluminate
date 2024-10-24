@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static i18n partials %}
+{% load static partials easy_icons %}
 
 {% block head %}
   {{ block.super }}
@@ -48,7 +48,7 @@
 </div>
 {% endpartialdef carousel-item %}
 
-{% block main %}
+{% block content %}
   <div class="spacer" style="height:350px"></div>
   <img class="position-fixed w-100 top-0 bottom-0 z-n1 object-fit-cover" width="auto" height="auto" src="{% static "img/world_map.webp" %}" alt="" />
   <div class="home-page bg-white">
@@ -89,7 +89,7 @@
       {% endfor %}
     </div>
   </div>
-{% endblock main %}
+{% endblock content %}
 
 {% block body_end %}
   {{ block.super }}

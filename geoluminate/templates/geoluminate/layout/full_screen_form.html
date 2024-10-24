@@ -1,14 +1,18 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load geoluminate %}
 
-{% block main %}
+{% block content %}
   <div class="modal d-block position-relative z-1 {% block modal_class %}{% endblock modal_class %}
      " tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content border-0 shadow">
         <div class="modal-header {% block header_class %}{% endblock header_class %}
            ">
-          <img class="mx-auto" src="{% brand "logo" %}" alt="" height="70px" width="auto" />
+          <img class="mx-auto"
+               src="{% brand "logo" %}"
+               alt=""
+               height="70px"
+               width="auto" />
         </div>
         <div class="modal-body {% block content_class %}{% endblock content_class %}
            ">
@@ -30,4 +34,4 @@
       </div>
     </div>
   </div>
-{% endblock main %}
+{% endblock content %}

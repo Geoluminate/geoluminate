@@ -1,11 +1,10 @@
-{% extends "geoluminate/layout/sidebar_left.html" %}
-{% load static i18n formsetify geoluminate sekizai_tags activity_tags imagekit neapolitan easy_icons flex_menu %}
+{% extends "geoluminate/layout/application.html" %}
+{% load static formsetify geoluminate sekizai_tags activity_tags imagekit neapolitan easy_icons flex_menu %}
 {% load render_bundle from webpack_loader %}
 
 {% block css %}
   {{ block.super }}
   {% render_bundle "detail" "css" "GEOLUMINATE" %}
-  {% render_bundle "datatables" "css" "GEOLUMINATE" %}
   <link rel="stylesheet" type="text/css" href="{% static "fluent_comments/css/ajaxcomments.css" %}" />
   <style>
     th {
@@ -17,87 +16,58 @@
 {% block javascript %}
   {{ block.super }}
   {% render_bundle "detail" "js" "GEOLUMINATE" attrs="defer" %}
-  {% render_bundle "datatables" "js" "GEOLUMINATE" attrs="defer" %}
-  <script src="{% static "el-pagination/js/el-pagination.js" %}" defer></script>
 {% endblock javascript %}
-
-{% block compressable_js %}
-{% endblock compressable_js %}
 
 {% block page_nav %}
   <nav class="page-nav">
-    {% render_menu menu pk=object.pk %}
+    {% render_menu menu pk=base_object.pk %}
   </nav>
 {% endblock page_nav %}
 
-{% block sidebar_title %}
-  {{ object.pk }}
-{% endblock sidebar_title %}
-
 {% block sidebar %}
-  {% block sidebar_top %}
-    {% block sidebar_image %}
-      <div class="card bg-secondary-subtle text-light ratio ratio-16x9">
-        <div class="d-flex flex-column justify-content-center align-items-center">
-          {% if object.image %}
-            <img src="{{ object.image.url }}" alt="{{ object }}" width="100%" height="100%" />
-          {% else %}
-            {% icon "image" height="25%" %}
-            {% trans "No image provided" %}
-          {% endif %}
-        </div>
+  {% block sidebar_image %}
+    <div class="card bg-secondary-subtle text-light ratio ratio-16x9">
+      <div class="d-flex flex-column justify-content-center align-items-center">
+        {% if base_object.image %}
+          <img src="{{ base_object.image.url }}"
+               alt="{{ base_object }}"
+               width="100%"
+               height="100%" />
+        {% else %}
+          {% icon "image" height="25%" %}
+          {% trans "No image provided" %}
+        {% endif %}
       </div>
-    {% endblock sidebar_image %}
-
-    <div class="actions d-flex mb-2 justify-content-center">
-      {% follow_button object %}
-      {% share_button object %}
-      <a href="#" class="btn btn-sm btn-secondary">
-        <i class="fa-solid fa-envelope"></i>
-        {% trans "Contact" %}
-      </a>
-      {% block actions %}
-      {% endblock actions %}
-
     </div>
-  {% endblock sidebar_top %}
+  {% endblock sidebar_image %}
 
+  <div class="actions d-flex mb-2 justify-content-center">
+    <c-button.follow :object="base_object"
+                     :user="request.user" />
+    {% share_button base_object %}
+    <a href="#"
+       class="btn btn-sm btn-secondary">
+      {% icon "email" %}
+      {% trans "Contact" %}
+    </a>
+    {% block actions %}
+    {% endblock actions %}
+
+  </div>
   <div class="mt-3">
     <hr />
-    {% for heading, section_fields in sidebar_fields.items %}
-      {% sidebar_section real heading section_fields %}
-      {% if not forloop.last %}<hr />{% endif %}
-    {% endfor %}
     {% block sidebar_cards %}
+      {% trans "Basic Information" as heading %}
+      {% sidebar_section base_object heading sidebar_fields %}
     {% endblock sidebar_cards %}
 
   </div>
 {% endblock sidebar %}
 
-{% block body_end %}
-  <div class="modal fade"
-       id="formModal"
-       tabindex="-1"
-       aria-labelledby="exampleModalLabel"
-       aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div id="modalFormBody" class="modal-body"></div>
-        <div class="modal-footer">
-          <div id="form-actions">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-{% endblock body_end %}
+{% comment %} {% block after_page %}
+  <div id="plugin-toolbar" class="d-flex flex-column h-100 border-start " hx-swap-oob="true">
+    {% block toolbar %}
+    {% endblock toolbar %}
 
-{% block after_page %}
-  <div id="plugin-toolbar" class="h-100 bg-secondary d-flex flex-column" hx-swap-oob="true"></div>
-{% endblock after_page %}
+  </div>
+{% endblock after_page %} {% endcomment %}

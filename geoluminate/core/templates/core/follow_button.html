@@ -1,21 +1,23 @@
-{% load i18n activity_tags %}
+{% load i18n activity_tags easy_icons %}
 
 {% if request.user|is_following:object %}
-  <a href="{% follow_all_url object %}"
-     hx-get="{% follow_all_url object %}"
-     hx-target="this"
-     hx-swap="outerHTML"
-     class="btn btn-success btn-sm">
-    <i class="fa-solid fa-star"></i>
+  <c-bs5.button href="{% follow_all_url object %}"
+                hx-get="{% follow_all_url object %}"
+                hx-target="this"
+                hx-swap="outerHTML"
+                icon="star-solid"
+                title="{% trans "Following" %}"
+                size="sm">
     {% trans "Following" %}
-  </a>
+  </c-bs5.button>
 {% else %}
-  <a href="{% follow_all_url object %}"
-     hx-get="{% follow_all_url object %}"
-     hx-target="this"
-     hx-swap="outerHTML"
-     class="btn btn-primary btn-sm">
-    <i class="fa-regular fa-star"></i>
-    {% trans "Follow" %}
-  </a>
+  <c-bs5.button href="{% follow_all_url object %}"
+                hx-get="{% follow_all_url object %}"
+                hx-target="this"
+                hx-swap="outerHTML"
+                icon="star-solid"
+                title="{% trans "Following" %}"
+                size="sm">
+    {% trans "Following" %}
+  </c-bs5.button>
 {% endif %}

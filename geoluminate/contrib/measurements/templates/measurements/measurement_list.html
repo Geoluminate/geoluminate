@@ -1,9 +1,6 @@
-{% extends "geoluminate/plugins/base.html" %}
-{% load geoluminate i18n partials easy_icons %}
+{% load geoluminate partials easy_icons %}
 {% load render_table from django_tables2 %}
 
-{% block page %}
-  {% comment %} {% render_table object_list %} {% endcomment %}
+<c-plugin layout="app">
   {% render_table table %}
-  {% comment %} {% include "geoluminate/base/list_view.html#page" %} {% endcomment %}
-{% endblock page %}
+</c-plugin>

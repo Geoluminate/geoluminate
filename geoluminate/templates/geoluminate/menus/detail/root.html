@@ -1,7 +1,7 @@
-<ul class="nav nav-tabs nav-pills nav-pills-alternate d-print-none" id="pageMenu" role="tablist">
+<nav class="nav nav-tabs nav-pills nav-pills-alternate d-print-none" id="pageMenu" role="tablist">
   {% for item in menu %}
     {% if item.visible %}
       {% include "geoluminate/menus/detail/menu.html" %}
     {% endif %}
   {% endfor %}
-</ul>
+</nav>

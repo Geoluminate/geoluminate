@@ -1,5 +1,5 @@
 {% extends "geoluminate/base/form.html" %}
-{% comment %} {% block main %}
+{% comment %} {% block content %}
   <h1>Are you sure you want to remove the following {{ object_verbose_name }}?</h1>
   {% include "contributors/contribution_card.html" with obj=object %}
   <p class="mt-4">{{ object }}</p>
@@ -19,4 +19,4 @@
       });
     });
   </script>
-{% endblock main %} {% endcomment %}
+{% endblock content %} {% endcomment %}

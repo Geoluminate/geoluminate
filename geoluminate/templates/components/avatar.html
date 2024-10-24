@@ -1,0 +1,10 @@
+{% load easy_icons %}
+
+{% if image %}
+  <img src="{{ image.url }}"
+       class="rounded-circle {{ wrapper_class }}" />
+{% else %}
+  <div class="bg-secondary-subtle text-light ratio ratio-1x1 rounded-circle {{ wrapper_class }}">
+    <div class="d-flex justify-content-center align-items-center">{% icon contributor.type height="25%" %}</div>
+  </div>
+{% endif %}

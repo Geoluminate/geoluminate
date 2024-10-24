@@ -1,6 +1,15 @@
-{% extends "geoluminate/cards/standard.html" %}
-{% load i18n contributor_tags %}
+{% load easy_icons %}
 
-{% block subtitle %}
-  {% include "contributors/names_list.html" with contributors=obj.contributions.all|role:"ProjectLeader" %}
-{% endblock subtitle %}
+<c-bs5.card title="{{ obj }}"
+            card_class="h-100">
+  <c-slot name="subtitle">
+    <c-contributor.names class="fs-6 text-secondary mt-2 mb-3"
+                         :contributors="obj.contributions.all" />
+  </c-slot>
+  {{ obj.descriptions.get_first|truncatewords_html:75 }}
+  <c-slot name="footer">
+    <a href="{{ obj.get_absolute_url }}"
+       class="btn btn-primary">{% trans "View details" %}
+    {% icon "arrow-right" %}</a>
+  </c-slot>
+</c-bs5.card>

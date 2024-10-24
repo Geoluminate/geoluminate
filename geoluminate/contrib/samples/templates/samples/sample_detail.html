@@ -1,2 +1,9 @@
 {% extends "geoluminate/base/detail_view.html" %}
-{% load i18n geoluminate %}
+{% load geoluminate %}
+
+{% block sidebar_cards %}
+  {% for heading, section_fields in sidebar_fields.items %}
+    {% sidebar_section real heading section_fields %}
+    {% if not forloop.last %}<hr />{% endif %}
+  {% endfor %}
+{% endblock sidebar_cards %}

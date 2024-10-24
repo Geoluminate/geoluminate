@@ -1,0 +1,16 @@
+<c-vars :title="{{ meta.title }}"
+        layout="page"
+        :layout_types="{'page': 'container mt-3', 'app': ''}" />
+<div class="{{ layout_types|get_item:layout }}" {{ attrs }}>
+  {% if layout == "page" %}
+    <c-header title="{{ title }}">
+      {% if actions %}
+        <c-slot name="actions">
+          {{ actions }}
+        </c-slot>
+      {% endif %}
+    </c-header>
+    <hr class="mt-0 mb-3" />
+  {% endif %}
+  {{ slot }}
+</div>

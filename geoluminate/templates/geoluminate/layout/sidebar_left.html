@@ -1,26 +1,37 @@
-{% extends "geoluminate/layout/application.html" %}
+{% extends "base.html" %}
 {% load geoluminate partials %}
 
-{% block page_left %}
-  {% partialdef sidebar inline=True %}
-  <aside id="pageSidebar"
-         class="sidebar px-0 overflow-auto"
-         data-bs-toggle="collapse"
-         data-bs-backdrop="false">
-    <div class="card rounded-0 border-0">
-      {% block sidebar_header %}
-      {% endblock sidebar_header %}
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-4 border-end">
+        {% block page_left %}
+          {% partialdef sidebar inline=True %}
+          <aside id="pageSidebar" class="px-2 overflow-auto">
+            <div class="ps-3">
+              {% block sidebar_header %}
+              {% endblock sidebar_header %}
 
-      <div class="card-body">
-        {% block sidebar %}
-        {% endblock sidebar %}
+              <div class="card-body">
+                {% block sidebar %}
+                {% endblock sidebar %}
 
-      </div>
-      {% block sidebar_footer %}
-      {% endblock sidebar_footer %}
+              </div>
+              {% block sidebar_footer %}
+              {% endblock sidebar_footer %}
+
+            </div>
+          </aside>
+        {% endpartialdef %}
+
+      {% endblock page_left %}
 
     </div>
-  </aside>
-{% endpartialdef %}
+    <div class="col">
+      {% block list_content %}
+      {% endblock list_content %}
 
-{% endblock page_left %}
+    </div>
+  </div>
+</div>
+{% endblock content %}

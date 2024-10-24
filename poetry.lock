@@ -1578,7 +1578,7 @@ anytree = "^2.12.1"
 type = "git"
 url = "https://github.com/SamuelJennings/django-flex-menus"
 reference = "HEAD"
-resolved_reference = "b40fda26a0009064bab5930264a029b05c0de126"
+resolved_reference = "ffc496f86c9fb3053a4ca83951247feeb29d5ecc"
 
 [[package]]
 name = "django-fluent-comments"

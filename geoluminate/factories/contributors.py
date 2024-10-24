@@ -3,18 +3,19 @@ import random
 import factory
 from factory import Faker, post_generation
 
-from ..contrib.contributors.models import Contributor
-from ..contrib.organizations.models import Membership, Organization
+from geoluminate.contrib.contributors.models import Organization, OrganizationMember
+
+from ..contrib.contributors.models import Contributor, Person
 from .utils import randint
 
 
-class GenericContributorFactory(factory.django.DjangoModelFactory):
+class ContributorFactory(factory.django.DjangoModelFactory):
     """Creates a Contributor object with no relationship to a Personal or Organization."""
 
-    name = factory.Faker("name")
-    about = factory.Faker("multiline_text", nb=randint(3, 5), nb_sentences=12)
+    image = factory.django.ImageField(width=1200, height=1200, color="blue")
+    profile = factory.Faker("multiline_text", nb=randint(3, 5), nb_sentences=12)
     alternative_names = factory.List([factory.Faker("name") for _ in range(random.randint(1, 3))])
-    lang = factory.Faker("language_code")
+    lang = factory.List([factory.Faker("language_code") for _ in range(random.randint(0, 3))])
 
     class Meta:
         model = Contributor
@@ -26,6 +27,7 @@ class ContributionFactory(factory.django.DjangoModelFactory):
     class Params:
         generate_contributors = False
         roles_choices = None
+        max_persons = 10
 
     class Meta:
         django_get_or_create = ["contributor", "object"]
@@ -39,10 +41,9 @@ class ContributionFactory(factory.django.DjangoModelFactory):
 
     @factory.lazy_attribute
     def contributor(self):
-        if self.generate_contributors:
-            create_contributors(10, 5, 5)
-            # self.__class__._contributor_cache = Contributor.objects.all()
-            self.generate_contributors = False
+        if self.generate_contributors or not Contributor.objects.exists():
+            PersonFactory.create_batch(self.max_persons)
+            # self.generate_contributors = False
         if not hasattr(self.__class__, "_contributor_cache"):
             self.__class__._contributor_cache = Contributor.objects.all()
         return random.choice(self._contributor_cache)
@@ -58,16 +59,17 @@ class ContributionFactory(factory.django.DjangoModelFactory):
         return manager.create(*args, **kwargs)
 
 
-class UserFactory(GenericContributorFactory):
+class PersonFactory(ContributorFactory):
+    name = factory.LazyAttribute(lambda o: f"{o.first_name} {o.last_name}")
     email = factory.LazyAttribute(lambda o: f"{o.first_name}.{o.last_name}@fakeuser.org")
     first_name = Faker("first_name")
     last_name = Faker("last_name")
-
-    # organization = factory.RelatedFactoryList(
-    #     "geoluminate.factories.OrganizationMembershipFactory",
-    #     factory_related_name="user",
-    #     size=randint(1, 4),
-    # )
+    is_active = factory.Faker("boolean", chance_of_getting_true=75)
+    organization = factory.RelatedFactoryList(
+        "geoluminate.factories.OrganizationMembershipFactory",
+        factory_related_name="person",
+        size=randint(1, 4),
+    )
 
     @post_generation
     def password(self, create: bool, extracted, **kwargs):
@@ -86,11 +88,11 @@ class UserFactory(GenericContributorFactory):
         self.set_password(password)
 
     class Meta:
-        model = Personal
+        model = Person
         django_get_or_create = ["email"]
 
 
-class OrganizationFactory(GenericContributorFactory):
+class OrganizationFactory(ContributorFactory):
     """Create an organization and associates it with a Contributor profile."""
 
     name = factory.Faker("company")
@@ -102,23 +104,16 @@ class OrganizationFactory(GenericContributorFactory):
 
 class OrganizationMembershipFactory(factory.django.DjangoModelFactory):
     class Meta:
-        model = Membership
+        model = OrganizationMember
 
-    user = factory.SubFactory("geoluminate.factories.UserFactory", organization=None)
-    organization = factory.SubFactory(
-        "geoluminate.factories.OrganizationFactory",
-    )
-    is_admin = factory.Faker("boolean", chance_of_getting_true=10)
+    person = factory.SubFactory("geoluminate.factories.PersonFactory")
+    organization = factory.SubFactory("geoluminate.factories.OrganizationFactory")
+    # is_admin = factory.Faker("boolean", chance_of_getting_true=10)
 
 
 def create_contributors(n_active, n_organizations, n_inactive):
     """Create a set of users and organizations."""
-    users = UserFactory.create_batch(n_active)
-    inactive = GenericContributorFactory.create_batch(n_inactive)
-    orgs = OrganizationFactory.create_batch(n_organizations)
-
-    return users, inactive, orgs
-    # OrganizationMembershipFactory.create_batch(n_organizations)
+    return PersonFactory.create_batch(n_active)
 
 
 class ContributorFactoryList(factory.RelatedFactoryList):

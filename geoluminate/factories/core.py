@@ -4,10 +4,8 @@ import factory
 import faker
 
 # from django.contrib.gis.geos import Point
-from factory.fuzzy import FuzzyChoice
 from research_vocabs.models import Concept
 
-from ...core.choices import Visibility
 from .utils import randint
 
 
@@ -64,8 +62,3 @@ class AbstractKeywordsFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = Concept
-
-
-class AbstractFactory(factory.django.DjangoModelFactory):
-    title = factory.Faker("sentence", nb_words=8, variable_nb_words=True)
-    visibility = FuzzyChoice(Visibility.values)

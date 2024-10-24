@@ -1,5 +1,5 @@
 from .contrib import DatasetFactory, MeasurementFactory, ProjectFactory, SampleFactory
-from .contributors import OrganizationFactory, OrganizationMembershipFactory, UserFactory
+from .contributors import OrganizationFactory, OrganizationMembershipFactory, PersonFactory
 from .core import randint
 
 __all__ = (
@@ -7,7 +7,7 @@ __all__ = (
     "ProjectFactory",
     "SampleFactory",
     "MeasurementFactory",
-    "UserFactory",
+    "PersonFactory",
     "OrganizationFactory",
     "OrganizationMembershipFactory",
     "randint",

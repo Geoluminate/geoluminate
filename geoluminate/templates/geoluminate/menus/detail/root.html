@@ -1,7 +1,10 @@
-<nav class="nav nav-tabs nav-pills nav-pills-alternate d-print-none" id="pageMenu" role="tablist">
-  {% for item in menu %}
-    {% if item.visible %}
-      {% include "geoluminate/menus/detail/menu.html" %}
-    {% endif %}
-  {% endfor %}
-</nav>
+<div class="container-fluid border-bottom">
+  <c-bs5.nav id="pageMenu"
+             tabstyle="underline">
+    {% for item in menu %}
+      {% if item.visible %}
+        {% include "geoluminate/menus/detail/menu.html" %}
+      {% endif %}
+    {% endfor %}
+  </c-bs5.nav>
+</div>

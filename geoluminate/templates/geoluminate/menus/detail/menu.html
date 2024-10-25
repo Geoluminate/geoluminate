@@ -1,12 +1,13 @@
 {% load easy_icons %}
 
-<a class="nav-link m-1 py-1 px-2 {{ child.extra_classes }}"
+<a class="nav-link {{ item.extra_classes }} {% if item.selected %}active{% endif %}"
    id="{{ item.label|slugify }}-tab"
    hx-get="{{ item.url }}"
    type="button"
    role="tab"
+   data-bs-toggle="tab"
    aria-controls="pills-home"
-   aria-selected="true">
+   aria-selected="false">
   {% icon item.icon %}
   <span class="d-none d-md-inline-block">{{ item.label }}</span>
 </a>

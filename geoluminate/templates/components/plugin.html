@@ -1,6 +1,6 @@
 <c-vars :title="{{ meta.title }}"
         layout="page"
-        :layout_types="{'page': 'container mt-3', 'app': ''}" />
+        :layout_types="{'page': 'container', 'app': ''}" />
 <div class="{{ layout_types|get_item:layout }}" {{ attrs }}>
   {% if layout == "page" %}
     <c-header title="{{ title }}">

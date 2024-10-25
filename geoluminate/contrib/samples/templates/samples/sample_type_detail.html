@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
   <div class="container">
-    <h1>{{ metadata.name }}</h1>
+    <c-header title="{{ metadata.name }}"
+              hr />
     <p>{{ metadata.description }}</p>
   </div>
 {% endblock content %}

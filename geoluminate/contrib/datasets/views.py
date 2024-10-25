@@ -53,6 +53,7 @@ class DatasetEditView(BaseEditView):
 class DatasetPlugin(ListPluginMixin):
     title = name = _("Datasets")
     icon = "dataset"
+    model = Dataset
 
     def get_queryset(self, *args, **kwargs):
         return self.base_object.datasets.all()

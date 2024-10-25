@@ -2,6 +2,13 @@ from django.utils.translation import gettext as _
 from django.views.generic.base import TemplateView
 
 
+class Overview(TemplateView):
+    name = _("Overview")
+    title = _("Overview")
+    icon = "overview.svg"
+    template_name = "core/plugins/overview.html"
+
+
 class ActivityStream(TemplateView):
     name = _("Activity")
     title = _("Recent Activity")

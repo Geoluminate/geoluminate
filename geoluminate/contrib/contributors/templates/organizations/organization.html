@@ -1,0 +1,15 @@
+{% load partials crispy_forms_tags %}
+
+{% partialdef form inline=True %}
+<c-description type="{{ title }}"
+               x-data="{submit() { this.$refs.form.requestSubmit(); }}">
+  <form action="{{ request.path }}"
+        hx-post="{{ request.path }}"
+        hx-swap="outerHTML"
+        x-ref="form"
+        @click.outside="submit"
+        @keydown.tab="submit">
+    {{ form|crispy }}
+  </form>
+</c-description>
+{% endpartialdef %}

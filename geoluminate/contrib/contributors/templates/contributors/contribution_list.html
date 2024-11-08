@@ -1,9 +1,41 @@
-{% load geoluminate partials easy_icons %}
+{% extends 'geoluminate/base/detail_view.html' %}
+{% load crispy_forms_tags partials %}
 
-<c-plugin layout="page"
-          title="{% trans "Contributors" %}">
-  <c-bs5.grid ncols="4"
-              wrapper_class="py-3">
+{% comment %} 
+<c-plugin layout="page" title="{% trans "Contributors" %}">
+  <c-bs5.grid ncols="6" wrapper_class="py-3">
     {% include "geoluminate/base/list_view.html#page" %}
   </c-bs5.grid>
-</c-plugin>
+</c-plugin> {% endcomment %}
+{% block content %}
+  {% partialdef plugin inline=True %}
+  <c-plugin layout="page" title="{{ view.title }}">
+    <c-slot name="actions">
+      {% block actions %}
+        <div class="dropdown">
+          <c-bs5.button class="btn btn-primary btn-sm"
+                        text="{% trans "New" %}"
+                        icon="plus"
+                        data-bs-toggle="dropdown" />
+          <ul class="dropdown-menu">
+            {% for form in forms %}
+              <li>
+                <a class="dropdown-item"
+                   href="#"
+                   data-bs-toggle="modal"
+                   data-bs-target="#{{ form.helper.form_id }}">From ROR</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endblock actions %}
+
+    </c-slot>
+    {% include "geoluminate/base/list_view.html#page" %}
+  </c-plugin>
+  <div id="bodyEnd" hx-swap-oob="true">
+    {% for form in forms %}<c-modals.ror :form="form" />{% endfor %}
+  </div>
+{% endpartialdef plugin %}
+
+{% endblock content %}

@@ -1,11 +1,16 @@
 {% load geoluminate contributor_tags easy_icons %}
 
 {% with obj as contributor %}
-  <div class="entry-list-item card border-0 text-center {{ contributor.type }}">
-    <c-avatar :image="contributor.image" />
-    <h5 class="card-title fs-6">
-      <a href="{{ contributor.get_absolute_url }}"
-         class="text-reset">{{ contributor }}</a>
-    </h5>
+  <div class="col ">
+    <div class="card shadow align-items-center text-center {{ contributor.type }}">
+      <div class="card-body w-100">
+        <c-avatar :image="contributor.image" class="w-100" />
+        <h5 class="card-title fs-6 mt-1">{{ contributor }}</h5>
+        <c-bs5.button class="btn btn-primary"
+                      href="{{ contributor.get_absolute_url }}">
+          {% trans "View profile" %}
+        </c-bs5.button>
+      </div>
+    </div>
   </div>
 {% endwith %}

@@ -1,15 +1,15 @@
 const {
   merge
-} = require('webpack-merge');
-const commonConfig = require('./common.config');
-const BundleTracker = require('webpack-bundle-tracker');
-const path = require('path');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const BaseDir = path.resolve(__dirname, '../../');
+} = require('webpack-merge')
+const commonConfig = require('./common.config')
+const BundleTracker = require('webpack-bundle-tracker')
+const path = require('path')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const BaseDir = path.resolve(__dirname, '../../')
 
 // This variable should mirror the one from config/settings/production.py
-const staticUrl = '/static/';
-const BASE_DIR = path.resolve(__dirname, '../../');
+const staticUrl = '/static/'
+const BASE_DIR = path.resolve(__dirname, '../../')
 
 
 module.exports = merge(commonConfig, {
@@ -28,8 +28,8 @@ module.exports = merge(commonConfig, {
     new CopyWebpackPlugin({
       patterns: [{
         from: path.resolve(BaseDir, 'node_modules/bootstrap/scss/'),
-        to: path.resolve(BaseDir, 'geoluminate/static/bootstrap/scss/'),
-      }, ],
+        to: path.resolve(BaseDir, 'geoluminate/static/bs5/'),
+      },],
     }),
   ],
-});
+})

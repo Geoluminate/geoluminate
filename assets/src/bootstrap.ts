@@ -1,4 +1,3 @@
-import '@popperjs/core'
 import {
   Popover,
   Toast,

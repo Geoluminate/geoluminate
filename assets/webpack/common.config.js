@@ -1,35 +1,26 @@
 const path = require('path')
 const BundleTracker = require('webpack-bundle-tracker')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const { popper } = require('@popperjs/core')
 
 const BaseDir = path.resolve(__dirname, '../../')
 const BundleDir = path.resolve(BaseDir, './geoluminate/static/bundles/')
 const AssetsDir = path.resolve(__dirname, '../')
 const VendorDir = path.resolve(__dirname, '../src/vendors/')
 
-console.log('Webpack common config:')
-console.log('Output Path:', BundleDir)
-console.log('Context Path:', AssetsDir)
-
 module.exports = {
   target: 'web',
   context: path.join(__dirname, '../'),
   entry: {
-    jquery: 'jquery',
-    bootstrap: path.resolve(VendorDir, './bootstrap'),
-    // datatables: path.resolve(AssetsDir, './src/datatables/index'),
-    htmx: 'htmx.org',
-    justGage: path.resolve(VendorDir, './justGage'),
-    list: path.resolve(__dirname, '../src/list'),
-    detail: path.resolve(__dirname, '../src/detail'),
+    popper: "@popperjs/core",
     project: path.resolve(__dirname, '../src/project'),
   },
   output: {
     path: BundleDir,
-    publicPath: '/static/bundles/',
-    filename: 'js/[name]-[fullhash].js',
+    publicPath: '/static/js/',
+    filename: 'js/[name].js',
     // filename: 'js/[name].js',
-    chunkFilename: 'js/[name]-[hash].js',
+    // chunkFilename: 'js/[name].js',
   },
   plugins: [
     new BundleTracker({
@@ -79,18 +70,6 @@ module.exports = {
   resolve: {
     modules: ['node_modules'],
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.mjs'],
-  },
-  externals: {
-    project: {
-      bootstrap: 'bootstrap'
-    },
-    list: {
-      bootstrap: 'bootstrap'
-    },
-    detail: {
-      bootstrap: 'bootstrap',
-    },
-    "jquery": "jQuery",
   },
   // optimization: {
   //   splitChunks: {

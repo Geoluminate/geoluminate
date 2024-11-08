@@ -1,5 +1,5 @@
-const { merge } = require('webpack-merge');
-const commonConfig = require('./common.config');
+const { merge } = require('webpack-merge')
+const commonConfig = require('./common.config')
 
 module.exports = merge(commonConfig, {
   mode: 'development',
@@ -11,7 +11,7 @@ module.exports = merge(commonConfig, {
   devServer: {
     port: 3000,
     proxy: {
-      '/': 'http://django:8000',
+      '/': 'http://localhost:8000',
     },
 
     client: {
@@ -25,4 +25,4 @@ module.exports = merge(commonConfig, {
     hot: false,
     liveReload: true,
   },
-});
+})

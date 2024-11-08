@@ -1,0 +1,9 @@
+<c-fields.field :field="field">
+  {% for obj in value %}
+  {% if obj.get_absolute_url %}
+    <a href="{{ obj.get_absolute_url }}">{{ obj }}</a>
+  {% else %}
+    {{ obj }}
+  {% endif %}
+  {% endfor %}
+</c-fields.field>

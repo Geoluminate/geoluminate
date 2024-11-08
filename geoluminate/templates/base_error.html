@@ -14,12 +14,7 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow">
           <div class="modal-body">
-            <img class="mx-auto w-100 mb-3"
-                 src="{% brand "logo" %}"
-                 alt=""
-                 style="max-height:120px"
-                 height="120"
-                 width="auto" />
+            <img class="mx-auto w-100 mb-3" src="{% static "img/brand/logo.svg" %}" alt="" style="max-height:120px" height="120" width="auto" />
             <h5 class="modal-title mb-2 text-left">
               {% block error %}
               {% endblock error %}
@@ -30,7 +25,9 @@
 
           </div>
           <div class="modal-footer justify-content-between border-0">
-            <a href="#" onclick="window.history.back();" class="btn btn-secondary">
+            <a href="#"
+               onclick="window.history.back();"
+               class="btn btn-secondary">
               <span class="fa-solid fa-arrow-left-long"></span>
             {% trans "Previous" %}</a>
             <a href="/" class="btn btn-primary btn-primary">

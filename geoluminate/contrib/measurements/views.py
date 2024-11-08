@@ -1,8 +1,9 @@
 from django.utils.translation import gettext as _
 from django.views.generic import TemplateView
-from django_tables2 import SingleTableMixin, tables
+from django_tables2 import tables
 
-from geoluminate.core.views.mixins import ListPluginMixin, PolymorphicSubclassBaseView, PolymorphicSubclassMixin
+from geoluminate.core.plugins import TablePlugin
+from geoluminate.core.views.mixins import PolymorphicSubclassBaseView, PolymorphicSubclassMixin
 from geoluminate.views import BaseListView
 
 from .models import Measurement
@@ -40,27 +41,16 @@ class MeasurementListView(PolymorphicSubclassBaseView, BaseListView):
 
 class MeasurementTable(tables.Table):
     sample = tables.columns.Column(linkify=True)
-
     corr_HP_flag = tables.columns.BooleanColumn()
 
     class Meta:
         model = Measurement
-        fields = [
-            "sample",
-            "q",
-            "q_uncertainty",
-            "corr_HP_flag",
-        ]
-
-    # def render_sample(self, record):
-    #     return record.sample.get_type()["verbose_name"]
+        fields = ["sample", "q", "q_uncertainty", "corr_HP_flag"]
 
 
-class MeasurementPlugin(SingleTableMixin, ListPluginMixin):
+class MeasurementPlugin(TablePlugin):
     title = name = _("Measurements")
     icon = "measurement.svg"
-    template_name = "measurements/measurement_list.html"
-    object_template = "measurements/measurement/card.html"
     model = Measurement
     table_class = MeasurementTable
 
@@ -71,11 +61,3 @@ class MeasurementPlugin(SingleTableMixin, ListPluginMixin):
 
     def get_table_data(self):
         return self.get_queryset()
-
-    # def get_queryset(self, *args, **kwargs):
-    # measurement_type = self.request.GET.get("mtype")
-    # measurement_type = "HeatFlowSite"
-    # from django.apps import apps
-
-    # mtype = apps.get_model("heat_flow.ParentHeatFlow")
-    # return mtype.objects.filter(sample__dataset=self.get_object()).select_related("sample__dataset")

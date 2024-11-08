@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from .models import Contributor
 
 
-class ListFilterTop(df.FilterSet):
+class ContributorFilter(df.FilterSet):
     name = df.CharFilter(
         lookup_expr="icontains",
         widget=forms.TextInput(attrs={"placeholder": "Find a contributor..."}),
@@ -25,8 +25,6 @@ class ListFilterTop(df.FilterSet):
         empty_label=_("Order by"),
     )
 
-
-class ContributorFilter(ListFilterTop):
     type = df.ChoiceFilter(
         choices=[
             ("active", "Active"),
@@ -51,11 +49,3 @@ class ContributorFilter(ListFilterTop):
         elif value == "organizations":
             return queryset.organizations()
         return queryset
-
-
-# class ContributionFilter(df.FilterSet):
-#     class Meta:
-#         model = Contribution
-#         fields = {
-#             "roles": ["icontains"],
-#         }

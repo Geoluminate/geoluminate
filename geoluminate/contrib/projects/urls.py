@@ -1,14 +1,10 @@
 from django.urls import include, path
-from neapolitan.views import Role
 
-from geoluminate.contrib.datasets.views import DatasetEditView
+from geoluminate.plugins import plugins
 
-from .plugins import project
-from .views import ProjectEditView, ProjectListView
+from .views import ProjectCRUDView
 
 urlpatterns = [
-    *ProjectEditView.get_urls(),
-    path("projects/", ProjectListView.as_view(), name="project-list"),
-    path("p/<str:pk>/", include(project.urls)),
-    path("p/<str:pk>/", include(DatasetEditView.get_urls(roles=[Role.CREATE]))),
+    *ProjectCRUDView.get_urls(),
+    path("project/<str:pk>/", include(plugins.get_urls("project"))),
 ]

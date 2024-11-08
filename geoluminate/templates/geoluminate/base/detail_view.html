@@ -1,11 +1,13 @@
-{% extends "geoluminate/layout/application.html" %}
-{% load static formsetify geoluminate sekizai_tags activity_tags imagekit neapolitan easy_icons flex_menu %}
+{% extends "base.html" %}
+{% load static flex_menu partials geoluminate %}
 {% load render_bundle from webpack_loader %}
+
+{% block body_class %}
+  vstack vh-100
+{% endblock body_class %}
 
 {% block css %}
   {{ block.super }}
-  {% render_bundle "detail" "css" "GEOLUMINATE" %}
-  <link rel="stylesheet" type="text/css" href="{% static "fluent_comments/css/ajaxcomments.css" %}" />
   <style>
     th {
       white-space: nowrap;
@@ -13,61 +15,23 @@
   </style>
 {% endblock css %}
 
-{% block javascript %}
-  {{ block.super }}
-  {% render_bundle "detail" "js" "GEOLUMINATE" attrs="defer" %}
-{% endblock javascript %}
-
 {% block page_nav %}
-  <nav class="page-nav">
-    {% render_menu menu pk=base_object.pk %}
-  </nav>
+  {% render_menu menu pk=base_object.pk|default:object.pk %}
 {% endblock page_nav %}
 
-{% block sidebar %}
-  {% block sidebar_image %}
-    <div class="card bg-secondary-subtle text-light ratio ratio-16x9">
-      <div class="d-flex flex-column justify-content-center align-items-center">
-        {% if base_object.image %}
-          <img src="{{ base_object.image.url }}"
-               alt="{{ base_object }}"
-               width="100%"
-               height="100%" />
-        {% else %}
-          {% icon "image" height="25%" %}
-          {% trans "No image provided" %}
-        {% endif %}
-      </div>
-    </div>
-  {% endblock sidebar_image %}
-
-  <div class="actions d-flex mb-2 justify-content-center">
-    <c-button.follow :object="base_object"
-                     :user="request.user" />
-    {% share_button base_object %}
-    <a href="#"
-       class="btn btn-sm btn-secondary">
-      {% icon "email" %}
-      {% trans "Contact" %}
-    </a>
-    {% block actions %}
-    {% endblock actions %}
+{% block content %}
+  <div class="overflow-hidden d-flex h-100">
+    <c-detail.sidebar>
+      {% for heading, config in sidebar_fields %}
+        <c-sidebar-fieldset :heading="heading" :fields="['title','project']" />
+      {% endfor %}
+      {% comment %} <c-fields.relation :field="field.0" :value="field.1" /> {% endcomment %}
+      {% render_field object "contributors" %}
+      {% comment %} {% render_field object "samples" %} {% endcomment %}
+      {% comment %} {% render_field object "project" %} {% endcomment %}
+    </c-detail.sidebar>
+    {% block plugin %}
+    {% endblock plugin %}
 
   </div>
-  <div class="mt-3">
-    <hr />
-    {% block sidebar_cards %}
-      {% trans "Basic Information" as heading %}
-      {% sidebar_section base_object heading sidebar_fields %}
-    {% endblock sidebar_cards %}
-
-  </div>
-{% endblock sidebar %}
-
-{% comment %} {% block after_page %}
-  <div id="plugin-toolbar" class="d-flex flex-column h-100 border-start " hx-swap-oob="true">
-    {% block toolbar %}
-    {% endblock toolbar %}
-
-  </div>
-{% endblock after_page %} {% endcomment %}
+{% endblock content %}

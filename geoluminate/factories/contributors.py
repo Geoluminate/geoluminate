@@ -1,11 +1,10 @@
 import random
 
 import factory
+from django.contrib.contenttypes.models import ContentType
 from factory import Faker, post_generation
 
-from geoluminate.contrib.contributors.models import Organization, OrganizationMember
-
-from ..contrib.contributors.models import Contributor, Person
+from ..contrib.contributors.models import Contributor
 from .utils import randint
 
 
@@ -30,12 +29,14 @@ class ContributionFactory(factory.django.DjangoModelFactory):
         max_persons = 10
 
     class Meta:
-        django_get_or_create = ["contributor", "object"]
+        model = "contributors.Contribution"
+        django_get_or_create = ["contributor", "object_id", "content_type"]
+
+    content_type = factory.LazyAttribute(lambda o: ContentType.objects.get_for_model(o.content_object))
+    object_id = factory.SelfAttribute("content_object.id")
 
     @factory.lazy_attribute
     def roles(self):
-        # parent_meta = self.factory_parent._Resolver__step.builder.factory_meta
-        # parent_model = parent_meta.model
         max_roles = len(self.roles_choices)
         return random.sample(self.roles_choices, k=random.randint(1, max_roles))
 
@@ -51,7 +52,6 @@ class ContributionFactory(factory.django.DjangoModelFactory):
     @classmethod
     def _create(cls, model_class, *args, **kwargs):
         """Create an instance of the model, and save it to the database."""
-        model_class = kwargs.pop("model", model_class)
         if cls._meta.django_get_or_create:
             return cls._get_or_create(model_class, *args, **kwargs)
 
@@ -88,7 +88,7 @@ class PersonFactory(ContributorFactory):
         self.set_password(password)
 
     class Meta:
-        model = Person
+        model = "contributors.Person"
         django_get_or_create = ["email"]
 
 
@@ -99,12 +99,12 @@ class OrganizationFactory(ContributorFactory):
     alternative_names = factory.List([factory.Faker("company") for _ in range(random.randint(0, 3))])
 
     class Meta:
-        model = Organization
+        model = "contributors.Organization"
 
 
 class OrganizationMembershipFactory(factory.django.DjangoModelFactory):
     class Meta:
-        model = OrganizationMember
+        model = "contributors.OrganizationMember"
 
     person = factory.SubFactory("geoluminate.factories.PersonFactory")
     organization = factory.SubFactory("geoluminate.factories.OrganizationFactory")
@@ -114,10 +114,3 @@ class OrganizationMembershipFactory(factory.django.DjangoModelFactory):
 def create_contributors(n_active, n_organizations, n_inactive):
     """Create a set of users and organizations."""
     return PersonFactory.create_batch(n_active)
-
-
-class ContributorFactoryList(factory.RelatedFactoryList):
-    def __init__(self, model, **kwargs):
-        related_factory = factory.make_factory(model, FACTORY_CLASS=ContributionFactory)
-        factory_related_name = "object"
-        super().__init__(related_factory, factory_related_name, **kwargs)

@@ -1,5 +1,39 @@
+import json
+
+from client_side_image_cropping import ClientsideCroppingWidget
 from django import forms
 from partial_date import PartialDate
+
+
+class ImageCroppingWidget(ClientsideCroppingWidget):
+    def __init__(self, width: int, height: int, config, result, *args, **kwargs):
+        self.config = config
+        self.result = result
+        super().__init__(width, height, width, height, *args, **kwargs)
+
+    def get_context(self, name, value, attrs):
+        context = super().get_context(name, value, attrs)
+        context["widget"].update(
+            {
+                "config": json.dumps(self.config),
+                "result": json.dumps(self.result),
+            }
+        )
+        return context
+
+    class Media:
+        css = {
+            "all": (
+                "client_side_image_cropping/croppie.css",
+                # "client_side_image_cropping/cropping_widget.css",
+                # "cropping_widget/cropping.css",
+            ),
+        }
+        js = (
+            "client_side_image_cropping/croppie.min.js",
+            # "cropping_widget/cropping.js",
+            # "client_side_image_cropping/cropping_widget.js",
+        )
 
 
 class PartialDateWidget(forms.SelectDateWidget):

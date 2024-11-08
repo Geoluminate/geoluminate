@@ -1,10 +1,8 @@
 {% load social_share %}
 
-<div class="linkedin-this">
-  <a href="http://www.linkedin.com/shareArticle?mini=true&url={{ linkedin_url }}"
-     class="{{ link_class }}"
-     target="_blank">
-    <i class='fa-brands fa-linkedin'></i>
-    <span class='d-none'>{{ link_text }}</span>
-  </a>
-</div>
+<c-bs5.button href="http://www.linkedin.com/shareArticle?mini=true&url={{ linkedin_url }}"
+              size="lg"
+              icon="linkedin"
+              target="_blank">
+  <span class="d-none">{{ link_text }}</span>
+</c-bs5.button>

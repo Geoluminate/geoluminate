@@ -4,21 +4,6 @@ from polymorphic.admin import PolymorphicChildModelAdmin, PolymorphicChildModelF
 from geoluminate.contrib.measurements.models import Measurement
 from geoluminate.core.utils import get_subclasses
 
-from .models import Date, Description
-
-
-class DescriptionInline(admin.TabularInline):
-    model = Description
-    fields = ["type", "text"]
-    extra = 0
-    max_num = 2
-
-
-class DateInline(admin.TabularInline):
-    model = Date
-    extra = 0
-    fields = ["type", "date"]
-
 
 @admin.register(Measurement)
 class MeasurementParentAdmin(PolymorphicParentModelAdmin):
@@ -30,4 +15,3 @@ class MeasurementParentAdmin(PolymorphicParentModelAdmin):
 class MeasurementAdmin(PolymorphicChildModelAdmin):
     show_in_index = True
     base_model = Measurement
-    inlines = [DescriptionInline, DateInline]

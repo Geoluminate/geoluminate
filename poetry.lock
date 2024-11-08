@@ -1091,13 +1091,13 @@ test = ["coverage", "django_webtest", "factory-boy", "pdbpp", "pyquery", "pytest
 
 [[package]]
 name = "django-admin-sortable2"
-version = "2.2.1"
+version = "2.2.3"
 description = "Generic drag-and-drop sorting for the List, the Stacked- and the Tabular-Inlines Views in the Django Admin"
 optional = false
 python-versions = "*"
 files = [
-    {file = "django_admin_sortable2-2.2.1-py3-none-any.whl", hash = "sha256:ae7ec1f0974202e27748fb618b13f23d1b1d44764374b09ad0a9a763f30b054f"},
-    {file = "django_admin_sortable2-2.2.1.tar.gz", hash = "sha256:30a9527f93fc61b7a2c5954db57d8428931e37f462c3b46cb101053dc5f51751"},
+    {file = "django_admin_sortable2-2.2.3-py3-none-any.whl", hash = "sha256:bda5f8f73590f7696595a86fc23c145d7c96b68fbb43478c74376484ee12ce81"},
+    {file = "django_admin_sortable2-2.2.3.tar.gz", hash = "sha256:38f95a956b5c23df2a46449f0a3268d47408a641cfb45961cde0c41d2a686397"},
 ]
 
 [package.dependencies]
@@ -1740,13 +1740,13 @@ resolved_reference = "ac82b21adaeb787e0cc432cf364246b3d82fdd48"
 
 [[package]]
 name = "django-jsonform"
-version = "2.22.0"
+version = "2.23.1"
 description = "A user-friendly JSON editing form for Django admin."
 optional = false
 python-versions = ">=3.4"
 files = [
-    {file = "django-jsonform-2.22.0.tar.gz", hash = "sha256:0c9d50fb371938e7262a7fef7c5a60835dd288f872f87b952d5e2ea84c825221"},
-    {file = "django_jsonform-2.22.0-py3-none-any.whl", hash = "sha256:c4dd1ba2b0152bd3164aacf326a83c35355c70d12de81908b5ced5f94c8263d6"},
+    {file = "django_jsonform-2.23.1-py3-none-any.whl", hash = "sha256:cd5900c9f4f69d90a40b3a495aeb66bf43f562b82bfb64be40a78a51bbc04a11"},
+    {file = "django_jsonform-2.23.1.tar.gz", hash = "sha256:b75ea31263fbdde7190c1b02422587208359b19b1a9babc15ec3ed8260b26af9"},
 ]
 
 [package.dependencies]
@@ -3581,13 +3581,13 @@ testing-docutils = ["pygments", "pytest (>=7,<8)", "pytest-param-files (>=0.3.4,
 
 [[package]]
 name = "neapolitan"
-version = "24.6"
+version = "24.7"
 description = "Neapolitan: quick CRUD views for Django."
 optional = false
 python-versions = "*"
 files = [
-    {file = "neapolitan-24.6-py2.py3-none-any.whl", hash = "sha256:2315b23fdfac09c380fd3e3899af237b77db702f60e6779e66dd9f133bce571b"},
-    {file = "neapolitan-24.6.tar.gz", hash = "sha256:0c84963a4b5cab2411952ee5bd939adbb8987ef27b3a53ca1399ab607b691cab"},
+    {file = "neapolitan-24.7-py2.py3-none-any.whl", hash = "sha256:2b3bf2490dce77819c0c46f2e4841820e1f68df9e745a84837b818395f3b7fdb"},
+    {file = "neapolitan-24.7.tar.gz", hash = "sha256:4081f1b4fa7e7f9142688ab7efde3b24af3fb262d72f2fb96af834d8481851bf"},
 ]
 
 [package.dependencies]
@@ -5887,4 +5887,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "4082cfc38b89dac20df62c33e1e21eeea3c686bc6efb5bae0cc10c2cc2eb05d1"
+content-hash = "556d3ccaa2c2448d4069a6a984b668fcc0a100778ad05b33f901011c727b918a"

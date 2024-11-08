@@ -1,8 +1,17 @@
 # from django.shortcuts import redirect
 from django.urls import include, path
-from drf_spectacular.views import SpectacularSwaggerView
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+from rest_framework_nested import routers
 
-from .views import TOSView
+from . import viewsets
+from .views import MeasurementMetadataView, TOSView
+
+# ============= BASE ROUTERS =============
+router = routers.SimpleRouter()
+router.register("project", viewsets.ProjectViewset)
+router.register("dataset", viewsets.DatasetViewset)
+router.register("sample", viewsets.SampleViewset)
+
 
 app_name = "api"
 urlpatterns = [
@@ -11,10 +20,12 @@ urlpatterns = [
         SpectacularSwaggerView.as_view(template_name="geoluminate/generic/spectacular.html", url_name="api:schema"),
         name="swagger-ui",
     ),
-    path("v1/", include("geoluminate.api.v1.urls")),
-    path("v1/tos/", TOSView.as_view(), name="tos"),
+    path("", include(router.urls)),
+    path("measurements/", MeasurementMetadataView.as_view(), name="measurement-metadata"),
+    path("", include("geoluminate.contrib.contributors.api.urls")),
+    path("schema/", SpectacularAPIView.as_view(), name="schema"),
+    path("tos/", TOSView.as_view(), name="tos"),
+    # path("auth/", include("rest_framework.urls", namespace="rest_framework")),
     # path("auth/", include("dj_rest_auth.urls")),
     # path("auth/register/", include("dj_rest_auth.registration.urls")),
-    # path("", lambda request: redirect("swagger-ui", permanent=False)),
-    # path("", lambda request: redirect("/api/v1", permanent=True)),
 ]

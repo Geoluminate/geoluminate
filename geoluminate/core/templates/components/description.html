@@ -1,0 +1,23 @@
+<div id="{{ type }}-description" {{ attrs }}>
+  <h5>
+    {{ type }}
+    {% if can_delete and description %}
+      <a href="{% url 'description-delete' base_pk=description.object_id pk=description.pk %}"
+         hx-post="{% url 'description-delete' base_pk=description.object_id pk=description.pk %}"
+         class="fs-6 text-danger">{% icon "delete" %}</a>
+    {% endif %}
+  </h5>
+  {% if can_update %}
+    <div hx-trigger="click"
+         hx-get="{% url 'description-update' base_pk=description.object_id pk=description.pk %}"
+         hx-target="#{{ type }}-description"
+         hx-swap="outerHTML"
+         class="editable">
+    {% endif %}
+    {% if slot %}
+      {{ slot }}
+    {% else %}
+      {{ description.value|linebreaks }}
+    {% endif %}
+    {% if can_update %}</div>{% endif %}
+</div>

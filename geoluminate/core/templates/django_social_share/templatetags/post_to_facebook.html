@@ -1,6 +1,6 @@
-<div class="facebook-this">
-  <a href="{{ facebook_url }}" class="{{ link_class }}" target="_blank">
-    <i class='fa-brands fa-facebook'></i>
-    <span class='d-none'>{{ link_text }}</span>
-  </a>
-</div>
+<c-bs5.button href="{{ facebook_url }}"
+              size="lg"
+              icon="facebook"
+              target="_blank">
+  <span class="d-none">{{ link_text }}</span>
+</c-bs5.button>

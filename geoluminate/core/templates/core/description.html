@@ -1,13 +1,41 @@
-{% load geoluminate static partials crispy_forms_tags %}
+{% load partials crispy_forms_tags %}
 
-{% partialdef description %}
-<div id="{{ description.type }}Description" class="section-header">
-  <h5 class="mb-0">{{ description.get_type_display }}</h5>
-  {{ description.text|linebreaks }}
-</div>
+{% partialdef dropdown %}
+<div></div>
+{% endpartialdef %}
+
+{% partialdef detail %}
+<c-description type="{{ description.type }}"
+               :description="description"
+               can_update />
 {% endpartialdef %}
 
 {% partialdef form inline=True %}
-<h1 class="modal-title fs-5" id="exampleModalLabel" hx-swap-oob="true">{{ form_title }}</h1>
-<div id="modalFormBody" hx-swap-oob="true">{% crispy form %}</div>
+<style>
+  textarea {
+    padding: 0
+  }
+
+  textarea:focus {
+    outline: 0;
+    border: none;
+  }
+
+  textarea:focus-visible {
+    outline: 0;
+    border: none;
+  }
+</style>
+<c-description type="{{ title }}"
+               x-data="{submit() { this.$refs.form.requestSubmit(); }}"
+               can_delete>
+  <form action="{{ request.path }}"
+        hx-post="{{ request.path }}"
+        hx-swap="outerHTML"
+        x-ref="form"
+        @click.outside="submit"
+        @keydown.tab="submit">
+    {{ form }}
+  </form>
+</c-description>
 {% endpartialdef %}

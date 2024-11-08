@@ -1,6 +1,6 @@
 <c-vars :title="{{ meta.title }}"
         layout="page"
-        :layout_types="{'page': 'container', 'app': ''}" />
+        :layout_types="{'page': 'container overflow-auto', 'app': ''}" />
 <div class="{{ layout_types|get_item:layout }}" {{ attrs }}>
   {% if layout == "page" %}
     <c-header title="{{ title }}">
@@ -10,7 +10,7 @@
         </c-slot>
       {% endif %}
     </c-header>
-    <hr class="mt-0 mb-3" />
+    {% if not no_hr %}<hr class="mt-0 mb-3" />{% endif %}
   {% endif %}
   {{ slot }}
 </div>

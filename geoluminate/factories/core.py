@@ -6,6 +6,8 @@ import faker
 # from django.contrib.gis.geos import Point
 from research_vocabs.models import Concept
 
+from geoluminate.core.models import Date, Description
+
 from .utils import randint
 
 
@@ -45,20 +47,47 @@ class GeoluminateProvider(faker.providers.BaseProvider):
 factory.Faker.add_provider(GeoluminateProvider)
 
 
-class DescriptionFactory(factory.django.DjangoModelFactory):
+class GenericFactory(factory.django.DjangoModelFactory):
+    class Params:
+        choices = None
+
+    @factory.lazy_attribute_sequence
+    def type(self, n):
+        if not self.choices:
+            raise ValueError("Must provide choices when building!")
+        return self.choices[n % len(self.choices)]
+
+
+class DescriptionFactory(GenericFactory):
     """A factory for creating Description objects."""
 
-    text = factory.Faker("multiline_text", nb=randint(3, 6), nb_sentences=12)
+    class Meta:
+        model = Description
+
+    value = factory.Faker("multiline_text", nb=randint(3, 6), nb_sentences=12)
 
 
-class DateFactory(factory.django.DjangoModelFactory):
+class DateFactory(GenericFactory):
     """A factory for creating Date objects."""
 
-    date = factory.Faker("partial_date")
+    class Meta:
+        model = Date
+
+    value = factory.Faker("partial_date")
 
 
-class AbstractKeywordsFactory(factory.django.DjangoModelFactory):
+class KeywordsFactory(factory.django.DjangoModelFactory):
     """A factory for creating Keywords objects."""
 
     class Meta:
         model = Concept
+
+
+class Descriptions(factory.RelatedFactoryList):
+    def __init__(self, choices: list, **kwargs):
+        super().__init__(DescriptionFactory, "content_object", size=randint(1, len(choices)), choices=choices, **kwargs)
+
+
+class Dates(factory.RelatedFactoryList):
+    def __init__(self, choices: list, **kwargs):
+        super().__init__(DateFactory, "content_object", size=randint(1, len(choices)), choices=choices, **kwargs)

@@ -1,0 +1,26 @@
+<aside class="d-block h-100 overflow-auto bg-secondary-subtle col-12 col-md-4 col-lg-3 pt-2 pt-md-0 {% if reverse %} border-start{% else %} border-end{% endif %} {{ sidebar_class }}">
+  <div class="p-2 overflow-auto vstack gap-3">
+    {% if image %}
+      {{ image }}
+    {% else %}
+      <c-image class="ratio ratio-16x9"
+               :image="object.image"
+               alt="{{ object }}"
+               width="100%"
+               height="100%" />
+    {% endif %}
+    <div class="hstack justify-content-center gap-1">
+      <c-button.follow :object="object" :user="request.user" />
+      <c-bs5.button class="btn btn-sm btn-success"
+                    icon="share"
+                    text="{% trans "Share" %}"
+                    data-bs-toggle="modal"
+                    data-bs-target="#shareModal" />
+      <c-bs5.button class="btn btn-sm btn-secondary"
+                    icon="email"
+                    text="{% trans "Contact" %}" />
+      {{ actions }}
+    </div>
+    {{ slot }}
+  </div>
+</aside>

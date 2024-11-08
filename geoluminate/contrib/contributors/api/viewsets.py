@@ -1,6 +1,6 @@
 from rest_framework import viewsets
 
-from geoluminate.api.v1.serializers import ProjectSerializer
+from geoluminate.api.serializers import ProjectSerializer
 from geoluminate.contrib.contributors.models import Contributor
 from geoluminate.contrib.datasets.models import Dataset
 from geoluminate.contrib.projects.models import Project

@@ -7,7 +7,7 @@ from formset.widgets import Selectize, UploadedFileInput
 
 from geoluminate.core.choices import iso_639_1_languages
 
-from ..models import Contributor, Identifier
+from ..models import Contributor
 
 
 class UserProfileForm(forms.ModelForm):
@@ -125,7 +125,6 @@ class IdentifierForm(forms.ModelForm):
     )
 
     class Meta:
-        model = Identifier
         fields = ["scheme", "identifier"]
 
     def __init__(self, scheme_choices, *args, **kwargs):

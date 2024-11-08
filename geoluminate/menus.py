@@ -1,9 +1,3 @@
-import logging
-from contextlib import suppress
-
-from django.conf import settings
-from django.urls import reverse
-from django.urls.exceptions import NoReverseMatch
 from django.utils.translation import gettext_lazy as _
 from flex_menu import Menu, MenuItem
 from literature.models import LiteratureItem
@@ -11,24 +5,9 @@ from literature.models import LiteratureItem
 from geoluminate.contrib.samples.models import Sample
 from geoluminate.models import Contributor, Dataset, Measurement, Project
 
-LABELS = settings.GEOLUMINATE_LABELS
-
-
-logger = logging.getLogger(__name__)
-
 
 def is_staff_user(request):
     return request.user.is_staff
-
-
-def check_url(viewname):
-    """Check to see if a url can be resolved. Return false if not."""
-
-    def inner(request):
-        with suppress(NoReverseMatch):
-            return reverse(viewname)
-
-    return inner
 
 
 DatabaseMenu = Menu(
@@ -119,26 +98,56 @@ DatabaseMenu = Menu(
 )
 
 
-ProjectDetailMenu = Menu(
-    "ProjectDetailMenu",
+ProjectMenu = Menu(
+    "ProjectMenu",
     label=_("Project"),
     root_template="geoluminate/menus/detail/root.html",
+    children=[
+        MenuItem(
+            _("Overview"),
+            view_name="project-detail",
+            icon="home",
+        ),
+    ],
 )
 
-DatasetDetailMenu = Menu(
-    "DatasetDetailMenu",
+DatasetMenu = Menu(
+    "DatasetMenu",
     label=_("Dataset"),
     root_template="geoluminate/menus/detail/root.html",
+    children=[
+        MenuItem(_("Overview"), icon="grid", view_name="dataset-detail"),
+    ],
 )
 
-SampleDetailMenu = Menu(
-    "SampleDetailMenu",
+SampleMenu = Menu(
+    "SampleMenu",
     label=_("Sample"),
     root_template="geoluminate/menus/detail/root.html",
+    children=[
+        MenuItem(
+            _("Overview"),
+            view_name="sample-detail",
+            icon="grid",
+        ),
+    ],
 )
 
-ContributorDetailMenu = Menu(
-    "ContributorDetailMenu",
+ContributorMenu = Menu(
+    "ContributorMenu",
     label=_("Contributor"),
+    root_template="geoluminate/menus/detail/root.html",
+    children=[
+        MenuItem(
+            _("Overview"),
+            view_name="person-detail",
+            icon="grid",
+        ),
+    ],
+)
+
+OrganizationMenu = Menu(
+    "OrganizationMenu",
+    label=_("Organization"),
     root_template="geoluminate/menus/detail/root.html",
 )

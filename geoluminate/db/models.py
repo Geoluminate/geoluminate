@@ -1,12 +1,7 @@
 from django.db.models import *  # isort:skip
 
-# from django.contrib.gis.db.models import *  # isort:skip
-
-# from django.contrib.gis.db.models import __all__ as models_all
 from django.db import models
 from django.urls import reverse
-from django.utils.html import escape
-from django.utils.safestring import mark_safe
 from django_bleach.models import BleachField as TextField
 from model_utils import FieldTracker
 from quantityfield.fields import (
@@ -44,13 +39,6 @@ class Model(models.Model):
         See: https://django-meta.readthedocs.io/en/latest/models.html#models for usage details
     """
 
-    # id = models.UUIDField(
-    #     default=uuid.uuid4,
-    #     editable=False,
-    #     unique=True,
-    #     verbose_name="UUID",
-    #     primary_key=True,
-    # )
     created = models.DateTimeField(
         auto_now_add=True,
         verbose_name="Created",
@@ -72,25 +60,8 @@ class Model(models.Model):
     def get_absolute_url(self):
         return reverse(f"{self._meta.model_name}-detail", kwargs={"pk": self.pk})
 
-    def get_update_url(self):
-        return reverse(f"{self._meta.model_name}-update", kwargs={"pk": self.pk})
-        # return self.get_absolute_url()
-        # return reverse(f"{self._meta.model_name}s:edit", kwargs={"pk": self.pk})
-
-    def get_add_url(self):
-        return reverse(f"{self._meta.model_name}-create")
-
-    def get_list_url(self):
-        return reverse(f"{self._meta.model_name}-list")
-
     def get_api_url(self):
         return reverse(f"api:{self._meta.model_name}-detail", kwargs={"pk": self.pk})
-
-    def get_absolute_url_link(self):
-        string = escape(str(self))
-        return mark_safe(f"<a href='{self.get_absolute_url()}'>{string}</a>")
-
-    __html__ = get_absolute_url_link
 
 
 __all__ = [

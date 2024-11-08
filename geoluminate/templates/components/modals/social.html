@@ -1,0 +1,14 @@
+{% load social_share %}
+
+<c-bs5.modal id="shareModal"
+             title="{% trans "Share this page" %}">
+  <div class="d-grid gap-2">
+    {% with class as "btn btn-lg btn-primary" %}
+      {% send_email geoluminate.database.name object request.path %}
+      {% post_to_twitter object.summary|default:"" request.path %}
+      {% post_to_linkedin request.path %}
+      {% post_to_facebook request.path %}
+      {% post_to_whatsapp request.path %}
+    {% endwith %}
+  </div>
+</c-bs5.modal>

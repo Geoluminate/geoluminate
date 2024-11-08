@@ -1,0 +1,75 @@
+{% extends 'geoluminate/base/detail_view.html' %}
+{% load formsetify contributor_tags geoluminate static partials easy_icons %}
+
+{% block content %}
+  {% partialdef plugin inline=True %}
+  <c-plugin layout="app">
+    <c-layout.sidebar size="3">
+      <c-slot name="sidebar">
+        <div class="card bg-secondary-subtle text-light ratio ratio-16x9">
+          <div class="d-flex flex-column justify-content-center align-items-center">
+            {% if base_object.image %}
+              <img src="{{ base_object.image.url }}"
+                   alt="{{ base_object }}"
+                   width="100%"
+                   height="100%" />
+            {% else %}
+              {% icon "image" height="25%" %}
+              {% trans "No image provided" %}
+            {% endif %}
+          </div>
+        </div>
+        <div class="hstack w-100 gap-1">
+          <c-button.follow :object="base_object" :user="request.user" />
+          {% comment %} {% share_button base_object %} {% endcomment %}
+          <c-bs5.button class="btn btn-sm btn-success"
+                        icon="share"
+                        text="{% trans "Share" %}"
+                        data-bs-toggle="modal"
+                        data-bs-target="#shareModal" />
+          <c-bs5.button href="#"
+                        class="btn btn-sm btn-secondary"
+                        icon="email"
+                        text="{% trans "Contact" %}" />
+        </div>
+        <hr class="m-0" />
+        {% block sidebar_cards %}
+          {% for heading, config in sidebar_fields %}
+            <c-sidebar-fieldset heading="{{ heading }}"
+                                :fields="config.fields"
+                                :object="base_object" />
+          {% endfor %}
+        {% endblock sidebar_cards %}
+
+      </c-slot>
+      <div class="col overflow-auto position-relative">
+        <div class="container py-3 d-flex gap-2">
+          <c-bs5.card title="Graph 1"
+                      id="graph1"
+                      style="max-width: 100%;
+                             height: 250px;
+                             width: 600px">
+            Placeholder content
+          </c-bs5.card>
+          <c-bs5.card title="Graph 2">
+            Placeholder content
+          </c-bs5.card>
+          {% block plugin %}
+          {% endblock plugin %}
+
+        </div>
+        <div id="mainIndicator"
+             class="dataTables_processing htmx-indicator endless_loading fs-1"
+             style="width: 3rem;
+                    height: 3rem"
+             role="status">
+          {% icon "spinner" %}
+          <span class="visually-hidden">{% trans "Loading..." %}</span>
+        </div>
+      </div>
+    </c-layout.sidebar>
+  </c-plugin>
+  <c-modals.social :object="base_object" />
+{% endpartialdef plugin %}
+
+{% endblock content %}

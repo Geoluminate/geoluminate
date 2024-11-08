@@ -3,30 +3,35 @@ import random
 from django.apps import apps
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
+from django.contrib.contenttypes.fields import GenericRelation
+from django.db import models
 from django.db.models import Count
 from django.templatetags.static import static
 from django.urls import reverse
+
+# from rest_framework.authtoken.models import Token
+from django.utils.encoding import force_str
+from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy as _
 from easy_thumbnails.fields import ThumbnailerImageField
 from jsonfield_toolkit.models import ArrayField
 from polymorphic.models import PolymorphicModel
 from shortuuid.django_fields import ShortUUIDField
 
-# from django.db.models.fields.files import FieldFile
-from geoluminate.core.models import AbstractIdentifier, PolymorphicMixin
-from geoluminate.core.utils import inherited_choices_factory
-from geoluminate.db import models
+from geoluminate.contrib.contributors.managers import ContributionManager
 
-from . import choices
+# from django.db.models.fields.files import FieldFile
+from geoluminate.core.models import GenericModel, Identifier, PolymorphicMixin
+from geoluminate.core.utils import default_image_path
+
 from .managers import UserManager
 
 
-def profile_image_path(instance, filename):
-    """Return the path to the profile image for a contributor."""
-    return f"contributors/{instance.pk}.{filename.split('.')[-1]}"
+def contributor_permissions_default():
+    return {"edit": False}
 
 
-class Contributor(models.Model, PolymorphicMixin, PolymorphicModel):
+class Contributor(PolymorphicMixin, PolymorphicModel):
     """A Contributor is a person or organisation that makes a contribution to a project, dataset, sample or measurement
     within the database. This model stores publicly available information about the contributor that can be used
     for proper attribution and formal publication of datasets. The fields are designed to align with the DataCite
@@ -42,12 +47,9 @@ class Contributor(models.Model, PolymorphicMixin, PolymorphicModel):
 
     image = ThumbnailerImageField(
         verbose_name=_("profile image"),
-        resize_source={"size": (1200, 1200)},
-        # processors=[SmartResize(600, 600)],
-        # options={"quality": 60},
         blank=True,
         null=True,
-        upload_to=profile_image_path,
+        upload_to=default_image_path,
     )
 
     name = models.CharField(
@@ -66,6 +68,7 @@ class Contributor(models.Model, PolymorphicMixin, PolymorphicModel):
     )
 
     profile = models.TextField(_("profile"), null=True, blank=True)
+    identifiers = GenericRelation("core.Identifier")
 
     # interests = TaggableConcepts(
     #     verbose_name=_("research interests"),
@@ -105,7 +108,7 @@ class Contributor(models.Model, PolymorphicMixin, PolymorphicModel):
         return self.name
 
     def get_absolute_url(self):
-        return reverse("contributor-detail", kwargs={"pk": self.pk})
+        return reverse("person-detail", kwargs={"pk": self.pk})
 
     def get_update_url(self):
         return reverse("contributor-update", kwargs={"pk": self.pk})
@@ -121,13 +124,17 @@ class Contributor(models.Model, PolymorphicMixin, PolymorphicModel):
         #     return "person"
         # return "organization"
 
+    @property
+    def projects(self):
+        Project = apps.get_model("projects.Project")
+        contributions = self.contributions.filter(content_type__model="project")
+        return Project.objects.filter(pk__in=contributions.values_list("object_id", flat=True))
+
 
 class Person(AbstractUser, Contributor):
     objects = UserManager()  # type: ignore[var-annotated]
 
     email = models.EmailField(_("email address"), unique=True)
-
-    # settings = models.JSONField(default=dict, blank=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name", "last_name"]
@@ -157,6 +164,9 @@ class Person(AbstractUser, Contributor):
         """Returns the location of the contributor. TODO: make this a foreign key to a location model."""
         return random.choice(["Potsdam", "Adelaide", "Dresden"])
         return self.organization.location
+
+    def get_absolute_url(self):
+        return reverse("person-detail", kwargs={"pk": self.pk})
 
     @property
     def given(self):
@@ -230,12 +240,40 @@ class Organization(Contributor):
         null=True,
     )
 
+    ror = models.JSONField(
+        verbose_name=_("Research Organization Registry"),
+        help_text=_("A JSON object containing information about the organization from the ROR API."),
+        null=True,
+        blank=True,
+    )
+
     class Meta:
         verbose_name = _("organization")
         verbose_name_plural = _("organizations")
 
     def __str__(self):
         return self.name
+
+    @classmethod
+    def from_ror(self, data):
+        """Create an organization from a ROR ID."""
+        ror_id = Identifier.objects.filter(scheme="ror", identifier=data["id"]).first()
+        if ror_id:
+            return ror_id.object
+
+        instance = Organization.objects.create(
+            name=data["name"],
+            alternative_names=[*data.get("aliases", []), *data.get("acronyms", [])],
+            ror=data,
+            links=data.get("links", []),
+        )
+
+        Identifier.objects.create(
+            scheme="ror",
+            identifier=data["id"],
+            object=instance,
+        )
+        return instance
 
     # @property
     # def type(self):
@@ -258,13 +296,86 @@ class Organization(Contributor):
     #     return self.owner.email
 
 
-class Identifier(AbstractIdentifier):
-    IdentifierLookup = choices.IdentifierLookup
-    PERS_ID_TYPES = choices.PersonalIdentifiers
-    ORG_ID_TYPES = choices.OrganizationalIdentifiers
-    SCHEME_CHOICES = inherited_choices_factory("ContributorIdentifiers", PERS_ID_TYPES, ORG_ID_TYPES)
-    scheme = models.CharField(_("scheme"), max_length=32, choices=SCHEME_CHOICES)
-    object = models.ForeignKey(to=Contributor, on_delete=models.CASCADE)
+class Contribution(GenericModel):
+    """A contributor is a person or organisation that has contributed to the project or
+    dataset. This model is based on the Datacite schema for contributors."""
+
+    objects = ContributionManager().as_manager()
+
+    contributor = models.ForeignKey(
+        "contributors.Contributor",
+        verbose_name=_("contributor"),
+        help_text=_("The person or organisation that contributed to the project or dataset."),
+        related_name="contributions",
+        null=True,
+        on_delete=models.SET_NULL,
+    )
+
+    roles = models.JSONField(
+        verbose_name=_("roles"),
+        help_text=_("Assigned roles for this contributor."),
+        default=list,
+        null=True,
+        blank=True,
+    )
+
+    # we can't rely on the contributor field to store necessary information, as the profile may have changed or been deleted, therefore we need to store the contributor's name and other details at the time of publication
+    store = models.JSONField(
+        _("contributor"),
+        help_text=_("A JSON representation of the contributor profile at the time of publication"),
+        default=dict,
+    )
+
+    # holds the permissions for each contributor, e.g. whether they can edit the object
+    permissions = models.JSONField(
+        _("permissions"),
+        help_text=_("A JSON representation of the contributor's permissions at the time of publication"),
+        default=contributor_permissions_default,
+    )
+
+    class Meta:
+        verbose_name = _("contributor")
+        verbose_name_plural = _("contributors")
+        unique_together = ("content_type", "object_id", "contributor")
+
+    def __str__(self):
+        return force_str(self.contributor)
+
+    def __repr__(self):
+        return f"<{self.contributor}: {self.roles}>"
+
+    def get_absolute_url(self):
+        """Returns the absolute url of the contributor's profile."""
+        return self.contributor.get_absolute_url()
+
+    def get_update_url(self):
+        related_name = self.object._meta.model_name
+        letter = related_name[0]
+        return reverse("contribution-update", kwargs={"pk": self.object.pk, "model": letter})
+
+    def get_create_url(self):
+        related_name = self.object._meta.model_name
+        letter = related_name[0]
+        return reverse("contribution-create", kwargs={"model": letter, "pk": self.object.pk})
+
+    def profile_to_data(self):
+        """Converts the profile to a JSON object."""
+
+        data = {
+            "name": self.profile.name,
+            "given": self.profile.given,
+            "family": self.profile.family,
+        }
+
+        ORCID = self.profile.identifiers.filter(scheme="ORCID").first()
+        if ORCID:
+            data["ORCID"] = ORCID.identifier
+
+        affiliation = self.profile.default_affiliation()
+        if affiliation:
+            data["affiliation"] = affiliation
+
+        return data
 
 
 def forwards():

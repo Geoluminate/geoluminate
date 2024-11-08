@@ -1,27 +1,10 @@
 from django.contrib import admin
 
-from .models import Date, Description, Project
-
-
-class DescriptionInline(admin.TabularInline):
-    model = Description
-    extra = 0
-    fields = ["type", "text"]
-    # max_num = len(Description.TYPE_CHOICES)
-
-
-class DateInline(admin.TabularInline):
-    model = Date
-    extra = 0
-    fields = ["type", "date"]
+from .models import Project
 
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
-    inlines = [
-        DescriptionInline,
-        DateInline,
-    ]
     search_fields = ("pk", "title")
     list_display = (
         "title",
@@ -51,6 +34,3 @@ class ProjectAdmin(admin.ModelAdmin):
             },
         ),
     )
-
-
-admin.site.register(Description)

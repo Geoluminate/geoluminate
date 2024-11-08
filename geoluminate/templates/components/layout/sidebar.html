@@ -1,11 +1,7 @@
-<c-vars reverse=""
-        size="4"
-        slot />
-<c-bs5.grid ncols="" {{ attrs }} row_class="{% if reverse %}flex-row-reverse{% endif %}">
-  <aside class="col-{{ size }} {% if reverse %} border-start{% else %} border-end{% endif %}">
-    <div class="px-2 overflow-auto">
-      {{ sidebar }}
-    </div>
+<c-vars reverse="" size="4" slot />
+<c-bs5.grid ncols="" {{ attrs }} wrapper_class="container-fluid px-0" row_class="mx-0 {% if reverse %}flex-row-reverse{% endif %}">
+  <aside class="col-{{ size }} {% if reverse %} border-start{% else %} border-end{% endif %} {{ sidebar_class }}">
+    <div class="p-2 overflow-auto vstack gap-3">{{ sidebar }}</div>
   </aside>
-  <div class="col-9">{{ slot }}</div>
+  <div class="col">{{ slot }}</div>
 </c-bs5.grid>

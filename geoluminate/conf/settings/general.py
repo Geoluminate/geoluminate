@@ -1,8 +1,5 @@
-import os
 import socket
-import sys
 from contextlib import suppress
-from template_partials.apps import wrap_loaders
 
 from django.contrib.messages import constants as messages
 from django.core.exceptions import ImproperlyConfigured
@@ -16,8 +13,6 @@ with suppress(ImproperlyConfigured):
 
     GIS_ENABLED = True
 
-
-# sys.path.append(os.path.join(BASE_DIR, "project", "schemas"))
 
 GEOLUMINATE = globals().get("GEOLUMINATE", {})
 
@@ -67,6 +62,7 @@ TEMPLATES = [
             "builtins": [
                 "django.templatetags.i18n",
                 "django_cotton.templatetags.cotton",
+                "easy_icons.templatetags.easy_icons",
             ],
         },
     },
@@ -136,7 +132,14 @@ DJANGO_SETUP_TOOLS = {
         "on_initial": [
             ("makemigrations", "--no-input"),
             ("migrate", "--no-input"),
-            ("createsuperuser", "--no-input"),
+            (
+                "createsuperuser",
+                "--no-input",
+                "--first_name",
+                env("DJANGO_SUPERUSER_FIRSTNAME", default="Super"),
+                "--last_name",
+                env("DJANGO_SUPERUSER_LASTNAME", default="User"),
+            ),
             ("loaddata", "creativecommons"),
         ],
         "always_run": [

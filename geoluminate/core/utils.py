@@ -1,21 +1,11 @@
-import re
-
 from django.apps import apps
 from django.conf import settings
 from django.db import models
-from django.db.models import Manager, TextChoices
 from django.template.loader import render_to_string
-from django.utils.translation import gettext_lazy as _
-from django_contact_form.forms import ContactForm
+from django.utils.text import slugify
 
+from geoluminate.contrib import CORE_MAPPING
 from geoluminate.identity.models import Authority, Database
-
-# def icon(icon):
-#     """Returns the icon for the project."""
-#     icon = settings.GEOLUMINATE_ICONS.get(icon, icon)
-#     if not icon:
-#         raise ValueError(f"Icon {icon} not found in settings.GEOLUMINATE_ICONS.")
-#     return icon
 
 
 def label(label):
@@ -27,21 +17,12 @@ def label(label):
 
 
 def context_processor(request):
-    """A context processor that adds the following variables to the context:
-
-    - ``geoluminate``: The ``GEOLUMINATE`` setting.
-    - ``ACCOUNT_ALLOW_REGISTRATION``: The ``ACCOUNT_ALLOW_REGISTRATION`` setting.
-    """
+    """A context processor that adds the following variables to the context:"""
     context = {
         "identity": {
             "database": Database.get_solo(),
             "authority": Authority.get_solo(),
         },
-        # "site_config": Configuration.get_solo(),
-        "ACCOUNT_ALLOW_REGISTRATION": settings.ACCOUNT_ALLOW_REGISTRATION,
-        "user_sidebar_widgets": settings.GEOLUMINATE_USER_SIDEBAR_WIDGETS,
-        "navbar_widgets": settings.GEOLUMINATE_NAVBAR_WIDGETS,
-        "contact_form": ContactForm(request=request),
     }
 
     return context
@@ -79,59 +60,9 @@ def max_length_from_choices(choices):
     return max([len(choice[0]) for choice in choices])
 
 
-def object_from_letter(letter):
-    """Return an object from a letter"""
-    type_map = {
-        "p": "projects.Project",
-        "d": "datasets.Dataset",
-        "s": "samples.Sample",
-    }
-    return apps.get_model(type_map.get(letter))
-
-
-# ascascas
-
-
-def strip_p_tags(text):
-    """Strip <p> tags from a string."""
-    return text.replace("</p><p>", "\n").replace("</p>", "").replace("<p>", "")
-
-
 def generate_xml(dataset):
     """Generate an XML document from a dataset."""
     return render_to_string("publishing/gfz_schema.xml", {"dataset": dataset})
-
-
-def get_object_media_path(obj):
-    """Return the path to an object."""
-    return obj._meta.label
-
-
-def split_camel_case(input_string):
-    """Split camel case string into words."""
-    words = re.findall(r"[A-Z]?[a-z]+|[A-Z]+(?=[A-Z]|$)", input_string)
-    return " ".join(words)
-
-
-def text_choices_factory(name, item_list):
-    """Create a TextChoices class from an XMLSchema element."""
-    cls_attrs = {}
-    for choice in item_list:
-        cls_attrs[choice] = (choice, _(split_camel_case(choice)))
-
-    return TextChoices(f"{name}Choices", cls_attrs)
-
-
-class PublicObjectsManager(Manager):
-    def get_queryset(self):
-        return super().get_queryset().filter(visibility=True)
-        # return ProjectQuerySet(self.model, using=self._db)
-
-    def active(self):
-        return self.get_queryset().active()
-
-    def inactive(self):
-        return self.get_queryset().inactive()
 
 
 def inherited_choices_factory(name, *args):
@@ -143,3 +74,14 @@ def inherited_choices_factory(name, *args):
             cls_attrs[key] = choice.value, choice.label
 
     return models.TextChoices(f"{name}Choices", cls_attrs)
+
+
+def get_model_class(pk):
+    """Return a model class from a primary key."""
+    return apps.get_model(CORE_MAPPING[pk[0]])
+
+
+def default_image_path(instance, filename):
+    """Generates file paths for images."""
+    model_name = slugify(instance._meta.verbose_name_plural)
+    return f"{model_name}/{instance.pk}/{filename}"

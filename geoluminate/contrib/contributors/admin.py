@@ -9,10 +9,8 @@ from django_select2.forms import Select2MultipleWidget
 from image_uploader_widget.widgets import ImageUploaderWidget
 from polymorphic.admin import PolymorphicChildModelAdmin, PolymorphicChildModelFilter, PolymorphicParentModelAdmin
 
-from geoluminate.contrib.contributors.models import Contributor
-
 # from django_select2.forms import Select2AdminMixin
-from .models import Contributor, Identifier, Organization, Person
+from .models import Contributor, Organization, Person
 
 
 class AccountEmailInline(admin.TabularInline):
@@ -33,19 +31,12 @@ class ContributorInline(admin.StackedInline):
     extra = 0
 
 
-class IdentifierInline(admin.TabularInline):
-    model = Identifier
-    field = ["scheme", "identifier"]
-    extra = 0
-
-
 @admin.register(Contributor)
 class ContributorAdmin(PolymorphicParentModelAdmin):
     base_model = Contributor
     child_models = (Contributor, Person, Organization)
     list_display = ["_name", "profile"]
     search_fields = ["name"]
-    inlines = [IdentifierInline]
     list_filter = (PolymorphicChildModelFilter,)
 
     formfield_overrides = {
@@ -142,9 +133,6 @@ class UserAdmin(BaseUserAdmin, PolymorphicChildModelAdmin, DcsicAdminMixin):
 
     search_fields = ("email",)
     ordering = ("last_name",)
-
-
-admin.site.register(Identifier)
 
 
 @admin.register(Organization)

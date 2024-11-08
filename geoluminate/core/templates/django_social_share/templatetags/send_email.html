@@ -1,6 +1,6 @@
-<div class="mail-this">
-  <a href="{{ mailto_url|safe }}" class="{{ link_class }}">
-    <i class='fa-solid fa-envelope'></i>
-    <span class='d-none'>{{ link_text }}</span>
-  </a>
-</div>
+<c-bs5.button href="{{ mailto_url|safe }}"
+              size="lg"
+              icon="email"
+              target="_blank">
+  <span class="d-none">{{ link_text }}</span>
+</c-bs5.button>

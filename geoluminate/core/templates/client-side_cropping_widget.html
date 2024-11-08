@@ -1,58 +1,139 @@
-{% load i18n geoluminate %}
+{% load i18n easy_icons %}
 
-<div class="dcsic_wrapper position-relative {% if current_img_url %}has_image{% endif %}"
-     data-res-width="{{ widget.res_width }}"
-     data-res-height="{{ widget.res_height }}"
-     data-res-format="{{ widget.res_format }}"
-     data-res-quality="{{ widget.res_quality }}">
+<style>
+  .empty-container {
+    cursor: pointer;
+  }
+</style>
+<div x-data="imageCropper"
+     class="position-relative"
+     style="aspect-ratio: {{ widget.res_width }} / {{ widget.res_height }}">
+  <div x-show.important="!croppieActive"
+       class="empty-container bg-secondary-subtle croppie-container position-relative"
+       @click="$refs.fileOpener.click()">
+    <div class="position-absolute top-50 start-50 translate-middle text-center z-0"
+         x-show.important="!croppedImage">
+      {% icon "image" height="2em" %}
+      <div>{% trans "Choose image" %}</div>
+    </div>
+    <img :src="croppedImage"
+         class="w-100 h-100"
+         x-show.important="croppedImage" />
+  </div>
+  <div class="croppie-container position-relative"
+       x-show.important="croppieActive">
+    <div x-ref="croppieElement" class="croppie-container"></div>
+  </div>
+  <div class="hstack gap-1 position-absolute z-1 bottom-0 start-50 translate-middle-x py-2">
+    <div class="btn btn-danger"
+         @click="deleteImage"
+         x-show="croppedImage && !croppieActive">{% icon "delete" %}</div>
+    {% comment %} <div class="btn btn-primary" @click="$refs.fileOpener.click()" x-show="croppedImage && !croppieActive">Choose another image</div> {% endcomment %}
+    <div class="btn btn-warning"
+         @click="cancelCroppie"
+         x-show="croppieActive">{% icon "cancel" %}</div>
+    <div class="btn btn-secondary"
+         @click="lockImage"
+         x-show="croppieActive">Save</div>
+    <div class="btn btn-primary"
+         @click="croppieInstance.rotate(90)"
+         x-show="croppieActive && croppieConfig.enableOrientation">{% icon "rotate" %}</div>
+  </div>
   <input type="hidden"
+         x-ref="croppieFileInput"
+         style="display: none"
          name="{{ widget.name }}"
          {% include "django/forms/widgets/attrs.html" %}
          {% if original_uploaded_data %}value="{{ original_uploaded_data }}"{% endif %} />
-  <span onclick="$('.dcsic_choose_other_img').click();">
-    <img src="{{ current_img_url }}"
-         class="dcsic_current_img"
-         style="width: {{ widget.preview_width }};
-                height: {{ widget.preview_height }}" />
-  </span>
-  <label class="d-none">
-    <span class="dcsic_choose_other_img"></span>
-    <input type="file"
-           class="dcsic_file_input d-none"
-           accept="image/*" />
-  </label>
-  {% if input_clearable %}
-    <button class="dcsic_delete_image m-3 btn btn-warning position-absolute bottom-0 end-0">
-      {% trans "Delete image" %}
-    </button>
-  {% endif %}
+  <input type="file"
+         x-ref="fileOpener"
+         style="display: none"
+         accept="image/*"
+         value="{{ widget.value }}"
+         @change="loadImage" />
 </div>
-<div class="dcsic_overlay modal bg-dark"
-     data-bs-backdrop="static"
-     style="--bs-bg-opacity: .8">
-  <div class="dcsic_dialog">
-    <div class="modal-content">
-      <div class="dcsic_croppie_container"
-           style="min-height: 350px"></div>
-      <div class="hstack gap-2 pb-3 justify-content-center">
-        <div class="dcsic_left btn btn-primary">
-          <span class="dcsic_icon">↺</span> {% trans "Rotate left" %}
-        </div>
-        <div class="dcsic_right btn btn-primary">
-          <span class="dcsic_icon">↻</span> {% trans "Rotate right" %}
-        </div>
-      </div>
-      <div class="modal-footer z-1">
-        <div class="dcsic_cancel btn btn-secondary">{% trans "Cancel" %}</div>
-        <div class="dcsic_ok btn btn-primary">{% trans "Continue" %}</div>
-      </div>
-    </div>
-  </div>
-</div>
-{% comment %} <div class="dcsic_overlay"><div class="dcsic_dialog">
-  <div class="dcsic_croppie_container"></div>
-  <div class="dcsic_buttons">
-      <div><div class="dcsic_left"><span class="dcsic_icon">↺</span> {% trans "Rotate left" %}</div><div class="dcsic_right"><span class="dcsic_icon">↻</span> {% trans "Rotate right" %}</div></div>
-      <div><div class="dcsic_cancel">{% trans "Cancel" %}</div><div class="dcsic_ok">{% trans "OK" %}</div></div>
-  </div>
-</div> {% endcomment %}
+{# djlint:off #}
+<script>
+  
+
+  document.addEventListener('alpine:init', () => {
+    Alpine.data('imageCropper', () => ({
+      croppedImage: "{% firstof original_uploaded_data current_img_url %}",
+      croppieInstance: null,
+      croppieActive: false,
+
+      // Croppie configuration options as Alpine properties
+      croppieConfig: {
+        viewport: {
+          width: "100%",
+          height: "100%",
+        },
+        enableOrientation: true,
+        showZoomer: false,
+        ...{{widget.config|safe}},
+      },
+
+      // Initialize Croppie using config from x-data
+      init() {
+        this.croppieInstance = new Croppie(this.$refs.croppieElement, this.croppieConfig);
+
+      },
+
+      // Load image into Croppie
+      loadImage(event) {
+        const file = event.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            this.croppieInstance.bind({
+              url: e.target.result
+            });
+            this.croppieActive = true;
+          };
+          reader.readAsDataURL(file);
+        }
+      },
+
+      deleteImage() {
+        
+        // Remove data from croppie
+        this.croppieInstance.bind({
+          url: null
+        });
+        // Removes the image src from the thumbail
+        this.croppedImage = "";
+        
+        // Clear the file input
+        this.$refs.croppieFileInput.value = "clear"; 
+
+        // Hide the croppie container
+        this.croppieActive = false;
+      },
+
+      cancelCroppie() {
+        // Remove data from croppie
+        this.croppieInstance.bind({
+          url: null
+        });
+        // Hide the croppie container
+        this.croppieActive = false;
+
+      },
+
+      lockImage() {
+        this.croppieInstance.result({
+          type: 'base64',
+          size: { width: {{ widget.res_width }} },
+          ...{{widget.result|safe}},
+        }).then((image) => {
+
+          this.$refs.croppieFileInput.value = image; 
+          this.croppedImage = image;
+          this.croppieActive = false;
+
+        });
+      }
+    }));
+  });
+</script>
+{# djlint:on #}

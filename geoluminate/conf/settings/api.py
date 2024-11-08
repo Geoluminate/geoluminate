@@ -44,7 +44,7 @@ REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     # "DEFAULT_SCHEMA_CLASS": "geoluminate.api.utils.CustomSchema",
     "DEFAULT_METADATA_CLASS": "drf_auto_endpoint.metadata.AutoMetadata",
-    "URL_FIELD_NAME": "details",
+    # "URL_FIELD_NAME": "details",
     # "DATETIME_FORMAT": "%Y-%m-%dT, %H:%M:%S",
 }
 

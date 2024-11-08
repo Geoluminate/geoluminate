@@ -4,8 +4,8 @@ from django.utils.translation import gettext_lazy as _
 from flex_menu import Menu, MenuItem
 
 
-def get_contibutor_url(request):
-    return reverse_lazy("contributor-detail", args=[request.user.id])
+def get_contributor_url(request):
+    return reverse_lazy("person-detail", args=[request.user.id])
 
 
 AccountMenu.add_children(
@@ -28,7 +28,7 @@ AccountMenu.add_children(
 
 FloatingAccountMenu.add_children(
     [
-        MenuItem(_("Profile"), url=get_contibutor_url, icon="user"),
+        MenuItem(_("Profile"), url=get_contributor_url, icon="user"),
         MenuItem(_("Manage Account"), view_name="account-management", icon="activity"),
         MenuItem(_("Recent Activity"), view_name="contributor-profile", icon="activity"),
         MenuItem(_("Database Admin"), view_name="admin:index", icon="administration"),

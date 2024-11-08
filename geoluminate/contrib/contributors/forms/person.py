@@ -19,10 +19,7 @@ class SignupExtraForm(forms.ModelForm):
 
     class Meta:
         model = get_user_model()
-        fields = (
-            "first_name",
-            "last_name",
-        )
+        fields = ("first_name", "last_name")
 
     def signup(self, request, user):
         """Save the user's first and last name."""

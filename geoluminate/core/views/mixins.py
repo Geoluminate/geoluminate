@@ -1,96 +1,35 @@
-from typing import Any
-
-from django.db import models
-from django.db.models import QuerySet
 from django.http import Http404
+from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.views.generic import ListView
 from el_pagination.views import AjaxMultipleObjectTemplateResponseMixin
-from meta.views import MetadataMixin
+
+from geoluminate.core.utils import get_model_class
 
 
-class HTMXMixin2:
-    """Adds HTMX support to a class-based view using django-template-partials. A fragment can be passed in the request using the 'fragment' query parameter. If the request is an HTMX request, the template_name attribute is used to render the view. Otherwise, the base_template attribute is used."""
+class BaseObjectMixin:
+    base_object_url_kwarg = "base_pk"
 
-    base_template: str | None = None
+    def get_base_object_class(self):
+        return get_model_class(self.kwargs.get(self.base_object_url_kwarg))
 
-    def get_template_names(self):
-        template_names = [*super().get_template_names(), self.base_template]
-        # get fragment from request
-        fragment = self.request.GET.get("fragment", None)
-        if fragment:
-            template_names = [f"{t}#{fragment}" for t in template_names]
-
-        return template_names
-
-    # def discover_templates(self):
-    #     """Follows the "extends" chain to discover the templates that are used to render the view."""
-    #     # django-template-partials will only look for partials in the direct template (e.g. it will not look in base templates)
-    #     # it does accept a list of template names
-    #     template_name = self.template
-    #     template = get_template(template_name)
-
-    #     source = template.source
+    def get_base_object(self):
+        self.base_object = get_object_or_404(
+            self.get_base_object_class(), pk=self.kwargs.get(self.base_object_url_kwarg)
+        )
+        return self.base_object
 
 
 class HTMXMixin:
-    """
-    A Django class-based view mixin for handling HTMX requests. It requires a base template that is rendered when the request is not an HTMX request. When the request is HTMX, the template_name attribute is used to render the view.
+    htmx_fragment = "plugin"
 
-    .. note::
-
-    The base template must utilize {% include template_name %} somewhere in the template. The template_name attribute is used to render the view when the request is an HTMX request.
-
-    Attributes:
-        base_template (str): The base template name to be used for rendering the view.
-        base_template_suffix (str): The suffix to be added to the base template name.
-        template_name (str): The name of the template to be used for rendering the view.
-        object_list (QuerySet): The list of objects to be displayed in the view.
-    """
-
-    base_template: str | None = None
-    base_template_suffix: str = ".html"
-    template_name: str | None = None
-    object_list: QuerySet | None = None
-    model: models.Model = None
-
-    def get_base_template(self, **kwargs: Any) -> list[str]:
-        """
-        Returns the base template name based on the model's meta information and the requesting app's name.
-        """
-        opts = self.model._meta if self.model else self.object_list.model._meta
-
-        requesting_app_name = self.request.resolver_match.app_name
-        names = [
-            f"{requesting_app_name}/base{self.base_template_suffix}",
-            # f"{opts.app_label}/{opts.model_name}{self.base_template_suffix}",
-            f"{opts.app_label}/base{self.base_template_suffix}",
-            # f"{opts.app_label}/{opts.model_name}_base.html",
-            f"base{self.base_template_suffix}",
-            "base.html",
-        ]
-        if base_template := self.kwargs.get("base_template") or self.base_template:
-            names.insert(0, base_template)
-        return names
-
-    def get_template_names(self) -> list[str]:
-        """
-        Returns the template name. If the request is an HTMX request, it returns `self.template_name`. Otherwise, it returns the result of `self.get_base_template()`.
-        """
+    def get_template_names(self, template_names=None):
+        if template_names is None:
+            template_names = super().get_template_names()
         if self.request.htmx:
-            print("htmx", self.template_name)
-            return self.template_name
-        print("not htmx", self.get_base_template())
-        return self.get_base_template()
-
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        """
-        Adds the result of get_template_names to the view context as template_name.
-        """
-        context = super().get_context_data(**kwargs)
-        context["template_name"] = self.get_template_names()
-
-        return context
+            fragment = self.request.GET.get("fragment", self.htmx_fragment)
+            template_names = [f"{t}#{fragment}" for t in template_names]
+        return template_names
 
 
 class ListMixin(AjaxMultipleObjectTemplateResponseMixin):
@@ -158,63 +97,12 @@ class ListFilterMixin(ListMixin):
 
 class ListPluginMixin(ListMixin, ListView):
     # template_name = "geoluminate/base/list_view.html#page"
-    template_name = "core/plugins/list.html"
+    template_name = "plugins/list.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["object_list"] = self.get_queryset()
         return context
-
-
-class GeoluminatePermissionMixin:
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["user_has_permission"] = {
-            "create": self.has_create_permission(),
-            "edit": self.has_edit_permission(),
-            "delete": self.has_delete_permission(),
-            "view": self.has_view_permission(),
-            "detail": self.has_detail_permission(),
-            "list": self.has_list_permission(),
-        }
-        return context
-
-    def has_create_permission(self):
-        return False or self.request.user.is_superuser
-
-    def has_edit_permission(self):
-        return False or self.request.user.is_superuser
-
-    def has_delete_permission(self):
-        return False or self.request.user.is_superuser
-
-    def has_view_permission(self):
-        return False or self.request.user.is_superuser
-
-    def has_detail_permission(self):
-        return False or self.request.user.is_superuser
-
-    def has_list_permission(self):
-        return False or self.request.user.is_superuser
-
-    def has_permission(self, action: str):
-        return getattr(self, f"has_{action}_permission")()
-
-
-class BaseMixin(MetadataMixin):
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        if getattr(self, "queryset", None):
-            context["model_name"] = self.queryset.model._meta.verbose_name
-            context["model_name_plural"] = self.queryset.model._meta.verbose_name_plural
-        elif getattr(self, "model", None):
-            context["model_name"] = self.model._meta.verbose_name
-            context["model_name_plural"] = self.model._meta.verbose_name_plural
-        context["breadcrumbs"] = self.get_breadcrumbs()
-        return context
-
-    def get_breadcrumbs(self):
-        return []
 
 
 class PolymorphicSubclassMixin:

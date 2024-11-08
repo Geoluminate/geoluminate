@@ -6,7 +6,7 @@ from django.contrib.admin import site
 from django.urls import include, path
 from django.views import defaults as default_views
 
-from geoluminate.views import HomeView
+from geoluminate.core.views.generic import DirectoryView, HomeView
 
 # from .admin import admin_measurement_view
 # register all adminactions
@@ -34,7 +34,7 @@ urlpatterns = [
     path("comments/", include("fluent_comments.urls")),
     path("i18n/", include("django.conf.urls.i18n")),
     path("comments/", include("django_comments_xtd.urls")),
-    # path("<pk>/", DirectoryView.as_view(), name="directory"),
+    path("<pk>/", DirectoryView.as_view(), name="directory"),
 ]
 
 

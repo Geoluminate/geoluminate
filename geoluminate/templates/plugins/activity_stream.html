@@ -1,0 +1,16 @@
+{% extends "geoluminate/base/detail_view.html" %}
+{% load activity_tags partials %}
+
+{% block content %}
+  {% partialdef plugin inline=True %}
+  <c-plugin layout="page">
+    {% activity_stream 'any' object %}
+    {% for action in stream %}
+      {% display_action action %}
+    {% empty %}
+      {% trans "Looks like there is nothing here!" %}
+    {% endfor %}
+  </c-plugin>
+{% endpartialdef plugin %}
+
+{% endblock content %}

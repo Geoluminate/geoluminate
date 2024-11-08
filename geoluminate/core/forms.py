@@ -1,7 +1,8 @@
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Button, Div, Field, Layout
 from django import forms
 from fluent_comments.forms import CompactLabelsCommentForm
+
+from .models import Date, Description
 
 
 class CommentForm(CompactLabelsCommentForm):
@@ -10,40 +11,47 @@ class CommentForm(CompactLabelsCommentForm):
         self.fields["comment"].widget.attrs["rows"] = 5
 
 
-# ===================== FORMS =====================
-
-FORM_ACTIONS = (
-    Div(
-        Button("submit", "Save", css_class="btn-primary", form="description-form"),
-        css_class="text-right",
-        css_id="form-actions",
-        hx_swap_oob="true",
-    ),
-)
-
-
 class DescriptionForm(forms.ModelForm):
-    text = forms.CharField(
+    value = forms.CharField(
+        required=False,
         label=False,
-        widget=forms.Textarea(attrs={"rows": 8}),
+        widget=forms.Textarea(
+            attrs={
+                "rows": 5,
+                "placeholder": "Enter a description...",
+                # "autofocus": "autofocus",
+                "x-data": "{}",
+                "x-ref": "textarea",
+                "x-init": "$nextTick(() => $refs.textarea.style.height = $refs.textarea.scrollHeight + 'px')",
+                "x-on:input": "$refs.textarea.style.height = 'auto'; $refs.textarea.style.height = $refs.textarea.scrollHeight + 'px';",
+                "style": "overflow: hidden; resize: none;",
+                "class": "w-100 border-0",
+            }
+        ),
     )
 
     class Meta:
-        fields = ["object", "type", "text"]
+        model = Description
+        fields = ["value", "type"]
         widgets = {
-            "object": forms.HiddenInput,
             "type": forms.HiddenInput,
-            # "text": TextEditorWidget(),
         }
 
     def __init__(self, model=None, request=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.form_id = "description-form"
         self.helper.render_hidden_fields = True
-        self.fields["type"].widget.choices = model.type_vocab.choices
-        self.fields["object"].initial = request.GET.get("pk")
-        self.helper.layout = Layout(
-            Field("text", wrapper_class="m-0"),
-            FORM_ACTIONS,
-        )
+
+
+class DateForm(forms.ModelForm):
+    class Meta:
+        model = Date
+        fields = ["value", "type"]
+        widgets = {
+            "type": forms.HiddenInput,
+            "value": forms.TextInput(attrs={"x-mask": "****/**/**", "placeholder": "YYYY/MM/DD"}),
+        }
+
+    def __init__(self, model=None, request=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["value"].label = kwargs.get("initial", {}).get("type", "Date")

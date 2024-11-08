@@ -1,0 +1,56 @@
+
+.sidebar {
+    display: block;
+    position: relative;
+    width: $sidebar-width;
+    min-height: 100%;
+    z-index: inherit;
+
+  }
+
+
+svg {
+	overflow: visible;
+    box-sizing: content-box;
+	display: var(--fa-display, inline-block);
+    vertical-align: -0.125em;
+}
+
+
+.endless_container {
+	text-align: center;
+
+	.endless_more {
+		@extend .btn;
+		@extend .btn-primary;
+		@extend .rounded-pill;
+		text-transform: capitalize;
+	}
+	// .endless_loading {
+	// 	content: url("/static/img/spinners/spinning-circles.svg");
+	// }
+}
+
+// for alpine.js x-cloak directive to work
+[x-cloak] {
+    display: none !important;
+  }
+
+.overflow-auto {
+	-ms-overflow-style: none;
+    scrollbar-color: transparent transparent;
+    scrollbar-width: thin;
+}
+
+.overflow-auto:hover {
+    scrollbar-color: rgba(173, 173, 173, 0.852) transparent;
+}
+
+
+.bg-gradient-none {
+	--bs-gradient: none;
+}
+
+.select2-container--open {
+	z-index: 1055;
+  }

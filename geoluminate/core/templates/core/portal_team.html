@@ -1,9 +1,0 @@
-{% extends "geoluminate/layout/container.html" %}
-{% block content %}
-  <div class="container">
-    {% for group in groups %}
-      <h1>{{ group.name }}</h1>
-      {% for user in group.user_set.all %}<p>{{ user.first_name }} {{ user.last_name }}</p>{% endfor %}
-    {% endfor %}
-  </div>
-{% endblock content %}

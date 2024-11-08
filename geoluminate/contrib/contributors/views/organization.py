@@ -1,40 +1,14 @@
 # import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import get_object_or_404
-from django.utils.functional import cached_property
+from django.urls import reverse
 from django.views.generic import CreateView, ListView
+from meta.views import MetadataMixin
 
-from geoluminate.views import BaseMixin
-
-from ..forms.organization import OrganizationCreateForm
+from ..forms.organization import RORForm
 from ..models import Organization
 
 
-class OrganizationMixin:
-    """Mixin used like a SingleObjectMixin to fetch an organization"""
-
-    org_model = Organization
-    org_context_name = "organization"
-
-    def get_org_model(self):
-        return self.org_model
-
-    def get_context_data(self, **kwargs):
-        kwargs.update({self.org_context_name: self.organization})
-        return super().get_context_data(**kwargs)
-
-    @cached_property
-    def organization(self):
-        organization_pk = self.kwargs.get("organization_pk", None)
-        return get_object_or_404(self.get_org_model(), pk=organization_pk)
-
-    def get_object(self):
-        return self.organization
-
-    get_organization = get_object  # Now available when `get_object` is overridden
-
-
-class OrganizationListView(BaseMixin, LoginRequiredMixin, OrganizationMixin, ListView):
+class OrganizationListView(MetadataMixin, LoginRequiredMixin, ListView):
     """List of organizations that the user is a member of."""
 
     model = Organization
@@ -43,20 +17,34 @@ class OrganizationListView(BaseMixin, LoginRequiredMixin, OrganizationMixin, Lis
         return self.org_model.active.filter(users=self.request.user)
 
 
-class OrganizationCreateView(BaseMixin, LoginRequiredMixin, CreateView):
+class OrgRORCreateView(MetadataMixin, LoginRequiredMixin, CreateView):
+    """Create a new organization using the RORForm."""
+
+    model = Organization
+    template_name = "organizations/organization_form.html"
+    success_url = "/"
+    form_class = RORForm
+
+    def get_success_url(self):
+        return reverse("organization-detail", kwargs={"pk": self.object.pk})
+
+    def form_valid(self, form):
+        objs = []
+        for obj in form.cleaned_data["data"]:
+            objs.append(Organization.from_ror(obj))
+
+        # return HttpResponseRedirect(self.get_success_url())
+
+
+class OrganizationCreateView(MetadataMixin, LoginRequiredMixin, CreateView):
     """Create a new organization."""
 
     template_name = "organizations/organization_form.html"
     success_url = "/"
-    form_class = OrganizationCreateForm
-
-    # def get_form_kwargs(self):
-    #     kwargs = super().get_form_kwargs()
-    #     kwargs.update({"request": self.request})
-    #     return kwargs
+    form_class = RORForm
 
 
-class OrganizationUserListView(BaseMixin, OrganizationMixin, ListView):
+class OrganizationUserListView(MetadataMixin, ListView):
     """List of users in an organization."""
 
     org_model = Organization

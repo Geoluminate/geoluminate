@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load geoluminate static partials el_pagination_tags crispy_forms_tags easy_icons %}
+{% load partials crispy_forms_tags %}
 {% load render_bundle from webpack_loader %}
 
 {% partialdef list-filter %}
@@ -15,17 +15,11 @@
 {% endpartialdef %}
 
 {% partialdef object-list %}
-{% paginate page_size object_list %}
-{% with object_list|verbose_name_plural as obj_name_plural %}
-  {% for obj in object_list %}
-    {% include object_template %}
-  {% empty %}
-    {% blocktranslate %}
-    <p>Looks like there are no {{ obj_name_plural }} here yet.</p>
-    {% endblocktranslate  %}
-  {% endfor %}
-  {% show_more %}
-{% endwith %}
+{% for obj in object_list %}
+  {% include object_template %}
+{% empty %}
+  {% trans "There's nothing here yet." %}
+{% endfor %}
 {% endpartialdef %}
 
 {% partialdef page %}
@@ -34,20 +28,8 @@
 </c-grid>
 {% endpartialdef %}
 
-{% block css %}
-  {{ block.super }}
-  {% render_bundle "detail" "css" "GEOLUMINATE" %}
-{% endblock css %}
-
-{% block javascript %}
-  {{ block.super }}
-  {% render_bundle "list" "js" "GEOLUMINATE" attrs="defer" %}
-  <script src="{% static "el-pagination/js/el-pagination.js" %}" defer></script>
-{% endblock javascript %}
-
 {% block content %}
-  <c-layout.sidebar wrapper_class="container"
-                    size="3">
+  <c-layout.sidebar wrapper_class="container" size="3">
     <c-slot name="sidebar">
       <div class="py-2 hstack sticky-top align-items-center">
         <h1 class="fs-5 fw-semibold m-0">{% trans "Filter by" %}</h1>
@@ -68,12 +50,15 @@
                   hx-push-url="true">{% trans "Apply" %}</button>
         </div>
       </div>
-      {% crispy filter.form %}
+      {% crispy filterset.form %}
     </c-slot>
     <div class="page-content container d-block entry-list py-3">
       <div>
-        <c-header title="{{ meta.title }}"
-                  hr />
+        <c-header title="{{ object_verbose_name_plural|title }}" hr>
+          <c-slot name="actions">
+            <c-paginator />
+          </c-slot>
+        </c-header>
         {% comment %} <a class="text-secondary ms-auto fs-3">{% icon "info" %}</a> {% endcomment %}
       </div>
       <p>

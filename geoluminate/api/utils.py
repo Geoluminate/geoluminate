@@ -2,6 +2,7 @@ from logging import getLogger
 
 from django.template import TemplateDoesNotExist
 from django.template.loader import render_to_string
+from rest_framework import viewsets
 from rest_framework.renderers import BrowsableAPIRenderer
 from rest_framework_nested.viewsets import NestedViewSetMixin
 
@@ -86,6 +87,25 @@ def api_doc(model, path):
     return ""
 
 
+class BaseSerializerMixin:
+    default_namespace = "api"
+
+    def build_url_field(self, field_name, model_class):
+        field_class, field_kwargs = super().build_url_field(field_name, model_class)
+        field_kwargs["view_name"] = f"{self.default_namespace}:{field_kwargs['view_name']}"
+        return field_class, field_kwargs
+
+    def build_relational_field(self, field_name, relation_info):
+        field_class, field_kwargs = super().build_relational_field(field_name, relation_info)
+        field_kwargs["view_name"] = f"{self.default_namespace}:{field_kwargs['view_name']}"
+        return field_class, field_kwargs
+
+    def get_field_names(self, declared_fields, info):
+        """Returns a case-insensitive, sorted list of field names."""
+        fields = super().get_field_names(declared_fields, info)
+        return sorted(fields, key=str.casefold)
+
+
 class NestedViewset(NestedViewSetMixin):
     """Subclass the default NestedViewSetMixin to make prevent a key error when generatin the schema with DRF Spectacular."""
 
@@ -104,3 +124,33 @@ class NestedViewset(NestedViewSetMixin):
         if (renderer := getattr(self.request, "accepted_renderer", None)) and renderer.format == "geojson":
             return None
         return self.paginator.paginate_queryset(queryset, self.request, view=self)
+
+
+class ViewsetMixin(NestedViewSetMixin, viewsets.ReadOnlyModelViewSet):
+    """A viewset mixin that allows both nested and base API routes to be processed by the same viewset."""
+
+    def get_queryset(self):
+        if self.is_nested():
+            return super().get_queryset()
+        return self.queryset
+
+    def get_serializer_class(self):
+        if (renderer := getattr(self.request, "accepted_renderer", None)) and renderer.format == "geojson":
+            if self.is_nested():
+                self.pagination_class = None
+            return self.geojson_serializer
+        return super().get_serializer_class()
+
+    def initialize_request(self, request, *args, **kwargs):
+        if self.is_nested():
+            return super().initialize_request(request, *args, **kwargs)
+        return viewsets.ReadOnlyModelViewSet.initialize_request(self, request, *args, **kwargs)
+
+    def is_nested(self):
+        """Returns true if the following conditions are met:
+
+        a) multiple kwargs are present in the url
+        b) a single kwarg is present in the url and that kwargs is the lookup field
+
+        """
+        return len(self.kwargs) > 1 or self.kwargs.get(self.lookup_field, False)

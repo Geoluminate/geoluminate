@@ -1,7 +1,8 @@
 {% load static geoluminate easy_icons %}
 
-<header class="navbar navbar-expand-lg bd-navbar navbar-dark bg-primary bg-gradient mb-0">
-  <nav class="container-fluid bd-gutter flex-wrap flex-lg-nowrap" aria-label="Main navigation">
+<header class="navbar navbar-expand-lg navbar-dark bg-primary bg-gradient mb-0">
+  <nav class="container-fluid bd-gutter flex-wrap flex-lg-nowrap"
+       aria-label="Main navigation">
     {% include "geoluminate/menus/main/widgets/database_navigation.html" %}
     <a class="navbar-brand" href="{% url "home" %}" title={{ site_config.database.name }}>
       <span class="d-md-none">{{ identity.database.short_name|default:"Geoluminate" }}</span>
@@ -25,18 +26,42 @@
       </span>
     </button> {% endcomment %}
     {% comment %} <a class="navbar-brand" href="#">Global Heat Flow Database</a> {% endcomment %}
-    <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
-      <li class="nav-item col-6 col-lg-auto"></li>
-      {% for widget in navbar_widgets %}
-        {% include widget %}
-        {% if not forloop.last %}
-          <li class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
-            <div class="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
-            <hr class="d-lg-none my-2 text-white-50" />
+    <div class="hstack gap-2 ms-md-auto">
+      <div class="dropdown">
+        <c-bs5.button class="btn btn-sm btn-outline-light bg-gradient-none dropdown-toggle shadow-none"
+                      type="button"
+                      icon="plus"
+                      aria-expanded="false"
+                      data-bs-toggle="dropdown" />
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li>
+            <a class="dropdown-item"
+               href="{% url "project-create" %}">
+              {% icon "project" %}
+            {% trans "New project" %}</a>
           </li>
-        {% endif %}
-      {% endfor %}
+          <li>
+            <a class="dropdown-item"
+               href="{% url "dataset-create" %}">
+              {% icon "dataset" %}
+            {% trans "New dataset" %}</a>
+          </li>
+        </ul>
+      </div>
+      <button @click="cycleTheme"
+              :class="theme"
+              class="theme-toggle btn btn-sm btn-outline-light bg-gradient-none shadow-none">
+        <span x-show="theme == 'light'"
+              x-cloak
+              title="{% trans "Toggle theme" %}">{% icon "sun" %}</span>
+        <span x-show="theme == 'dark'"
+              x-cloak
+              title="{% trans "Toggle theme" %}">{% icon "moon" %}</span>
+        <span x-show="theme == 'auto'"
+              x-cloak
+              title="{% trans "Toggle theme" %}">{% icon "circle-half" %}</span>
+      </button>
       {% include "account_management/sidebar_toggle.html" %}
-    </ul>
+    </div>
   </nav>
 </header>

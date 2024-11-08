@@ -8,6 +8,16 @@ from formset.collection import FormCollection
 from .models import Project
 
 
+class BaseForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop("request", None)
+        self.user = None
+        if self.request:
+            self.user = self.request.user
+
+        super().__init__(*args, **kwargs)
+
+
 class Options(EntangledModelForm):
     cascade_license = forms.BooleanField(
         label=_("Cascade License"),
@@ -37,7 +47,7 @@ class Options(EntangledModelForm):
         }
 
 
-class ProjectForm(ModelForm):
+class ProjectForm(BaseForm):
     title = forms.CharField(help_text=_("Give your new project a meaningful name"))
     status = forms.ChoiceField(
         choices=Project.STATUS_CHOICES.choices,
@@ -50,9 +60,6 @@ class ProjectForm(ModelForm):
             "title",
             "status",
         ]
-        # widgets = {
-        #     "status": widgets.RadioSelect(),
-        # }
 
 
 class ProjectFormCollection(FormCollection):

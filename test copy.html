@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ROR Lookup</title>
+  <!-- Include Alpine.js -->
+  <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <!-- Include HTMX -->
+  <script src="https://unpkg.com/htmx.org@2.0.3"
+    integrity="sha384-0895/pl2MU10Hqc6jd4RvrthNlDiE9U1tWmX7WRESftEDRosgxNsQG/Ze9YMRzHq"
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/htmx-ext-debug@2.0.0/debug.js"></script>
+</head>
+
+<body>
+
+  <div x-data="rorLookup">
+    <!-- Input for organization name -->
+    <label for="organization">Enter Organization Name:</label>
+    <input id="organization" x-model="orgName" @input.debounce.500ms="fetchRorData"
+      placeholder="Type organization name">
+
+    <!-- Error message if request fails -->
+    <p x-show="error" class="error" x-text="error"></p>
+
+    <!-- List of matching organizations with checkboxes -->
+    <div x-show="matches.length > 0">
+      <h3>Matching Organizations:</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Country</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <template x-for="org in matches" :key="org.id">
+            <tr>
+
+              <td x-text="org.name"></td>
+              <td x-text="org.country?.country_name || 'N/A'"></td>
+              <td> <button hx-post="/" hx-vals="{'org_id': 1}" hx-swap="none">
+                  Add
+                </button></td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- <td><input type="radio" name="organization" :value="org.id" x-model="selectedOrgId"
+                  @change="setSelectedOrg(org)"></td> -->
+  <script>
+    function rorLookup() {
+      return {
+        orgName: '',
+        matches: [],
+        selectedOrgId: '',
+        selectedOrg: {},
+        error: null,
+
+        // Watch for changes in selectedOrgId and update selectedOrg details
+        init() {
+          this.$watch('selectedOrgId', (newValue) => {
+            if (newValue) {
+              this.selectedOrg = this.matches.find(org => org.id === newValue) || {}
+            } else {
+              this.selectedOrg = {}
+            }
+          })
+        },
+
+        // Fetch ROR data based on orgName input
+        async fetchRorData() {
+          if (this.orgName.length < 3) {
+            this.matches = []
+            return
+          }
+
+          this.error = null
+          const url = `https://api.ror.org/organizations?query=${encodeURIComponent(this.orgName)}`
+
+          try {
+            // const response = await fetch(url)
+
+            // if (!response.ok) {
+            // throw new Error('Error fetching ROR data')
+            // }
+            const data = [
+              {
+                "id": "https://ror.org/04z8jg394",
+                "name": "Helmholtz Centre Potsdam - GFZ German Research Centre for Geosciences",
+                "email_address": "",
+                "ip_addresses": [],
+                "established": 1992,
+                "types": [
+                  "Facility"
+                ],
+                "relationships": [
+                  {
+                    "label": "Helmholtz Association of German Research Centres",
+                    "type": "Parent",
+                    "id": "https://ror.org/0281dp749"
+                  },
+                  {
+                    "label": "Research Institute For Sustainability – Helmholtz Centre Potsdam",
+                    "type": "Child",
+                    "id": "https://ror.org/01vvnmw35"
+                  }
+                ],
+                "addresses": [
+                  {
+                    "lat": 52.39886,
+                    "lng": 13.06566,
+                    "state": null,
+                    "state_code": null,
+                    "city": "Potsdam",
+                    "geonames_city": {
+                      "id": 2852458,
+                      "city": "Potsdam",
+                      "geonames_admin1": {
+                        "name": "Brandenburg",
+                        "id": 2945356,
+                        "ascii_name": "Brandenburg",
+                        "code": "DE.11"
+                      },
+                      "geonames_admin2": {
+                        "name": null,
+                        "id": null,
+                        "ascii_name": null,
+                        "code": "DE.11.00"
+                      },
+                      "license": {
+                        "attribution": "Data from geonames.org under a CC-BY 3.0 license",
+                        "license": "http://creativecommons.org/licenses/by/3.0/"
+                      },
+                      "nuts_level1": {
+                        "name": null,
+                        "code": null
+                      },
+                      "nuts_level2": {
+                        "name": null,
+                        "code": null
+                      },
+                      "nuts_level3": {
+                        "name": null,
+                        "code": null
+                      }
+                    },
+                    "postcode": null,
+                    "primary": false,
+                    "line": null,
+                    "country_geonames_id": 2921044
+                  }
+                ],
+                "links": [
+                  "https://www.gfz-potsdam.de"
+                ],
+                "aliases": [],
+                "acronyms": [
+                  "GFZ"
+                ],
+                "status": "active",
+                "wikipedia_url": "https://en.wikipedia.org/wiki/GFZ_German_Research_Centre_for_Geosciences",
+                "labels": [
+                  {
+                    "label": "Helmholtz-Zentrum Potsdam - Deutsches GeoForschungsZentrum GFZ",
+                    "iso639": "de"
+                  }
+                ],
+                "country": {
+                  "country_name": "Germany",
+                  "country_code": "DE"
+                },
+                "external_ids": {
+                  "ISNI": {
+                    "preferred": null,
+                    "all": [
+                      "0000 0000 9195 2461"
+                    ]
+                  },
+                  "FundRef": {
+                    "preferred": "501100010956",
+                    "all": [
+                      "501100010956"
+                    ]
+                  },
+                  "Wikidata": {
+                    "preferred": null,
+                    "all": [
+                      "Q1205654"
+                    ]
+                  },
+                  "GRID": {
+                    "preferred": "grid.23731.34",
+                    "all": "grid.23731.34"
+                  }
+                }
+              }
+            ]
+            // const data = await response.json()
+            // this.matches = data.items
+            this.matches = data
+          } catch (error) {
+            this.error = error.message
+            this.matches = []
+          }
+        },
+
+        // Set the selected organization details
+        setSelectedOrg(org) {
+          this.selectedOrgId = org.id
+          this.selectedOrg = org
+        }
+      }
+    }
+  </script>
+
+</body>
+
+</html>

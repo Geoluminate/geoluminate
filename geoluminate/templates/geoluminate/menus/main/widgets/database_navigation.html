@@ -1,4 +1,4 @@
-{% load geoluminate sekizai_tags cache flex_menu %}
+{% load sekizai_tags cache flex_menu static %}
 
 <div class="bd-navbar-toggle me-2">
   <button class="navbar-toggler d-block"
@@ -15,10 +15,15 @@
 {% addtoblock "body_end" %}
   {% cache 500 sidebar %}
   {% spaceless %}
-    <nav id="mainSidebar" class="offcanvas offcanvas-start" tabindex="-1">
+    <nav id="mainSidebar"
+         class="offcanvas offcanvas-start"
+         tabindex="-1">
       <div class="offcanvas-header align-items-start">
-        <img src="{% brand "logo" %}" alt="" width="100%" height="100%" />
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <img src="{% static "img/brand/logo.svg" %}" alt="" width="100%" height="100%" />
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
       </div>
       <div class="offcanvas-body">{% render_menu "DatabaseMenu" %}</div>
       <div class="footer"></div>

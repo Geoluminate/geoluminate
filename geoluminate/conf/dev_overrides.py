@@ -1,6 +1,3 @@
-import os
-
-
 env = globals()["env"]
 
 
@@ -51,7 +48,6 @@ VOCABULARY_DEFAULT_CACHE = "vocabularies"
 
 SHELL_PLUS = "ipython"
 
-# STATIC FILES OVERRIDES
 INSTALLED_APPS.insert(0, "whitenoise.runserver_nostatic")
 COMPRESS_OFFLINE = False
 COMPRESS_ENABLED = False

@@ -5,20 +5,7 @@ from django_select2.forms import Select2MultipleWidget, Select2Widget
 from polymorphic.admin import PolymorphicChildModelFilter
 from polymorphic_treebeard.admin import PolymorphicTreeAdmin, PolymorphicTreeChildAdmin
 
-from .models import Date, Description, Sample
-
-
-class DescriptionInline(admin.TabularInline):
-    model = Description
-    fields = ["type", "text"]
-    extra = 0
-    max_num = 2
-
-
-class DateInline(admin.TabularInline):
-    model = Date
-    extra = 0
-    fields = ["type", "date"]
+from .models import Sample
 
 
 @admin.register(Sample)
@@ -55,7 +42,6 @@ class SampleAdmin(PolymorphicTreeChildAdmin):
             {"fields": (("_position", "_ref_node_id"),)},
         ),
     )
-    inlines = [DescriptionInline, DateInline]
     # show_in_index = True
     formfield_overrides = {
         models.ForeignKey: {"widget": Select2Widget},

@@ -62,7 +62,6 @@ django-migration-zero = "^2.0.0"
 django-model-utils = "^4.3.1"
 django-organizations = "^2.1.0"
 django-parler = "^2.3"
-django-partial-date = "^1.3.2"
 django-pint = "^0.7.3"
 django-redis = "^5.2.0"
 django-rest-polymorphic = "^0.1.10"
@@ -91,7 +90,7 @@ faker = "^24.1.0"
 flower = "^1.2.0"
 gunicorn = "^20.1.0"
 lxml = "^5.1.0"
-neapolitan = "^24.4"
+neapolitan = "24.7"
 psycopg2-binary = "^2.9.5"
 pyyaml = "^6.0"
 redis = "^4.5.2"
@@ -99,7 +98,6 @@ tldextract = "^3.4.0"
 whitenoise = "^6.4.0"
 django-content-license = {git = "https://github.com/Geoluminate/django-content-license"}
 django-easy-icons = {git = "https://github.com/SamuelJennings/django-easy-icons"}
-django-literature = {git = "https://github.com/Geoluminate/django-literature"}
 django-research-vocabs = {git = "https://github.com/Geoluminate/django-research-vocabs"}
 django-account-management = {git = "https://github.com/SamuelJennings/django-account-management"}
 django-polymorphic-treebeard = {git = "https://github.com/SamuelJennings/django-polymorphic-treebeard"}
@@ -107,6 +105,7 @@ django-jsonfield-toolkit = {git = "https://github.com/SamuelJennings/django-json
 django-setup-tools = {git = "https://github.com/SamuelJennings/django-setup-tools"}
 shortuuid = "^1.0.13"
 django-cotton = "^1.2.1"
+django-literature = {git = "https://github.com/Geoluminate/django-literature"}
 
 
 
@@ -244,11 +243,11 @@ exclude = [
 blank_line_after_tag="load,endpartialdef,endblock"
 close_void_tags=true
 custom_blocks="addtoblock"
-custom_html="django-formset,c-[\\w.]+"
+custom_html="django-formset,c-[\\w.-]+"
 format_js=true
 format_css=true
 indent=2
-max_attribute_length=10
+max_attribute_length=50
 max_blank_lines=0
 max_line_length=119
 ignore="H016,H030,H031,H021,D018,H037"

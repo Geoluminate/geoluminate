@@ -6,12 +6,10 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic import UpdateView
 from extra_views import InlineFormSetView
-
-from geoluminate.views import BaseMixin
+from meta.views import MetadataMixin
 
 from ..forms.collections import ProfileEditForm, UserIdentifierForm
 from ..forms.person import UserProfileForm
-from ..models import Identifier
 
 helper = FormHelper()
 helper = FormHelper()
@@ -20,7 +18,7 @@ helper.render_required_fields = True
 helper.template = "bootstrap5/table_inline_formset.html"
 
 
-class Base(BaseMixin, LoginRequiredMixin, UpdateView):
+class Base(MetadataMixin, LoginRequiredMixin, UpdateView):
     template_name = "user/settings/base.html"
     model = get_user_model()
 
@@ -57,10 +55,10 @@ class UpdateAffiliations(Base):
         return self.request.user
 
 
-class UpdateIdentifiers(BaseMixin, InlineFormSetView):
+class UpdateIdentifiers(MetadataMixin, InlineFormSetView):
     title = _("Persistent Identifiers")
     model = get_user_model()
-    inline_model = Identifier
+    # inline_model = Identifier
     form_class = UserIdentifierForm
     template_name = "user/settings/base.html"
     success_url = reverse_lazy("contributor-identifiers")

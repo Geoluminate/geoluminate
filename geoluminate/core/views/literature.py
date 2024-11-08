@@ -12,32 +12,3 @@ class ReferenceListView(BaseListView):
     filterset_fields = [
         "title",
     ]
-
-
-# class DatasetDetailView(BaseDetailView):
-#     base_template = "datasets/dataset_detail.html"
-#     model = Dataset
-#     title = _("Dataset")
-#     extra_context = {
-#         "menu": "DatasetDetailMenu",
-#         "sidebar_fields": [
-#             "title",
-#             "project",
-#             "created",
-#             "modified",
-#         ],
-#     }
-
-
-# class DatasetEditView(BaseEditView):
-#     model = Dataset
-#     form_class = DatasetForm
-#     related_name = "project"
-
-
-# class DatasetPlugin(ListPluginMixin):
-#     title = name = _("Datasets")
-#     icon = "dataset"
-
-#     def get_queryset(self, *args, **kwargs):
-#         return self.base_object.datasets.all()

@@ -1,0 +1,12 @@
+{% extends "geoluminate/base/detail_view.html" %}
+{% load geoluminate %}
+
+{% block sidebar_cards %}
+  {% comment %} {% for heading, config in sidebar_fields %}
+  <c-sidebar-fieldset heading="{{ heading }}" :fields="config.fields" :object="base_object" />
+  {% endfor %} {% endcomment %}
+  {% for heading, section_fields in sidebar_fields.items %}
+    {% sidebar_section real heading section_fields %}
+    {% if not forloop.last %}<hr />{% endif %}
+  {% endfor %}
+{% endblock sidebar_cards %}

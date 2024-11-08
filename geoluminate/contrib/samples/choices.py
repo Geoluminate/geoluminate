@@ -2,13 +2,6 @@ from django.db import models
 from django.utils.translation import gettext as _
 from research_vocabs.vocabularies import RemoteVocabulary, VocabularyBuilder
 
-# http://vocabulary.odm2.org/api/v1/actiontype/?format=skos
-# class SampleStatus(LocalVocabulary):
-#     class Meta:
-#         source = "./vocab_data/status.rdf"
-#         prefix = "odm2"
-#         namespace = "http://vocabulary.odm2.org/status/"
-
 
 class SampleStatus(RemoteVocabulary):
     class Meta:

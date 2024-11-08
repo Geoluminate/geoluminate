@@ -1,0 +1,19 @@
+{% load crispy_forms_tags %}
+
+<form method="post" action="{% url 'ror-create' %}">
+  <c-bs5.modal id="{{ form.helper.form_id }}"
+               dialog_class="modal-dialog-centered">
+    <c-slot name="header">
+      {% icon "ror" class="me-2" height="36px" %}
+      {% comment %} <img src="{% static "img/brand/icon.svg" %}" class="me-2" height="36px" alt="logo" /> {% endcomment %}
+      <h5 class="modal-title">{% trans "Add organization" %}</h5>
+      <button type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"></button>
+    </c-slot>
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-primary">{% trans "Save & Continue" %}</button>
+  </c-bs5.modal>
+</form>

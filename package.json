@@ -10,6 +10,9 @@
     "@fortawesome/free-regular-svg-icons": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@popperjs/core": "^2.10.2",
+    "@types/alpinejs": "^3.13.10",
+    "@types/alpinejs__mask": "^3.13.4",
+    "@types/alpinejs__persist": "^3.13.4",
     "@types/bootstrap": "^5.2.10",
     "@types/isotope-layout": "^3.0.12",
     "@types/jquery": "^3.5.29",
@@ -64,6 +67,9 @@
     "build": "webpack --config assets/webpack/prod.config.js"
   },
   "dependencies": {
+    "@alpinejs/mask": "^3.14.3",
+    "@alpinejs/persist": "^3.14.3",
+    "alpinejs": "^3.14.3",
     "datatables.net": "^2.0.3",
     "datatables.net-bs5": "^2.0.3",
     "datatables.net-buttons-bs5": "^3.0.1",

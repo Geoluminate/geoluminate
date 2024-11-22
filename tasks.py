@@ -58,9 +58,6 @@ def bump(c, rule="patch"):
     vnum = c.run(f"poetry version {rule} -s", hide=True).stdout.strip()
     c.run(f'git commit pyproject.toml -m "bump version v{vnum}"')
 
-    # 2. Get the current version number as a variable
-    # version = c.run("poetry version", hide=True).stdout.strip()
-
     if rule in ["major", "minor"]:
         # 3. create a tag and push it to the remote repository
         c.run(f'git tag -a v{vnum} -m "{vnum}"')
@@ -76,22 +73,6 @@ def live_docs(c):
 
 
 @task
-def shell(c):
-    """
-    Build the documentation and open it in a live browser
-    """
-    c.run("docker compose -f local.yml run django python manage.py shell")
-
-
-@task
-def makemigrations(c):
-    """
-    Build the documentation and open it in a live browser
-    """
-    c.run("docker compose -f local.yml run django python manage.py makemigrations")
-
-
-@task
 def dumpdata(c):
     c.run(
         "docker compose -f local.yml run django python manage.py dumpdata users organizations contributors projects"
@@ -102,20 +83,6 @@ def dumpdata(c):
 @task
 def loaddata(c):
     c.run("docker compose -f local.yml run django python manage.py loaddata core --app geoluminate")
-
-
-@task
-def reset_db(c):
-    """
-    Build the documentation and open it in a live browser
-    """
-    c.run("docker compose run django python manage.py flush")
-
-
-@task
-def build_docker(c):
-    """Build the core geoluminate docker images"""
-    c.run("poetry build")
 
 
 @task

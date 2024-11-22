@@ -24,6 +24,7 @@ class Citation:
     """The DOI for the citation."""
 
 
+# probably call this Config or something
 @dataclass(frozen=True, kw_only=True)
 class Metadata:
     metadata_version: str = "1.0"
@@ -53,6 +54,12 @@ class Metadata:
     """The email address of the package maintainer of the data model."""
 
     analagous_to: list[str | Concept] = field(default_factory=list)
+
+    filterset_class: str = ""
+    """The name of the filterset class that filters the data model."""
+
+    filterset_fields: list[str] = field(default_factory=list)
+    """A list of fields that are used to filter the data model. Only applicable if filterset_class is not provided."""
 
     def as_dict(self):
         return asdict(self)

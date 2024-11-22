@@ -1,9 +1,7 @@
-<c-bs5.nav id="pageMenu"
-           class="border-bottom px-2"
-           tabstyle="underline">
-  {% for item in menu %}
-    {% if item.visible %}
-      {% include "geoluminate/menus/detail/menu.html" %}
+{% for item in menu %}
+  {% if item.visible %}
+    {% if item.template %}
+      {% include item.template %}
     {% endif %}
-  {% endfor %}
-</c-bs5.nav>
+  {% endif %}
+{% endfor %}

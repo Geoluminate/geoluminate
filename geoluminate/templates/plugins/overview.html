@@ -1,5 +1,5 @@
-{% extends 'geoluminate/base/detail_view.html' %}
-{% load formsetify contributor_tags geoluminate static partials easy_icons %}
+{% extends 'geoluminate/object_detail.html' %}
+{% load contributor_tags geoluminate static partials easy_icons %}
 
 {% block content %}
   {% partialdef plugin inline=True %}
@@ -42,7 +42,7 @@
         {% endblock sidebar_cards %}
 
       </c-slot>
-      <div class="col overflow-auto position-relative">
+      <div class="col position-relative">
         <div class="container py-3 d-flex gap-2">
           <c-bs5.card title="Graph 1"
                       id="graph1"

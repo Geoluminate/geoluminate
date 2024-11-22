@@ -2,13 +2,8 @@ from django.utils.translation import gettext_lazy as _
 from flex_menu import Menu, MenuItem
 from literature.models import LiteratureItem
 
-from geoluminate.contrib.samples.models import Sample
+from geoluminate.contrib.core.models import Sample
 from geoluminate.models import Contributor, Dataset, Measurement, Project
-
-
-def is_staff_user(request):
-    return request.user.is_staff
-
 
 DatabaseMenu = Menu(
     "DatabaseMenu",
@@ -36,7 +31,7 @@ DatabaseMenu = Menu(
         ),
         MenuItem(
             _("Samples"),
-            view_name="sample-type-list",
+            view_name="sample-list",
             icon="sample",
             count=Sample.objects.count,
             description=_(
@@ -45,21 +40,13 @@ DatabaseMenu = Menu(
         ),
         MenuItem(
             _("Measurements"),
-            view_name="measurement-type-list",
+            view_name="measurement-list",
             icon="measurement",
             count=Measurement.objects.count,
             description=_(
                 "Find exactly what you need to advance your data analytics workflow by exploring our extensive collection of samples. Filter through diverse sample types, measured properties, locations and more to find the perfect supplement for your current and future research."
             ),
         ),
-        # MenuItem(
-        #     _("Explorer"),
-        #     view_name="viewer",
-        #     icon="map",
-        #     description=_(
-        #         "Explore our extensive collection of projects, datasets, samples and measurements using our interactive map and data viewer. Create complex filters, visualize data, and gain valuable insight into our database."
-        #     ),
-        # ),
         MenuItem(
             _("References"),
             view_name="reference-list",
@@ -86,28 +73,15 @@ DatabaseMenu = Menu(
                 "Explore our API documentation to learn how to interact programatically with our database and access our extensive collection of datasets, samples, projects and more. Integrate our online resources into your custom applications, notebooks and workflows."
             ),
         ),
-        # MenuItem(
-        #     _("Vocabularies"),
-        #     view_name="vocabularies:list",
-        #     icon="vocabularies",
-        #     description=_(
-        #         "Explore our API documentation to learn how to interact programatically with our database and access our extensive collection of datasets, samples, projects and more. Integrate our online resources into your custom applications, notebooks and workflows."
-        #     ),
-        # ),
     ],
 )
-
 
 ProjectMenu = Menu(
     "ProjectMenu",
     label=_("Project"),
     root_template="geoluminate/menus/detail/root.html",
     children=[
-        MenuItem(
-            _("Overview"),
-            view_name="project-detail",
-            icon="home",
-        ),
+        MenuItem(_("Overview"), view_name="project-detail", icon="grid", template="geoluminate/menus/detail/menu.html"),
     ],
 )
 
@@ -116,7 +90,7 @@ DatasetMenu = Menu(
     label=_("Dataset"),
     root_template="geoluminate/menus/detail/root.html",
     children=[
-        MenuItem(_("Overview"), icon="grid", view_name="dataset-detail"),
+        MenuItem(_("Overview"), icon="grid", view_name="dataset-detail", template="geoluminate/menus/detail/menu.html"),
     ],
 )
 
@@ -125,11 +99,7 @@ SampleMenu = Menu(
     label=_("Sample"),
     root_template="geoluminate/menus/detail/root.html",
     children=[
-        MenuItem(
-            _("Overview"),
-            view_name="sample-detail",
-            icon="grid",
-        ),
+        MenuItem(_("Overview"), view_name="sample-detail", icon="grid", template="geoluminate/menus/detail/menu.html"),
     ],
 )
 
@@ -138,16 +108,6 @@ ContributorMenu = Menu(
     label=_("Contributor"),
     root_template="geoluminate/menus/detail/root.html",
     children=[
-        MenuItem(
-            _("Overview"),
-            view_name="person-detail",
-            icon="grid",
-        ),
+        MenuItem(_("Overview"), view_name="person-detail", icon="grid", template="geoluminate/menus/detail/menu.html"),
     ],
-)
-
-OrganizationMenu = Menu(
-    "OrganizationMenu",
-    label=_("Organization"),
-    root_template="geoluminate/menus/detail/root.html",
 )

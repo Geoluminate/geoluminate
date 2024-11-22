@@ -34,7 +34,7 @@ class GeoluminateConfig(AppConfig):
 
         from rest_framework.serializers import ModelSerializer
 
-        from geoluminate.api.fields import QuantityField
+        from geoluminate.contrib.api.fields import QuantityField
         from geoluminate.db import models
 
         if settings.GIS_ENABLED:

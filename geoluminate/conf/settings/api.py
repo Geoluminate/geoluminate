@@ -16,9 +16,9 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.TokenAuthentication",
     ],
     "DEFAULT_THROTTLE_CLASSES": [
-        "geoluminate.api.throttling.AnonBurstRate",
-        "geoluminate.api.throttling.AnonSustainedRate",
-        "geoluminate.api.throttling.UserBurstRate",
+        "geoluminate.contrib.api.throttling.AnonBurstRate",
+        "geoluminate.contrib.api.throttling.AnonSustainedRate",
+        "geoluminate.contrib.api.throttling.UserBurstRate",
     ],
     "DEFAULT_THROTTLE_RATES": {
         "anon_burst": "4/second",
@@ -26,12 +26,12 @@ REST_FRAMEWORK = {
         "user_burst": "25/second",
     },
     "DEFAULT_PERMISSION_CLASSES": [
-        "geoluminate.api.access_policies.CoreAccessPolicy",
+        "geoluminate.contrib.api.access_policies.CoreAccessPolicy",
     ],
     "DEFAULT_RENDERER_CLASSES": [
         "rest_framework.renderers.BrowsableAPIRenderer",
         "drf_orjson_renderer.renderers.ORJSONRenderer",
-        "geoluminate.api.renderers.GeoJSONRenderer",
+        "geoluminate.contrib.api.renderers.GeoJSONRenderer",
         # "rest_framework.renderers.TemplateHTMLRenderer",
         # "rest_framework_csv.renderers.PaginatedCSVRenderer",
     ],
@@ -42,7 +42,7 @@ REST_FRAMEWORK = {
         "drf_orjson_renderer.parsers.ORJSONParser",
     ],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
-    # "DEFAULT_SCHEMA_CLASS": "geoluminate.api.utils.CustomSchema",
+    # "DEFAULT_SCHEMA_CLASS": "geoluminate.contrib.api.utils.CustomSchema",
     "DEFAULT_METADATA_CLASS": "drf_auto_endpoint.metadata.AutoMetadata",
     # "URL_FIELD_NAME": "details",
     # "DATETIME_FORMAT": "%Y-%m-%dT, %H:%M:%S",
@@ -52,12 +52,12 @@ REST_FRAMEWORK = {
 # By Default swagger ui is available only to admin user(s). You can change permission classes to change that
 # See more configuration options at https://drf-spectacular.readthedocs.io/en/latest/settings.html#settings
 SPECTACULAR_SETTINGS = {
-    "SCHEMA_PATH_PREFIX": r"/api/v[0-9]",
+    "SCHEMA_PATH_PREFIX": "/api/",
     "SCHEMA_COERCE_PATH_PK_SUFFIX": True,
     "TITLE": f"{SITE_NAME} API",
     # "DESCRIPTION": render_to_string("api/docs/api_description.md", context={"geoluminate": GEOLUMINATE}),
     # "TOS": render_to_string("geoluminate/generic/api/tos.html"),
-    "TOS": "/api/v1/tos/",
+    "TOS": "/api/tos/",
     # "CONTACT": {
     #     "name": GEOLUMINATE["governance"]["name"],
     #     "url": GEOLUMINATE["governance"]["url"],
@@ -104,7 +104,7 @@ SPECTACULAR_SETTINGS = {
         "tryItOutEnabled": False,
         "docExpansion": "none",
     },
-    "PREPROCESSING_HOOKS": ["geoluminate.api.utils.public_api"],
+    "PREPROCESSING_HOOKS": ["geoluminate.contrib.api.utils.public_api"],
 }  # type: ignore[var-annotated]
 """"""
 

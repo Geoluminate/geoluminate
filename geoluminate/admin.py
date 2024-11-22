@@ -1,4 +1,3 @@
-from geoluminate.contrib.measurements.admin import MeasurementAdmin
-from geoluminate.contrib.samples.admin import SampleAdmin
+from geoluminate.contrib.core.admin import MeasurementAdmin, SampleAdmin
 
 __all__ = ["MeasurementAdmin", "SampleAdmin"]

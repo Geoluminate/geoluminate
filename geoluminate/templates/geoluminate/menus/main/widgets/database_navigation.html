@@ -1,17 +1,15 @@
 {% load sekizai_tags cache flex_menu static %}
 
-<div class="bd-navbar-toggle me-2">
-  <button class="navbar-toggler d-block"
-          type="button"
-          data-bs-toggle="offcanvas"
-          data-bs-target="#mainSidebar"
-          aria-controls="mainSidebar"
-          aria-expanded="false"
-          aria-label="{% trans "Toggle database navigation" %}">
-    <span class="navbar-toggler-icon"></span>
-    <span class="d-none fs-6 pe-1">{% trans "Database Menu" %}</span>
-  </button>
-</div>
+<button class="navbar-toggler d-block me-2"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#mainSidebar"
+        aria-controls="mainSidebar"
+        aria-expanded="false"
+        aria-label="{% trans "Toggle database navigation" %}">
+  <span class="navbar-toggler-icon"></span>
+  <span class="d-none fs-6 pe-1">{% trans "Database Menu" %}</span>
+</button>
 {% addtoblock "body_end" %}
   {% cache 500 sidebar %}
   {% spaceless %}

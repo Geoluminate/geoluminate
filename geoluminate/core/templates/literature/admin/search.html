@@ -16,7 +16,7 @@
 {% block form_top %}<h1>Online search</h1>{% endblock %}
 
 {% block field_sets %}
-  <div class="col-12 col-lg-9">
+  <div class="col-12 col-md-9">
     <div class="card">
       <div class="card-body">
         {% comment %} {% get_changeform_template adminform as changeform_template %} {% endcomment %}
@@ -31,7 +31,8 @@
                 {{ field }}
               </div>
               {% if field.help_text %}
-                <div class="help" {% if field.id_for_label %}id="{{ field.id_for_label }}_helptext"{% endif %}>
+                <div class="help"
+                     {% if field.id_for_label %}id="{{ field.id_for_label }}_helptext"{% endif %}>
                   <div>{{ field.help_text|safe }}</div>
                 </div>
               {% endif %}

@@ -19,9 +19,10 @@ from polymorphic.models import PolymorphicModel
 from shortuuid.django_fields import ShortUUIDField
 
 from geoluminate.contrib.contributors.managers import ContributionManager
+from geoluminate.contrib.generic.models import GenericModel, Identifier
 
 # from django.db.models.fields.files import FieldFile
-from geoluminate.core.models import GenericModel, Identifier, PolymorphicMixin
+from geoluminate.core.models import PolymorphicMixin
 from geoluminate.core.utils import default_image_path
 
 from .managers import UserManager
@@ -68,7 +69,7 @@ class Contributor(PolymorphicMixin, PolymorphicModel):
     )
 
     profile = models.TextField(_("profile"), null=True, blank=True)
-    identifiers = GenericRelation("core.Identifier")
+    identifiers = GenericRelation("generic.Identifier")
 
     # interests = TaggableConcepts(
     #     verbose_name=_("research interests"),
@@ -126,9 +127,23 @@ class Contributor(PolymorphicMixin, PolymorphicModel):
 
     @property
     def projects(self):
-        Project = apps.get_model("projects.Project")
-        contributions = self.contributions.filter(content_type__model="project")
-        return Project.objects.filter(pk__in=contributions.values_list("object_id", flat=True))
+        Project = apps.get_model("fairdm.Project")
+        return Project.objects.filter(contributors__contributor=self)
+
+    @property
+    def datasets(self):
+        Dataset = apps.get_model("fairdm.Dataset")
+        return Dataset.objects.filter(contributors__contributor=self)
+
+    @property
+    def samples(self):
+        Sample = apps.get_model("fairdm.Sample")
+        return Sample.objects.filter(contributors__contributor=self)
+
+    @property
+    def measurements(self):
+        Measurement = apps.get_model("fairdm.Measurement")
+        return Measurement.objects.filter(contributors__contributor=self)
 
 
 class Person(AbstractUser, Contributor):

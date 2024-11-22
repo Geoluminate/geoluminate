@@ -461,6 +461,21 @@
       "path": "..\\bs5\\vendor\\_rfs.scss",
       "publicPath": "/static/bundles/../bs5/vendor/_rfs.scss"
     },
+    "83a538a018a9e44b023a.woff2": {
+      "name": "83a538a018a9e44b023a.woff2",
+      "path": "83a538a018a9e44b023a.woff2",
+      "publicPath": "/static/bundles/83a538a018a9e44b023a.woff2"
+    },
+    "ad1782c70927ebc5bc87.ttf": {
+      "name": "ad1782c70927ebc5bc87.ttf",
+      "path": "ad1782c70927ebc5bc87.ttf",
+      "publicPath": "/static/bundles/ad1782c70927ebc5bc87.ttf"
+    },
+    "css/project.723acf61b7c531814c75.css": {
+      "name": "css/project.723acf61b7c531814c75.css",
+      "path": "css\\project.723acf61b7c531814c75.css",
+      "publicPath": "/static/bundles/css/project.723acf61b7c531814c75.css"
+    },
     "js/popper.js": {
       "name": "js/popper.js",
       "path": "js\\popper.js",
@@ -482,7 +497,8 @@
       "js/popper.js"
     ],
     "project": [
-      "js/project.js"
+      "js/project.js",
+      "css/project.723acf61b7c531814c75.css"
     ]
   },
   "publicPath": "/static/bundles/"

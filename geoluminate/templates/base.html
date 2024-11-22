@@ -17,6 +17,7 @@
       {% compress css file fairdm %}
         <link rel="stylesheet" type="text/x-scss" href="{% static "scss/stylesheet.scss" %}" />
       {% endcompress %}
+      {% render_bundle "project" "css" "GEOLUMINATE" %}
       {% compress js file fairdm %}
         {% render_bundle "project" "js" "GEOLUMINATE" attrs="defer" %}
       {% endcompress %}
@@ -29,16 +30,19 @@
         </script>
         {% render_bundle "popper" "js" "GEOLUMINATE" %}
       {% endcompress %}
+      {% comment %} <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/fontawesome.min.css" integrity="sha512-B46MVOJpI6RBsdcU307elYeStF2JKT87SsHZfRSkjVi4/iZ3912zXi45X5/CBr/GbCyLx6M1GQtTKYRd52Jxgw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/js/fontawesome.min.js"
+              integrity="sha512-NeFv3hB6XGV+0y96NVxoWIkhrs1eC3KXBJ9OJiTFktvbzJ/0Kk7Rmm9hJ2/c2wJjy6wG0a0lIgehHjCTDLRwWw=="
+              crossorigin="anonymous"
+              referrerpolicy="no-referrer"></script> {% endcomment %}
       {% django_htmx_script %}
-      <script src="https://unpkg.com/htmx-ext-debug@2.0.0/debug.js"
-              defer></script>
     {% endblock head %}
 
     {% render_block "css" %}
     {% block css %}
     {% endblock css %}
 
-    <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-target="main" hx-ext="debug" class="{% block body_class %}{% endblock body_class %}
+    <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-target="main" hx-ext="debug,preload" class="{% block body_class %}{% endblock body_class %}
        ">
       {% block body %}
         {% block application %}

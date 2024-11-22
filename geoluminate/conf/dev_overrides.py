@@ -1,3 +1,6 @@
+import re
+from django.utils.log import RequireDebugTrue
+
 env = globals()["env"]
 
 
@@ -28,7 +31,8 @@ THUMBNAIL_DEFAULT_STORAGE = "easy_thumbnails.storage.ThumbnailFileSystemStorage"
 
 CACHES = {
     "default": {
-        "BACKEND": "django.core.cache.backends.dummy.DummyCache",
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        # "BACKEND": "django.core.cache.backends.dummy.DummyCache",
         "LOCATION": "",
     },
     "select2": {
@@ -72,3 +76,47 @@ INTERNAL_IPS = ["127.0.0.1"]
 CORS_ALLOW_ALL_ORIGINS = True
 
 AWS_S3_URL_PROTOCOL = "http:"
+
+# https://github.com/torchbox/django-libsass
+LIBSASS_SOURCEMAPS = True
+
+DEBUG_TOOLBAR_CONFIG = {
+    # "DISABLE_PANELS": ["debug_toolbar.panels.redirects.RedirectsPanel"],
+    "SHOW_TEMPLATE_CONTEXT": True,
+    "ROOT_TAG_EXTRA_ATTRS": "hx-preserve",
+}
+
+
+class IgnoreStaticAndMediaFilter:
+    def filter(self, record):
+        # Access the message in record and check if it's a static or media request
+        message = record.getMessage()
+        return not re.match(r'^"GET /(static|media)/', message) and not re.match(r'^"GET /__debug__/', message)
+
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "filters": {
+        "require_debug_true": {
+            "()": RequireDebugTrue,  # Only log in DEBUG mode
+        },
+        "ignore_static_and_media": {
+            "()": IgnoreStaticAndMediaFilter,
+        },
+    },
+    "handlers": {
+        "console": {
+            "level": "DEBUG",
+            "filters": ["require_debug_true", "ignore_static_and_media"],
+            "class": "logging.StreamHandler",
+        },
+    },
+    "loggers": {
+        "django.server": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+    },
+}

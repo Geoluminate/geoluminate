@@ -19,17 +19,14 @@ INSTALLED_APPS = [
     # "django.contrib.gis",
     "django.contrib.humanize",
     "actstream",
-    # "taggit",  # required from django-literature
     # GEOLUMINATE
     "geoluminate",
-    "geoluminate.core",
-    "geoluminate.identity",
-    # "configuration",
-    "geoluminate.contrib.projects",
-    "geoluminate.contrib.datasets",
-    "geoluminate.contrib.samples",
-    "geoluminate.contrib.measurements",
+    "geoluminate.contrib.generic",
     "geoluminate.contrib.contributors",
+    "geoluminate.contrib.core",
+    "geoluminate.core",
+    "geoluminate.contrib.identity",
+    # "configuration",
     # COMMENTING FRAMEWORK
     "django_comments_xtd",
     "django_comments",
@@ -47,53 +44,53 @@ INSTALLED_APPS = [
     "allauth.usersessions",
     "invitations",
     # DJANGO REST FRAMEWORK
-    "rest_framework",
-    "rest_framework.authtoken",
     "corsheaders",
-    "dj_rest_auth",
     "dj_rest_auth.registration",
-    "drf_spectacular",  # auto documentation of API
-    "drf_spectacular_sidecar",  # static files for drf_spectacular
+    "dj_rest_auth",
     "drf_auto_endpoint",
+    "drf_spectacular_sidecar",  # static files for drf_spectacular
+    "drf_spectacular",  # auto documentation of API
+    "rest_framework.authtoken",
+    "rest_framework",
     # UTILITIES
-    "sekizai",
-    "easy_thumbnails",
-    "easy_icons",
+    "compressor",
+    "dbbackup",
+    "django_bleach",  # for sanitizing html input
     "django_celery_beat",  # celery based task manager
+    "django_cotton.apps.SimpleAppConfig",
+    "django_extensions",
+    "django_setup_tools",
+    "django_tables2",
+    "easy_icons",
+    "easy_thumbnails",
+    "flex_menu",
+    "jsonfield_toolkit",
+    "meta",  # for seo optimization
+    "neapolitan",
+    "sekizai",
+    "template_partials.apps.SimpleAppConfig",
     # OTHERS
     "solo",  # singleton model for storing dynamic global variables in the DB
     "django_contact_form",  # for contact forms
     "storages",  # for setting up backend storages
-    "simple_menu",  # for defining non-CMS menus in the application
     # building nice looking forms and filters
     "django_filters",
     "crispy_forms",
     "crispy_bootstrap5",
-    # some other useful apps that are required by the default installation
-    "meta",  # for seo optimization
-    "django_social_share",  # easy links to social sharing sites
-    "django_bleach",  # for sanitizing html input
-    "compressor",
-    "django_htmx",
-    "el_pagination",
+    "widget_tweaks",
     "django_select2",
     "client_side_image_cropping",
-    "dbbackup",
+    # some other useful apps that are required by the default installation
+    "django_social_share",  # easy links to social sharing sites
+    "django_htmx",
     "webpack_loader",
     "imagekit",
-    "image_uploader_widget",
     "literature",
-    "formset",
+    # ADMIN TOOLS
+    "image_uploader_widget",
+    # "formset",
     "licensing",
     "laboratory",
     "research_vocabs",
-    "neapolitan",
-    "template_partials.apps.SimpleAppConfig",
-    "jsonfield_toolkit",
-    "django_extensions",
-    "flex_menu",
-    "django_tables2",
-    "django_setup_tools",
-    "django_cotton.apps.SimpleAppConfig",
     *GEOLUMINATE_APPS,
 ]

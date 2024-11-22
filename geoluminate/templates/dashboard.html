@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-
 {% block content %}
-  <div class="container">This is a view for logged in users.</div>
+  <c-layout.page title="{% trans "Home" %}">
+    <div class="container">This is a view for logged in users.</div>
+  </c-layout.page>
 {% endblock content %}

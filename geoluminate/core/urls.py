@@ -1,11 +1,9 @@
-from django.urls import include, path
+from django.urls import path
 
-from .views import generic, literature
+from .views import GenericContactForm, ReferenceListView, follow_unfollow
 
 urlpatterns = [
-    path("edit/<str:base_pk>/", include(generic.DescriptionCRUDView.get_urls())),
-    path("edit/<str:base_pk>/", include(generic.DatesCRUDView.get_urls())),
-    path("activity/follow-object/<str:pk>", generic.follow_unfollow, name="follow-object"),
-    path("contact/", generic.GenericContactForm.as_view(), name="contact"),
-    path("references/", literature.ReferenceListView.as_view(), name="reference-list"),
+    path("activity/follow-object/<str:pk>", follow_unfollow, name="follow-object"),
+    path("contact/", GenericContactForm.as_view(), name="contact"),
+    path("references/", ReferenceListView.as_view(), name="reference-list"),
 ]

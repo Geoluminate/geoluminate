@@ -3,10 +3,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.admin import site
-from django.urls import include, path
+from django.urls import include, path, re_path
 from django.views import defaults as default_views
 
-from geoluminate.core.views.generic import DirectoryView, HomeView
+from geoluminate.contrib.core.utils import UUID_RE_PATTERN
+from geoluminate.core.views import DirectoryView, HomeView
 
 # from .admin import admin_measurement_view
 # register all adminactions
@@ -16,13 +17,11 @@ urlpatterns = [
     path("admin/literature/", include("literature.urls")),
     path(settings.ADMIN_URL, admin.site.urls),
     path("", HomeView.as_view(), name="home"),
-    path("", include("geoluminate.contrib.datasets.urls")),
-    path("", include("geoluminate.contrib.projects.urls")),
-    path("", include("geoluminate.contrib.samples.urls")),
-    path("", include("geoluminate.contrib.measurements.urls")),
+    path("", include("geoluminate.contrib.core.urls")),
     path("", include("geoluminate.contrib.contributors.urls")),
-    path("", include("geoluminate.core.urls")),  # must be before actstream.urls
-    path("api/", include("geoluminate.api.urls")),
+    path("", include("geoluminate.contrib.generic.urls")),
+    path("", include("geoluminate.core.urls")),
+    path("api/", include("geoluminate.contrib.api.urls")),
     path("vocabularies/", include("research_vocabs.urls")),
     path("account/", include("account_management.urls")),
     path("account/", include("allauth.urls")),
@@ -34,7 +33,7 @@ urlpatterns = [
     path("comments/", include("fluent_comments.urls")),
     path("i18n/", include("django.conf.urls.i18n")),
     path("comments/", include("django_comments_xtd.urls")),
-    path("<pk>/", DirectoryView.as_view(), name="directory"),
+    re_path(UUID_RE_PATTERN, DirectoryView.as_view(), name="directory"),
 ]
 
 

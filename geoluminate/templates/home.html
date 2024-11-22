@@ -30,8 +30,8 @@
 {% endblock head %}
 
 {% partialdef carousel-item %}
-<div class="text-center mx-2 col-8" style="height: 350px">
-  <div class="card container h-100 ">
+<div class="text-center mx-2 " style="height: 350px">
+  <div class="card container h-100">
     <div class="card-body d-flex flex-column">
       <h5>{{ c.name_plural }}</h5>
       <div class="mb-2">
@@ -39,9 +39,11 @@
       </div>
       <p>{{ c.description }}</p>
       <div class="mt-auto">
-        <a href="{{ c.list_url }}" class="btn btn-primary">{% icon "search.svg" %} {% trans "Search" %}</a>
-        <a href="{{ c.detail_url }}" class="btn btn-secondary">{% icon "chart.svg" %} {% trans "Visualize" %}</a>
-        <a href="{{ c.detail_url }}" class="btn btn-secondary">{% trans "Learn More" %}</a>
+        <a href="{{ c.list_url }}" class="btn btn-primary">{% icon "search" %} {% trans "Search" %}</a>
+        <a href="{{ c.detail_url }}"
+           class="btn btn-secondary">{% icon "chart" %} {% trans "Visualize" %}</a>
+        <a href="{{ c.detail_url }}"
+           class="btn btn-secondary">{% trans "Learn More" %}</a>
       </div>
     </div>
   </div>
@@ -68,21 +70,31 @@
           <p>{{ identity.authority.description }}</p>
         </div>
       </section>
-      <div class="bg-secondary-subtle vh-100 py-5 d-flex flex-column justify-content-center">
+      <div class="bg-secondary-subtle vh-100 py-5">
         <h2 class="pt-3 container">{% trans "Sample types" %}</h2>
-        <div class="container pt-3 pb-5 mb-0 multiple-items">
+        <swiper-container centered-slides="true"
+                          slides-per-view="2"
+                          navigation="true"
+                          grab-cursor="true">
           {% for c in sample_types %}
-            {% partial carousel-item %}
+            <swiper-slide>
+              {% partial carousel-item %}
+            </swiper-slide>
           {% endfor %}
-        </div>
+        </swiper-container>
       </div>
-      <div class="bg-primary-subtle  vh-100 py-5 d-flex flex-column justify-content-center">
+      <div class="bg-primary-subtle  vh-100 py-5">
         <h2 class="pt-3 container">{% trans "Measurements" %}</h2>
-        <div class="container pt-3 pb-5 mb-0 multiple-items">
+        <swiper-container centered-slides="true"
+                          slides-per-view="2"
+                          navigation="true"
+                          grab-cursor="true">
           {% for c in measurement_types %}
-            {% partial carousel-item %}
+            <swiper-slide>
+              {% partial carousel-item %}
+            </swiper-slide>
           {% endfor %}
-        </div>
+        </swiper-container>
       </div>
       {% for template in view.templates %}
         {% include template %}
@@ -93,7 +105,8 @@
 
 {% block body_end %}
   {{ block.super }}
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
   <script>
     $('.multiple-items').slick({
       infinite: true,

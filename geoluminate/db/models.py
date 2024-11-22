@@ -3,6 +3,7 @@ from django.db.models import *  # isort:skip
 from django.db import models
 from django.urls import reverse
 from django_bleach.models import BleachField as TextField
+from django_filters import FilterSet
 from model_utils import FieldTracker
 from quantityfield.fields import (
     BigIntegerQuantityField,
@@ -52,16 +53,18 @@ class Model(models.Model):
 
     tracker = FieldTracker()
 
-    _metadata: Metadata = None
-
     class Meta:
         abstract = True
 
+    class Config:
+        metadata: Metadata = None
+        filterset_class: FilterSet = None
+        filterset_fields: list = []
+        serializer_class = None
+        serializer_fields: list = []
+
     def get_absolute_url(self):
         return reverse(f"{self._meta.model_name}-detail", kwargs={"pk": self.pk})
-
-    def get_api_url(self):
-        return reverse(f"api:{self._meta.model_name}-detail", kwargs={"pk": self.pk})
 
 
 __all__ = [

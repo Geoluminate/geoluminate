@@ -39,13 +39,11 @@ MESSAGE_TAGS = {
     messages.ERROR: "error alert-danger",
 }
 
-
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [BASE_DIR / "templates"],
         "OPTIONS": {
-            "builtins": ["easy_icons.templatetags.easy_icons"],
             "context_processors": [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
@@ -121,7 +119,8 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 
-DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap5-responsive.html"
+# DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap5-responsive.html"
+DJANGO_TABLES2_TEMPLATE = "geoluminate/base/table.html"
 
 ACCOUNT_MANAGEMENT_GET_AVATAR_URL = "geoluminate.contrib.contributors.utils.get_contributor_avatar"  # This line connects the avatar_url template tag to the function that retrieves the contributor's avatar URL.  # noqa: E501
 
@@ -161,3 +160,81 @@ DJANGO_SETUP_TOOLS = {
 }
 
 COTTON_DIR = "components"
+
+
+EASY_ICONS = {
+    # the function that will be used to get the icon based on user settings
+    "default_renderer": "provider",
+    # default attributes applied to all icons
+    "attrs": {
+        # "height": "1em",
+        # "fill": "currentColor",
+    },
+    # maps aliases to icon names
+    "aliases": {
+        "administration": "fas fa-cogs",
+        "activity": "activity.svg",
+        "angle-left": "fas fa-angle-left",
+        "angle-right": "fas fa-angle-right",
+        "angles-left": "fas fa-angle-double-left",
+        "angles-right": "fas fa-angle-double-right",
+        "api": "fas fa-code",
+        "arrow-left": "fas fa-arrow-left",
+        "arrow-right": "fas fa-arrow-right",
+        "arrow-up": "fas fa-arrow-up",
+        "arrow-down": "fas fa-arrow-down",
+        "back": "fas fa-arrow-left",
+        "cancel": "fas fa-times",
+        "chart": "fas fa-chart-bar",
+        "close": "fas fa-times",
+        "circle-half": "fas fa-circle-half-stroke",
+        "comments": "fas fa-comments",
+        "community": "fas fa-users",
+        "contributors": "fas fa-user-friends",
+        "dataset": "fas fa-folder",
+        "delete": "fas fa-trash",
+        "download": "fas fa-download",
+        "edit": "fas fa-edit",
+        "email": "fas fa-envelope",
+        "expand": "fas fa-expand",
+        # "facebook": "facebook.svg",
+        "filter": "fas fa-filter",
+        "grid": "grid.svg",
+        "home": "fas fa-home",
+        "identifier": "fas fa-fingerprint",
+        "image": "fas fa-image",
+        "images": "fas fa-images",
+        "info": "fas fa-info-circle",
+        "invite": "fas fa-envelope",
+        "linkedin": "fab fa-linkedin",
+        "literature": "fas fa-book",
+        "location": "fas fa-map-marker-alt",
+        "login": "fas fa-sign-in-alt",
+        "logout": "fas fa-sign-out-alt",
+        "map": "fas fa-map-marked-alt",
+        "measurement": "fas fa-ruler",
+        "measurements": "fas fa-ruler-combined",
+        "moon": "fas fa-moon",
+        "orcid": "fab fa-orcid",
+        "organisation": "fas fa-building",
+        "organization": "fas fa-building",
+        "overview": "fas fa-book-open",
+        "plus": "fas fa-plus",
+        "project": "fas fa-layer-group",
+        "ror": "ror.svg",
+        "rotate": "fas fa-sync-alt",
+        "sample": "fas fa-database",
+        "search": "fas fa-search",
+        "share": "fas fa-share",
+        "spinner": "spinner.svg",
+        "star-outline": "far fa-star",
+        "star-solid": "fas fa-star",
+        "sun": "fas fa-sun",
+        "upload": "fas fa-upload",
+        "user-circle": "fas fa-user-circle",
+        "user": "fas fa-user",
+        "vocabularies": "fas fa-book-open",
+        "whatsapp": "fab fa-whatsapp",
+        "x_twitter": "fab fa-twitter",
+    },
+}

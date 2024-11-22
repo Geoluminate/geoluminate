@@ -5,7 +5,7 @@ from django.template.loader import render_to_string
 from django.utils.text import slugify
 
 from geoluminate.contrib import CORE_MAPPING
-from geoluminate.identity.models import Authority, Database
+from geoluminate.contrib.identity.models import Authority, Database
 
 
 def label(label):

@@ -1,11 +1,13 @@
-{% load partials %}
+{% load partials easy_icons %}
 
 {% partialdef page %}
-{% comment %} <li class="page-item {% if num == page_obj.number %}active{% endif %}"> {% endcomment %}
 <a class="page-link" href="?page={{ num }}">{{ label|default:num }}</a>
-{% comment %} </li> {% endcomment %}
 {% endpartialdef page %}
 
+{% icon "angles-left" as start_icon %}
+{% icon "angle-left" as previous_icon %}
+{% icon "angle-right" as next_icon %}
+{% icon "angles-right" as end_icon %}
 {% partialdef paginator inline=True %}
 {% if paginator.num_pages > 1 %}
   <nav aria-label="Page navigation">
@@ -13,16 +15,16 @@
       <!-- First and Previous Links -->
       <li class="page-item {% if not page_obj.has_previous %}disabled{% endif %}">
         {% if page_obj.has_previous %}
-          {% include "components/paginator.html#page" with num=1 label="First" %}
+          {% include "components/paginator.html#page" with num=1 label=start_icon %}
         {% else %}
-          <span class="page-link" tabindex="-1">&laquo; First</span>
+          <span class="page-link" tabindex="-1">{{ start_icon }}</span>
         {% endif %}
       </li>
       <li class="page-item {% if not page_obj.has_previous %}disabled{% endif %}">
         {% if page_obj.has_previous %}
-          {% include "components/paginator.html#page" with num=page_obj.previous_page_number label="Previous" %}
+          {% include "components/paginator.html#page" with num=page_obj.previous_page_number label=previous_icon %}
         {% else %}
-          <span class="page-link" tabindex="-1">Previous</span>
+          <span class="page-link" tabindex="-1">{{ previous_icon }}</span>
         {% endif %}
       </li>
       <!-- Page Number Links with Maximum of 10 -->
@@ -56,17 +58,17 @@
       <li class="page-item {% if not page_obj.has_next %}disabled{% endif %}">
         {% if page_obj.has_next %}
           <a class="page-link"
-             href="?page={{ page_obj.next_page_number }}">Next</a>
+             href="?page={{ page_obj.next_page_number }}">{{ next_icon }}</a>
         {% else %}
-          <span class="page-link">Next</span>
+          <span class="page-link">{{ next_icon }}</span>
         {% endif %}
       </li>
       <li class="page-item {% if not page_obj.has_next %}disabled{% endif %}">
         {% if page_obj.has_next %}
           <a class="page-link"
-             href="?page={{ paginator.num_pages }}">Last &raquo;</a>
+             href="?page={{ paginator.num_pages }}">{{ end_icon }}</a>
         {% else %}
-          <span class="page-link">Last &raquo;</span>
+          <span class="page-link">{{ end_icon }}</span>
         {% endif %}
       </li>
     </ul>

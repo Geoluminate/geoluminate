@@ -1,7 +1,7 @@
 CORE_MAPPING = {
-    "p": "projects.Project",
-    "d": "datasets.Dataset",
-    "s": "samples.Sample",
-    "m": "measurements.Measurement",
-    "c": "contributors.Contributor",
+    "p": "fairdm.Project",
+    "d": "fairdm.Dataset",
+    "s": "fairdm.Sample",
+    "m": "fairdm.Measurement",
+    "c": "fairdm.Contributor",
 }

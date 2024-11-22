@@ -1,4 +1,4 @@
-{% extends 'geoluminate/base/detail_view.html' %}
+{% extends 'geoluminate/object_detail.html' %}
 {% load crispy_forms_tags partials %}
 
 {% block content %}
@@ -15,7 +15,9 @@
       {% endblock actions %}
 
     </c-slot>
-    {% include "geoluminate/base/list_view.html#page" %}
+    <c-card-list :object_list="object_list"
+                 :template="object_template" />
+    {% comment %} {% include "geoluminate/object_list.html#page" %} {% endcomment %}
   </c-plugin>
   <div id="bodyEnd" hx-swap-oob="true">
     {% for form in forms %}

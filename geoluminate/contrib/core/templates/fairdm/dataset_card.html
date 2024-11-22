@@ -1,0 +1,30 @@
+{% load contributor_tags easy_icons %}
+
+<c-bs5.card card_class="h-100" only>
+  <c-bs5.grid gap=2>
+    <div class="col-12 col-md-3">
+      <c-image class="ratio ratio-16x9 rounded-2"
+               :image="obj.image"
+               alt="{{ obj }}"
+               width="100%"
+               height="100%" />
+    </div>
+    <div class="col-12 col-md">
+      <h2 class="card-title mb-0 fs-5 text-truncate">{{ obj }}</h2>
+      <c-contributor.names class="fs-6 text-secondary mb-1"
+                           :contributors="obj.contributions.all" />
+      {% with obj.descriptions.get_first as abstract %}
+        {% if abstract %}
+          {{ abstract|truncatewords_html:75 }}
+        {% else %}
+          <code class="text-reset">&lt;{% trans "no abstract provided" %}&gt;</code>
+        {% endif %}
+      {% endwith %}
+    </div>
+  </c-bs5.grid>
+  <c-slot name="footer">
+    <a href="{{ obj.get_absolute_url }}"
+       class="btn btn-primary">{% trans "View details" %}
+    {% icon "arrow-right" %}</a>
+  </c-slot>
+</c-bs5.card>

@@ -2,7 +2,7 @@ from django.db.models.base import Model as Model
 from django.utils.translation import gettext as _
 
 from geoluminate import plugins
-from geoluminate.core.views.mixins import ListPluginMixin
+from geoluminate.core.view_mixins import ListPluginMixin
 
 from .forms.organization import RORForm
 

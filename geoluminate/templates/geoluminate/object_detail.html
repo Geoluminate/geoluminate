@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static flex_menu partials geoluminate %}
+{% load render_bundle from webpack_loader %}
+
+{% block body_class %}
+  vstack vh-100
+{% endblock body_class %}
+
+{% block page_nav %}
+  <c-bs5.nav id="pageMenu"
+             class="border-bottom border-1 border-secondary-subtle px-2 position-relative shadow-sm bg-gradient"
+             tabstyle="underline">
+    {% if base_object %}
+      {% render_menu menu pk=base_object.pk %}
+    {% else %}
+      {% render_menu menu pk=object.pk %}
+    {% endif %}
+    <c-menu.widgets class="ms-auto">
+      <c-bs5.button href="{% url "samples-download" %}"
+                    class="btn btn-sm btn-outline-primary"
+                    icon="upload" />
+      <c-bs5.button href="{% url "samples-download" %}"
+                    class="btn btn-sm btn-outline-primary"
+                    icon="download" />
+    </c-menu.widgets>
+  </c-bs5.nav>
+{% endblock page_nav %}
+
+{% block content %}
+  <div class="overflow-hidden d-flex h-100"
+       hx-vals="{'dataset': '{{ dataset.pk }}'}">
+    <c-detail.sidebar>
+      {% block sidebar_cards %}
+        {% for heading, fields in sidebar_fields.items %}
+          <c-sidebar-fieldset :heading="heading" :fields="fields" />
+        {% endfor %}
+      {% endblock sidebar_cards %}
+
+      {% comment %} {% render_field object "contributors" %} {% endcomment %}
+    </c-detail.sidebar>
+    <div id="pluginContainer"
+         class="overflow-auto w-100 h-100">
+      {% block plugin %}
+      {% endblock plugin %}
+
+    </div>
+  </div>
+{% endblock content %}

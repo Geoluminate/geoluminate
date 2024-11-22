@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from geoluminate.contrib.samples.admin import SampleAdmin
+from geoluminate.contrib.core.admin import SampleAdmin
 
 from .models import CustomSample, ExampleMeasurement
 

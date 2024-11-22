@@ -10,28 +10,4 @@
     {% endblock content %}
 
   </c-bs5.modal>
-  {% comment %} <div class="modal d-block position-relative z-1 {% block modal_class %}{% endblock modal_class %} " tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content border-0 shadow">
-        <div class="modal-header {% block header_class %}{% endblock header_class %} ">
-          <img class="mx-auto" src="{% static "img/brand/logo.svg" %}" alt="" height="70px" width="auto" />
-        </div>
-        <div class="modal-body {% block content_class %}{% endblock content_class %} ">
-          <h5 class="modal-title text-left">
-            {% block page_title %}
-            {% endblock page_title %}
-
-          </h5>
-          {% block content %}
-          {% endblock content %}
-
-        </div>
-        <div class="modal-footer border-0 {% block footer_class %}{% endblock footer_class %} ">
-          {% block footer %}
-          {% endblock footer %}
-
-        </div>
-      </div>
-    </div>
-  </div> {% endcomment %}
 {% endblock content %}

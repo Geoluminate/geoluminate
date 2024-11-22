@@ -1,12 +1,6 @@
-{% extends 'geoluminate/base/detail_view.html' %}
+{% extends 'geoluminate/object_form.html' %}
 {% load crispy_forms_tags partials %}
 
-{% comment %}
-<c-plugin layout="page" title="{% trans "Contributors" %}">
-  <c-bs5.grid ncols="6" wrapper_class="py-3">
-    {% include "geoluminate/base/list_view.html#page" %}
-  </c-bs5.grid>
-</c-plugin> {% endcomment %}
 {% block content %}
   {% partialdef plugin inline=True %}
   <c-plugin layout="page" title="{{ view.title }}">
@@ -31,7 +25,9 @@
       {% endblock actions %}
 
     </c-slot>
-    {% include "geoluminate/base/list_view.html#page" %}
+    <c-card-list class="row-cols-5"
+                 :object_list="object_list"
+                 :template="object_template" />
   </c-plugin>
   <div id="bodyEnd" hx-swap-oob="true">
     {% for form in forms %}<c-modals.ror :form="form" />{% endfor %}

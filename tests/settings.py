@@ -10,8 +10,9 @@ geoluminate.setup(
 ROOT_URLCONF = "geoluminate.urls"
 
 # DEBUG_TOOLBAR_CONFIG = {
-#     "DISABLE_PANELS": ["debug_toolbar.panels.redirects.RedirectsPanel"],
+#     # "DISABLE_PANELS": ["debug_toolbar.panels.redirects.RedirectsPanel"],
 #     "SHOW_TEMPLATE_CONTEXT": True,
+#     "ROOT_TAG_EXTRA_ATTRS": "hx-preserve",
 # }
 
 # DEBUG_TOOLBAR_PANELS += [

@@ -1,8 +1,0 @@
-{% extends "geoluminate/base/detail_view.html" %}
-{% load imagekit %}
-
-{% block sidebar_image %}
-  {% if object.image %}
-    <div class="card text-white">{% thumbnail '100x100' object.image %}</div>
-    {% endif %}
-  {% endblock sidebar_image %}

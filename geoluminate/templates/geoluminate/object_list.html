@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load partials crispy_forms_tags %}
+{% load render_bundle from webpack_loader %}
+
+{% comment %} {% partialdef object-list %}
+{% for obj in object_list %}
+  {% include object_template %}
+{% endfor %}
+{% endpartialdef %}
+
+{% partialdef page %}
+<div class="hstack flex-wrap gap-2">{% partial object-list %}</div>
+{% endpartialdef %} {% endcomment %}
+{% block content %}
+  {% partialdef plugin inline=True %}
+  <c-layout.sidebar gap="0"
+                    hx-target="this"
+                    hx-swap="outerHTML"
+                    hx-push-url
+                    x-data="{'isfiltered': false, 'filterCount': {{ filter_count }}, 'totalCount': 7}">
+    <c-slot name="sidebar">
+      <form id="filterForm"
+            action="{{ request.path }}"
+            method="get"
+            hx-get>
+        <div class="py-2 hstack sticky-top align-items-center">
+          <h1 class="fs-5 fw-semibold m-0">{% trans "Filter by" %}</h1>
+          <div class="ms-auto">
+            <button class="btn btn-sm btn-warning"
+                    type="button"
+                    hx-get>{% trans "Clear" %}</button>
+            <button class="btn btn-sm btn-primary" type="submit">{% trans "Apply" %}</button>
+          </div>
+        </div>
+        {{ filterset.form|crispy }}
+      </form>
+    </c-slot>
+    <c-layout.page title="{{ object_verbose_name_plural|title }}">
+      <c-slot name="actions">
+        <c-paginator />
+      </c-slot>
+      <div x-show="isfiltered"
+           x-cloak
+           x-transition:enter="transition ease-out duration-300"
+           class="text-muted mb-1">
+        {% blocktrans %}
+        Found <span x-text="filterCount"></span> matching entries.
+        {% endblocktrans %}
+      </div>
+      <c-card-list class="row-cols-1"
+                   :object_list="object_list"
+                   :template="object_template" />
+      {% comment %}
+<c-card-list :object_list="object_list" {% endcomment %} {% comment %} template="{{ object_template }}" />
+      {% endcomment %}
+      {% comment %} {% partial page %} {% endcomment %}
+    </c-layout.page>
+  </c-layout.sidebar>
+{% endpartialdef plugin %}
+
+{% endblock content %}
+
+{% block toolbar_right %}
+  <a class="btn text-primary content-sidebar-toggle"
+     href="#pageSidebar"
+     data-bs-toggle="offcanvas"
+     role="button"
+     aria-controls="pageSidebar"
+     aria-expanded="true">
+    <i class="fas fa-filter"></i>
+  </a>
+{% endblock toolbar_right %}
+
+{% block body_end %}
+  {{ block.super }}
+  <!-- Modal -->
+  <div class="modal fade"
+       id="listDescriptionModal"
+       tabindex="-1"
+       aria-labelledby="listDescriptionModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5"
+              id="listDescriptionModalLabel">{{ meta.title }}</h1>
+          <button type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          {% comment %} {% block description %}
+            {{ description }}
+{% endblock description %}
+
+
+
+
+
+          {% endcomment %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock body_end %}

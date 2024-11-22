@@ -1,6 +1,6 @@
-from .contrib import DatasetFactory, MeasurementFactory, ProjectFactory, SampleFactory
 from .contributors import OrganizationFactory, OrganizationMembershipFactory, PersonFactory
-from .core import randint
+from .core import DatasetFactory, MeasurementFactory, ProjectFactory, SampleFactory
+from .generic import randint
 
 __all__ = (
     "DatasetFactory",

@@ -943,6 +943,17 @@ files = [
 ]
 
 [[package]]
+name = "defusedxml"
+version = "0.7.1"
+description = "XML bomb protection for Python stdlib modules"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+files = [
+    {file = "defusedxml-0.7.1-py2.py3-none-any.whl", hash = "sha256:a352e7e428770286cc899e2542b6cdaedb2b4953ff269a210103ec58f6198a61"},
+    {file = "defusedxml-0.7.1.tar.gz", hash = "sha256:1bb3032db185915b62d7c6209c5a8792be6a32ab2fedacc84e01b52c51aa3e69"},
+]
+
+[[package]]
 name = "deptry"
 version = "0.8.0"
 description = "A command line utility to check for obsolete, missing and transitive dependencies in a Python project."
@@ -961,17 +972,17 @@ tomli = {version = ">=2.0.1,<3.0.0", markers = "python_version < \"3.11\""}
 
 [[package]]
 name = "diff-match-patch"
-version = "20230430"
-description = "Diff Match and Patch"
+version = "20241021"
+description = "Repackaging of Google's Diff Match and Patch libraries."
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "diff-match-patch-20230430.tar.gz", hash = "sha256:953019cdb9c9d2c9e47b5b12bcff3cf4746fc4598eb406076fa1fc27e6a1f15c"},
-    {file = "diff_match_patch-20230430-py3-none-any.whl", hash = "sha256:dce43505fb7b1b317de7195579388df0746d90db07015ed47a85e5e44930ef93"},
+    {file = "diff_match_patch-20241021-py3-none-any.whl", hash = "sha256:93cea333fb8b2bc0d181b0de5e16df50dd344ce64828226bda07728818936782"},
+    {file = "diff_match_patch-20241021.tar.gz", hash = "sha256:beae57a99fa48084532935ee2968b8661db861862ec82c6f21f4acdd6d835073"},
 ]
 
 [package.extras]
-dev = ["attribution (==1.6.2)", "black (==23.3.0)", "flit (==3.8.0)", "mypy (==1.2.0)", "ufmt (==2.1.0)", "usort (==1.0.6)"]
+dev = ["attribution (==1.8.0)", "black (==24.8.0)", "build (>=1)", "flit (==3.9.0)", "mypy (==1.12.1)", "ufmt (==2.7.3)", "usort (==1.0.8.post1)"]
 
 [[package]]
 name = "dill"
@@ -1018,18 +1029,18 @@ with-social = ["django-allauth (>=0.40.0,<0.53.0)"]
 
 [[package]]
 name = "django"
-version = "5.0.9"
+version = "5.1.3"
 description = "A high-level Python web framework that encourages rapid development and clean, pragmatic design."
 optional = false
 python-versions = ">=3.10"
 files = [
-    {file = "Django-5.0.9-py3-none-any.whl", hash = "sha256:f219576ba53be4e83f485130a7283f0efde06a9f2e3a7c3c5180327549f078fa"},
-    {file = "Django-5.0.9.tar.gz", hash = "sha256:6333870d342329b60174da3a60dbd302e533f3b0bb0971516750e974a99b5a39"},
+    {file = "Django-5.1.3-py3-none-any.whl", hash = "sha256:8b38a9a12da3ae00cb0ba72da985ec4b14de6345046b1e174b1fd7254398f818"},
+    {file = "Django-5.1.3.tar.gz", hash = "sha256:c0fa0e619c39325a169208caef234f90baa925227032ad3f44842ba14d75234a"},
 ]
 
 [package.dependencies]
 argon2-cffi = {version = ">=19.1.0", optional = true, markers = "extra == \"argon2\""}
-asgiref = ">=3.7.0,<4"
+asgiref = ">=3.8.1,<4"
 sqlparse = ">=0.3.1"
 tzdata = {version = "*", markers = "sys_platform == \"win32\""}
 
@@ -1258,22 +1269,26 @@ Django = ">=2.2"
 
 [[package]]
 name = "django-comments-xtd"
-version = "2.10.0"
-description = "Django Comments Framework extension app with thread support, follow up notifications and email confirmations."
+version = "2.10.1"
+description = ""
 optional = false
 python-versions = "*"
-files = [
-    {file = "django_comments_xtd-2.10.0-py3-none-any.whl", hash = "sha256:d9e670931a427028a7b8f4f2e6a737b014bf83d713368bd6ff4823bc2caca04e"},
-    {file = "django_comments_xtd-2.10.0.tar.gz", hash = "sha256:6217c41ed398942c07a44374a308cd9bf541f5444d3d25b3eaae0447c4a66d48"},
-]
+files = []
+develop = false
 
 [package.dependencies]
-Django = ">=3,<5.1"
+Django = ">=3,<5.2"
 django-contrib-comments = ">=2.2,<2.3"
 djangorestframework = ">=3.12,<3.16"
 docutils = "*"
 pytz = "*"
 six = "*"
+
+[package.source]
+type = "git"
+url = "https://github.com/danirus/django-comments-xtd"
+reference = "HEAD"
+resolved_reference = "67b86b8342403617a0e1200a4b6213193ed533f7"
 
 [[package]]
 name = "django-compressor"
@@ -1478,20 +1493,6 @@ reference = "HEAD"
 resolved_reference = "13094788f188dec7d87174063b1d7791cce544c2"
 
 [[package]]
-name = "django-el-pagination"
-version = "4.0.0"
-description = "Django pagination tools supporting Ajax, multiple and lazy pagination, Twitter-style and Digg-style pagination."
-optional = false
-python-versions = "*"
-files = [
-    {file = "django-el-pagination-4.0.0.tar.gz", hash = "sha256:eb9a5be4cd46d1b43c1a5f3732fc428a3eb168b72ce122b7506e3da615187384"},
-    {file = "django_el_pagination-4.0.0-py2.py3-none-any.whl", hash = "sha256:61d76242a29de5705f01f0ffa6df9af436b978839ea39fd411269a30a410dfc0"},
-]
-
-[package.dependencies]
-django = ">=3.2.0"
-
-[[package]]
 name = "django-entangled"
 version = "0.5.4"
 description = "Edit JSON field using Django Model Form"
@@ -1672,28 +1673,30 @@ async-rq = ["django-rq (>=0.6.0)"]
 
 [[package]]
 name = "django-import-export"
-version = "4.1.1"
+version = "4.2.1"
 description = "Django application and library for importing and exporting data with included admin integration."
 optional = false
-python-versions = ">=3.8"
+python-versions = ">=3.9"
 files = [
-    {file = "django_import_export-4.1.1-py3-none-any.whl", hash = "sha256:730ae2443a02b1ba27d8dba078a27ae9123adfcabb78161b4f130843607b3df9"},
-    {file = "django_import_export-4.1.1.tar.gz", hash = "sha256:16ecc5a9f0df46bde6eb278a3e65ebda0ee1db55656f36440e9fb83f40ab85a3"},
+    {file = "django_import_export-4.2.1-py3-none-any.whl", hash = "sha256:09bf43af7964d9fdd30eb8e1f29867e53a73fb9533643ac0279c26994916b469"},
+    {file = "django_import_export-4.2.1.tar.gz", hash = "sha256:a0919e5e0897b46e4364798b3fd4187dd813e6c58bff8b7184cb5223151133bc"},
 ]
 
 [package.dependencies]
-diff-match-patch = "*"
-Django = ">=3.2"
-tablib = "3.5.0"
+diff-match-patch = "20241021"
+Django = ">=4.2"
+tablib = "3.7.0"
 
 [package.extras]
-all = ["tablib[all] (==3.5.0)"]
+all = ["tablib[all]"]
 cli = ["tablib[cli]"]
+docs = ["sphinx (==8.1.3)", "sphinx-rtd-theme (==3.0.1)"]
 ods = ["tablib[ods]"]
 pandas = ["tablib[pandas]"]
-xls = ["tablib[xls] (==3.5.0)"]
-xlsx = ["tablib[xlsx] (==3.5.0)"]
-yaml = ["tablib[yaml] (==3.5.0)"]
+tests = ["chardet (==5.2.0)", "coverage (==7.6.4)", "django-extensions (==3.2.3)", "memory-profiler (==0.61.0)", "mysqlclient (==2.2.5)", "psycopg2-binary (==2.9.10)", "pytz (==2024.2)", "setuptools-scm (==8.1.0)", "tablib[all] (>=3.7.0)"]
+xls = ["tablib[xls]"]
+xlsx = ["tablib[xlsx]"]
+yaml = ["tablib[yaml]"]
 
 [[package]]
 name = "django-invitations"
@@ -1908,6 +1911,22 @@ files = [
 Django = ">=2.2"
 
 [[package]]
+name = "django-parler-rest"
+version = "2.2"
+description = "Multilingual support for django-rest-framework"
+optional = false
+python-versions = "*"
+files = [
+    {file = "django-parler-rest-2.2.tar.gz", hash = "sha256:58d0d7155964214dfbdb72783eff6a200c5e786e2d4f3cd74ea463d56cb10e9c"},
+    {file = "django_parler_rest-2.2-py2.py3-none-any.whl", hash = "sha256:3cba9a47ec64771394e99ca49f9bef6f7dd76c1e39634fd634d2c1050fb9630a"},
+]
+
+[package.dependencies]
+django = ">=2.2"
+django-parler = ">=1.9.2"
+djangorestframework = ">=3.5"
+
+[[package]]
 name = "django-partial-date"
 version = "1.3.2"
 description = "Django custom model field for partial dates with the form YYYY, YYYY-MM, YYYY-MM-DD"
@@ -2082,20 +2101,6 @@ type = "git"
 url = "https://github.com/SamuelJennings/django-setup-tools"
 reference = "HEAD"
 resolved_reference = "c6b5e92130304997c548507221b7ad0727656ed7"
-
-[[package]]
-name = "django-simple-menu"
-version = "2.1.3"
-description = "Simple, yet powerful, code-based menus for Django applications"
-optional = false
-python-versions = ">=3.6"
-files = [
-    {file = "django-simple-menu-2.1.3.tar.gz", hash = "sha256:4246c12fa267598e4652793dfec5d123f97f82430965bd34a8c42d38d5be1801"},
-    {file = "django_simple_menu-2.1.3-py3-none-any.whl", hash = "sha256:371ed124cc35c72496c2b99672fac759d268950454984c7f15f2cbdedb4f2840"},
-]
-
-[package.dependencies]
-Django = ">=3.2"
 
 [[package]]
 name = "django-social-share"
@@ -2306,6 +2311,17 @@ files = [
 ]
 
 [[package]]
+name = "django-widget-tweaks"
+version = "1.5.0"
+description = "Tweak the form field rendering in templates, not in python-level form definitions."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "django-widget-tweaks-1.5.0.tar.gz", hash = "sha256:1c2180681ebb994e922c754804c7ffebbe1245014777ac47897a81f57cc629c7"},
+    {file = "django_widget_tweaks-1.5.0-py3-none-any.whl", hash = "sha256:a41b7b2f05bd44d673d11ebd6c09a96f1d013ee98121cb98c384fe84e33b881e"},
+]
+
+[[package]]
 name = "djangorestframework"
 version = "3.14.0"
 description = "Web APIs for Django, made easy."
@@ -2505,6 +2521,17 @@ optional = false
 python-versions = "*"
 files = [
     {file = "EditorConfig-0.12.4.tar.gz", hash = "sha256:24857fa1793917dd9ccf0c7810a07e05404ce9b823521c7dce22a4fb5d125f80"},
+]
+
+[[package]]
+name = "et-xmlfile"
+version = "2.0.0"
+description = "An implementation of lxml.xmlfile for the standard library"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "et_xmlfile-2.0.0-py3-none-any.whl", hash = "sha256:7a91720bc756843502c3b7504c77b8fe44217c85c537d85037f0f536151b2caa"},
+    {file = "et_xmlfile-2.0.0.tar.gz", hash = "sha256:dab3f4764309081ce75662649be815c4c9081e88f0837825f90fd28317d4da54"},
 ]
 
 [[package]]
@@ -3672,6 +3699,33 @@ files = [
 rsa = ["cryptography (>=3.0.0)"]
 signals = ["blinker (>=1.4.0)"]
 signedtoken = ["cryptography (>=3.0.0)", "pyjwt (>=2.0.0,<3)"]
+
+[[package]]
+name = "odfpy"
+version = "1.4.1"
+description = "Python API and tools to manipulate OpenDocument files"
+optional = false
+python-versions = "*"
+files = [
+    {file = "odfpy-1.4.1.tar.gz", hash = "sha256:db766a6e59c5103212f3cc92ec8dd50a0f3a02790233ed0b52148b70d3c438ec"},
+]
+
+[package.dependencies]
+defusedxml = "*"
+
+[[package]]
+name = "openpyxl"
+version = "3.1.5"
+description = "A Python library to read/write Excel 2010 xlsx/xlsm files"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "openpyxl-3.1.5-py2.py3-none-any.whl", hash = "sha256:5282c12b107bffeef825f4617dc029afaf41d0ea60823bbb665ef3079dc79de2"},
+    {file = "openpyxl-3.1.5.tar.gz", hash = "sha256:cf0e3cf56142039133628b5acffe8ef0c12bc902d2aadd3e0fe5878dc08d1050"},
+]
+
+[package.dependencies]
+et-xmlfile = "*"
 
 [[package]]
 name = "orjson"
@@ -4892,6 +4946,21 @@ requests = ">=2.0.0"
 rsa = ["oauthlib[signedtoken] (>=3.0.0)"]
 
 [[package]]
+name = "rest-pandas"
+version = "1.1.0"
+description = "Serves up pandas dataframes via the Django REST Framework for client-side(i.e. d3.js) visualizations"
+optional = false
+python-versions = "*"
+files = [
+    {file = "rest-pandas-1.1.0.tar.gz", hash = "sha256:13796398565a08c668e0fd31861939df6d0f9cc859b1493308f7cc5c11ea247c"},
+    {file = "rest_pandas-1.1.0-py3-none-any.whl", hash = "sha256:28238165223042d1618490b689fef04740dbdb63adb1ced58e4fbb8af87f63f6"},
+]
+
+[package.dependencies]
+djangorestframework = ">=3.3.1"
+pandas = ">=0.19.0"
+
+[[package]]
 name = "rjsmin"
 version = "1.2.2"
 description = "Javascript Minifier"
@@ -5431,24 +5500,46 @@ tests = ["cython", "littleutils", "pygments", "pytest", "typeguard"]
 
 [[package]]
 name = "tablib"
-version = "3.5.0"
+version = "3.7.0"
 description = "Format agnostic tabular data library (XLS, JSON, YAML, CSV, etc.)"
 optional = false
-python-versions = ">=3.8"
+python-versions = ">=3.9"
 files = [
-    {file = "tablib-3.5.0-py3-none-any.whl", hash = "sha256:9821caa9eca6062ff7299fa645e737aecff982e6b2b42046928a6413c8dabfd9"},
-    {file = "tablib-3.5.0.tar.gz", hash = "sha256:f6661dfc45e1d4f51fa8a6239f9c8349380859a5bfaa73280645f046d6c96e33"},
+    {file = "tablib-3.7.0-py3-none-any.whl", hash = "sha256:9a6930037cfe0f782377963ca3f2b1dae3fd4cdbf0883848f22f1447e7bb718b"},
+    {file = "tablib-3.7.0.tar.gz", hash = "sha256:f9db84ed398df5109bd69c11d46613d16cc572fb9ad3213f10d95e2b5f12c18e"},
 ]
 
+[package.dependencies]
+odfpy = {version = "*", optional = true, markers = "extra == \"all\""}
+openpyxl = {version = ">=2.6.0", optional = true, markers = "extra == \"all\""}
+pandas = {version = "*", optional = true, markers = "extra == \"all\""}
+pyyaml = {version = "*", optional = true, markers = "extra == \"all\""}
+tabulate = {version = "*", optional = true, markers = "extra == \"all\""}
+xlrd = {version = "*", optional = true, markers = "extra == \"all\""}
+xlwt = {version = "*", optional = true, markers = "extra == \"all\""}
+
 [package.extras]
-all = ["markuppy", "odfpy", "openpyxl (>=2.6.0)", "pandas", "pyyaml", "tabulate", "xlrd", "xlwt"]
+all = ["odfpy", "openpyxl (>=2.6.0)", "pandas", "pyyaml", "tabulate", "xlrd", "xlwt"]
 cli = ["tabulate"]
-html = ["markuppy"]
 ods = ["odfpy"]
 pandas = ["pandas"]
 xls = ["xlrd", "xlwt"]
 xlsx = ["openpyxl (>=2.6.0)"]
 yaml = ["pyyaml"]
+
+[[package]]
+name = "tabulate"
+version = "0.9.0"
+description = "Pretty-print tabular data"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "tabulate-0.9.0-py3-none-any.whl", hash = "sha256:024ca478df22e9340661486f85298cff5f6dcdba14f3813e8830015b9ed1948f"},
+    {file = "tabulate-0.9.0.tar.gz", hash = "sha256:0095b12bf5966de529c0feb1fa08671671b3368eec77d7ef7ab114be2c068b3c"},
+]
+
+[package.extras]
+widechars = ["wcwidth"]
 
 [[package]]
 name = "termcolor"
@@ -5887,4 +5978,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "556d3ccaa2c2448d4069a6a984b668fcc0a100778ad05b33f901011c727b918a"
+content-hash = "743e2178949db134eedcc5cae379943ae62ca5ae42f5636d1da05c47f11b0c4e"

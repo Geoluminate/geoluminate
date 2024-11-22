@@ -1,4 +1,4 @@
-from geoluminate.contrib.projects.models import Project
+from geoluminate.contrib.core.models import Project
 from geoluminate.factories import ProjectFactory
 
 from .abstract_factory import TestAbstractFactory

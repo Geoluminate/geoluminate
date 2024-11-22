@@ -1,4 +1,4 @@
-{% extends "geoluminate/base/detail_view.html" %}
+{% extends "geoluminate/object_form.html" %}
 {% load geoluminate %}
 
 {% block content %}
@@ -8,7 +8,8 @@
 {% block sidebar %}
   <div id="list-example" class="list-group">
     {% for label, template, form in forms %}
-      <a class="list-group-item list-group-item-action" href="#{{ label }}">{{ label }}</a>
+      <a class="list-group-item list-group-item-action"
+         href="#{{ label }}">{{ label }}</a>
     {% endfor %}
   </div>
 {% endblock sidebar %}

@@ -33,10 +33,10 @@ class CustomIndexDashboard(Dashboard):
             modules.ModelList(
                 title=_("Geoluminate"),
                 models=[
-                    "geoluminate.contrib.projects.models.Project",
-                    "geoluminate.contrib.datasets.models.Dataset",
-                    "geoluminate.contrib.samples.models.Sample",
-                    "geoluminate.contrib.measurements.models.Measurement",
+                    "geoluminate.contrib.core.models.Project",
+                    "geoluminate.contrib.core.models.Dataset",
+                    "geoluminate.contrib.core.models.Sample",
+                    "geoluminate.contrib.core.models.Measurement",
                     "geoluminate.contrib.gis.models.Location",
                 ],
             )
@@ -168,7 +168,7 @@ class CustomMenu(Menu):
             items.ModelList(
                 _("Configuration"),
                 models=[
-                    "geoluminate.identity.models.*",
+                    "geoluminate.contrib.identity.models.*",
                     "django_celery_beat.models.PeriodicTask",
                     "django.contrib.sites.*",
                     "allauth.socialaccount.models.SocialApp",

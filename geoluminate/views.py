@@ -1,25 +1,48 @@
+from django.contrib.auth.decorators import login_required
 from django.db.models.base import Model as Model
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext as _
-from django.views.decorators.cache import cache_page
 from django.views.generic import DetailView
 from django_filters.views import FilterView
 from meta.views import MetadataMixin
 from neapolitan.views import CRUDView
 
-from geoluminate.core.views.mixins import (
+from geoluminate.contrib.identity.models import Database
+from geoluminate.core.view_mixins import (
     HTMXMixin,
     ListFilterMixin,
 )
-from geoluminate.identity.models import Database
 
 
+@method_decorator(login_required, name="show_form")
 class BaseCRUDView(MetadataMixin, HTMXMixin, CRUDView):
     ncols = 1
     object_template = None
     sidebar_fields = []
     menu = None
     path_converter = "str"
+
+    # @property
+    # def filterset_class(self):
+    #     return self.model.get_filterset()
+
+    def get_template_names(self):
+        if self.template_name is not None:
+            template_names = [self.template_name]
+
+        if self.model is not None and self.template_name_suffix is not None:
+            template_names = [
+                f"{self.model._meta.app_label}/"
+                f"{self.model._meta.object_name.lower()}"
+                f"{self.template_name_suffix}.html",
+                f"geoluminate/object{self.template_name_suffix}.html",
+            ]
+
+        return HTMXMixin.get_template_names(self, template_names)
+
+    def get_list_context_data(self, context):
+        context["filter_count"] = context["filterset"].qs.count()
+        return context
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -61,17 +84,36 @@ class BaseCRUDView(MetadataMixin, HTMXMixin, CRUDView):
         return self.sidebar_fields
 
 
-@method_decorator(cache_page(60 * 5), name="dispatch")
+# @method_decorator(cache_page(60 * 5), name="dispatch")
 class BaseListView(MetadataMixin, ListFilterMixin, HTMXMixin, FilterView):
     """
     The base class for displaying a list of objects within the Geoluminate framework.
     """
 
+    template_name_suffix = "_list"
     ncols = 1
-    list_filter_top = ["title", "o"]
 
     def get_model(self):
         return self.model or self.queryset.model
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["object_verbose_name_plural"] = self.get_model()._meta.verbose_name_plural
+        return context
+
+    def get_template_names(self):
+        if self.template_name is not None:
+            template_names = [self.template_name]
+
+        if self.model is not None and self.template_name_suffix is not None:
+            template_names = [
+                f"{self.model._meta.app_label}/"
+                f"{self.model._meta.object_name.lower()}"
+                f"{self.template_name_suffix}.html",
+                f"geoluminate/object{self.template_name_suffix}.html",
+            ]
+
+        return HTMXMixin.get_template_names(self, template_names)
 
 
 class BaseDetailView(MetadataMixin, HTMXMixin, DetailView):

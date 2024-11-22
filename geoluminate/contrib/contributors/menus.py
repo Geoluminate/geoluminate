@@ -8,7 +8,7 @@ def get_contributor_url(request):
     return reverse_lazy("person-detail", args=[request.user.id])
 
 
-AccountMenu.add_children(
+AccountMenu.insert(
     [
         Menu(
             "ProfileMenu",
@@ -26,7 +26,7 @@ AccountMenu.add_children(
 )
 
 
-FloatingAccountMenu.add_children(
+FloatingAccountMenu.insert(
     [
         MenuItem(_("Profile"), url=get_contributor_url, icon="user"),
         MenuItem(_("Manage Account"), view_name="account-management", icon="activity"),

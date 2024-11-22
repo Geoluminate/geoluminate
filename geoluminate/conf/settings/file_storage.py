@@ -30,10 +30,6 @@ STATICFILES_FINDERS = [
 ]
 
 
-# https://github.com/torchbox/django-libsass
-LIBSASS_SOURCEMAPS = True
-
-
 # WHITENOISE
 # ------------------------------------------------------------------------------
 WHITENOISE_MANIFEST_STRICT = False

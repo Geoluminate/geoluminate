@@ -11,6 +11,7 @@ class SampleTable(tables.Table):
     has_children = tables.BooleanColumn(verbose_name=_("Has children"), accessor="numchild")
     has_parent = tables.BooleanColumn(verbose_name=_("Has parent"), accessor="depth")
     dataset = tables.Column(linkify=True)
+    # dataset_link = tables.Column(accessor="dataset", linkify=True, visible=False)
 
     class Meta:
         model = Sample
@@ -26,7 +27,10 @@ class SampleTable(tables.Table):
         return icon("dataset")
 
     def value_dataset(self, value):
-        return value
+        return value.pk
+
+    # def value_dataset_link(self, value):
+    #     return f'=HYPERLINK("{value.get_absolute_url()}", "📁 View online")'
 
 
 class MeasurementTable(tables.Table):

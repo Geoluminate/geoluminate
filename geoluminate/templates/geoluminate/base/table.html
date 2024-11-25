@@ -1,5 +1,6 @@
 {% extends 'django_tables2/bootstrap5.html' %}
-{% load l10n %}
+{% load django_tables2 %}
+{% load i18n l10n %}
 
 {% block table-wrapper %}
   <div class="fairdm-table table-container table-responsive flex-grow-1">
@@ -12,6 +13,24 @@
 
   </div>
 {% endblock table-wrapper %}
+
+{% block table.thead %}
+  {% if table.show_header %}
+    <thead {{ table.attrs.thead.as_html }}>
+      <tr>
+        {% for column in table.columns %}
+          <th {{ column.attrs.th.as_html }} scope="col">
+            {% if column.orderable %}
+              <a href="{% querystring table.prefixed_order_by_field=column.order_by_alias.next %}">{{ column.header }}</a>
+            {% else %}
+              {{ column.header }}
+            {% endif %}
+          </th>
+        {% endfor %}
+      </tr>
+    </thead>
+  {% endif %}
+{% endblock table.thead %}
 
 {% block table.tbody.row %}
   {% if forloop.first and table.page.has_next %}

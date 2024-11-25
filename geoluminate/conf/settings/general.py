@@ -208,7 +208,6 @@ EASY_ICONS = {
         "invite": "fas fa-envelope",
         "linkedin": "fab fa-linkedin",
         "literature": "fas fa-book",
-        "location": "fas fa-map-marker-alt",
         "login": "fas fa-sign-in-alt",
         "logout": "fas fa-sign-out-alt",
         "map": "fas fa-map-marked-alt",

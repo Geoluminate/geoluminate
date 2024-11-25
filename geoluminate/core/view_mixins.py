@@ -165,6 +165,7 @@ class TableMixin(ExportMixin, SingleTableMixin):
     template_name_suffix = "_table"
     base_model = None
     paginate_by = 20
+    filterset_fields = ["name"]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -181,7 +182,9 @@ class TableMixin(ExportMixin, SingleTableMixin):
         return model_class
 
     def get_filterset_class(self):
-        return import_string(self.model.Config.filterset_class)
+        if hasattr(self.model.Config, "filterset_class"):
+            return import_string(self.model.Config.filterset_class)
+        return super().get_filterset_class()
 
     def get_table_class(self):
         return import_string(self.model.Config.table_class)

@@ -1486,11 +1486,14 @@ python-versions = "^3.10"
 files = []
 develop = false
 
+[package.dependencies]
+django = "*"
+
 [package.source]
 type = "git"
 url = "https://github.com/SamuelJennings/django-easy-icons"
 reference = "HEAD"
-resolved_reference = "13094788f188dec7d87174063b1d7791cce544c2"
+resolved_reference = "40b4328ab14788ab7b672c6072a1be8a00c3d7c6"
 
 [[package]]
 name = "django-entangled"

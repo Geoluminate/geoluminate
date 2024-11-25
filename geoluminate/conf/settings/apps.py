@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     "rest_framework",
     # UTILITIES
+    "pwa",  # github.com/silviolleite/django-pwa
     "compressor",
     "dbbackup",
     "django_bleach",  # for sanitizing html input

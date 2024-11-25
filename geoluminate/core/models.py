@@ -41,7 +41,8 @@ class PolymorphicMixin(ShowFieldType):
         # for k in inheritance:
         # if cls._metadata is not None:
         # metadata.update(**cls._metadata.as_dict())
-        metadata.update(**cls.Config.metadata.as_dict())
+        if hasattr(cls.Config, "metadata"):
+            metadata.update(**cls.Config.metadata.as_dict())
 
         inheritance = [
             k.get_metadata() for k in cls.mro()[:0:-1] if issubclass(k, cls.base_class()) and k != cls.base_class()

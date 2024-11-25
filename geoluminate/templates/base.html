@@ -1,4 +1,4 @@
-{% load static meta sekizai_tags geoluminate compress easy_icons django_htmx %}
+{% load static meta sekizai_tags geoluminate compress easy_icons django_htmx pwa %}
 {% load render_bundle from webpack_loader %}
 
 <!DOCTYPE html>
@@ -13,6 +13,7 @@
       <meta name="viewport"
             content="width=device-width, initial-scale=1" />
       {% include "meta/meta.html" %}
+      {% progressive_web_app_meta %}
       <link rel="icon" type="image/svg+xml" href="{% static "img/brand/icon.svg" %}" />
       {% compress css file fairdm %}
         <link rel="stylesheet" type="text/x-scss" href="{% static "scss/stylesheet.scss" %}" />

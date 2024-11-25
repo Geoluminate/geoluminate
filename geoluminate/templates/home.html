@@ -1,34 +1,6 @@
 {% extends "base.html" %}
 {% load static partials easy_icons %}
 
-{% block head %}
-  {{ block.super }}
-  <!-- Add the slick-theme.css if you want default styling -->
-  <link rel="stylesheet"
-        type="text/css"
-        href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
-  <!-- Add the slick-theme.css if you want default styling -->
-  <link rel="stylesheet"
-        type="text/css"
-        href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
-  <style>
-    .slick-track {
-      display: flex;
-    }
-
-    .slick-track .slick-slide {
-      display: flex;
-      height: auto;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .slick-dots {
-      bottom: 0;
-    }
-  </style>
-{% endblock head %}
-
 {% partialdef carousel-item %}
 <div class="text-center mx-2 " style="height: 350px">
   <div class="card container h-100">
@@ -102,16 +74,3 @@
     </div>
   </div>
 {% endblock content %}
-
-{% block body_end %}
-  {{ block.super }}
-  <script type="text/javascript"
-          src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-  <script>
-    $('.multiple-items').slick({
-      infinite: true,
-      arrows: true,
-      dots: true,
-    });
-  </script>
-{% endblock body_end %}

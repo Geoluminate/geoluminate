@@ -108,6 +108,7 @@ tablib = {extras = ["all"], version = "^3.7.0"}
 rest-pandas = "^1.1.0"
 django-parler-rest = "^2.2"
 django-comments-xtd = {git = "https://github.com/danirus/django-comments-xtd"}
+django-pwa = "^2.0.1"
 
 
 

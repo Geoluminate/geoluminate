@@ -79,6 +79,7 @@
     <c-bs5.modal id="filterModal"
                  dialog_class="modal-xl"
                  title="{% trans "Sample filter" %}">
+      {{ filter.form.media.css }}
       <form id="filterForm"
             method="get"
             x-ref="filter"
@@ -89,6 +90,7 @@
         {% endfor %}
         <button type="submit" data-bs-dismiss="modal">{% trans "Apply filters" %}</button>
       </form>
+      {{ filter.form.media.js }}
     </c-bs5.modal>
   </div>
 {% endpartialdef plugin %}

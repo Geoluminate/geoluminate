@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static flex_menu partials geoluminate %}
+{% load static flex_menu partials geoluminate i18n %}
 {% load render_bundle from webpack_loader %}
 
 {% block body_class %}
@@ -16,12 +16,25 @@
       {% render_menu menu pk=object.pk %}
     {% endif %}
     <c-menu.widgets class="ms-auto">
-      <c-bs5.button href="{% url "samples-download" %}"
-                    class="btn btn-sm btn-outline-primary"
-                    icon="upload" />
-      <c-bs5.button href="{% url "samples-download" %}"
-                    class="btn btn-sm btn-outline-primary"
-                    icon="download" />
+      <c-bs5.dropdown button_class="" icon="ellipsis">
+        {% if dataset %}
+          <c-bs5.button href="{% url "dataset-upload" pk=dataset.pk %}"
+                        hx-get="{% url "dataset-upload" pk=dataset.pk %}"
+                        hx-target="#pluginContainer"
+                        class="dropdown-item"
+                        text="{% trans "Upload" %}"
+                        icon="upload" />
+          <h6 class="dropdown-header">{% trans "Download" %}</h6>
+          <c-bs5.button href="{% url "dataset-metadata-download" pk=dataset.pk %}"
+                        class="dropdown-item"
+                        text="{% trans "Metadata" %}"
+                        icon="download-xml" />
+          <c-bs5.button href="{% url "samples-download" %}"
+                        class="dropdown-item"
+                        text="{% trans "Archive" %}"
+                        icon="download-zip" />
+        {% endif %}
+      </c-bs5.dropdown>
     </c-menu.widgets>
   </c-bs5.nav>
 {% endblock page_nav %}

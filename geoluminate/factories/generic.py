@@ -2,6 +2,7 @@ import random
 
 import factory
 import faker
+from factory import PostGeneration
 
 # from django.contrib.gis.geos import Point
 from research_vocabs.models import Concept
@@ -39,6 +40,23 @@ class GeoluminateProvider(faker.providers.BaseProvider):
             raise ValueError("Must provide either a model or a queryset")
         qs = queryset or model.objects.all()
         return qs.order_by("?").first()
+
+
+class RandomM2M(PostGeneration):
+    def __init__(self, related_model, count=3, related_field=None):
+        self.related_model = related_model
+        self.count = count
+        self.related_field = related_field
+        super().__init__(self.generate)
+
+    def generate(self, obj, create, extracted, **kwargs):
+        if not create:
+            return
+        if extracted:
+            getattr(obj, self.related_field).set(extracted)
+        else:
+            all_objects = self.related_model.objects.order_by("?")
+            getattr(obj, self.related_field).set(all_objects[: self.count])
 
 
 factory.Faker.add_provider(GeoluminateProvider)

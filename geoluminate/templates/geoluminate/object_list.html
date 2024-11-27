@@ -2,15 +2,6 @@
 {% load partials crispy_forms_tags %}
 {% load render_bundle from webpack_loader %}
 
-{% comment %} {% partialdef object-list %}
-{% for obj in object_list %}
-  {% include object_template %}
-{% endfor %}
-{% endpartialdef %}
-
-{% partialdef page %}
-<div class="hstack flex-wrap gap-2">{% partial object-list %}</div>
-{% endpartialdef %} {% endcomment %}
 {% block content %}
   {% partialdef plugin inline=True %}
   <c-layout.sidebar gap="0"
@@ -19,10 +10,11 @@
                     hx-push-url
                     x-data="{'isfiltered': false, 'filterCount': {{ filter_count }}, 'totalCount': 7}">
     <c-slot name="sidebar">
+      {% partialdef filter inline=True %}
       <form id="filterForm"
             action="{{ request.path }}"
             method="get"
-            hx-get>
+            hx-get="{{ request.path }}">
         <div class="py-2 hstack sticky-top align-items-center">
           <h1 class="fs-5 fw-semibold m-0">{% trans "Filter by" %}</h1>
           <div class="ms-auto">
@@ -32,30 +24,35 @@
             <button class="btn btn-sm btn-primary" type="submit">{% trans "Apply" %}</button>
           </div>
         </div>
-        {{ filterset.form|crispy }}
+        {% if filter %}
+          {{ filter.form|crispy }}
+        {% else %}
+          {{ filterset.form|crispy }}
+        {% endif %}
       </form>
+    {% endpartialdef filter %}
+
+  </c-slot>
+  {% partialdef page inline=True %}
+  <c-layout.page title="{{ object_verbose_name_plural|title }}">
+    <c-slot name="actions">
+      <c-paginator />
     </c-slot>
-    <c-layout.page title="{{ object_verbose_name_plural|title }}">
-      <c-slot name="actions">
-        <c-paginator />
-      </c-slot>
-      <div x-show="isfiltered"
-           x-cloak
-           x-transition:enter="transition ease-out duration-300"
-           class="text-muted mb-1">
-        {% blocktrans %}
+    <div x-show="isfiltered"
+         x-cloak
+         x-transition:enter="transition ease-out duration-300"
+         class="text-muted mb-1">
+      {% blocktrans %}
         Found <span x-text="filterCount"></span> matching entries.
         {% endblocktrans %}
-      </div>
-      <c-card-list class="row-cols-1"
-                   :object_list="object_list"
-                   :template="object_template" />
-      {% comment %}
-<c-card-list :object_list="object_list" {% endcomment %} {% comment %} template="{{ object_template }}" />
-      {% endcomment %}
-      {% comment %} {% partial page %} {% endcomment %}
-    </c-layout.page>
-  </c-layout.sidebar>
+    </div>
+    <c-card-list class="row-cols-1"
+                 :object_list="object_list"
+                 :template="object_template" />
+  </c-layout.page>
+{% endpartialdef page %}
+
+</c-layout.sidebar>
 {% endpartialdef plugin %}
 
 {% endblock content %}

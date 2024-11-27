@@ -145,7 +145,7 @@ class ListFilterMixin(ListMixin):
         """
         model = self.get_queryset().model
 
-        options = getattr(model, "Options", None)
+        options = getattr(model, "Config", None)
         if options:
             self.filterset_class = getattr(options, "filterset_class", self.filterset_class)
             self.filterset_fields = getattr(options, "filterset_fields", self.filterset_fields)
@@ -187,7 +187,9 @@ class TableMixin(ExportMixin, SingleTableMixin):
         return super().get_filterset_class()
 
     def get_table_class(self):
-        return import_string(self.model.Config.table_class)
+        if hasattr(self.model.Config, "table_class") and not self.table_class:
+            return import_string(self.model.Config.table_class)
+        return super().get_table_class()
 
 
 class ListPluginMixin(ListMixin, ListView):

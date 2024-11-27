@@ -6,6 +6,7 @@
 {% endblock css %}
 
 {% partialdef form inline=True %}
+{{ form.media.css }}
 <form method="post"
       {% comment %}
       hx-post="{{ request.get_full_path }}"
@@ -18,21 +19,24 @@
 {% endpartialdef %}
 
 {% block content %}
-  {% partialdef plugin inline=True %}
-  <div class="container col col-lg-8">
-    <c-header title="{{ title }}" hr />
-    <div class="page-content">
-      {% if view.help_text %}{{ view.help_text }}{% endif %}
-      <div class="my-3">
-        {% block form %}
-          {% partial form %}
-        {% endblock form %}
+  <div class="container col-12 col-md-9 col-lg-7">
+    {% partialdef plugin inline=True %}
+    <div class="container px-md-5">
+      {% if title %}<c-header title="{{ title }}" hr />{% endif %}
+      <div class="page-content">
+        {% if view.help_text %}{{ view.help_text }}{% endif %}
+        <div class="my-3">
+          {% block form %}
+            {% partial form %}
+          {% endblock form %}
 
+        </div>
       </div>
     </div>
-  </div>
-{% endpartialdef %}
+    {{ form.media.js }}
+  {% endpartialdef %}
 
+</div>
 {% endblock content %}
 
 {% block js %}

@@ -1,5 +1,6 @@
 from client_side_image_cropping import ClientsideCroppingWidget
 from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Column, Layout, Row, Submit
 from django import forms
 from django.utils.translation import gettext as _
 from django_select2.forms import Select2MultipleWidget, Select2Widget
@@ -8,6 +9,25 @@ from formset.widgets import Selectize, UploadedFileInput
 from geoluminate.core.choices import iso_639_1_languages
 
 from ..models import Contributor
+
+
+class UserIdentifierForm(forms.ModelForm):
+    class Meta:
+        # model = Identifier
+        fields = ["scheme", "identifier"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Row(
+                Column("scheme", css_class="col-3"),
+                Column("identifier", css_class="col-6"),
+                Column("delete", css_class="col-3"),
+            )
+        )
+        self.helper.add_input(Submit("submit", "Save"))
+        self.helper.render_required_fields = True
 
 
 class UserProfileForm(forms.ModelForm):

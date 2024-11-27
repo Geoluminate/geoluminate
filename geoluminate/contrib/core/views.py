@@ -1,10 +1,16 @@
+from django import forms
 from django.apps import apps
 from django.core.files.base import ContentFile
 from django.forms import modelform_factory
+from django.template.loader import render_to_string
+from django.utils.module_loading import import_string
 from django.utils.translation import gettext as _
+from django.views.generic.detail import SingleObjectMixin
+from django.views.generic.edit import FormView
 from django_downloadview import VirtualDownloadView
+from meta.views import MetadataMixin
 
-from geoluminate.core.view_mixins import TableMixin
+from geoluminate.core.view_mixins import HTMXMixin, TableMixin
 from geoluminate.menus import DatasetMenu, ProjectMenu, SampleMenu
 from geoluminate.views import BaseCRUDView, BaseListView
 
@@ -62,7 +68,7 @@ class SampleCRUDView(BaseCRUDView):
 
     def get_form_class(self):
         if hasattr(self.model.Config, "form_class"):
-            return self.model.Config.form_class
+            return import_string(self.model.Config.form_class)
 
         return modelform_factory(self.model, form=SampleForm)
 
@@ -128,3 +134,44 @@ class SamplesDownloadView(VirtualDownloadView):
     def get_file(self):
         """Return :class:`django.core.files.base.ContentFile` object."""
         return ContentFile(b"Hello world!\n", name="hello-world.txt")
+
+
+class MetadataDownloadView(SingleObjectMixin, VirtualDownloadView):
+    model = Dataset
+    template_name = "publishing/gfz_schema.xml"
+
+    def get_file(self):
+        dataset = self.get_object()
+        content = render_to_string(self.template_name, {"dataset": dataset})
+        return ContentFile(content, name=f"{dataset}.xml")
+
+
+class UploadForm(forms.Form):
+    docfile = forms.FileField(label="Select a file")
+
+
+class DatasetUpload(HTMXMixin, MetadataMixin, FormView):
+    title = _("Upload")
+    template_name = "geoluminate/import.html"
+    template_name = "geoluminate/object_form.html"
+    form_class = UploadForm
+    extra_context = {"title": _("Upload")}
+
+    def process_import(self, dataset, import_file):
+        # importer = HeatFlowParentImporter(import_file, dataset)
+        # errors = importer.process_import()
+        # dataset = Dataset.objects.get(pk=pk)
+        # import_file = self.request.FILES["docfile"]
+        # importer = HeatFlowParentImporter(import_file, dataset)
+        # errors = importer.process_import()
+        # if errors:
+        # context["errors"] = errors
+        # else:
+        # message user
+        # self.message_user(request, "Import successful")
+        # return redirect(admin_urlname(context["opts"], "changelist"))
+        return {}
+
+    def form_valid(self, form):
+        result = self.process_import(self.dataset, form.cleaned_data["docfile"])
+        return super().form_valid(form)

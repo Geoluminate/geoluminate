@@ -21,6 +21,7 @@ class BaseCRUDView(MetadataMixin, HTMXMixin, CRUDView):
     sidebar_fields = []
     menu = None
     path_converter = "str"
+    paginate_by = 20
 
     # @property
     # def filterset_class(self):
@@ -105,7 +106,7 @@ class BaseListView(MetadataMixin, ListFilterMixin, HTMXMixin, FilterView):
         if self.template_name is not None:
             template_names = [self.template_name]
 
-        if self.model is not None and self.template_name_suffix is not None:
+        elif self.model is not None and self.template_name_suffix is not None:
             template_names = [
                 f"{self.model._meta.app_label}/"
                 f"{self.model._meta.object_name.lower()}"

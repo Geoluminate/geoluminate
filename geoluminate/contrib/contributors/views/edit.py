@@ -8,10 +8,9 @@ from django.views.generic import UpdateView
 from extra_views import InlineFormSetView
 from meta.views import MetadataMixin
 
-from ..forms.collections import ProfileEditForm, UserIdentifierForm
+from ..forms.forms import UserIdentifierForm
 from ..forms.person import UserProfileForm
 
-helper = FormHelper()
 helper = FormHelper()
 helper.add_input(Submit("submit", "Save"))
 helper.render_required_fields = True
@@ -31,17 +30,6 @@ class UpdateProfile(Base):
     description = _("The following information is publicly available to all visitors of this portal.")
     form_class = UserProfileForm
 
-    def post(self, request, *args, **kwargs):
-        return super().post(request, *args, **kwargs)
-
-    def form_invalid(self, form):
-        response = super().form_invalid(form)
-        return response
-
-    def form_valid(self, form):
-        response = super().form_valid(form)
-        return response
-
     def get_success_url(self):
         return self.request.META.get("HTTP_REFERER", reverse_lazy("account-management"))  # Fallback to a default URL
 
@@ -49,10 +37,7 @@ class UpdateProfile(Base):
 class UpdateAffiliations(Base):
     template_name = "user/settings/profile_identifiers.html"
     title = _("Affiliations")
-    collection_class = ProfileEditForm
-
-    def get_object(self):
-        return self.request.user
+    form_class = UserProfileForm
 
 
 class UpdateIdentifiers(MetadataMixin, InlineFormSetView):

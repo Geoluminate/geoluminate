@@ -31,19 +31,21 @@
       {% if page_obj.paginator.num_pages > 10 %}
         {% if page_obj.number > 4 %}
           {% include "components/paginator.html#page" with num=1 %}
-          {% if page_obj.number > 5 %}<span class="ellipsis">...</span>{% endif %}
+          {% if page_obj.number > 5 %}<span class="page-link align-middle disabled ellipsis">...</span>{% endif %}
         {% endif %}
         {% for num in page_obj.paginator.page_range %}
           {% if num >= page_obj.number|add:'-3' and num <= page_obj.number|add:'3' %}
             {% if num == page_obj.number %}
-              <strong>{{ num }}</strong>
+              <strong class="page-link active">{{ num }}</strong>
             {% else %}
               {% partial page %}
             {% endif %}
           {% endif %}
         {% endfor %}
         {% if page_obj.number < page_obj.paginator.num_pages|add:'-3' %}
-          {% if page_obj.number < page_obj.paginator.num_pages|add:'-4' %}<span class="ellipsis">...</span>{% endif %}
+          {% if page_obj.number < page_obj.paginator.num_pages|add:'-4' %}
+            <span class="page-link disabled align-middle ellipsis">...</span>
+          {% endif %}
           {% include "components/paginator.html#page" with num=page_obj.paginator.num_pages %}
         {% endif %}
       {% else %}

@@ -31,7 +31,6 @@ REST_FRAMEWORK = {
     "DEFAULT_RENDERER_CLASSES": [
         "rest_framework.renderers.BrowsableAPIRenderer",
         "drf_orjson_renderer.renderers.ORJSONRenderer",
-        "geoluminate.contrib.api.renderers.GeoJSONRenderer",
         # "rest_framework.renderers.TemplateHTMLRenderer",
         # "rest_framework_csv.renderers.PaginatedCSVRenderer",
     ],
@@ -106,7 +105,6 @@ SPECTACULAR_SETTINGS = {
     },
     "PREPROCESSING_HOOKS": ["geoluminate.contrib.api.utils.public_api"],
 }  # type: ignore[var-annotated]
-""""""
 
 # django-cors-headers - https://github.com/adamchainz/django-cors-headers#setup
 CORS_URLS_REGEX = r"^/api/.*$"

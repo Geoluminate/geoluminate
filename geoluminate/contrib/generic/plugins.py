@@ -26,15 +26,12 @@ class Description(DetailView):
         context = super().get_context_data(**kwargs)
         context["descriptions"] = self.get_object().descriptions.all()
         context["all_types"] = self.object.DESCRIPTION_TYPES.choices
-        context["dates_config"] = {
+        context["config"] = {
             # "objects": list(self.object.dates.values("value", "type", "pk")),
-            "available_types": self.object.DATE_TYPES.choices,
-            "create_url": reverse("date-create", kwargs={"object_id": self.object.pk}),
+            "date_types": self.object.DATE_TYPES.choices,
+            "date_create_url": reverse("date-create", kwargs={"object_id": self.object.pk}),
+            "description_types": self.object.DESCRIPTION_TYPES.choices,
+            "description_create_url": reverse("description-create", kwargs={"object_id": self.object.pk}),
         }
 
-        context["description_config"] = {
-            # "objects": list(self.object.descriptions.values("value", "type", "pk")),
-            "available_types": self.object.DESCRIPTION_TYPES.choices,
-            "create_url": reverse("description-create", kwargs={"object_id": self.object.pk}),
-        }
         return context

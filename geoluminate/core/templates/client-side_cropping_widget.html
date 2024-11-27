@@ -54,7 +54,7 @@
 </div>
 {# djlint:off #}
 <script>
-  
+
 
   document.addEventListener('alpine:init', () => {
     Alpine.data('imageCropper', () => ({
@@ -69,8 +69,8 @@
           height: "100%",
         },
         enableOrientation: true,
-        showZoomer: false,
-        ...{{widget.config|safe}},
+        showZoomer: false
+        // ...{{widget.config|safe}},
       },
 
       // Initialize Croppie using config from x-data
@@ -95,16 +95,16 @@
       },
 
       deleteImage() {
-        
+
         // Remove data from croppie
         this.croppieInstance.bind({
           url: null
         });
         // Removes the image src from the thumbail
         this.croppedImage = "";
-        
+
         // Clear the file input
-        this.$refs.croppieFileInput.value = "clear"; 
+        this.$refs.croppieFileInput.value = "clear";
 
         // Hide the croppie container
         this.croppieActive = false;
@@ -124,10 +124,10 @@
         this.croppieInstance.result({
           type: 'base64',
           size: { width: {{ widget.res_width }} },
-          ...{{widget.result|safe}},
+          // ...{{widget.result|safe}},
         }).then((image) => {
 
-          this.$refs.croppieFileInput.value = image; 
+          this.$refs.croppieFileInput.value = image;
           this.croppedImage = image;
           this.croppieActive = false;
 

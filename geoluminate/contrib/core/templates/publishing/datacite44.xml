@@ -1,4 +1,5 @@
 {% load contributor_tags %}
+{% spaceless %}
 <resource {% block resource_attrs %} xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://datacite.org/schema/kernel-4" xsi:schemaLocation="http://datacite.org/schema/kernel-4 https://schema.datacite.org/meta/kernel-4.4/metadata.xsd" {% endblock %}>
   <identifier identifierType="DOI"></identifier>
   <resourceType resourceTypeGeneral="Dataset">{{ dataset.resoure_type }}</resourceType>
@@ -36,7 +37,7 @@
   {% comment %} CONTRIBUTORS {% endcomment %}
   <contributors>
     {% for c in dataset.contributors.all %}{% for role in c.roles %}
-    {% if role != "Creator" %}{% with c.profile as profile %}
+    {% if role != "Creator" %}{% with c.contributor as profile %}
     <contributor contributorType="{{ role }}">
       <contributorName>{{ profile.name }}</contributorName>{% if profile.type == "Personal" %}
       <givenName>{{ profile.given }}</givenName>
@@ -81,7 +82,7 @@
 
   {% comment %} DESCRIPTIONS {% endcomment %}
   <descriptions>{% for description in dataset.descriptions.all %}
-    <description xml:lang="{{ description.lang|default:"en"}}" descriptionType="{{ description.type }}">{{ description.clean }}</description>{% endfor %}
+    <description xml:lang="{{ description.lang|default:"en"}}" descriptionType="{{ description.type }}">{{ description.value }}</description>{% endfor %}
   </descriptions>
 
   {% comment %} LOCATION {% endcomment %}
@@ -126,3 +127,4 @@
   </relatedItems> {% endcomment %}
 
 </resource>
+{% endspaceless %}

@@ -109,6 +109,7 @@ rest-pandas = "^1.1.0"
 django-parler-rest = "^2.2"
 django-comments-xtd = {git = "https://github.com/danirus/django-comments-xtd"}
 django-pwa = "^2.0.1"
+django-pandas = "^0.6.7"
 
 
 

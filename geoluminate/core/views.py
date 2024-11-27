@@ -15,15 +15,17 @@ from geoluminate.contrib import CORE_MAPPING
 from geoluminate.models import Measurement, Sample
 from geoluminate.views import BaseListView
 
+from .filters import LiteratureFilterset
+
 
 class ReferenceListView(BaseListView):
     title = _("References")
     model = LiteratureItem
+    paginate_by = 20
+    filterset_class = LiteratureFilterset
     template_name = "geoluminate/object_list.html"
-    queryset = LiteratureItem.objects.all()
-    filterset_fields = [
-        "title",
-    ]
+    # def get_template_names(self):
+    #     return ["geoluminate/object_list.html"]
 
 
 def follow_unfollow(request, pk):

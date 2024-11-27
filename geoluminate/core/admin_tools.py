@@ -5,7 +5,6 @@ from admin_tools.menu import Menu, items
 from django.conf import settings
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-from easy_icons.templatetags.easy_icons import icon
 
 GEOLUMINATE_APPS = {f.split(".")[0] for f in settings.GEOLUMINATE_APPS}
 
@@ -160,9 +159,9 @@ class CustomMenu(Menu):
         super().__init__(**kwargs)
         self.children += [
             items.MenuItem(_("Dashboard"), reverse("admin:index")),
-            items.Bookmarks(),
+            # items.Bookmarks(),
             items.AppList(
-                _("Apps"),
+                _("Add-ons"),
                 models=[f"{f}.*" for f in GEOLUMINATE_APPS],
             ),
             items.ModelList(
@@ -176,16 +175,17 @@ class CustomMenu(Menu):
                 ],
             ),
             items.ModelList(
-                icon("community"),
+                _("Community"),
                 models=(
                     "geoluminate.contrib.contributors.models.Person",
                     "geoluminate.contrib.contributors.models.Organization",
                 ),
             ),
             items.ModelList(
-                icon("comments"),
+                _("Comments"),
                 models=("django_comments_xtd.models.*",),
             ),
+            items.MenuItem(_("Reference Manager"), reverse("literature-list")),
             # items.AppList(_("Administration"), models=("django.contrib.*",)),
             # items.MenuItem(icon("invite"), reverse("admin:invitations_invitation_add")),
             # items.MenuItem(

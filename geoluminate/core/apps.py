@@ -7,5 +7,6 @@ class CoreConfig(AppConfig):
     verbose_name = "core"
 
     def ready(self):
+        pass
         # This installs the comment_will_be_posted signal
-        from . import receivers  # noqa: F401
+        # from . import receivers

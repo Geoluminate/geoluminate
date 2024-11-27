@@ -27,6 +27,8 @@ EARTH_SCIENCE_Y_COORD = {
     "max_digits": None,
 }
 
+PWA_APP_NAME = "Heatflow.world"
+PWA_APP_DESCRIPTION = "Heatflow.world is a platform for sharing and exploring heat flow data."
 
 # DJANGO_SETUP_TOOLS = {
 #     "": {

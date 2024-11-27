@@ -1,0 +1,60 @@
+{% load partials i18n crispy_forms_tags %}
+
+{% block css %}
+  {{ form.media.css }}
+{% endblock css %}
+
+{% partialdef form inline=True %}
+{{ form.media.css }}
+<form method="post"
+      enctype="multipart/form-data"
+      action="{{ request.get_full_path }}"
+      hx-post="{{ request.get_full_path }}"
+      {% if request.htmx.target %}hx-target="#{{ request.htmx.target }}"{% endif %}>
+  {% csrf_token %}
+  {{ form|crispy }}
+  <button type="submit" class="btn btn-primary">{% trans "Save & Continue" %}</button>
+</form>
+{% endpartialdef form %}
+
+{% partialdef plugin inline=True %}
+<div class="container px-md-5">
+  {% if title %}<c-header title="{{ title }}" hr />{% endif %}
+  <div class="page-content">
+    {% if view.help_text %}{{ view.help_text }}{% endif %}
+    <div class="my-3">
+      {% block form %}
+        {% partial form %}
+      {% endblock form %}
+
+    </div>
+  </div>
+  {{ form.media.js }}
+  {% if errors %}
+    <div class="errors">
+      <h2 class="fs-5">{% trans "Import Errors" %}</h2>
+      {% for index, row in errors.items %}
+        <div class="table table-container table-responsive flex-grow-1">
+          <table class="table caption-top">
+            <caption>{% trans "Row" %} {{ index }}</caption>
+            <thead>
+              <tr>
+                <th>{% trans "Field" %}</th>
+                <th>{% trans "Error" %}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for field, error in row.items %}
+                <tr>
+                  <td>{{ field }}</td>
+                  <td>{{ error }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
+{% endpartialdef plugin %}

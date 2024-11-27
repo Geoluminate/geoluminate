@@ -8,14 +8,15 @@
                alt="{{ obj }}"
                width="100%"
                height="100%" />
+      <small>{{ obj.license|default_if_none:"No license specified" }}</small>
     </div>
-    <div class="col-12 col-md">
+    <div class="col-12 col-md-9">
       <h2 class="card-title mb-0 fs-5 text-truncate">{{ obj }}</h2>
       <c-contributor.names class="fs-6 text-secondary mb-1"
-                           :contributors="obj.contributions.all" />
-      {% with obj.descriptions.get_first as abstract %}
+                           :contributors="obj.contributors.all" />
+      {% with obj.descriptions.first.value as abstract %}
         {% if abstract %}
-          {{ abstract|truncatewords_html:75 }}
+          {{ abstract|truncatewords_html:50 }}
         {% else %}
           <code class="text-reset">&lt;{% trans "no abstract provided" %}&gt;</code>
         {% endif %}

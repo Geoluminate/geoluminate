@@ -9,8 +9,8 @@
         {% trans "Contributing to discussions on this site requires an active account. Join our community today and let us know what you think about this " %}{{ verbose_name }}
       </div>
     {% else %}
-      <div class="d-flex justify-content-center">
-        <div class="card w-75 mb-3">
+      <div class="hstack justify-content-center bg-primary-subtle py-3">
+        <div class="card w-75">
           <div class="card-body">{% render_comment_form for base_object %}</div>
         </div>
       </div>
@@ -25,8 +25,7 @@
       ha{{ comment_count|pluralize:"s,ve" }} been posted.
     </div> {% endcomment %}
     {% if comment_count %}
-      <hr />
-      <div class="comments">
+      <div class="comments py-3">
         {% if base_object.polymorphic_model_marker %}
           {% render_xtdcomment_tree for base_object %}
         {% else %}

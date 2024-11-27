@@ -14,8 +14,8 @@ from geoluminate.core.views import DirectoryView, HomeView
 actions.add_to_site(site)
 
 urlpatterns = [
-    path("admin/literature/", include("literature.urls")),
     path(settings.ADMIN_URL, admin.site.urls),
+    path("django-literature/", include("literature.urls")),
     path("", HomeView.as_view(), name="home"),
     path("", include("geoluminate.contrib.core.urls")),
     path("", include("geoluminate.contrib.contributors.urls")),

@@ -8,8 +8,7 @@ import geoluminate
 
 # pprint(os.environ.__dict__)
 
-
-geoluminate.setup(apps=["example", "django_better_admin_arrayfield"])
+geoluminate.setup(apps=["example"])
 
 # LANGUAGES = [
 #     ("en", _("English")),

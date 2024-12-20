@@ -217,6 +217,7 @@ EASY_ICONS = {
         "map": "fas fa-map-marked-alt",
         "measurement": "fas fa-ruler",
         "measurements": "fas fa-ruler-combined",
+        "menu": "fas fa-bars",
         "moon": "fas fa-moon",
         "orcid": "fab fa-orcid",
         "organisation": "fas fa-building",

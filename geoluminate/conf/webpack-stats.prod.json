@@ -461,6 +461,21 @@
       "path": "..\\bs5\\vendor\\_rfs.scss",
       "publicPath": "/static/bundles/../bs5/vendor/_rfs.scss"
     },
+    "05fdd87be89f7f8f0a1e.ttf": {
+      "name": "05fdd87be89f7f8f0a1e.ttf",
+      "path": "05fdd87be89f7f8f0a1e.ttf",
+      "publicPath": "/static/bundles/05fdd87be89f7f8f0a1e.ttf"
+    },
+    "26b80c8830bebf340211.ttf": {
+      "name": "26b80c8830bebf340211.ttf",
+      "path": "26b80c8830bebf340211.ttf",
+      "publicPath": "/static/bundles/26b80c8830bebf340211.ttf"
+    },
+    "4f6a2dabee9c092d09b9.woff2": {
+      "name": "4f6a2dabee9c092d09b9.woff2",
+      "path": "4f6a2dabee9c092d09b9.woff2",
+      "publicPath": "/static/bundles/4f6a2dabee9c092d09b9.woff2"
+    },
     "83a538a018a9e44b023a.woff2": {
       "name": "83a538a018a9e44b023a.woff2",
       "path": "83a538a018a9e44b023a.woff2",
@@ -471,10 +486,25 @@
       "path": "ad1782c70927ebc5bc87.ttf",
       "publicPath": "/static/bundles/ad1782c70927ebc5bc87.ttf"
     },
-    "css/project.723acf61b7c531814c75.css": {
-      "name": "css/project.723acf61b7c531814c75.css",
-      "path": "css\\project.723acf61b7c531814c75.css",
-      "publicPath": "/static/bundles/css/project.723acf61b7c531814c75.css"
+    "c3ea317a0f10f201597f.woff2": {
+      "name": "c3ea317a0f10f201597f.woff2",
+      "path": "c3ea317a0f10f201597f.woff2",
+      "publicPath": "/static/bundles/c3ea317a0f10f201597f.woff2"
+    },
+    "css/project.c0ff14c021441bd4f288.css": {
+      "name": "css/project.c0ff14c021441bd4f288.css",
+      "path": "css\\project.c0ff14c021441bd4f288.css",
+      "publicPath": "/static/bundles/css/project.c0ff14c021441bd4f288.css"
+    },
+    "fa86b3c85e77abbd2ebd.ttf": {
+      "name": "fa86b3c85e77abbd2ebd.ttf",
+      "path": "fa86b3c85e77abbd2ebd.ttf",
+      "publicPath": "/static/bundles/fa86b3c85e77abbd2ebd.ttf"
+    },
+    "fdbb558523a380307689.woff2": {
+      "name": "fdbb558523a380307689.woff2",
+      "path": "fdbb558523a380307689.woff2",
+      "publicPath": "/static/bundles/fdbb558523a380307689.woff2"
     },
     "js/popper.js": {
       "name": "js/popper.js",
@@ -498,7 +528,7 @@
     ],
     "project": [
       "js/project.js",
-      "css/project.723acf61b7c531814c75.css"
+      "css/project.c0ff14c021441bd4f288.css"
     ]
   },
   "publicPath": "/static/bundles/"

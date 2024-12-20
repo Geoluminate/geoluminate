@@ -3,6 +3,7 @@ from environ import Env
 env = Env(
     # DJANGO
     DJANGO_ADMIN_URL=(str, "admin/"),
+    DJANGO_SUPERUSER_EMAIL=(str, "super.user@example.com"),
     DJANGO_ALLOW_SIGNUP=(bool, True),
     DJANGO_ALLOWED_HOSTS=(list, []),
     DJANGO_CACHE=(bool, True),
@@ -11,7 +12,7 @@ env = Env(
     DJANGO_SECRET_KEY=(str, "django-insecure-qQN1YqvsY7dQ1xtdhLavAeXn1mUEAI0Wu8vkDbodEqRKkJbHyMEQS5F"),
     DJANGO_SITE_DOMAIN=(str, "localhost:8000"),
     DJANGO_SITE_ID=(int, 1),
-    DJANGO_SITE_NAME=(str, "Geoluminate Research Portal"),
+    DJANGO_SITE_NAME=(str, "FairDM Demo Site"),
     DJANGO_TIME_ZONE=(str, "UTC"),
     # SECURITY
     DJANGO_SECURE_SSL_REDIRECT=(bool, True),

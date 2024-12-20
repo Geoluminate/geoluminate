@@ -8,6 +8,9 @@
 All settings can be overridden in your project settings file.
 """
 
+from django.utils.translation import gettext_lazy as _
+
+
 # django-rest-framework - https://www.django-rest-framework.org/api-guide/settings/
 REST_FRAMEWORK = {
     "HTML_SELECT_CUTOFF": 10,
@@ -53,7 +56,7 @@ REST_FRAMEWORK = {
 SPECTACULAR_SETTINGS = {
     "SCHEMA_PATH_PREFIX": "/api/",
     "SCHEMA_COERCE_PATH_PK_SUFFIX": True,
-    "TITLE": f"{SITE_NAME} API",
+    "TITLE": _("API Documentation"),
     # "DESCRIPTION": render_to_string("api/docs/api_description.md", context={"geoluminate": GEOLUMINATE}),
     # "TOS": render_to_string("geoluminate/generic/api/tos.html"),
     "TOS": "/api/tos/",

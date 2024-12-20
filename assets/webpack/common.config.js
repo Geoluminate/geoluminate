@@ -1,8 +1,8 @@
+const webpack = require('webpack')
 const path = require('path')
 const BundleTracker = require('webpack-bundle-tracker')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { popper } = require('@popperjs/core')
-
 const BaseDir = path.resolve(__dirname, '../../')
 const BundleDir = path.resolve(BaseDir, './geoluminate/static/bundles/')
 const AssetsDir = path.resolve(__dirname, '../')
@@ -32,6 +32,9 @@ module.exports = {
       filename: 'css/[name].[contenthash].css'
       // filename: 'css/[name].css'
     }),
+    // new webpack.ProvidePlugin({
+    //   htmx: 'htmx.org',
+    // }),
 
   ],
   module: {

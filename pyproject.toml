@@ -122,7 +122,6 @@ django-debug-toolbar-template-profiler = "^2.1.0"
 django-extensions = "^3.2.1"
 django-stubs = "^1.15.0"
 djlint = "^1.25.0"
-geoluminate-docs = {git = "https://github.com/Geoluminate/geoluminate-docs.git", rev = "master"}
 invoke = "^2.0.0"
 ipython = "^8.21.0"
 mypy = "^1.2.0"
@@ -143,6 +142,10 @@ django-debug-toolbar = "^4.4.6"
 pytest-env = "^1.1.5"
 pip-licenses = "^5.0.0"
 
+
+
+[tool.poetry.group.docs.dependencies]
+geoluminate-docs = {git = "https://github.com/Geoluminate/geoluminate-docs"}
 
 [build-system]
 requires = ["poetry-core"]

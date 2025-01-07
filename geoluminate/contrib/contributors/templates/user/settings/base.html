@@ -2,7 +2,7 @@
 {% load crispy_forms_tags static %}
 
 {% block content %}
-  <c-header title="{{ meta.title }}" hr />
+  <c-text.title title="{{ meta.title }}" hr />
   {% if formset %}
     {% crispy formset helper %}
   {% else %}

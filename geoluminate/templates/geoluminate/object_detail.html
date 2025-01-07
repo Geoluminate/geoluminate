@@ -40,22 +40,20 @@
 {% endblock page_nav %}
 
 {% block content %}
-  <div class="overflow-hidden d-flex h-100"
-       hx-vals="{'dataset': '{{ dataset.pk }}'}">
-    <c-detail.sidebar>
-      {% block sidebar_cards %}
-        {% for heading, fields in sidebar_fields.items %}
-          <c-sidebar-fieldset :heading="heading" :fields="fields" />
-        {% endfor %}
-      {% endblock sidebar_cards %}
+  <c-layout.detail>
+    <c-slot name="sidebar">
+      <c-detail.sidebar image_class="ratio ratio-16x9 mx-auto">
+        {% block sidebar_cards %}
+          {% for heading, fields in sidebar_fields.items %}
+            <c-sidebar-fieldset :heading="heading" :fields="fields" />
+          {% endfor %}
+        {% endblock sidebar_cards %}
 
-      {% comment %} {% render_field object "contributors" %} {% endcomment %}
-    </c-detail.sidebar>
-    <div id="pluginContainer"
-         class="overflow-auto w-100 h-100">
-      {% block plugin %}
-      {% endblock plugin %}
+        {% comment %} {% render_field object "contributors" %} {% endcomment %}
+      </c-detail.sidebar>
+    </c-slot>
+    {% block plugin %}
+    {% endblock plugin %}
 
-    </div>
-  </div>
+  </c-layout.detail>
 {% endblock content %}

@@ -6,12 +6,12 @@ from django.core.exceptions import ImproperlyConfigured
 
 env = globals()["env"]
 
-GIS_ENABLED = False
+# GIS_ENABLED = False
 
-with suppress(ImproperlyConfigured):
-    import django.contrib.gis.db.models  # noqa
+# with suppress(ImproperlyConfigured):
+#     import django.contrib.gis.db.models  # noqa
 
-    GIS_ENABLED = True
+#     GIS_ENABLED = True
 
 
 GEOLUMINATE = globals().get("GEOLUMINATE", {})

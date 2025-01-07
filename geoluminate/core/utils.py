@@ -8,9 +8,6 @@ from django.utils.text import slugify
 from geoluminate.contrib import CORE_MAPPING
 from geoluminate.contrib.identity.models import Authority, Database
 
-# Get the current site
-current_site = Site.objects.get_current()
-
 
 def label(label):
     """Returns the given label specified in settings.GEOLUMINATE_LABELS."""
@@ -21,6 +18,8 @@ def label(label):
 
 
 def context_processor(request):
+    # Get the current site
+    current_site = Site.objects.get_current()
     """A context processor that adds the following variables to the context:"""
     context = {
         "config": {

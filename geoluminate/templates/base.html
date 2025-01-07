@@ -58,40 +58,16 @@
         {% block page_nav %}
         {% endblock page_nav %}
 
-        <main class="flex-grow-1 overflow-hidden">
-          {% block content_wrapper %}
-            {% block content %}
-            {% endblock content %}
-          {% endblock content_wrapper %}
+        {% comment %} <main class="flex-grow-1 overflow-hidden"> {% endcomment %}
+        {% block content_wrapper %}
+          {% block content %}
+          {% endblock content %}
+        {% endblock content_wrapper %}
 
-        </main>
+        {% comment %} </main> {% endcomment %}
       {% endblock application %}
 
-      <div id="messageContainer"
-           class="position-absolute bottom-0 end-0">
-        <div class="vstack gap-1">
-          {% for message in messages %}
-            <div aria-live="polite"
-                 aria-atomic="true"
-                 class="w-100 d-flex px-1">
-              <div class="card alert shadow-sm"
-                   data-delay="5000"
-                   role="alert">
-                <div class="card-header">
-                  {% trans "Message" %}
-                  <button type="button"
-                          class="btn-close float-end"
-                          data-bs-dismiss="alert"
-                          aria-label="Close"></button>
-                </div>
-                <div class="card-body">
-                  <p class="card-text">{{ message }}</p>
-                </div>
-              </div>
-            </div>
-          {% endfor %}
-        </div>
-      </div>
+      <c-messages.container id="messageContainer" />
       {% block body_end %}
       {% endblock body_end %}
 

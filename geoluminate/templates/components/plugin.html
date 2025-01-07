@@ -3,13 +3,13 @@
         :layout_types="{'page': 'container overflow-auto', 'app': ''}" />
 <div class="w-100 h-100 {{ layout_types|get_item:layout }}" {{ attrs }}>
   {% if layout == "page" %}
-    <c-header title="{{ title }}">
+    <c-text.title title="{{ title }}">
       {% if actions %}
         <c-slot name="actions">
           {{ actions }}
         </c-slot>
       {% endif %}
-    </c-header>
+    </c-text.title>
     {% if not no_hr %}<hr class="mt-0 mb-3" />{% endif %}
   {% endif %}
   {{ slot }}

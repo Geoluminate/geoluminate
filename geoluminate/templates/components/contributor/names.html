@@ -1,13 +1,11 @@
 {% load contributor_tags %}
 
-<c-vars contributors
-        role
-        separator="," />
+<c-vars contributors role separator="," />
 {% if contributors %}
-  <div {{ attrs }}>
+  <c-text.lead {{ attrs }}>
     {% for c in contributors %}
       <c-contributor.name :contributor="c"
                           after="{% if not forloop.last %}{{ separator }}{% endif %}" />
     {% endfor %}
-  </div>
+  </c-text.lead>
 {% endif %}

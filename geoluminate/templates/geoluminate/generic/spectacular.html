@@ -3,13 +3,12 @@
 
 {% block head %}
   {{ block.super }}
-  <link rel="stylesheet"
-        href="{{ swagger_ui_css }}" />
+  <link rel="stylesheet" href="{{ swagger_ui_css }}" />
 {% endblock head %}
 
 {% block content %}
   <div class="container py-3">
-    {% comment %} <c-header hr /> {% endcomment %}
+    {% comment %} <c-text.title hr /> {% endcomment %}
     <div id="swagger-ui"></div>
   </div>
   <script src="{{ swagger_ui_bundle }}"></script>

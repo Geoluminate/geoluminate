@@ -1,5 +1,4 @@
 from django.apps import AppConfig
-from django.conf import settings
 from django.utils.module_loading import autodiscover_modules
 
 
@@ -37,15 +36,15 @@ class GeoluminateConfig(AppConfig):
         from geoluminate.contrib.api.fields import QuantityField
         from geoluminate.db import models
 
-        if settings.GIS_ENABLED:
-            from django.contrib.gis.db import models as gis_models
-            from rest_framework_gis.fields import GeometryField
+        # if settings.GIS_ENABLED:
+        #     from django.contrib.gis.db import models as gis_models
+        #     from rest_framework_gis.fields import GeometryField
 
-            ModelSerializer.serializer_field_mapping.update(
-                {
-                    gis_models.PointField: GeometryField,
-                }
-            )
+        #     ModelSerializer.serializer_field_mapping.update(
+        #         {
+        #             gis_models.PointField: GeometryField,
+        #         }
+        #     )
 
         # at the moment we are using the QuantifyField serializer for all QuantityField types
         # however, we will need to update this if we want to support non-readonly models

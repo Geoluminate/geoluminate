@@ -2,9 +2,10 @@ from allauth.account.adapter import DefaultAccountAdapter
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from allauth.socialaccount.providers.orcid.provider import extract_from_dict
 from django.conf import settings
+from django.contrib import messages
 from django.http import HttpRequest
 
-from .models import Person
+from geoluminate.contrib.generic.models import Identifier
 
 
 class AccountAdapter(DefaultAccountAdapter):
@@ -25,30 +26,37 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
         if sociallogin.account.provider == "orcid":
             orcid_id = sociallogin.account.uid
 
-            # 1. check if a user with this ORCID already exists
-            # contributor is a geoluminate.contrib.contributors.models.Person instance
-            contributor = Person.objects.filter(identifiers__value=orcid_id).first() or sociallogin.user
+            # Check if the orcid_id is already in the database. If it is, link the social account to the existing user
+            if existing := Identifier.objects.filter(value=orcid_id).first():
+                sociallogin.user = existing.content_object
 
-            # access the ORCID profile data and parse into our contributor model
-            # NOTE: django_allauth has already populated the first_name, last_name, and email fields where available
-            data = sociallogin.account.extra_data
+                # Set the user as active and save. Otherwise django-allauth will prevent login.
+                # Users can exists in the database as inactive if they were added as a contributor to a project, dataset, etc.
+                # without actually having an account.
+                sociallogin.user.is_active = True
+                sociallogin.user.save()
+                messages.success(
+                    request,
+                    "We were able to match your ORCID account against existing information in our system and have updated your profile!",
+                )
 
-            contributor.name = extract_from_dict(data, ["person", "name", "credit-name", "value"])
+    def save_user(self, request, sociallogin, form=None):
+        user = super().save_user(request, sociallogin, form)
+        user.identifiers.create(value=sociallogin.account.uid, type="orcid")
+        return user
 
-            contributor.profile = extract_from_dict(data, ["person", "biography", "content"])
+    def populate_user(self, request, sociallogin, data):
+        user = super().populate_user(request, sociallogin, data)
 
-            other_names = extract_from_dict(data, ["person", "other-names", "other-name"])
-            if other_names:
-                contributor.alternative_names = [name["content"] for name in other_names]
+        user.name = extract_from_dict(data, ["person", "name", "credit-name", "value"])
 
-            links = extract_from_dict(data, ["person", "researcher-urls", "researcher-url"])
-            if links:
-                contributor.links = [{"display": link["url-name"], "url": link["url"]["value"]} for link in links]
+        user.profile = extract_from_dict(data, ["person", "biography", "content"])
 
-            # contributor.save()
+        other_names = extract_from_dict(data, ["person", "other-names", "other-name"])
+        if other_names:
+            user.alternative_names = [name["content"] for name in other_names]
 
-            # contributor.identifiers = extract_from_dict(data, ["person", "external-identifiers", "external-identifier"])
-
-            # You can also validate or reject the login if needed
-            # Raise an exception to stop the login process
-            # raise Exception("Custom error message")
+        links = extract_from_dict(data, ["person", "researcher-urls", "researcher-url"])
+        if links:
+            user.links = [{"display": link["url-name"], "url": link["url"]["value"]} for link in links]
+        return user

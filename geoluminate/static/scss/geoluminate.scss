@@ -1,12 +1,11 @@
 @import "bs5/functions";
-@import "bs5/functions";
 @import "bs5/variables";
 @import "bs5/variables-dark";
 
 $sidebar-width:              315px !default;
 $card-border-radius:         1rem;
-$enable-gradients:           true;
-$enable-shadows:             true;
+$enable-gradients:           false;
+$enable-shadows:             false;
 $headings-font-weight:        475;
 $headings-line-height:        1.2;
 
@@ -20,5 +19,6 @@ $fairdm-colors: (
 $theme-colors: map-merge($theme-colors, $fairdm-colors);
 
 @import 'bs5/bootstrap';
+@import "utilities";
 @import "spectacular";
 @import "custom";

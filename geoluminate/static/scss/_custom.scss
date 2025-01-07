@@ -1,3 +1,29 @@
+.content-center {
+  @extend .d-flex;
+  @extend .justify-content-center;
+  @extend .align-items-center;
+}
+
+
+.navbar {
+
+  button, a {
+    color: var(--bs-navbar-color);
+    border: var(--bs-border-width) var(--bs-border-style) var(--bs-navbar-color);
+    // @extend .bg-body;
+  }
+
+  &.bg-primary {
+    button.btn, a.btn {
+      @extend .text-white;
+      // @extend .bg-primary;
+    }
+
+  }
+
+}
+
+
 .sidebar {
   display: block;
   position: relative;

@@ -19,15 +19,32 @@ class BaseForm(ModelForm):
 
 
 class ProjectForm(BaseForm):
-    title = forms.CharField(help_text=_("Give your new project a meaningful name"))
+    image = forms.ImageField(
+        widget=ImageCroppingWidget(
+            width=1200,
+            height=int(1200 * 9 / 16),
+            empty_text=_("Select cover image"),
+            config={
+                "enableOrientation": True,
+            },
+            result={
+                "format": "jpeg",
+            },
+        ),
+        required=False,
+        label=False,
+    )
+    name = forms.CharField(label=_("Project name"), help_text=_("Give your new project a name"))
     status = forms.ChoiceField(
+        label=_("Current status"),
         choices=Project.STATUS_CHOICES.choices,
-        help_text=_("What is the current status of this project?"),
+        help_text=_("In which stage of it's lifecycle is this project?"),
     )
 
     class Meta:
         model = Project
         fields = [
+            "image",
             "name",
             "status",
         ]

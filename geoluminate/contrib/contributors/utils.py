@@ -1,11 +1,12 @@
 import json
 
+from allauth.socialaccount.providers.orcid.provider import extract_from_dict
 from django.conf import settings
 from django.db import models
 from django.db.models import CharField, F, Value
 from easy_thumbnails.files import get_thumbnailer
 
-from .models import Contributor
+from .models import Contributor, Person
 
 
 def get_contributor_avatar(contributor):
@@ -181,3 +182,20 @@ def user_network(contributor):
 #     ).values_list("object_id", flat=True)
 
 #     return Contribution.objects.filter(object_id__in=dataset_ids)
+
+
+def contributor_from_orcid_id(orcid_id):
+    """Returns a contributor object from an ORCID ID."""
+    contributor = Person.objects.filter(identifiers__type="ORCID", identifiers__value=orcid_id).first()
+
+    if contributor is None:
+        c = Person()
+        c.identifiers.create(type="ORCID", value=orcid_id)
+
+
+def contributor_from_orcid_data(data):
+    common_fields = dict(
+        email=extract_from_dict(data, ["person", "emails", "email", 0, "email"]),
+        last_name=extract_from_dict(data, ["person", "name", "family-name", "value"]),
+        first_name=extract_from_dict(data, ["person", "name", "given-names", "value"]),
+    )

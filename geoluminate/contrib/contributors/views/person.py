@@ -9,7 +9,23 @@ from geoluminate.views import BaseCRUDView, MetadataMixin
 
 from ..filters import ContributorFilter
 from ..forms.forms import UserProfileForm
-from ..models import Person
+from ..models import Contributor, Person
+
+
+class ContributorCRUDView(BaseCRUDView):
+    model = Contributor
+    form_class = UserProfileForm
+    menu = ContributorMenu
+    ncols = 5
+    filterset_class = ContributorFilter
+    sidebar_fields = [
+        (
+            _("Basic Information"),
+            {
+                "fields": ["name", "created", "modified"],
+            },
+        ),
+    ]
 
 
 class PersonCRUDView(BaseCRUDView):

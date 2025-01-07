@@ -12,6 +12,7 @@ from django_contact_form.views import ContactFormView
 from literature.models import LiteratureItem
 
 from geoluminate.contrib import CORE_MAPPING
+from geoluminate.contrib.core.forms import DatasetForm, ProjectForm
 from geoluminate.models import Measurement, Sample
 from geoluminate.views import BaseListView
 
@@ -79,7 +80,7 @@ class DirectoryView(RedirectView):
 
 
 class HomeView(TemplateView):
-    template_name = "home.html"
+    template_name = "fairdm/home.html"
     authenticated_template = "dashboard.html"
 
     def get_template_names(self):
@@ -88,6 +89,10 @@ class HomeView(TemplateView):
         return super().get_template_names()
 
     def authenticated_context(self, context, **kwargs):
+        context["forms"] = {
+            "project": ProjectForm(),
+            "dataset": DatasetForm(),
+        }
         return context
 
     def anonymous_context(self, context, **kwargs):

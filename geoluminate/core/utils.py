@@ -1,11 +1,15 @@
 from django.apps import apps
 from django.conf import settings
+from django.contrib.sites.models import Site
 from django.db import models
 from django.template.loader import render_to_string
 from django.utils.text import slugify
 
 from geoluminate.contrib import CORE_MAPPING
 from geoluminate.contrib.identity.models import Authority, Database
+
+# Get the current site
+current_site = Site.objects.get_current()
 
 
 def label(label):
@@ -19,6 +23,10 @@ def label(label):
 def context_processor(request):
     """A context processor that adds the following variables to the context:"""
     context = {
+        "config": {
+            "site_name": settings.SITE_NAME,
+            "site_domain": current_site.domain,
+        },
         "identity": {
             "database": Database.get_solo(),
             "authority": Authority.get_solo(),

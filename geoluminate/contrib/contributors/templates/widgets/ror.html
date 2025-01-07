@@ -1,5 +1,67 @@
 {% load i18n %}
 
+{# djlint:off #}
+<script>
+  var events = ['alpine:init', 'htmx:afterSwap'];
+  events.forEach(event => {
+    document.addEventListener(event, () => {
+      Alpine.data('rorLookup', () => ({
+        orgName: '',
+        matches: [],
+        selectedOrgs: [],
+        error: null,
+
+        // Computed property to serialize selected organizations to JSON
+        get selectedOrgsJson() {
+          return JSON.stringify(this.selectedOrgs)
+        },
+
+        async fetchRorData() {
+          if (this.orgName.length < 3) {
+            this.matches = []
+            return
+          }
+
+          this.error = null
+          const url = `https://api.ror.org/organizations?query=${encodeURIComponent(this.orgName)}`
+
+          try {
+            const response = await fetch(url)
+
+            if (!response.ok) {
+              throw new Error('Error fetching ROR data')
+            }
+
+            const data = await response.json()
+            // Filter out organizations already selected
+            this.matches = data.items.filter(
+              org => !this.selectedOrgs.some(selected => selected.id === org.id)
+            )
+          } catch (error) {
+            this.error = error.message
+            this.matches = []
+          }
+        },
+        // Add selected organization to pinned list
+        addSelectedOrg(org) {
+          if (!this.selectedOrgs.some(selected => selected.id === org.id)) {
+            this.selectedOrgs.push(org)
+          }
+
+          // Clear search and matches after selection
+          this.orgName = ''
+          this.matches = []
+        },
+
+        // Remove organization from selected list
+        removeSelectedOrg(orgId) {
+          this.selectedOrgs = this.selectedOrgs.filter(org => org.id !== orgId)
+        }
+      }))
+    });
+  });
+</script>
+{# djlint:on #}
 <div x-data="rorLookup">
   <input type="text"
          class="form-control"
@@ -35,70 +97,6 @@
   </div>
   <textarea x-model="selectedOrgsJson"
             type="{{ widget.type }}"
-            name="{{ widget.name }}" hidden></textarea>
+            name="{{ widget.name }}"
+            hidden></textarea>
 </div>
-<script>
-  document.addEventListener('alpine:init', () => {
-    Alpine.data('rorLookup', () => ({
-      orgName: '',
-      matches: [],
-      selectedOrgs: [],
-      error: null,
-
-      // Computed property to serialize selected organizations to JSON
-      get selectedOrgsJson() {
-        return JSON.stringify(this.selectedOrgs)
-      },
-
-
-      async fetchRorData() {
-        if (this.orgName.length < 3) {
-          this.matches = []
-          return
-        }
-
-        this.error = null
-        const url = `https://api.ror.org/organizations?query=${encodeURIComponent(this.orgName)}`
-
-        try {
-          const response = await fetch(url)
-
-          if (!response.ok) {
-            throw new Error('Error fetching ROR data')
-          }
-
-          const data = await response.json()
-          // Filter out organizations already selected
-          this.matches = data.items.filter(
-            org => !this.selectedOrgs.some(selected => selected.id === org.id)
-          )
-        } catch (error) {
-          this.error = error.message
-          this.matches = []
-        }
-      },
-      // Add selected organization to pinned list
-      addSelectedOrg(org) {
-        if (!this.selectedOrgs.some(selected => selected.id === org.id)) {
-          this.selectedOrgs.push(org)
-        }
-
-        // Clear search and matches after selection
-        this.orgName = ''
-        this.matches = []
-      },
-
-      // Remove organization from selected list
-      removeSelectedOrg(orgId) {
-        this.selectedOrgs = this.selectedOrgs.filter(org => org.id !== orgId)
-      }
-    }))
-  });
-</script>
-{% comment %} const response = await fetch(url)
-
-if (!response.ok) {
-  throw new Error('Error fetching ROR data')
-}
-
-const data = await response.json() {% endcomment %}

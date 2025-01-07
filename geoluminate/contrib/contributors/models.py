@@ -161,7 +161,7 @@ class Person(AbstractUser, Contributor):
         return self.name
 
     def save(self, *args, **kwargs):
-        if not self.pk:
+        if not self.pk and not self.name:
             self.name = f"{self.first_name} {self.last_name}"
         super().save(*args, **kwargs)
 
@@ -181,7 +181,7 @@ class Person(AbstractUser, Contributor):
         return self.organization.location
 
     def get_absolute_url(self):
-        return reverse("person-detail", kwargs={"pk": self.pk})
+        return reverse("contributor-detail", kwargs={"pk": self.pk})
 
     @property
     def given(self):
@@ -192,6 +192,13 @@ class Person(AbstractUser, Contributor):
     def family(self):
         """Alias for self.last_name."""
         return self.last_name
+
+    def orcid_data(self):
+        """Returns the ORCID data for the user if available."""
+        orcid = self.get_provider("orcid")
+        if orcid:
+            return orcid.extra_data
+        return None
 
 
 class OrganizationMember(models.Model):

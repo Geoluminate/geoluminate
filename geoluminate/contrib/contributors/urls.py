@@ -3,7 +3,7 @@ from django.urls import include, path
 from .views import ContributorContactView
 from .views.edit import UpdateAffiliations, UpdateIdentifiers, UpdateProfile
 from .views.organization import OrganizationCreateView, OrganizationListView, OrgRORCreateView
-from .views.person import PersonCRUDView
+from .views.person import ContributorCRUDView, PersonCRUDView
 
 personal = [*PersonCRUDView.get_urls()]
 
@@ -16,6 +16,7 @@ account = [
 
 urlpatterns = [
     path("account/", include(account)),
+    *ContributorCRUDView.get_urls(),
     path("", include(personal)),
     path("contributor/<str:pk>/contact/", ContributorContactView.as_view(), name="contributor-contact"),
     path("organization/add/", OrganizationCreateView.as_view(), name="create"),

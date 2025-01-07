@@ -19,7 +19,7 @@ class LiteratureFilterset(df.FilterSet):
 
     status = df.ChoiceFilter(
         field_name="review__status",
-        choices=[("completed", _("Completed")), ("open", _("Open"))],
+        choices=[(2, _("Completed")), (1, _("Pending"))],
         label=_("Review status"),
     )
 

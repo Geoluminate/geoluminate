@@ -6,9 +6,10 @@ from partial_date import PartialDate
 
 
 class ImageCroppingWidget(ClientsideCroppingWidget):
-    def __init__(self, width: int, height: int, config, result, *args, **kwargs):
+    def __init__(self, width: int, height: int, config, result, empty_text=None, *args, **kwargs):
         self.config = config
         self.result = result
+        self.empty_text = empty_text
         super().__init__(width, height, width, height, *args, **kwargs)
 
     def get_context(self, name, value, attrs):
@@ -17,6 +18,7 @@ class ImageCroppingWidget(ClientsideCroppingWidget):
             {
                 "config": json.dumps(self.config),
                 "result": json.dumps(self.result),
+                "empty_text": self.empty_text,
             }
         )
         return context

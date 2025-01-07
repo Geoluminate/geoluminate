@@ -21,6 +21,11 @@ class ContributorsPlugin(ListPluginMixin):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["forms"] = [f(request=self.request) for f in self.forms]
+        context["forms"] = {
+            # "contributor": ContributorForm(),
+            # "orcid": ORCIDForm(),
+            "ror": RORForm(),
+            # "manual_add": ManualAddForm(),
+        }
         context["object"] = self.base_object
         return context

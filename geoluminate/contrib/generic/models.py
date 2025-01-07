@@ -49,7 +49,7 @@ class Date(GenericModel):
 
 class Identifier(GenericModel):
     type = models.CharField(max_length=50)
-    value = models.CharField(_("identifier"), max_length=255, db_index=True)
+    value = models.CharField(_("identifier"), max_length=255, db_index=True, unique=True)
 
     class Meta:
         verbose_name = _("date")

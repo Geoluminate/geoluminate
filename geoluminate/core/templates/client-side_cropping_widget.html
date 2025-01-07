@@ -5,6 +5,7 @@
     cursor: pointer;
   }
 </style>
+{% trans "Choose image" as image_text %}
 <div x-data="imageCropper"
      class="position-relative"
      style="aspect-ratio: {{ widget.res_width }} / {{ widget.res_height }}">
@@ -14,7 +15,7 @@
     <div class="position-absolute top-50 start-50 translate-middle text-center z-0"
          x-show.important="!croppedImage">
       {% icon "image" height="2em" %}
-      <div>{% trans "Choose image" %}</div>
+      <div>{{ widget.empty_text }}</div>
     </div>
     <img :src="croppedImage"
          class="w-100 h-100"

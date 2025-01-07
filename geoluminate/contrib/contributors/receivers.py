@@ -15,7 +15,7 @@ def create_profile(request, user, **kwargs):
 
     # if the user signed up with orcid, it will be available on the user object
     # we can use it to see if a profile is already associated with the user
-    if user.orcid:
+    if data := user.orcid_data():
         logger.info(f"Found a profile matching the provided ORCID for {user.username}")
         # TODO
         # 1. check identifiers table for a matching orcid

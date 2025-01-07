@@ -1,8 +1,8 @@
 ---
 myst:
   html_meta:
-    "description lang=en": "Glossary of terminology used within the Geoluminate web framework"
-    "keywords": "Geoluminate, research data"
+    "description lang=en": "Glossary of terminology used within the FairDM web framework"
+    "keywords": "FairDM, research data"
 ---
 
 (glossary)=
@@ -27,7 +27,7 @@ Project
     A project is a collection of related datasets plus relevant metadata that describes the collection. See the [Projects](projects.md) section of the user guide for more information. 
     
 Dataset
-    A dataset represents a collection of samples and any measurements or observations made on those samples. Datasets are the core building block of Geoluminate-powered web portals. See the [Datasets](datasets.md) section of the user guide for more information.
+    A dataset represents a collection of samples and any measurements or observations made on those samples. Datasets are the core building block of FairDM-powered web portals. See the [Datasets](datasets.md) section of the user guide for more information.
 
 Sample
     A sample represents any entity which may been measured or observed in some way. The definition here is deliberately vague in order to allow for maximum flexibility in interpretation. See the [Samples](samples.md) section of the user guide for more information.

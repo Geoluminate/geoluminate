@@ -65,27 +65,27 @@ When cost is not an issue, development of research data portals can be handed to
 In the more common scenario, research data portals are developed in-house by researchers or data managers with limited web development experience. Given the enormous complexity of modern web development, such an undertaking can be overwhelming, leading to poorly designed, inconsistent, and difficult-to-use portals. Ultimately, the research world is left with a fragmented landscape of research data portals that are difficult to navigate, integrate, and reuse.
 
 
-## The role of Geoluminate
+## The role of FairDM
 
-Geoluminate embraces both Open Science and FAIR Data principles. Metadata related to research projects, datasets, contributors, samples, measurements and observations are stored in a structured format that is both machine- and human-readable. This metadata is then used to generate a web portal that is both Findable and Accessible. The web portal is designed to be Interoperable with other web portals that adhere to the same schema. Finally, the web portal is designed to be Reusable by other research communities.
+FairDM embraces both Open Science and FAIR Data principles. Metadata related to research projects, datasets, contributors, samples, measurements and observations are stored in a structured format that is both machine- and human-readable. This metadata is then used to generate a web portal that is both Findable and Accessible. The web portal is designed to be Interoperable with other web portals that adhere to the same schema. Finally, the web portal is designed to be Reusable by other research communities.
 
-Geoluminate aims to address these challenges by providing a simplified framework for constructing modern and intuitive research portals that adhere to the FAIR data principles. By offering a consistent design, reusable components, and a streamlined development and deployment process, Geoluminate empowers research institutions and organizations to create high-quality data portals efficiently and effectively.
+FairDM aims to address these challenges by providing a simplified framework for constructing modern and intuitive research portals that adhere to the FAIR data principles. By offering a consistent design, reusable components, and a streamlined development and deployment process, FairDM empowers research institutions and organizations to create high-quality data portals efficiently and effectively.
 
 <!-- 
-# Geoluminate
+# FairDM
 
-## What is Geoluminate?
+## What is FairDM?
 
-Geoluminate is a Python-based micro web framework that allows research communities to easily and declaratively define data models that capture and describe any information relevant to their specific research domain. It is designed to help researchers adhere to metadata schemas that make it easy to formally publish their datasets and properly attribute all individuals and organisations involved in their data collection and processing lifecycle. Geoluminate leverages the established tools and features of the Django Web Framework in order to build lasting research portals that will grow with your community's expectation into the future.
+FairDM is a Python-based micro web framework that allows research communities to easily and declaratively define data models that capture and describe any information relevant to their specific research domain. It is designed to help researchers adhere to metadata schemas that make it easy to formally publish their datasets and properly attribute all individuals and organisations involved in their data collection and processing lifecycle. FairDM leverages the established tools and features of the Django Web Framework in order to build lasting research portals that will grow with your community's expectation into the future.
 
 
-You can host your own community portal online, publish a container that others can install and run on their own servers or distribute a lite version that runs completely offline on a field laptop. All of this is possible with Geoluminate!
+You can host your own community portal online, publish a container that others can install and run on their own servers or distribute a lite version that runs completely offline on a field laptop. All of this is possible with FairDM!
 
-## What problems does Geoluminate solve?
+## What problems does FairDM solve?
 
 ### Data Quality and Metadata Standards
 
-Geoluminate-powered portals are designed to help researchers adhere to metadata schemas that make it easy to formally publish their datasets and properly attribute all individuals and organisations involved in their data collection and processing lifecycle.
+FairDM-powered portals are designed to help researchers adhere to metadata schemas that make it easy to formally publish their datasets and properly attribute all individuals and organisations involved in their data collection and processing lifecycle.
 
 , making it easier for them to publish their datasets while ensuring that the necessary information for attribution is captured accurately. By following these established schemas, we streamline the process of documenting and sharing datasets, facilitating proper credit attribution throughout the research community.
 
@@ -101,20 +101,20 @@ Ownership of data is not just an issue for individuals looking to maintain contr
 
 ### Data Interoperability
 
-In order to decentralize the research data landscape, it is extremely important to facilitate data interoperability across numerous systems and platforms. This is where Geoluminate comes in. By providing a standardized schema for research data, Geoluminate ensures that data can be easily shared and integrated across different research communities and platforms.
+In order to decentralize the research data landscape, it is extremely important to facilitate data interoperability across numerous systems and platforms. This is where FairDM comes in. By providing a standardized schema for research data, FairDM ensures that data can be easily shared and integrated across different research communities and platforms.
 
-## What other benefits does Geoluminate offer?
+## What other benefits does FairDM offer?
 
 ### Community building
 
-Geoluminate allows you to focus on cultivating a strong sense of belonging within your research community. Through interactive features and engaging functionalities, you can nurture meaningful connections and foster a spirit of collaboration that transcends geographical boundaries.
+FairDM allows you to focus on cultivating a strong sense of belonging within your research community. Through interactive features and engaging functionalities, you can nurture meaningful connections and foster a spirit of collaboration that transcends geographical boundaries.
 
 ### Collaboration
 
 
 ### Publication
 
-Geoluminate provides a platform for researchers to publish their datasets, confident that their contributions will be appropriately acknowledged within the scholarly community.
+FairDM provides a platform for researchers to publish their datasets, confident that their contributions will be appropriately acknowledged within the scholarly community.
 
  -->
 

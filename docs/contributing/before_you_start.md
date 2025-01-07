@@ -1,6 +1,6 @@
 # Before you start
 
-This guide is mainly for experienced Django developers that may wish to contribute to the development of the core Geoluminate framework. If you are looking for information on how to develop a Geoluminate-powered web application for your research community, please see the [Developer Guide](#developer-guide).
+This guide is mainly for experienced Django developers that may wish to contribute to the development of the core FairDM framework. If you are looking for information on how to develop a FairDM-powered web application for your research community, please see the [Developer Guide](#developer-guide).
 
 ## Code of Conduct
 

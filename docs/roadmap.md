@@ -1,6 +1,6 @@
 # Roadmap
 
-This document outlines the objectives and goals for the development of the Geoluminate framework. It is intended to provide a high-level overview of the project's direction and priorities, and is subject to change as the project evolves. The roadmap is divided into target versions of the application, which each have several milestones representing a set of tasks and deliverables.
+This document outlines the objectives and goals for the development of the FairDM framework. It is intended to provide a high-level overview of the project's direction and priorities, and is subject to change as the project evolves. The roadmap is divided into target versions of the application, which each have several milestones representing a set of tasks and deliverables.
 
 ## V1.0.0
 

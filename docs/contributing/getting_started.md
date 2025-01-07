@@ -1,6 +1,6 @@
 # Getting Started
 
-This guide outlines the steps to contribute to Geoluminate. By following these instructions, you can fork the repository, set up a virtual environment, make changes, write tests, and submit a pull request to the main repository.
+This guide outlines the steps to contribute to FairDM. By following these instructions, you can fork the repository, set up a virtual environment, make changes, write tests, and submit a pull request to the main repository.
 
 ## Prerequisites
 
@@ -12,7 +12,7 @@ Before you begin, ensure that you have the following installed on your local mac
 
 ## Step 1: Fork the Repository and Clone it to Your Local Machine
 
-1. Click on the "Fork" button at the top right corner of the [repository page](https://github.com/Geoluminate/geoluminate).
+1. Click on the "Fork" button at the top right corner of the [repository page](https://github.com/FairDM/geoluminate).
 2. After forking, you'll be redirected to your forked repository. Copy the URL of your forked repository.
 3. Open a terminal or command prompt.
 4. Change to the directory where you want to clone the repository.
@@ -112,7 +112,7 @@ Congratulations! You've successfully contributed to the main repository by follo
 
 # Contributor Guidelines
 
-Thank you for your interest in contributing to Geoluminate! We appreciate your time and effort in helping us improve the project. To ensure a smooth and collaborative development process, please follow these guidelines when contributing.
+Thank you for your interest in contributing to FairDM! We appreciate your time and effort in helping us improve the project. To ensure a smooth and collaborative development process, please follow these guidelines when contributing.
 
 ## Getting Started
 

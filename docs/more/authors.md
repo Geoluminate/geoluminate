@@ -9,7 +9,7 @@
 
 ## Acknowledgements
 
-<!-- Geoluminate as an open-source project is currently in active development thanks to the GeoForschungsZentrum_, Potsdam, DE. Geoluminate was in it's infancy as both a package and a concept when it was adopted by the `World Heat Flow Database Project`_ as the framework for a new web application designed to support and serve the updated `Global Heat Flow Database`_ of the IHFC_. Because of this ongoing support, Geoluminate will receive full time attention until at least June
+<!-- FairDM as an open-source project is currently in active development thanks to the GeoForschungsZentrum_, Potsdam, DE. FairDM was in it's infancy as both a package and a concept when it was adopted by the `World Heat Flow Database Project`_ as the framework for a new web application designed to support and serve the updated `Global Heat Flow Database`_ of the IHFC_. Because of this ongoing support, FairDM will receive full time attention until at least June
 
 .. image:: static/logo.svg
    :target: https://www.geoluminate.com.au

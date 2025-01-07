@@ -32,18 +32,6 @@ roadmap
 ```
 
 ```{toctree}
-:caption: Guides
-:maxdepth: 1
-:hidden:
-
-guides/user-guide/index
-guides/admin_guide/index
-guides/developer_guide/index
-
-```
-
-
-```{toctree}
 :caption: More
 :maxdepth: 1
 :hidden:

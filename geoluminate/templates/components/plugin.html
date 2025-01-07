@@ -1,7 +1,7 @@
 <c-vars :title="{{ meta.title }}"
         layout="page"
         :layout_types="{'page': 'container overflow-auto', 'app': ''}" />
-<div class="{{ layout_types|get_item:layout }}" {{ attrs }}>
+<div class="w-100 h-100 {{ layout_types|get_item:layout }}" {{ attrs }}>
   {% if layout == "page" %}
     <c-header title="{{ title }}">
       {% if actions %}

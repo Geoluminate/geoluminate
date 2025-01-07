@@ -1,0 +1,7 @@
+<div class="overflow-hidden d-flex h-100">
+  <aside class="overflow-auto d-none d-md-block position-relative h-100 bg-secondary-subtle col-12 col-md-4 col-lg-3 pt-2 pt-md-0 {% if reverse %} border-start{% else %} border-end{% endif %} {{ sidebar_class }}">
+    {{ sidebar }}
+  </aside>
+  <div id="pluginContainer"
+       class="overflow-auto w-100 h-100 col-12 col-md-4 col-lg-3 pt-2 pt-md-0 ">{{ slot }}</div>
+</div>

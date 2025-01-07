@@ -32,6 +32,7 @@
         {% render_bundle "popper" "js" "GEOLUMINATE" %}
       {% endcompress %}
       {% django_htmx_script %}
+      {{ config|json_script:"database-identity" }}
       <script src="https://code.jquery.com/jquery-3.7.1.min.js"
               integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
               crossorigin="anonymous"></script>
@@ -41,64 +42,69 @@
     {% block css %}
     {% endblock css %}
 
-    <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-target="main" hx-ext="debug,preload" class="{% block body_class %}{% endblock body_class %}
-       ">
-      {% block body %}
-        {% block application %}
-          {% block content_menu %}
-            {% include "geoluminate/menus/main/menu.html" %}
-          {% endblock content_menu %}
+  </head>
+  <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+        hx-target="main"
+        hx-ext="debug,preload"
+        x-data="{{ config|safe }}"
+        class="vstack vh-100 w-100">
+    {% block body %}
+      {% block application %}
+        {% block content_menu %}
+          <c-menu.main show_brand="true">
+          </c-menu.main>
+        {% endblock content_menu %}
 
-          {% block page_nav %}
-          {% endblock page_nav %}
+        {% block page_nav %}
+        {% endblock page_nav %}
 
-          <main class="flex-grow-1 overflow-hidden">
-            {% block content_wrapper %}
-              {% block content %}
-              {% endblock content %}
-            {% endblock content_wrapper %}
+        <main class="flex-grow-1 overflow-hidden">
+          {% block content_wrapper %}
+            {% block content %}
+            {% endblock content %}
+          {% endblock content_wrapper %}
 
-          </main>
-        {% endblock application %}
+        </main>
+      {% endblock application %}
 
-        <div id="messageContainer"
-             class="position-absolute bottom-0 end-0">
-          <div class="vstack gap-1">
-            {% for message in messages %}
-              <div aria-live="polite"
-                   aria-atomic="true"
-                   class="w-100 d-flex px-1">
-                <div class="card alert shadow-sm"
-                     data-delay="5000"
-                     role="alert">
-                  <div class="card-header">
-                    {% trans "Message" %}
-                    <button type="button"
-                            class="btn-close float-end"
-                            data-bs-dismiss="alert"
-                            aria-label="Close"></button>
-                  </div>
-                  <div class="card-body">
-                    <p class="card-text">{{ message }}</p>
-                  </div>
+      <div id="messageContainer"
+           class="position-absolute bottom-0 end-0">
+        <div class="vstack gap-1">
+          {% for message in messages %}
+            <div aria-live="polite"
+                 aria-atomic="true"
+                 class="w-100 d-flex px-1">
+              <div class="card alert shadow-sm"
+                   data-delay="5000"
+                   role="alert">
+                <div class="card-header">
+                  {% trans "Message" %}
+                  <button type="button"
+                          class="btn-close float-end"
+                          data-bs-dismiss="alert"
+                          aria-label="Close"></button>
+                </div>
+                <div class="card-body">
+                  <p class="card-text">{{ message }}</p>
                 </div>
               </div>
-            {% endfor %}
-          </div>
+            </div>
+          {% endfor %}
         </div>
-        {% block body_end %}
-        {% endblock body_end %}
+      </div>
+      {% block body_end %}
+      {% endblock body_end %}
 
-        <div id="bodyEnd"></div>
-        {% block js %}
-        {% endblock js %}
+      <div id="bodyEnd"></div>
+      {% block js %}
+      {% endblock js %}
 
-        {% if user.is_authenticated %}
-          {% include "account_management/sidebar.html" %}
-        {% endif %}
-      {% endblock body %}
+      {% if user.is_authenticated %}
+        {% include "account_management/sidebar.html" %}
+      {% endif %}
+    {% endblock body %}
 
-      {% render_block "js" %}
-      {% render_block "body_end" %}
-    </body>
-  </html>
+    {% render_block "js" %}
+    {% render_block "body_end" %}
+  </body>
+</html>

@@ -1,0 +1,9 @@
+{% load crispy_forms_tags %}
+
+<c-vars form buttontext="Save" :modal="True" />
+<form method="post" enctype="multipart/form-data" {{ attrs }}>
+  {% csrf_token %}
+  {{ form.media }}
+    <p class="form-text">{{ help_text }}</p>
+    {{ form|crispy }}
+</form>

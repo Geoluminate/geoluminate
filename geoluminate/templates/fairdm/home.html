@@ -1,0 +1,128 @@
+{% extends "fullscreen.html" %}
+{% load static partials easy_icons %}
+
+{% block css %}
+  {# djlint:off #}
+  <style>
+    .mySwiper {
+      width: 100%;
+      height: 100%;
+    }
+@media (max-width: 767.98px) {
+
+  .half-height {
+    height: 50vh;
+    {% comment %} height: 50%; {% endcomment %}
+  }
+}
+</style>
+  {# djlint:on #}
+{% endblock css %}
+
+{% block content %}
+  <c-menu.main navbar_class="position-absolute top-0 start-0 end-0 z-2"
+               bg="light">
+  </c-menu.main>
+  <div class="vh-100 w-100">
+    <swiper-container class="mySwiper"
+                      direction="vertical"
+                      pagination="true"
+                      pagination-clickable="true"
+                      lazy="true"
+                      speed="600"
+                      mousewheel='true'
+                      keyboard="true">
+      {% block slides %}
+        <c-home.slide type="fullscreen"
+                      display="FairDM"
+                      lead="{% trans "The free and open-source FAIR Dataset Management framework" %}"
+                      img="https://picsum.photos/id/60/1200/600" />
+        <c-home.slide style="columns"
+                      display="{% trans "Findable" %}"
+                      lead="{% trans "Explore domain relevant research projects, datasets, samples and measurements." %}"
+                      padding="5"
+                      object_fit="contain"
+                      text="{% trans "FairDM portals allow you to easily find the data you require for your current and future projects." %}"
+                      slide_class="bg-primary"
+                      img="https://unsplash.it/600/?random"
+                      img_style="background"
+                      action="{% url "project-list" %}"
+                      action_text="{% trans "Explore" %}" />
+        <c-home.slide style="columns"
+                      reverse
+                      display="{% trans "Accessible" %}"
+                      lead="{% trans "Gain access to data legally and securely." %}"
+                      text="{% trans "Publish and release datasets on your terms, Search published datasets, filter by license, filter by keywords." %}"
+                      slide_class="bg-secondary"
+                      img="https://unsplash.it/600/?random"
+                      action="{% url "dataset-list" %}"
+                      action_text="{% trans "Explore" %}" />
+        <c-home.slide style="columns"
+                      display="{% trans "Interoperable" %}"
+                      lead="{% trans "Integrate data or metadata into your custom applications and workflows." %}"
+                      text="{% trans "Fair DM portals come equipped with a fully-featured REST API that can be used to programmatically browse data within the portal." %}"
+                      img="https://unsplash.it/600/?random"
+                      action="{% url "api:swagger-ui" %}"
+                      action_text="{% trans "API Documentation" %}" />
+        <c-home.slide style="columns"
+                      reverse
+                      display="{% trans "Reusable" %}"
+                      lead="{% trans "Integrate data or metadata into your custom applications and workflows." %}"
+                      text="{% trans "FairDM portals come equipped with a fully-featured REST API that can be used to programmatically browse data within the portal." %}"
+                      img="https://unsplash.it/600/?random"
+                      action="{% url "dataset-list" %}"
+                      action_text="{% trans "Explore" %}" />
+        <c-home.slide style="card"
+                      display="{% trans "Reusable" %}"
+                      lead="{% trans "Integrate data or metadata into your custom applications and workflows." %}"
+                      text="{% trans "FairDM portals come equipped with a fully-featured REST API that can be used to programmatically browse data within the portal." %}"
+                      img="https://unsplash.it/600/?random"
+                      action="{% url "dataset-list" %}"
+                      action_text="{% trans "Explore" %}" />
+      {% endblock slides %}
+
+    </swiper-container>
+  </div>
+  {% comment %} {% include "fairdm/footer.html" %} {% endcomment %}
+{% endblock content %}
+
+{% comment %} <div style="transform:translateY(-200px)">
+  <section class="mt-0">
+    <div class="container card rounded-4 col-md-9">
+      <div class="card-body">
+        <h1>{{ identity.database.name }}</h1>
+        <p>{{ identity.database.description|linebreaks }}</p>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="container col-md-9 px-3 py-3 bg-white">
+      <h2>{{ identity.authority.name }}</h2>
+      <a href="{{ identity.authority.url }}">{{ identity.authority.url }}</a>
+      <p>{{ identity.authority.description }}</p>
+    </div>
+  </section>
+  <div class="bg-secondary-subtle vh-100 py-5">
+    <h2 class="pt-3 container">{% trans "Sample types" %}</h2>
+    <swiper-container centered-slides="true" slides-per-view="2" navigation="true" grab-cursor="true">
+      {% for c in sample_types %}
+        <swiper-slide>
+          {% partial carousel-item %}
+        </swiper-slide>
+      {% endfor %}
+    </swiper-container>
+  </div>
+  <div class="bg-primary-subtle  vh-100 py-5">
+    <h2 class="pt-3 container">{% trans "Measurements" %}</h2>
+    <swiper-container centered-slides="true" slides-per-view="2" navigation="true" grab-cursor="true">
+      {% for c in measurement_types %}
+        <swiper-slide>
+          {% partial carousel-item %}
+        </swiper-slide>
+      {% endfor %}
+    </swiper-container>
+  </div>
+  {% for template in view.templates %}
+    {% include template %}
+  {% endfor %}
+</div> {% endcomment %}

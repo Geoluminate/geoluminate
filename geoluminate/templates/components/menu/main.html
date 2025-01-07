@@ -1,0 +1,50 @@
+{% load static geoluminate easy_icons sekizai_tags cache flex_menu %}
+
+<c-vars bg="primary" />
+<nav class="navbar navbar-expand-lg mb-0 {% if bg == "primary" %}navbar-dark bg-primary{% endif %} {{ navbar_class }}"
+     aria-label="Main navigation">
+  <div class="container-fluid">
+    <button class="navbar-toggler d-block me-2"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#mainSidebar"
+            aria-controls="mainSidebar"
+            aria-expanded="false"
+            aria-label="{% trans "Toggle database navigation" %}">
+      <span class="navbar-toggler-icon"></span>
+      <span class="d-none fs-6 pe-1">{% trans "Database Menu" %}</span>
+    </button>
+    {% if show_brand %}
+      <a class="navbar-brand border-0" href="{% url "home" %}" title={{ site_config.database.name }}>
+        <span x-text="site_name"></span>
+        {% comment %} <span class="d-md-none text-truncate">{{ identity.database.short_name|default:"Geoluminate" }}</span> {% endcomment %}
+        {% comment %} <span class="d-none d-md-block text-truncate">{{ identity.database.name|default:"Geoluminate" }}</span> {% endcomment %}
+      </a>
+    {% endif %}
+    {% comment %} <c-menu.widgets.search /> {% endcomment %}
+    <div class="hstack gap-2 ms-md-auto">
+      {% if request.user.is_authenticated %}<c-menu.widgets.quick-add />{% endif %}
+      <c-menu.widgets.theme-toggle />
+      {% include "account_management/sidebar_toggle.html" %}
+    </div>
+  </div>
+</nav>
+{% addtoblock "body_end" %}
+  {% comment %} {% cache 500 sidebar %} {% endcomment %}
+  {% spaceless %}
+    <nav id="mainSidebar"
+         class="offcanvas offcanvas-start"
+         tabindex="-1">
+      <div class="offcanvas-header align-items-start">
+        <img src="{% static "img/brand/logo.svg" %}" alt="" width="100%" height="100%" />
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">{% render_menu "DatabaseMenu" %}</div>
+      <div class="footer"></div>
+    </nav>
+  {% endspaceless %}
+  {% comment %} {% endcache %} {% endcomment %}
+{% endaddtoblock %}

@@ -1,7 +1,7 @@
 <c-vars reverse="" sidebar_class sidebar slot gap="2" />
-<div class="d-flex h-100  flex-wrap gap-{{ gap }}" {{ attrs }}>
-  <aside class="col-12 col-md-3 {% if reverse %} border-start{% else %} border-end{% endif %} {{ sidebar_class }}">
+<div class="d-flex h-100 flex-wrap gap-0" {{ attrs }}>
+  <aside class="col-12 col-md-3 h-100 overflow-auto {% if reverse %} border-start ps-2 pe-3{% else %} border-end pe-2 ps-3{% endif %} {{ sidebar_class }}">
     <div class="p-2 overflow-auto vstack gap-3">{{ sidebar }}</div>
   </aside>
-  <div class="col-12 col-md">{{ slot }}</div>
+  <div class="col-12 col-md-9 h-100 overflow-auto">{{ slot }}</div>
 </div>

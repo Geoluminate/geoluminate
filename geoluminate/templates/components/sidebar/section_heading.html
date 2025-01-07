@@ -1,0 +1,8 @@
+<div class="hstack justify-content-between mb-1">
+  <h2 class="fs-6 fw-semibold">{{ heading }}</h2>
+  {% if action %}
+    {{ action }}
+  {% elif href %}
+    <c-bs5.button />
+  {% endif %}
+</div>

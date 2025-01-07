@@ -1,0 +1,21 @@
+<div class="dropdown d-none d-md-block">
+  <c-bs5.button class="btn btn-sm dropdown-toggle"
+                type="button"
+                icon="plus"
+                aria-expanded="false"
+                data-bs-toggle="dropdown" />
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li>
+      <a class="dropdown-item"
+         href="{% url "project-create" %}">
+        {% icon "project" %}
+      {% trans "New project" %}</a>
+    </li>
+    <li>
+      <a class="dropdown-item"
+         href="{% url "dataset-create" %}">
+        {% icon "dataset" %}
+      {% trans "New dataset" %}</a>
+    </li>
+  </ul>
+</div>

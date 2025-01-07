@@ -29,6 +29,10 @@ EARTH_SCIENCE_Y_COORD = {
 PWA_APP_NAME = "Heatflow.world"
 PWA_APP_DESCRIPTION = "Heatflow.world is a platform for sharing and exploring heat flow data."
 
+
+COMPRESS_ENABLED = True
+COMPRESS_OFFLINE = False
+
 # DJANGO_SETUP_TOOLS = {
 #     "": {
 #         "on_initial": [

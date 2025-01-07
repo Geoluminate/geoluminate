@@ -7,6 +7,9 @@ All settings can be overridden in your project settings file.
 
 env = globals()["env"]
 
+DEBUG = env("DJANGO_DEBUG")
+
+
 ACCOUNT_ALLOW_REGISTRATION = env("DJANGO_ALLOW_SIGNUP")
 
 # PASSWORDS
@@ -113,14 +116,14 @@ SOCIALACCOUNT_AUTO_SIGNUP = False
 
 SOCIALACCOUNT_PROVIDERS = {
     "orcid": {
-        "BASE_DOMAIN": "orcid.org",
+        "BASE_DOMAIN": "orcid.org" if not DEBUG else "sandbox.orcid.org",
         "MEMBER_API": False,
     }
 }
 """"""
 
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
-# SOCIALACCOUNT_ADAPTER = "geoluminate.contrib.users.adapters.SocialAccountAdapter"
+SOCIALACCOUNT_ADAPTER = "geoluminate.contrib.contributors.adapters.SocialAccountAdapter"
 
 
 ACCOUNT_SIGNUP_FORM_CLASS = "geoluminate.contrib.contributors.forms.person.SignupExtraForm"

@@ -1,0 +1,44 @@
+{% block css %}
+  {{ form.media.css }}
+  {{ block.super }}
+{% endblock css %}
+
+{% block content %}
+  <form method="post">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">Submit</button>
+  </form>
+  {% block body_end %}
+    {{ form.media.js }}
+    <script>
+      $(function() {
+
+        const $select = $('.select2');
+
+        $select.select2({
+          minimumInputLength: 1,
+          ajax: {
+            url: 'https://api.ror.org/organizations',
+            delay: 1000,
+            data: function(params) {
+              return {
+                "query": params.term
+              };
+            },
+            processResults: function(data) {
+              return {
+                results: $.map(data.items, function(item) {
+                  return {
+                    id: JSON.stringify(item),
+                    text: item['name'],
+                  }
+                })
+              };
+            },
+          }
+        });
+      })
+    </script>
+  {% endblock body_end %}
+{% endblock content %}

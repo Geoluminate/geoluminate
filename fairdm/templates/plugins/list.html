@@ -1,0 +1,26 @@
+{% load crispy_forms_tags partials %}
+
+{% with base_object as object %}
+  <c-plugin layout="page" title="{{ view.title }}">
+    <c-slot name="actions">
+      <c-bs5.button class="btn btn-primary btn-sm"
+                    text="{% trans "New" %}"
+                    icon="plus"
+                    data-bs-toggle="modal"
+                    data-bs-target="#createModal" />
+    </c-slot>
+    <c-card-list :object_list="object_list"
+                 :template="object_template" />
+  </c-plugin>
+{% endwith %}
+{% comment %} <div id="bodyEnd" hx-swap-oob="true">
+  {% for form in forms %}
+    <form method="post" action="{% url "dataset-create" %}">
+      <c-bs5.modal title="{% trans "Create Dataset" %}" id="createModal" dialog_class="modal-dialog-centered">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-primary">{% trans "Save & Continue" %}</button>
+      </c-bs5.modal>
+    </form>
+  {% endfor %}
+</div> {% endcomment %}

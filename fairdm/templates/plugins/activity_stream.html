@@ -1,0 +1,10 @@
+{% load activity_tags partials %}
+
+<c-plugin layout="page">
+  {% activity_stream 'any' base_object %}
+  {% for action in stream %}
+    <c-activity.action_compact :action="action" />
+  {% empty %}
+    <c-text.empty />
+  {% endfor %}
+</c-plugin>

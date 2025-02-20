@@ -1,4 +1,4 @@
-from geoluminate.contrib.core.filters import SampleFilter
+from fairdm.core.filters import SampleFilter
 
 from .models import CustomSample
 

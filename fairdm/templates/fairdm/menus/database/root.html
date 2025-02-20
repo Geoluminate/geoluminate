@@ -1,0 +1,16 @@
+{% for section in menu %}
+  {% if section.visible %}
+    <c-layout.sidebar-section :heading="section.label">
+      {% if section.children %}
+        <c-sidebar.menu class="mb-3">
+          {% for item in section.children %}
+            {% if item.visible %}
+              {% firstof section.template as template %}
+              {% include section.template %}
+            {% endif %}
+          {% endfor %}
+        </c-sidebar.menu>
+      {% endif %}
+    </c-layout.sidebar-section>
+  {% endif %}
+{% endfor %}

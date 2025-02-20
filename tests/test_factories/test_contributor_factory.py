@@ -1,8 +1,8 @@
 import pytest
 from django.test import TestCase
 
-from geoluminate.contrib.contributors.models import Contributor
-from geoluminate.factories import (
+from fairdm.contrib.contributors.models import Contributor
+from fairdm.factories import (
     OrganizationFactory,
     PersonFactory,
 )

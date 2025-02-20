@@ -1,13 +1,13 @@
-import geoluminate
+import fairdm
 
-geoluminate.setup(
+fairdm.setup(
     apps=[
         "example",
         # "django_better_admin_arrayfield",
     ]
 )
 
-ROOT_URLCONF = "geoluminate.urls"
+ROOT_URLCONF = "fairdm.urls"
 
 # DEBUG_TOOLBAR_CONFIG = {
 #     # "DISABLE_PANELS": ["debug_toolbar.panels.redirects.RedirectsPanel"],

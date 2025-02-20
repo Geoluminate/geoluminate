@@ -16,7 +16,7 @@ from docs.conf import *
 html_theme_options.update(
     {
         "announcement": (
-            "⚠️Geoluminate is currently undergoing rapid development and the API may change without notice! ⚠️"
+            "⚠️FairDM is currently undergoing rapid development and the API may change without notice! ⚠️"
         ),
     }
 )

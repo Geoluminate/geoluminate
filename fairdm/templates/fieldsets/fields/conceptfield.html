@@ -1,0 +1,8 @@
+<div class="mb-3">
+  <div class="fw-semibold" title="{{ field.help_text }}">{{ field.verbose_name|title }}</div>
+  {% firstof choice_label value as result %}
+  <p class="ms-2 {% if result %}text-decoration-underline{% endif %}">
+    <span title="{{ value.definition }}"
+          data-bs-toggle="tooltip">{{ result|default:"-" }}</span>
+  </p>
+</div>

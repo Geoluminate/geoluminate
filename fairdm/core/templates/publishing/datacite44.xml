@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+{% load contributor_tags partials %}
+
+{% partialdef name_identifier %}
+<nameIdentifier nameIdentifierScheme="{{ id.type }}" {% if id.get_root_url %}schemeURI="{{ id.get_root_url }}"{% endif %}>{% if id.get_root_url %}{{ id.get_absolute_url }}{% else %}{{id.value}}{% endif %}</nameIdentifier>
+{% endpartialdef name_identifier %}
+
+{% partialdef affiliation %}
+{% with id=affiliation.get_default_identifier %}
+<affiliation affiliationIdentifier="{{ id.get_absolute_url }}" affiliationIdentifierScheme="{{ id.type }}" schemeURI="{{ id.get_root_url }}">{{ affiliation }}</affiliation>
+{% endwith %}
+{% endpartialdef affiliation %}
+
+{% partialdef contributor_inner %}
+{% if contributor.type == "person" %}
+  <givenName>{{ contributor.given }}</givenName>
+  <familyName>{{ contributor.family }}</familyName>
+{% endif %}
+{% for id in contributor.identifiers.all %}
+  {% partial name_identifier %}
+{% endfor %}
+{% with contributor.get_default_affiliation as affiliation %}
+  {% comment %} WARNING: this needs to be re-thought. The affiliation of the contributor AT THE TIME OF CREATION should be used.
+  Therefore we probably need to store this info on the Contribution object. {% endcomment %}
+  {% if affiliation %}
+    {% partial affiliation %}
+  {% endif %}
+{% endwith %}
+{% endpartialdef contributor_inner %}
+
+
+{% spaceless %}
+<resource {% block resource_attrs %} xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://datacite.org/schema/kernel-4" xsi:schemaLocation="http://datacite.org/schema/kernel-4 https://schema.datacite.org/meta/kernel-4.4/metadata.xsd" {% endblock resource_attrs %}>
+  <resourceType resourceTypeGeneral="Dataset"></resourceType>
+  <language>{{ dataset.lang }}</language>
+  <version>{{ dataset.version|default:1.0 }}</version>
+  {% comment %} <sizes>
+    <size>{{ dataset.samples.count }} Samples</size>
+    <size>{{ dataset.locations.distinct.count }} Geographic Locations</size>
+  </sizes> {% endcomment %}
+  <formats>
+    <format>csv</format>
+  </formats>
+  {% block publisher %}
+    <publisher xml:lang="en"></publisher>
+  {% endblock publisher %}
+  <publicationYear>{% now "Y" %}</publicationYear>
+  <titles>
+    <title xml:lang="en">{{ dataset.title }}</title>
+  </titles>
+
+  <creators>{% for c in dataset.contributors.all|by_role:"Creator" %}{% with c.contributor as contributor %}
+    <creator>
+      <creatorName nameType="{{ contributor.type|capfirst }}">{{ contributor.name }}</creatorName>
+      {% partial contributor_inner %}
+    </creator>
+    {% endwith %}{% endfor %}
+  </creators>
+
+  {% if dataset.contributors.exists %}
+  <contributors>
+    {% for c in dataset.contributors.all %}
+      {% for role in c.roles %}
+        {% if role != "Creator" %}
+          {% with c.contributor as contributor %}
+          <contributor contributorType="{{ role }}">
+            <contributorName>{{ contributor.name }}</contributorName>
+            {% partial contributor_inner %}
+          </contributor>
+          {% endwith %}
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
+  </contributors>
+  {% endif %}
+  
+  {% if dataset.keywords.exists %}
+  <subjects>
+    {% for subject in dataset.keywords.all %}
+      <subject subjectScheme="{{ subject.vocabulary }}" schemeURI="{{ subject.vocabulary.scheme.URI }}" valueURI="{{ subject.uri }}">{{ subject.label }}</subject>
+    {% endfor %}
+    {% for tag in dataset.tags.all %}
+      <subject>{{ tag }}</subject>
+    {% endfor %}
+  </subjects>
+  {% endif %}
+
+
+
+  {% if dataset.dates.exists %}
+  <dates>{% for date in dataset.dates.all %}
+      <date dateType="{{ date.type }}">{{ date.value }}</date>{% endfor %}
+  </dates>
+  {% endif %}
+
+  {% comment %} <alternateIdentifiers>
+    <alternateIdentifier alternateIdentifierType="URL">{{ uri }}</alternateIdentifier>
+    {% block alternate_identifiers %}{% endblock %}
+  </alternateIdentifiers> {% endcomment %}
+  <relatedIdentifiers>
+    <relatedIdentifier relatedIdentifierType="URL" relationType="IsVariantFormOf">{{ uri }}</relatedIdentifier>
+    {% comment %} <relatedIdentifier relatedIdentifierType="DOI" relationType="IsSupplementTo">{{ dataset.reference.doi }}</relatedIdentifier> {% endcomment %}
+
+    {% comment %} <relatedIdentifier relatedIdentifierType="DOI" relationType="Cites">{{ dataset.reference.doi }}</relatedIdentifier> {% endcomment %}
+
+
+
+    {% comment %} <relatedIdentifier relatedIdentifierType="URL" relationType="HasMetadata" relatedMetadataScheme="citeproc+json" schemeURI="https://github.com/citation-style-language/schema/raw/master/csl-data.json">https://data.datacite.org/application/citeproc+json/10.5072/example-full</relatedIdentifier>
+    <relatedIdentifier relatedIdentifierType="arXiv" relationType="IsReviewedBy" resourceTypeGeneral="Text">arXiv:0706.0001</relatedIdentifier> {% endcomment %}
+  </relatedIdentifiers>
+
+  {% if dataset.license %}
+  <rightsList>{% with dataset.license as license %}
+    <rights xml:lang="en" schemeURI="{{ license.URL}}" rightsIdentifierScheme="{{ license.scheme }}" rightsIdentifier="{{ license.name }}" rightsURI="{{ license.URL }}">{{ license.name }}</rights>{% endwith %}
+  </rightsList>
+  {% endif %}
+
+  <descriptions>{% for description in dataset.descriptions.all %}
+    <description xml:lang="{{ description.lang|default:"en"}}" descriptionType="{{ description.type }}">{{ description.value }}</description>{% endfor %}
+  </descriptions>
+
+  {% if dataset.bbox or dataset.centroid %}
+  <geoLocations>
+    <geoLocation>
+      {% comment %} <geoLocationPlace>Not sure how to handle this</geoLocationPlace> {% endcomment %}
+      {% if dataset.centroid %}
+      <geoLocationPoint>{% with dataset.centroid as point %}
+        <pointLongitude>{{ point.x }}</pointLongitude>
+        <pointLatitude>{{ point.y }}</pointLatitude>{% endwith %}
+      </geoLocationPoint>
+      {% endif %}
+      {% if dataset.bbox %}
+      <geoLocationBox>
+        <westBoundLongitude>{{dataset.bbox.min_x}}</westBoundLongitude>
+        <eastBoundLongitude>{{dataset.bbox.max_x}}</eastBoundLongitude>
+        <southBoundLatitude>{{dataset.bbox.min_y}}</southBoundLatitude>
+        <northBoundLatitude>{{dataset.bbox.max_y}}</northBoundLatitude>
+      </geoLocationBox>
+      {% endif %}
+    </geoLocation>
+  </geoLocations>
+  {% endif %}
+
+  {% if dataset.funding %}
+  <fundingReferences>{% for funder in dataset.funding.all %}
+    <fundingReference>
+      <funderName>{{ funder.name }}</funderName>{% for identifier in funder.profile.identifiers %}
+      <funderIdentifier funderIdentifierType="{{ identifier.scheme }}">{{ identifier.identifier }}</funderIdentifier>{% endfor %}{% with funder.award as award %}
+      <awardNumber>{{ award.award_number }}</awardNumber>
+      <awardTitle>{{ award.title }}</awardTitle>{% endwith %}
+    </fundingReference>{% endfor %}
+  </fundingReferences>
+  {% endif %}
+  {% comment %} <relatedItems>
+    <relatedItem relationType="IsPublishedIn" relatedItemType="Journal">
+      <relatedItemIdentifier relatedItemIdentifierType="ISSN">0370-2693</relatedItemIdentifier>
+      <titles>
+        <title>Physics letters B</title>
+      </titles>
+      <publicationYear>2018</publicationYear>
+      <volume>776</volume>
+      <firstPage>249</firstPage>
+      <lastPage>264</lastPage>
+    </relatedItem>
+  </relatedItems> {% endcomment %}
+
+</resource>
+
+{% endspaceless %}

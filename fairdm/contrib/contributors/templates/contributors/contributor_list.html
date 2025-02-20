@@ -1,0 +1,12 @@
+{% extends "fairdm/object_list.html" %}
+{% block description %}
+  The people and organisations listed here have contributed in some way to a dataset that has passed our internal review process and been included in the {{ identity.database.name }}.
+{% endblock description %}
+
+{% block card_list %}
+  <c-card-list class="row-cols-5"
+               gap="1"
+               id="contributorList"
+               :object_list="object_list"
+               :template="object_template" />
+{% endblock card_list %}

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from geoluminate.contrib.core.admin import SampleAdmin
+from fairdm.core.admin import SampleAdmin
 
 from .models import CustomSample, ExampleMeasurement
 

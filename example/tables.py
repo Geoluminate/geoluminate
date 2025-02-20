@@ -1,11 +1,11 @@
-from geoluminate.contrib.core.tables import SampleTable
+from fairdm.core.tables import SampleTable
 
-from .models import Sample
+from .models import CustomSample
 
 
 class CustomSampleTable(SampleTable):
     class Meta:
-        model = Sample
+        model = CustomSample
         exclude = [
             "path",
             "depth",

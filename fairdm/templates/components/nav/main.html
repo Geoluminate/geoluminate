@@ -1,0 +1,33 @@
+{% load static fairdm easy_icons sekizai_tags cache flex_menu %}
+
+<c-vars nav_style nav_class />
+<nav class="navbar navbar-expand-lg mb-0 {% if not nav_style == "transparent" %}navbar-dark bg-primary{% endif %} {{ nav_class }}"
+     aria-label="Main navigation">
+  <div class="container-fluid">
+    <button class="navbar-toggler d-block me-2"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#mainSidebar"
+            aria-controls="mainSidebar"
+            aria-expanded="false"
+            aria-label="{% trans "Toggle database navigation" %}">
+      <span class="navbar-toggler-icon"></span>
+      <span class="d-none fs-6 pe-1">{% trans "Database Menu" %}</span>
+    </button>
+    {% if show_brand %}
+      <a class="navbar-brand border-0"
+         href="{% url "home" %}"
+         title="{{ site_config.database.name }}">
+        <span x-text="site_name"></span>
+        {% comment %} <span class="d-md-none text-truncate">{{ identity.database.short_name|default:"FairDM" }}</span> {% endcomment %}
+        {% comment %} <span class="d-none d-md-block text-truncate">{{ identity.database.name|default:"FairDM" }}</span> {% endcomment %}
+      </a>
+    {% endif %}
+    {% comment %} <c-widgets.search /> {% endcomment %}
+    <c-button.group class="ms-md-auto" gap="2">
+      {% comment %} {% if request.user.is_authenticated %}<c-widgets.quick-add />{% endif %} {% endcomment %}
+      <c-widgets.theme-toggle />
+      {% include "account_management/sidebar_toggle.html" %}
+    </c-button.group>
+  </div>
+</nav>

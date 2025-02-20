@@ -1,0 +1,9 @@
+<c-menu.dropdown btn_class="btn btn-sm btn-outline-primary"
+                 menu_class="dropdown-menu-end">
+  <c-menu.dropdown-item href="{% url "project-create" %}"
+                        icon="project"
+                        text="{% trans "Project" %}" />
+  <c-menu.dropdown-item href="{% url "dataset-create" %}"
+                        icon="dataset"
+                        text="{% trans "Dataset" %}" />
+</c-menu.dropdown>

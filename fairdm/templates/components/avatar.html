@@ -1,0 +1,17 @@
+{% load easy_icons %}
+
+<c-vars icon="person" for="person" />
+{% if not contributor.image %}
+  <div class="bg-body overflow-hidden card text-secondary ratio {% if for == "person" %}ratio-1x1 rounded-circle {% else %}ratio-16x9 {% endif %}  {{ class }}">
+    <div class="d-flex justify-content-center align-items-center fs-2">{% icon contributor.type %}</div>
+  </div>
+{% elif contributor.type == "person" %}
+  <div class="bg-body overflow-hidden card text-secondary ratio ratio-1x1 rounded-circle {{ class }}">
+    <img src="{{ contributor.image.url }}" />
+  </div>
+{% elif contributor.type == "organization" %}
+  <div class="bg-body overflow-hidden text-secondary ratio ratio-16x9 {{ class }}">
+    <img src="{{ contributor.image.url }}"
+         class="object-fit-contain px-1" />
+  </div>
+{% endif %}

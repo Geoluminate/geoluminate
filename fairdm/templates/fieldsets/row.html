@@ -1,0 +1,8 @@
+{% load fairdm %}
+
+<div class="d-flex">
+  {% for field in fields %}
+    <div class="col me-5">{% render_field object field %}</div>
+    {% comment %} {% if not forloop.last %}<div class="vr mx-3"></div>{% endif %} {% endcomment %}
+  {% endfor %}
+</div>

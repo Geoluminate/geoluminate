@@ -1,0 +1,26 @@
+{% load crispy_forms_tags %}
+
+<c-layout.form>
+  <c-slot name="actions">
+    <c-bs5.dropdown button_class="dropdown-toggle btn btn-sm btn-primary"
+                    button_text="{% trans "Get template" %}"
+                    icon="download">
+      <c-import-export.export-dropdown :formats="view.import_formats" :dataset="dataset" />
+    </c-bs5.dropdown>
+  </c-slot>
+  {% block content %}
+    <div class="alert alert-info" role="alert">
+      {% trans "Please ensure that you are importing data using the correct template for this data type! To learn more about importing data into this portal, please see the documentation." %}
+    </div>
+  {% endblock content %}
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <c-bs5.button type="submit"
+                  class="btn btn-primary"
+                  icon="upload">
+      {% trans "Submit" %}
+    </c-bs5.button>
+  </form>
+</c-layout.standard>

@@ -1,0 +1,21 @@
+{% load activity_tags %}
+
+{% if user.is_authenticated %}
+  {% with user|is_following:object as following %}
+    <c-bs5.button x-data="{ following: {{ following|yesno:'true,false' }} }"
+                  class="btn btn-primary btn-sm follow-button"
+                  hx-get="{% url "follow-object" pk=object.pk %}"
+                  hx-swap="none"
+                  size="sm"
+                  @htmx:after-on-load="following =! following">
+      <span x-show="following" x-cloak>
+        {% icon "star-solid" %}
+        {% trans "Unfollow" %}
+      </span>
+      <span x-show="!following" x-cloak>
+        {% icon "star-outline" %}
+        {% trans "Follow" %}
+      </span>
+    </c-bs5.button>
+  {% endwith %}
+{% endif %}

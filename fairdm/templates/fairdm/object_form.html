@@ -1,0 +1,26 @@
+{% load static partials crispy_forms_tags %}
+
+<c-layout.standard>
+  <c-slot name="head">
+    {{ form.media.css }}
+  </c-slot>
+  <div class="h-100 overflow-auto">
+    <div class="container col-12 col-md-9 col-lg-7">
+      <div class="container px-md-5">
+        {% if title %}<c-text.title title="{{ title }}" hr />{% endif %}
+        <div class="page-content">
+          {% if view.help_text %}{{ view.help_text }}{% endif %}
+          <div class="my-3">
+            <form method="post"
+                  {% if request.htmx.target %}hx-target="#{{ request.htmx.target }}"{% endif %}>
+              {% csrf_token %}
+              {{ form|crispy }}
+              <button type="submit" class="btn btn-primary">{% trans "Save & Continue" %}</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{ form.media.js }}
+</c-layout.standard>

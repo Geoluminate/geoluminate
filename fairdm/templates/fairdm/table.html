@@ -1,0 +1,82 @@
+{% extends "django_tables2/bootstrap5.html" %}
+{% load django_tables2 %}
+{% load i18n l10n fairdm %}
+
+{% block table-wrapper %}
+  <div class="fairdm-table table-container table-responsive flex-grow-1">
+    {% block table %}
+      {{ block.super }}
+    {% endblock table %}
+
+    {% block pagination %}
+    {% endblock pagination %}
+
+  </div>
+{% endblock table-wrapper %}
+
+{% block table.thead %}
+  {% if table.show_header %}
+    <thead {{ table.attrs.thead.as_html }}>
+      <tr>
+        {% for column in table.columns %}
+          {% get_field table.data.model column.name as db_field %}
+          <th {{ column.attrs.th.as_html }} scope="col">
+            {% if db_field.help_text %}
+              <span data-bs-toggle="popover"
+                    data-bs-placement="bottom"
+                    data-bs-html="true"
+                    data-bs-trigger="hover focus"
+                    data-bs-title="{{ column.header }}{% if db_field.units %} ({{ db_field.units|unit }}){% endif %}"
+                    data-bs-content="{{ db_field.help_text }}">
+              {% else %}
+                <span>
+                {% endif %}
+                {% if column.orderable %}
+                  {% comment %} <a href="{% querystring table.prefixed_order_by_field=column.order_by_alias.next %}" class="link-underline-hover">{{ column.name }}</a> {% endcomment %}
+                  <a href="{% querystring table.prefixed_order_by_field=column.order_by_alias.next %}"
+                     class="link-underline-hover">{{ column.header|default:"" }}</a>
+                {% else %}
+                  {{ column.header|default:"" }}
+                  {% comment %} {{ column.name }} {% endcomment %}
+                {% endif %}
+              </span>
+            </th>
+          {% endfor %}
+        </tr>
+      </thead>
+    {% endif %}
+  {% endblock table.thead %}
+
+  {% block table.tbody.row %}
+    {% if forloop.first and table.page.has_next %}
+      <tr {{ row.attrs.as_html }}
+          hx-get
+          preload="htmx:afterSettle"
+          hx-vals="{'page': '{{ table.page.next_page_number }}'}"
+          hx-trigger="intersect once"
+          hx-target="tbody"
+          hx-swap="beforeend"
+          hx-select="tbody tr">
+      {% else %}
+        <tr {{ row.attrs.as_html }}>
+        {% endif %}
+        {% for column, cell in row.items %}
+          <td {{ column.attrs.td.as_html }}>
+            {% if column.localize == None %}
+              {% comment %} The following prevents quantityfield values from printing their units in the table {% endcomment %}
+              {% if cell.magnitude != None %}
+                {{ cell.magnitude }}
+              {% else %}
+                {{ cell }}
+              {% endif %}
+            {% else %}
+              {% if column.localize %}
+                {{ cell|localize }}
+              {% else %}
+                {{ cell|unlocalize }}
+              {% endif %}
+            {% endif %}
+          </td>
+        {% endfor %}
+      </tr>
+    {% endblock table.tbody.row %}

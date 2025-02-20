@@ -1,0 +1,7 @@
+<c-vars title :hr="True" />
+<div class="container {{ class }}">
+  {% if title or meta %}
+    <c-text.title title="{% firstof title meta.title %}" />
+  {% endif %}
+  {{ slot }}
+</div>

@@ -1,7 +1,7 @@
 import pytest
 
-from geoluminate.factories import SampleFactory
-from geoluminate.models import Sample
+from fairdm.factories import SampleFactory
+from fairdm.models import Sample
 
 
 @pytest.fixture

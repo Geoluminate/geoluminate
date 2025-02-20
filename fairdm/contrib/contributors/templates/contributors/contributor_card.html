@@ -1,0 +1,28 @@
+{% load fairdm contributor_tags easy_icons %}
+
+{% with obj as contributor %}
+  <c-bs5.card class="shadow align-items-center text-center {{ contributor.type }}"
+              body_class="vstack align-items-center">
+    <c-avatar :image="contributor.image"
+              class="w-75"
+              :for="contributor.type"
+              only />
+    <h5 class="card-title fs-6 mt-1 mb-3">
+      {% if contributor.get_default_identifier %}
+        <c-bs5.button class="text-reset link-underline-hover"
+                      href="{{ contributor.get_default_identifier.get_absolute_url }}">
+          {% if contributor.type == "organization" %}
+            {% icon contributor.DEFAULT_IDENTIFIER height="1em" %}
+          {% else %}
+            {% icon contributor.icon height="1em" %}
+          {% endif %}
+        </c-bs5.button>
+      {% endif %}
+      {{ contributor }}
+    </h5>
+    <c-bs5.button class="btn btn-primary"
+                  href="{{ contributor.get_absolute_url }}">
+      {% trans "View profile" %}
+    </c-bs5.button>
+  </c-bs5.card>
+{% endwith %}

@@ -1,4 +1,4 @@
-from geoluminate.metadata import Metadata
+from fairdm.metadata import Metadata
 
 from .models import CustomSample
 

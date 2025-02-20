@@ -1,0 +1,33 @@
+{% load partials crispy_forms_tags %}
+
+{% partialdef table %}
+<div id="keywords-container">
+  {% if object_list or tags %}
+    {% for kw in object_list %}
+      <a tabindex="0"
+         type="button"
+         data-bs-toggle="popover"
+         data-bs-title="{{ kw.vocabulary }}"
+         data-bs-html="true"
+         data-bs-content="<h1 class='fs-6 fw-bold'>{{ kw.label|capfirst }}</h1>{{ kw.as_concept.definition }} <a href='{{ kw.uri }}' target='_blank'>{{ kw.uri }}</a>"
+         data-bs-trigger="focus"
+         class="badge rounded-pill text-bg-primary text-decoration-none">{{ kw.label|capfirst }}</a>
+    {% endfor %}
+    {% for tag in tags %}
+      <span class="badge rounded-pill text-bg-secondary text-decoration-none">{{ tag }}</span>
+    {% endfor %}
+  {% else %}
+    <c-text.empty />
+  {% endif %}
+</div>
+{% endpartialdef table %}
+
+{% partialdef formset %}
+{% crispy form %}
+{% endpartialdef formset %}
+
+{% comment %} when no partial tag is specified, everything is rendered {% endcomment %}
+{% block content %}
+  {% partial table %}
+  {% partial formset %}
+{% endblock content %}

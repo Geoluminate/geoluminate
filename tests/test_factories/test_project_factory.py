@@ -1,5 +1,5 @@
-from geoluminate.contrib.core.models import Project
-from geoluminate.factories import ProjectFactory
+from fairdm.core.models import Project
+from fairdm.factories import ProjectFactory
 
 from .abstract_factory import TestAbstractFactory
 

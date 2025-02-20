@@ -1,0 +1,10 @@
+{% extends "fairdm/object_detail.html" %}
+{% load static fairdm sekizai_tags activity_tags easy_icons %}
+
+{% block sidebar_image %}
+  <div class="d-flex justify-content-center">
+    <c-avatar :image="base_object.image"
+              class="w-50"
+              icon="person" />
+  </div>
+{% endblock sidebar_image %}

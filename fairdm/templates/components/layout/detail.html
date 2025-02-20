@@ -1,0 +1,66 @@
+{% load flex_menu %}
+
+<c-layout.standard>
+  <c-bs5.nav id="pageMenu"
+             class="d-none d-md-flex border-bottom border-1 border-secondary-subtle px-2 position-relative shadow-sm bg-gradient"
+             tabstyle="underline">
+    {% if base_object %}
+      {% render_menu menu pk=base_object.pk %}
+    {% else %}
+      {% render_menu menu pk=object.pk %}
+    {% endif %}
+    <c-button.group class="ms-auto">
+      {{ detail_nav_actions }}
+      <c-bs5.dropdown id="detailExtraItemsDropdown"
+                      button_class=""
+                      icon="ellipsis">
+        {{ detail_extra_options }}
+        {% if dataset %}
+          <h6 class="dropdown-header">{% trans "Download" %}</h6>
+          <c-bs5.button href="{% url "dataset-metadata-download" pk=dataset.pk %}"
+                        class="dropdown-item"
+                        text="{% trans "Metadata" %}"
+                        icon="download-xml" />
+          <c-bs5.button href="{% url "dataset-download" pk=dataset.pk %}"
+                        class="dropdown-item"
+                        text="{% trans "Data Package" %}"
+                        icon="download-zip" />
+        {% endif %}
+      </c-bs5.dropdown>
+    </c-button.group>
+  </c-bs5.nav>
+  <c-layout.application>
+    <aside class="overflow-auto d-none d-md-block position-relative h-100 pt-md-0 {% if reverse %} border-start{% else %} border-end{% endif %} {{ sidebar_class }}">
+      {% if sidebar %}
+        {{ sidebar }}
+      {% else %}
+        <c-detail.sidebar image_class="ratio ratio-16x9 mx-auto">
+          {{ sidebar_cards }}
+          {% block sidebar_cards %}
+            <c-layout.sidebar-section id="milestonesSection"
+                                      heading="{% trans "Milestones" %}"
+                                      :visible="object.dates.exists">
+              <c-slot name="actions">
+                {% comment %} <c-bs5.button class="text-success" href="#" data-bs-toggle="modal" data-bs-target="#milestonesModal" icon="edit" /> {% endcomment %}
+              </c-slot>
+              {% include "generic/milestone.html#table" with object_list=object.dates.all %}
+            </c-layout.sidebar-section>
+            <c-layout.sidebar-section id="keywordsSection"
+                                      heading="{% trans "Keywords" %}"
+                                      :visible="object.keywords.exists">
+              <c-slot name="actions">
+                {% comment %} <c-bs5.button class="text-success" href="#" data-bs-toggle="modal" data-bs-target="#keywordsModal" icon="edit" /> {% endcomment %}
+              </c-slot>
+              {% include "generic/keywords.html#table" with object_list=object.keywords.all tags=object.tags.all %}
+            </c-layout.sidebar-section>
+          {% endblock sidebar_cards %}
+
+        </c-detail.sidebar>
+      {% endif %}
+    </aside>
+    <main id="pluginContainer"
+          class="position-relative overflow-auto flex-grow-1 pt-2 pt-md-0 ">
+      {{ slot }}
+    </main>
+  </c-layout.application>
+</c-layout.standard>

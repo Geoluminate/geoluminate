@@ -4,7 +4,7 @@ minio/
 test.*
 .vocabularies-cache
 # would be nice to ignore these and build bundle in CI workflow
-# geoluminate/static/bundles/
+# fairdm/static/bundles/
 
 
 # webpack-stats.json
@@ -96,10 +96,10 @@ env.bak/
 venv.bak/
 
 dist
-geoluminate/static/geoluminate/temp/*
+fairdm/static/fairdm/temp/*
 *.ipython
 assets/webpack-stats.json
 staticfiles
-geoluminate/templates/geoluminate/cards/standard_copy.html
+fairdm/templates/fairdm/cards/standard_copy.html
 *.env
 !stack.development.env

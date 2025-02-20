@@ -1,0 +1,81 @@
+{% load partials crispy_forms_tags %}
+
+<c-layout.sidebar hx-target="this"
+                  hx-swap="outerHTML"
+                  hx-push-url
+                  x-data="{'isfiltered': false, 'filterCount': {{ filter_count }}, 'totalCount': 7}">
+  <c-slot name="sidebar">
+    <form id="filterForm"
+          action="{{ request.path }}"
+          method="get"
+          hx-get="{{ request.path }}">
+      <div class="py-2 hstack sticky-top align-items-center">
+        <h1 class="fs-5 fw-semibold m-0">{% trans "Filter by" %}</h1>
+        <div class="ms-auto">
+          <button class="btn btn-sm btn-warning"
+                  type="button"
+                  hx-get>{% trans "Clear" %}</button>
+          <button class="btn btn-sm btn-primary" type="submit">{% trans "Apply" %}</button>
+        </div>
+      </div>
+      {% if filter %}
+        {{ filter.form|crispy }}
+      {% else %}
+        {{ filterset.form|crispy }}
+      {% endif %}
+    </form>
+  </c-slot>
+  <c-layout.page title="{{ object_verbose_name_plural|title }}">
+    <c-slot name="actions">
+      <c-bs5.button class="btn btn-primary btn-sm d-md-none"
+                    icon="filter"
+                    data-bs-toggle="modal"
+                    data-bs-target="#filterModal" />
+    </c-slot>
+    <c-paginator />
+    <div x-show="isfiltered"
+         x-cloak
+         x-transition:enter="transition ease-out duration-300"
+         class="text-muted mb-1">
+      {% blocktrans %}
+        Found <span x-text="filterCount"></span> matching entries.
+        {% endblocktrans %}
+    </div>
+    {% block card_list %}
+      <c-card-list class="row-cols-1"
+                   :object_list="object_list"
+                   :template="object_template" />
+    {% endblock card_list %}
+
+  </c-layout.page>
+</c-layout.sidebar>
+<c-bs5.modal title="{% trans "Filter by" %}" id="filterModal">
+  <form id="modalfilterForm"
+        action="{{ request.path }}"
+        method="get"
+        hx-get="{{ request.path }}">
+    {% if filter %}
+      {{ filter.form|crispy }}
+    {% else %}
+      {{ filterset.form|crispy }}
+    {% endif %}
+  </form>
+  <c-slot name="footer">
+    <button class="btn btn-sm btn-warning"
+            type="button"
+            hx-get>{% trans "Clear" %}</button>
+    <button class="btn btn-sm btn-primary" type="submit">{% trans "Apply" %}</button>
+  </c-slot>
+</c-bs5.modal>
+{% comment %} {% block toolbar_right %}
+  <a class="btn text-primary content-sidebar-toggle" href="#pageSidebar" data-bs-toggle="offcanvas" role="button" aria-controls="pageSidebar" aria-expanded="true">
+    <i class="fas fa-filter"></i>
+  </a>
+{% endblock toolbar_right %}
+
+{% block body_end %}
+  {{ block.super }}
+{% endblock body_end %}
+
+
+{% endcomment %}

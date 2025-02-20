@@ -1,0 +1,88 @@
+{% load static %}
+
+<c-vars id="contributor" icon="person" />
+<script>
+  var events = ['alpine:init', 'htmx:afterSwap'];
+  events.forEach(event => {
+    document.addEventListener(event, () => {
+      Alpine.data("{{ id }}", () => ({
+        endpoint: '{% url "api:contributor-list" %}?name=',
+        query: '',
+        matches: [],
+        error: null,
+
+        async fetchData() {
+          if (this.query.length < 3) {
+            this.matches = []
+            return
+          }
+          this.error = null
+          const url = this.endpoint + encodeURIComponent(this.query);
+
+          try {
+            const response = await fetch(url, {
+              headers: {
+                'Accept': 'application/json'
+              },
+            })
+
+            if (!response.ok) {
+              throw new Error('Error fetching from remote source')
+            }
+            const data = await response.json()
+
+            this.matches = data.results;
+
+            this.$nextTick(() => {
+              htmx.process("#{{ id }}Modal .result-list");
+            });
+
+
+          } catch (error) {
+            this.error = error.message
+            this.matches = []
+          }
+        },
+      }))
+    });
+  });
+</script>
+<c-modals.remote-database-search hx-vals='{"object_id": "{{ object.pk }}"}'>
+  <c-slot name="header">
+    <img src="{% static "img/brand/icon.svg" %}"
+         alt=""
+         style="height: 1lh" />
+    <input type="search"
+           class="ms-1 form-control"
+           x-model="query"
+           @input.debounce.500ms="fetchData"
+           placeholder="{% trans "Start typing to search..." %}" />
+  </c-slot>
+  <c-slot name="template">
+    <div>
+      <span x-text="item.name"></span>
+    </div>
+  </c-slot>
+  <c-slot name="empty_container">
+    <img src="{% static "img/brand/logo.svg" %}"
+         class="w-75 mb-3"
+         alt="logo" />
+    <p>
+      {% trans "Search this portal to quickly add an existing contributor. Can't find who you're looking for? Use the buttons below to add a contributor from an external registry." %}
+    </p>
+  </c-slot>
+  <c-slot name="footer">
+    <c-button.group>
+      <c-bs5.button class="btn bg-secondary-subtle w-50"
+                    data-bs-toggle="modal"
+                    data-bs-target="#orcidModal">
+        {% icon "orcid" height="1em" %} {% trans "Add by ORCiD" %}
+      </c-bs5.button>
+      <c-bs5.button class="btn bg-secondary-subtle w-50"
+                    data-bs-toggle="modal"
+                    data-bs-target="#RORModal">
+        {% icon "ROR" height="1em" %} {% trans "Search ROR database" %}
+      </c-bs5.button>
+    </c-button.group>
+  </c-slot>
+</c-modals.remote-database-search>

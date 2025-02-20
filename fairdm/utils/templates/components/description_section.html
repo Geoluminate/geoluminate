@@ -1,0 +1,18 @@
+{% load partials %}
+
+{% partialdef description %}
+<c-layout.page-section :heading="False">
+  <div class="fw-semibold">{{ description.get_type_display }}</div>
+  {{ description.value|linebreaks }}
+</c-layout.page-section>
+{% endpartialdef description %}
+
+<c-layout.page-section id="description-list">
+  {% if descriptions %}
+    {% for description in descriptions %}
+      {% partial description %}
+    {% endfor %}
+  {% else %}
+    <c-text.empty />
+  {% endif %}
+</c-layout.page-section>

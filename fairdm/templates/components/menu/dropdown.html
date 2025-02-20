@@ -1,0 +1,10 @@
+<div class="dropdown {{ dropdown_class }}">
+  <c-bs5.button class="dropdown-toggle {{ btn_class }} "
+                type="button"
+                icon="{{ icon }}"
+                aria-expanded="false"
+                data-bs-toggle="dropdown" />
+  <ul class="dropdown-menu {{ menu_class }}">
+    {{ slot }}
+  </ul>
+</div>

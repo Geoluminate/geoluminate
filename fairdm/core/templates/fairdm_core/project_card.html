@@ -1,0 +1,6 @@
+{% load easy_icons %}
+
+<c-card.style2 title="{{ obj }}"
+               :obj="obj"
+               :preview="obj.descriptions.first"
+               :contributors="obj.contributions.all" />

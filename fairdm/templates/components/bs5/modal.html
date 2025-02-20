@@ -1,0 +1,30 @@
+{% load static %}
+
+<c-vars dialog_class="modal-dialog-centered"
+        :centered="False" />
+<div id="{{ id }}"
+     class="modal fade {{ modal_class }}"
+     tabindex="-1">
+  <div class="modal-dialog {% if centered %}modal-dialog-centered{% endif %} {{ dialog_class }}">
+    <div class="modal-content {{ content_class }}">
+      {% if header or title %}
+        <div class="modal-header {{ header_class }}">
+          {{ header }}
+          {% if title %}
+            <img src="{% static "img/brand/icon.svg" %}"
+                 class="me-2"
+                 height="36px"
+                 alt="logo" />
+            <h5 class="modal-title">{{ title }}</h5>
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+          {% endif %}
+        </div>
+      {% endif %}
+      <div class="modal-body {{ body_class }}">{{ slot }}</div>
+      {% if footer %}<div class="modal-footer {{ footer_class }}">{{ footer }}</div>{% endif %}
+    </div>
+  </div>
+</div>

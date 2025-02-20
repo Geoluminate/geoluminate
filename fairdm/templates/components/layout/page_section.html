@@ -1,0 +1,10 @@
+<c-vars level="2" :visible="True" />
+{% if visible %}
+  <section class="page-section mb-3 {{ class }}" {{ attrs }}>
+    <div class="d-flex justify-content-between">
+      {% if heading %}<h {{ level }} class="fs-5">{{ heading }}</h {{ level }}>{% endif %}
+      {{ actions }}
+    </div>
+    {{ slot }}
+  </section>
+{% endif %}

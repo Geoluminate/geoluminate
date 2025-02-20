@@ -1,0 +1,22 @@
+<c-vars object_fit="cover" padding="0" />
+<swiper-slide class="{{ slide_class }} d-flex flex-wrap h-100 p-{{ padding }} {% if reverse %}flex-row-reverse{% endif %} " {{ attrs }}>
+  <div class="col-lg-6 col-12 d-flex justify-content-center align-items-center h-50 h-lg-100">
+    {% if column2 %}
+      {{ column2 }}
+    {% elif img %}
+      <img src="{{ img }}"
+           loading="lazy"
+           alt=""
+           class="h-100 w-100 object-fit-{{ object_fit }}" />
+    {% endif %}
+  </div>
+  <div class="col-lg-6 col-12 d-flex justify-content-center align-items-center h-50 h-lg-100">
+    <div class="flex-grow-1 p-5">
+      {% if column1 %}
+        {{ column1 }}
+      {% else %}
+        <c-home.content />
+      {% endif %}
+    </div>
+  </div>
+</swiper-slide>

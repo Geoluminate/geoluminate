@@ -1,0 +1,10 @@
+<a href="{{ item.url }}"
+   class="list-group-item list-group-item-action {% if item.selected %}active{% endif %}{{ item.extra_classes }}"
+   {% if item.description %} data-bs-trigger="hover" data-bs-toggle="popover" data-bs-placement="right" data-bs-title="{{ item.label }}" data-bs-content="{{ item.description }}"{% endif %}>
+  <span class="d-inline-block icon">
+    {% if item.icon %}
+      {% icon item.icon %}
+    {% endif %}
+  </span>
+  <span class="text-capitalize">{{ item.label }}</span>
+</a>

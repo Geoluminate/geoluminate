@@ -1,0 +1,19 @@
+<c-vars :template_only="False"
+        action="dataset-export-view" />
+{% comment %} USING FORMS WITH POST HERE TO PREVENT WEB CRAWLERS/BOTS SUBMITTING LINKS {% endcomment %}
+{% for format in formats %}
+  <li>
+    <form method="post"
+          action="{% url action pk=dataset.pk %}{% querystring %}?&format={{ format }}">
+      {% csrf_token %}
+      {% if template_only %}<input type="hidden" name="template" value="true" />{% endif %}
+      <input type="hidden" name="format" value="{{ format }}" />
+      <button type="submit"
+              name="format"
+              value="{{ format }}"
+              class="dropdown-item">
+        <code>.{{ format }}</code>
+      </button>
+    </form>
+  </li>
+{% endfor %}

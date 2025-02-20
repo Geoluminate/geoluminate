@@ -1,6 +1,6 @@
 import factory
 
-from geoluminate.factories import SampleFactory
+from fairdm.factories import SampleFactory
 
 from .models import CustomSample
 

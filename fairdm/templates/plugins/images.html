@@ -1,0 +1,7 @@
+{% load static comments fairdm partials %}
+
+<c-plugin layout="page" :title="object" :hr="False">
+  <div class="position-absolute top-50 start-50 translate-middle">{% trans "There's nothing here yet." %}</div>
+</c-plugin>
+<c-spinner id="mainIndicator" class="fs-1" centered />
+{% for modal in modals %}<c-component :is="modal" />{% endfor %}

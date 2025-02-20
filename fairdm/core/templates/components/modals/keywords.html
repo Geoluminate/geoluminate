@@ -1,0 +1,34 @@
+<c-bs5.modal id="keywordsModal">
+  <c-slot name="title">
+    {% blocktrans with entity_type=object.verbose_name|capfirst %}
+    <span class="">{{ entity_type }} keywords</span>
+    {% endblocktrans %}
+  </c-slot>
+  <div class="alert alert-info" role="alert">
+    {% blocktrans with entity_type=object.verbose_name %}
+    Keywords greatly enhance the discoverability of your {{ entity_type }}, making it easier to find through search engines and data portals. Well-chosen keywords increase the likelihood that other researchers can find and properly interpret your dataset, maximizing its impact and re-usability. <a href="/" target="_blank">Learn more</a>. 
+    {% endblocktrans %}
+  </div>
+  <div id="keywords-container"
+       hx-target="this"
+       hx-trigger="intersect"
+       hx-get="{% url "update-keywords" pk=object.pk %}"
+       hx-select="#keyword-form">
+    <p class="card-text placeholder-glow">
+      <div class="placeholder col-8"></div>
+      <div class="placeholder col-12 ps-2"></div>
+      <div class="placeholder col-8"></div>
+      <div class="placeholder col-12 ps-2"></div>
+      <div class="placeholder col-8"></div>
+      <div class="placeholder col-12 ps-2"></div>
+    </p>
+  </div>
+  <c-slot name="footer">
+    <c-bs5.button hx-include="#keyword-form"
+                  hx-post="{% url "update-keywords" pk=object.pk %}"
+                  hx-target="#keywords-container"
+                  class="btn btn-primary"
+                  icon="save"
+                  text="{% trans "Update" %}" />
+  </c-slot>
+</c-bs5.modal>

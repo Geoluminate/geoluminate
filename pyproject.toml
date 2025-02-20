@@ -1,17 +1,17 @@
 [tool.poetry]
-name = "geoluminate"
+name = "fairdm"
 version = "0.1.1"
 description = ""
 authors = ["Sam Jennings <samuel.scott.jennings@gmail.com>"]
 license = "GPL-3.0-or-later"
 readme = "README.md"
 include = [
-    "geoluminate",
+    "fairdm",
     "README.md",
     "LICENSE",
 ]
-homepage = "https://github.com/Geoluminate/geoluminate"
-keywords = ["research", "database", "research data management", "open data", "geoluminate", "FAIR"]
+homepage = "https://github.com/FAIR-DM/fairdm"
+keywords = ["research", "database", "research data management", "open data", "fairdm", "FAIR"]
 classifiers = [
     "Development Status :: 1 - Planning",
     "Framework :: Django :: 4.0",
@@ -21,7 +21,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
 ]
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.11"
 celery = "^5.4.0"
 crispy-bootstrap5 = "^2024.2"
 dj-rest-auth = "^3.0.0"
@@ -82,8 +82,6 @@ drf-orjson-renderer = "^1.7.1"
 drf-schema-adapter = "^3.0.6"
 drf-spectacular = {extras = ["sidecar"], version = "^0.26.1"}
 easy-thumbnails = "^2.10"
-factory-boy = "^3.2.1"
-faker = "^24.1.0"
 flower = "^1.2.0"
 gunicorn = "^20.1.0"
 lxml = "^5.1.0"
@@ -101,7 +99,7 @@ django-polymorphic-treebeard = {git = "https://github.com/SamuelJennings/django-
 django-jsonfield-toolkit = {git = "https://github.com/SamuelJennings/django-jsonfield-toolkit"}
 django-setup-tools = {git = "https://github.com/SamuelJennings/django-setup-tools"}
 shortuuid = "^1.0.13"
-django-cotton = "^1.2.1"
+django-cotton = "^1.5.2"
 django-literature = {git = "https://github.com/Geoluminate/django-literature"}
 django-widget-tweaks = "^1.5.0"
 tablib = {extras = ["all"], version = "^3.7.0"}
@@ -110,37 +108,17 @@ django-parler-rest = "^2.2"
 django-comments-xtd = {git = "https://github.com/danirus/django-comments-xtd"}
 django-pwa = "^2.0.1"
 django-pandas = "^0.6.7"
+django-ordered-model = "^3.7.4"
+django-taggit = "^6.1.0"
 
 
 
 [tool.poetry.group.dev.dependencies]
-black = "^23.1.0"
-coverage = "^7.2.1"
-deptry = "^0.8.0"
-django-coverage-plugin = "^3.0.0"
-django-debug-toolbar-template-profiler = "^2.1.0"
-django-extensions = "^3.2.1"
-django-stubs = "^1.15.0"
-djlint = "^1.25.0"
-invoke = "^2.0.0"
-ipython = "^8.21.0"
-mypy = "^1.2.0"
-pre-commit = "^3.2.2"
-pylint-celery = "^0.3"
-pylint-django = "^2.5.3"
-pytest = "^8.3.3"
-pytest-cov = "^4.0.0"
-pytest-django = "^4.5.2"
-pytest-sugar = "^0.9.7"
-tox = "^4.4.6"
-types-python-dateutil = "^2.8.19.12"
-types-requests = "^2.28.11.17"
+fairdm-dev-tools = {git = "https://github.com/FAIR-DM/dev-tools"}
 importtime-waterfall = "^1.0.0"
 pandas = "^2.2.2"
 django-better-admin-arrayfield = "^1.4.2"
-django-debug-toolbar = "^4.4.6"
-pytest-env = "^1.1.5"
-pip-licenses = "^5.0.0"
+snakeviz = "^2.2.2"
 
 
 
@@ -233,7 +211,7 @@ ignore = [
     "C901",
 ]
 exclude = [
-    "geoluminate/conf/*",
+    "fairdm/conf/*",
 ]
 [tool.ruff.lint.per-file-ignores]
 "**/tests/*" = ["S101","S105"]
@@ -269,7 +247,7 @@ indent_size=2
 
 
 [tool.mypy]
-files = ["geoluminate"]
+files = ["fairdm"]
 disallow_untyped_defs = "False"
 disallow_any_unimported = "False"
 ignore_missing_imports = "True"
@@ -283,26 +261,26 @@ exclude = [
     "docs/",
     "migrations/",
     "tests/settings.py",
-    "geoluminate/conf/*",
-    "geoluminate/contrib/user/forms/*",
+    "fairdm/conf/*",
+    "fairdm/contrib/user/forms/*",
     ]
-mypy_path = "./geoluminate/"
+mypy_path = "./fairdm/"
 plugins = ["mypy_django_plugin.main"]
 
 [[tool.mypy.overrides]]
-module = "geoluminate.models"
+module = "fairdm.models"
 disable_error_code = [
     "var-annotated",
 ]
 
 [[tool.mypy.overrides]]
-module = "geoluminate.db.gis.base"
+module = "fairdm.db.gis.base"
 disable_error_code = [
     "var-annotated",
 ]
 
 [[tool.mypy.overrides]]
-module = "geoluminate.models"
+module = "fairdm.models"
 disable_error_code = [
     "var-annotated",
 ]

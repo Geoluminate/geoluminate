@@ -1,0 +1,13 @@
+{% load fairdm %}
+
+<c-vars empty="–" />
+<div>
+  <div class="fw-semibold" title="{{ field.help_text }}">{{ field.verbose_name|capfirst }}</div>
+  <p class="ms-2 mb-2">
+    {% if slot %}
+      {{ slot }}
+    {% else %}
+      {{ value|default:empty }}
+    {% endif %}
+  </p>
+</div>

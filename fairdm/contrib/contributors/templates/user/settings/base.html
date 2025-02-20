@@ -1,0 +1,11 @@
+{% extends "account_management/base.html" %}
+{% load crispy_forms_tags static %}
+
+{% block content %}
+  <c-text.title title="{{ meta.title }}" hr />
+  {% if formset %}
+    {% crispy formset helper %}
+  {% else %}
+    {% crispy form %}
+  {% endif %}
+{% endblock content %}

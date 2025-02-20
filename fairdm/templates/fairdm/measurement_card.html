@@ -1,0 +1,15 @@
+{% load fairdm %}
+
+{% get_registry_info obj as info %}
+<c-bs5.card card_class="h-100"
+            header="{{ obj.verbose_name|title }} - {{ obj.id }}"
+            title="">
+  {% render_fieldsets obj info.config.get_fieldsets %}
+  <c-slot name="footer">
+    <c-bs5.button button_class="btn btn-primary"
+                  href="{{ obj.dataset.get_absolute_url }}"
+                  icon="dataset"
+                  text="{% trans "Dataset" %}">
+    </c-bs5.button>
+  </c-slot>
+</c-bs5.card>

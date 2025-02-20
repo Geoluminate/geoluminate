@@ -5,7 +5,7 @@ partial_date_re = re.compile(r"^(?P<year>\d{4})(?:-(?P<month>\d{1,2}))?(?:-(?P<d
 
 
 class PartialDate(date):
-    __slots__ = "_year", "_month", "_day", "_precision"
+    __slots__ = "_day", "_month", "_precision", "_year"
 
     YEAR = 0
     MONTH = 1

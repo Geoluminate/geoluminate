@@ -1,0 +1,39 @@
+$primary:                    #08376b !default;
+$sidebar-width:              315px !default;
+$card-border-radius:         1rem !default;
+$enable-gradients:           false !default;
+$enable-shadows:             false !default;
+$headings-font-weight:        475 !default;
+$headings-line-height:        1.2 !default;
+
+@import "bs5/functions";
+@import "bs5/variables";
+@import "bs5/variables-dark";
+
+// Add a custom color to $theme-colors
+$fairdm-colors: (
+  "project": #ebf92c,
+  "dataset": #00cb07,
+  "sample": #2c33f9,
+  "measurement": #f97e2c,
+);
+$theme-colors: map-merge($theme-colors, $fairdm-colors);
+
+@import 'bs5/bootstrap';
+@import "utilities";
+@import "spectacular";
+@import "custom";
+
+
+aside {
+  min-width: $sidebar-width;
+  max-width: $sidebar-width;
+}
+
+.bg-primary {
+  color: color-contrast($primary) !important;
+}
+
+.bg-secondary {
+  color: color-contrast($secondary) !important;
+}

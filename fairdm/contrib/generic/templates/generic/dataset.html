@@ -1,0 +1,32 @@
+{% comment %} {% extends 'base.html' %} {% endcomment %}
+{% load partials crispy_forms_tags %}
+
+{% block content %}
+  <c-layout.page title="{% trans "Update" %} - {{ object.verbose_name|title }}"
+                 class="px-5">
+    <form method="post" id="basic-information-form">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <hr />
+      {% for formset in inlines %}
+        <c-layout.page-section heading="{{ formset.model.verbose_name_plural|title }}">
+          {{ formset|crispy }}
+        </c-layout.page-section>
+      {% endfor %}
+    </form>
+  </c-layout.page>
+  <div class="sticky-bottom container d-flex py-1 border-top bg-body shadow  w-100">
+    <c-button.group class="ms-auto">
+      <c-bs5.button hx-get="{{ object.get_absolute_url }}"
+                    class="btn btn-secondary"
+                    icon="close"
+                    text="{% trans "Cancel" %}" />
+      {% comment %} <c-bs5.button type="submit" form="basic-information-form" class="btn btn-success" icon="save" text="{% trans "Save changes" %}" /> {% endcomment %}
+      <c-bs5.button hx-include="#basic-information-form"
+                    hx-post="{{ request.path }}"
+                    class="btn btn-success"
+                    icon="save"
+                    text="{% trans "Save changes" %}" />
+    </c-button.group>
+  </div>
+{% endblock content %}

@@ -1,0 +1,44 @@
+{% load comments %}
+
+{% comment %} hx-target="#comments-list-{{ cid }}" {% endcomment %}
+{% comment %} hx-swap="beforeBegin" {% endcomment %}
+<form method="post"
+      action="{% comment_form_target %}"
+      hx-post="{% comment_form_target %}"
+      hx-target=".comments"
+      hx-select=".comments"
+      onsubmit="post.disabled = true; return true;">
+  {% csrf_token %}
+  <fieldset>
+    <input type="hidden"
+           name="next"
+           value="{% url 'comments-xtd-sent' %}" />
+    <div class="alert alert-danger"
+         data-comment-element="errors"
+         hidden></div>
+    {% for field in form %}
+      {% if field.is_hidden %}<div>{{ field }}</div>{% endif %}
+    {% endfor %}
+    <div style="display:none">{{ form.honeypot }}</div>
+    <div class="row mb-3 form-group{% if 'comment' in form.errors %} has-danger{% endif %}">
+      <div>{{ form.comment }}</div>
+    </div>
+    <div class="row form-group">
+      <div class="col-7"></div>
+    </div>
+  </fieldset>
+  <div class="row form-group">
+    <div class="d-flex w-100 align-items-center">
+      <input type="submit"
+             name="post"
+             value="{% trans 'send' %}"
+             class=" text-capitalize me-1 btn btn-primary" />
+      {% comment %} <input type="submit" name="preview" value="{% trans 'preview' %}" class="text-capitalize btn btn-secondary" /> {% endcomment %}
+      <div class="form-check ms-auto ">
+        {{ form.followup }}
+        <label for="id_followup{% if cid %}_{{ cid }}{% endif %}"
+               class="form-check-label">&nbsp;{{ form.followup.label }}</label>
+      </div>
+    </div>
+  </div>
+</form>

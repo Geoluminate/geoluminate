@@ -1,0 +1,535 @@
+{
+  "status": "done",
+  "assets": {
+    "../bs5/_accordion.scss": {
+      "name": "../bs5/_accordion.scss",
+      "path": "..\\bs5\\_accordion.scss",
+      "publicPath": "/static/bundles/../bs5/_accordion.scss"
+    },
+    "../bs5/_alert.scss": {
+      "name": "../bs5/_alert.scss",
+      "path": "..\\bs5\\_alert.scss",
+      "publicPath": "/static/bundles/../bs5/_alert.scss"
+    },
+    "../bs5/_badge.scss": {
+      "name": "../bs5/_badge.scss",
+      "path": "..\\bs5\\_badge.scss",
+      "publicPath": "/static/bundles/../bs5/_badge.scss"
+    },
+    "../bs5/_breadcrumb.scss": {
+      "name": "../bs5/_breadcrumb.scss",
+      "path": "..\\bs5\\_breadcrumb.scss",
+      "publicPath": "/static/bundles/../bs5/_breadcrumb.scss"
+    },
+    "../bs5/_button-group.scss": {
+      "name": "../bs5/_button-group.scss",
+      "path": "..\\bs5\\_button-group.scss",
+      "publicPath": "/static/bundles/../bs5/_button-group.scss"
+    },
+    "../bs5/_buttons.scss": {
+      "name": "../bs5/_buttons.scss",
+      "path": "..\\bs5\\_buttons.scss",
+      "publicPath": "/static/bundles/../bs5/_buttons.scss"
+    },
+    "../bs5/_card.scss": {
+      "name": "../bs5/_card.scss",
+      "path": "..\\bs5\\_card.scss",
+      "publicPath": "/static/bundles/../bs5/_card.scss"
+    },
+    "../bs5/_carousel.scss": {
+      "name": "../bs5/_carousel.scss",
+      "path": "..\\bs5\\_carousel.scss",
+      "publicPath": "/static/bundles/../bs5/_carousel.scss"
+    },
+    "../bs5/_close.scss": {
+      "name": "../bs5/_close.scss",
+      "path": "..\\bs5\\_close.scss",
+      "publicPath": "/static/bundles/../bs5/_close.scss"
+    },
+    "../bs5/_containers.scss": {
+      "name": "../bs5/_containers.scss",
+      "path": "..\\bs5\\_containers.scss",
+      "publicPath": "/static/bundles/../bs5/_containers.scss"
+    },
+    "../bs5/_dropdown.scss": {
+      "name": "../bs5/_dropdown.scss",
+      "path": "..\\bs5\\_dropdown.scss",
+      "publicPath": "/static/bundles/../bs5/_dropdown.scss"
+    },
+    "../bs5/_forms.scss": {
+      "name": "../bs5/_forms.scss",
+      "path": "..\\bs5\\_forms.scss",
+      "publicPath": "/static/bundles/../bs5/_forms.scss"
+    },
+    "../bs5/_functions.scss": {
+      "name": "../bs5/_functions.scss",
+      "path": "..\\bs5\\_functions.scss",
+      "publicPath": "/static/bundles/../bs5/_functions.scss"
+    },
+    "../bs5/_grid.scss": {
+      "name": "../bs5/_grid.scss",
+      "path": "..\\bs5\\_grid.scss",
+      "publicPath": "/static/bundles/../bs5/_grid.scss"
+    },
+    "../bs5/_helpers.scss": {
+      "name": "../bs5/_helpers.scss",
+      "path": "..\\bs5\\_helpers.scss",
+      "publicPath": "/static/bundles/../bs5/_helpers.scss"
+    },
+    "../bs5/_images.scss": {
+      "name": "../bs5/_images.scss",
+      "path": "..\\bs5\\_images.scss",
+      "publicPath": "/static/bundles/../bs5/_images.scss"
+    },
+    "../bs5/_list-group.scss": {
+      "name": "../bs5/_list-group.scss",
+      "path": "..\\bs5\\_list-group.scss",
+      "publicPath": "/static/bundles/../bs5/_list-group.scss"
+    },
+    "../bs5/_maps.scss": {
+      "name": "../bs5/_maps.scss",
+      "path": "..\\bs5\\_maps.scss",
+      "publicPath": "/static/bundles/../bs5/_maps.scss"
+    },
+    "../bs5/_mixins.scss": {
+      "name": "../bs5/_mixins.scss",
+      "path": "..\\bs5\\_mixins.scss",
+      "publicPath": "/static/bundles/../bs5/_mixins.scss"
+    },
+    "../bs5/_modal.scss": {
+      "name": "../bs5/_modal.scss",
+      "path": "..\\bs5\\_modal.scss",
+      "publicPath": "/static/bundles/../bs5/_modal.scss"
+    },
+    "../bs5/_nav.scss": {
+      "name": "../bs5/_nav.scss",
+      "path": "..\\bs5\\_nav.scss",
+      "publicPath": "/static/bundles/../bs5/_nav.scss"
+    },
+    "../bs5/_navbar.scss": {
+      "name": "../bs5/_navbar.scss",
+      "path": "..\\bs5\\_navbar.scss",
+      "publicPath": "/static/bundles/../bs5/_navbar.scss"
+    },
+    "../bs5/_offcanvas.scss": {
+      "name": "../bs5/_offcanvas.scss",
+      "path": "..\\bs5\\_offcanvas.scss",
+      "publicPath": "/static/bundles/../bs5/_offcanvas.scss"
+    },
+    "../bs5/_pagination.scss": {
+      "name": "../bs5/_pagination.scss",
+      "path": "..\\bs5\\_pagination.scss",
+      "publicPath": "/static/bundles/../bs5/_pagination.scss"
+    },
+    "../bs5/_placeholders.scss": {
+      "name": "../bs5/_placeholders.scss",
+      "path": "..\\bs5\\_placeholders.scss",
+      "publicPath": "/static/bundles/../bs5/_placeholders.scss"
+    },
+    "../bs5/_popover.scss": {
+      "name": "../bs5/_popover.scss",
+      "path": "..\\bs5\\_popover.scss",
+      "publicPath": "/static/bundles/../bs5/_popover.scss"
+    },
+    "../bs5/_progress.scss": {
+      "name": "../bs5/_progress.scss",
+      "path": "..\\bs5\\_progress.scss",
+      "publicPath": "/static/bundles/../bs5/_progress.scss"
+    },
+    "../bs5/_reboot.scss": {
+      "name": "../bs5/_reboot.scss",
+      "path": "..\\bs5\\_reboot.scss",
+      "publicPath": "/static/bundles/../bs5/_reboot.scss"
+    },
+    "../bs5/_root.scss": {
+      "name": "../bs5/_root.scss",
+      "path": "..\\bs5\\_root.scss",
+      "publicPath": "/static/bundles/../bs5/_root.scss"
+    },
+    "../bs5/_spinners.scss": {
+      "name": "../bs5/_spinners.scss",
+      "path": "..\\bs5\\_spinners.scss",
+      "publicPath": "/static/bundles/../bs5/_spinners.scss"
+    },
+    "../bs5/_tables.scss": {
+      "name": "../bs5/_tables.scss",
+      "path": "..\\bs5\\_tables.scss",
+      "publicPath": "/static/bundles/../bs5/_tables.scss"
+    },
+    "../bs5/_toasts.scss": {
+      "name": "../bs5/_toasts.scss",
+      "path": "..\\bs5\\_toasts.scss",
+      "publicPath": "/static/bundles/../bs5/_toasts.scss"
+    },
+    "../bs5/_tooltip.scss": {
+      "name": "../bs5/_tooltip.scss",
+      "path": "..\\bs5\\_tooltip.scss",
+      "publicPath": "/static/bundles/../bs5/_tooltip.scss"
+    },
+    "../bs5/_transitions.scss": {
+      "name": "../bs5/_transitions.scss",
+      "path": "..\\bs5\\_transitions.scss",
+      "publicPath": "/static/bundles/../bs5/_transitions.scss"
+    },
+    "../bs5/_type.scss": {
+      "name": "../bs5/_type.scss",
+      "path": "..\\bs5\\_type.scss",
+      "publicPath": "/static/bundles/../bs5/_type.scss"
+    },
+    "../bs5/_utilities.scss": {
+      "name": "../bs5/_utilities.scss",
+      "path": "..\\bs5\\_utilities.scss",
+      "publicPath": "/static/bundles/../bs5/_utilities.scss"
+    },
+    "../bs5/_variables-dark.scss": {
+      "name": "../bs5/_variables-dark.scss",
+      "path": "..\\bs5\\_variables-dark.scss",
+      "publicPath": "/static/bundles/../bs5/_variables-dark.scss"
+    },
+    "../bs5/_variables.scss": {
+      "name": "../bs5/_variables.scss",
+      "path": "..\\bs5\\_variables.scss",
+      "publicPath": "/static/bundles/../bs5/_variables.scss"
+    },
+    "../bs5/bootstrap-grid.scss": {
+      "name": "../bs5/bootstrap-grid.scss",
+      "path": "..\\bs5\\bootstrap-grid.scss",
+      "publicPath": "/static/bundles/../bs5/bootstrap-grid.scss"
+    },
+    "../bs5/bootstrap-reboot.scss": {
+      "name": "../bs5/bootstrap-reboot.scss",
+      "path": "..\\bs5\\bootstrap-reboot.scss",
+      "publicPath": "/static/bundles/../bs5/bootstrap-reboot.scss"
+    },
+    "../bs5/bootstrap-utilities.scss": {
+      "name": "../bs5/bootstrap-utilities.scss",
+      "path": "..\\bs5\\bootstrap-utilities.scss",
+      "publicPath": "/static/bundles/../bs5/bootstrap-utilities.scss"
+    },
+    "../bs5/bootstrap.scss": {
+      "name": "../bs5/bootstrap.scss",
+      "path": "..\\bs5\\bootstrap.scss",
+      "publicPath": "/static/bundles/../bs5/bootstrap.scss"
+    },
+    "../bs5/forms/_floating-labels.scss": {
+      "name": "../bs5/forms/_floating-labels.scss",
+      "path": "..\\bs5\\forms\\_floating-labels.scss",
+      "publicPath": "/static/bundles/../bs5/forms/_floating-labels.scss"
+    },
+    "../bs5/forms/_form-check.scss": {
+      "name": "../bs5/forms/_form-check.scss",
+      "path": "..\\bs5\\forms\\_form-check.scss",
+      "publicPath": "/static/bundles/../bs5/forms/_form-check.scss"
+    },
+    "../bs5/forms/_form-control.scss": {
+      "name": "../bs5/forms/_form-control.scss",
+      "path": "..\\bs5\\forms\\_form-control.scss",
+      "publicPath": "/static/bundles/../bs5/forms/_form-control.scss"
+    },
+    "../bs5/forms/_form-range.scss": {
+      "name": "../bs5/forms/_form-range.scss",
+      "path": "..\\bs5\\forms\\_form-range.scss",
+      "publicPath": "/static/bundles/../bs5/forms/_form-range.scss"
+    },
+    "../bs5/forms/_form-select.scss": {
+      "name": "../bs5/forms/_form-select.scss",
+      "path": "..\\bs5\\forms\\_form-select.scss",
+      "publicPath": "/static/bundles/../bs5/forms/_form-select.scss"
+    },
+    "../bs5/forms/_form-text.scss": {
+      "name": "../bs5/forms/_form-text.scss",
+      "path": "..\\bs5\\forms\\_form-text.scss",
+      "publicPath": "/static/bundles/../bs5/forms/_form-text.scss"
+    },
+    "../bs5/forms/_input-group.scss": {
+      "name": "../bs5/forms/_input-group.scss",
+      "path": "..\\bs5\\forms\\_input-group.scss",
+      "publicPath": "/static/bundles/../bs5/forms/_input-group.scss"
+    },
+    "../bs5/forms/_labels.scss": {
+      "name": "../bs5/forms/_labels.scss",
+      "path": "..\\bs5\\forms\\_labels.scss",
+      "publicPath": "/static/bundles/../bs5/forms/_labels.scss"
+    },
+    "../bs5/forms/_validation.scss": {
+      "name": "../bs5/forms/_validation.scss",
+      "path": "..\\bs5\\forms\\_validation.scss",
+      "publicPath": "/static/bundles/../bs5/forms/_validation.scss"
+    },
+    "../bs5/helpers/_clearfix.scss": {
+      "name": "../bs5/helpers/_clearfix.scss",
+      "path": "..\\bs5\\helpers\\_clearfix.scss",
+      "publicPath": "/static/bundles/../bs5/helpers/_clearfix.scss"
+    },
+    "../bs5/helpers/_color-bg.scss": {
+      "name": "../bs5/helpers/_color-bg.scss",
+      "path": "..\\bs5\\helpers\\_color-bg.scss",
+      "publicPath": "/static/bundles/../bs5/helpers/_color-bg.scss"
+    },
+    "../bs5/helpers/_colored-links.scss": {
+      "name": "../bs5/helpers/_colored-links.scss",
+      "path": "..\\bs5\\helpers\\_colored-links.scss",
+      "publicPath": "/static/bundles/../bs5/helpers/_colored-links.scss"
+    },
+    "../bs5/helpers/_focus-ring.scss": {
+      "name": "../bs5/helpers/_focus-ring.scss",
+      "path": "..\\bs5\\helpers\\_focus-ring.scss",
+      "publicPath": "/static/bundles/../bs5/helpers/_focus-ring.scss"
+    },
+    "../bs5/helpers/_icon-link.scss": {
+      "name": "../bs5/helpers/_icon-link.scss",
+      "path": "..\\bs5\\helpers\\_icon-link.scss",
+      "publicPath": "/static/bundles/../bs5/helpers/_icon-link.scss"
+    },
+    "../bs5/helpers/_position.scss": {
+      "name": "../bs5/helpers/_position.scss",
+      "path": "..\\bs5\\helpers\\_position.scss",
+      "publicPath": "/static/bundles/../bs5/helpers/_position.scss"
+    },
+    "../bs5/helpers/_ratio.scss": {
+      "name": "../bs5/helpers/_ratio.scss",
+      "path": "..\\bs5\\helpers\\_ratio.scss",
+      "publicPath": "/static/bundles/../bs5/helpers/_ratio.scss"
+    },
+    "../bs5/helpers/_stacks.scss": {
+      "name": "../bs5/helpers/_stacks.scss",
+      "path": "..\\bs5\\helpers\\_stacks.scss",
+      "publicPath": "/static/bundles/../bs5/helpers/_stacks.scss"
+    },
+    "../bs5/helpers/_stretched-link.scss": {
+      "name": "../bs5/helpers/_stretched-link.scss",
+      "path": "..\\bs5\\helpers\\_stretched-link.scss",
+      "publicPath": "/static/bundles/../bs5/helpers/_stretched-link.scss"
+    },
+    "../bs5/helpers/_text-truncation.scss": {
+      "name": "../bs5/helpers/_text-truncation.scss",
+      "path": "..\\bs5\\helpers\\_text-truncation.scss",
+      "publicPath": "/static/bundles/../bs5/helpers/_text-truncation.scss"
+    },
+    "../bs5/helpers/_visually-hidden.scss": {
+      "name": "../bs5/helpers/_visually-hidden.scss",
+      "path": "..\\bs5\\helpers\\_visually-hidden.scss",
+      "publicPath": "/static/bundles/../bs5/helpers/_visually-hidden.scss"
+    },
+    "../bs5/helpers/_vr.scss": {
+      "name": "../bs5/helpers/_vr.scss",
+      "path": "..\\bs5\\helpers\\_vr.scss",
+      "publicPath": "/static/bundles/../bs5/helpers/_vr.scss"
+    },
+    "../bs5/mixins/_alert.scss": {
+      "name": "../bs5/mixins/_alert.scss",
+      "path": "..\\bs5\\mixins\\_alert.scss",
+      "publicPath": "/static/bundles/../bs5/mixins/_alert.scss"
+    },
+    "../bs5/mixins/_backdrop.scss": {
+      "name": "../bs5/mixins/_backdrop.scss",
+      "path": "..\\bs5\\mixins\\_backdrop.scss",
+      "publicPath": "/static/bundles/../bs5/mixins/_backdrop.scss"
+    },
+    "../bs5/mixins/_banner.scss": {
+      "name": "../bs5/mixins/_banner.scss",
+      "path": "..\\bs5\\mixins\\_banner.scss",
+      "publicPath": "/static/bundles/../bs5/mixins/_banner.scss"
+    },
+    "../bs5/mixins/_border-radius.scss": {
+      "name": "../bs5/mixins/_border-radius.scss",
+      "path": "..\\bs5\\mixins\\_border-radius.scss",
+      "publicPath": "/static/bundles/../bs5/mixins/_border-radius.scss"
+    },
+    "../bs5/mixins/_box-shadow.scss": {
+      "name": "../bs5/mixins/_box-shadow.scss",
+      "path": "..\\bs5\\mixins\\_box-shadow.scss",
+      "publicPath": "/static/bundles/../bs5/mixins/_box-shadow.scss"
+    },
+    "../bs5/mixins/_breakpoints.scss": {
+      "name": "../bs5/mixins/_breakpoints.scss",
+      "path": "..\\bs5\\mixins\\_breakpoints.scss",
+      "publicPath": "/static/bundles/../bs5/mixins/_breakpoints.scss"
+    },
+    "../bs5/mixins/_buttons.scss": {
+      "name": "../bs5/mixins/_buttons.scss",
+      "path": "..\\bs5\\mixins\\_buttons.scss",
+      "publicPath": "/static/bundles/../bs5/mixins/_buttons.scss"
+    },
+    "../bs5/mixins/_caret.scss": {
+      "name": "../bs5/mixins/_caret.scss",
+      "path": "..\\bs5\\mixins\\_caret.scss",
+      "publicPath": "/static/bundles/../bs5/mixins/_caret.scss"
+    },
+    "../bs5/mixins/_clearfix.scss": {
+      "name": "../bs5/mixins/_clearfix.scss",
+      "path": "..\\bs5\\mixins\\_clearfix.scss",
+      "publicPath": "/static/bundles/../bs5/mixins/_clearfix.scss"
+    },
+    "../bs5/mixins/_color-mode.scss": {
+      "name": "../bs5/mixins/_color-mode.scss",
+      "path": "..\\bs5\\mixins\\_color-mode.scss",
+      "publicPath": "/static/bundles/../bs5/mixins/_color-mode.scss"
+    },
+    "../bs5/mixins/_color-scheme.scss": {
+      "name": "../bs5/mixins/_color-scheme.scss",
+      "path": "..\\bs5\\mixins\\_color-scheme.scss",
+      "publicPath": "/static/bundles/../bs5/mixins/_color-scheme.scss"
+    },
+    "../bs5/mixins/_container.scss": {
+      "name": "../bs5/mixins/_container.scss",
+      "path": "..\\bs5\\mixins\\_container.scss",
+      "publicPath": "/static/bundles/../bs5/mixins/_container.scss"
+    },
+    "../bs5/mixins/_deprecate.scss": {
+      "name": "../bs5/mixins/_deprecate.scss",
+      "path": "..\\bs5\\mixins\\_deprecate.scss",
+      "publicPath": "/static/bundles/../bs5/mixins/_deprecate.scss"
+    },
+    "../bs5/mixins/_forms.scss": {
+      "name": "../bs5/mixins/_forms.scss",
+      "path": "..\\bs5\\mixins\\_forms.scss",
+      "publicPath": "/static/bundles/../bs5/mixins/_forms.scss"
+    },
+    "../bs5/mixins/_gradients.scss": {
+      "name": "../bs5/mixins/_gradients.scss",
+      "path": "..\\bs5\\mixins\\_gradients.scss",
+      "publicPath": "/static/bundles/../bs5/mixins/_gradients.scss"
+    },
+    "../bs5/mixins/_grid.scss": {
+      "name": "../bs5/mixins/_grid.scss",
+      "path": "..\\bs5\\mixins\\_grid.scss",
+      "publicPath": "/static/bundles/../bs5/mixins/_grid.scss"
+    },
+    "../bs5/mixins/_image.scss": {
+      "name": "../bs5/mixins/_image.scss",
+      "path": "..\\bs5\\mixins\\_image.scss",
+      "publicPath": "/static/bundles/../bs5/mixins/_image.scss"
+    },
+    "../bs5/mixins/_list-group.scss": {
+      "name": "../bs5/mixins/_list-group.scss",
+      "path": "..\\bs5\\mixins\\_list-group.scss",
+      "publicPath": "/static/bundles/../bs5/mixins/_list-group.scss"
+    },
+    "../bs5/mixins/_lists.scss": {
+      "name": "../bs5/mixins/_lists.scss",
+      "path": "..\\bs5\\mixins\\_lists.scss",
+      "publicPath": "/static/bundles/../bs5/mixins/_lists.scss"
+    },
+    "../bs5/mixins/_pagination.scss": {
+      "name": "../bs5/mixins/_pagination.scss",
+      "path": "..\\bs5\\mixins\\_pagination.scss",
+      "publicPath": "/static/bundles/../bs5/mixins/_pagination.scss"
+    },
+    "../bs5/mixins/_reset-text.scss": {
+      "name": "../bs5/mixins/_reset-text.scss",
+      "path": "..\\bs5\\mixins\\_reset-text.scss",
+      "publicPath": "/static/bundles/../bs5/mixins/_reset-text.scss"
+    },
+    "../bs5/mixins/_resize.scss": {
+      "name": "../bs5/mixins/_resize.scss",
+      "path": "..\\bs5\\mixins\\_resize.scss",
+      "publicPath": "/static/bundles/../bs5/mixins/_resize.scss"
+    },
+    "../bs5/mixins/_table-variants.scss": {
+      "name": "../bs5/mixins/_table-variants.scss",
+      "path": "..\\bs5\\mixins\\_table-variants.scss",
+      "publicPath": "/static/bundles/../bs5/mixins/_table-variants.scss"
+    },
+    "../bs5/mixins/_text-truncate.scss": {
+      "name": "../bs5/mixins/_text-truncate.scss",
+      "path": "..\\bs5\\mixins\\_text-truncate.scss",
+      "publicPath": "/static/bundles/../bs5/mixins/_text-truncate.scss"
+    },
+    "../bs5/mixins/_transition.scss": {
+      "name": "../bs5/mixins/_transition.scss",
+      "path": "..\\bs5\\mixins\\_transition.scss",
+      "publicPath": "/static/bundles/../bs5/mixins/_transition.scss"
+    },
+    "../bs5/mixins/_utilities.scss": {
+      "name": "../bs5/mixins/_utilities.scss",
+      "path": "..\\bs5\\mixins\\_utilities.scss",
+      "publicPath": "/static/bundles/../bs5/mixins/_utilities.scss"
+    },
+    "../bs5/mixins/_visually-hidden.scss": {
+      "name": "../bs5/mixins/_visually-hidden.scss",
+      "path": "..\\bs5\\mixins\\_visually-hidden.scss",
+      "publicPath": "/static/bundles/../bs5/mixins/_visually-hidden.scss"
+    },
+    "../bs5/utilities/_api.scss": {
+      "name": "../bs5/utilities/_api.scss",
+      "path": "..\\bs5\\utilities\\_api.scss",
+      "publicPath": "/static/bundles/../bs5/utilities/_api.scss"
+    },
+    "../bs5/vendor/_rfs.scss": {
+      "name": "../bs5/vendor/_rfs.scss",
+      "path": "..\\bs5\\vendor\\_rfs.scss",
+      "publicPath": "/static/bundles/../bs5/vendor/_rfs.scss"
+    },
+    "05fdd87be89f7f8f0a1e.ttf": {
+      "name": "05fdd87be89f7f8f0a1e.ttf",
+      "path": "05fdd87be89f7f8f0a1e.ttf",
+      "publicPath": "/static/bundles/05fdd87be89f7f8f0a1e.ttf"
+    },
+    "26b80c8830bebf340211.ttf": {
+      "name": "26b80c8830bebf340211.ttf",
+      "path": "26b80c8830bebf340211.ttf",
+      "publicPath": "/static/bundles/26b80c8830bebf340211.ttf"
+    },
+    "4f6a2dabee9c092d09b9.woff2": {
+      "name": "4f6a2dabee9c092d09b9.woff2",
+      "path": "4f6a2dabee9c092d09b9.woff2",
+      "publicPath": "/static/bundles/4f6a2dabee9c092d09b9.woff2"
+    },
+    "83a538a018a9e44b023a.woff2": {
+      "name": "83a538a018a9e44b023a.woff2",
+      "path": "83a538a018a9e44b023a.woff2",
+      "publicPath": "/static/bundles/83a538a018a9e44b023a.woff2"
+    },
+    "ad1782c70927ebc5bc87.ttf": {
+      "name": "ad1782c70927ebc5bc87.ttf",
+      "path": "ad1782c70927ebc5bc87.ttf",
+      "publicPath": "/static/bundles/ad1782c70927ebc5bc87.ttf"
+    },
+    "c3ea317a0f10f201597f.woff2": {
+      "name": "c3ea317a0f10f201597f.woff2",
+      "path": "c3ea317a0f10f201597f.woff2",
+      "publicPath": "/static/bundles/c3ea317a0f10f201597f.woff2"
+    },
+    "css/project.c0ff14c021441bd4f288.css": {
+      "name": "css/project.c0ff14c021441bd4f288.css",
+      "path": "css\\project.c0ff14c021441bd4f288.css",
+      "publicPath": "/static/bundles/css/project.c0ff14c021441bd4f288.css"
+    },
+    "fa86b3c85e77abbd2ebd.ttf": {
+      "name": "fa86b3c85e77abbd2ebd.ttf",
+      "path": "fa86b3c85e77abbd2ebd.ttf",
+      "publicPath": "/static/bundles/fa86b3c85e77abbd2ebd.ttf"
+    },
+    "fdbb558523a380307689.woff2": {
+      "name": "fdbb558523a380307689.woff2",
+      "path": "fdbb558523a380307689.woff2",
+      "publicPath": "/static/bundles/fdbb558523a380307689.woff2"
+    },
+    "js/popper.js": {
+      "name": "js/popper.js",
+      "path": "js\\popper.js",
+      "publicPath": "/static/bundles/js/popper.js"
+    },
+    "js/project.js": {
+      "name": "js/project.js",
+      "path": "js\\project.js",
+      "publicPath": "/static/bundles/js/project.js"
+    },
+    "js/project.js.LICENSE.txt": {
+      "name": "js/project.js.LICENSE.txt",
+      "path": "js\\project.js.LICENSE.txt",
+      "publicPath": "/static/bundles/js/project.js.LICENSE.txt"
+    }
+  },
+  "chunks": {
+    "popper": [
+      "js/popper.js"
+    ],
+    "project": [
+      "js/project.js",
+      "css/project.c0ff14c021441bd4f288.css"
+    ]
+  },
+  "publicPath": "/static/bundles/"
+}

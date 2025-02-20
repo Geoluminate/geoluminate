@@ -1,0 +1,19 @@
+{% load meta fairdm static %}
+
+<c-base>
+  <c-slot name="head">
+    <title>{{ title }}</title>
+  </c-slot>
+  <c-body>
+    <div class="container flex-grow-1 vstack justify-content-center align-items-center">
+      <img class="mb-3"
+           src="{% static "img/brand/logo.svg" %}"
+           alt=""
+           style="max-height:120px"
+           height="120"
+           width="auto" />
+      <h1>{{ title }}</h1>
+      <p>{{ message }}</p>
+    </div>
+  </c-body>
+</c-base>

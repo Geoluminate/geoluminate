@@ -1,0 +1,25 @@
+{% load crispy_forms_tags partials %}
+
+<c-plugin layout="page" title="{{ view.title }}">
+  <c-slot name="actions">
+    {% block actions %}
+      <c-button.group>
+        <c-bs5.button class="btn btn-sm btn-primary"
+                      data-bs-toggle="modal"
+                      data-bs-target="#contributorModal"
+                      icon="plus"
+                      text="{% trans "Add" %}"
+                      :visible="user_can_edit" />
+      </c-button.group>
+    {% endblock actions %}
+
+  </c-slot>
+  <c-card-list class="row-cols-5"
+               gap="1"
+               id="contributorList"
+               :object_list="object_list"
+               :template="object_template" />
+</c-plugin>
+<div>
+  {% for modal in modals %}<c-component :is="modal" />{% endfor %}
+</div>

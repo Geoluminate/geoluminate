@@ -1,0 +1,8 @@
+<c-vars :precision="0" />
+{% if precision == 2 %}
+  <span>{{ date|date:"M d, Y" }}</span>
+{% elif precision == 1 %}
+  {{ date|date:"M, Y" }}
+{% elif precision == 0 %}
+  {{ date|date:"Y" }}
+{% endif %}

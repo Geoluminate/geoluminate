@@ -1,7 +1,7 @@
 from django.test import TestCase
 
-from geoluminate.contrib.contributors.models import Organization
-from geoluminate.factories import OrganizationFactory
+from fairdm.contrib.contributors.models import Organization
+from fairdm.factories import OrganizationFactory
 
 
 class TestOrganizationFactory(TestCase):

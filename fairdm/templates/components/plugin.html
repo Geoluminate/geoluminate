@@ -1,0 +1,34 @@
+{% load partials %}
+
+<c-vars title="{{ meta.title }}"
+        :hr="True"
+        layout="page"
+        :layout_types="{'page': 'px-5 container overflow-auto', 'app': ''}" />
+{% partialdef plugin %}
+<div class="w-100 h-100  {{ layout_types|get_item:layout }}"
+     {{ attrs }}>
+  {% if layout == "page" %}
+    <c-text.title :title="{{ title }}">
+      {% if actions %}
+        <c-slot name="actions">
+          {{ actions }}
+        </c-slot>
+      {% endif %}
+    </c-text.title>
+  {% endif %}
+  {{ slot }}
+</div>
+<c-spinner id="mainIndicator" class="fs-1" centered />
+{% endpartialdef plugin %}
+
+{% partialdef page %}
+<c-layout.detail title="{{ meta.title }}">
+  {% partial plugin %}
+</c-layout.detail>
+{% endpartialdef page %}
+
+{% if request.htmx %}
+  {% partial plugin %}
+{% else %}
+  {% partial page %}
+{% endif %}

@@ -1,0 +1,17 @@
+<c-bs5.card>
+  <div class="hstack w-100">
+    <div class="me-3" style="height: 48px; width:48px">
+      <c-avatar :contributor="action.actor" />
+    </div>
+    <div class="d-inline-block">
+      {% if action.actor.get_absolute_url %}
+        <a href="{{ action.actor.get_absolute_url }}"
+           class="fw-bold">{{ action.actor }}</a>
+      {% else %}
+        <span class="fw-bold">{{ action.actor }}</span>
+      {% endif %}
+      - <span>{{ action.description }}</span>
+      <div class="small">{{ action.timestamp|timesince }} {% trans "ago" %}</div>
+    </div>
+  </div>
+</c-bs5.card>

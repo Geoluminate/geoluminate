@@ -1,0 +1,12 @@
+{% load fairdm %}
+
+{% for title, fieldset in fieldsets %}
+  <fieldset>
+    {% if title %}<legend>{{ title }}</legend>{% endif %}
+    {% if fieldset.description %}<p>{{ fieldset.description }}</p>{% endif %}
+    {% for row in fieldset.fields %}
+      {% render_row object row %}
+    {% endfor %}
+  </fieldset>
+  {% if not forloop.last %}<hr class="my-4" />{% endif %}
+{% endfor %}

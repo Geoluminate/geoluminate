@@ -1,0 +1,102 @@
+{% load i18n %}
+
+{# djlint:off #}
+<script>
+  var events = ['alpine:init', 'htmx:afterSwap'];
+  events.forEach(event => {
+    document.addEventListener(event, () => {
+      Alpine.data('rorLookup', () => ({
+        orgName: '',
+        matches: [],
+        selectedOrgs: [],
+        error: null,
+
+        // Computed property to serialize selected organizations to JSON
+        get selectedOrgsJson() {
+          return JSON.stringify(this.selectedOrgs)
+        },
+
+        async fetchRorData() {
+          if (this.orgName.length < 3) {
+            this.matches = []
+            return
+          }
+
+          this.error = null
+          const url = `https://api.ror.org/organizations?query=${encodeURIComponent(this.orgName)}`
+
+          try {
+            const response = await fetch(url)
+
+            if (!response.ok) {
+              throw new Error('Error fetching ROR data')
+            }
+
+            const data = await response.json()
+            // Filter out organizations already selected
+            this.matches = data.items.filter(
+              org => !this.selectedOrgs.some(selected => selected.id === org.id)
+            )
+          } catch (error) {
+            this.error = error.message
+            this.matches = []
+          }
+        },
+        // Add selected organization to pinned list
+        addSelectedOrg(org) {
+          if (!this.selectedOrgs.some(selected => selected.id === org.id)) {
+            this.selectedOrgs.push(org)
+          }
+
+          // Clear search and matches after selection
+          this.orgName = ''
+          this.matches = []
+        },
+
+        // Remove organization from selected list
+        removeSelectedOrg(orgId) {
+          this.selectedOrgs = this.selectedOrgs.filter(org => org.id !== orgId)
+        }
+      }))
+    });
+  });
+</script>
+{# djlint:on #}
+<div x-data="rorLookup">
+  <input type="text"
+         class="form-control"
+         x-model="orgName"
+         @input.debounce.500ms="fetchRorData"
+         placeholder="Type to search organizations..."
+         aria-expanded="false" />
+  <!-- Bootstrap Dropdown -->
+  <ul class="dropdown-menu w-100 mt-2"
+      :class="{'show': matches.length > 0}"
+      style="max-height: 200px;
+             overflow-y: auto">
+    <template x-for="org in matches" :key="org.id">
+      <li>
+        <button class="dropdown-item"
+                type="button"
+                @click="addSelectedOrg(org)"
+                x-text="org.name"></button>
+      </li>
+    </template>
+  </ul>
+  <!-- Error message if request fails -->
+  <p x-show="error" class="error" x-text="error"></p>
+  <!-- Display selected organization below select input -->
+  <div class="py-2" x-show="selectedOrgs.length > 0">
+    <ul class="list-group list-group-flush">
+      <template x-for="org in selectedOrgs" :key="org.id">
+        <li class="list-group-item">
+          <span x-text="org.name"></span> - <span x-text="org.country?.country_name || 'N/A'"></span>
+        </li>
+      </template>
+    </ul>
+  </div>
+  <textarea x-model="selectedOrgsJson"
+            type="{{ widget.type }}"
+            name="{{ widget.name }}"
+            hidden></textarea>
+</div>

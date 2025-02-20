@@ -1,4 +1,4 @@
-# Geoluminate
+# FairDM
 
 [![Github Build](https://github.com/Geoluminate/geoluminate/actions/workflows/build.yml/badge.svg)](https://github.com/Geoluminate/geoluminate/actions/workflows/build.yml)
 [![Github Docs](https://github.com/Geoluminate/geoluminate/actions/workflows/docs.yml/badge.svg)](https://github.com/Geoluminate/geoluminate/actions/workflows/docs.yml)

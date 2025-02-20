@@ -1,0 +1,31 @@
+{% load partials crispy_forms_tags %}
+
+{% partialdef table %}
+<div id="milestone-table-container">
+  {% if object_list %}
+    <table class="table mb-0">
+      <tbody>
+        {% for date in object_list %}
+          <tr class="bg-transparent border-light">
+            <td class="bg-transparent fw-medium">{{ date.type }}:</td>
+            <td class="bg-transparent">
+              <c-date :date="date.value.date"
+                      :precision="date.value.precision" />
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <c-text.empty />
+  {% endif %}
+</div>
+{% endpartialdef table %}
+
+{% partialdef formset %}
+{% crispy formset %}
+{% endpartialdef formset %}
+
+{% comment %} when no partial tag is specified, everything is rendered {% endcomment %}
+{% partial table %}
+{% partial formset %}

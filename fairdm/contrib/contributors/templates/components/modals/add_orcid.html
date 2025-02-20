@@ -1,0 +1,95 @@
+{% load static %}
+
+<c-vars id="orcid" icon="orcid" />
+<script>
+  var events = ['alpine:init', 'htmx:afterSwap'];
+  events.forEach(event => {
+    document.addEventListener(event, () => {
+      Alpine.data("{{ id }}", () => ({
+        endpoint: "https://pub.orcid.org/v3.0/",
+        query: '',
+        matches: [],
+        error: null,
+
+        async fetchData() {
+          if (this.query.length < 19) {
+            if (this.query.length === 0) {
+              this.matches = []
+            }
+            return
+          }
+          this.error = null
+          const url = this.endpoint + encodeURIComponent(this.query);
+
+          try {
+            const response = await fetch(url, {
+              headers: {
+                'Accept': 'application/json'
+              },
+            })
+
+            if (!response.ok) {
+              throw new Error('Error fetching from remote source')
+            }
+            const data = await response.json()
+
+            // utilize declared function to extract data from response
+            this.matches = [data];
+
+            this.$nextTick(() => {
+              htmx.process("#{{ id }}Modal .result-list");
+            });
+          } catch (error) {
+            this.error = error.message
+            this.matches = []
+          }
+        },
+      }))
+    });
+  });
+</script>
+<c-modals.remote-database-search :single_result="True">
+  <c-slot name="header">
+    {% icon icon height="1lh" %}
+    <input type="search"
+           class="ms-1 form-control"
+           x-model="query"
+           x-mask="9999-9999-9999-999*"
+           @input.debounce.500ms="fetchData"
+           placeholder="0000-0000-0000-0000" />
+  </c-slot>
+  <c-slot name="template">
+    {% comment %} How the result is displayed in the modal {% endcomment %}
+    <div class="w-100">
+      <div class="hstack mb-2">
+        <span class="fs-1">{% icon "user" %}</span>
+        <div class="ms-3">
+          <div class="fs-5">
+            <span x-text="item.person.name['given-names'].value"></span>
+            <span x-text="item.person.name['family-name'].value"></span>
+          </div>
+          {% icon "orcid" height="1em" %}
+          <a :href="item['orcid-identifier'].uri"
+             x-text="item['orcid-identifier'].path"></a>
+        </div>
+      </div>
+      <strong>{% trans "Affiliations" %}:</strong>
+      <p x-text="item['activities-summary'].employments['affiliation-group'][0]['summaries'][0]['employment-summary'].organization.name">
+      </p>
+    </div>
+  </c-slot>
+  <c-slot name="empty_container">
+    <img src="{% static "img/ORCID.png" %}"
+         class="w-75 mb-3"
+         alt="ORCID" />
+    <p>
+      {% blocktrans %}
+    Enter a valid ORCiD in the field above to easily add a new contributor.
+    Not sure if they have one? Try using the <a href="https://orcid.org/orcid-search/search" target="_blank">official ORCiD registry search</a> to find out.
+      {% endblocktrans %}
+    </p>
+  </c-slot>
+  <c-slot name="footer">
+    <a href="">{% trans "Use a form instead" %}</a>
+  </c-slot>
+</c-modals.remote-database-search>

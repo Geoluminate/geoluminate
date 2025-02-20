@@ -1,0 +1,12 @@
+{% load crispy_forms_tags %}
+
+<c-layout.form title="{% trans "Contact Us" %}">
+  <p>{% trans "Reach out to us by submitting the form below." %}</p>
+  <form method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <c-bs5.button class="btn btn-primary"
+                  text="{% trans "Send message" %}"
+                  icon="send" />
+  </form>
+</c-layout.form>

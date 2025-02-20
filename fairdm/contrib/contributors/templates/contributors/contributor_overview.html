@@ -1,0 +1,21 @@
+{% load %}
+<div class="container py-3">
+  <div class="section-header d-flex align-items-center">
+    <h5 class="mb-0">{% trans "Active Projects" %}</h5>
+  </div>
+  <div id="carouselExample" class="carousel carousel-dark slide">
+    <div class="carousel-inner">
+      {% comment %} {% for obj in contributor.projects.all %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">{% include "projects/project_card.html" %}</div>
+      {% endfor %} {% endcomment %}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</div>

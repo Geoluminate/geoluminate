@@ -1,0 +1,15 @@
+{% load partials crispy_forms_tags %}
+
+{% partialdef detail %}
+<c-card.contribution :contributor="contributor" can_update />
+{% endpartialdef %}
+
+{% partialdef form inline=True %}
+<c-card.contribution :contributor="contributor">
+  <form action="{{ request.path }}"
+        hx-post="{{ request.path }}"
+        hx-swap="outerHTML">
+    {{ form|crispy }}
+  </form>
+</c-card.contribution>
+{% endpartialdef %}

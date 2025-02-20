@@ -1,0 +1,11 @@
+{% comment %} <div class="tweet-this">
+  <a href="{{ tweet_url }}" class="meta-act-link meta-tweet {{ link_class }}" target="_blank">
+    <span class="d-none">{{ link_text }}</span>
+  </a>
+</div> {% endcomment %}
+<c-bs5.button href="{{ tweet_url }}"
+              size="lg"
+              icon="x_twitter"
+              target="_blank">
+  <span class="d-none">{{ link_text }}</span>
+</c-bs5.button>

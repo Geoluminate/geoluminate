@@ -1,0 +1,23 @@
+{% load partials crispy_forms_tags %}
+
+{% partialdef detail %}
+<span id="{{ date.type }}" class="fw-medium">{{ date.type }}:</span>
+<c-date :date="date.value.date"
+        :precision="date.value.precision" />
+{% endpartialdef %}
+
+{% partialdef form %}
+{% endpartialdef %}
+
+{% partialdef form inline=True %}
+<div x-data="{submit() { this.$refs.form.requestSubmit(); }}"
+     id="{{ date.type }}">
+  <form action="{{ request.path }}"
+        hx-post="{{ request.path }}"
+        hx-swap="outerHTML"
+        x-ref="form"
+        @click.outside="submit">
+    {{ form|crispy }}
+  </form>
+</div>
+{% endpartialdef %}

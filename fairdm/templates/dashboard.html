@@ -1,0 +1,125 @@
+{% load account_management %}
+
+<c-layout.sidebar>
+  <c-slot name="sidebar">
+    <div class="dropdown">
+      <a href="#"
+         class="hstack fs-5 gap-2 text-reset text-decoration-none dropdown-toggle"
+         type="button"
+         data-bs-toggle="dropdown"
+         aria-expanded="false">
+        {% avatar_url user as avatar %}
+        {% if avatar %}
+          <img src="{{ avatar }}" class="h-100" />
+        {% else %}
+          {% icon "user" height="1.5em" %}
+        {% endif %}
+        <span class="text-truncate">{{ user }}</span>
+      </a>
+      <ul class="dropdown-menu">
+        <li>
+          <a class="dropdown-item"
+             href="{{ request.user.get_absolute_url }}">
+            {% icon "user" %}
+          {% trans "Public profile" %}</a>
+        </li>
+      </ul>
+    </div>
+    {% block sidebar %}
+      <c-layout.sidebar-section heading="{% trans "My projects" %}">
+        {% if request.user.projects.exists %}
+          <c-sidebar.menu>
+            {% for object in request.user.projects.all|slice:":3" %}
+              <a class="list-group-item text-truncate px-0"
+                 title="{{ object }}"
+                 href="{{ object.get_absolute_url }}">{% icon "project" %} {{ object }}</a>
+            {% endfor %}
+          </c-sidebar.menu>
+          <a href="#">{% trans "Show more" %}</a>
+        {% else %}
+          <span class="text-muted">{% trans "You don't have any projects yet." %}</span>
+        {% endif %}
+      </c-layout.sidebar-section>
+      <c-layout.sidebar-section heading="{% trans "My datasets" %}">
+        <c-sidebar.menu>
+          {% for object in request.user.datasets.all|slice:":5" %}
+            <a class="list-group-item text-truncate px-0"
+               title="{{ object }}"
+               href="{{ object.get_absolute_url }}">{% icon "dataset" %} {{ object }}</a>
+          {% endfor %}
+        </c-sidebar.menu>
+        <a href="#">{% trans "Show more" %}</a>
+      </c-layout.sidebar-section>
+    {% endblock sidebar %}
+
+  </c-slot>
+  <c-layout.page title="{% trans "Home" %}">
+    <c-slot name="actions">
+      <c-widgets.quick_add text="Create new" />
+    </c-slot>
+    <c-layout.page-section heading="{% trans "Recently worked on..." %}">
+      <swiper-container class="w-100"
+                        navigation="true"
+                        space-between="30"
+                        slides-per-view="auto"
+                        pagination="true"
+                        pagination-clickable="true">
+        <c-dashboard.card title="{% icon "project" %} {% trans "Create a project" %}"
+                          class="text-center">
+          {% trans "Store project-level metadata directly alongside your datasets. Doing so is a great way to showcase your funded research projects, group together related datasets and to share what you've been working on with the broader community!" %}
+          <a class="stretched-link"
+             href="#"
+             data-bs-toggle="modal"
+             data-bs-target="#createProjectModal"></a>
+        </c-dashboard.card>
+        <c-dashboard.card title="{% icon "dataset" %} {% trans "Create a dataset" %}"
+                          class="text-center">
+          {% trans "Plan a new dataset or upload data you've previously collected. Contribute dataset-level metadata to enhance the discoverability of your work and speed-up the data-publication process." %}
+          <a class="stretched-link"
+             href="#"
+             data-bs-toggle="modal"
+             data-bs-target="#createDatasetModal"></a>
+        </c-dashboard.card>
+      </swiper-container>
+    </c-layout.page-section>
+    <c-layout.page-section heading="{% trans "Start something new" %}">
+      <swiper-container class="w-100"
+                        navigation="true"
+                        pagination="true"
+                        pagination-clickable="true">
+        <c-dashboard.card title="{% icon "project" %} {% trans "Create a project" %}"
+                          class="text-center">
+          {% trans "Store project-level metadata directly alongside your datasets. Doing so is a great way to showcase your funded research projects, group together related datasets and to share what you've been working on with the broader community!" %}
+          <a class="stretched-link"
+             href="#"
+             data-bs-toggle="modal"
+             data-bs-target="#createProjectModal"></a>
+        </c-dashboard.card>
+        <c-dashboard.card title="{% icon "dataset" %} {% trans "Create a dataset" %}"
+                          class="text-center">
+          {% trans "Plan a new dataset or upload data you've previously collected. Contribute dataset-level metadata to enhance the discoverability of your work and speed-up the data-publication process." %}
+          <a class="stretched-link"
+             href="#"
+             data-bs-toggle="modal"
+             data-bs-target="#createDatasetModal"></a>
+        </c-dashboard.card>
+      </swiper-container>
+    </c-layout.page-section>
+    <c-layout.page-section heading="{% trans "Resources" %}">
+      <swiper-container class="w-100"
+                        navigation="true"
+                        pagination="true"
+                        pagination-clickable="true">
+        <c-dashboard.card title="{% trans "Tutorials" %}">
+          {% trans "Learn how to get the most out of this portal." %}
+        </c-dashboard.card>
+        <c-dashboard.card title="{% trans "What is FairDM?" %}">
+          {% trans "Learn more about FairDM, the python-based framework powering this platform." %}
+        </c-dashboard.card>
+        <c-dashboard.card title="{% trans "What is FairDM?" %}">
+          {% trans "Learn more about FairDM, the python-based framework powering this platform." %}
+        </c-dashboard.card>
+      </swiper-container>
+    </c-layout.page-section>
+  </c-layout.page>
+</c-layout.sidebar>

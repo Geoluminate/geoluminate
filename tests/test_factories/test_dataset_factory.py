@@ -1,7 +1,7 @@
 import pytest
 
-from geoluminate.contrib.core.models import Dataset
-from geoluminate.factories import DatasetFactory
+from fairdm.core.models import Dataset
+from fairdm.factories import DatasetFactory
 
 
 @pytest.fixture

@@ -1,0 +1,16 @@
+{% if contributor.get_default_identifier %}
+    <a class="text-decoration-none"
+       href="{{ contributor.get_default_identifier.get_absolute_url }}"
+       data-bs-toggle="tooltip"
+       data-bs-html="true"
+       data-bs-custom-class="tooltip-primary"
+       data-bs-placement="bottom"
+       {% if contributor.orcid_is_authenticated %} data-bs-title="{% trans "This ORCID is <em>authenticated</em>." %}" {% else %} data-bs-title="{% trans "This ORCID is <em>unauthenticated</em>." %}"  {% endif %}>{% icon contributor.icon height="1em" %}</a>
+{% endif %}
+{% comment %} <c-bs5.button class="text-reset link-underline-hover position-absolute top-0 start-0 ms-2 mt-1" href="{{ contributor.get_default_identifier.get_absolute_url }}">
+    {% if contributor.type == "organization" %}
+        {% icon contributor.DEFAULT_IDENTIFIER height="1em" %}
+    {% else %}
+        {% icon contributor.icon height="1em" %}
+    {% endif %}
+</c-bs5.button> {% endcomment %}

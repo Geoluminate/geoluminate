@@ -1,0 +1,6 @@
+<span class="htmx-indicator {{ class }} {% if centered %}position-absolute top-50 start-50 translate-middle{% endif %}"
+      {{ attrs }}
+      role="status">
+  {% icon "spinner" %}
+  <span class="visually-hidden">{% trans "Loading..." %}</span>
+</span>

@@ -1,0 +1,13 @@
+{% load easy_icons %}
+
+<c-vars icon="" style="primary" size="" outline="" :visible="True" />
+{% if visible %}
+<{% if href %}a {% else %}button {% endif %} {{ attrs }}
+   class="btn btn-{{ style }} btn-{{ size }} {% if outline %}btn-outline{% endif %}">
+  {% if icon %}
+    {% icon icon %}
+  {% endif %}
+  {{ slot }}
+  {{ text }}
+</{% if href %}a {% else %}button {% endif %} >
+{% endif %}

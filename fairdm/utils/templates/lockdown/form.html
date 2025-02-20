@@ -1,0 +1,18 @@
+{% comment %} {% extends "fairdm/layout/full_screen_form.html" %} {% endcomment %}
+{% block page_title %}
+  {% trans "Lockdown Enabled" %}
+{% endblock %}
+
+{% block content %}
+  <p>{% trans "This community is only accesible to staff members." %}</p>
+  <form id="form" method='post'>
+    {% csrf_token %}
+    {{ form.as_p }}
+  </form>
+{% endblock %}
+
+{% block footer %}
+  <button class="btn btn-lg btn-primary"
+          form="form"
+          type="submit">{% trans "Submit" %}</button>
+{% endblock %}

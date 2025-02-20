@@ -1,0 +1,23 @@
+<div class="card">
+  <div class="card-body">
+    {% if obj.image %}
+      <img class="rounded-2 ms-3 mb-3 float-end"
+           src="{{ obj.image.url }}"
+           alt=""
+           width="30%" />
+    {% endif %}
+    <h2 class="card-title fs-5 text-truncate">{{ title }}</h2>
+    <c-contributor.names class="fs-6 text-secondary mb-1"
+                         :contributors="obj.contributors.all" />
+    {% if preview %}
+      {{ preview.value|truncatewords_html:100 }}
+    {% else %}
+      <c-text.empty text="{% trans "No preview available" %}" />
+    {% endif %}
+  </div>
+  <div class="card-footer">
+    <a href="{{ obj.get_absolute_url }}"
+       class="btn btn-primary">{% trans "View details" %}
+    {% icon "arrow-right" %}</a>
+  </div>
+</div>

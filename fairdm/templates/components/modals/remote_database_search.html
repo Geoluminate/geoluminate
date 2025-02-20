@@ -1,0 +1,57 @@
+{% load crispy_forms_tags %}
+
+<c-vars id
+        form_action
+        icon
+        input_placeholder
+        empty_message
+        single_result />
+{# djlint:off #}
+<style>
+  .modal-body {
+    height: 65vh;
+  }
+</style>
+<form method="post"
+      enctype="multipart/form-data"
+      action="{% url "contribution-create" base_pk=object.pk %}"
+      x-data="{{ id }}"
+      id="{{ id }}Form"
+      {{ attrs }}>
+  {% csrf_token %}
+  <c-bs5.modal id="{{ id }}Modal"
+               dialog_class="modal-dialog-centered modal-dialog-scrollable"
+               body_class="p-0"
+               footer_class="d-block text-left">
+    <!-- Error message if request fails -->
+    <p x-show="error" class="error" x-text="error"></p>
+    <ul class="result-list list-group list-group-flush border-0 h-100"
+        x-show="matches.length > 0"
+        :class="{'show': matches.length > 0}">
+      <template x-for="item in matches">
+        <li class="list-group-item justify-content-between {% if single_result %}vstack {% else %}hstack{% endif %}">
+          {{ template }}
+          <button class="btn btn-sm btn-success text-nowrap"
+                  name="data"
+                  :value="JSON.stringify(item)"
+                  hx-target="#contributorList"
+                  hx-swap="beforeend"
+                  hx-post="{% url "contribution-create" base_pk=object.pk %}">
+            {% icon "plus" %}
+            {% trans "Add" %}
+          </button>
+        </li>
+      </template>
+    </ul>
+    <div x-show="matches.length === 0"
+         class="p-2 vstack text-center justify-content-center align-items-center h-100">
+      {% if empty_container %}
+        {{ empty_container }}
+      {% else %}
+        <div>{% icon icon height="96px" %}</div>
+        <p>{{ empty_message }}</p>
+      {% endif %}
+    </div>
+    <c-spinner x-show="matches.length === 0" centered />
+  </c-bs5.modal>
+</form>

@@ -1,0 +1,36 @@
+{% extends "account_management/base.html" %}
+{% load static meta sekizai_tags fairdm compress easy_icons django_htmx %}
+{% load render_bundle from webpack_loader %}
+
+{% block head %}
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1" />
+  {% include "meta/meta.html" %}
+  <link rel="icon"
+        type="image/svg+xml"
+        href="{% static "img/brand/icon.svg" %}" />
+  {% compress css file fairdm %}
+    <link rel="stylesheet"
+          type="text/x-scss"
+          href="{% static "scss/stylesheet.scss" %}" />
+  {% endcompress %}
+  {% render_bundle "project" "css" "FAIRDM" %}
+  {% compress js file fairdm %}
+    {% render_bundle "project" "js" "FAIRDM" attrs="defer" %}
+  {% endcompress %}
+  {% compress js file fairdm %}
+    <script>
+      (function() {
+        const theme = localStorage.getItem('_x_theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-bs-theme', JSON.parse(theme));
+      })();
+    </script>
+    {% render_bundle "popper" "js" "FAIRDM" %}
+  {% endcompress %}
+  {% django_htmx_script %}
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+          integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+          crossorigin="anonymous"></script>
+{% endblock head %}

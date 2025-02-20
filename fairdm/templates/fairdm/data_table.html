@@ -1,0 +1,125 @@
+{% load crispy_forms_tags fairdm widget_tweaks static partials %}
+{% load render_table from django_tables2 %}
+{% load export_url from django_tables2 %}
+
+{% partialdef table %}
+<div class="overflow-hidden vstack h-100"
+     hx-target="this"
+     hx-swap="outerHTML"
+     :hx-vals="JSON.stringify({'dataset': '{{ dataset.pk }}'})"
+     :class="{'position-fixed vh-100 top-0 start-0 w-100': isFullscreen}"
+     x-data="{'isFullscreen': false, submit() { htmx.trigger(this.$refs.filter, 'submit'); }, 'num_pages': {{ table.paginator.num_pages }}, 'page': {{ table.page.number }}, 'page_size': {{ table.paginator.per_page }}, 'total_objects': {{ total_object_count }}, 'sampleType': '{{ current_type }}' }">
+  <c-page-nav>
+    {% block toolbar_start %}
+      <a href="#"
+         type="button"
+         data-bs-toggle="offcanvas"
+         data-bs-target="#dataInfoOffcanvas">{% icon "info" %}</a>
+      <select name="type"
+              form="filterForm"
+              id="typeSelect"
+              hx-get="{{ request.path }}"
+              hx-trigger="change"
+              hx-push-url="true"
+              class="form-select w-auto">
+        <optgroup label="Samples">
+          {% for item in registry.samples %}
+            <option value="{{ item.full_name }}"
+                    {% if request.GET.type == item.full_name %}selected{% endif %}>
+              {{ item.verbose_name_plural }}
+            </option>
+          {% endfor %}
+        </optgroup>
+        <optgroup label="Measurements">
+          {% for item in registry.measurements %}
+            <option value="{{ item.full_name }}"
+                    {% if request.GET.type == item.full_name %}selected{% endif %}>
+              {{ item.verbose_name_plural }}
+            </option>
+          {% endfor %}
+        </optgroup>
+      </select>
+    {% endblock toolbar_start %}
+
+    {% trans "Search by name" as placeholder %}
+    {% if filter.form.name %}
+      <div>
+        {% render_field filter.form.name form="filterForm" type="search" class="form-control" placeholder=placeholder  @input.debounce="submit" %}
+      </div>
+    {% endif %}
+    <c-button.group class="ms-auto">
+      {% if user_can_edit %}
+        <c-bs5.button class="btn btn-sm btn-outline-primary"
+                      href="{{ create_view_url }}"
+                      hx-get="{{ create_view_url }}"
+                      icon="plus"
+                      :visible="user_can_edit" />
+        <c-bs5.button class="btn btn-sm btn-outline-primary"
+                      href="{% url "dataset-import-view" pk=dataset.pk %}{% querystring %}"
+                      icon="upload"
+                      :visible="user_can_edit" />
+      {% endif %}
+      <c-bs5.dropdown button_class="btn-sm btn-outline-primary"
+                      button_text="{% icon 'download' %}">
+        {% comment %} <c-import-export.export-dropdown :formats="view.export_formats" :dataset="dataset" /> {% endcomment %}
+      </c-bs5.dropdown>
+      <button class="btn btn-sm btn-outline-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#filterModal"
+              type="button">{% icon "filter" %}</button>
+      <button class="btn btn-sm btn-outline-primary"
+              @click="isFullscreen = !isFullscreen"
+              :class="{'btn-outline-primary': !isFullscreen, 'btn-outline-secondary': isFullscreen}"
+              type="button">{% icon "expand" %}</button>
+    </c-button.group>
+  </c-page-nav>
+  {% render_table table %}
+  <c-spinner id="tableIndicator" class="fs-1" centered />
+  <c-bs5.modal id="filterModal"
+               dialog_class="modal-xl"
+               title="{% trans "Sample filter" %}">
+    {{ filter.form.media.css }}
+    <form id="filterForm"
+          method="get"
+          x-ref="filter"
+          hx-get="{{ request.path }}"
+          hx-indicator="#tableIndicator">
+      {% for field in filter.form %}
+        {% if field.name != "name" and field.name != "type" and field.name != "o" %}{{ field|as_crispy_field }}{% endif %}
+      {% endfor %}
+      <button type="submit" data-bs-dismiss="modal">{% trans "Apply filters" %}</button>
+    </form>
+    {{ filter.form.media.js }}
+  </c-bs5.modal>
+</div>
+{% get_registry_info object_list as model_info %}
+<c-bs5.offcanvas id="dataInfoOffcanvas"
+                 header="{{ model_info.verbose_name }}">
+  <dl>
+    <dt>{% trans "Definition" %}</dt>
+    <dd>
+      {{ model_info.config.description }}
+    </dd>
+    <dt>{% trans "Defined by" %}</dt>
+    <dd>
+      <a href="{{ model_info.config.authority.website }}">{{ model_info.config.authority.name }}</a>
+    </dd>
+    <dt>{% trans "Defined in" %}</dt>
+    <dd>
+      <a href="{{ model_info.config.repository_url }}">{{ model_info.config.repository_url }}</a>
+    </dd>
+    <dt>{% trans "Citation" %}</dt>
+    <dd>
+      <a href="{{ model_info.config.citation.doi }}">{{ model_info.config.citation.text }}</a>
+    </dd>
+  </dl>
+</c-bs5.offcanvas>
+{% endpartialdef %}
+
+{% if request.htmx %}
+  {% partial table %}
+{% else %}
+  <c-layout.standard>
+    {% partial table %}
+  </c-layout.standard>
+{% endif %}

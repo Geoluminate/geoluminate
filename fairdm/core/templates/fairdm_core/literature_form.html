@@ -1,0 +1,21 @@
+{% extends "fairdm/plugins/page.html" %}
+{% load formsetify fairdm %}
+
+{% block title %}
+  {% trans "Primary Reference" %}
+{% endblock title %}
+
+{% block content %}
+  {% if view.help_text %}{{ view.help_text }}{% endif %}
+  <div class='my-3'>
+    <django-formset endpoint="{% url  "literature:edit" pk=object.dataset.reference.pk %}"
+                    csrf-token="{{ csrf_token }}">
+      {% comment %} {% render_form form "bootstrap" field_classes="mb-2" %} {% endcomment %}
+      {% comment %} {{ form }} {% endcomment %}
+      {{ form_collection }}
+      <button type="button"
+              class="btn btn-success"
+              df-click="submit() -> proceed">{% trans "Save" %}</button>
+    </django-formset>
+  </div>
+{% endblock %}

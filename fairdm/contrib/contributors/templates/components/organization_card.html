@@ -1,0 +1,15 @@
+<c-bs5.card class="shadow align-items-center text-center {{ contributor.type }}"
+            body_class="vstack align-items-center">
+  <span class="position-absolute top-0 end-0 me-2 mt-1 z-1">{% icon "gear" %}</span>
+  {% if contributor.get_default_identifier %}
+    <span class="position-absolute top-0 start-0 ms-2 mt-1 z-1">
+      <c-contributor.icon :contributor="contributor" />
+    </span>
+  {% endif %}
+  <c-avatar :contributor="contributor" class="w-100" only />
+  <h5 class="card-title fs-6 mt-1 mb-3">{{ contributor }}</h5>
+  <c-bs5.button class="btn btn-primary"
+                href="{{ contributor.get_absolute_url }}">
+    {% trans "View profile" %}
+  </c-bs5.button>
+</c-bs5.card>

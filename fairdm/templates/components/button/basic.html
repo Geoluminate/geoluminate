@@ -1,0 +1,13 @@
+{% load easy_icons %}
+
+<c-vars icon="" style="primary" size="" outline="" />
+<button {{ attrs }}
+        class="btn btn-{{ style }} btn-{{ size }} {% if outline %}btn-outline{% endif %}">
+  {% if not icon_position == "end" %}
+    {% icon icon %}
+  {% endif %}
+  {% firstof slot text %}
+  {% if icon_position == "end" %}
+    {% icon icon %}
+  {% endif %}
+</button>

@@ -1,0 +1,25 @@
+<c-plugin layout="page" :title="object" :hr="False">
+  <c-slot name="actions">
+    <c-bs5.button class="text-success"
+                  href="{% url "description-formset" pk=object.pk %}"
+                  hx-get="{% url "description-formset" pk=object.pk %}"
+                  icon="edit"
+                  :visible="user_can_edit" />
+  </c-slot>
+  <c-contributor.names class="fs-6 text-secondary mt-1 mb-3"
+                       :contributors="object.contributors.all"
+                       role="ProjectMember" />
+  <c-description-section :descriptions="object.get_descriptions_in_order" />
+</c-plugin>
+<c-spinner id="mainIndicator" class="fs-1" centered />
+{% for modal in modals %}<c-component :is="modal" />{% endfor %}
+{% comment %} {% block sidebar_cards %}
+  <c-layout.sidebar-section>
+    {% if object.owner %}
+      <c-field name="owner" />
+    {% else %}
+      <c-text.empty />
+    {% endif %}
+  </c-layout.sidebar-section>
+  {{ block.super }}
+{% endblock sidebar_cards %} {% endcomment %}

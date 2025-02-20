@@ -1,0 +1,65 @@
+<c-vars id="ROR" icon="ror" />
+<script>
+  var events = ['alpine:init', 'htmx:afterSwap'];
+  events.forEach(event => {
+    document.addEventListener(event, () => {
+      Alpine.data("{{ id }}", () => ({
+        endpoint: "https://api.ror.org/organizations?query=",
+        query: '',
+        matches: [],
+        error: null,
+
+        async fetchData() {
+          if (this.query.length < 3) {
+            this.matches = []
+            return
+          }
+          this.error = null
+          const url = this.endpoint + encodeURIComponent(this.query);
+
+          try {
+            const response = await fetch(url, {
+              headers: {
+                'Accept': 'application/json'
+              },
+            })
+
+            if (!response.ok) {
+              throw new Error('Error fetching from remote source')
+            }
+            const data = await response.json()
+
+            // utilize declared function to extract data from response
+            this.matches = data.items;
+
+            this.$nextTick(() => {
+              htmx.process("#{{ id }}Modal .result-list");
+            });
+          } catch (error) {
+            this.error = error.message
+            this.matches = []
+          }
+        },
+      }))
+    });
+  });
+</script>
+<c-modals.remote-database-search empty_message="{% trans "Use the search input above to find an organization using the Research Organization Registry." %}">
+  <c-slot name="header">
+    {% icon icon height="1lh" %}
+    <input type="search"
+           class="ms-1 form-control"
+           x-model="query"
+           @input.debounce.500ms="fetchData"
+           placeholder="{% trans "Start typing to search..." %}" />
+  </c-slot>
+  <c-slot name="template">
+    <div>
+      <span x-text="item.name"></span>,
+      <span x-text="item.country?.country_name || 'N/A'"></span>
+    </div>
+  </c-slot>
+  <c-slot name="footer">
+    <a href="">{% trans "Add using form instead" %}</a>
+  </c-slot>
+</c-modals.remote-database-search>

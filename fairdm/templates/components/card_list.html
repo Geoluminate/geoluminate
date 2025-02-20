@@ -1,0 +1,6 @@
+<div id="{{ id }}"
+     class="d-flex flex-wrap {{ class }}">
+  {% for obj in object_list %}
+    <div class="col p-{{ gap }}">{% include template %}</div>
+  {% endfor %}
+</div>

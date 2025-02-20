@@ -1,0 +1,9 @@
+<c-vars reverse="" sidebar_class sidebar slot />
+<c-layout.standard>
+  <div class="d-flex h-100" {{ attrs }}>
+    <aside class="d-none d-md-flex h-100 overflow-auto {% if reverse %} border-start ps-2 pe-3{% else %} border-end pe-2 ps-3{% endif %} {{ sidebar_class }}">
+      <div class="p-2 overflow-auto vstack gap-3">{{ sidebar }}</div>
+    </aside>
+    <div class="flex-grow-1 h-100 overflow-auto">{{ slot }}</div>
+  </div>
+</c-layout.standard>

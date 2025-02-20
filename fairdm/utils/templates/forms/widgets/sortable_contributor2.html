@@ -1,0 +1,81 @@
+{% extends '' %}
+<div x-data="dropdownComponent({{ inputData }}, {{ initialData }})">
+  <div class="d-flex">
+    <!-- The ordered list with drag-and-drop functionality -->
+    <div class="sortable-list-items form-control border d-flex flex-wrap"
+         x-sort="updateorderedString.bind($data)">
+      <template x-for="(item, index) in selected" :key="item[0]">
+        <span x-sort:item="item[0]"
+              :data-value="item[0]"
+              class="badge rounded-pill text-bg-secondary me-1">
+          <span x-text="item[1]"></span>
+          <span @click="removeItem(item)"
+                class="text-white fw-semibold ms-1">x</span>
+        </span>
+      </template>
+    </div>
+    {% comment %} <select name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %}>{% for group_name, group_choices, group_index in widget.optgroups %}{% if group_name %}
+    </select>
+    {% endcomment %}
+    <!-- Add new elements to list -->
+    <select x-ref="selectElement"
+            id="person-select"
+            @change="addItem">
+      <option value="" disabled selected>{% trans "Add" %}</option>
+      <template x-for="item in inputData" :key="item[0]">
+        <option :value="item[0]"
+                x-text="item[1]"
+                x-show="!selected.includes(item)"></option>
+      </template>
+    </select>
+  </div>
+  <input type="hidden"
+         name="{{ widget.name }}"
+         {% include "django/forms/widgets/attrs.html" %}
+         x-model="orderedString"
+         readonly
+         class="form-control mt-2" />
+</div>
+<script>
+  var events = ['alpine:init', 'htmx:afterSwap'];
+  events.forEach(event => {
+    document.addEventListener(event, () => {
+      Alpine.data('dropdownComponent', (data, initial) => ({
+        selected: initial,
+        orderedString: '',
+        inputData: data,
+
+        init(data, initial) {
+          // Initialize the ordered string
+          this.updateorderedString()
+
+        },
+
+        addItem(event) {
+          const person = this.inputData.find(p => p[0] == event.target.value)
+          if (person && !this.selected.some(p => p[0] === person[0])) {
+            this.selected.push(person)
+            this.updateorderedString()
+          }
+          this.$refs.selectElement.value = ""
+        },
+        removeItem(person) {
+          this.selected = this.selected.filter(p => p[0] !== person[0])
+          this.updateorderedString()
+        },
+        updateorderedString() {
+          // Scan all items and update the comma-separated ids string based on the order
+          this.$nextTick(() => {
+            const ids = Array.from(document.querySelectorAll('.sortable-list-items > span')).map(item => item.dataset.value)
+            this.orderedString = ids.join(',')
+          })
+        }
+      }))
+
+
+
+
+
+    });
+  });
+</script>

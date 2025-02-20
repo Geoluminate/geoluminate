@@ -1,0 +1,17 @@
+{% load fairdm %}
+
+<fieldset class="mb-3" id="{{ heading|slugify }}-fieldset">
+  <div class="d-flex justify-content-between align-items-baseline">
+    {% if heading %}<h2 class="fs-5">{{ heading }}</h2>{% endif %}
+    {% if edit_url %}
+      <a hx-get="{{ edit_url }}"
+         hx-target="#{{ heading|slugify }}-field-list"
+         href="{{ edit_url }}"
+         class="btn btn-lg btn-sm text-success">{% icon "edit" %}</a>
+    {% endif %}
+  </div>
+  {% for field in fields %}
+    {% get_field object field as field %}
+    <c-fields.field :field="field.0" :value="field.1" />
+  {% endfor %}
+</fieldset>

@@ -1,0 +1,25 @@
+<c-bs5.modal id="milestonesModal">
+  <c-slot name="title">
+    {% blocktrans with entity_type=object.verbose_name %}
+    <span class="text-capitalize">{{ entity_type }} milestones</span>
+    {% endblocktrans %}
+  </c-slot>
+  <div class="alert alert-info" role="alert">
+    {% blocktrans with entity_type=object.verbose_name %}
+    Milestones represent key dates in the lifecycle of a {{ entity_type }}. They should be entered with the highest precision possible, however, partial dates are acceptable when the precise date is not known and cannot be determined. <a href="/">Learn more.</a>
+    {% endblocktrans %}
+  </div>
+  <div id="date-form-collection"
+       hx-trigger="load"
+       hx-target="this"
+       hx-get="{% url "date-collection-update" pk=object.pk %}"
+       hx-select="#date-form-collection"></div>
+  <c-slot name="footer">
+    <c-bs5.button hx-include="#date-form-collection"
+                  hx-post="{% url "date-collection-update" pk=object.pk %}"
+                  hx-target="#milestone-table-container"
+                  class="btn btn-primary"
+                  icon="save"
+                  text="{% trans "Update" %}" />
+  </c-slot>
+</c-bs5.modal>

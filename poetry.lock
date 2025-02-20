@@ -1026,7 +1026,7 @@ django-htmx = "^1.21.0"
 type = "git"
 url = "https://github.com/SamuelJennings/django-account-management"
 reference = "HEAD"
-resolved_reference = "c19a58424bc6a304e8d8fe7bce5add17652e2f68"
+resolved_reference = "6d1c40781fa4a18b05e771fe1867705c2590f314"
 
 [[package]]
 name = "django-activity-stream"
@@ -2059,7 +2059,7 @@ rdflib = "^7.0.0"
 type = "git"
 url = "https://github.com/Geoluminate/django-research-vocabs"
 reference = "HEAD"
-resolved_reference = "0f3f977db9df5f2d8d2bab420b1925c9728e929f"
+resolved_reference = "a7611e8c8d2b0529cad084e00d118750a989b4e5"
 
 [[package]]
 name = "django-rest-polymorphic"

@@ -4,7 +4,7 @@ const BundleTracker = require('webpack-bundle-tracker')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { popper } = require('@popperjs/core')
 const BaseDir = path.resolve(__dirname, '../../')
-const BundleDir = path.resolve(BaseDir, './geoluminate/static/bundles/')
+const BundleDir = path.resolve(BaseDir, './fairdm/static/bundles/')
 const AssetsDir = path.resolve(__dirname, '../')
 const VendorDir = path.resolve(__dirname, '../src/vendors/')
 

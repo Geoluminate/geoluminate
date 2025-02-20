@@ -1,9 +1,0 @@
-<h1 class="display-3">{{ display }}</h1>
-{% if lead %}<p class="lead">{{ lead }}</p>{% endif %}
-{% if text %}<p>{{ text }}</p>{% endif %}
-{% if actions %}
-  {{ actions }}
-{% elif action %}
-  <a href="{{ action }}"
-     class="btn btn-outline-primary">{{ action_text }}</a>
-{% endif %}

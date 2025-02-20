@@ -22,13 +22,13 @@ module.exports = merge(commonConfig, {
   plugins: [
     new BundleTracker({
       relativePath: true,
-      path: path.resolve(BASE_DIR, './geoluminate/conf/'),
+      path: path.resolve(BASE_DIR, './fairdm/conf/'),
       filename: 'webpack-stats.prod.json',
     }),
     new CopyWebpackPlugin({
       patterns: [{
         from: path.resolve(BaseDir, 'node_modules/bootstrap/scss/'),
-        to: path.resolve(BaseDir, 'geoluminate/static/bs5/'),
+        to: path.resolve(BaseDir, 'fairdm/static/bs5/'),
       },],
     }),
   ],
